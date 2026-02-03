@@ -298,7 +298,7 @@ main
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -329,7 +329,7 @@ main
     variable z set to 101
     set n to n + x
   end each
-  print n
+  call printNoLine(n)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -366,7 +366,7 @@ main
       end while
       set x to x + 1
   end while
-  print t
+  call printNoLine(t)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -398,7 +398,7 @@ main
     throw exception "error"
   catch exception in e
     variable b set to e
-    print b
+    call printNoLine(b)
   end try
 end main`;
 
@@ -427,7 +427,7 @@ main
     throw exception "error"
   catch exception in e
     variable b set to e
-    print b
+    call printNoLine(b)
   end try
 end main`;
 
@@ -446,7 +446,7 @@ end main`;
       asDebugSymbol("e", "error", '{"Type":"String"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print19", expected);
+    await assertDebugBreakPoint(fileImpl, "call19", expected);
   });
 
   test("Pass_InIf", async () => {
@@ -550,7 +550,7 @@ end main`;
 
 main
   variable a set to [ff(1), ff(2)]
-  print a
+  call printNoLine(a)
 end main
 
 function ff(a as Int) returns Int
@@ -570,7 +570,7 @@ end function
 
     const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
-    await assertDebugBreakPoint(fileImpl, "return13", expected);
+    await assertDebugBreakPoint(fileImpl, "return14", expected);
   });
 
   test("Pass_OutParameter", async () => {
@@ -582,7 +582,7 @@ main
 end main
   
 procedure printParameter(out n as Int)
-  print n
+  call printNoLine(n)
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -597,7 +597,7 @@ end procedure`;
 
     const expected = [asDebugSymbol("n", 1, '{"Type":"Int"}')];
 
-    await assertDebugBreakPoint(fileImpl, "print13", expected);
+    await assertDebugBreakPoint(fileImpl, "call13", expected);
   });
 
   test("Pass_ClassTypeInfo", async () => {
@@ -605,7 +605,7 @@ end procedure`;
 
 main
   variable x set to new Foo()
-  print x
+  call printNoLine(x)
 end main
   
 class Bar
@@ -642,7 +642,7 @@ end class`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_Enum", async () => {
@@ -650,7 +650,7 @@ end class`;
 
 main
   variable x set to Fruit.apple
-  print x
+  call printNoLine(x)
 end main
   
 enum Fruit apple, pear`;
@@ -667,7 +667,7 @@ enum Fruit apple, pear`;
 
     const expected = [asDebugSymbol("x", "apple", '{"Type":"Enum","OfTypes":{"Type":"Fruit"}}')];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_Tuple", async () => {
@@ -675,7 +675,7 @@ enum Fruit apple, pear`;
 
 main
   variable x set to tuple(1, "fred")
-  print x
+  call printNoLine(x)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -696,7 +696,7 @@ end main`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_TupleDeconstruction", async () => {
@@ -704,7 +704,7 @@ end main`;
 
 main
   variable x, y set to a
-  print x
+  call printNoLine(x)
 end main
 
 constant a set to tuple(1, "fred")`;
@@ -732,7 +732,7 @@ constant a set to tuple(1, "fred")`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_ListDeconstruction", async () => {
@@ -740,7 +740,7 @@ constant a set to tuple(1, "fred")`;
 
 main
   variable x:y set to a
-  print x
+  call printNoLine(x)
 end main
 
 constant a set to {1, 2, 3}`;
@@ -768,7 +768,7 @@ constant a set to {1, 2, 3}`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_RecordDeconstruction", async () => {
@@ -776,7 +776,7 @@ constant a set to {1, 2, 3}`;
 
 main
   variable x, y set to new Foo() with x set to 1, y set to "fred"
-  print x
+  call printNoLine(x)
 end main
 
 record Foo
@@ -807,7 +807,7 @@ end record`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "print6", expected);
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
   });
 
   test("Pass_FunctionProperty", async () => {

@@ -46,7 +46,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
   variable vg2 set to vg.withAppend(circ)
-  print vg2.vectorGraphicsAsHtml()
+  call printNoLine(vg2.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -55,7 +55,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   let vg2 = vg.withAppend(circ);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -88,7 +88,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
   call vg.append(circ)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -97,7 +97,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -153,7 +153,7 @@ main
   call rect.setFillColour(green)
   call rect.setStrokeColour(blue)
   call rect.setStrokeWidth(3)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -185,7 +185,7 @@ async function main() {
   rect.setFillColour(_stdlib.green);
   rect.setStrokeColour(_stdlib.blue);
   rect.setStrokeWidth(3);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -243,7 +243,7 @@ main
   set rect to rect.withStrokeColour(blue)
   set rect to rect.withStrokeWidth(3)
   set vg to vg.withAppend(rect)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -275,7 +275,7 @@ async function main() {
   rect = rect.withStrokeColour(_stdlib.blue);
   rect = rect.withStrokeWidth(3);
   vg = vg.withAppend(rect);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -308,14 +308,14 @@ return [main, _tests];}`;
 
 main
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
-  print circ.centreX
+  call printNoLine(circ.centreX)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
-  await system.print(circ.centreX);
+  await _stdlib.printNoLine(circ.centreX);
 }
 return [main, _tests];}`;
 
@@ -342,7 +342,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to black, strokeWidth set to 1
   variable vg2 set to vg.withAppend(circ)
-  print vg2.vectorGraphicsAsHtml()
+  call printNoLine(vg2.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -351,7 +351,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   let vg2 = vg.withAppend(circ);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -384,7 +384,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to transparent, strokeWidth set to 1
   call vg.append(circ)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -393,7 +393,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.transparent; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -423,7 +423,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to white + 1, strokeColour set to black, strokeWidth set to 1
   call vg.append(circ)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -432,7 +432,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.white + 1; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -461,7 +461,7 @@ main
   variable vg set to new List<of VectorGraphic>()
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with x set to 50, y set to 50, width set to 50, height set to 50
   call vg.append(i)
-  print vg.vectorGraphicsAsHtml()
+  call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -470,7 +470,7 @@ async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
   let i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
   vg.append(i);
-  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -502,7 +502,7 @@ return [main, _tests];}`;
 main
   variable c set to new CircleVG()
   variable x set to c.centreX
-  print x
+  call printNoLine(x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -510,7 +510,7 @@ const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.CircleVG()._initialise());
   let x = c.centreX;
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
 

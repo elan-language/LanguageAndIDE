@@ -51,7 +51,7 @@ return [main, _tests];}`;
 main
   variable tf set to openFileForReading()
   variable txt set to tf.readWholeFile()
-  print txt
+  call printNoLine(txt)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -59,7 +59,7 @@ const global = new class {};
 async function main() {
   let tf = (await _stdlib.openFileForReading());
   let txt = tf.readWholeFile();
-  await system.print(txt);
+  await _stdlib.printNoLine(txt);
 }
 return [main, _tests];}`;
 
@@ -120,7 +120,7 @@ main
   variable tf set to openFileForReading()
 
   while not tf.endOfFile()
-    print tf.readLine()
+    call printNoLine(tf.readLine())
   end while
 end main`;
 
@@ -129,7 +129,7 @@ const global = new class {};
 async function main() {
   let tf = (await _stdlib.openFileForReading());
   while (!tf.endOfFile()) {
-    await system.print(tf.readLine());
+    await _stdlib.printNoLine(tf.readLine());
   }
 }
 return [main, _tests];}`;

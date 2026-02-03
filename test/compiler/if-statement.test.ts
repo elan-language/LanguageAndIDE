@@ -21,9 +21,9 @@ suite("If Statement", () => {
 main
   variable a set to true
   if a then
-    print "yes"
+    call printNoLine("yes")
   else
-    print "no"
+    call printNoLine("no")
   end if
 end main`;
 
@@ -32,9 +32,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.print("yes");
+    await _stdlib.printNoLine("yes");
   } else {
-    await system.print("no");
+    await _stdlib.printNoLine("no");
   }
 }
 return [main, _tests];}`;
@@ -61,9 +61,9 @@ return [main, _tests];}`;
 main
   variable a set to false
   if a then
-    print "yes"
+    call printNoLine("yes")
   else
-    print "no"
+    call printNoLine("no")
   end if
 end main`;
 
@@ -72,9 +72,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.false;
   if (a) {
-    await system.print("yes");
+    await _stdlib.printNoLine("yes");
   } else {
-    await system.print("no");
+    await _stdlib.printNoLine("no");
   }
 }
 return [main, _tests];}`;
@@ -101,11 +101,11 @@ return [main, _tests];}`;
 main
   variable a set to 2
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   elif a is 2 then
-    print "two"
+    call printNoLine("two")
   else
-    print "neither"
+    call printNoLine("neither")
   end if
 end main`;
 
@@ -114,11 +114,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.print("one");
+    await _stdlib.printNoLine("one");
   } else if (a === 2) {
-    await system.print("two");
+    await _stdlib.printNoLine("two");
   } else {
-    await system.print("neither");
+    await _stdlib.printNoLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -145,11 +145,11 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   elif a is 2 then
-    print "two"
+    call printNoLine("two")
   else
-    print "neither"
+    call printNoLine("neither")
   end if
 end main`;
 
@@ -158,11 +158,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("one");
+    await _stdlib.printNoLine("one");
   } else if (a === 2) {
-    await system.print("two");
+    await _stdlib.printNoLine("two");
   } else {
-    await system.print("neither");
+    await _stdlib.printNoLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -189,7 +189,7 @@ return [main, _tests];}`;
 main
   variable a set to true
   if a then
-    print "yes"
+    call printNoLine("yes")
   end if
 end main`;
 
@@ -198,7 +198,7 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.print("yes");
+    await _stdlib.printNoLine("yes");
   }
 }
 return [main, _tests];}`;
@@ -225,13 +225,13 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   elif a is 2 then
-    print "two"
+    call printNoLine("two")
   elif a is 3 then
-    print "three"
+    call printNoLine("three")
   else
-    print "neither"
+    call printNoLine("neither")
   end if
 end main`;
 
@@ -240,13 +240,13 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("one");
+    await _stdlib.printNoLine("one");
   } else if (a === 2) {
-    await system.print("two");
+    await _stdlib.printNoLine("two");
   } else if (a === 3) {
-    await system.print("three");
+    await _stdlib.printNoLine("three");
   } else {
-    await system.print("neither");
+    await _stdlib.printNoLine("neither");
   }
 }
 return [main, _tests];}`;
@@ -273,11 +273,11 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   elif a is 2 then
-    print "two"
+    call printNoLine("two")
   elif a is 3 then
-    print "three"
+    call printNoLine("three")
   end if
 end main`;
 
@@ -286,11 +286,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("one");
+    await _stdlib.printNoLine("one");
   } else if (a === 2) {
-    await system.print("two");
+    await _stdlib.printNoLine("two");
   } else if (a === 3) {
-    await system.print("three");
+    await _stdlib.printNoLine("three");
   }
 }
 return [main, _tests];}`;
@@ -355,7 +355,7 @@ main
   if a is 1 then
     variable b set to a
     set b to 2
-    print b
+    call printNoLine(b)
   end if
 end main`;
 
@@ -366,7 +366,7 @@ async function main() {
   if (a === 1) {
     let b = a;
     b = 2;
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   }
 }
 return [main, _tests];}`;
@@ -393,7 +393,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print ""
+    call printNoLine("")
   else
     set a to 3
   end if
@@ -404,7 +404,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else {
     a = 3;
   }
@@ -433,11 +433,11 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print ""
+    call printNoLine("")
   else
     variable b set to a
     set b to 2
-    print b
+    call printNoLine(b)
   end if
 end main`;
 
@@ -446,11 +446,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else {
     let b = a;
     b = 2;
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   }
 }
 return [main, _tests];}`;
@@ -478,10 +478,10 @@ main
   variable a set to 3
   if a is 1 then
     variable b set to 1
-    print b
+    call printNoLine(b)
   else
     variable b set to a
-    print b
+    call printNoLine(b)
   end if
 end main`;
 
@@ -491,10 +491,10 @@ async function main() {
   let a = 3;
   if (a === 1) {
     let b = 1;
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   } else {
     let b = a;
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   }
 }
 return [main, _tests];}`;
@@ -521,7 +521,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    print ""
+    call printNoLine("")
   elif a is 2 then 
     set a to 3
   end if
@@ -532,7 +532,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else if (a === 2) {
     a = 3;
   }
@@ -561,11 +561,11 @@ return [main, _tests];}`;
 main
   variable a set to 2
   if a is 1 then
-    print ""
+    call printNoLine("")
   elif a is 2 then
     variable b set to a
     set b to 2
-    print b
+    call printNoLine(b)
   end if
 end main`;
 
@@ -574,11 +574,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
     b = 2;
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   }
 }
 return [main, _tests];}`;
@@ -605,7 +605,7 @@ return [main, _tests];}`;
 main
   variable a set to 2
   if a is 1 then
-    print ""
+    call printNoLine("")
   else 
     [ghosted] constant b set to 2
   end if
@@ -616,7 +616,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else {
 
   }
@@ -645,13 +645,13 @@ return [main, _tests];}`;
 main
   variable a set to 2
   if a is 1 then
-    print ""
+    call printNoLine("")
   elif a is 2 then
     variable b set to a
     for i from 0 to 5 step 1
       set b to b + i
     end for
-    print b
+    call printNoLine(b)
   end if
 end main`;
 
@@ -660,14 +660,14 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.print("");
+    await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const _tofor16 = 5;
-    for (let i = 0; i <= _tofor16; i = i + 1) {
+    const _tofor17 = 5;
+    for (let i = 0; i <= _tofor17; i = i + 1) {
       b = b + i;
     }
-    await system.print(b);
+    await _stdlib.printNoLine(b);
   }
 }
 return [main, _tests];}`;
@@ -694,7 +694,7 @@ return [main, _tests];}`;
 main
   variable a set to true
   if a
-    print "yes"
+    call printNoLine("yes")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -716,11 +716,11 @@ end main`;
 main
   variable a set to 3
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   else
-    print "not one"
+    call printNoLine("not one")
   else
-    print "two"
+    call printNoLine("two")
   end if
 end main`;
 
@@ -746,11 +746,11 @@ end main`;
 main
   variable a set to 3
   if a is 1 then
-    print "one"
+    call printNoLine("one")
   else
-    print "not one"
+    call printNoLine("not one")
   elif a is 2 then
-    print "two"
+    call printNoLine("two")
   end if
 end main`;
 
@@ -776,9 +776,9 @@ end main`;
 main
   variable a set to 3
   if a then
-    print "yes"
+    call printNoLine("yes")
   else
-    print "no"
+    call printNoLine("no")
   end if
 end main`;
 
@@ -802,11 +802,11 @@ end main`;
   main
     variable a set to 2
     if a is 1 then
-      print "one"
+      call printNoLine("one")
     elif a then
-      print "two"
+      call printNoLine("two")
     else
-      print "neither"
+      call printNoLine("neither")
     end if
   end main`;
 
@@ -832,9 +832,9 @@ end main`;
     if a is 1 then
       variable a set to 3
     elif a is 2 then
-      print "two"
+      call printNoLine("two")
     else
-      print "neither"
+      call printNoLine("neither")
     end if
   end main`;
 
@@ -860,11 +860,11 @@ end main`;
   main
     variable a set to 2
     if a is 1 then
-      print "one"
+      call printNoLine("one")
     elif a is 2 then
       variable a set to 3
     else
-      print "neither"
+      call printNoLine("neither")
     end if
   end main`;
 
@@ -890,9 +890,9 @@ end main`;
   main
     variable a set to 2
     if a is 1 then
-      print "one"
+      call printNoLine("one")
     elif a is 2 then
-      print "two"
+      call printNoLine("two")
     else
       variable a set to 3
     end if
@@ -922,7 +922,7 @@ end main`;
     if a is 1 then
       variable b set to 2
     elif a is 2 then
-      print b
+      call printNoLine(b)
     else
       variable c set to 2
     end if

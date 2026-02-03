@@ -20,11 +20,11 @@ suite("Inheritance", () => {
 
 main
   variable x set to new Bar()
-  print x.p1
-  print x.p2
-  print x.product()
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
+  call printNoLine(x.product())
   call x.setP1(4)
-  print x.product()
+  call printNoLine(x.product())
 end main
 
 abstract class Foo
@@ -59,11 +59,11 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print(x.p1);
-  await system.print(x.p2);
-  await system.print((await x.product()));
+  await _stdlib.printNoLine(x.p1);
+  await _stdlib.printNoLine(x.p2);
+  await _stdlib.printNoLine((await x.product()));
   await x.setP1(4);
-  await system.print((await x.product()));
+  await _stdlib.printNoLine((await x.product()));
 }
 
 class Foo {
@@ -138,8 +138,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Yon()
-  print f(x)
-  print b(x)
+  call printNoLine(f(x))
+  call printNoLine(b(x))
 end main
 
 abstract class Foo
@@ -171,8 +171,8 @@ end function`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Yon()._initialise());
-  await system.print((await global.f(x)));
-  await system.print((await global.b(x)));
+  await _stdlib.printNoLine((await global.f(x)));
+  await _stdlib.printNoLine((await global.b(x)));
 }
 
 class Foo {
@@ -256,7 +256,7 @@ class Bar inherits Foo
 end class
 
 procedure proc(foo as Foo)
-    print foo.p1
+    call printNoLine(foo.p1)
 end procedure
 `;
 
@@ -290,7 +290,7 @@ class Bar extends Foo {
 }
 
 async function proc(foo) {
-  await system.print(foo.p1);
+  await _stdlib.printNoLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -317,7 +317,7 @@ return [main, _tests];}`;
 main
   variable b set to new Bar()
   variable lst set to [b]
-  print fun(lst)
+  call printNoLine(fun(lst))
 end main
 
 abstract class Foo
@@ -340,7 +340,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
   let lst = system.list([b]);
-  await system.print((await global.fun(lst)));
+  await _stdlib.printNoLine((await global.fun(lst)));
 }
 
 class Foo {
@@ -392,7 +392,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Bar()
-  print fun(f)
+  call printNoLine(fun(f))
 end main
 
 abstract class Foo
@@ -414,7 +414,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Bar()._initialise());
-  await system.print((await global.fun(f)));
+  await _stdlib.printNoLine((await global.fun(f)));
 }
 
 class Foo {
@@ -488,8 +488,8 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print ff()
-    print property.p1
+    call printNoLine(ff())
+    call printNoLine(property.p1)
   end procedure
 end class`;
 
@@ -524,8 +524,8 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print((await this.ff()));
-    await system.print(this.p1);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -585,11 +585,11 @@ class Bar inherits Yon
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print ff()
-    print property.p1
+    call printNoLine(ff())
+    call printNoLine(property.p1)
     call setP2(a + 1)
-    print ff2()
-    print property.p2
+    call printNoLine(ff2())
+    call printNoLine(property.p2)
   end procedure
 end class`;
 
@@ -638,11 +638,11 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print((await this.ff()));
-    await system.print(this.p1);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
     await this.setP2(a + 1);
-    await system.print((await this.ff2()));
-    await system.print(this.p2);
+    await _stdlib.printNoLine((await this.ff2()));
+    await _stdlib.printNoLine(this.p2);
   }
 
 }
@@ -702,11 +702,11 @@ class Bar inherits Yon
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print ff()
-    print property.p1
+    call printNoLine(ff())
+    call printNoLine(property.p1)
     call setP2(a + 1)
-    print ff2()
-    print property.p2
+    call printNoLine(ff2())
+    call printNoLine(property.p2)
   end procedure
 end class`;
 
@@ -755,11 +755,11 @@ class Bar extends Yon {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print((await this.ff()));
-    await system.print(this.p1);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
     await this.setP2(a + 1);
-    await system.print((await this.ff2()));
-    await system.print(this.p2);
+    await _stdlib.printNoLine((await this.ff2()));
+    await _stdlib.printNoLine(this.p2);
   }
 
 }
@@ -799,9 +799,9 @@ class Bar inherits Foo
   end constructor
 
   procedure testPrivate(a as Int)
-    print property.p1
+    call printNoLine(property.p1)
     set property.p1 to a
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 end class`;
 
@@ -827,9 +827,9 @@ class Bar extends Foo {
   }
 
   async testPrivate(a) {
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
     this.p1 = a;
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -877,7 +877,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 end class`;
 
@@ -914,7 +914,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -962,7 +962,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 
   procedure setP(a as Int)
@@ -1000,7 +1000,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
   async setP(a) {
@@ -1038,7 +1038,7 @@ abstract class Foo
   abstract function ff(a as Int) returns Int
 
   private procedure setP1(a as Int)
-    print ff(a)
+    call printNoLine(ff(a))
   end procedure
 
 end class
@@ -1052,7 +1052,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 
   function ff(a as Int) returns Int
@@ -1074,7 +1074,7 @@ class Foo {
   }
 
   async setP1(a) {
-    await system.print((await this.ff(a)));
+    await _stdlib.printNoLine((await this.ff(a)));
   }
 
 }
@@ -1091,7 +1091,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
   async ff(a) {
@@ -1143,7 +1143,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 end class`;
 
@@ -1178,7 +1178,7 @@ class Bar extends Foo {
 
   async testPrivate(a) {
     await this.setP1(a);
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -1289,7 +1289,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.testPrivate(3)
+  call printNoLine(x.testPrivate(3))
 end main
 
 abstract class Yon
@@ -1319,7 +1319,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await x.testPrivate(3)));
+  await _stdlib.printNoLine((await x.testPrivate(3)));
 }
 
 class Yon {
@@ -1374,7 +1374,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.ff()
+  call printNoLine(x.ff())
 end main
 
 interface Yon
@@ -1402,7 +1402,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await x.ff()));
+  await _stdlib.printNoLine((await x.ff()));
 }
 
 class Yon {
@@ -1461,7 +1461,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.ff()
+  call printNoLine(x.ff())
 end main
 
 interface Yon
@@ -1489,7 +1489,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await x.ff()));
+  await _stdlib.printNoLine((await x.ff()));
 }
 
 class Yon {
@@ -1548,7 +1548,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.ff()
+  call printNoLine(x.ff())
 end main
 
 interface Yon
@@ -1576,7 +1576,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await x.ff()));
+  await _stdlib.printNoLine((await x.ff()));
 }
 
 class Yon {
@@ -2096,7 +2096,7 @@ end class`;
 main
   variable b set to new Bar()
   variable f set to upcast(b)
-  print fun(f)
+  call printNoLine(fun(f))
 end main
 
 abstract class Foo
@@ -2141,7 +2141,7 @@ end function
 main
   variable b set to new Bar()
   variable lst set to [b]
-  print fun(lst)
+  call printNoLine(fun(lst))
 end main
 
 abstract class Foo
@@ -2196,7 +2196,7 @@ class Bar inherits Foo
 end class
 
 procedure fun(l as List<of Foo>)
-  print l[0]
+  call printNoLine(l[0])
 end procedure
 `;
 
@@ -2222,7 +2222,7 @@ end procedure
 
 main
   variable lst set to new Dictionary<of String, Bar>()
-  print fun(lst)
+  call printNoLine(fun(lst))
 end main
 
 abstract class Foo
@@ -2262,7 +2262,7 @@ end function
 
 main
   variable x set to new Bar()
-  print x.p1
+  call printNoLine(x.p1)
 end main
 
 class Bar inherits Foo
@@ -3032,11 +3032,11 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.p1
-  print x.p2
-  print x.product()
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
+  call printNoLine(x.product())
   call x.setP1(4)
-  print x.product()
+  call printNoLine(x.product())
 end main
 
 abstract class Foo
@@ -3093,11 +3093,11 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.p1
-  print x.p2
-  print x.product()
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
+  call printNoLine(x.product())
   call x.setP1(4)
-  print x.product()
+  call printNoLine(x.product())
 end main
 
 abstract class Foo
@@ -3191,7 +3191,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print ff(x)
+  call printNoLine(ff(x))
 end main
 
 function ff(f as Foo) returns Int
@@ -3226,7 +3226,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print ff(x)
+  call printNoLine(ff(x))
 end main
 
 function ff(f as Yon) returns Int
@@ -3265,7 +3265,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print ff(x)
+  call printNoLine(ff(x))
 end main
 
 function ff(f as Yon) returns Int

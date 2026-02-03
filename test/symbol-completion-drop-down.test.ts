@@ -2245,7 +2245,7 @@ end class`;
 
 constant a set to {0,0}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2940,7 +2940,7 @@ main
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -2980,7 +2980,7 @@ class Foo
 end class
 
 procedure printModified(f as Func<of Foo => Int>, i as Foo)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3012,7 +3012,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3049,7 +3049,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3086,7 +3086,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3128,7 +3128,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(

@@ -21,7 +21,7 @@ suite("String Manipulation", () => {
 main
   variable a set to "Hello"
   variable b set to "World!"
-  print a + " " + b
+  call printNoLine(a + " " + b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -29,7 +29,7 @@ const global = new class {};
 async function main() {
   let a = "Hello";
   let b = "World!";
-  await system.print(a + " " + b);
+  await _stdlib.printNoLine(a + " " + b);
 }
 return [main, _tests];}`;
 
@@ -55,7 +55,7 @@ return [main, _tests];}`;
 main
   variable a set to "Hello"
   variable b set to 'World!'
-  print a + " " + b
+  call printNoLine(a + " " + b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -63,7 +63,7 @@ const global = new class {};
 async function main() {
   let a = "Hello";
   let b = 'World!';
-  await system.print(a + " " + b);
+  await _stdlib.printNoLine(a + " " + b);
 }
 return [main, _tests];}`;
 
@@ -87,13 +87,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "_" + "Hello" + "!"
+  call printNoLine("_" + "Hello" + "!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("_" + "Hello" + "!");
+  await _stdlib.printNoLine("_" + "Hello" + "!");
 }
 return [main, _tests];}`;
 
@@ -117,7 +117,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "Hello" + 3.1
+  call printNoLine("Hello" + 3.1)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -141,7 +141,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print "Hello" + 3
+  call printNoLine("Hello" + 3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -166,14 +166,14 @@ end main`;
 
 main
   variable a set to "abcde"
-  print a[2]
+  call printNoLine(a[2])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = "abcde";
-  await system.print(system.safeIndex(a, 2));
+  await _stdlib.printNoLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -200,7 +200,7 @@ main
   variable a set to "abcde"
   variable b set to "z"
   set b to b + a[0]
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -209,7 +209,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = b + system.safeIndex(a, 0);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -236,7 +236,7 @@ main
   variable a set to "abcde"
   variable b set to "z"
   set b to a[0]
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -245,7 +245,7 @@ async function main() {
   let a = "abcde";
   let b = "z";
   b = system.safeIndex(a, 0);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -270,18 +270,18 @@ return [main, _tests];}`;
 
 main
   variable a set to "abcde"
-  print a[1..3]
-  print a[2..]
-  print a[..2]
+  call printNoLine(a[1..3])
+  call printNoLine(a[2..])
+  call printNoLine(a[..2])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = "abcde";
-  await system.print(system.safeSlice(a, 1, 3));
-  await system.print(system.safeSlice(a, 2));
-  await system.print(system.safeSlice(a, 0, 2));
+  await _stdlib.printNoLine(system.safeSlice(a, 1, 3));
+  await _stdlib.printNoLine(system.safeSlice(a, 2));
+  await _stdlib.printNoLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -305,25 +305,25 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print "abc".isSameValueAs("abc")
-    print "abc".isSameValueAs("abcd")
-    print "abc".isSameValueAs("Abc")
-    print "abc".isSameValueAs("abc")
-    print not "abc".isSameValueAs("abcd")
-    print not "abc".isSameValueAs("abcd")
-    print not "abc".isSameValueAs("Abc")
+    call printNoLine("abc".isSameValueAs("abc"))
+    call printNoLine("abc".isSameValueAs("abcd"))
+    call printNoLine("abc".isSameValueAs("Abc"))
+    call printNoLine("abc".isSameValueAs("abc"))
+    call printNoLine(not "abc".isSameValueAs("abcd"))
+    call printNoLine(not "abc".isSameValueAs("abcd"))
+    call printNoLine(not "abc".isSameValueAs("Abc"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.isSameValueAs("abc", "abc"));
-  await system.print(_stdlib.isSameValueAs("abc", "abcd"));
-  await system.print(_stdlib.isSameValueAs("abc", "Abc"));
-  await system.print(_stdlib.isSameValueAs("abc", "abc"));
-  await system.print(!_stdlib.isSameValueAs("abc", "abcd"));
-  await system.print(!_stdlib.isSameValueAs("abc", "abcd"));
-  await system.print(!_stdlib.isSameValueAs("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abc"));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abcd"));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abc"));
+  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "Abc"));
 }
 return [main, _tests];}`;
 
@@ -347,25 +347,25 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print "abc".isSameReferenceAs("abc")
-    print "abc".isSameReferenceAs("abcd")
-    print "abc".isSameReferenceAs("Abc")
-    print "abc".isSameReferenceAs("abc")
-    print not "abc".isSameReferenceAs("abcd")
-    print not "abc".isSameReferenceAs("abcd")
-    print not "abc".isSameReferenceAs("Abc")
+    call printNoLine("abc".isSameReferenceAs("abc"))
+    call printNoLine("abc".isSameReferenceAs("abcd"))
+    call printNoLine("abc".isSameReferenceAs("Abc"))
+    call printNoLine("abc".isSameReferenceAs("abc"))
+    call printNoLine(not "abc".isSameReferenceAs("abcd"))
+    call printNoLine(not "abc".isSameReferenceAs("abcd"))
+    call printNoLine(not "abc".isSameReferenceAs("Abc"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.isSameReferenceAs("abc", "abc"));
-  await system.print(_stdlib.isSameReferenceAs("abc", "abcd"));
-  await system.print(_stdlib.isSameReferenceAs("abc", "Abc"));
-  await system.print(_stdlib.isSameReferenceAs("abc", "abc"));
-  await system.print(!_stdlib.isSameReferenceAs("abc", "abcd"));
-  await system.print(!_stdlib.isSameReferenceAs("abc", "abcd"));
-  await system.print(!_stdlib.isSameReferenceAs("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abc"));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abcd"));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abc"));
+  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "Abc"));
 }
 return [main, _tests];}`;
 
@@ -389,23 +389,23 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "abc".isBefore("abC")
-  print "abcd".isAfter("abc")
-  print "abc".isAfterOrSameAs("abc")
-  print "abc".isBeforeOrSameAs("abc")
-  print "abcd".isAfterOrSameAs("abc")
-  print "abcd".isBeforeOrSameAs("abc")
+  call printNoLine("abc".isBefore("abC"))
+  call printNoLine("abcd".isAfter("abc"))
+  call printNoLine("abc".isAfterOrSameAs("abc"))
+  call printNoLine("abc".isBeforeOrSameAs("abc"))
+  call printNoLine("abcd".isAfterOrSameAs("abc"))
+  call printNoLine("abcd".isBeforeOrSameAs("abc"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.isBefore("abc", "abC"));
-  await system.print(_stdlib.isAfter("abcd", "abc"));
-  await system.print(_stdlib.isAfterOrSameAs("abc", "abc"));
-  await system.print(_stdlib.isBeforeOrSameAs("abc", "abc"));
-  await system.print(_stdlib.isAfterOrSameAs("abcd", "abc"));
-  await system.print(_stdlib.isBeforeOrSameAs("abcd", "abc"));
+  await _stdlib.printNoLine(_stdlib.isBefore("abc", "abC"));
+  await _stdlib.printNoLine(_stdlib.isAfter("abcd", "abc"));
+  await _stdlib.printNoLine(_stdlib.isAfterOrSameAs("abc", "abc"));
+  await _stdlib.printNoLine(_stdlib.isBeforeOrSameAs("abc", "abc"));
+  await _stdlib.printNoLine(_stdlib.isAfterOrSameAs("abcd", "abc"));
+  await _stdlib.printNoLine(_stdlib.isBeforeOrSameAs("abcd", "abc"));
 }
 return [main, _tests];}`;
 
@@ -432,7 +432,7 @@ main
   variable a set to "abcde"
   variable b set to 2.1 + 3.4
   set a to b.asString()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -441,7 +441,7 @@ async function main() {
   let a = "abcde";
   let b = 2.1 + 3.4;
   a = (await _stdlib.asString(b));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -468,7 +468,7 @@ main
   variable a set to 3
   variable b set to 4
   variable c set to "{a} x {b} = {a * b}"
-  print c
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -477,7 +477,7 @@ async function main() {
   let a = 3;
   let b = 4;
   let c = \`\${await _stdlib.asString(a)} x \${await _stdlib.asString(b)} = \${await _stdlib.asString(a * b)}\`;
-  await system.print(c);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -502,7 +502,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3.1 + "Hello"
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -527,7 +527,7 @@ end main`;
 
 main
   variable a set to 3 + "Hello"
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -552,7 +552,7 @@ end main`;
 
 main
   variable a set to "abcde"
-  print a[5]
+  call printNoLine(a[5])
 end main
 `;
 
@@ -577,7 +577,7 @@ end main
 main
   variable a set to "abcde"
   call a.put(0, "b")
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -602,12 +602,12 @@ end main
     const code = `${testHeader}
 
 main
-  print "abc" < "abC"
-  print "abcd" > "abc"
-  print "abc" >= "abc"
-  print "abc" <= "abc"
-  print "abcd" >= "abc"
-  print "abcd" <= "abc"
+  call printNoLine("abc" < "abC")
+  call printNoLine("abcd" > "abc")
+  call printNoLine("abc" >= "abc")
+  call printNoLine("abc" <= "abc")
+  call printNoLine("abcd" >= "abc")
+  call printNoLine("abcd" <= "abc")
 end main
 `;
 
@@ -638,7 +638,7 @@ end main
 main
   variable a set to "abcde"
   set a to 2.1 + 3.4
-  print a
+  call printNoLine(a)
 end main
 `;
 

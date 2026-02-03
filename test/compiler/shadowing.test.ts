@@ -20,14 +20,14 @@ suite("Shadowing", () => {
 
 main
   variable pi set to library.pi
-  print pi
+  call printNoLine(pi)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let pi = _stdlib.pi;
-  await system.print(pi);
+  await _stdlib.printNoLine(pi);
 }
 return [main, _tests];}`;
 
@@ -54,8 +54,8 @@ constant f set to 1
 
 main
   variable f set to 2
-  print f
-  print global.f
+  call printNoLine(f)
+  call printNoLine(global.f)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -65,8 +65,8 @@ const global = new class {
 };
 async function main() {
   let f = 2;
-  await system.print(f);
-  await system.print(global.f);
+  await _stdlib.printNoLine(f);
+  await _stdlib.printNoLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -91,14 +91,14 @@ return [main, _tests];}`;
 
 main
   variable pi set to library.pi
-  print pi
+  call printNoLine(pi)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let pi = _stdlib.pi;
-  await system.print(pi);
+  await _stdlib.printNoLine(pi);
 }
 return [main, _tests];}`;
 
@@ -125,8 +125,8 @@ constant f set to 1
 
 main
   variable f set to 2
-  print f
-  print global.f
+  call printNoLine(f)
+  call printNoLine(global.f)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -136,8 +136,8 @@ const global = new class {
 };
 async function main() {
   let f = 2;
-  await system.print(f);
-  await system.print(global.f);
+  await _stdlib.printNoLine(f);
+  await _stdlib.printNoLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -162,10 +162,10 @@ return [main, _tests];}`;
 
 main
     variable f set to new Foo()
-    print f.sin(1)
-    print sin(1)
-    print global.sin(1)
-    print library.sin(1)
+    call printNoLine(f.sin(1))
+    call printNoLine(sin(1))
+    call printNoLine(global.sin(1))
+    call printNoLine(library.sin(1))
 end main
 
 function sin(x as Float) returns Float
@@ -185,10 +185,10 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.sin(1)));
-  await system.print((await global.sin(1)));
-  await system.print((await global.sin(1)));
-  await system.print(_stdlib.sin(1));
+  await _stdlib.printNoLine((await f.sin(1)));
+  await _stdlib.printNoLine((await global.sin(1)));
+  await _stdlib.printNoLine((await global.sin(1)));
+  await _stdlib.printNoLine(_stdlib.sin(1));
 }
 
 async function sin(x) {
@@ -239,7 +239,7 @@ main
 end main
 
 procedure pause(x as Float)
-    print 111
+    call printNoLine(111)
 end procedure
 
 class Foo
@@ -247,7 +247,7 @@ class Foo
     end constructor
 
     procedure pause(x as Float)
-      print 222
+      call printNoLine(222)
     end procedure
 end class`;
 
@@ -262,7 +262,7 @@ async function main() {
 }
 
 async function pause(x) {
-  await system.print(111);
+  await _stdlib.printNoLine(111);
 }
 global["pause"] = pause;
 
@@ -275,7 +275,7 @@ class Foo {
   }
 
   async pause(x) {
-    await system.print(222);
+    await _stdlib.printNoLine(222);
   }
 
 }
@@ -302,8 +302,8 @@ return [main, _tests];}`;
 
 main
     variable sin set to 2
-    print sin
-    print global.sin(1)
+    call printNoLine(sin)
+    call printNoLine(global.sin(1))
 end main
 
 function sin(x as Float) returns Float
@@ -314,8 +314,8 @@ end function`;
 const global = new class {};
 async function main() {
   let sin = 2;
-  await system.print(sin);
-  await system.print((await global.sin(1)));
+  await _stdlib.printNoLine(sin);
+  await _stdlib.printNoLine((await global.sin(1)));
 }
 
 async function sin(x) {
@@ -345,24 +345,24 @@ return [main, _tests];}`;
 
 main
   variable sin set to 2
-  print sin
+  call printNoLine(sin)
   call global.sin(1)
 end main
 
 procedure sin(x as Float)
-  print 111
+  call printNoLine(111)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let sin = 2;
-  await system.print(sin);
+  await _stdlib.printNoLine(sin);
   await global.sin(1);
 }
 
 async function sin(x) {
-  await system.print(111);
+  await _stdlib.printNoLine(111);
 }
 global["sin"] = sin;
 return [main, _tests];}`;
@@ -388,7 +388,7 @@ return [main, _tests];}`;
 
 main
   variable add2 set to add2(1)
-  print add2
+  call printNoLine(add2)
 end main
 
 function add2(x as Float) returns Float
@@ -399,7 +399,7 @@ end function`;
 const global = new class {};
 async function main() {
   let add2 = (await global.add2(1));
-  await system.print(add2);
+  await _stdlib.printNoLine(add2);
 }
 
 async function add2(x) {
@@ -431,7 +431,7 @@ constant a set to 4
 
 main
   variable a set to 3
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -441,7 +441,7 @@ const global = new class {
 };
 async function main() {
   let a = 3;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -465,7 +465,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo()
+  call printNoLine(foo())
 end main
 function foo() returns Int
   return 1
@@ -479,7 +479,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo()));
+  await _stdlib.printNoLine((await global.foo()));
 }
 
 async function foo() {
@@ -517,7 +517,7 @@ main
   call foo()
 end main
 procedure foo()
-  print 1
+  call printNoLine(1)
 end procedure
 
 function bar() returns Int
@@ -532,7 +532,7 @@ async function main() {
 }
 
 async function foo() {
-  await system.print(1);
+  await _stdlib.printNoLine(1);
 }
 global["foo"] = foo;
 
@@ -667,7 +667,7 @@ end main`;
 constant x set to 1
 
 main
-  print foo(1)
+  call printNoLine(foo(1))
 end main
 
 function foo(x as Int) returns Int
@@ -680,7 +680,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.foo(1)));
+  await _stdlib.printNoLine((await global.foo(1)));
 }
 
 async function foo(x) {
@@ -733,7 +733,7 @@ end main`;
 
 main
   variable result set to foo(3,4)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -762,7 +762,7 @@ end function`;
 
 main
   variable result set to foo(3,4)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int

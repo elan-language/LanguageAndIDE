@@ -22,8 +22,8 @@ main
   variable y set to 0
   variable z set to ""
   set y, z to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -34,8 +34,8 @@ async function main() {
   let y = 0;
   let z = "";
   [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -60,8 +60,8 @@ return [main, _tests];}`;
 
 main
   variable a, b set to foo()
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 function foo() returns (Float, Int)
@@ -72,8 +72,8 @@ end function`;
 const global = new class {};
 async function main() {
   let [a, b] = (await global.foo());
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo() {
@@ -104,8 +104,8 @@ return [main, _tests];}`;
 main
   variable foo set to new Foo()
   variable a, b set to foo.bar()
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 class Foo
@@ -122,8 +122,8 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   let [a, b] = (await foo.bar());
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -162,8 +162,8 @@ return [main, _tests];}`;
 
 main
   variable a, b set to foo()
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 function foo() returns (ListImmutable<of Float>, Int)
@@ -174,8 +174,8 @@ end function`;
 const global = new class {};
 async function main() {
   let [a, b] = (await global.foo());
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo() {
@@ -205,14 +205,14 @@ return [main, _tests];}`;
 
 main
   variable x set to tuple(3, "Apple", true, 1.1)
-  print x
+  call printNoLine(x)
   variable a, b, c, d set to x
-  print a
-  print b
-  print c
-  print d
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(c)
+  call printNoLine(d)
   variable _, _, e, _ set to x
-  print e
+  call printNoLine(e)
 end main
 `;
 
@@ -220,14 +220,14 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
-  await system.print(x);
+  await _stdlib.printNoLine(x);
   let [a, b, c, d] = x;
-  await system.print(a);
-  await system.print(b);
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
   let [, , e, ] = x;
-  await system.print(e);
+  await _stdlib.printNoLine(e);
 }
 return [main, _tests];}`;
 
@@ -254,7 +254,7 @@ main
   variable x set to tuple(3, "Apple")
   variable z set to ""
   set _, z to x
-  print z
+  call printNoLine(z)
 end main
 `;
 
@@ -264,7 +264,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let z = "";
   [, z] = x;
-  await system.print(z);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -291,7 +291,7 @@ main
   variable x set to tuple(3, "Apple")
   variable y set to 0
   set y, _ to x
-  print y
+  call printNoLine(y)
 end main
 `;
 
@@ -301,7 +301,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let y = 0;
   [y, ] = x;
-  await system.print(y);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -328,7 +328,7 @@ main
   variable x set to tuple(3, "Apple", 4)
   variable z set to ""
   set _, z, _ to x
-  print z
+  call printNoLine(z)
 end main
 `;
 
@@ -338,7 +338,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let z = "";
   [, z, ] = x;
-  await system.print(z);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -365,7 +365,7 @@ main
   variable x set to tuple(3, "Apple", 4)
   variable y set to 0
   set _, _, y to x
-  print y
+  call printNoLine(y)
 end main
 `;
 
@@ -375,7 +375,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let y = 0;
   [, , y] = x;
-  await system.print(y);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -401,8 +401,8 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3, "Apple")
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -411,8 +411,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -438,7 +438,7 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3, "Apple")
   variable _, z set to x
-  print z
+  call printNoLine(z)
 end main
 `;
 
@@ -447,7 +447,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [, z] = x;
-  await system.print(z);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -473,8 +473,8 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3, "Apple")
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -483,8 +483,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -510,7 +510,7 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3, "Apple")
   variable _, z set to x
-  print z
+  call printNoLine(z)
 end main
 `;
 
@@ -519,7 +519,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [, z] = x;
-  await system.print(z);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -545,8 +545,8 @@ return [main, _tests];}`;
 main
   variable t set to tuple(3, 4, "Apple")
   variable x, _, z set to t
-  print x
-  print z
+  call printNoLine(x)
+  call printNoLine(z)
 end main
 `;
 
@@ -555,8 +555,8 @@ const global = new class {};
 async function main() {
   let t = system.tuple([3, 4, "Apple"]);
   let [x, , z] = t;
-  await system.print(x);
-  await system.print(z);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -586,8 +586,8 @@ main
   variable b set to ""
   set a to y
   set b to z
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 `;
 
@@ -600,8 +600,8 @@ async function main() {
   let b = "";
   a = y;
   b = z;
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -628,8 +628,8 @@ main
   variable a set to [1,2]
   variable x set to tuple(3, a)
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -639,8 +639,8 @@ async function main() {
   let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -667,8 +667,8 @@ main
   variable a set to [1,2]
   variable x set to tuple(3, a)
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -678,8 +678,8 @@ async function main() {
   let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -708,8 +708,8 @@ main
   variable y set to 0
   variable z set to empty List<of Int>
   set y, z to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -721,8 +721,8 @@ async function main() {
   let y = 0;
   let z = system.initialise(_stdlib.List.emptyInstance());
   [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -749,8 +749,8 @@ main
   variable a set to tuple(1,2)
   variable x set to tuple(3, a)
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -760,8 +760,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -788,8 +788,8 @@ main
   variable a set to tuple(1,2)
   variable x set to tuple(3, a)
   variable y, z set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -799,8 +799,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -829,8 +829,8 @@ main
   variable y set to 0
   variable z set to tuple(0, 0)
   set y, z to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -842,8 +842,8 @@ async function main() {
   let y = 0;
   let z = system.tuple([0, 0]);
   [y, z] = x;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -908,8 +908,8 @@ main
   variable y set to 0
   variable z set to ""
   set z, y to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -937,8 +937,8 @@ main
   variable x set to tuple(3,"Apple")
   variable z set to ""
   set z, y to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -967,8 +967,8 @@ main
   variable x set to tuple(3,"Apple")
   variable z set to 0
   variable z, y set to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 
@@ -996,7 +996,7 @@ main
   variable x set to tuple(3, "Apple")
   variable y set to ""
   set y, _ to x
-  print y
+  call printNoLine(y)
 end main
 `;
 
@@ -1025,8 +1025,8 @@ main
   constant y set to 0
   constant z set to ""
   set y, z to x
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 `;
 

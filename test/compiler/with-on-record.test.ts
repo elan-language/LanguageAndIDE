@@ -22,8 +22,8 @@ suite("With on Record", () => {
 main
   variable a set to new Foo()
   variable b set to copy a with a set to 2
-  print a.a
-  print b.a
+  call printNoLine(a.a)
+  call printNoLine(b.a)
 end main
 
 record Foo
@@ -35,8 +35,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.print(a.a);
-  await system.print(b.a);
+  await _stdlib.printNoLine(a.a);
+  await _stdlib.printNoLine(b.a);
 }
 
 class Foo {
@@ -69,7 +69,7 @@ return [main, _tests];}`;
 main
   variable a set to new Foo()
   set a to copy a with a set to 2
-  print a.a
+  call printNoLine(a.a)
 end main
 
 record Foo
@@ -81,7 +81,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   a = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.print(a.a);
+  await _stdlib.printNoLine(a.a);
 }
 
 class Foo {
@@ -113,7 +113,7 @@ return [main, _tests];}`;
 
 main
   variable a set to foo()
-  print a.a
+  call printNoLine(a.a)
 end main
 
 function foo() returns Foo
@@ -130,7 +130,7 @@ end record`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.print(a.a);
+  await _stdlib.printNoLine(a.a);
 }
 
 async function foo() {
@@ -169,7 +169,7 @@ return [main, _tests];}`;
 
 main
   variable a set to foo()
-  print a.a
+  call printNoLine(a.a)
 end main
 
 function foo() returns Foo
@@ -186,7 +186,7 @@ end record`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.print(a.a);
+  await _stdlib.printNoLine(a.a);
 }
 
 async function foo() {
@@ -225,7 +225,7 @@ return [main, _tests];}`;
 
 main
   variable a set to foo()
-  print a.a
+  call printNoLine(a.a)
 end main
 
 function foo() returns Foo
@@ -241,7 +241,7 @@ end record`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.print(a.a);
+  await _stdlib.printNoLine(a.a);
 }
 
 async function foo() {
@@ -280,10 +280,10 @@ return [main, _tests];}`;
 main
   variable a set to new Foo()
   variable b set to copy a with a set to 2, b set to "fred"
-  print a.a
-  print a.b
-  print b.a
-  print b.b
+  call printNoLine(a.a)
+  call printNoLine(a.b)
+  call printNoLine(b.a)
+  call printNoLine(b.b)
 end main
 
 record Foo
@@ -297,10 +297,10 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
-  await system.print(a.a);
-  await system.print(a.b);
-  await system.print(b.a);
-  await system.print(b.b);
+  await _stdlib.printNoLine(a.a);
+  await _stdlib.printNoLine(a.b);
+  await _stdlib.printNoLine(b.a);
+  await _stdlib.printNoLine(b.b);
 }
 
 class Foo {
@@ -335,8 +335,8 @@ return [main, _tests];}`;
 main
   variable a set to new Foo()
   variable b set to copy a with a set to 2
-  print a.a
-  print b.a
+  call printNoLine(a.a)
+  call printNoLine(b.a)
 end main
 
 record Foo
@@ -351,8 +351,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.print(a.a);
-  await system.print(b.a);
+  await _stdlib.printNoLine(a.a);
+  await _stdlib.printNoLine(b.a);
 }
 
 class Foo {
@@ -387,8 +387,8 @@ return [main, _tests];}`;
 main
   variable a set to new Foo()
   variable b set to copy a with a set to 2 + 2
-  print a.a
-  print b.a
+  call printNoLine(a.a)
+  call printNoLine(b.a)
 end main
 
 record Foo
@@ -400,8 +400,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
-  await system.print(a.a);
-  await system.print(b.a);
+  await _stdlib.printNoLine(a.a);
+  await _stdlib.printNoLine(b.a);
 }
 
 class Foo {
@@ -435,8 +435,8 @@ main
   variable a set to new Foo()
   variable a1 set to copy a with b set to 1
   variable b set to copy a with a set to a1
-  print a.a.b
-  print b.a.b
+  call printNoLine(a.a.b)
+  call printNoLine(b.a.b)
 end main
 
 record Foo
@@ -450,8 +450,8 @@ async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let a1 = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.b = 1; return _a;})();
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = a1; return _a;})();
-  await system.print(a.a.b);
-  await system.print(b.a.b);
+  await _stdlib.printNoLine(a.a.b);
+  await _stdlib.printNoLine(b.a.b);
 }
 
 class Foo {
@@ -493,8 +493,8 @@ main
   variable a set to [0,2]
   variable b set to new Foo()
   variable c set to copy b with b set to a[1]
-  print b.b
-  print c.b
+  call printNoLine(b.b)
+  call printNoLine(c.b)
 end main
 
 record Foo
@@ -507,8 +507,8 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  await system.print(b.b);
-  await system.print(c.b);
+  await _stdlib.printNoLine(b.b);
+  await _stdlib.printNoLine(c.b);
 }
 
 class Foo {
@@ -542,9 +542,9 @@ main
   variable a set to [0,2]
   variable b set to new Foo()
   variable c set to copy b with b set to a[0], c set to a[1], d set to a.length()
-  print c.b
-  print c.c
-  print c.d
+  call printNoLine(c.b)
+  call printNoLine(c.c)
+  call printNoLine(c.d)
 end main
 
 record Foo
@@ -559,9 +559,9 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 0); _a.c = system.safeIndex(a, 1); _a.d = a.length(); return _a;})();
-  await system.print(c.b);
-  await system.print(c.c);
-  await system.print(c.d);
+  await _stdlib.printNoLine(c.b);
+  await _stdlib.printNoLine(c.c);
+  await _stdlib.printNoLine(c.d);
 }
 
 class Foo {
@@ -599,9 +599,9 @@ main
   variable a set to [0,2]
   variable b set to new Foo()
   variable c set to copy b with b set to doIndex(a, 0), c set to doIndex(a, 1), d set to a.length()
-  print c.b
-  print c.c
-  print c.d
+  call printNoLine(c.b)
+  call printNoLine(c.c)
+  call printNoLine(c.d)
 end main
 
 function doIndex(arr as List<of Int>, i as Int) returns Int 
@@ -620,9 +620,9 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = (await global.doIndex(a, 0)); _a.c = (await global.doIndex(a, 1)); _a.d = a.length(); return _a;})();
-  await system.print(c.b);
-  await system.print(c.c);
-  await system.print(c.d);
+  await _stdlib.printNoLine(c.b);
+  await _stdlib.printNoLine(c.c);
+  await _stdlib.printNoLine(c.d);
 }
 
 async function doIndex(arr, i) {
@@ -665,8 +665,8 @@ main
   variable a set to {0,2}
   variable b set to new Foo()
   variable c set to copy b with b set to a[1]
-  print b.b
-  print c.b
+  call printNoLine(b.b)
+  call printNoLine(c.b)
 end main
 
 record Foo
@@ -679,8 +679,8 @@ async function main() {
   let a = system.listImmutable([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  await system.print(b.b);
-  await system.print(c.b);
+  await _stdlib.printNoLine(b.b);
+  await _stdlib.printNoLine(c.b);
 }
 
 class Foo {
@@ -714,8 +714,8 @@ main
   variable a set to {0,2,3}
   variable b set to new Foo()
   variable c set to copy b with b set to a.length()
-  print b.b
-  print c.b
+  call printNoLine(b.b)
+  call printNoLine(c.b)
 end main
 
 record Foo
@@ -728,8 +728,8 @@ async function main() {
   let a = system.listImmutable([0, 2, 3]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = a.length(); return _a;})();
-  await system.print(b.b);
-  await system.print(c.b);
+  await _stdlib.printNoLine(b.b);
+  await _stdlib.printNoLine(c.b);
 }
 
 class Foo {
@@ -762,7 +762,7 @@ return [main, _tests];}`;
 main
   variable b set to new Foo()
   variable c set to copy b with b set to [0]
-  print c.b
+  call printNoLine(c.b)
 end main
 
 record Foo
@@ -791,7 +791,7 @@ end record`;
 main
   variable a set to {1, 2}
   variable b set to copy a with a set to 0
-  print b
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -814,7 +814,7 @@ end main`;
 main
   variable a set to {3}
   variable b set to copy a with a set to 0
-  print b
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -837,7 +837,7 @@ end main`;
 main
   variable b set to new Foo()
   variable c set to copy b with b set to 0
-  print c.d
+  call printNoLine(c.d)
 end main
 
 record Foo
@@ -884,7 +884,7 @@ end record`;
 main
   variable b set to new Foo()
   variable c set to copy b with aa set to aa -1
-  print c.aa
+  call printNoLine(c.aa)
 end main
 
 record Foo

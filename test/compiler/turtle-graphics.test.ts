@@ -20,11 +20,11 @@ main
   variable t set to new Turtle()
   call t.turn(30)
   call t.move(40)
-  print t.x.round(2)
-  print " "
-  print t.y.round(2)
-  print " "
-  print t.heading
+  call printNoLine(t.x.round(2))
+  call printNoLine(" ")
+  call printNoLine(t.y.round(2))
+  call printNoLine(" ")
+  call printNoLine(t.heading)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -33,11 +33,11 @@ async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(30);
   await t.move(40);
-  await system.print(_stdlib.round(t.x, 2));
-  await system.print(" ");
-  await system.print(_stdlib.round(t.y, 2));
-  await system.print(" ");
-  await system.print(t.heading);
+  await _stdlib.printNoLine(_stdlib.round(t.x, 2));
+  await _stdlib.printNoLine(" ");
+  await _stdlib.printNoLine(_stdlib.round(t.y, 2));
+  await _stdlib.printNoLine(" ");
+  await _stdlib.printNoLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ main
   variable t set to new Turtle()
   call t.turn(90)
   call t.turn(1000)
-  print t.heading
+  call printNoLine(t.heading)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -74,7 +74,7 @@ async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(90);
   await t.turn(1000);
-  await system.print(t.heading);
+  await _stdlib.printNoLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -100,7 +100,7 @@ main
   variable t set to new Turtle()
   call t.turn(90)
   call t.turn(-1000)
-  print t.heading
+  call printNoLine(t.heading)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -109,7 +109,7 @@ async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(90);
   await t.turn((-1000));
-  await system.print(t.heading);
+  await _stdlib.printNoLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -133,18 +133,18 @@ return [main, _tests];}`;
 
 main
   variable t set to new Turtle()
-  print t.x
-  print t.y
-  print t.heading
+  call printNoLine(t.x)
+  call printNoLine(t.y)
+  call printNoLine(t.heading)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
-  await system.print(t.x);
-  await system.print(t.y);
-  await system.print(t.heading);
+  await _stdlib.printNoLine(t.x);
+  await _stdlib.printNoLine(t.y);
+  await _stdlib.printNoLine(t.heading);
 }
 return [main, _tests];}`;
 
@@ -172,7 +172,7 @@ main
   call t.penWidth(3)
   call t.penColour(red)
   call t.move(10)
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -183,7 +183,7 @@ async function main() {
   t.penWidth(3);
   t.penColour(_stdlib.red);
   await t.move(10);
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -221,7 +221,7 @@ main
   call t.move(5)
   call t.penDown()
   call t.move(10)
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -234,7 +234,7 @@ async function main() {
   await t.move(5);
   t.penDown();
   await t.move(10);
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -270,7 +270,7 @@ main
   call t.show()
   call t.turn(90)
   call t.move(10)
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -280,7 +280,7 @@ async function main() {
   await t.show();
   await t.turn(90);
   await t.move(10);
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -316,7 +316,7 @@ main
   call t.turn(90)
   call t.move(10)
   call t.hide()
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -327,7 +327,7 @@ async function main() {
   await t.turn(90);
   await t.move(10);
   await t.hide();
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -359,7 +359,7 @@ main
   variable t set to new Turtle()
   call t.show()
   call t.placeAt(20, 30)
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -368,7 +368,7 @@ async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.show();
   await t.placeAt(20, 30);
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -401,7 +401,7 @@ main
   variable t set to new Turtle()
   call t.show()
   call t.moveTo(20, 30)
-  print t.asHtml()
+  call printNoLine(t.asHtml())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -410,7 +410,7 @@ async function main() {
   let t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.show();
   await t.moveTo(20, 30);
-  await system.print(t.asHtml());
+  await _stdlib.printNoLine(t.asHtml());
 }
 return [main, _tests];}`;
 

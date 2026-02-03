@@ -22,8 +22,8 @@ main
   variable a set to 0
   variable b set to ""
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -38,8 +38,8 @@ async function main() {
   let a = 0;
   let b = "";
   ({a, b} = x);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -74,10 +74,10 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a set to 3, fruit set to "Apple", aBool set to true, aFloat set to 1.1
   variable a, fruit, aBool, aFloat set to x
-  print a
-  print fruit
-  print aBool
-  print aFloat
+  call printNoLine(a)
+  call printNoLine(fruit)
+  call printNoLine(aBool)
+  call printNoLine(aFloat)
 end main
 
 
@@ -94,10 +94,10 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
   let {a, fruit, aBool, aFloat} = x;
-  await system.print(a);
-  await system.print(fruit);
-  await system.print(aBool);
-  await system.print(aFloat);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(fruit);
+  await _stdlib.printNoLine(aBool);
+  await _stdlib.printNoLine(aFloat);
 }
 
 class Foo {
@@ -137,7 +137,7 @@ main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable b set to ""
   set _, b to x
-  print b
+  call printNoLine(b)
 end main
 
 record Foo
@@ -168,7 +168,7 @@ end record`;
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable _, b set to x
-  print b
+  call printNoLine(b)
 end main
 
 record Foo
@@ -199,8 +199,8 @@ end record`;
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -213,8 +213,8 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -249,7 +249,7 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable _, b set to x
-  print b
+  call printNoLine(b)
 end main
 
 record Foo
@@ -284,8 +284,8 @@ main
   variable z set to ""
   set y to a
   set z to b
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 
 record Foo
@@ -302,8 +302,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 
 class Foo {
@@ -342,8 +342,8 @@ main
   variable z set to ""
   set y to a
   set z to b
-  print y
-  print z
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 
 record Foo
@@ -360,8 +360,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 
 class Foo {
@@ -396,8 +396,8 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -410,8 +410,8 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -446,8 +446,8 @@ return [main, _tests];}`;
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -460,8 +460,8 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -497,8 +497,8 @@ main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable y set to new Bar() with c set to x
   variable c, d set to y
-  print c
-  print d
+  call printNoLine(c)
+  call printNoLine(d)
 end main
 
 record Foo
@@ -517,8 +517,8 @@ async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 
 class Foo {
@@ -569,8 +569,8 @@ main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
   variable y set to new Bar() with c set to x
   variable c, d set to y
-  print c
-  print d
+  call printNoLine(c)
+  call printNoLine(d)
 end main
 
 record Foo
@@ -589,8 +589,8 @@ async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 
 class Foo {
@@ -643,8 +643,8 @@ main
   variable a set to empty ListImmutable<of Int>
   variable b set to ""
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -659,8 +659,8 @@ async function main() {
   let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = "";
   ({a, b} = x);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -698,8 +698,8 @@ main
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
-  print c
-  print d
+  call printNoLine(c)
+  call printNoLine(d)
 end main
 
 record Foo
@@ -720,8 +720,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 
 class Foo {
@@ -774,8 +774,8 @@ main
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
-  print c
-  print d
+  call printNoLine(c)
+  call printNoLine(d)
 end main
 
 record Foo
@@ -796,8 +796,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 
 class Foo {
@@ -849,8 +849,8 @@ main
   variable a set to ""
   variable b set to 0
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -883,8 +883,8 @@ main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to ""
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -917,8 +917,8 @@ main
   variable x set to new Foo() with a set to 100, b set to "fred"
   variable a set to ""
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -952,8 +952,8 @@ main
   constant a set to 0
   constant b set to ""
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 record Foo
@@ -985,8 +985,8 @@ end record`;
 main
   variable x set to new Foo()
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 class Foo
@@ -1022,8 +1022,8 @@ main
   variable a set to 0
   variable b set to ""
   set a, b to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 class Foo
@@ -1057,8 +1057,8 @@ end class`;
 main
   variable x set to new Foo()
   variable a, b set to x
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 class Foo

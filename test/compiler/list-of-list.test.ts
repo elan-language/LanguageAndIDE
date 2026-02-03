@@ -22,7 +22,7 @@ main
   variable a set to [1,2]
   variable b set to [3,4]
   variable c set to [a,b]
-  print c
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -31,7 +31,7 @@ async function main() {
   let a = system.list([1, 2]);
   let b = system.list([3, 4]);
   let c = system.list([a, b]);
-  await system.print(c);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -56,14 +56,14 @@ return [main, _tests];}`;
 
 main
   variable a set to createList(0, "")
-  print a.length()
+  call printNoLine(a.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.createList(0, "");
-  await system.print(a.length());
+  await _stdlib.printNoLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -90,8 +90,8 @@ main
   variable a set to [[""],[""],[""]]
   call a.put(0, ["bar", "foo"])
   call a.put(2, ["yon", "xan"])
-  print a[0][1]
-  print a[2][0]
+  call printNoLine(a[0][1])
+  call printNoLine(a[2][0])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -100,8 +100,8 @@ async function main() {
   let a = system.list([system.list([""]), system.list([""]), system.list([""])]);
   a.put(0, system.list(["bar", "foo"]));
   a.put(2, system.list(["yon", "xan"]));
-  await system.print(system.safeIndex(system.safeIndex(a, 0), 1));
-  await system.print(system.safeIndex(system.safeIndex(a, 2), 0));
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 0), 1));
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
 return [main, _tests];}`;
 
@@ -128,7 +128,7 @@ main
   variable a set to [["",""],["",""],["",""]]
   call a.put(0, ["bar", "foo"])
   call a[0].put(1, "yon")
-  print a[0][1]
+  call printNoLine(a[0][1])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -137,7 +137,7 @@ async function main() {
   let a = system.list([system.list(["", ""]), system.list(["", ""]), system.list(["", ""])]);
   a.put(0, system.list(["bar", "foo"]));
   system.safeIndex(a, 0).put(1, "yon");
-  await system.print(system.safeIndex(system.safeIndex(a, 0), 1));
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
 return [main, _tests];}`;
 
@@ -164,8 +164,8 @@ main
   variable a set to [[""],[""],[""]]
   call a.append(["foo"])
   call a.append(["yon"])
-  print a[3]
-  print a[4]
+  call printNoLine(a[3])
+  call printNoLine(a[4])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -174,8 +174,8 @@ async function main() {
   let a = system.list([system.list([""]), system.list([""]), system.list([""])]);
   a.append(system.list(["foo"]));
   a.append(system.list(["yon"]));
-  await system.print(system.safeIndex(a, 3));
-  await system.print(system.safeIndex(a, 4));
+  await _stdlib.printNoLine(system.safeIndex(a, 3));
+  await _stdlib.printNoLine(system.safeIndex(a, 4));
 }
 return [main, _tests];}`;
 
@@ -202,7 +202,7 @@ main
   variable a set to [[""], [""], [""]]
   call a[1].append("foo")
   call a[2].append("yon")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -211,7 +211,7 @@ async function main() {
   let a = system.list([system.list([""]), system.list([""]), system.list([""])]);
   system.safeIndex(a, 1).append("foo");
   system.safeIndex(a, 2).append("yon");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -238,7 +238,7 @@ main
   variable a set to [["one"], ["two"], ["three"]]
   call a.insert(1, ["foo"])
   call a.insert(3, ["yon"])
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -247,7 +247,7 @@ async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   a.insert(1, system.list(["foo"]));
   a.insert(3, system.list(["yon"]));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -274,7 +274,7 @@ main
   variable a set to [["one"], ["two"], ["three"]]
   call a[0].insert(0, "foo")
   call a[2].insert(1, "yon")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -283,7 +283,7 @@ async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   system.safeIndex(a, 0).insert(0, "foo");
   system.safeIndex(a, 2).insert(1, "yon");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -310,7 +310,7 @@ main
   variable a set to [["one"], ["two"], ["three"]]
   call a.removeAt(0)
   call a.removeAt(1)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -319,7 +319,7 @@ async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   a.removeAt(0);
   a.removeAt(1);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -346,7 +346,7 @@ main
   variable a set to [["one"], ["two"], ["three"]]
   call a[0].removeAt(0)
   call a[2].removeAt(0)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -355,7 +355,7 @@ async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   system.safeIndex(a, 0).removeAt(0);
   system.safeIndex(a, 2).removeAt(0);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -381,7 +381,7 @@ return [main, _tests];}`;
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a.removeFirst(["two"])
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -389,7 +389,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"]), system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   a.removeFirst(system.list(["two"]));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -415,7 +415,7 @@ return [main, _tests];}`;
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a[1].removeFirst("two")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -423,7 +423,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"]), system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   system.safeIndex(a, 1).removeFirst("two");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -449,7 +449,7 @@ return [main, _tests];}`;
 main
   variable a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
   call a.removeAll(["two"])
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -457,7 +457,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list(["one"]), system.list(["two"]), system.list(["three"]), system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   a.removeAll(system.list(["two"]));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -483,7 +483,7 @@ return [main, _tests];}`;
 main
   variable a set to [["one"], ["two", "two"], ["three"], ["one"], ["two"], ["three"]]
   call a[1].removeAll("two")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -491,7 +491,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list(["one"]), system.list(["two", "two"]), system.list(["three"]), system.list(["one"]), system.list(["two"]), system.list(["three"])]);
   system.safeIndex(a, 1).removeAll("two");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -516,16 +516,16 @@ return [main, _tests];}`;
 
 main
   variable a set to {{"foo"},{"bar","yon"}}.asList()
-  print a.length()
-  print a
+  call printNoLine(a.length())
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable(["foo"]), system.listImmutable(["bar", "yon"])]).asList();
-  await system.print(a.length());
-  await system.print(a);
+  await _stdlib.printNoLine(a.length());
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -552,11 +552,11 @@ main
   variable a set to empty List<of List<of Int>>
   variable b set to empty List<of List<of Int>>
   call a.append([3])
-  print a
-  print b
-  print a.isSameValueAs(b)
-  print a.isSameValueAs(empty List<of List<of Int>>)
-  print b.isSameValueAs(empty List<of List<of Int>>)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty List<of List<of Int>>))
+  call printNoLine(b.isSameValueAs(empty List<of List<of Int>>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -565,11 +565,11 @@ async function main() {
   let a = system.initialise(_stdlib.List.emptyInstance());
   let b = system.initialise(_stdlib.List.emptyInstance());
   a.append(system.list([3]));
-  await system.print(a);
-  await system.print(b);
-  await system.print(_stdlib.isSameValueAs(a, b));
-  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.List.emptyInstance())));
-  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -596,11 +596,11 @@ main
   variable a set to empty List<of List<of Int>>
   variable b set to empty List<of List<of Int>>
   call a.append([3])
-  print a
-  print b
-  print a.isSameReferenceAs(b)
-  print a.isSameReferenceAs(empty List<of List<of Int>>)
-  print b.isSameReferenceAs(empty List<of List<of Int>>)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty List<of List<of Int>>))
+  call printNoLine(b.isSameReferenceAs(empty List<of List<of Int>>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -609,11 +609,11 @@ async function main() {
   let a = system.initialise(_stdlib.List.emptyInstance());
   let b = system.initialise(_stdlib.List.emptyInstance());
   a.append(system.list([3]));
-  await system.print(a);
-  await system.print(b);
-  await system.print(_stdlib.isSameReferenceAs(a, b));
-  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.List.emptyInstance())));
-  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -638,14 +638,14 @@ return [main, _tests];}`;
 
 main
   variable a set to [createList(2, 0), createList(2, 0), createList(2, 0)]
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([_stdlib.createList(2, 0), _stdlib.createList(2, 0), _stdlib.createList(2, 0)]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -670,14 +670,14 @@ return [main, _tests];}`;
 
 main
   variable a set to [createList(2, 1), createList(2, 1)]
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([_stdlib.createList(2, 1), _stdlib.createList(2, 1)]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -773,7 +773,7 @@ end main
 
 main
   variable a set to [[1],[1]]
-  print a[0, 0]
+  call printNoLine(a[0, 0])
 end main
 `;
 

@@ -20,7 +20,7 @@ suite("Constants", () => {
 
 constant a set to 3
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -30,7 +30,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ return [main, _tests];}`;
 constant a set to 0xFF
 main
   
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -66,7 +66,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -91,7 +91,7 @@ return [main, _tests];}`;
 
 constant a set to 0b10101
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -101,7 +101,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -126,7 +126,7 @@ return [main, _tests];}`;
 
 constant a set to 3.1
 main
-print a
+call printNoLine(a)
 end main
 `;
 
@@ -136,7 +136,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -161,7 +161,7 @@ return [main, _tests];}`;
 
 constant a set to "hell0"
 main
-print a
+call printNoLine(a)
 end main
 `;
 
@@ -171,7 +171,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -196,8 +196,8 @@ return [main, _tests];}`;
 
 constant a set to ""
 main
-  print a
-  print a.isSameValueAs(empty String)
+  call printNoLine(a)
+  call printNoLine(a.isSameValueAs(empty String))
 end main
 `;
 
@@ -207,8 +207,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
-  await system.print(_stdlib.isSameValueAs(global.a, ""));
+  await _stdlib.printNoLine(global.a);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(global.a, ""));
 }
 return [main, _tests];}`;
 
@@ -233,8 +233,8 @@ return [main, _tests];}`;
 
 constant a set to ""
 main
-  print a
-  print a.isSameReferenceAs(empty String)
+  call printNoLine(a)
+  call printNoLine(a.isSameReferenceAs(empty String))
 end main
 `;
 
@@ -244,8 +244,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
-  await system.print(_stdlib.isSameReferenceAs(global.a, ""));
+  await _stdlib.printNoLine(global.a);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(global.a, ""));
 }
 return [main, _tests];}`;
 
@@ -270,7 +270,7 @@ return [main, _tests];}`;
 
 constant a set to " "
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -280,7 +280,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -305,7 +305,7 @@ return [main, _tests];}`;
 
 constant a set to true
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -315,7 +315,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -340,7 +340,7 @@ return [main, _tests];}`;
 
 constant a set to Fruit.apple
 main
-  print a
+  call printNoLine(a)
 end main
 enum Fruit apple, orange, pear
 `;
@@ -355,7 +355,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -380,7 +380,7 @@ return [main, _tests];}`;
 
 constant a set to {1,2,3}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -390,7 +390,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -415,7 +415,7 @@ return [main, _tests];}`;
 
 constant a set to [1,2,3]
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -440,7 +440,7 @@ end main
 
 constant a set to {{4, 5}, {6, 7, 8}}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -450,7 +450,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -475,7 +475,7 @@ return [main, _tests];}`;
 
 constant a set to {{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -484,7 +484,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -512,7 +512,7 @@ return [main, _tests];}`;
 
 constant a set to ["a":1]
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -537,7 +537,7 @@ end main
 
 main
   constant a set to 3
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -545,7 +545,7 @@ end main
 const global = new class {};
 async function main() {
   const a = 3;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -570,7 +570,7 @@ return [main, _tests];}`;
 const a set to 3
 
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -594,7 +594,7 @@ constant a set to 3
 
 main
   set a to 4
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -619,7 +619,7 @@ end main
 
 main
   set pi to 4
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -646,7 +646,7 @@ constant a set to 3 + 4
 
 main
   set a to 4 
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -670,7 +670,7 @@ constant a set to 3
 constant b set to a
 
 main
-  print b
+  call printNoLine(b)
 end main
 `;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -681,7 +681,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.b);
+  await _stdlib.printNoLine(global.b);
 }
 return [main, _tests];}`;
 
@@ -783,7 +783,7 @@ end main
 
 constant a set to {openBrace:blue, closeBrace:red}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -793,7 +793,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -819,7 +819,7 @@ return [main, _tests];}`;
 constant a set to b
 constant b set to 2
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -844,7 +844,7 @@ end main
 constant a set to { b }
 constant b set to 2
 main
-  print a[0]
+  call printNoLine(a[0])
 end main
 `;
 

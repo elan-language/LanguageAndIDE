@@ -20,7 +20,7 @@ suite("Record", () => {
 
 main
   variable f set to new Foo()
-  print f.p1
+  call printNoLine(f.p1)
 end main
 
 record Foo
@@ -31,7 +31,7 @@ end record`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f.p1);
+  await _stdlib.printNoLine(f.p1);
 }
 
 class Foo {
@@ -91,8 +91,8 @@ end record`;
 
 main
   variable f set to new Foo() with p1 set to 3, p2 set to "hello"
-  print f.p1
-  print f.p2
+  call printNoLine(f.p1)
+  call printNoLine(f.p2)
 end main
 
 record Foo
@@ -104,8 +104,8 @@ end record`;
 const global = new class {};
 async function main() {
   let f = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
-  await system.print(f.p1);
-  await system.print(f.p2);
+  await _stdlib.printNoLine(f.p1);
+  await _stdlib.printNoLine(f.p2);
 }
 
 class Foo {
@@ -139,8 +139,8 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo() with p1 set to 3, p2 set to "hello"
-  print f
-  print f.doubled()
+  call printNoLine(f)
+  call printNoLine(f.doubled())
 end main
 
 record Foo
@@ -161,8 +161,8 @@ end record`;
 const global = new class {};
 async function main() {
   let f = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p1 = 3; _a.p2 = "hello"; return _a;})();
-  await system.print(f);
-  await system.print((await f.doubled()));
+  await _stdlib.printNoLine(f);
+  await _stdlib.printNoLine((await f.doubled()));
 }
 
 class Foo {
@@ -204,8 +204,8 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo(3)
-  print f.p1
-  print f.square()
+  call printNoLine(f.p1)
+  call printNoLine(f.square())
 end main
 
 abstract record Bar
@@ -253,7 +253,7 @@ end record`;
 
 main
   variable f set to new Foo()
-  print fun(f)
+  call printNoLine(fun(f))
 end main
 
 record Foo
@@ -269,7 +269,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await global.fun(f)));
+  await _stdlib.printNoLine((await global.fun(f)));
 }
 
 class Foo {
@@ -314,7 +314,7 @@ record Foo
 end record
 
 procedure proc(foo as Foo)
-    print foo.p1
+    call printNoLine(foo.p1)
 end procedure
 `;
 
@@ -333,7 +333,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  await system.print(foo.p1);
+  await _stdlib.printNoLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;

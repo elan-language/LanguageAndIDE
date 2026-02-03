@@ -23,9 +23,9 @@ main
   variable x set to 2 + 3 * 5 + 1
   variable y set to (2 + 3) * 5 + 1
   variable z set to (2 + 3) * (5 + 1)
-  print x
-  print y
-  print z
+  call printNoLine(x)
+  call printNoLine(y)
+  call printNoLine(z)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -34,9 +34,9 @@ async function main() {
   let x = 2 + 3 * 5 + 1;
   let y = (2 + 3) * 5 + 1;
   let z = (2 + 3) * (5 + 1);
-  await system.print(x);
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -63,9 +63,9 @@ return [main, _tests];}`;
     variable x set to 2 + (3 * 5) + 1
     variable y set to ((2 + 3)) * 5 + (1)
     variable z set to ((2 + 3) * (5 + 1))
-    print x
-    print y
-    print z
+    call printNoLine(x)
+    call printNoLine(y)
+    call printNoLine(z)
   end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -74,9 +74,9 @@ async function main() {
   let x = 2 + (3 * 5) + 1;
   let y = ((2 + 3)) * 5 + (1);
   let z = ((2 + 3) * (5 + 1));
-  await system.print(x);
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 return [main, _tests];}`;
 
@@ -102,8 +102,8 @@ return [main, _tests];}`;
 main
   variable x set to 2 + 3 ^ 2
   variable y set to (2 + 3) ^ 2
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -111,8 +111,8 @@ const global = new class {};
 async function main() {
   let x = 2 + 3 ** 2;
   let y = (2 + 3) ** 2;
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -138,8 +138,8 @@ return [main, _tests];}`;
 main
   variable x set to 16.0 / 2 ^ 3
   variable y set to (16.0 / 2) ^ 3
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -147,8 +147,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -174,8 +174,8 @@ return [main, _tests];}`;
 main
   variable x set to 16.0 / 2 ^ 3
   variable y set to (16.0 / 2) ^ 3
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -183,8 +183,8 @@ const global = new class {};
 async function main() {
   let x = 16 / 2 ** 3;
   let y = (16 / 2) ** 3;
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -212,8 +212,8 @@ main
   variable y set to 0
   set x to - 4.7
   set y to 5 * -3
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -223,8 +223,8 @@ async function main() {
   let y = 0;
   x = (-4.7);
   y = 5 * (-3);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -250,8 +250,8 @@ return [main, _tests];}`;
 main
   variable x set to 11 mod 3
   variable y set to (5 + 6) mod 3
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -259,8 +259,8 @@ const global = new class {};
 async function main() {
   let x = 11 % 3;
   let y = (5 + 6) % 3;
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -324,15 +324,15 @@ end main`;
     const code = `${testHeader}
 
 main
-  print 2*12/3.0 + 190
-  print 24/6/2.0
+  call printNoLine(2*12/3.0 + 190)
+  call printNoLine(24/6/2.0)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(2 * 12 / 3 + 190);
-  await system.print(24 / 6 / 2);
+  await _stdlib.printNoLine(2 * 12 / 3 + 190);
+  await _stdlib.printNoLine(24 / 6 / 2);
 }
 return [main, _tests];}`;
 
@@ -355,13 +355,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sqrt(-1)
+  call printNoLine(sqrt(-1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sqrt((-1)));
+  await _stdlib.printNoLine(_stdlib.sqrt((-1)));
 }
 return [main, _tests];}`;
 
@@ -384,13 +384,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 1.0/0
+  call printNoLine(1.0/0)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(1 / 0);
+  await _stdlib.printNoLine(1 / 0);
 }
 return [main, _tests];}`;
 

@@ -20,7 +20,7 @@ suite("Chaining", () => {
 main 
   variable a set to {{1,2}, {3,4}}
   variable b set to a[1][1]
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -28,7 +28,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable([1, 2]), system.listImmutable([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -54,7 +54,7 @@ return [main, _tests];}`;
 main 
   variable a set to [[1,2], [3,4]]
   variable b set to a[1][1]
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -62,7 +62,7 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2]), system.list([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -88,7 +88,7 @@ return [main, _tests];}`;
 main 
   variable a set to new Foo()
   variable b set to a.a[0]
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -104,7 +104,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = system.safeIndex(a.a, 0);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -143,7 +143,7 @@ main
   variable f set to new Foo()
   variable b set to 0
   set b to f.b.y.z
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -174,7 +174,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let b = 0;
   b = f.b.y.z;
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -249,7 +249,7 @@ main
   variable f set to [new Foo()]
   variable b set to 0
   set b to f[0].b.ff()
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -274,7 +274,7 @@ async function main() {
   let f = system.list([system.initialise(await new Foo()._initialise())]);
   let b = 0;
   b = (await system.safeIndex(f, 0).b.ff());
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -333,7 +333,7 @@ main
   variable f set to [new Foo()]
   variable b set to 0
   set b to f[0].b.ff()
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -358,7 +358,7 @@ async function main() {
   let f = system.list([system.initialise(await new Foo()._initialise())]);
   let b = 0;
   b = (await system.safeIndex(f, 0).b.ff());
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -416,7 +416,7 @@ return [main, _tests];}`;
 main 
   variable s set to ""
   set s to "Hello World!".lowerCase()[0..1].upperCase()
-  print s
+  call printNoLine(s)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -424,7 +424,7 @@ const global = new class {};
 async function main() {
   let s = "";
   s = _stdlib.upperCase(system.safeSlice(_stdlib.lowerCase("Hello World!"), 0, 1));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
 
@@ -451,7 +451,7 @@ main
   variable aStringVar set to "abcdexefg"
   variable s set to ""
   set s to aStringVar.upperCase()[1..7][2..6].indexOf("X").asString()
-  print s
+  call printNoLine(s)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -460,7 +460,7 @@ async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
   s = (await _stdlib.asString(_stdlib.indexOf(system.safeSlice(system.safeSlice(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
 
@@ -485,7 +485,7 @@ return [main, _tests];}`;
 main 
   variable a set to ""
   set a to (new Bar()).strArr[0].upperCase()[0]
-  print a
+  call printNoLine(a)
 end main
 
 class Bar
@@ -502,7 +502,7 @@ const global = new class {};
 async function main() {
   let a = "";
   a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(await new Bar()._initialise())).strArr, 0)), 0);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 
 class Bar {
@@ -540,7 +540,7 @@ main
   variable aFoo set to new Foo()
   variable b set to 0
   set b to aFoo.createLst(10)[1..5].length() + 3
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -559,7 +559,7 @@ async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
   b = system.safeSlice((await aFoo.createLst(10)), 1, 5).length() + 3;
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -600,7 +600,7 @@ main
   variable aBar set to new Bar()
   variable b set to 0
   set b to 5 + aBar.foo.create2DList()[2][1] - 2
-  print b
+  call printNoLine(b)
 end main
 
 class Bar
@@ -628,7 +628,7 @@ async function main() {
   let aBar = system.initialise(await new Bar()._initialise());
   let b = 0;
   b = 5 + system.safeIndex(system.safeIndex((await aBar.foo.create2DList()), 2), 1) - 2;
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Bar {
@@ -685,14 +685,14 @@ return [main, _tests];}`;
 
 main 
   variable a set to {1,2,3,4,5,6}
-  print a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x)
+  call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3, 4, 5, 6]);
-  await system.print((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -717,14 +717,14 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  print a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x)
+  call printNoLine(a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await system.print((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
@@ -751,7 +751,7 @@ main
   variable a set to [[1,2], [3,4]]
   variable b set to ""
   set b to a[1][1]
-  print b
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -776,7 +776,7 @@ end main`;
 main 
   variable a set to new Foo()
   variable b set to a.ff().fd()
-  print b
+  call printNoLine(b)
 end main
 
 class Foo

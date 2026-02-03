@@ -20,7 +20,7 @@ suite("Function Method", () => {
 
 main
   variable f set to new Foo()
-  print f.times(2)
+  call printNoLine(f.times(2))
 end main
 
 class Foo
@@ -44,7 +44,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.times(2)));
+  await _stdlib.printNoLine((await f.times(2)));
 }
 
 class Foo {
@@ -91,7 +91,7 @@ main
   variable f set to new Foo()
   variable x set to 1.1
   set x to f.times(x)
-  print x
+  call printNoLine(x)
 end main
 
 class Foo
@@ -117,7 +117,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let x = 1.1;
   x = (await f.times(x));
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 
 class Foo {
@@ -164,7 +164,7 @@ main
   variable f set to new Foo()
   variable x set to empty ListImmutable<of Float>
   set x to f.times(2)
-  print x
+  call printNoLine(x)
 end main
 
 class Foo
@@ -190,7 +190,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
   x = (await f.times(2));
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 
 class Foo {
@@ -236,7 +236,7 @@ return [main, _tests];}`;
 main
   variable b set to new Bar()
   variable x set to b.getTimes()
-  print x
+  call printNoLine(x)
 end main
 
 class Bar
@@ -272,7 +272,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
   let x = (await b.getTimes());
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 
 class Bar {
@@ -338,7 +338,7 @@ return [main, _tests];}`;
 main
   variable b set to new Bar()
   variable x set to b.getTimes()
-  print x
+  call printNoLine(x)
 end main
 
 class Bar
@@ -379,7 +379,7 @@ const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
   let x = (await b.getTimes());
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 
 class Bar {
@@ -454,7 +454,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.length()
+  call printNoLine(f.length())
 end main
 
 class Foo
@@ -495,7 +495,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.length()));
+  await _stdlib.printNoLine((await f.length()));
 }
 
 class Foo {
@@ -567,7 +567,7 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable b set to new Bar()
-  print f.times(b)
+  call printNoLine(f.times(b))
 end main
 
 class Foo
@@ -613,7 +613,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let b = system.initialise(await new Bar()._initialise());
-  await system.print((await f.times(b)));
+  await _stdlib.printNoLine((await f.times(b)));
 }
 
 class Foo {
@@ -693,7 +693,7 @@ class Foo
   property p1 as Float
 
   procedure prt()
-    print asString()
+    call printNoLine(asString())
   end procedure
 
   function asString() returns String
@@ -720,7 +720,7 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    await system.print((await this.asString()));
+    await _stdlib.printNoLine((await this.asString()));
   }
 
   async asString() {
@@ -751,7 +751,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print times(f, 2)
+  call printNoLine(times(f, 2))
 end main
 
 class Foo
@@ -1054,7 +1054,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  print f.foo()
+  call printNoLine(f.foo())
 end main
     
 class Foo
@@ -1094,7 +1094,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  print f.foo()
+  call printNoLine(f.foo())
 end main
     
 class Foo
@@ -1138,7 +1138,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  print f.bar()
+  call printNoLine(f.bar())
 end main
 
 class Foo

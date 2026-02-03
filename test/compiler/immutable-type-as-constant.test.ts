@@ -21,7 +21,7 @@ suite("Immutable Type as Constant", () => {
 constant k set to "Apple"
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -30,7 +30,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.k);
+  await _stdlib.printNoLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ return [main, _tests];}`;
 constant k set to tuple(3, "Apple")
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -65,7 +65,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.k);
+  await _stdlib.printNoLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -91,7 +91,7 @@ return [main, _tests];}`;
 constant k set to {1, 2, 3}
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -100,7 +100,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.k);
+  await _stdlib.printNoLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -126,7 +126,7 @@ return [main, _tests];}`;
 constant k set to {"a":1, "b":3, "c":3}
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -135,7 +135,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.k);
+  await _stdlib.printNoLine(global.k);
 }
 return [main, _tests];}`;
 
@@ -161,7 +161,7 @@ return [main, _tests];}`;
 constant k = new Foo()
 
 main
-  print k
+  call printNoLine(k)
 end main
 
 record Foo
@@ -191,7 +191,7 @@ end record`;
 constant k set to [1, 2, 3]
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -216,7 +216,7 @@ end main`;
 constant k set to new List<of Int>()
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -238,7 +238,7 @@ end main`;
 constant k set to empty List<of Int>
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -260,7 +260,7 @@ end main`;
 constant k set to ["a":1]
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -285,7 +285,7 @@ end main`;
 constant k set to new Dictionary<of String, Int>()
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -307,7 +307,7 @@ end main`;
 constant k set to empty Dictionary<of String, Int>
 
 main 
-  print k
+  call printNoLine(k)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -329,7 +329,7 @@ end main`;
 constant k set to new Foo()
 
 main 
-  print k.p1
+  call printNoLine(k.p1)
 end main
 
 class Foo

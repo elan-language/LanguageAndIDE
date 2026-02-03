@@ -20,14 +20,14 @@ suite("Set", () => {
 main
   variable st set to new Set<of Int>()
   set st to st.add(3).add(7).add(5)
-  print st.length()
+  call printNoLine(st.length())
   set st to st.add(7)
-  print st.length()
+  call printNoLine(st.length())
   set st to st.remove(3)
-  print st.length()
+  call printNoLine(st.length())
   set st to st.remove(3)
-  print st.length()
-  print st
+  call printNoLine(st.length())
+  call printNoLine(st)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -35,14 +35,14 @@ const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Set()._initialise());
   st = st.add(3).add(7).add(5);
-  await system.print(st.length());
+  await _stdlib.printNoLine(st.length());
   st = st.add(7);
-  await system.print(st.length());
+  await _stdlib.printNoLine(st.length());
   st = st.remove(3);
-  await system.print(st.length());
+  await _stdlib.printNoLine(st.length());
   st = st.remove(3);
-  await system.print(st.length());
-  await system.print(st);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st);
 }
 return [main, _tests];}`;
 
@@ -71,7 +71,7 @@ main
   set st1 to st1.add(2).add(4).add(6)
   set st2 to st2.add(1).add(4).add(9)
   variable st3 set to st1.union(st2)
-  print st3
+  call printNoLine(st3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -82,7 +82,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6);
   st2 = st2.add(1).add(4).add(9);
   let st3 = st1.union(st2);
-  await system.print(st3);
+  await _stdlib.printNoLine(st3);
 }
 return [main, _tests];}`;
 
@@ -111,7 +111,7 @@ main
   set st1 to st1.add(2).add(4).add(6).add(3)
   set st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.intersection(st2)
-  print st3
+  call printNoLine(st3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -122,7 +122,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.intersection(st2);
-  await system.print(st3);
+  await _stdlib.printNoLine(st3);
 }
 return [main, _tests];}`;
 
@@ -151,7 +151,7 @@ main
   set st1 to st1.add(2).add(4).add(6).add(3)
   set st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.difference(st2)
-  print st3
+  call printNoLine(st3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -162,7 +162,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.difference(st2);
-  await system.print(st3);
+  await _stdlib.printNoLine(st3);
 }
 return [main, _tests];}`;
 
@@ -190,9 +190,9 @@ main
   variable st1 set to st0.add(2).add(4).add(6).add(3)
   variable st2 set to st0.add(3).add(1).add(4).add(9)
   variable st3 set to st0.add(8).add(9)
-  print st1.isDisjointFrom(st2)
-  print st1.isDisjointFrom(st3)
-  print st2.isDisjointFrom(st3)
+  call printNoLine(st1.isDisjointFrom(st2))
+  call printNoLine(st1.isDisjointFrom(st3))
+  call printNoLine(st2.isDisjointFrom(st3))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -202,9 +202,9 @@ async function main() {
   let st1 = st0.add(2).add(4).add(6).add(3);
   let st2 = st0.add(3).add(1).add(4).add(9);
   let st3 = st0.add(8).add(9);
-  await system.print(st1.isDisjointFrom(st2));
-  await system.print(st1.isDisjointFrom(st3));
-  await system.print(st2.isDisjointFrom(st3));
+  await _stdlib.printNoLine(st1.isDisjointFrom(st2));
+  await _stdlib.printNoLine(st1.isDisjointFrom(st3));
+  await _stdlib.printNoLine(st2.isDisjointFrom(st3));
 }
 return [main, _tests];}`;
 
@@ -232,12 +232,12 @@ main
   variable st1 set to st0.add(2).add(4).add(6).add(3)
   variable st2 set to st0.add(4).add(6)
   variable st3 set to st0.add(4).add(6).add(1)
-  print st2.isSubsetOf(st1)
-  print st2.isSupersetOf(st1)
-  print st1.isSupersetOf(st2)
-  print st1.isSupersetOf(st3)
-  print st3.isSupersetOf(st0)
-  print st0.isSubsetOf(st3)
+  call printNoLine(st2.isSubsetOf(st1))
+  call printNoLine(st2.isSupersetOf(st1))
+  call printNoLine(st1.isSupersetOf(st2))
+  call printNoLine(st1.isSupersetOf(st3))
+  call printNoLine(st3.isSupersetOf(st0))
+  call printNoLine(st0.isSubsetOf(st3))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -247,12 +247,12 @@ async function main() {
   let st1 = st0.add(2).add(4).add(6).add(3);
   let st2 = st0.add(4).add(6);
   let st3 = st0.add(4).add(6).add(1);
-  await system.print(st2.isSubsetOf(st1));
-  await system.print(st2.isSupersetOf(st1));
-  await system.print(st1.isSupersetOf(st2));
-  await system.print(st1.isSupersetOf(st3));
-  await system.print(st3.isSupersetOf(st0));
-  await system.print(st0.isSubsetOf(st3));
+  await _stdlib.printNoLine(st2.isSubsetOf(st1));
+  await _stdlib.printNoLine(st2.isSupersetOf(st1));
+  await _stdlib.printNoLine(st1.isSupersetOf(st2));
+  await _stdlib.printNoLine(st1.isSupersetOf(st3));
+  await _stdlib.printNoLine(st3.isSupersetOf(st0));
+  await _stdlib.printNoLine(st0.isSubsetOf(st3));
 }
 return [main, _tests];}`;
 
@@ -277,9 +277,9 @@ return [main, _tests];}`;
 main
   variable st0 set to new Set<of Int>()
   variable st1 set to st0.addFromList([2,4,6,3])
-  print st1
+  call printNoLine(st1)
   variable st2 set to st1.addFromList([2,5,6])
-  print st2
+  call printNoLine(st2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -287,9 +287,9 @@ const global = new class {};
 async function main() {
   let st0 = system.initialise(await new _stdlib.Set()._initialise());
   let st1 = st0.addFromList(system.list([2, 4, 6, 3]));
-  await system.print(st1);
+  await _stdlib.printNoLine(st1);
   let st2 = st1.addFromList(system.list([2, 5, 6]));
-  await system.print(st2);
+  await _stdlib.printNoLine(st2);
 }
 return [main, _tests];}`;
 
@@ -319,8 +319,8 @@ main
   variable cc set to empty List<of String>
   set aa to a
   set cc to c
-  print aa
-  print cc
+  call printNoLine(aa)
+  call printNoLine(cc)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -332,8 +332,8 @@ async function main() {
   let cc = system.initialise(_stdlib.List.emptyInstance());
   aa = a;
   cc = c;
-  await system.print(aa);
-  await system.print(cc);
+  await _stdlib.printNoLine(aa);
+  await _stdlib.printNoLine(cc);
 }
 return [main, _tests];}`;
 
@@ -359,7 +359,7 @@ return [main, _tests];}`;
 main
   variable a set to new Set<of String>()
   set a to a.add("foo")
-  print a.contains("foo")
+  call printNoLine(a.contains("foo"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -367,7 +367,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Set()._initialise());
   a = a.add("foo");
-  await system.print(a.contains("foo"));
+  await _stdlib.printNoLine(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -393,7 +393,7 @@ return [main, _tests];}`;
 main
   variable a set to new Set<of String>()
   set a to a.add("bar")
-  print a.contains("foo")
+  call printNoLine(a.contains("foo"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -401,7 +401,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Set()._initialise());
   a = a.add("bar");
-  await system.print(a.contains("foo"));
+  await _stdlib.printNoLine(a.contains("foo"));
 }
 return [main, _tests];}`;
 

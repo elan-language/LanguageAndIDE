@@ -20,7 +20,7 @@ suite("This and Property", () => {
 
 main
   variable x set to new Foo(7)
-  print x.p1
+  call printNoLine(x.p1)
 end main
 
 class Foo
@@ -40,7 +40,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise(7));
-  await system.print(x.p1);
+  await _stdlib.printNoLine(x.p1);
 }
 
 class Foo {
@@ -81,7 +81,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.bar()
+  call printNoLine(f.bar())
 end main
 
 function doubled(f as Foo) returns Float
@@ -109,7 +109,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.bar()));
+  await _stdlib.printNoLine((await f.bar()));
 }
 
 async function doubled(f) {
@@ -159,7 +159,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.bar()
+  call printNoLine(f.bar())
 end main
 
 class Foo
@@ -179,7 +179,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.bar()));
+  await _stdlib.printNoLine((await f.bar()));
 }
 
 class Foo {
@@ -226,7 +226,7 @@ end main
 
 class Foo
   procedure bar()
-    print this
+    call printNoLine(this)
   end procedure
 end class`;
 
@@ -241,7 +241,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async _initialise() { return this; }
   async bar() {
-    await system.print(this);
+    await _stdlib.printNoLine(this);
   }
 
 }
@@ -268,7 +268,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.bar()
+  call printNoLine(f.bar())
 end main
 
 class Foo
@@ -302,7 +302,7 @@ end class`;
 
 main
     variable x set to new Foo(7)
-    print x.p1
+    call printNoLine(x.p1)
 end main
 
 class Foo
@@ -337,7 +337,7 @@ end class`;
 
 main
     variable x set to new Foo(7)
-    print x.p1
+    call printNoLine(x.p1)
 end main
 
 class Foo
@@ -373,7 +373,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  print this
+  call printNoLine(this)
 end main`;
 
     const fileImpl = new FileImpl(

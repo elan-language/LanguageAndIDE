@@ -17,23 +17,23 @@ suite("If Statement", () => {
     const code = `${testHeader}
 
 main
-  print if true then 1 else 2
-  print if false then 3 else 4
-  print if true then if true then "A" else "B" else if true then "C" else "D"
-  print if true then if false then "A" else "B" else if true then "C" else "D"
-  print if false then if true then "A" else "B" else if true then "C" else "D"
-  print if false then if true then "A" else "B" else if false then "C" else "D"
+  call printNoLine(if true then 1 else 2)
+  call printNoLine(if false then 3 else 4)
+  call printNoLine(if true then if true then "A" else "B" else if true then "C" else "D")
+  call printNoLine(if true then if false then "A" else "B" else if true then "C" else "D")
+  call printNoLine(if false then if true then "A" else "B" else if true then "C" else "D")
+  call printNoLine(if false then if true then "A" else "B" else if false then "C" else "D")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((_stdlib.true ? 1 : 2));
-  await system.print((_stdlib.false ? 3 : 4));
-  await system.print((_stdlib.true ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.print((_stdlib.true ? (_stdlib.false ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.print((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.print((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.false ? "C" : "D")));
+  await _stdlib.printNoLine((_stdlib.true ? 1 : 2));
+  await _stdlib.printNoLine((_stdlib.false ? 3 : 4));
+  await _stdlib.printNoLine((_stdlib.true ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await _stdlib.printNoLine((_stdlib.true ? (_stdlib.false ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await _stdlib.printNoLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await _stdlib.printNoLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.false ? "C" : "D")));
 }
 return [main, _tests];}`;
 

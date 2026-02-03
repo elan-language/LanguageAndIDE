@@ -19,14 +19,14 @@ suite("Unique Identifiers", () => {
 
 main
   variable bReak set to 2
-  print bReak
+  call printNoLine(bReak)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let bReak = 2;
-  await system.print(bReak);
+  await _stdlib.printNoLine(bReak);
 }
 return [main, _tests];}`;
 
@@ -51,7 +51,7 @@ return [main, _tests];}`;
 
 main
   variable foo set to new Foo()
-  print foo
+  call printNoLine(foo)
 end main
 
 class Foo
@@ -66,7 +66,7 @@ end class`;
 const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
-  await system.print(foo);
+  await _stdlib.printNoLine(foo);
 }
 
 class Foo {
