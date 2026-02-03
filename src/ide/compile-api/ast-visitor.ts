@@ -83,7 +83,6 @@ import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { ForAsn } from "../../compiler/syntax-nodes/statements/for-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { LetAsn } from "../../compiler/syntax-nodes/statements/let-asn";
-import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -194,7 +193,6 @@ import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
-import { Print } from "../frames/statements/print";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
 import { Throw } from "../frames/statements/throw";
@@ -554,13 +552,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), procedureAsn)) as AstNode[];
 
     return procedureAsn;
-  }
-
-  if (node instanceof Print) {
-    const printAsn = new PrintAsn(node.getHtmlId(), scope);
-    printAsn.breakpointStatus = node.breakpointStatus;
-    printAsn.expr = transform(node.expr, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
-    return printAsn;
   }
 
   if (node instanceof Each) {

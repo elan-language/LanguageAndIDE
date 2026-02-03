@@ -20,7 +20,6 @@ import { Elif } from "../src/ide/frames/statements/elif";
 import { Else } from "../src/ide/frames/statements/else";
 import { For } from "../src/ide/frames/statements/for";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
-import { Print } from "../src/ide/frames/statements/print";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
@@ -45,8 +44,9 @@ export function T01_helloWorld() {
   const comment = new CommentStatement(m);
   comment.text.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
-  const pr = new Print(m);
-  pr.expr.setFieldToKnownValidText(`"Hello World!"`);
+  const pr = new CallStatement(m);
+  pr.proc.setFieldToKnownValidText('printNoLine')
+  pr.args.setFieldToKnownValidText(`"Hello World!"`);
   m.addChildBefore(pr, ss);
   f.updateAllParseStatus();
   return f;

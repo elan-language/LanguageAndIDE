@@ -34,7 +34,6 @@ import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
-import { Print } from "./statements/print";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
@@ -75,8 +74,6 @@ export class LanguageJava implements Language {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
-    } else if (frame instanceof Print) {
-      html = `<el-method>print</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>());</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
