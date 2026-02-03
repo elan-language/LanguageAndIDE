@@ -649,6 +649,8 @@ test('tabs parse', async ({ page }) => {
  
   await expect(page.locator('#help-home')).toBeVisible();
 
+  await page.getByText('main procedure function test').click();
+
   await page.keyboard.type("m");
 
   await page.keyboard.type("va");
@@ -667,7 +669,7 @@ test('tabs parse', async ({ page }) => {
   await expect(page.getByText("incomplete")).toBeFocused();
   await page.keyboard.press('Enter');
 
- await expect(page.locator("#var3")).toBeFocused();
+ await expect(page.locator("#var4 input")).toBeFocused();
 });
 
 test('tabs compile', async ({ page }) => {
@@ -678,6 +680,8 @@ test('tabs compile', async ({ page }) => {
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
   await expect(page.locator('#help-home')).toBeVisible();
+
+  await expect(page.getByText('main procedure function test')).toBeVisible();
 
   await page.keyboard.type("m");
 
@@ -703,5 +707,5 @@ test('tabs compile', async ({ page }) => {
  await expect(page.getByText("unknown")).toBeFocused();
  await page.keyboard.press('Enter');
 
- await expect(page.locator("#var3")).toBeFocused();
+ await expect(page.locator("#expr5 input")).toBeFocused();
 });

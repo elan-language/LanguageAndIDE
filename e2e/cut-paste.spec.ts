@@ -370,6 +370,8 @@ test('paste into field', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
+  await page.getByText('main procedure function test').click();
+
   await page.keyboard.type('m');
   await page.keyboard.type('va');
   await page.keyboard.type('firstword');
