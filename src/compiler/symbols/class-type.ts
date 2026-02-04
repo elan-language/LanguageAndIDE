@@ -98,8 +98,8 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     return this.scope!.getChildren().filter((c) => isSymbol(c));
   }
 
-  resolveSymbol(id: string, scope: Scope): ElanSymbol {
-    return this.scope.resolveSymbol(id, scope);
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    return this.scope.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   get name() {

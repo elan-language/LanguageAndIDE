@@ -46,7 +46,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     return this.out ? SymbolScope.outParameter : SymbolScope.parameter;
   }
 
-  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     if (this.id.trim() === id) {
       return this;
     }

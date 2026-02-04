@@ -131,7 +131,9 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     filter: (s: ElanSymbol) => boolean,
   ): ClassAsn[] {
     const nodes = superClasses.filter((i) => isAstIdNode(i));
-    const symbols = nodes.map((n) => getGlobalScope(this).resolveSymbol(n.id, this)).filter(filter);
+    const symbols = nodes
+      .map((n) => getGlobalScope(this).resolveSymbol(n.id, true, this))
+      .filter(filter);
     return symbols as ClassAsn[];
   }
 
@@ -207,11 +209,11 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, this);
+      return this.getParentScope().resolveSymbol(id, caseSensitive, this);
     }
 
     return symbol;

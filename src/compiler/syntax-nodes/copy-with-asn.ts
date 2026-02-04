@@ -25,7 +25,9 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     let withClauseStr = "";
 
     if (fromType instanceof ClassType) {
-      const classSymbol = this.scope.getParentScope().resolveSymbol(fromType.className, this.scope);
+      const classSymbol = this.scope
+        .getParentScope()
+        .resolveSymbol(fromType.className, true, this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
 
@@ -34,7 +36,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
           const propertyId = ast.id;
           const type = ast.symbolType();
 
-          const pSymbol = classSymbol.resolveSymbol(propertyId, this.scope);
+          const pSymbol = classSymbol.resolveSymbol(propertyId, true, this.scope);
           mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
           mustBeAssignableType(pSymbol.symbolType(), type, this.compileErrors, this.fieldId);
 

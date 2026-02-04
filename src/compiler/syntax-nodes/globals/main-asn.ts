@@ -28,7 +28,7 @@ export class MainAsn extends CompoundAsn implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const existingMain = this.resolveSymbol("__main", this);
+    const existingMain = this.resolveSymbol("__main", true, this);
 
     if (existingMain instanceof DuplicateSymbol) {
       mustNotHaveDuplicateMain(this.compileErrors, this.fieldId);

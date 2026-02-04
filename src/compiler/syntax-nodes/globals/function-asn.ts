@@ -38,16 +38,16 @@ export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
     return this.children.filter((s) => s instanceof ReturnAsn)[0];
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, this)
+        ? this.params.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public compile(): string {

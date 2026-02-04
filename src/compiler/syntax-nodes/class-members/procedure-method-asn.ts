@@ -38,12 +38,12 @@ ${this.indent()}}\r
 `;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   get symbolId() {

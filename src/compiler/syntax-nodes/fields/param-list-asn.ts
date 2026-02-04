@@ -66,7 +66,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     return [names, types];
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
     const matches = allSymbols.filter((n) => n.symbolId === id);
 
@@ -83,7 +83,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
 
   private mustNotBeRedefined(id: string) {
     // up two or we just get the parameter again
-    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, this);
+    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, true, this);
     mustNotBeRedefined(symbol, id, this.compileErrors, this.fieldId);
   }
 
@@ -92,7 +92,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     const parentScope = this.getParentScope();
 
     if (isFunction(parentScope) || isConstructor(parentScope)) {
-      const symbol = parentScope.resolveSymbol(id, this);
+      const symbol = parentScope.resolveSymbol(id, true, this);
       if (symbol.symbolScope === SymbolScope.outParameter) {
         mustNotBeOutParameter(this.compileErrors, this.fieldId);
       }

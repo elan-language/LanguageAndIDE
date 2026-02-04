@@ -456,7 +456,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
-      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, true, classType);
 
       if (
         subSymbol instanceof UnknownSymbol ||
@@ -881,7 +881,7 @@ function mustBeCompatibleRecordDeconstruction(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const classDef = scope.resolveSymbol(rst.name, scope);
+  const classDef = scope.resolveSymbol(rst.name, true, scope);
 
   if (isClass(classDef)) {
     const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
@@ -1116,7 +1116,7 @@ export function mustBeUniqueNameInScope(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const symbol = scope.resolveSymbol(name, scope);
+  const symbol = scope.resolveSymbol(name, true, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     let postFix = "";

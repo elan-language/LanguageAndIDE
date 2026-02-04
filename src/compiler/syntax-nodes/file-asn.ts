@@ -225,7 +225,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     // only constants above scope
 
     let globalSymbols: ElanSymbol[] = [];
@@ -253,6 +253,6 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       return new DuplicateSymbol(matches);
     }
 
-    return this.scope.resolveSymbol(id, this);
+    return this.scope.resolveSymbol(id, caseSensitive, this);
   }
 }

@@ -49,7 +49,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
   getSymbol() {
     const currentScope = updateScope(this.qualifier, this.scope);
-    return currentScope.resolveSymbol(this.id, this.scope);
+    return currentScope.resolveSymbol(this.id, true, this.scope);
   }
 
   compileSimpleSubscript(id: string, prefix: string, postfix: string) {

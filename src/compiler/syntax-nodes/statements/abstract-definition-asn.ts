@@ -52,7 +52,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.fieldId);
-      const symbol = this.getScope().resolveSymbol(i!, this);
+      const symbol = this.getScope().resolveSymbol(i!, true, this);
       mustNotBeRedefined(symbol, i, this.compileErrors, this.fieldId);
     }
 
@@ -84,12 +84,12 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

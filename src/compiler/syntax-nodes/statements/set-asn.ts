@@ -65,7 +65,7 @@ export class SetAsn extends BreakpointAsn {
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
 
     for (const id of ids) {
-      const symbol = this.getParentScope().resolveSymbol(id, this);
+      const symbol = this.getParentScope().resolveSymbol(id, true, this);
       mustNotBeLet(symbol, id, this.compileErrors, this.fieldId);
     }
 

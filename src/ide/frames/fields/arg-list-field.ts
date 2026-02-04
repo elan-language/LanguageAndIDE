@@ -52,7 +52,7 @@ export class ArgListField extends AbstractField {
 
   private argumentDescriptions(holder: Frame, scope: Scope | undefined) {
     const proc = (holder as CallStatement).proc.text;
-    const ps = scope?.resolveSymbol(proc, scope);
+    const ps = scope?.resolveSymbol(proc, true, scope);
     let descriptions = ["<i>arguments</i>"];
     if (ps && !(ps instanceof UnknownSymbol)) {
       descriptions = parameterNames(ps.symbolType());

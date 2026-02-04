@@ -35,7 +35,7 @@ export class LiteralListImmutableAsn extends AbstractAstNode implements AstColle
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(ListImmutableName, this.scope);
+    const symbol = globalScope.resolveSymbol(ListImmutableName, true, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     return st.reify([this.items[0]?.symbolType() ?? UnknownType.Instance]);

@@ -47,20 +47,20 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return this.parameters.map((p) => p.compile()).join(", ");
   }
 
-  resolveSymbol(id: string, scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     for (const p of this.parameters) {
-      const ss = p.resolveSymbol(id, scope);
+      const ss = p.resolveSymbol(id, caseSensitive, initialScope);
       if (!(ss instanceof UnknownSymbol)) {
         return ss;
       }
     }
 
     const searchScope =
-      isDefinitionScope(this.scope) || this.scope === scope
+      isDefinitionScope(this.scope) || this.scope === initialScope
         ? this.scope.getParentScope()
         : this.scope;
 
-    return searchScope.resolveSymbol(id, this.scope);
+    return searchScope.resolveSymbol(id, caseSensitive, this.scope);
   }
 
   symbolMatches(id: string, all: boolean, scope: Scope): ElanSymbol[] {

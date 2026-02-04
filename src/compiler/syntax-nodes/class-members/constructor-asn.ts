@@ -39,12 +39,12 @@ ${this.indent()}}\r
 `;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, this)
+        ? this.params.resolveSymbol(id, true, this)
         : new UnknownSymbol(id);
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

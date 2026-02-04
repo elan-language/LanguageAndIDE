@@ -239,8 +239,8 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
-    return this.getParentScope().resolveSymbol(id, this);
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
+    return this.getParentScope().resolveSymbol(id, caseSensitive, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

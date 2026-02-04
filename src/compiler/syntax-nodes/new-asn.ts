@@ -43,7 +43,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
         libScope = type.scope.symbolScope === SymbolScope.stdlib;
 
         const constructorType = type
-          .resolveSymbol(`__${constructorKeyword}`, this.scope)
+          .resolveSymbol(`__${constructorKeyword}`, true, this.scope)
           .symbolType();
 
         const parameterTypes =

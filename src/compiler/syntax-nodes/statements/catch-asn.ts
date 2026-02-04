@@ -64,13 +64,13 @@ ${compileNodes(this.compileChildren)}\r`;
     return this.getCurrentScope().getParentScope();
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (getId(this.variable) === id) {
       return this;
     }
     return (
       getChildSymbol(this.compileChildren, id, initialScope) ??
-      this.getOuterScope().resolveSymbol(id, this.getCurrentScope())
+      this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
     );
   }
 

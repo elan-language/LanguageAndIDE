@@ -24,7 +24,7 @@ export class EachAsn extends CompoundAsn {
     this.compileErrors = [];
 
     const id = this.variable.compile();
-    const symbol = this.scope.resolveSymbol(id, this);
+    const symbol = this.scope.resolveSymbol(id, true, this);
 
     mustNotBeRedefined(symbol, id, this.compileErrors, this.fieldId);
 
@@ -39,7 +39,7 @@ ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
     if (id === v) {
@@ -52,7 +52,7 @@ ${this.indent()}}`;
       };
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

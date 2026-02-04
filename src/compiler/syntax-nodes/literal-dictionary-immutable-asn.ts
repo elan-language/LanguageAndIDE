@@ -51,7 +51,7 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, true, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     const first = this.list.items[0] as KvpAsn | undefined;

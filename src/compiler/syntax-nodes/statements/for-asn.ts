@@ -27,7 +27,7 @@ export class ForAsn extends CompoundAsn {
     const t = this.to.compile();
     let s = this.step.compile();
 
-    const id = this.getParentScope().resolveSymbol(v, this);
+    const id = this.getParentScope().resolveSymbol(v, true, this);
     let declare = "";
 
     if (id instanceof UnknownSymbol) {
@@ -57,7 +57,7 @@ ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
     if (id === v) {
@@ -68,7 +68,7 @@ ${this.indent()}}`;
         symbolScope: SymbolScope.counter,
       };
     }
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

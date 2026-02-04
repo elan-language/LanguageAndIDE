@@ -32,16 +32,16 @@ export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Sc
     return new ProcedureType(pn, pt, false, true);
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, this)
+        ? this.params.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public compile(): string {

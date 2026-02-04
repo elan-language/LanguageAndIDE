@@ -57,7 +57,7 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(DictionaryName, this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryName, true, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     const first = this.list.items[0] as KvpAsn | undefined;
