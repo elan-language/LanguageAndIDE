@@ -1,8 +1,8 @@
-# 741c495d109f126cfd5f5934f52cda426756d69a7cc14a80172852f3100b672f Elan 2.0.0-alpha guest default_profile valid
+# dd56c565fdc4ec05a4253dfdeccbe886e528dd6ed65e08851b8715640a390404 Elan 2.0.0-alpha guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x^2)
+  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + power(p.x, 2))
   constant sumY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
   constant sumXY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
   constant n set to points.length()

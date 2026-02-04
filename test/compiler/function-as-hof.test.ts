@@ -23,7 +23,7 @@ main
 end main
   
 procedure printModified(i as Float, f as Func<of Float => Float>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure
   
 function twice(x as Float) returns Float
@@ -37,7 +37,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.print((await f(i)));
+  await _stdlib.printNoLine((await f(i)));
 }
 global["printModified"] = printModified;
 
@@ -73,7 +73,7 @@ main
 end main
   
 procedure printModified(i as Float, f as Func<of => Float>)
-  print f()
+  call printNoLine(f())
 end procedure
   
 function twice() returns Float
@@ -87,7 +87,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.print((await f()));
+  await _stdlib.printNoLine((await f()));
 }
 global["printModified"] = printModified;
 
@@ -123,7 +123,7 @@ main
 end main
   
 procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
-  print f(s,c)
+  call printNoLine(f(s,c))
 end procedure
   
 function find(x as String, y as String) returns Int
@@ -137,7 +137,7 @@ async function main() {
 }
 
 async function printIt(s, c, f) {
-  await system.print((await f(s, c)));
+  await _stdlib.printNoLine((await f(s, c)));
 }
 global["printIt"] = printIt;
 
@@ -170,7 +170,7 @@ return [main, _tests];}`;
 
 main
   variable f set to getFunc()
-  print f(5)
+  call printNoLine(f(5))
 end main
   
 function getFunc() returns Func<of Float => Float>
@@ -185,7 +185,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = (await global.getFunc());
-  await system.print((await f(5)));
+  await _stdlib.printNoLine((await f(5)));
 }
 
 async function getFunc() {
@@ -222,7 +222,7 @@ return [main, _tests];}`;
 
 main
   variable f set to ref twice
-  print f(5)
+  call printNoLine(f(5))
 end main
   
 function twice(x as Float) returns Float
@@ -233,7 +233,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = global.twice;
-  await system.print((await f(5)));
+  await _stdlib.printNoLine((await f(5)));
 }
 
 async function twice(x) {
@@ -265,7 +265,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo(ref ff)
-  print f.pf(5)
+  call printNoLine(f.pf(5))
 end main
 
 function ff(a as Int) returns Int
@@ -285,7 +285,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise(global.ff));
-  await system.print((await f.pf(5)));
+  await _stdlib.printNoLine((await f.pf(5)));
 }
 
 async function ff(a) {
@@ -328,7 +328,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print ref ff
+  call printNoLine(ref ff)
 end main
 
 function ff(a as Int) returns Int
@@ -338,7 +338,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(global.ff);
+  await _stdlib.printNoLine(global.ff);
 }
 
 async function ff(a) {
@@ -370,7 +370,7 @@ return [main, _tests];}`;
 
 main
   variable f set to twice
-  print f(5)
+  call printNoLine(f(5))
 end main
   
 function twice(x as Float) returns Float
@@ -381,7 +381,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = global.twice;
-  await system.print((await f(5)));
+  await _stdlib.printNoLine((await f(5)));
 }
 
 async function twice(x) {
@@ -414,7 +414,7 @@ main
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure
   
 function power(x as Int, y as Int) returns Int
@@ -446,7 +446,7 @@ main
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure
   
 function power(x as Int) returns String
@@ -475,7 +475,7 @@ end function`;
 
 main
   variable a set to getFunc()
-  print a()
+  call printNoLine(a())
 end main
 
 function getFunc() returns Func<of Int => Int>
@@ -510,7 +510,7 @@ main
 end main
   
 procedure printModified(i as Float, f as Func<of Float => Float>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure
   
 function twice(x as Float) returns Float
@@ -524,7 +524,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.print((await f(i)));
+  await _stdlib.printNoLine((await f(i)));
 }
 global["printModified"] = printModified;
 
@@ -555,7 +555,7 @@ return [main, _tests];}`;
 
 main
   variable f set to getFunc()
-  print f(5)
+  call printNoLine(f(5))
 end main
   
 function getFunc() returns Func<of Float => Float>
@@ -570,7 +570,7 @@ end function`;
 const global = new class {};
 async function main() {
   let f = (await global.getFunc());
-  await system.print((await f(5)));
+  await _stdlib.printNoLine((await f(5)));
 }
 
 async function getFunc() {
@@ -605,7 +605,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo(ff)
-  print f.pf(5)
+  call printNoLine(f.pf(5))
 end main
 
 function ff(a as Int) returns Int
@@ -625,7 +625,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise(global.ff));
-  await system.print((await f.pf(5)));
+  await _stdlib.printNoLine((await f.pf(5)));
 }
 
 async function ff(a) {

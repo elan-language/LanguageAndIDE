@@ -22,7 +22,7 @@ suite("Immutable Dictionary", () => {
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -31,7 +31,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -57,7 +57,7 @@ return [main, _tests];}`;
 enum Fruit apple, orange, pear  
 constant a set to {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -70,7 +70,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -95,14 +95,14 @@ return [main, _tests];}`;
 
 main
   variable a set to {"a":1, "b":3, "z":10}
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -127,7 +127,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a["z"]
+  call printNoLine(a["z"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -136,7 +136,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(system.safeIndex(global.a, "z"));
+  await _stdlib.printNoLine(system.safeIndex(global.a, "z"));
 }
 return [main, _tests];}`;
 
@@ -163,7 +163,7 @@ constant a set to {"a":1, "b":3, "z":10}
 main
   variable b set to empty ListImmutable<of String>
   set b to a.keys()
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -174,7 +174,7 @@ const global = new class {
 async function main() {
   let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = global.a.keys();
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -206,9 +206,9 @@ main
   set a to a.withPut(r1, 1)
   set a to a.withPut(r2, 2)
   
-  print a[r1]
-  print a[r2]
-  print a[r3]
+  call printNoLine(a[r1])
+  call printNoLine(a[r2])
+  call printNoLine(a[r3])
 end main
 
 record Point
@@ -225,9 +225,9 @@ async function main() {
   let r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
-  await system.print(system.safeIndex(a, r1));
-  await system.print(system.safeIndex(a, r2));
-  await system.print(system.safeIndex(a, r3));
+  await _stdlib.printNoLine(system.safeIndex(a, r1));
+  await _stdlib.printNoLine(system.safeIndex(a, r2));
+  await _stdlib.printNoLine(system.safeIndex(a, r3));
 }
 
 class Point {
@@ -261,8 +261,8 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.hasKey("b")
-  print a.hasKey("d")
+  call printNoLine(a.hasKey("b"))
+  call printNoLine(a.hasKey("d"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -271,8 +271,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a.hasKey("b"));
-  await system.print(global.a.hasKey("d"));
+  await _stdlib.printNoLine(global.a.hasKey("b"));
+  await _stdlib.printNoLine(global.a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -297,7 +297,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.values()
+  call printNoLine(a.values())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -306,7 +306,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a.values());
+  await _stdlib.printNoLine(global.a.values());
 }
 return [main, _tests];}`;
 
@@ -333,8 +333,8 @@ constant a set to {"a":1, "b":3, "z":10}
 main
   variable b set to a.withPut("b", 4)
   variable c set to b.withPut("d", 2)
-  print a
-  print c
+  call printNoLine(a)
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -345,8 +345,8 @@ const global = new class {
 async function main() {
   let b = global.a.withPut("b", 4);
   let c = b.withPut("d", 2);
-  await system.print(global.a);
-  await system.print(c);
+  await _stdlib.printNoLine(global.a);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -372,8 +372,8 @@ return [main, _tests];}`;
 constant a set to {"a":1, "b":3, "z":10}
 main
   variable b set to a.withRemoveAt("b")
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -383,8 +383,8 @@ const global = new class {
 };
 async function main() {
   let b = global.a.withRemoveAt("b");
-  await system.print(global.a);
-  await system.print(b);
+  await _stdlib.printNoLine(global.a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -410,7 +410,7 @@ return [main, _tests];}`;
 constant a set to {"a":1, "b":3, "z":10}
 main
   variable b set to a.withRemoveAt("c")
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -420,7 +420,7 @@ const global = new class {
 };
 async function main() {
   let b = global.a.withRemoveAt("c");
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -448,9 +448,9 @@ main
   variable b set to a.withPut("Foo", 1)
   set b to b.withPut("Bar", 3)
   variable k set to b.keys()
-  print k.length()
-  print b["Foo"]
-  print b["Bar"]
+  call printNoLine(k.length())
+  call printNoLine(b["Foo"])
+  call printNoLine(b["Bar"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -460,9 +460,9 @@ async function main() {
   let b = a.withPut("Foo", 1);
   b = b.withPut("Bar", 3);
   let k = b.keys();
-  await system.print(k.length());
-  await system.print(system.safeIndex(b, "Foo"));
-  await system.print(system.safeIndex(b, "Bar"));
+  await _stdlib.printNoLine(k.length());
+  await _stdlib.printNoLine(system.safeIndex(b, "Foo"));
+  await _stdlib.printNoLine(system.safeIndex(b, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -492,9 +492,9 @@ main
   variable b set to a.withPut(Fruit.apple, 1)
   set b to b.withPut(Fruit.orange, 3)
   variable k set to b.keys()
-  print k.length()
-  print b[Fruit.apple]
-  print b[Fruit.orange]
+  call printNoLine(k.length())
+  call printNoLine(b[Fruit.apple])
+  call printNoLine(b[Fruit.orange])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -508,9 +508,9 @@ async function main() {
   let b = a.withPut(Fruit.apple, 1);
   b = b.withPut(Fruit.orange, 3);
   let k = b.keys();
-  await system.print(k.length());
-  await system.print(system.safeIndex(b, Fruit.apple));
-  await system.print(system.safeIndex(b, Fruit.orange));
+  await _stdlib.printNoLine(k.length());
+  await _stdlib.printNoLine(system.safeIndex(b, Fruit.apple));
+  await _stdlib.printNoLine(system.safeIndex(b, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -530,18 +530,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Pass_EmptyDictionaryImmutable", async () => {
+  test("Pass_EmptyDictionaryImmutableByValue", async () => {
     const code = `${testHeader}
 
 main
   variable a set to empty DictionaryImmutable<of String, Int>
   variable b set to empty DictionaryImmutable<of String, Int>
   set b to a.withPut("a", 1)
-  print a
-  print b
-  print a is b
-  print a is empty DictionaryImmutable<of String, Int>
-  print b is empty DictionaryImmutable<of String, Int>
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty DictionaryImmutable<of String, Int>))
+  call printNoLine(b.isSameValueAs(empty DictionaryImmutable<of String, Int>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -550,11 +550,11 @@ async function main() {
   let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
   let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
   b = a.withPut("a", 1);
-  await system.print(a);
-  await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -574,6 +574,50 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}{a:1}falsetruefalse");
   });
 
+  test("Pass_EmptyDictionaryImmutableByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty DictionaryImmutable<of String, Int>
+  variable b set to empty DictionaryImmutable<of String, Int>
+  set b to a.withPut("a", 1)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty DictionaryImmutable<of String, Int>))
+  call printNoLine(b.isSameReferenceAs(empty DictionaryImmutable<of String, Int>))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  b = a.withPut("a", 1);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{}{a:1}falsefalsefalse");
+  });
+
   test("Pass_RecordKeyNoDuplicates", async () => {
     const code = `${testHeader}
 
@@ -585,12 +629,12 @@ main
   set a to a.withPut(r1, 1)
   set a to a.withPut(r2, 2)
   
-  print a[r1]
-  print a.keys().length()
+  call printNoLine(a[r1])
+  call printNoLine(a.keys().length())
 
   set a to a.withRemoveAt(r1)
 
-  print a.keys().length()
+  call printNoLine(a.keys().length())
 end main
 
 record Point
@@ -606,10 +650,10 @@ async function main() {
   let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
-  await system.print(system.safeIndex(a, r1));
-  await system.print(a.keys().length());
+  await _stdlib.printNoLine(system.safeIndex(a, r1));
+  await _stdlib.printNoLine(a.keys().length());
   a = a.withRemoveAt(r1);
-  await system.print(a.keys().length());
+  await _stdlib.printNoLine(a.keys().length());
 }
 
 class Point {
@@ -645,8 +689,8 @@ main
   variable a set to {"a":1, "b":3, "z":10}
   variable b set to empty Dictionary<of String, Int>
   set b to a.asDictionary()
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -655,8 +699,8 @@ async function main() {
   let a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   b = a.asDictionary();
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -681,7 +725,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "a":10}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -704,7 +748,7 @@ end main
 
 constant a set to {"a":1, "b":3.1, "c":10}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -729,7 +773,7 @@ end main
 
 constant a set to {"a":1, "b":3, 10:10}
 main
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -754,7 +798,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a["c"]
+  call printNoLine(a["c"])
 end main
 `;
 
@@ -901,7 +945,7 @@ end main
 main
   variable a set to {"a":1, "b":3, "z":10}
   call a.removeAt("b")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -947,7 +991,7 @@ end main`;
 
 main
     variable a set to new DictionaryImmutable()
-    print a
+    call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -972,7 +1016,7 @@ end main`;
 constant a set to {0:"a"}
 
 main
-  print p1()
+  call printNoLine(p1())
 end main
 
 function p1() returns String

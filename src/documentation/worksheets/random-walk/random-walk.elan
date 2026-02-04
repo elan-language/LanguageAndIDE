@@ -1,4 +1,4 @@
-# 9e6593950ef741a7a144083ed08688e1709aa18edeedcd31256e4aa3c9ee09b5 Elan 2.0.0-alpha guest default_profile valid
+# 7b6b42200e782377dfff618c401a483b8cb6adaef443df0adff6c4d3aedaf4d9 Elan 2.0.0-alpha guest default_profile valid
 
 # 
 # 
@@ -15,7 +15,7 @@ main
     call t.placeAt(0, 0)
     variable colour set to randomInt(red, blue)
     call t.penColour(colour)
-    while sqrt(t.x^2 + t.y^2) < 50
+    while sqrt(power(t.x, 2) + power(t.y, 2)) < 50
       variable angle set to randomInt(-90, 90)
       call t.turn(angle)
       call t.move(5)

@@ -1,4 +1,9 @@
-import { elanFunction } from "../../src/compiler/elan-type-annotations";
+import {
+  elanAnyType,
+  elanFunction,
+  elanProcedure,
+  ProcedureOptions,
+} from "../../src/compiler/elan-type-annotations";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
 import { DefaultProfile } from "../../src/ide/frames/default-profile";
@@ -18,6 +23,13 @@ class TestStdLib {
   simpleFunction(): number {
     return 101;
   }
+
+  @elanProcedure(["any"], ProcedureOptions.async)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async printNoLine(@elanAnyType() s: any) {
+    const sl = new StdLib(new StubInputOutput());
+    await sl.printNoLine(s);
+  }
 }
 
 suite("Directives", () => {
@@ -27,7 +39,7 @@ suite("Directives", () => {
 main
   variable x set to 0.0
   set x to simpleFunction()
-  print x
+  call printNoLine(x)
 end main`;
 
     const fileImpl = new FileImpl(

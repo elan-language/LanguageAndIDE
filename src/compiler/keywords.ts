@@ -40,7 +40,6 @@ export const notKeyword = "not";
 export const ofKeyword = "of";
 export const orKeyword = "or";
 export const outKeyword = "out";
-export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
@@ -114,7 +113,6 @@ export const allKeywords = [
   ofKeyword,
   orKeyword,
   outKeyword,
-  printKeyword,
   privateKeyword,
   procedureKeyword,
   propertyKeyword,

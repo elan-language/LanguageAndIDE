@@ -155,9 +155,9 @@ return [main, _tests];}`;
 main
   try
     call foo()
-    print "not caught"
+    call printNoLine("not caught")
   catch exception in e
-    print e
+    call printNoLine(e)
   end try
 end main
 
@@ -170,10 +170,10 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    await system.print("not caught");
+    await _stdlib.printNoLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    await system.print(e);
+    await _stdlib.printNoLine(e);
   }
 }
 
@@ -207,9 +207,9 @@ main
     variable x set to empty List<of Foo>
     variable y set to x[1]
     variable z set to y.p1
-    print "not caught"
+    call printNoLine("not caught")
   catch exception in e
-    print e
+    call printNoLine(e)
   end try
 end main
 
@@ -228,10 +228,10 @@ async function main() {
     let x = system.initialise(_stdlib.List.emptyInstance());
     let y = system.safeIndex(x, 1);
     let z = y.p1;
-    await system.print("not caught");
+    await _stdlib.printNoLine("not caught");
   } catch (_e) {
     let e = _e.message;
-    await system.print(e);
+    await _stdlib.printNoLine(e);
   }
 }
 
@@ -270,11 +270,11 @@ return [main, _tests];}`;
 main
   try
     call foo()
-    print "not caught"
+    call printNoLine("not caught")
   catch exception in e
     variable s set to ""
     set s to e
-    print s
+    call printNoLine(s)
   end try
 end main
   
@@ -287,12 +287,12 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    await system.print("not caught");
+    await _stdlib.printNoLine("not caught");
   } catch (_e) {
     let e = _e.message;
     let s = "";
     s = e;
-    await system.print(s);
+    await _stdlib.printNoLine(s);
   }
 }
 
@@ -327,7 +327,7 @@ main
     throw exception "fail"
   catch exception in e
     variable a set to e
-    print a
+    call printNoLine(a)
   end try
 end main
   
@@ -344,7 +344,7 @@ async function main() {
   } catch (_e) {
     let e = _e.message;
     let a = e;
-    await system.print(a);
+    await _stdlib.printNoLine(a);
   }
 }
 
@@ -378,7 +378,7 @@ main
   try
     throw exception "fail"
   catch exception in e
-    print a
+    call printNoLine(a)
   end try
 end main
   
@@ -394,7 +394,7 @@ async function main() {
     throw new Error("fail");
   } catch (_e) {
     let e = _e.message;
-    await system.print(a);
+    await _stdlib.printNoLine(a);
   }
 }
 
@@ -493,9 +493,9 @@ end function
 main
   try
     call foo()
-    print "not caught"
+    call printNoLine("not caught")
   catch
-    print "caught"
+    call printNoLine("caught")
   end try
 end main
   
@@ -547,7 +547,7 @@ main
     variable a set to 1
     throw exception "fail"
   catch exception in e
-    print a
+    call printNoLine(a)
   end try
 end main
   
@@ -579,7 +579,7 @@ main
     throw exception "fail"
   catch exception in e
     variable a set to e
-    print a
+    call printNoLine(a)
   end try
 end main
   

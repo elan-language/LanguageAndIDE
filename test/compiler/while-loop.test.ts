@@ -23,7 +23,7 @@ main
   while x < 10
     set x to x + 1
   end while
-  print x
+  call printNoLine(x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -33,7 +33,7 @@ async function main() {
   while (x < 10) {
     x = x + 1;
   }
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
 
@@ -67,7 +67,7 @@ main
       end while
       set x to x + 1
   end while
-  print t
+  call printNoLine(t)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -83,7 +83,7 @@ async function main() {
     }
     x = x + 1;
   }
-  await system.print(t);
+  await _stdlib.printNoLine(t);
 }
 return [main, _tests];}`;
 
@@ -227,7 +227,7 @@ main
 main
   variable a set to 3
   while a
-    print a
+    call printNoLine(a)
   end while
 end main`;
 
@@ -250,7 +250,7 @@ end main`;
 
 main
   while a
-    print a
+    call printNoLine(a)
   end while
 end main`;
 

@@ -25,12 +25,12 @@ suite("StdLib", () => {
 constant lst set to {1, 2}
 main
   variable arr set to ["three", "four"]
-  print lst.contains(1)
-  print lst.contains(3)
-  print arr.contains("four")
-  print arr.contains("five")
-  print "onetwo".contains("two")
-  print "onetwo".contains("three")
+  call printNoLine(lst.contains(1))
+  call printNoLine(lst.contains(3))
+  call printNoLine(arr.contains("four"))
+  call printNoLine(arr.contains("five"))
+  call printNoLine("onetwo".contains("two"))
+  call printNoLine("onetwo".contains("three"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -40,12 +40,12 @@ const global = new class {
 };
 async function main() {
   let arr = system.list(["three", "four"]);
-  await system.print(global.lst.contains(1));
-  await system.print(global.lst.contains(3));
-  await system.print(arr.contains("four"));
-  await system.print(arr.contains("five"));
-  await system.print(_stdlib.contains("onetwo", "two"));
-  await system.print(_stdlib.contains("onetwo", "three"));
+  await _stdlib.printNoLine(global.lst.contains(1));
+  await _stdlib.printNoLine(global.lst.contains(3));
+  await _stdlib.printNoLine(arr.contains("four"));
+  await _stdlib.printNoLine(arr.contains("five"));
+  await _stdlib.printNoLine(_stdlib.contains("onetwo", "two"));
+  await _stdlib.printNoLine(_stdlib.contains("onetwo", "three"));
 }
 return [main, _tests];}`;
 
@@ -69,17 +69,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 1
+  call printNoLine(1)
   call pause(100)
-  print 2
+  call printNoLine(2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(1);
+  await _stdlib.printNoLine(1);
   await _stdlib.pause(100);
-  await system.print(2);
+  await _stdlib.printNoLine(2);
 }
 return [main, _tests];}`;
 
@@ -106,7 +106,7 @@ main
   variable a set to clock()
   call pause(100)
   variable b set to clock()
-  print b > a
+  call printNoLine(b > a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -115,7 +115,7 @@ async function main() {
   let a = _stdlib.clock();
   await _stdlib.pause(100);
   let b = _stdlib.clock();
-  await system.print(b > a);
+  await _stdlib.printNoLine(b > a);
 }
 return [main, _tests];}`;
 
@@ -141,8 +141,8 @@ return [main, _tests];}`;
 main
   variable a set to random()
   variable b set to random()
-  print a < 1
-  print a isnt b
+  call printNoLine(a < 1)
+  call printNoLine(a isnt b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -150,8 +150,8 @@ const global = new class {};
 async function main() {
   let a = _stdlib.random();
   let b = _stdlib.random();
-  await system.print(a < 1);
-  await system.print(a !== b);
+  await _stdlib.printNoLine(a < 1);
+  await _stdlib.printNoLine(a !== b);
 }
 return [main, _tests];}`;
 
@@ -176,14 +176,14 @@ return [main, _tests];}`;
 
 main
   variable a set to  parseAsFloat("10.1")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("10.1");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -208,14 +208,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsFloat("x12")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("x12");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -240,14 +240,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsFloat("25g")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("25g");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -272,14 +272,14 @@ return [main, _tests];}`;
 
 main
   variable a set to  parseAsFloat("10")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsFloat("10");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -307,7 +307,7 @@ main
   variable b set to  parseAsFloat("10.1e+2")
   variable c set to  parseAsFloat("10.1e-2")
   variable d set to  parseAsFloat("0.12E2")
-  print [a, b, c, d]
+  call printNoLine([a, b, c, d])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -317,7 +317,7 @@ async function main() {
   let b = _stdlib.parseAsFloat("10.1e+2");
   let c = _stdlib.parseAsFloat("10.1e-2");
   let d = _stdlib.parseAsFloat("0.12E2");
-  await system.print(system.list([a, b, c, d]));
+  await _stdlib.printNoLine(system.list([a, b, c, d]));
 }
 return [main, _tests];}`;
 
@@ -345,14 +345,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsInt("25g")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("25g");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -377,14 +377,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsInt("10")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("10");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -409,14 +409,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsInt("")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -441,14 +441,14 @@ return [main, _tests];}`;
 
 main
   variable a set to parseAsInt("10.1")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.parseAsInt("10.1");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -472,14 +472,14 @@ return [main, _tests];}`;
 
 main
   call printNoLine("Hello")
-  print "!"
+  call printNoLine("!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine("Hello");
-  await system.print("!");
+  await _stdlib.printNoLine("!");
 }
 return [main, _tests];}`;
 
@@ -504,14 +504,14 @@ return [main, _tests];}`;
 
 main
   call printNoLine(101)
-  print "!"
+  call printNoLine("!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine(101);
-  await system.print("!");
+  await _stdlib.printNoLine("!");
 }
 return [main, _tests];}`;
 
@@ -599,17 +599,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print openBrace
-  print closeBrace
-  print quotes
+  call printNoLine(openBrace)
+  call printNoLine(closeBrace)
+  call printNoLine(quotes)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.openBrace);
-  await system.print(_stdlib.closeBrace);
-  await system.print(_stdlib.quotes);
+  await _stdlib.printNoLine(_stdlib.openBrace);
+  await _stdlib.printNoLine(_stdlib.closeBrace);
+  await _stdlib.printNoLine(_stdlib.quotes);
 }
 return [main, _tests];}`;
 
@@ -738,9 +738,9 @@ main
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
   end for
-  print results[0] > 0
-  print results[1] > 0
-  print results[0] + results[1]
+  call printNoLine(results[0] > 0)
+  call printNoLine(results[1] > 0)
+  call printNoLine(results[0] + results[1])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -752,9 +752,9 @@ async function main() {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
-  await system.print(system.safeIndex(results, 0) > 0);
-  await system.print(system.safeIndex(results, 1) > 0);
-  await system.print(system.safeIndex(results, 0) + system.safeIndex(results, 1));
+  await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
 }
 return [main, _tests];}`;
 
@@ -786,9 +786,9 @@ main
     set val, rnd to rnd.nextInt(0, 1)
     call results.put(val, results[val] + 1)
   end for
-  print results[0] > 0
-  print results[1] > 0
-  print results[0] + results[1]
+  call printNoLine(results[0] > 0)
+  call printNoLine(results[1] > 0)
+  call printNoLine(results[0] + results[1])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -803,9 +803,9 @@ async function main() {
     [val, rnd] = rnd.nextInt(0, 1);
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  await system.print(system.safeIndex(results, 0) > 0);
-  await system.print(system.safeIndex(results, 1) > 0);
-  await system.print(system.safeIndex(results, 0) + system.safeIndex(results, 1));
+  await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
 }
 return [main, _tests];}`;
 
@@ -837,8 +837,8 @@ main
   end for
   for i from 0 to 6 step 1
     variable r set to results[i]
-    print r
-    print ", "
+    call printNoLine(r)
+    call printNoLine(", ")
   end for
 end main`;
 
@@ -856,8 +856,8 @@ async function main() {
   const _tofor24 = 6;
   for (let i = 0; i <= _tofor24; i = i + 1) {
     let r = system.safeIndex(results, i);
-    await system.print(r);
-    await system.print(", ");
+    await _stdlib.printNoLine(r);
+    await _stdlib.printNoLine(", ");
   }
 }
 return [main, _tests];}`;
@@ -890,8 +890,8 @@ main
   end for
   for i from 0 to 6 step 1
     variable r set to results[i]
-    print r
-    print ", "
+    call printNoLine(r)
+    call printNoLine(", ")
   end for
 end main
 
@@ -913,8 +913,8 @@ async function main() {
   const _tofor24 = 6;
   for (let i = 0; i <= _tofor24; i = i + 1) {
     let r = system.safeIndex(results, i);
-    await system.print(r);
-    await system.print(", ");
+    await _stdlib.printNoLine(r);
+    await _stdlib.printNoLine(", ");
   }
 }
 
@@ -952,7 +952,7 @@ main
   variable nota set to bitNot(a)
   variable aL set to bitShiftL(a, 2)
   variable aR set to bitShiftR(a, 2)
-  print a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary()
+  call printNoLine(a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -966,7 +966,7 @@ async function main() {
   let nota = _stdlib.bitNot(a);
   let aL = _stdlib.bitShiftL(a, 2);
   let aR = _stdlib.bitShiftR(a, 2);
-  await system.print(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR));
+  await _stdlib.printNoLine(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR));
 }
 return [main, _tests];}`;
 
@@ -993,7 +993,7 @@ main
   call oxoBoard.put(0, 0, "o")
   call oxoBoard.put(2, 2, "o")
   call oxoBoard.put(1, 1, "x")
-  print oxoBoard
+  call printNoLine(oxoBoard)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1003,7 +1003,7 @@ async function main() {
   oxoBoard.put(0, 0, "o");
   oxoBoard.put(2, 2, "o");
   oxoBoard.put(1, 1, "x");
-  await system.print(oxoBoard);
+  await _stdlib.printNoLine(oxoBoard);
 }
 return [main, _tests];}`;
 
@@ -1031,10 +1031,10 @@ main
   variable ob2 set to oxoBoard.withPut(0, 0, "o")
   variable ob3 set to ob2.withPut(2, 1, "x")
   variable ob4 set to ob3.withPut(1, 2, "o")
-  print oxoBoard
-  print ob2
-  print ob3
-  print ob4
+  call printNoLine(oxoBoard)
+  call printNoLine(ob2)
+  call printNoLine(ob3)
+  call printNoLine(ob4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1044,10 +1044,10 @@ async function main() {
   let ob2 = oxoBoard.withPut(0, 0, "o");
   let ob3 = ob2.withPut(2, 1, "x");
   let ob4 = ob3.withPut(1, 2, "o");
-  await system.print(oxoBoard);
-  await system.print(ob2);
-  await system.print(ob3);
-  await system.print(ob4);
+  await _stdlib.printNoLine(oxoBoard);
+  await _stdlib.printNoLine(ob2);
+  await _stdlib.printNoLine(ob3);
+  await _stdlib.printNoLine(ob4);
 }
 return [main, _tests];}`;
 
@@ -1074,13 +1074,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print unicode(65)
+  call printNoLine(unicode(65))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.unicode(65));
+  await _stdlib.printNoLine(_stdlib.unicode(65));
 }
 return [main, _tests];}`;
 
@@ -1104,13 +1104,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "Apple".asUnicode()
+  call printNoLine("Apple".asUnicode())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.asUnicode("Apple"));
+  await _stdlib.printNoLine(_stdlib.asUnicode("Apple"));
 }
 return [main, _tests];}`;
 
@@ -1137,8 +1137,8 @@ main
   variable a set to [1,2]
   variable b set to [3,4]
   call a.appendList(b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1147,8 +1147,8 @@ async function main() {
   let a = system.list([1, 2]);
   let b = system.list([3, 4]);
   a.appendList(b);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1175,8 +1175,8 @@ main
   variable a set to new List<of Foo>()
   variable b set to new List<of Bar>()
   call a.appendList(b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 abstract class Foo
@@ -1192,8 +1192,8 @@ async function main() {
   let a = system.initialise(await new _stdlib.List()._initialise());
   let b = system.initialise(await new _stdlib.List()._initialise());
   a.appendList(b);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -1231,8 +1231,8 @@ main
   variable a set to [1,2]
   variable b set to [3,4]
   call a.prependList(b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1241,8 +1241,8 @@ async function main() {
   let a = system.list([1, 2]);
   let b = system.list([3, 4]);
   a.prependList(b);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1269,7 +1269,7 @@ main
   variable a set to [1,2]
   variable b set to 3
   call a.prepend(b)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1278,7 +1278,7 @@ async function main() {
   let a = system.list([1, 2]);
   let b = 3;
   a.prepend(b);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -1304,7 +1304,7 @@ return [main, _tests];}`;
 main
   variable s set to "Now is the time..."
   variable words set to s.split(" ")
-  print words
+  call printNoLine(words)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1312,7 +1312,7 @@ const global = new class {};
 async function main() {
   let s = "Now is the time...";
   let words = _stdlib.split(s, " ");
-  await system.print(words);
+  await _stdlib.printNoLine(words);
 }
 return [main, _tests];}`;
 
@@ -1337,7 +1337,7 @@ return [main, _tests];}`;
 main
   variable words set to ["Now", "is","the","time..."]
   variable s set to words.join(".")
-  print s
+  call printNoLine(s)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1345,7 +1345,7 @@ const global = new class {};
 async function main() {
   let words = system.list(["Now", "is", "the", "time..."]);
   let s = (await words.join("."));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
 
@@ -1370,7 +1370,7 @@ return [main, _tests];}`;
 main
   variable words set to {"Now", "is","the","time..."}
   variable s set to words.join(".")
-  print s
+  call printNoLine(s)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1378,7 +1378,7 @@ const global = new class {};
 async function main() {
   let words = system.listImmutable(["Now", "is", "the", "time..."]);
   let s = (await words.join("."));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
 
@@ -1404,7 +1404,7 @@ return [main, _tests];}`;
 main
   variable words set to {1,2,3,4}
   variable s set to words.join("")
-  print s
+  call printNoLine(s)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1412,7 +1412,7 @@ const global = new class {};
 async function main() {
   let words = system.listImmutable([1, 2, 3, 4]);
   let s = (await words.join(""));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
 
@@ -1438,7 +1438,7 @@ return [main, _tests];}`;
 main
   variable words set to {new Point(), new Point()}
   variable s set to words.join(",")
-  print s
+  call printNoLine(s)
 end main
 
 record Point
@@ -1449,7 +1449,7 @@ const global = new class {};
 async function main() {
   let words = system.listImmutable([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
   let s = (await words.join(","));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 
 class Point {
@@ -1481,7 +1481,7 @@ return [main, _tests];}`;
 main
   variable words set to [new Point(), new Point()]
   variable s set to words.join(",")
-  print s
+  call printNoLine(s)
 end main
 
 record Point
@@ -1492,7 +1492,7 @@ const global = new class {};
 async function main() {
   let words = system.list([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
   let s = (await words.join(","));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 
 class Point {
@@ -1524,7 +1524,7 @@ return [main, _tests];}`;
 main
   variable words set to ["Now", "is","the","time..."].asArray()
   variable s set to words.join(".")
-  print s
+  call printNoLine(s)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1549,8 +1549,8 @@ end main`;
 main
   variable s1 set to "[a] [b]"
   variable s2 set to s1.replace("[",unicode(123)).replace("]", unicode(125))
-  print s1
-  print s2
+  call printNoLine(s1)
+  call printNoLine(s2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1558,8 +1558,8 @@ const global = new class {};
 async function main() {
   let s1 = "[a] [b]";
   let s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
-  await system.print(s1);
-  await system.print(s2);
+  await _stdlib.printNoLine(s1);
+  await _stdlib.printNoLine(s2);
 }
 return [main, _tests];}`;
 
@@ -1586,8 +1586,8 @@ main
   variable s2 set to "cbabdabbc"
   variable result1 set to s1.matchesRegExp(/[a-c]*/)
   variable result2 set to s2.matchesRegExp(/^[a-c]*$/)
-  print result1
-  print result2
+  call printNoLine(result1)
+  call printNoLine(result2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1597,8 +1597,8 @@ async function main() {
   let s2 = "cbabdabbc";
   let result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
   let result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
-  await system.print(result1);
-  await system.print(result2);
+  await _stdlib.printNoLine(result1);
+  await _stdlib.printNoLine(result2);
 }
 return [main, _tests];}`;
 
@@ -1622,14 +1622,14 @@ return [main, _tests];}`;
 
 main
   variable r set to "[a-c]*".asRegExp()
-  print r
+  call printNoLine(r)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let r = _stdlib.asRegExp("[a-c]*");
-  await system.print(r);
+  await _stdlib.printNoLine(r);
 }
 return [main, _tests];}`;
 
@@ -1655,13 +1655,13 @@ main
   variable a set to [1, 3, 5, 7, 9]
   variable b set to {2, 4, 6, 8}
   variable c set to "Hello World!"
-  print a.indexOf(9)
-  print a.indexOf(5)
-  print b.indexOf(2)
-  print b.indexOf(7)
-  print c.indexOf("o")
-  print c.indexOf("ll")
-  print c.indexOf("x")
+  call printNoLine(a.indexOf(9))
+  call printNoLine(a.indexOf(5))
+  call printNoLine(b.indexOf(2))
+  call printNoLine(b.indexOf(7))
+  call printNoLine(c.indexOf("o"))
+  call printNoLine(c.indexOf("ll"))
+  call printNoLine(c.indexOf("x"))
   variable i set to 1
   set i to a.indexOf(9)
 end main`;
@@ -1672,13 +1672,13 @@ async function main() {
   let a = system.list([1, 3, 5, 7, 9]);
   let b = system.listImmutable([2, 4, 6, 8]);
   let c = "Hello World!";
-  await system.print(a.indexOf(9));
-  await system.print(a.indexOf(5));
-  await system.print(b.indexOf(2));
-  await system.print(b.indexOf(7));
-  await system.print(_stdlib.indexOf(c, "o"));
-  await system.print(_stdlib.indexOf(c, "ll"));
-  await system.print(_stdlib.indexOf(c, "x"));
+  await _stdlib.printNoLine(a.indexOf(9));
+  await _stdlib.printNoLine(a.indexOf(5));
+  await _stdlib.printNoLine(b.indexOf(2));
+  await _stdlib.printNoLine(b.indexOf(7));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "o"));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "ll"));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "x"));
   let i = 1;
   i = a.indexOf(9);
 }
@@ -1705,7 +1705,7 @@ return [main, _tests];}`;
 main
   variable i set to 1
   set i to "A".asUnicode()
-  print i
+  call printNoLine(i)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1713,7 +1713,7 @@ const global = new class {};
 async function main() {
   let i = 1;
   i = _stdlib.asUnicode("A");
-  await system.print(i);
+  await _stdlib.printNoLine(i);
 }
 return [main, _tests];}`;
 
@@ -1736,15 +1736,15 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sqrt(-1).isNaN()
-  print sqrt(2).isNaN()
+  call printNoLine(sqrt(-1).isNaN())
+  call printNoLine(sqrt(2).isNaN())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.isNaN(_stdlib.sqrt((-1))));
-  await system.print(_stdlib.isNaN(_stdlib.sqrt(2)));
+  await _stdlib.printNoLine(_stdlib.isNaN(_stdlib.sqrt((-1))));
+  await _stdlib.printNoLine(_stdlib.isNaN(_stdlib.sqrt(2)));
 }
 return [main, _tests];}`;
 
@@ -1767,19 +1767,19 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print (1/0).isInfinite()
-  print (-1/0).isInfinite()
-  print (1/1).isInfinite()
-  print sqrt(-1).isInfinite()
+  call printNoLine((1.0/0).isInfinite())
+  call printNoLine((-1.0/0).isInfinite())
+  call printNoLine((1.0/1).isInfinite())
+  call printNoLine(sqrt(-1).isInfinite())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.isInfinite((1 / 0)));
-  await system.print(_stdlib.isInfinite(((-1) / 0)));
-  await system.print(_stdlib.isInfinite((1 / 1)));
-  await system.print(_stdlib.isInfinite(_stdlib.sqrt((-1))));
+  await _stdlib.printNoLine(_stdlib.isInfinite((1 / 0)));
+  await _stdlib.printNoLine(_stdlib.isInfinite(((-1) / 0)));
+  await _stdlib.printNoLine(_stdlib.isInfinite((1 / 1)));
+  await _stdlib.printNoLine(_stdlib.isInfinite(_stdlib.sqrt((-1))));
 }
 return [main, _tests];}`;
 
@@ -1867,17 +1867,17 @@ end class`;
     const code = `${testHeader}
 
 main
-  print parseAsInt("12 34 56".split(" ")[1])
-  print "z" + "a b c".split(" ")[1]
-  print "a b c".split(" ")[1] + "z"
+  call printNoLine(parseAsInt("12 34 56".split(" ")[1]))
+  call printNoLine("z" + "a b c".split(" ")[1])
+  call printNoLine("a b c".split(" ")[1] + "z")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.parseAsInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
-  await system.print("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
-  await system.print(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
+  await _stdlib.printNoLine(_stdlib.parseAsInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
+  await _stdlib.printNoLine("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
+  await _stdlib.printNoLine(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
 }
 return [main, _tests];}`;
 
@@ -1992,13 +1992,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequence(1, 5)
+  call printNoLine(sequence(1, 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequence(1, 5));
+  await _stdlib.printNoLine(_stdlib.sequence(1, 5));
 }
 return [main, _tests];}`;
 
@@ -2021,13 +2021,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequence(5, 1)
+  call printNoLine(sequence(5, 1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequence(5, 1));
+  await _stdlib.printNoLine(_stdlib.sequence(5, 1));
 }
 return [main, _tests];}`;
 
@@ -2050,15 +2050,15 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequenceWithStep(1, 6, 2)
-  print sequenceWithStep(5, -4, -2)
+  call printNoLine(sequenceWithStep(1, 6, 2))
+  call printNoLine(sequenceWithStep(5, -4, -2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequenceWithStep(1, 6, 2));
-  await system.print(_stdlib.sequenceWithStep(5, (-4), (-2)));
+  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, 2));
+  await _stdlib.printNoLine(_stdlib.sequenceWithStep(5, (-4), (-2)));
 }
 return [main, _tests];}`;
 
@@ -2081,13 +2081,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequenceWithStep(1, 6, 0)
+  call printNoLine(sequenceWithStep(1, 6, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequenceWithStep(1, 6, 0));
+  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, 0));
 }
 return [main, _tests];}`;
 
@@ -2110,13 +2110,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequenceWithStep(1, 6, -1)
+  call printNoLine(sequenceWithStep(1, 6, -1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequenceWithStep(1, 6, (-1)));
+  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, (-1)));
 }
 return [main, _tests];}`;
 
@@ -2142,13 +2142,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print sequenceWithStep(6, 1, 2)
+  call printNoLine(sequenceWithStep(6, 1, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.sequenceWithStep(6, 1, 2));
+  await _stdlib.printNoLine(_stdlib.sequenceWithStep(6, 1, 2));
 }
 return [main, _tests];}`;
 
@@ -2172,14 +2172,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print new library.List<of Int>()
+  call printNoLine(new library.List<of Int>())
 end main
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(system.initialise(await new _stdlib.List()._initialise()));
+  await _stdlib.printNoLine(system.initialise(await new _stdlib.List()._initialise()));
 }
 return [main, _tests];}`;
 
@@ -2210,8 +2210,8 @@ class List
 end class
 
 main
-  print new List()
-  print new library.List<of Int>()
+  call printNoLine(new List())
+  call printNoLine(new library.List<of Int>())
 end main
 `;
 
@@ -2227,8 +2227,8 @@ class List {
 }
 
 async function main() {
-  await system.print(system.initialise(await new List()._initialise()));
-  await system.print(system.initialise(await new _stdlib.List()._initialise()));
+  await _stdlib.printNoLine(system.initialise(await new List()._initialise()));
+  await _stdlib.printNoLine(system.initialise(await new _stdlib.List()._initialise()));
 }
 return [main, _tests];}`;
 
@@ -2248,20 +2248,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "MyList[]");
   });
 
-  test("Pass_SetComparison", async () => {
+  test("Pass_SetComparisonByValue", async () => {
     const code = `${testHeader}
 
 main
   variable b set to ["2", "7"].asSet()
   variable c set to ["7", "2"].asSet()
   variable d set to ["8", "2"].asSet()
-  print b is c
-  print b is d
+  call printNoLine(b.isSameValueAs(c))
+  call printNoLine(b.isSameValueAs(d))
   variable b2 set to [2, 7].asSet()
   variable c2 set to [7, 2].asSet()
   variable d2 set to [8, 2].asSet()
-  print b2 is c2
-  print b2 is d2
+  call printNoLine(b2.isSameValueAs(c2))
+  call printNoLine(b2.isSameValueAs(d2))
 end main
 `;
 
@@ -2271,13 +2271,13 @@ async function main() {
   let b = system.list(["2", "7"]).asSet();
   let c = system.list(["7", "2"]).asSet();
   let d = system.list(["8", "2"]).asSet();
-  await system.print(system.objectEquals(b, c));
-  await system.print(system.objectEquals(b, d));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, c));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, d));
   let b2 = system.list([2, 7]).asSet();
   let c2 = system.list([7, 2]).asSet();
   let d2 = system.list([8, 2]).asSet();
-  await system.print(system.objectEquals(b2, c2));
-  await system.print(system.objectEquals(b2, d2));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, c2));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, d2));
 }
 return [main, _tests];}`;
 
@@ -2295,5 +2295,136 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+  });
+
+  test("Pass_SetComparisonByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to ["2", "7"].asSet()
+  variable c set to ["7", "2"].asSet()
+  variable d set to ["8", "2"].asSet()
+  call printNoLine(b.isSameReferenceAs(c))
+  call printNoLine(b.isSameReferenceAs(d))
+  variable b2 set to [2, 7].asSet()
+  variable c2 set to [7, 2].asSet()
+  variable d2 set to [8, 2].asSet()
+  call printNoLine(b2.isSameReferenceAs(c2))
+  call printNoLine(b2.isSameReferenceAs(d2))
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let b = system.list(["2", "7"]).asSet();
+  let c = system.list(["7", "2"]).asSet();
+  let d = system.list(["8", "2"]).asSet();
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, c));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, d));
+  let b2 = system.list([2, 7]).asSet();
+  let c2 = system.list([7, 2]).asSet();
+  let d2 = system.list([8, 2]).asSet();
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, c2));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, d2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalse");
+  });
+
+  test("Pass_divideFunctions", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(divAsInteger(1, 2))
+  call printNoLine(divAsInteger(1.0, 2.0))
+  call printNoLine(divAsInteger(1, 2.0))
+  call printNoLine(divAsInteger(1.0, 2))
+  call printNoLine(divAsFloat(1, 2))
+  call printNoLine(divAsFloat(1.0, 2.0))
+  call printNoLine(divAsFloat(1, 2.0))
+  call printNoLine(divAsFloat(1.0, 2))
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
+  });
+
+  test("Pass_createGraphicsFunctions", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of VectorGraphic>()
+  set a to createListOfVectorGraphics()
+  variable b set to new Array2D<of Int>(40, 30, white)
+  set b to createBlockGraphicsArray()
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  a = (await _stdlib.createListOfVectorGraphics());
+  let b = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  b = (await _stdlib.createBlockGraphicsArray());
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
   });
 });

@@ -52,7 +52,7 @@
 
 
 <div class="step" id="step1"><h1>Step 1: load the starting code</h1>
-    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 9225afd4f61281809de87122d11592501e4491beffbbf0676afba7bdb6fa9121 Elan 2.0.0-alpha guest default_profile valid
+    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 818d78d3b10625472bbbb264a5102cfabf64da144175abb392bb971832f9b6b3 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable points set to 1000
@@ -154,7 +154,7 @@ end function
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue.keys()[(number/4).floor()]
+  variable rank set to rankValue.keys()[divAsInteger(number, 4)]
   variable suit set to intAsSuit(number mod 4)
   return new Card(rank, suit)
 end function
@@ -207,7 +207,7 @@ function htmlForCard(card as Card) returns String
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridByRank[rank]
-      if location is "royal" then
+      if location.isSameValueAs("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
@@ -327,7 +327,7 @@ abstract class Player
   procedure draw()
     variable newCard set to dealCard(random())
     call property.cards.append(newCard)
-    if newCard.rank is "A" then
+    if newCard.rank.isSameValueAs("A") then
       call addAce()
     else
       set property.handTotal to property.handTotal + newCard.value
@@ -441,11 +441,11 @@ class HumanPlayer inherits Player
   procedure nextAction(dealerFaceCard as Card)
     variable key set to ""
     call clearKeyBuffer()
-    while key is ""
+    while key.isSameValueAs("")
       set key to waitForKey()
-      if key is "d" then
+      if key.isSameValueAs("d") then
         call draw()
-      elif key is "s" then
+      elif key.isSameValueAs("s") then
         call stand()
       else
         set key to ""

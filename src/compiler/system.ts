@@ -196,6 +196,10 @@ export class System {
       return true;
     }
 
+    if (typeof o1 === "string" || typeof o2 === "string") {
+      return o1 === o2;
+    }
+
     if (o1?.constructor?.name !== o2?.constructor?.name) {
       return false;
     }

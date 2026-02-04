@@ -20,14 +20,14 @@ suite("Dictionary", () => {
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -52,14 +52,14 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -86,7 +86,7 @@ enum Fruit apple, orange, pear
 
 main
   variable a set to [Fruit.apple:1, Fruit.orange:3, Fruit.pear:10]
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -97,7 +97,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = system.dictionary([[Fruit.apple, 1], [Fruit.orange, 3], [Fruit.pear, 10]]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -122,14 +122,14 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  print a["z"]
+  call printNoLine(a["z"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.print(system.safeIndex(a, "z"));
+  await _stdlib.printNoLine(system.safeIndex(a, "z"));
 }
 return [main, _tests];}`;
 
@@ -154,14 +154,14 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
-  print a["b"]["z"]
+  call printNoLine(a["b"]["z"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  await system.print(system.safeIndex(system.safeIndex(a, "b"), "z"));
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, "b"), "z"));
 }
 return [main, _tests];}`;
 
@@ -188,7 +188,7 @@ main
   variable a set to ["a":1, "b":3, "z":10]
   variable b set to empty List<of String>
   set b to a.keys()
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -197,7 +197,7 @@ async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = system.initialise(_stdlib.List.emptyInstance());
   b = a.keys();
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -222,16 +222,16 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  print a.hasKey("b")
-  print a.hasKey("d")
+  call printNoLine(a.hasKey("b"))
+  call printNoLine(a.hasKey("d"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.print(a.hasKey("b"));
-  await system.print(a.hasKey("d"));
+  await _stdlib.printNoLine(a.hasKey("b"));
+  await _stdlib.printNoLine(a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -256,14 +256,14 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  print a.values()
+  call printNoLine(a.values())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.print(a.values());
+  await _stdlib.printNoLine(a.values());
 }
 return [main, _tests];}`;
 
@@ -290,7 +290,7 @@ main
   variable a set to ["a":1, "b":3, "z":10]
   call a.put("b", 4)
   call a.put("d", 2)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -299,7 +299,7 @@ async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.put("b", 4);
   a.put("d", 2);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -326,7 +326,7 @@ main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   call a.put("b", ["c":4])
   call a["a"].put("x", 2)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -335,7 +335,7 @@ async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
   a.put("b", system.dictionary([["c", 4]]));
   system.safeIndex(a, "a").put("x", 2);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -361,7 +361,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":1, "b":3, "z":10]
   call a.removeAt("b")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -369,7 +369,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.removeAt("b");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -395,7 +395,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
   call a["b"].removeAt("b")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -403,7 +403,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
   system.safeIndex(a, "b").removeAt("b");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -429,7 +429,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":1, "b":3, "z":10]
   call a.removeAt("c")
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -437,7 +437,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.removeAt("c");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -465,9 +465,9 @@ main
   call a.put("Foo", 1)
   call a.put("Bar", 3)
   variable k set to a.keys()
-  print k.length()
-  print a["Foo"]
-  print a["Bar"]
+  call printNoLine(k.length())
+  call printNoLine(a["Foo"])
+  call printNoLine(a["Bar"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -477,9 +477,9 @@ async function main() {
   a.put("Foo", 1);
   a.put("Bar", 3);
   let k = a.keys();
-  await system.print(k.length());
-  await system.print(system.safeIndex(a, "Foo"));
-  await system.print(system.safeIndex(a, "Bar"));
+  await _stdlib.printNoLine(k.length());
+  await _stdlib.printNoLine(system.safeIndex(a, "Foo"));
+  await _stdlib.printNoLine(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -508,9 +508,9 @@ main
   call a.put("Bar", new Dictionary<of String, Int>())
   call a["Bar"].put("bb", 3)
   variable k set to a.keys()
-  print k.length()
-  print a["Foo"]
-  print a["Bar"]
+  call printNoLine(k.length())
+  call printNoLine(a["Foo"])
+  call printNoLine(a["Bar"])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -521,9 +521,9 @@ async function main() {
   a.put("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
   system.safeIndex(a, "Bar").put("bb", 3);
   let k = a.keys();
-  await system.print(k.length());
-  await system.print(system.safeIndex(a, "Foo"));
-  await system.print(system.safeIndex(a, "Bar"));
+  await _stdlib.printNoLine(k.length());
+  await _stdlib.printNoLine(system.safeIndex(a, "Foo"));
+  await _stdlib.printNoLine(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -553,9 +553,9 @@ main
   call a.put(Fruit.apple, 1)
   call a.put(Fruit.orange, 3)
   variable k set to a.keys()
-  print k.length()
-  print a[Fruit.apple]
-  print a[Fruit.orange]
+  call printNoLine(k.length())
+  call printNoLine(a[Fruit.apple])
+  call printNoLine(a[Fruit.orange])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -569,9 +569,9 @@ async function main() {
   a.put(Fruit.apple, 1);
   a.put(Fruit.orange, 3);
   let k = a.keys();
-  await system.print(k.length());
-  await system.print(system.safeIndex(a, Fruit.apple));
-  await system.print(system.safeIndex(a, Fruit.orange));
+  await _stdlib.printNoLine(k.length());
+  await _stdlib.printNoLine(system.safeIndex(a, Fruit.apple));
+  await _stdlib.printNoLine(system.safeIndex(a, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -603,9 +603,9 @@ main
   call a.put(r1, 1)
   call a.put(r2, 2)
   
-  print a[r1]
-  print a[r2]
-  print a[r3]
+  call printNoLine(a[r1])
+  call printNoLine(a[r2])
+  call printNoLine(a[r3])
 end main
 
 record Point
@@ -622,9 +622,9 @@ async function main() {
   let r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a.put(r1, 1);
   a.put(r2, 2);
-  await system.print(system.safeIndex(a, r1));
-  await system.print(system.safeIndex(a, r2));
-  await system.print(system.safeIndex(a, r3));
+  await _stdlib.printNoLine(system.safeIndex(a, r1));
+  await _stdlib.printNoLine(system.safeIndex(a, r2));
+  await _stdlib.printNoLine(system.safeIndex(a, r3));
 }
 
 class Point {
@@ -664,12 +664,12 @@ main
   call a.put(r1, 1)
   call a.put(r2, 2)
   
-  print a[r1]
-  print a.keys().length()
+  call printNoLine(a[r1])
+  call printNoLine(a.keys().length())
 
   call a.removeAt(r1)
 
-  print a.keys().length()
+  call printNoLine(a.keys().length())
 end main
 
 record Point
@@ -685,10 +685,10 @@ async function main() {
   let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a.put(r1, 1);
   a.put(r2, 2);
-  await system.print(system.safeIndex(a, r1));
-  await system.print(a.keys().length());
+  await _stdlib.printNoLine(system.safeIndex(a, r1));
+  await _stdlib.printNoLine(a.keys().length());
   a.removeAt(r1);
-  await system.print(a.keys().length());
+  await _stdlib.printNoLine(a.keys().length());
 }
 
 class Point {
@@ -717,18 +717,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "210");
   });
 
-  test("Pass_EmptyDictionary", async () => {
+  test("Pass_EmptyDictionaryByValue", async () => {
     const code = `${testHeader}
 
 main
   variable a set to empty Dictionary<of String, Int>
   variable b set to empty Dictionary<of String, Int>
   call a.put("a", 3)
-  print a
-  print b
-  print a is b
-  print a is empty Dictionary<of String, Int>
-  print b is empty Dictionary<of String, Int>
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty Dictionary<of String, Int>))
+  call printNoLine(b.isSameValueAs(empty Dictionary<of String, Int>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -737,11 +737,11 @@ async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   a.put("a", 3);
-  await system.print(a);
-  await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -761,18 +761,62 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:3][]falsefalsetrue");
   });
 
-  test("Pass_Empty2dDictionary", async () => {
+  test("Pass_EmptyDictionaryByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty Dictionary<of String, Int>
+  variable b set to empty Dictionary<of String, Int>
+  call a.put("a", 3)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty Dictionary<of String, Int>))
+  call printNoLine(b.isSameReferenceAs(empty Dictionary<of String, Int>))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.put("a", 3);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:3][]falsefalsefalse");
+  });
+
+  test("Pass_Empty2dDictionaryByValue", async () => {
     const code = `${testHeader}
 
 main
   variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
   variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
   call a.put("a", ["a":1])
-  print a
-  print b
-  print a is b
-  print a is empty Dictionary<of String, Dictionary<of String, Int>>
-  print b is empty Dictionary<of String, Dictionary<of String, Int>>
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>))
+  call printNoLine(b.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -781,11 +825,11 @@ async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   a.put("a", system.dictionary([["a", 1]]));
-  await system.print(a);
-  await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -803,6 +847,50 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsetrue");
+  });
+
+  test("Pass_Empty2dDictionaryByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
+  variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
+  call a.put("a", ["a":1])
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty Dictionary<of String, Dictionary<of String, Int>>))
+  call printNoLine(b.isSameReferenceAs(empty Dictionary<of String, Dictionary<of String, Int>>))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  a.put("a", system.dictionary([["a", 1]]));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsefalse");
   });
 
   test("Pass_SetInMain", async () => {
@@ -945,7 +1033,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "a":10]
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -968,7 +1056,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3.1, "c":10]
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -993,7 +1081,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, 10:10]
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1018,7 +1106,7 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  print a["c"]
+  call printNoLine(a["c"])
 end main
 `;
 
@@ -1093,8 +1181,8 @@ main
   variable a set to ["a":1, "b":3, "z":10]
   variable b set to a.withPut("b", 4)
   variable c set to b.withPut("d", 2)
-  print a
-  print c
+  call printNoLine(a)
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1103,8 +1191,8 @@ async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = a.withPut("b", 4);
   let c = b.withPut("d", 2);
-  await system.print(a);
-  await system.print(c);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -1130,8 +1218,8 @@ return [main, _tests];}`;
 main
   variable a set to ["a":1, "b":3, "z":10]
   variable b set to a.withRemoveAt("b")
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1139,8 +1227,8 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = a.withRemoveAt("b");
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1170,9 +1258,9 @@ main
   variable s42 set to "42"
   call di.put(i42, 99)
   call ds.put(s42, 98)
-  print "{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}"
-  print "{di} {ds}"
-  print "{di.keys()} {di.keys().contains(42)}"
+  call printNoLine("{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}")
+  call printNoLine("{di} {ds}")
+  call printNoLine("{di.keys()} {di.keys().contains(42)}")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1184,9 +1272,9 @@ async function main() {
   let s42 = "42";
   di.put(i42, 99);
   ds.put(s42, 98);
-  await system.print(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
-  await system.print(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
-  await system.print(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
 }
 return [main, _tests];}`;
 
@@ -1212,8 +1300,8 @@ return [main, _tests];}`;
 main
   variable a set to ["a":1, "b":3, "z":10]
   variable b set to a.asDictionaryImmutable()
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1221,8 +1309,8 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = a.asDictionaryImmutable();
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1272,7 +1360,7 @@ end main
 
 main
     variable a set to new Dictionary()
-    print a
+    call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(

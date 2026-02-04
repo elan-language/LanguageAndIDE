@@ -20,8 +20,8 @@ suite("Interface", () => {
 
 main
   variable x set to new Bar()
-  print x.prop
-  print x.func()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -41,7 +41,7 @@ class Bar inherits Foo
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
   property prop as Int
@@ -51,8 +51,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print(x.prop);
-  await system.print((await x.func()));
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
   await x.proc();
 }
 
@@ -86,7 +86,7 @@ class Bar {
   }
 
   async proc() {
-    await system.print(2);
+    await _stdlib.printNoLine(2);
   }
 
   prop = 0;
@@ -115,8 +115,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.prop
-  print x.func()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -142,7 +142,7 @@ class Bar inherits Foo2
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
   property prop as Int
@@ -152,8 +152,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print(x.prop);
-  await system.print((await x.func()));
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
   await x.proc();
 }
 
@@ -195,7 +195,7 @@ class Bar {
   }
 
   async proc() {
-    await system.print(2);
+    await _stdlib.printNoLine(2);
   }
 
   prop = 0;
@@ -224,8 +224,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.prop
-  print x.func()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -251,7 +251,7 @@ class Bar inherits Foo, Foo1, Foo2
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
   property prop as Int
@@ -261,8 +261,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print(x.prop);
-  await system.print((await x.func()));
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
   await x.proc();
 }
 
@@ -304,7 +304,7 @@ class Bar {
   }
 
   async proc() {
-    await system.print(2);
+    await _stdlib.printNoLine(2);
   }
 
   prop = 0;
@@ -333,8 +333,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print func1(x)
-  print func2(x)
+  call printNoLine(func1(x))
+  call printNoLine(func2(x))
 end main
 
 function func1(f as Foo1) returns Int
@@ -371,8 +371,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await global.func1(x)));
-  await system.print((await global.func2(x)));
+  await _stdlib.printNoLine((await global.func1(x)));
+  await _stdlib.printNoLine((await global.func2(x)));
 }
 
 async function func1(f) {
@@ -441,8 +441,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print func1(x)
-  print func2(x)
+  call printNoLine(func1(x))
+  call printNoLine(func2(x))
 end main
 
 function func1(f as Foo1) returns Int
@@ -479,8 +479,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await global.func1(x)));
-  await system.print((await global.func2(x)));
+  await _stdlib.printNoLine((await global.func1(x)));
+  await _stdlib.printNoLine((await global.func2(x)));
 }
 
 async function func1(f) {
@@ -549,8 +549,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print func1(x)
-  print func2(x)
+  call printNoLine(func1(x))
+  call printNoLine(func2(x))
 end main
 
 function func1(f as Foo1) returns Int
@@ -587,8 +587,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print((await global.func1(x)));
-  await system.print((await global.func2(x)));
+  await _stdlib.printNoLine((await global.func1(x)));
+  await _stdlib.printNoLine((await global.func2(x)));
 }
 
 async function func1(f) {
@@ -657,8 +657,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.foo
-  print x.foo.f
+  call printNoLine(x.foo)
+  call printNoLine(x.foo.f)
 end main
 
 interface Foo
@@ -681,8 +681,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.print(x.foo);
-  await system.print(x.foo.f);
+  await _stdlib.printNoLine(x.foo);
+  await _stdlib.printNoLine(x.foo.f);
 }
 
 class Foo {
@@ -918,7 +918,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Bar()
-  print x.func()
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -937,7 +937,7 @@ class Bar inherits Foo
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
 end class`;
@@ -961,7 +961,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.prop
+  call printNoLine(x.prop)
   call x.proc()
 end main
 
@@ -977,7 +977,7 @@ class Bar inherits Foo
   end constructor
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
   property prop as Int
@@ -1002,8 +1002,8 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.prop
-  print x.func()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
 end main
 
 interface Foo
@@ -1043,7 +1043,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.func()
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -1065,7 +1065,7 @@ class Bar inherits Foo
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
 end class`;
@@ -1089,7 +1089,7 @@ end class`;
 
 main
   variable x set to new Bar()
-  print x.func()
+  call printNoLine(x.func())
   call x.proc()
 end main
 
@@ -1111,7 +1111,7 @@ class Bar inherits Foo, Foo1
   end function
 
   procedure proc()
-    print 2
+    call printNoLine(2)
   end procedure
 
 end class`;
@@ -1314,7 +1314,7 @@ end interface`;
 
 main
   variable x set to new Bar()
-  print func1(x)
+  call printNoLine(func1(x))
 end main
 
 function func1(f as Foo1) returns Int

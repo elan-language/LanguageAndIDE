@@ -19,9 +19,9 @@ suite("Associations and Defaults", () => {
 
 main
   variable g set to new Game()
-  print g.p2
-  print g.p1
-  print g.previousScores
+  call printNoLine(g.p2)
+  call printNoLine(g.p1)
+  call printNoLine(g.previousScores)
 end main
 
 class Game
@@ -59,9 +59,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(g.p2);
-  await system.print(g.p1);
-  await system.print(g.previousScores);
+  await _stdlib.printNoLine(g.p2);
+  await _stdlib.printNoLine(g.p1);
+  await _stdlib.printNoLine(g.previousScores);
 }
 
 class Game {
@@ -136,8 +136,8 @@ return [main, _tests];}`;
 
 main
   variable g set to new Foo()
-  print g.p1
-  print g.p2
+  call printNoLine(g.p1)
+  call printNoLine(g.p2)
 end main
 
 class Foo
@@ -154,8 +154,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Foo()._initialise());
-  await system.print(g.p1);
-  await system.print(g.p2);
+  await _stdlib.printNoLine(g.p1);
+  await _stdlib.printNoLine(g.p2);
 }
 
 class Foo {
@@ -195,17 +195,17 @@ return [main, _tests];}`;
 
 main
   variable g set to new Game()
-  print g.i
-  print g.f
-  print g.b
-  print g.s
-  print g.li
-  print g.ds
-  print g.dsi
-  print g.ai
-  print g.t
-  print g.ff("a", "b")
-  print "aa".matchesRegExp(g.r)
+  call printNoLine(g.i)
+  call printNoLine(g.f)
+  call printNoLine(g.b)
+  call printNoLine(g.s)
+  call printNoLine(g.li)
+  call printNoLine(g.ds)
+  call printNoLine(g.dsi)
+  call printNoLine(g.ai)
+  call printNoLine(g.t)
+  call printNoLine(g.ff("a", "b"))
+  call printNoLine("aa".matchesRegExp(g.r))
 end main
 
 class Game
@@ -234,17 +234,17 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(g.i);
-  await system.print(g.f);
-  await system.print(g.b);
-  await system.print(g.s);
-  await system.print(g.li);
-  await system.print(g.ds);
-  await system.print(g.dsi);
-  await system.print(g.ai);
-  await system.print(g.t);
-  await system.print((await g.ff("a", "b")));
-  await system.print(_stdlib.matchesRegExp("aa", g.r));
+  await _stdlib.printNoLine(g.i);
+  await _stdlib.printNoLine(g.f);
+  await _stdlib.printNoLine(g.b);
+  await _stdlib.printNoLine(g.s);
+  await _stdlib.printNoLine(g.li);
+  await _stdlib.printNoLine(g.ds);
+  await _stdlib.printNoLine(g.dsi);
+  await _stdlib.printNoLine(g.ai);
+  await _stdlib.printNoLine(g.t);
+  await _stdlib.printNoLine((await g.ff("a", "b")));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
@@ -306,16 +306,16 @@ return [main, _tests];}`;
 main
   variable p set to new Player()
   variable g set to p.g
-  print g.i
-  print g.f
-  print g.b
-  print g.s
-  print g.li
-  print g.ds
-  print g.dsi
-  print g.ai
-  print g.t
-  print g.r
+  call printNoLine(g.i)
+  call printNoLine(g.f)
+  call printNoLine(g.b)
+  call printNoLine(g.s)
+  call printNoLine(g.li)
+  call printNoLine(g.ds)
+  call printNoLine(g.dsi)
+  call printNoLine(g.ai)
+  call printNoLine(g.t)
+  call printNoLine(g.r)
 end main
 
 class Player
@@ -351,16 +351,16 @@ const global = new class {};
 async function main() {
   let p = system.initialise(await new Player()._initialise());
   let g = p.g;
-  await system.print(g.i);
-  await system.print(g.f);
-  await system.print(g.b);
-  await system.print(g.s);
-  await system.print(g.li);
-  await system.print(g.ds);
-  await system.print(g.dsi);
-  await system.print(g.ai);
-  await system.print(g.t);
-  await system.print(g.r);
+  await _stdlib.printNoLine(g.i);
+  await _stdlib.printNoLine(g.f);
+  await _stdlib.printNoLine(g.b);
+  await _stdlib.printNoLine(g.s);
+  await _stdlib.printNoLine(g.li);
+  await _stdlib.printNoLine(g.ds);
+  await _stdlib.printNoLine(g.dsi);
+  await _stdlib.printNoLine(g.ai);
+  await _stdlib.printNoLine(g.t);
+  await _stdlib.printNoLine(g.r);
 }
 
 class Player {
@@ -437,7 +437,7 @@ return [main, _tests];}`;
 
 main
   variable g set to empty Game
-  print g.i
+  call printNoLine(g.i)
 end main
 
 class Game
@@ -457,7 +457,7 @@ end class`;
 const global = new class {};
 async function main() {
   let g = Game.emptyInstance();
-  await system.print(g.i);
+  await _stdlib.printNoLine(g.i);
 }
 
 class Game {
@@ -498,8 +498,8 @@ return [main, _tests];}`;
 
 main
   variable g set to new Game()
-  print g.p1
-  print g.previousGame
+  call printNoLine(g.p1)
+  call printNoLine(g.previousGame)
 end main
 
 class Game
@@ -532,8 +532,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(g.p1);
-  await system.print(g.previousGame);
+  await _stdlib.printNoLine(g.p1);
+  await _stdlib.printNoLine(g.previousGame);
 }
 
 class Game {
@@ -599,18 +599,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A game");
   });
 
-  test("Pass_defaultKeywordToTestValue", async () => {
+  test("Pass_emptyKeywordToTestValue", async () => {
     const code = `${testHeader}
 
 main
   variable g set to new Game()
-  print g.p1 is empty Player
-  print g.p2 is empty Player
-  print g.previousGame is empty Game
-  print g.previousScores is empty ListImmutable<of Int>
-  print g.score is empty Int
-  print g.best is empty Int
-  print g.r is empty RegExp
+  call printNoLine(g.p1.isSameValueAs(empty Player))
+  call printNoLine(g.p2.isSameValueAs(empty Player))
+  call printNoLine(g.previousGame.isSameValueAs(empty Game))
+  call printNoLine(g.previousScores.isSameValueAs(empty ListImmutable<of Int>))
+  call printNoLine(g.score is empty Int)
+  call printNoLine(g.best is empty Int)
+  call printNoLine(g.r is empty RegExp)
 end main
 
 class Game
@@ -653,13 +653,13 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(system.objectEquals(g.p1, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.p2, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  await system.print(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(g.score === 0);
-  await system.print(g.best === 0);
-  await system.print(g.r === system.emptyRegExp());
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(g.score === 0);
+  await _stdlib.printNoLine(g.best === 0);
+  await _stdlib.printNoLine(g.r === system.emptyRegExp());
 }
 
 class Game {
@@ -741,14 +741,156 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
   });
 
+  test("Pass_emptyKeywordToTestReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable g set to new Game()
+  call printNoLine(g.p1.isSameReferenceAs(empty Player))
+  call printNoLine(g.p2.isSameReferenceAs(empty Player))
+  call printNoLine(g.previousGame.isSameReferenceAs(empty Game))
+  call printNoLine(g.previousScores.isSameReferenceAs(empty ListImmutable<of Int>))
+  call printNoLine(g.score.isSameReferenceAs(empty Int))
+  call printNoLine(g.best.isSameReferenceAs(empty Int))
+  call printNoLine(g.r.isSameReferenceAs(empty RegExp))
+end main
+
+class Game
+  constructor()
+    set property.score to 1
+  end constructor
+
+  property score as Float
+  property best as Float
+
+  property p1 as Player
+  property p2 as Player
+
+  property previousGame as Game
+
+  property previousScores as ListImmutable<of Int>
+
+  property r as RegExp
+
+  function asString() returns String
+    return "A game"
+  end function
+
+end class
+
+class Player
+  constructor(name as String)
+    set property.name to name
+  end constructor
+
+  property name as String
+
+  function asString() returns String
+    return property.name
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let g = system.initialise(await new Game()._initialise());
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.p1, Player.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.p2, Player.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.previousGame, Game.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.score, 0));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.best, 0));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.r, system.emptyRegExp()));
+}
+
+class Game {
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
+
+  async _initialise() {
+    this.score = 1;
+    return this;
+  }
+
+  score = 0;
+
+  best = 0;
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Player.emptyInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  _p2;
+  get p2() {
+    return this._p2 ??= Player.emptyInstance();
+  }
+  set p2(p2) {
+    this._p2 = p2;
+  }
+
+  _previousGame;
+  get previousGame() {
+    return this._previousGame ??= Game.emptyInstance();
+  }
+  set previousGame(previousGame) {
+    this._previousGame = previousGame;
+  }
+
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+
+  r = system.emptyRegExp();
+
+  async asString() {
+    return "A game";
+  }
+
+}
+
+class Player {
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
+
+  async _initialise(name) {
+    this.name = name;
+    return this;
+  }
+
+  name = "";
+
+  async asString() {
+    return this.name;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalsefalsetruetrue");
+  });
+
   test("Pass_defaultValueCanBeAssigned", async () => {
     const code = `${testHeader}
 
 main
   variable g set to new Game()
-  print g.score
+  call printNoLine(g.score)
   call g.setScore(empty Int)
-  print g.score
+  call printNoLine(g.score)
 end main
 
 class Game
@@ -793,9 +935,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(g.score);
+  await _stdlib.printNoLine(g.score);
   await g.setScore(0);
-  await system.print(g.score);
+  await _stdlib.printNoLine(g.score);
 }
 
 class Game {
@@ -879,19 +1021,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "100");
   });
 
-  test("Pass_defaultForStandardDataStructures", async () => {
+  test("Pass_emptyForStandardDataStructuresByValue", async () => {
     const code = `${testHeader}
 
 main
   variable f set to new Foo()
-  print f.a
-  print f.b
-  print f.c
-  print f.d
-  print f.a is empty ListImmutable<of Int>
-  print f.b is empty String
-  print f.c is empty Dictionary<of String,Int>
-  print f.d is empty List<of Int>
+  call printNoLine(f.a)
+  call printNoLine(f.b)
+  call printNoLine(f.c)
+  call printNoLine(f.d)
+  call printNoLine(f.a.isSameValueAs(empty ListImmutable<of Int>))
+  call printNoLine(f.b.isSameValueAs(empty String))
+  call printNoLine(f.c.isSameValueAs(empty Dictionary<of String,Int>))
+  call printNoLine(f.d.isSameValueAs(empty List<of Int>))
 end main
 
 class Foo
@@ -913,14 +1055,14 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f.a);
-  await system.print(f.b);
-  await system.print(f.c);
-  await system.print(f.d);
-  await system.print(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(f.b === "");
-  await system.print(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(f.a);
+  await _stdlib.printNoLine(f.b);
+  await _stdlib.printNoLine(f.c);
+  await _stdlib.printNoLine(f.d);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.b, ""));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
@@ -962,13 +1104,96 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}[][]truetruetruetrue");
   });
 
+  test("Pass_emptyForStandardDataStructuresByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.a)
+  call printNoLine(f.b)
+  call printNoLine(f.c)
+  call printNoLine(f.d)
+  call printNoLine(f.a.isSameReferenceAs(empty ListImmutable<of Int>))
+  call printNoLine(f.b.isSameReferenceAs(empty String))
+  call printNoLine(f.c.isSameReferenceAs(empty Dictionary<of String,Int>))
+  call printNoLine(f.d.isSameReferenceAs(empty List<of Int>))
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as ListImmutable<of Int>
+  property b as String
+  property c as Dictionary<of String, Int>
+  property d as List<of Int>
+
+  function asString() returns String
+    return "A Foo"
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine(f.a);
+  await _stdlib.printNoLine(f.b);
+  await _stdlib.printNoLine(f.c);
+  await _stdlib.printNoLine(f.d);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.b, ""));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+
+  b = "";
+
+  c = system.initialise(_stdlib.Dictionary.emptyInstance());
+
+  d = system.initialise(_stdlib.List.emptyInstance());
+
+  async asString() {
+    return "A Foo";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{}[][]falsetruefalsefalse");
+  });
+
   test("Pass_PropertyOfAbstractType", async () => {
     const code = `${testHeader}
 
 main
   variable g set to new Game()
   variable p set to g.p1
-  print p.ucName()
+  call printNoLine(p.ucName())
 end main
 
 class Game
@@ -994,7 +1219,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
-  await system.print((await p.ucName()));
+  await _stdlib.printNoLine((await p.ucName()));
 }
 
 class Game {
@@ -1076,7 +1301,7 @@ class Game
   procedure something()
     variable a set to 1
     set a to property.p1[0]
-    print a
+    call printNoLine(a)
   end procedure
 
 end class`;
@@ -1101,7 +1326,7 @@ class Game {
   async something() {
     let a = 1;
     a = system.safeIndex(this.p1, 0);
-    await system.print(a);
+    await _stdlib.printNoLine(a);
   }
 
 }
@@ -1134,7 +1359,7 @@ end main
 class Foo
   
   procedure pp()
-    print 1
+    call printNoLine(1)
   end procedure
 
 end class
@@ -1162,7 +1387,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async _initialise() { return this; }
   async pp() {
-    await system.print(1);
+    await _stdlib.printNoLine(1);
   }
 
 }
@@ -1421,7 +1646,7 @@ end main
 class Foo
   
   procedure pp()
-    print 1
+    call printNoLine(1)
   end procedure
 
 end class
@@ -1465,7 +1690,7 @@ end main
 class Foo
   
   procedure pp()
-    print 1
+    call printNoLine(1)
   end procedure
 
 end class
@@ -1512,7 +1737,7 @@ end main
 class Foo
   
   procedure pp()
-    print 1
+    call printNoLine(1)
   end procedure
 
 end class

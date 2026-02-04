@@ -79,6 +79,7 @@ import {
   isProcedure,
   isProperty,
   isSymbol,
+  isValueTypeExcludingString,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -100,6 +101,7 @@ import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { TestType } from "./symbols/test-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -701,6 +703,23 @@ export function mustBeCoercibleType(
   mustBeAssignableType(lhs, rhs, compileErrors, location);
 }
 
+export function mustBeValueType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  // for compare allow int and floats
+  if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs' or '.isSameReferenceAs'`,
+        location,
+      ),
+    );
+  }
+}
+
 export function mustBeKnownOperation(op: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
@@ -749,6 +768,22 @@ export function mustBeIntegerType(
 ) {
   mustBeAssignableType(IntType.Instance, lhs, compileErrors, location);
   mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
+}
+
+export function mustNotBeIntegerTypesToDivide(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lhs === IntType.Instance && rhs === IntType.Instance) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInteger or divAsFloat.",
+        location,
+      ),
+    );
+  }
 }
 
 export function mustBeImmutableType(
@@ -918,6 +953,10 @@ export function mustBeCompatibleDefinitionNode(
   const rst = rhs.symbolType();
 
   mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location);
+
+  if (rst instanceof TestType) {
+    compileErrors.push(new SyntaxCompileError(`Cannot assign a test to a variable.`, location));
+  }
 }
 
 export function mustBeCompatibleNode(

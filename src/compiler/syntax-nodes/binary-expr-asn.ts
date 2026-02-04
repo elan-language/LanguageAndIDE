@@ -7,7 +7,7 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
   getGlobalScope,
-  isValueType,
+  isValueTypeExcludingString,
   mostPreciseSymbol,
 } from "../../compiler/symbols/symbol-helpers";
 import {
@@ -17,6 +17,8 @@ import {
   mustBeIntegerType,
   mustBeKnownOperation,
   mustBeNumberTypes,
+  mustBeValueType,
+  mustNotBeIntegerTypesToDivide,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperation } from "./ast-helpers";
@@ -48,7 +50,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
       case OperationSymbol.Divide:
-      case OperationSymbol.Pow:
         return true;
     }
     return false;
@@ -113,8 +114,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return "%";
       case OperationSymbol.Divide:
         return "/";
-      case OperationSymbol.Pow:
-        return "**";
     }
     return " ";
   }
@@ -143,6 +142,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isEqualityOp(opSymbol)) {
+      mustBeValueType(lst, rst, this.compileErrors, this.fieldId);
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 
@@ -158,13 +158,20 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
+    if (opSymbol === OperationSymbol.Divide) {
+      mustNotBeIntegerTypesToDivide(lst, rst, this.compileErrors, this.fieldId);
+    }
+
     if (opSymbol === OperationSymbol.Div) {
       adviseAgainstDiv(this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    if (opSymbol === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
+    if (
+      opSymbol === OperationSymbol.Equals &&
+      (isValueTypeExcludingString(lst) || isValueTypeExcludingString(rst))
+    ) {
       return `${lhsCode} ${this.opToJs(opSymbol)} ${rhsCode}`;
     }
 
@@ -189,8 +196,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Minus:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
-        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
-      case OperationSymbol.Pow:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;

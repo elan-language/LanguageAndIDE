@@ -20,38 +20,38 @@ suite("Stack", () => {
 
 main
   variable st set to new Stack<of String>()
-  print st.length()
+  call printNoLine(st.length())
   set st to st.push("apple")
   set st to st.push("pear")
-  print st
-  print st.length()
-  print st.peek()
+  call printNoLine(st)
+  call printNoLine(st.length())
+  call printNoLine(st.peek())
   variable fruit set to ""
   set fruit, st to st.pop()
-  print fruit
+  call printNoLine(fruit)
   set fruit, st to st.pop()
-  print fruit
-  print st.length()
-  print st
+  call printNoLine(fruit)
+  call printNoLine(st.length())
+  call printNoLine(st)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.print(st.length());
+  await _stdlib.printNoLine(st.length());
   st = st.push("apple");
   st = st.push("pear");
-  await system.print(st);
-  await system.print(st.length());
-  await system.print(st.peek());
+  await _stdlib.printNoLine(st);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st.peek());
   let fruit = "";
   [fruit, st] = st.pop();
-  await system.print(fruit);
+  await _stdlib.printNoLine(fruit);
   [fruit, st] = st.pop();
-  await system.print(fruit);
-  await system.print(st.length());
-  await system.print(st);
+  await _stdlib.printNoLine(fruit);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st);
 }
 return [main, _tests];}`;
 
@@ -154,14 +154,14 @@ end main`;
 
 main
   variable st set to new Stack<of String>()
-  print st.peek()
+  call printNoLine(st.peek())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.print(st.peek());
+  await _stdlib.printNoLine(st.peek());
 }
 return [main, _tests];}`;
 
@@ -189,14 +189,14 @@ return [main, _tests];}`;
 
 main
   variable st set to new Stack<of String>()
-  print st.pop()
+  call printNoLine(st.pop())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.print(st.pop());
+  await _stdlib.printNoLine(st.pop());
 }
 return [main, _tests];}`;
 

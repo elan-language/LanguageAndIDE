@@ -1,11 +1,11 @@
-# cdeb1289ded0148926916a4e6ee56b11fcead63b667ba834125499586f3b56bd Elan 2.0.0-alpha guest default_profile valid
+# 6908db3d4fa6dc535f7d0677a9ef304eccdb51583d96c09ac9db2329cc628e26 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
-  while reply.upperCase() isnt "Q"
+  while not reply.upperCase().isSameValueAs("Q")
     set reply to inputString('RETURN for time now or\nUnix time (positive integer) or\nQ to quit')
-    if reply is "" then
-      call printDate((clock()/1000).floor())
+    if reply.isSameValueAs("") then
+      call printDate(divAsInteger(clock(), 1000))
     else
       variable t, d set to parseAsInt(reply)
       if t and (d >= 0) then
@@ -27,11 +27,11 @@ end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
   # get separate values from Unix time
-  constant hour set to ((unixSecs/60).floor()/60).floor() mod 24
-  constant minute set to (unixSecs/60).floor() mod 60
+  constant hour set to (divAsInteger(divAsInteger(unixSecs, 60), 60) mod 24)
+  constant minute set to divAsInteger(unixSecs, 60) mod 60
   constant second set to (unixSecs mod 60)
   # days and years from Unix epoch
-  constant unixDay set to (unixSecs/daySecs).floor()
+  constant unixDay set to divAsInteger(unixSecs, daySecs)
   constant years set to ((unixDay + 1)/365.24).floor()
   # this year and weekday
   constant year set to unixYear + years
@@ -61,7 +61,7 @@ function leap(year as Int) returns Boolean
   variable leapYear set to false
   if (year mod 4) is 0 then
     set leapYear to true
-    if ((year mod 100) is 0) and (((year/100).floor() mod 4) isnt 0) then
+    if ((year mod 100) is 0) and ((divAsInteger(year, 100) mod 4) isnt 0) then
       set leapYear to false
     end if
   end if
@@ -124,9 +124,9 @@ function pad(d as String, p as String, s as String) returns String
   # s: input string
   variable sR set to s
   if p.length() > s.length() then
-    if d.upperCase() is "L" then
+    if d.upperCase().isSameValueAs("L") then
       set sR to (p + s)[(p + s).length() - p.length()..]
-    elif d.upperCase() is "R" then
+    elif d.upperCase().isSameValueAs("R") then
       set sR to (s + p)[..p.length()]
     end if
   end if

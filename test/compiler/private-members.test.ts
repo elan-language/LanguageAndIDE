@@ -19,7 +19,7 @@ suite("Private Members", () => {
 
 main
   variable x set to new Foo()
-  print x
+  call printNoLine(x)
 end main
 
 class Foo
@@ -42,7 +42,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 
 class Foo {
@@ -87,7 +87,7 @@ return [main, _tests];}`;
 main
   variable x set to new Foo()
   call x.testSetP1(5)
-  print x.p1
+  call printNoLine(x.p1)
 end main
 
 class Foo
@@ -111,7 +111,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
   await x.testSetP1(5);
-  await system.print(x.p1);
+  await _stdlib.printNoLine(x.p1);
 }
 
 class Foo {
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.testFf("test")
+  call printNoLine(f.testFf("test"))
 end main
   
 class Foo
@@ -177,7 +177,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await f.testFf("test")));
+  await _stdlib.printNoLine((await f.testFf("test")));
 }
 
 class Foo {
@@ -368,7 +368,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  print f.p2
+  call printNoLine(f.p2)
 end main
 
 class Foo
@@ -408,7 +408,7 @@ end class`;
 
 main
   variable foo set to new Foo()
-  print foo.ff()
+  call printNoLine(foo.ff())
 end main
 
 class Foo

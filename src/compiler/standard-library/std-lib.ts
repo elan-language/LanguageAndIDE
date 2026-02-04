@@ -193,6 +193,22 @@ export class StdLib {
     throw new ElanCompilerError("Not implemented: " + typeof v);
   }
 
+  @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
+  isSameValueAs<T1>(
+    @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
+    @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
+  ): boolean {
+    return this.system.objectEquals(v1, v2);
+  }
+
+  @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
+  isSameReferenceAs<T1>(
+    @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
+    @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
+  ): boolean {
+    return v1 === v2;
+  }
+
   @elanFunction(["value"])
   unicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);
@@ -296,6 +312,21 @@ export class StdLib {
   @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List, [ElanString]))
   split(s: string, separator: string): List<string> {
     return this.system.initialise(new List(s.split(separator)));
+  }
+
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
+  divAsInteger(n1: number, n2: number) {
+    return Math.floor(n1 / n2);
+  }
+
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
+  divAsFloat(n1: number, n2: number) {
+    return n1 / n2;
+  }
+
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
+  power(n1: number, n2: number) {
+    return Math.pow(n1, n2);
   }
 
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
@@ -798,6 +829,20 @@ export class StdLib {
   @elanProcedure([], ProcedureOptions.async)
   async clearBlocks() {
     await this.system!.elanInputOutput.clearBlockGraphics();
+  }
+
+  @elanFunction(
+    [],
+    FunctionOptions.pureAsync,
+    ElanClass(List, [ElanT1Constrained(ElanClass(VectorGraphic))]),
+  )
+  async createListOfVectorGraphics(): Promise<List<VectorGraphic>> {
+    return this.system.initialise(await new List<VectorGraphic>()._initialise());
+  }
+
+  @elanFunction([], FunctionOptions.pureAsync, ElanClass(ElanArray2D, [ElanInt]))
+  async createBlockGraphicsArray(): Promise<ElanArray2D<number>> {
+    return this.system.initialise(await new ElanArray2D<number>()._initialise(40, 30, this.white));
   }
 
   @elanFunction([""], FunctionOptions.pureExtension)

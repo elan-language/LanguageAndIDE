@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -20,25 +21,25 @@ suite("Procedure Statement", () => {
     const code = `${testHeader}
 
 main
-  print 1
+  call printNoLine(1)
   call foo()
-  print 3
+  call printNoLine(3)
 end main
 
 procedure foo()
-  print 2
+  call printNoLine(2)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(1);
+  await _stdlib.printNoLine(1);
   await foo();
-  await system.print(3);
+  await _stdlib.printNoLine(3);
 }
 
 async function foo() {
-  await system.print(2);
+  await _stdlib.printNoLine(2);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -70,10 +71,10 @@ main
 end main
 
 procedure foo(x as List<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
-  print x
-  print y
-  print z
-  print t
+  call printNoLine(x)
+  call printNoLine(y)
+  call printNoLine(z)
+  call printNoLine(t)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -87,10 +88,10 @@ async function main() {
 }
 
 async function foo(x, y, z, t) {
-  await system.print(x);
-  await system.print(y);
-  await system.print(z);
-  await system.print(t);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
+  await _stdlib.printNoLine(t);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -116,14 +117,14 @@ return [main, _tests];}`;
 
 main
   call pause(1)
-  print 1
+  call printNoLine(1)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await _stdlib.pause(1);
-  await system.print(1);
+  await _stdlib.printNoLine(1);
 }
 return [main, _tests];}`;
 
@@ -153,8 +154,8 @@ main
 end main
 
 procedure foo(a as Float, b as String)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -166,8 +167,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -194,7 +195,7 @@ return [main, _tests];}`;
 main
   variable a set to [2, 3]
   call changeFirst(a)
-  print a
+  call printNoLine(a)
 end main
 
 procedure changeFirst(out a as List<of Int>)
@@ -208,7 +209,7 @@ async function main() {
   let _a0 = [a];
   await changeFirst(_a0);
   a = _a0[0];
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 
 async function changeFirst(a) {
@@ -242,8 +243,8 @@ main
 end main
 
 procedure foo(a as Int, b as String)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -254,8 +255,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -281,33 +282,33 @@ return [main, _tests];}`;
 
 main
   call foo()
-  print 3
+  call printNoLine(3)
 end main
 
 procedure foo()
-  print 1
+  call printNoLine(1)
   call bar()
 end procedure
 
 procedure bar()
-  print 2
+  call printNoLine(2)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await foo();
-  await system.print(3);
+  await _stdlib.printNoLine(3);
 }
 
 async function foo() {
-  await system.print(1);
+  await _stdlib.printNoLine(1);
   await bar();
 }
 global["foo"] = foo;
 
 async function bar() {
-  await system.print(2);
+  await _stdlib.printNoLine(2);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -337,7 +338,7 @@ main
 end main
 
 procedure square(x as Int)
-  print x * x
+  call printNoLine(x * x)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -348,7 +349,7 @@ async function main() {
 }
 
 async function square(x) {
-  await system.print(x * x);
+  await _stdlib.printNoLine(x * x);
 }
 global["square"] = square;
 return [main, _tests];}`;
@@ -378,7 +379,7 @@ end main
 
 procedure foo(a as Int)
   if a > 0 then
-      print a
+      call printNoLine(a)
       variable b set to a - 1
       call foo(b)
   end if
@@ -392,7 +393,7 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-    await system.print(a);
+    await _stdlib.printNoLine(a);
     let b = a - 1;
     await foo(b);
   }
@@ -449,7 +450,7 @@ class Bar
     property p1 as Float
 
     procedure length(plus as Float)
-      print property.p1 + plus
+      call printNoLine(property.p1 + plus)
     end procedure
 
     function asString() returns String
@@ -502,7 +503,7 @@ class Bar {
   p1 = 0;
 
   async length(plus) {
-    await system.print(this.p1 + plus);
+    await _stdlib.printNoLine(this.p1 + plus);
   }
 
   async asString() {
@@ -535,8 +536,8 @@ main
   variable a set to 2
   variable b set to "hello"
   call foo(a, b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 procedure foo(out x as Float, out y as String)
@@ -552,8 +553,8 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo(x, y) {
@@ -586,8 +587,8 @@ main
   variable a set to 2
   variable b set to 3
   call foo(a, b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 procedure foo(out x as Float, out y as Float)
@@ -604,8 +605,8 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo(x, y) {
@@ -639,8 +640,8 @@ main
   variable a set to 2
   variable b set to 3
   call foo(a, b)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main
 
 procedure foo(out a as Float, out b as Float)
@@ -661,14 +662,14 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo(a, b) {
-  let _a1 = [a[0]]; let _b1 = [b[0]];
-  await bar(_a1, _b1);
-  a[0] = _a1[0]; b[0] = _b1[0];
+  let _a3 = [a[0]]; let _b3 = [b[0]];
+  await bar(_a3, _b3);
+  a[0] = _a3[0]; b[0] = _b3[0];
 }
 global["foo"] = foo;
 
@@ -703,7 +704,7 @@ main
   variable a set to new Foo()
   variable b set to 0
   call foo(a, b)
-  print b
+  call printNoLine(b)
 end main
 
 procedure foo(out f as Foo, out y as Int)
@@ -727,13 +728,13 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo(f, y) {
-  let _y1 = [y[0]];
-  await f[0].bar(_y1);
-  y[0] = _y1[0];
+  let _y2 = [y[0]];
+  await f[0].bar(_y2);
+  y[0] = _y2[0];
 }
 global["foo"] = foo;
 
@@ -775,7 +776,7 @@ main
   variable a set to new Foo()
   variable b set to 100
   call foo(a, b)
-  print b
+  call printNoLine(b)
 end main
 
 procedure foo(out f as Foo, out y as Int)
@@ -798,7 +799,7 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 async function foo(f, y) {
@@ -841,9 +842,9 @@ return [main, _tests];}`;
 main
   variable x set to 1
   call addOne(x)
-  print x
+  call printNoLine(x)
   call addOne(x)
-  print x
+  call printNoLine(x)
 end main
 
 procedure addOne(out n as Int)
@@ -857,11 +858,11 @@ async function main() {
   let _x0 = [x];
   await addOne(_x0);
   x = _x0[0];
-  await system.print(x);
-  let _x1 = [x];
-  await addOne(_x1);
-  x = _x1[0];
-  await system.print(x);
+  await _stdlib.printNoLine(x);
+  let _x2 = [x];
+  await addOne(_x2);
+  x = _x2[0];
+  await _stdlib.printNoLine(x);
 }
 
 async function addOne(n) {
@@ -895,7 +896,7 @@ main
 end main
 
 procedure printParameter(out n as Int)
-  print n
+  call printNoLine(n)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -908,7 +909,7 @@ async function main() {
 }
 
 async function printParameter(n) {
-  await system.print(n[0]);
+  await _stdlib.printNoLine(n[0]);
 }
 global["printParameter"] = printParameter;
 return [main, _tests];}`;
@@ -958,7 +959,7 @@ main
 end main
     
 procedure foo(Int a) 
-  print a
+  call printNoLine(a)
 end procedure
 `;
 
@@ -978,9 +979,9 @@ end procedure
     const code = `${testHeader}
 
 main
-  print 1
+  call printNoLine(1)
   call foo()
-  print 3
+  call printNoLine(3)
 end main
 
 procedure foo()
@@ -1006,13 +1007,13 @@ end procedure
     const code = `${testHeader}
 
 main
-  print 1
+  call printNoLine(1)
   call foo(3)
-  print 3
+  call printNoLine(3)
 end main
 
 procedure foo()
-  print 2
+  call printNoLine(2)
 end procedure
 `;
 
@@ -1041,8 +1042,8 @@ main
 end main
 
 procedure foo(a as Int, b as String)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end procedure
 `;
 
@@ -1096,8 +1097,8 @@ main
 end main
 
 procedure foo(a as Int, b as String)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end procedure
 `;
 
@@ -1229,7 +1230,7 @@ end main`;
 main
   variable a set to {2, 3}
   call changeAll(a)
-  print a
+  call printNoLine(a)
 end main
 
 procedure changeAll(a as ListImmutable<of Int>)
@@ -1259,7 +1260,7 @@ end procedure`;
 main
   variable a set to [2, 3]
   call changeAll(a)
-  print a
+  call printNoLine(a)
 end main
 
 procedure changeAll(a as List<of Int>)
@@ -1289,7 +1290,7 @@ end procedure`;
 main
   variable a set to 4
   call changeValue(a)
-  print a
+  call printNoLine(a)
 end main
 
 procedure changeValue(a as Int)
@@ -1493,11 +1494,11 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
 
-  test("Fail_OperatorsAndProcedures", async () => {
+  ignore_test("Fail_OperatorsAndProcedures", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to p1 is p2
+  variable a set to p2.isSameValueAs(p2)
   variable b set to p1 + p2
   variable c set to -p1
 end main

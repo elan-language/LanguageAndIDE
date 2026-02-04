@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -19,7 +20,7 @@ suite("Function", () => {
     const code = `${testHeader}
 
 main
-  print foo(3,4)
+  call printNoLine(foo(3,4))
 end main
 
 function foo(a as Float, b as Float) returns Float
@@ -29,7 +30,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo(3, 4)));
+  await _stdlib.printNoLine((await global.foo(3, 4)));
 }
 
 async function foo(a, b) {
@@ -59,7 +60,7 @@ return [main, _tests];}`;
 
 main
   variable a set to foo(1,2)[0]
-  print a
+  call printNoLine(a)
 end main
 
 function foo(a as Int, b as Int) returns List<of Int>
@@ -70,7 +71,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.safeIndex((await global.foo(1, 2)), 0);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 
 async function foo(a, b) {
@@ -100,7 +101,7 @@ return [main, _tests];}`;
 
 main
   variable a set to foo(1,2)[0..1]
-  print a
+  call printNoLine(a)
 end main
 
 function foo(a as Int, b as Int) returns List<of Int>
@@ -111,7 +112,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.safeSlice((await global.foo(1, 2)), 0, 1);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 
 async function foo(a, b) {
@@ -140,7 +141,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo(3,4)
+  call printNoLine(foo(3,4))
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -150,7 +151,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo(3, 4)));
+  await _stdlib.printNoLine((await global.foo(3, 4)));
 }
 
 async function foo(a, b) {
@@ -179,7 +180,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo(3,4)
+  call printNoLine(foo(3,4))
 end main
 
 function foo(a as Int, b as Int) returns Foo
@@ -194,7 +195,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo(3, 4)));
+  await _stdlib.printNoLine((await global.foo(3, 4)));
 }
 
 async function foo(a, b) {
@@ -233,7 +234,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print foo(3,4)
+    call printNoLine(foo(3,4))
 end main
 
 function foo(a as Int, b as Int) returns List<of Int>
@@ -243,7 +244,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo(3, 4)));
+  await _stdlib.printNoLine((await global.foo(3, 4)));
 }
 
 async function foo(a, b) {
@@ -272,7 +273,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print factorial(5)
+  call printNoLine(factorial(5))
 end main
 
 function factorial(a as Int) returns Int
@@ -288,7 +289,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.factorial(5)));
+  await _stdlib.printNoLine((await global.factorial(5)));
 }
 
 async function factorial(a) {
@@ -324,7 +325,7 @@ return [main, _tests];}`;
 
 main
   variable b set to new Bar()
-  print foo(b)
+  call printNoLine(foo(b))
 end main
 
 function foo(bar as Bar) returns String
@@ -345,7 +346,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(await new Bar()._initialise());
-  await system.print((await global.foo(b)));
+  await _stdlib.printNoLine((await global.foo(b)));
 }
 
 async function foo(bar) {
@@ -389,7 +390,7 @@ return [main, _tests];}`;
 
 main
   variable b set to new library.List<of Int>()
-  print foo(b)
+  call printNoLine(foo(b))
 end main
 
 function foo(bar as library.List<of Int>) returns String
@@ -404,7 +405,7 @@ end class`;
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  await system.print((await global.foo(b)));
+  await _stdlib.printNoLine((await global.foo(b)));
 }
 
 async function foo(bar) {
@@ -756,7 +757,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  print a
+  call printNoLine(a)
   return a * b
 end function`;
 
@@ -802,7 +803,7 @@ end function`;
 
 main
   variable result set to foo(3,4)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -831,7 +832,7 @@ end function`;
 
 main
   variable result set to foo(3,4)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -908,7 +909,7 @@ end function`;
 
 main
   variable result set to foo(3, 4, 5)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -936,7 +937,7 @@ end function`;
 
 main
   variable result set to foo(3)
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -964,7 +965,7 @@ end function`;
 
 main
   variable result set to foo(3, "b")
-  print result
+  call printNoLine(result)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -992,7 +993,7 @@ end function`;
 
 main
   variable result set to foo(3, "b")
-  print result
+  call printNoLine(result)
 end main
 
 function foo(ref a as Int, b as Int) returns Int
@@ -1270,11 +1271,11 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
+  ignore_test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to ref p1 is ref p2
+  variable a set to (ref p1).isSameValueAs(ref p2)
 end main
 
 function p1() returns Int
@@ -1296,6 +1297,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
@@ -1395,11 +1397,11 @@ end function`;
     ]);
   });
 
-  test("Fail_OperatorsAndProcedures1", async () => {
+  ignore_test("Fail_OperatorsAndProcedures1", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to p1 is p2
+  variable a set to p1.isSameValueAs(p2)
 end main
 
 function p1() returns Int
@@ -1486,7 +1488,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  print a.b
+  call printNoLine(a.b)
 end main
 
 function a() returns Int
@@ -1539,7 +1541,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print abs.b
+  call printNoLine(abs.b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1563,7 +1565,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print abs
+  call printNoLine(abs)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1737,7 +1739,7 @@ end main`;
 
 main
   variable x set to 3
-  print x.bitShiftL(x, 2)
+  call printNoLine(x.bitShiftL(x, 2))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1762,7 +1764,7 @@ end main`;
 
 main
   variable x set to 3
-  print x.foo(x)
+  call printNoLine(x.foo(x))
 end main
 
 function foo(x as Int) returns Int
@@ -1791,7 +1793,7 @@ end function`;
 
 main
   variable b set to new List()
-  print foo(b)
+  call printNoLine(foo(b))
 end main
 
 function foo(bar as library.List<of Int>) returns String

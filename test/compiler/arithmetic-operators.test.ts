@@ -20,13 +20,13 @@ suite("Arithmetic Operators", () => {
     const code = `${testHeader}
 
 main
-  print 3 + 4
+  call printNoLine(3 + 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 + 4);
+  await _stdlib.printNoLine(3 + 4);
 }
 return [main, _tests];}`;
 
@@ -50,13 +50,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 - 4
+  call printNoLine(3 - 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 - 4);
+  await _stdlib.printNoLine(3 - 4);
 }
 return [main, _tests];}`;
 
@@ -80,13 +80,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 * 4
+  call printNoLine(3 * 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 * 4);
+  await _stdlib.printNoLine(3 * 4);
 }
 return [main, _tests];}`;
 
@@ -111,14 +111,14 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  print a + 4
+  call printNoLine(a + 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = 3;
-  await system.print(a + 4);
+  await _stdlib.printNoLine(a + 4);
 }
 return [main, _tests];}`;
 
@@ -138,19 +138,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_DivideIntegersToFloat", async () => {
+  test("Fail_DivideIntegersToFloat", async () => {
     const code = `${testHeader}
 
 main
-  print 3 / 2
+  call printNoLine(3 / 2)
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await system.print(3 / 2);
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -163,22 +156,22 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1.5");
+    assertDoesNotCompile(fileImpl, [
+      "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInteger or divAsFloat.LangRef.html#compile_error",
+    ]);
   });
 
-  test("Pass_IntegerDivision", async () => {
+  test("Pass_IntegerDivision1", async () => {
     const code = `${testHeader}
 
 main
-  print (7/2).floor()
+  call printNoLine(divAsFloat(7, 2).floor())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.floor((7 / 2)));
+  await _stdlib.printNoLine(_stdlib.floor(_stdlib.divAsFloat(7, 2)));
 }
 return [main, _tests];}`;
 
@@ -198,17 +191,77 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_Mod", async () => {
+  test("Pass_IntegerDivision2", async () => {
     const code = `${testHeader}
 
 main
-  print 11 mod 3
+  call printNoLine(divAsInteger(7, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(11 % 3);
+  await _stdlib.printNoLine(_stdlib.divAsInteger(7, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_IntegerDivision3", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(divAsFloat(7, 2))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.divAsFloat(7, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.5");
+  });
+
+  test("Pass_Mod", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(11 mod 3)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(11 % 3);
 }
 return [main, _tests];}`;
 
@@ -232,13 +285,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print if (25 mod 20) < 19 then 1 else 2
+  call printNoLine(if (25 mod 20) < 19 then 1 else 2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(((25 % 20) < 19 ? 1 : 2));
+  await _stdlib.printNoLine(((25 % 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 
@@ -262,13 +315,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 ^ 3
+  call printNoLine(power(3, 3))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 ** 3);
+  await _stdlib.printNoLine(_stdlib.power(3, 3));
 }
 return [main, _tests];}`;
 
@@ -292,14 +345,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to 1
+  variable a set to 1.0
   variable b set to 1.1
-  set a to 2 ^ 2
-  set b to 2 ^ 2
-  set b to 2 ^ 0.5
-  set b to 0.5 ^ 2
-  print a
-  print b
+  set a to power(2, 2)
+  set b to power(2, 2)
+  set b to power(2, 0.5)
+  set b to power(0.5, 2)
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -307,12 +360,12 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = 1.1;
-  a = 2 ** 2;
-  b = 2 ** 2;
-  b = 2 ** 0.5;
-  b = 0.5 ** 2;
-  await system.print(a);
-  await system.print(b);
+  a = _stdlib.power(2, 2);
+  b = _stdlib.power(2, 2);
+  b = _stdlib.power(2, 0.5);
+  b = _stdlib.power(0.5, 2);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -338,7 +391,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   set a to a + 1
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -346,7 +399,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = a + 1;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -467,7 +520,7 @@ end class
     const code = `${testHeader}
 
 main
-  print 11 mod 3.2
+  call printNoLine(11 mod 3.2)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -491,7 +544,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print 11.7 mod 3
+  call printNoLine(11.7 mod 3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -606,7 +659,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to 2 ^ 0.5
+  set x to power(2, 0.5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -631,7 +684,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to 0.5 ^ 2
+  set x to power(0.5, 2)
 end main`;
 
     const fileImpl = new FileImpl(

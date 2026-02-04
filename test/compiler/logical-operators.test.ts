@@ -23,10 +23,10 @@ main
   variable b set to false and true
   variable c set to true and false
   variable d set to true and true
-  print a
-  print b
-  print c
-  print d
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(c)
+  call printNoLine(d)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -36,10 +36,10 @@ async function main() {
   let b = _stdlib.false && _stdlib.true;
   let c = _stdlib.true && _stdlib.false;
   let d = _stdlib.true && _stdlib.true;
-  await system.print(a);
-  await system.print(b);
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 return [main, _tests];}`;
 
@@ -67,10 +67,10 @@ main
   variable b set to false or true
   variable c set to true or false
   variable d set to true or true
-  print a
-  print b
-  print c
-  print d
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(c)
+  call printNoLine(d)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -80,10 +80,10 @@ async function main() {
   let b = _stdlib.false || _stdlib.true;
   let c = _stdlib.true || _stdlib.false;
   let d = _stdlib.true || _stdlib.true;
-  await system.print(a);
-  await system.print(b);
-  await system.print(c);
-  await system.print(d);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
 }
 return [main, _tests];}`;
 
@@ -109,8 +109,8 @@ return [main, _tests];}`;
 main
   variable a set to not false
   variable b set to not true
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -118,8 +118,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false;
   let b = !_stdlib.true;
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -145,8 +145,8 @@ return [main, _tests];}`;
 main
   variable a set to not false and true
   variable b set to not (false and true)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -154,8 +154,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false && _stdlib.true;
   let b = !(_stdlib.false && _stdlib.true);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -181,9 +181,9 @@ main
   variable a set to (4 > 3) and (6 > 5)
   variable b set to (3 > 4) or (6 is 6)
   variable c set to not (4 > 3)
-  print a
-  print b
-  print c
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -192,9 +192,9 @@ async function main() {
   let a = (4 > 3) && (6 > 5);
   let b = (3 > 4) || (6 === 6);
   let c = !(4 > 3);
-  await system.print(a);
-  await system.print(b);
-  await system.print(c);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -218,14 +218,14 @@ return [main, _tests];}`;
 
 main 
   variable a set to (true and false) is (true or false)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = (_stdlib.true && _stdlib.false) === (_stdlib.true || _stdlib.false);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -286,7 +286,7 @@ end main`;
 
 main 
   variable a set to 4 > 3 and 6 > 5
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -312,7 +312,7 @@ end main`;
 
 main 
   variable a set to not 4 > 3
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -338,14 +338,14 @@ end main`;
 
 main 
   variable a set to true and false is true or false
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = _stdlib.true && _stdlib.false === _stdlib.true || _stdlib.false;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -390,7 +390,7 @@ end main`;
 
 main
   variable a set to false xor false
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -411,7 +411,7 @@ end main`;
 
 main
   variable a set to not 1
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -437,7 +437,7 @@ end main`;
 main
   variable a set to "fred"
   variable b set to not a
-  print b
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -462,7 +462,7 @@ end main`;
 
 main
   variable a set to - true
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -488,7 +488,7 @@ end main`;
 main
   variable a set to "fred"
   variable b set to -a
-  print b
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(

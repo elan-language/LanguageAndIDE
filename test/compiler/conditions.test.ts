@@ -19,17 +19,17 @@ suite("Conditions", () => {
     const code = `${testHeader}
 
 main
-  print 3 < 4
-  print 3 < 2
-  print 3 < 3
+  call printNoLine(3 < 4)
+  call printNoLine(3 < 2)
+  call printNoLine(3 < 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 < 4);
-  await system.print(3 < 2);
-  await system.print(3 < 3);
+  await _stdlib.printNoLine(3 < 4);
+  await _stdlib.printNoLine(3 < 2);
+  await _stdlib.printNoLine(3 < 3);
 }
 return [main, _tests];}`;
 
@@ -53,17 +53,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 > 4
-  print 3 > 2
-  print 3 > 3
+  call printNoLine(3 > 4)
+  call printNoLine(3 > 2)
+  call printNoLine(3 > 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 > 4);
-  await system.print(3 > 2);
-  await system.print(3 > 3);
+  await _stdlib.printNoLine(3 > 4);
+  await _stdlib.printNoLine(3 > 2);
+  await _stdlib.printNoLine(3 > 3);
 }
 return [main, _tests];}`;
 
@@ -87,17 +87,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 <= 4
-  print 3 <= 2
-  print 3 <= 3
+  call printNoLine(3 <= 4)
+  call printNoLine(3 <= 2)
+  call printNoLine(3 <= 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 <= 4);
-  await system.print(3 <= 2);
-  await system.print(3 <= 3);
+  await _stdlib.printNoLine(3 <= 4);
+  await _stdlib.printNoLine(3 <= 2);
+  await _stdlib.printNoLine(3 <= 3);
 }
 return [main, _tests];}`;
 
@@ -121,17 +121,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 >= 4
-  print 3 >= 2
-  print 3 >= 3
+  call printNoLine(3 >= 4)
+  call printNoLine(3 >= 2)
+  call printNoLine(3 >= 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 >= 4);
-  await system.print(3 >= 2);
-  await system.print(3 >= 3);
+  await _stdlib.printNoLine(3 >= 4);
+  await _stdlib.printNoLine(3 >= 2);
+  await _stdlib.printNoLine(3 >= 3);
 }
 return [main, _tests];}`;
 
@@ -155,17 +155,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 isnt 4
-  print 3 isnt 2
-  print 3 isnt 3
+  call printNoLine(3 isnt 4)
+  call printNoLine(3 isnt 2)
+  call printNoLine(3 isnt 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 !== 4);
-  await system.print(3 !== 2);
-  await system.print(3 !== 3);
+  await _stdlib.printNoLine(3 !== 4);
+  await _stdlib.printNoLine(3 !== 2);
+  await _stdlib.printNoLine(3 !== 3);
 }
 return [main, _tests];}`;
 
@@ -189,17 +189,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 is 4
-  print 3 is 2
-  print 3 is 3
+  call printNoLine(3 is 4)
+  call printNoLine(3 is 2)
+  call printNoLine(3 is 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 === 4);
-  await system.print(3 === 2);
-  await system.print(3 === 3);
+  await _stdlib.printNoLine(3 === 4);
+  await _stdlib.printNoLine(3 === 2);
+  await _stdlib.printNoLine(3 === 3);
 }
 return [main, _tests];}`;
 
@@ -223,31 +223,31 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 < 3.1
-  print 3 <= 3.1
-  print 3 > 3.1
-  print 3 >= 3.1
-  print 3 is 3.0
-  print 3 isnt 3.0
-  print 3.1 < 3
-  print 3.1 <= 3
-  print 3.1 > 3
-  print 3.1 >= 3
+  call printNoLine(3 < 3.1)
+  call printNoLine(3 <= 3.1)
+  call printNoLine(3 > 3.1)
+  call printNoLine(3 >= 3.1)
+  call printNoLine(3 is 3.0)
+  call printNoLine(3 isnt 3.0)
+  call printNoLine(3.1 < 3)
+  call printNoLine(3.1 <= 3)
+  call printNoLine(3.1 > 3)
+  call printNoLine(3.1 >= 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 < 3.1);
-  await system.print(3 <= 3.1);
-  await system.print(3 > 3.1);
-  await system.print(3 >= 3.1);
-  await system.print(3 === 3);
-  await system.print(3 !== 3);
-  await system.print(3.1 < 3);
-  await system.print(3.1 <= 3);
-  await system.print(3.1 > 3);
-  await system.print(3.1 >= 3);
+  await _stdlib.printNoLine(3 < 3.1);
+  await _stdlib.printNoLine(3 <= 3.1);
+  await _stdlib.printNoLine(3 > 3.1);
+  await _stdlib.printNoLine(3 >= 3.1);
+  await _stdlib.printNoLine(3 === 3);
+  await _stdlib.printNoLine(3 !== 3);
+  await _stdlib.printNoLine(3.1 < 3);
+  await _stdlib.printNoLine(3.1 <= 3);
+  await _stdlib.printNoLine(3.1 > 3);
+  await _stdlib.printNoLine(3.1 >= 3);
 }
 return [main, _tests];}`;
 
@@ -271,17 +271,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print (5 + 3) > (4 + 2)
-  print (5 + 3) is (4 + 4)
-  print (5 + 3) > (4 + 6)
+  call printNoLine((5 + 3) > (4 + 2))
+  call printNoLine((5 + 3) is (4 + 4))
+  call printNoLine((5 + 3) > (4 + 6))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((5 + 3) > (4 + 2));
-  await system.print((5 + 3) === (4 + 4));
-  await system.print((5 + 3) > (4 + 6));
+  await _stdlib.printNoLine((5 + 3) > (4 + 2));
+  await _stdlib.printNoLine((5 + 3) === (4 + 4));
+  await _stdlib.printNoLine((5 + 3) > (4 + 6));
 }
 return [main, _tests];}`;
 
@@ -305,7 +305,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 not is 3
+  call printNoLine(3 not is 3)
 end main
 `;
 
@@ -326,7 +326,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 not 3
+  call printNoLine(3 not 3)
 end main
 `;
 
@@ -347,7 +347,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 != 3
+  call printNoLine(3 != 3)
 end main
 `;
 
@@ -368,7 +368,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 =< 3
+  call printNoLine(3 =< 3)
 end main
 `;
 
@@ -389,7 +389,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 > or = 3
+  call printNoLine(3 > or = 3)
 end main
 `;
 
@@ -410,7 +410,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 = 4
+  call printNoLine(3 = 4)
 end main
 `;
 
@@ -427,16 +427,16 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_compareDifferentTypes", async () => {
+  test("Fail_compareDifferentTypesByValue", async () => {
     const code = `${testHeader}
 
 main
-  print 3 is "3"
-  print 3 isnt "3"
-  print 3 < "3"
-  print 3 <= "3"
-  print 3 > "3"
-  print 3 >= "3"
+  call printNoLine(3.isSameValueAs("3"))
+  call printNoLine(not 3.isSameValueAs("3"))
+  call printNoLine(3 < "3")
+  call printNoLine(3 <= "3")
+  call printNoLine(3 > "3")
+  call printNoLine(3 >= "3")
 end main
 `;
 
@@ -452,8 +452,8 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
@@ -461,11 +461,37 @@ end main
     ]);
   });
 
+  test("Fail_compareDifferentTypesByReference", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(3.isSameReferenceAs("3"))
+  call printNoLine(not 3.isSameReferenceAs("3"))
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
+    ]);
+  });
+
   test("Fail_greaterOrLessThan", async () => {
     const code = `${testHeader}
 
 main
-  print 3 <> 3  
+  call printNoLine(3 <> 3  )
 end main
 `;
 
@@ -486,7 +512,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 3 == 3  
+  call printNoLine(3 == 3  )
 end main
 `;
 
@@ -507,7 +533,7 @@ end main
     const code = `${testHeader}
 
 main
-  print 5 + 3 > 4 + 2
+  call printNoLine(5 + 3 > 4 + 2)
 end main`;
     const fileImpl = new FileImpl(
       testHash,

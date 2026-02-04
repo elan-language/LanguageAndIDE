@@ -18,13 +18,13 @@ suite("Printing Symbols", () => {
     const code = `${testHeader}
 
 main
-  print 
+  call printNoLine("")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("");
+  await _stdlib.printNoLine("");
 }
 return [main, _tests];}`;
 
@@ -47,13 +47,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "¬!£$%^&*()@~#|<>'"
+  call printNoLine("¬!£$%^&*()@~#|<>'")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("¬!£$%^&*()@~#|<>'");
+  await _stdlib.printNoLine("¬!£$%^&*()@~#|<>'");
 }
 return [main, _tests];}`;
 
@@ -77,13 +77,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "\\b\\n"
+  call printNoLine("\\b\\n")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("\\\\b\\n");
+  await _stdlib.printNoLine("\\\\b\\n");
 }
 return [main, _tests];}`;
 
@@ -136,14 +136,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "Foo"
+  call printNoLine("Foo")
   call clearPrintedText()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("Foo");
+  await _stdlib.printNoLine("Foo");
   await _stdlib.clearPrintedText();
 }
 return [main, _tests];}`;
@@ -169,14 +169,14 @@ return [main, _tests];}`;
 
 main
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with width set to 50, height set to 50, title set to "foo", alt set to "bar"
-  print i
+  call printNoLine(i)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.width = 50; _a.height = 50; _a.title = "foo"; _a.alt = "bar"; return _a;})();
-  await system.print(i);
+  await _stdlib.printNoLine(i);
 }
 return [main, _tests];}`;
 
@@ -199,19 +199,19 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "<3"
-  print "a < b "
-  print "c <d> "
-  print "e <f "
+  call printNoLine("<3")
+  call printNoLine("a < b ")
+  call printNoLine("c <d> ")
+  call printNoLine("e <f ")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("<3");
-  await system.print("a < b ");
-  await system.print("c <d> ");
-  await system.print("e <f ");
+  await _stdlib.printNoLine("<3");
+  await _stdlib.printNoLine("a < b ");
+  await _stdlib.printNoLine("c <d> ");
+  await _stdlib.printNoLine("e <f ");
 }
 return [main, _tests];}`;
 

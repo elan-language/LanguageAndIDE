@@ -1,4 +1,4 @@
-# 78bd20951a84a78a01e00f26fe0c428b89b7e6f0df738a6bde1977b57c7191a5 Elan 2.0.0-alpha guest default_profile valid
+# 02b9c67a1ea5c7e37008ee98a32e8e10ec98db0716a1afb255db0143db77dad4 Elan 2.0.0-alpha guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -45,8 +45,8 @@ procedure processoneline(line as String, out result as String, out skipping as B
     # fetch the number at the end of the line
     # note that the number is held as a string at all times in this program
     variable num set to gettrailingnumber(linem)
-    if num isnt "" then
-      if num is "0" then
+    if not num.isSameValueAs("") then
+      if num.isSameValueAs("0") then
         # all values must be Floats
         set num to "0.0"
       end if
@@ -73,7 +73,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s is "" then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean

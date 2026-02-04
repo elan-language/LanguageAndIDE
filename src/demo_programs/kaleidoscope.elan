@@ -1,11 +1,11 @@
-# 9c11c7ebaa465262920de6c5ece472f8a536ed379c6916ed0fef38904220f3d1 Elan 2.0.0-alpha guest default_profile valid
+# 02bbc61108d701622c1e565a98ad04663b3cd8fd030cea4c1609b221348528fc Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)
   while true
     constant x set to randomInt(0, 19)
     constant y set to randomInt(0, 14)
-    constant colour set to randomInt(0, 2^24 - 1)
+    constant colour set to randomInt(0, (power(2, 24) - 1).floor())
     call blocks.put(20 + x, 15 - y, colour)
     call blocks.put(20 + x, 15 + y, colour)
     call blocks.put(20 - x, 15 - y, colour)

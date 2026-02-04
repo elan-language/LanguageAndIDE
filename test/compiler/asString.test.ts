@@ -18,14 +18,14 @@ suite("asString", () => {
 
 main
   variable f set to 1
-  print f.asString()
+  call printNoLine(f.asString())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let f = 1;
-  await system.print((await _stdlib.asString(f)));
+  await _stdlib.printNoLine((await _stdlib.asString(f)));
 }
 return [main, _tests];}`;
 
@@ -51,7 +51,7 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable s set to f.asString()
-  print s
+  call printNoLine(s)
 end main
 
 class Foo
@@ -68,7 +68,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let s = (await _stdlib.asString(f));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 
 class Foo {
@@ -107,7 +107,7 @@ main
   variable f set to new Foo()
   variable p set to f.p1
   variable s set to p.asString()
-  print s
+  call printNoLine(s)
 end main
 
 class Foo
@@ -123,7 +123,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let p = f.p1;
   let s = (await _stdlib.asString(p));
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 
 class Foo {
@@ -170,8 +170,8 @@ main
   variable s1 set to f.asString()
   variable p set to f.p1
   variable s2 set to p.asString()
-  print s1
-  print s2
+  call printNoLine(s1)
+  call printNoLine(s2)
 end main
 
 class Foo
@@ -192,8 +192,8 @@ async function main() {
   let s1 = (await f.asString());
   let p = f.p1;
   let s2 = (await p.asString());
-  await system.print(s1);
-  await system.print(s2);
+  await _stdlib.printNoLine(s1);
+  await _stdlib.printNoLine(s2);
 }
 
 class Foo {
@@ -241,7 +241,7 @@ return [main, _tests];}`;
 main
     variable f set to new Foo()
     variable s set to f.asString()
-    print s
+    call printNoLine(s)
 end main
 
 class Foo
@@ -265,7 +265,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let s = (await f.asString());
-  await system.print(s);
+  await _stdlib.printNoLine(s);
 }
 
 class Foo {
@@ -309,7 +309,7 @@ return [main, _tests];}`;
 
 main
     variable f set to new Foo()
-    print f
+    call printNoLine(f)
 end main
 
 class Foo
@@ -332,7 +332,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f);
+  await _stdlib.printNoLine(f);
 }
 
 class Foo {
@@ -377,13 +377,13 @@ return [main, _tests];}`;
 main
     variable l set to {1,2,3}
     variable sl set to l.asString()
-    print sl
+    call printNoLine(sl)
     variable a set to {1,2,3}.asList()
     variable sa set to a.asString()
-    print sa
+    call printNoLine(sa)
     variable d set to ["a":1, "b":3, "z":10]
     variable sd set to d.asString()
-    print sd
+    call printNoLine(sd)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -391,13 +391,13 @@ const global = new class {};
 async function main() {
   let l = system.listImmutable([1, 2, 3]);
   let sl = (await _stdlib.asString(l));
-  await system.print(sl);
+  await _stdlib.printNoLine(sl);
   let a = system.listImmutable([1, 2, 3]).asList();
   let sa = (await _stdlib.asString(a));
-  await system.print(sa);
+  await _stdlib.printNoLine(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let sd = (await _stdlib.asString(d));
-  await system.print(sd);
+  await _stdlib.printNoLine(sd);
 }
 return [main, _tests];}`;
 

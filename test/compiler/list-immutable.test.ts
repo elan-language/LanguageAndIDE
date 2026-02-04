@@ -22,14 +22,14 @@ suite("ListImmutable", () => {
 
 main
   variable a set to {4,5,6,7,8}
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -54,14 +54,14 @@ return [main, _tests];}`;
 
 main
   variable a set to {{4, 5}, {6, 7, 8}}
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable([4, 5]), system.listImmutable([6, 7, 8])]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -87,7 +87,7 @@ return [main, _tests];}`;
 main
   variable a set to new Foo()
   variable b set to {a}
-  print b
+  call printNoLine(b)
 end main
 
 record Foo
@@ -99,7 +99,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = system.listImmutable([a]);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -139,11 +139,11 @@ main
   variable x set to {c}
   variable y set to {d}
   variable z set to {e}
-  print v
-  print w
-  print x
-  print y
-  print z
+  call printNoLine(v)
+  call printNoLine(w)
+  call printNoLine(x)
+  call printNoLine(y)
+  call printNoLine(z)
 end main
 
 class Foo
@@ -169,11 +169,11 @@ async function main() {
   let x = system.listImmutable([c]);
   let y = system.listImmutable([d]);
   let z = system.listImmutable([e]);
-  await system.print(v);
-  await system.print(w);
-  await system.print(x);
-  await system.print(y);
-  await system.print(z);
+  await _stdlib.printNoLine(v);
+  await _stdlib.printNoLine(w);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
 }
 
 class Foo {
@@ -212,14 +212,14 @@ return [main, _tests];}`;
 
 main
   variable a set to {"Foo", "Bar"}
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable(["Foo", "Bar"]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -244,14 +244,14 @@ return [main, _tests];}`;
 
 main
   variable a set to {4.1,5,6,7,8}
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4.1, 5, 6, 7, 8]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -276,14 +276,14 @@ return [main, _tests];}`;
 
 main
     variable a set to {4,5,6,7,8}
-    print a.length()
+    call printNoLine(a.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.print(a.length());
+  await _stdlib.printNoLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -308,14 +308,14 @@ return [main, _tests];}`;
 
 main
     variable a set to new ListImmutable<of Int>()
-    print a.length()
+    call printNoLine(a.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
-  await system.print(a.length());
+  await _stdlib.printNoLine(a.length());
 }
 return [main, _tests];}`;
 
@@ -340,14 +340,14 @@ return [main, _tests];}`;
 
 main
     variable a set to {4,5,6,7,8}
-    print a[2]
+    call printNoLine(a[2])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.print(system.safeIndex(a, 2));
+  await _stdlib.printNoLine(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -374,8 +374,8 @@ main
     variable a set to {"one", "two", "three"}
     set a to a.withPut(1, "TWO")
     variable b set to a.withPut(0, "ONE")
-    print a
-    print b
+    call printNoLine(a)
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -384,8 +384,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withPut(1, "TWO");
   let b = a.withPut(0, "ONE");
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -411,7 +411,7 @@ return [main, _tests];}`;
 main
     variable a set to {"one", "two", "three"}
     variable b set to a.withPut(3, "THREE")
-    print b
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -419,7 +419,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = a.withPut(3, "THREE");
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -446,8 +446,8 @@ main
     variable a set to {"one", "two", "three"}
     set a to a.withInsert(1, "TWO")
     variable b set to a.withInsert(0, "ONE")
-    print a
-    print b
+    call printNoLine(a)
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -456,8 +456,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withInsert(1, "TWO");
   let b = a.withInsert(0, "ONE");
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -484,8 +484,8 @@ main
     variable a set to {"one", "two", "three"}
     set a to a.withRemoveAt(1)
     variable b set to a.withRemoveAt(0)
-    print a
-    print b
+    call printNoLine(a)
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -494,8 +494,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withRemoveAt(1);
   let b = a.withRemoveAt(0);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -521,7 +521,7 @@ return [main, _tests];}`;
 main
     variable a set to {"one", "two", "three", "one", "two", "three"}
     set a to a.withRemoveFirst("two")
-    print a
+    call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -529,7 +529,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three", "one", "two", "three"]);
   a = a.withRemoveFirst("two");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -555,7 +555,7 @@ return [main, _tests];}`;
 main
     variable a set to {"one", "two", "three", "one", "two", "three"}
     set a to a.withRemoveAll("two")
-    print a
+    call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -563,7 +563,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three", "one", "two", "three"]);
   a = a.withRemoveAll("two");
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -588,18 +588,18 @@ return [main, _tests];}`;
 
 main
   variable a set to {4,5,6,7,8}
-  print a[2..5]
-  print a[1..3]
-  print a[0..2]
+  call printNoLine(a[2..5])
+  call printNoLine(a[1..3])
+  call printNoLine(a[0..2])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.print(system.safeSlice(a, 2, 5));
-  await system.print(system.safeSlice(a, 1, 3));
-  await system.print(system.safeSlice(a, 0, 2));
+  await _stdlib.printNoLine(system.safeSlice(a, 2, 5));
+  await _stdlib.printNoLine(system.safeSlice(a, 1, 3));
+  await _stdlib.printNoLine(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -625,8 +625,8 @@ return [main, _tests];}`;
 main
   variable a set to {4,5,6,7,8}
   variable b set to a.withAppend(9)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -634,8 +634,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = a.withAppend(9);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -661,8 +661,8 @@ return [main, _tests];}`;
 main
   variable a set to {4,5,6,7,8}
   variable b set to a + 9
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -688,8 +688,8 @@ end main`;
 main
   variable a set to {4,5,6,7,8}
   variable b set to 9 + a
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -697,8 +697,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.concat(9, a);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -726,9 +726,9 @@ main
     variable a set to {4,5,6,7,8}
     variable b set to {1,2,3}
     variable c set to a + b
-    print a
-    print b
-    print c
+    call printNoLine(a)
+    call printNoLine(b)
+    call printNoLine(c)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -755,9 +755,9 @@ main
     variable a set to {"a", "b"}
     variable b set to "cd"
     variable c set to a + b[0]
-    print a
-    print b
-    print c
+    call printNoLine(a)
+    call printNoLine(b)
+    call printNoLine(c)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -782,7 +782,7 @@ end main`;
 
 constant a set to {4,5,6,7,8}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -791,7 +791,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.a);
+  await _stdlib.printNoLine(global.a);
 }
 return [main, _tests];}`;
 
@@ -816,14 +816,14 @@ return [main, _tests];}`;
 
 main
   variable a set to new ListImmutable<of Int>()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -848,7 +848,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print f.it
+  call printNoLine(f.it)
 end main
   
 class Foo
@@ -866,7 +866,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f.it);
+  await _stdlib.printNoLine(f.it);
 }
 
 class Foo {
@@ -902,18 +902,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}");
   });
 
-  test("Pass_EmptyListImmutable", async () => {
+  test("Pass_EmptyListImmutableByValue", async () => {
     const code = `${testHeader}
 
 main
   variable a set to empty ListImmutable<of Int>
   variable b set to empty ListImmutable<of Int>
   set b to a.withAppend(3)
-  print a
-  print b
-  print a is b
-  print a is empty ListImmutable<of Int>
-  print b is empty ListImmutable<of Int>
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty ListImmutable<of Int>))
+  call printNoLine(b.isSameValueAs(empty ListImmutable<of Int>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -922,11 +922,11 @@ async function main() {
   let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = a.withAppend(3);
-  await system.print(a);
-  await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -946,6 +946,50 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{}{3}falsetruefalse");
   });
 
+  test("Pass_EmptyListImmutableByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty ListImmutable<of Int>
+  variable b set to empty ListImmutable<of Int>
+  set b to a.withAppend(3)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty ListImmutable<of Int>))
+  call printNoLine(b.isSameReferenceAs(empty ListImmutable<of Int>))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  b = a.withAppend(3);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{}{3}falsefalsefalse");
+  });
+
   test("Pass_addListToList", async () => {
     const code = `${testHeader}
 
@@ -953,8 +997,8 @@ main
   variable a set to {4,5,6,7,8}
   variable b set to {1,2,3,4,5}
   variable c set to a.withAppendList(b)
-  print a
-  print c
+  call printNoLine(a)
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -963,8 +1007,8 @@ async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.listImmutable([1, 2, 3, 4, 5]);
   let c = a.withAppendList(b);
-  await system.print(a);
-  await system.print(c);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -991,7 +1035,7 @@ main
     variable a set to {"one", "two", "three"}
     variable b set to ""
     set b to a.head()
-    print b
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1000,7 +1044,7 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = "";
   b = a.head();
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1027,7 +1071,7 @@ main
     variable a set to {"one", "two", "three"}
     variable b set to {""}
     set b to a.tail()
-    print b
+    call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1036,7 +1080,7 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = system.listImmutable([""]);
   b = a.tail();
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1062,8 +1106,8 @@ return [main, _tests];}`;
 main
   variable a set to {4,5,6,7,8}
   variable b set to a.withPrepend(9)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1071,8 +1115,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = a.withPrepend(9);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1099,8 +1143,8 @@ main
   variable a set to {4,5,6,7,8}
   variable b set to {1,2,3,4,5}
   variable c set to a.withPrependList(b)
-  print a
-  print c
+  call printNoLine(a)
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1109,8 +1153,8 @@ async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.listImmutable([1, 2, 3, 4, 5]);
   let c = a.withPrependList(b);
-  await system.print(a);
-  await system.print(c);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -1136,7 +1180,7 @@ return [main, _tests];}`;
 main
   variable a set to {new Point()}
   variable b set to a.map(lambda p as Point => p)
-  print b[0]
+  call printNoLine(b[0])
 end main
 
 record Point
@@ -1148,7 +1192,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([system.initialise(await new Point()._initialise())]);
   let b = (await a.map(async (p) => p));
-  await system.print(system.safeIndex(b, 0));
+  await _stdlib.printNoLine(system.safeIndex(b, 0));
 }
 
 class Point {
@@ -1178,7 +1222,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print ff({"s"})
+  call printNoLine(ff({"s"}))
 end main
 
 function ff(ll as ListImmutable<of String>) returns ListImmutable<of Point>
@@ -1191,7 +1235,7 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.ff(system.listImmutable(["s"]))));
+  await _stdlib.printNoLine((await global.ff(system.listImmutable(["s"]))));
 }
 
 async function ff(ll) {
@@ -1369,7 +1413,7 @@ end main
 main
   variable a set to {"one", "two", "three"}
   set a to a.put(1, "TWO")
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1395,7 +1439,7 @@ end main
 main
   variable a set to {"one", "two", "three"}
   call a.append("four")
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1421,7 +1465,7 @@ end main
 main
   variable a set to {"one", "two", "three"}
   call a.insert(1, "four")
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1447,7 +1491,7 @@ end main
 main
   variable a set to {"one", "two", "three"}
   call a.removeAt(1)
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1473,7 +1517,7 @@ end main
 main
   variable a set to {"one", "two", "three", "one", "two", "three"}
   call a.removeFirst("two")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1498,7 +1542,7 @@ end main`;
 main
   variable a set to {"one", "two", "three", "one", "two", "three"}
   call a.removeAll("two")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1522,7 +1566,7 @@ end main`;
 
 main
     variable a set to new ListImmutable()
-    print a
+    call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1571,7 +1615,7 @@ end main`;
 
 main
   variable a set to {{0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}, {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}, {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}, {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}}
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -1579,7 +1623,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable([0, 0, 0, 0.16, 0, 0, 0.01]), system.listImmutable([0.85, 0.04, (-0.04), 0.85, 0, 1.6, 0.85]), system.listImmutable([0.2, (-0.26), 0.23, 0.22, 0, 1.6, 0.07]), system.listImmutable([(-0.15), 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -1618,10 +1662,10 @@ main
   set bb to b
   set cc to c
   set dd to d
-  print aa
-  print bb
-  print cc
-  print dd
+  call printNoLine(aa)
+  call printNoLine(bb)
+  call printNoLine(cc)
+  call printNoLine(dd)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1639,10 +1683,10 @@ async function main() {
   bb = b;
   cc = c;
   dd = d;
-  await system.print(aa);
-  await system.print(bb);
-  await system.print(cc);
-  await system.print(dd);
+  await _stdlib.printNoLine(aa);
+  await _stdlib.printNoLine(bb);
+  await _stdlib.printNoLine(cc);
+  await _stdlib.printNoLine(dd);
 }
 return [main, _tests];}`;
 

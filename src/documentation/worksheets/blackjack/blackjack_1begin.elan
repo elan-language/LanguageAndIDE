@@ -1,4 +1,4 @@
-# b01c58497940e34da9e537dac8b36f68f24f9f8cce6b3b49d8a091d0d6ba0078 Elan 2.0.0-alpha guest default_profile valid
+# 43c637020acdce59bcac27a3533c31b79c5cd0b0f7dad8817ee285f636b1e544 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable game set to new Game(1000)
@@ -10,7 +10,7 @@ main
     call clearKeyBuffer()
     call display(game)
     variable k set to waitForKey().lowerCase()
-    if k is 'y' then
+    if k.isSameValueAs('y') then
       call game.setMessage("")
     else
       set anotherRound to false
@@ -117,7 +117,7 @@ end test
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue.keys()[(number/4).floor()]
+  variable rank set to rankValue.keys()[divAsInteger(number, 4)]
   variable suit set to number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
@@ -208,7 +208,7 @@ function htmlForCard(card as Card) returns String
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridByRank[rank]
-      if location is "royal" then
+      if location.isSameValueAs("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
@@ -332,7 +332,7 @@ abstract class Player
   procedure draw()
     variable newCard set to dealCard(random())
     call property.cards.append(newCard)
-    if newCard.rank is "A" then
+    if newCard.rank.isSameValueAs("A") then
       call addAce()
     else
       set property.handTotal to property.handTotal + rankValue[newCard.rank]
@@ -446,11 +446,11 @@ class HumanPlayer inherits Player
   procedure nextAction(dealerFaceCard as Card)
     variable key set to ""
     call clearKeyBuffer()
-    while key is ""
+    while key.isSameValueAs("")
       set key to waitForKey()
-      if key is "d" then
+      if key.isSameValueAs("d") then
         call draw()
-      elif key is "s" then
+      elif key.isSameValueAs("s") then
         call stand()
       else
         set key to ""

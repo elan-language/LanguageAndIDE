@@ -120,7 +120,7 @@ return [main, _tests];}`;
 main
   variable gr set to new Array2D<of Int>(40, 30, white)
   variable a set to getKey()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -128,7 +128,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKey());
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -154,7 +154,7 @@ return [main, _tests];}`;
 main
   variable a set to 0
   set a to getNumericKey()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -162,7 +162,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.getNumericKey());
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -187,14 +187,14 @@ return [main, _tests];}`;
 
 main
   variable a set to waitForKey()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = (await _stdlib.waitForKey());
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -220,7 +220,7 @@ return [main, _tests];}`;
 main
   variable gr set to new Array2D<of Int>(40, 30, white)
   variable a set to getKeyWithModifier()
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -228,7 +228,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKeyWithModifier());
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -316,7 +316,7 @@ return [main, _tests];}`;
 main
   variable foo set to new Foo()
   variable a set to foo.p
-  print a
+  call printNoLine(a)
 end main
 
 class Foo
@@ -331,7 +331,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   let a = foo.p;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 
 class Foo {

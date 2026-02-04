@@ -1,4 +1,4 @@
-# 261b841cb4231ed32e314ee6b55c25e0674238131cc8e26d77b86528ad3ece29 Elan 2.0.0-alpha guest default_profile valid
+# 418996796841bc1e32ff97a99ccddb160c36853895fd8cf92494b578599b3ffb Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -28,7 +28,7 @@ procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point,
     call displayBlocks(gr2)
     call pause(0)
   end while
-  if solver.getLastVisited() is destination then
+  if solver.getLastVisited().isSameValueAs(destination) then
     variable route, length set to solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
@@ -42,11 +42,11 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, 
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
       variable p set to newPoint(x, y)
-      if p is start then
+      if p.isSameValueAs(start) then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
-      elif p is dest then
+      elif p.isSameValueAs(dest) then
         call nodes.append(new Node(p, infinity, 0))
-      elif random() < percentRocks/100 then
+      elif random() < divAsFloat(percentRocks, 100) then
         call rocks.append(p)
       else
         call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
@@ -114,7 +114,7 @@ class Solver
   procedure visitNextPoint()
     call updateNeighbours()
     set property.current to nextNodeToVisit()
-    if (property.current is empty Node) or (property.current.point is property.destination) then
+    if (property.current.isSameValueAs(empty Node)) or (property.current.point.isSameValueAs(property.destination)) then
       set property.running to false
     else
       call property.current.setVisited(true)
@@ -147,7 +147,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    constant matches set to property.nodes.filter(lambda n as Node => n.point is p)
+    constant matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
@@ -187,7 +187,7 @@ class Solver
     variable route set to {property.destination}
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
-    while node.point isnt property.start
+    while not node.point.isSameValueAs(property.start)
       variable previous set to node.via
       variable p set to node.point
       set length to length + p.minDistTo(previous)
@@ -244,7 +244,7 @@ record Point
   property isNotEmpty as Boolean
 
   function minDistTo(p as Point) returns Float
-    return sqrt((p.x - property.x)^2 + (p.y - property.y)^2)
+    return sqrt(power((p.x - property.x), 2) + power((p.y - property.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean

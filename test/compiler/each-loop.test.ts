@@ -24,7 +24,7 @@ main
   each x in a
       set n to n + x
   end each
-  print n
+  call printNoLine(n)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -36,7 +36,7 @@ async function main() {
   for (const x of _itereach9) {
     n = n + x;
   }
-  await system.print(n);
+  await _stdlib.printNoLine(n);
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ main
   each x in a
     set n to n + x
   end each
-  print n
+  call printNoLine(n)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -77,7 +77,7 @@ async function main() {
   for (const x of _itereach9) {
     n = n + x;
   }
-  await system.print(n);
+  await _stdlib.printNoLine(n);
 }
 return [main, _tests];}`;
 
@@ -103,7 +103,7 @@ return [main, _tests];}`;
 main
   variable a set to "hello"
   each x in a
-    print x
+    call printNoLine(x)
   end each
 end main`;
 
@@ -113,7 +113,7 @@ async function main() {
   let a = "hello";
   const _itereach6 = [...a];
   for (const x of _itereach6) {
-    await system.print(x);
+    await _stdlib.printNoLine(x);
   }
 }
 return [main, _tests];}`;
@@ -140,7 +140,7 @@ return [main, _tests];}`;
 main
   each x in "12"
     each y in "34"
-      print "{x}{y}"
+      call printNoLine("{x}{y}")
     end each
   end each
 end main`;
@@ -152,7 +152,7 @@ async function main() {
   for (const x of _itereach3) {
     const _itereach7 = [..."34"];
     for (const y of _itereach7) {
-      await system.print(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
+      await _stdlib.printNoLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
 }
@@ -179,7 +179,7 @@ return [main, _tests];}`;
 
 main
   each x in fruit()
-    print x
+    call printNoLine(x)
   end each
 end main
 
@@ -192,7 +192,7 @@ const global = new class {};
 async function main() {
   const _itereach3 = [...(await global.fruit())];
   for (const x of _itereach3) {
-    await system.print(x);
+    await _stdlib.printNoLine(x);
   }
 }
 
@@ -263,7 +263,7 @@ main
   variable a set to [1,2,3]
   each item in a
     call a.append(item)
-    print item
+    call printNoLine(item)
   end each
 end main`;
 
@@ -274,7 +274,7 @@ async function main() {
   const _itereach6 = [...a];
   for (const item of _itereach6) {
     a.append(item);
-    await system.print(item);
+    await _stdlib.printNoLine(item);
   }
 }
 return [main, _tests];}`;
@@ -334,7 +334,7 @@ class Bar
 
   procedure display()
     each item in li
-      print item
+      call printNoLine(item)
     end each
   end procedure
 end class`;
@@ -364,9 +364,9 @@ main
   variable a set to {7, 8, 9}
   variable x set to "hello"
   each x in a
-    print x
+    call printNoLine(x)
   end each
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -392,9 +392,9 @@ end main
 main
   variable a set to {7, 8, 9}
   each x in a
-    print x
+    call printNoLine(x)
   end each
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -418,9 +418,9 @@ end main
 main
   variable ids set to {7, 8, 9}
   each id in id
-    print id
+    call printNoLine(id)
   end each
-  print ids
+  call printNoLine(ids)
 end main
 `;
 
@@ -444,9 +444,9 @@ end main
 main
   variable a set to [7, 8, 9]
   each x in a
-    print x
+    call printNoLine(x)
   end for
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -469,7 +469,7 @@ end main
 main
   variable y set to 10
   each x in y
-    print x
+    call printNoLine(x)
   end each
 end main
 `;
@@ -496,7 +496,7 @@ end main
 main
   variable s set to "hello"
   each ch in s
-    print ch
+    call printNoLine(ch)
     set s to "fred"
   end each
 end main
@@ -508,7 +508,7 @@ async function main() {
   let s = "hello";
   const _itereach6 = [...s];
   for (const ch of _itereach6) {
-    await system.print(ch);
+    await _stdlib.printNoLine(ch);
     s = "fred";
   }
 }
@@ -537,7 +537,7 @@ main
   variable a set to {1, 2, 3, 4, 5}
   each x in a
     set a to a.withAppend(x)
-    print x
+    call printNoLine(x)
   end each
 end main
 `;
@@ -549,7 +549,7 @@ async function main() {
   const _itereach6 = [...a];
   for (const x of _itereach6) {
     a = a.withAppend(x);
-    await system.print(x);
+    await _stdlib.printNoLine(x);
   }
 }
 return [main, _tests];}`;
@@ -576,7 +576,7 @@ return [main, _tests];}`;
 main
   constant s set to "hello"
   each ch in s
-    print ch
+    call printNoLine(ch)
     set s to "fred"
   end each
 end main

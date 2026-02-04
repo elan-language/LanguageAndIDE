@@ -20,9 +20,9 @@ suite("StdLib HOFs", () => {
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.filter(lambda x as Int => x > 20)
-  print source.filter(lambda x as Int => x > 20)
-  print source.filter(lambda x as Int => (x < 3) or (x > 35))
+  call printNoLine(source.filter(lambda x as Int => x > 20))
+  call printNoLine(source.filter(lambda x as Int => x > 20))
+  call printNoLine(source.filter(lambda x as Int => (x < 3) or (x > 35)))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -31,9 +31,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.filter(async (x) => x > 20)));
-  await system.print((await global.source.filter(async (x) => x > 20)));
-  await system.print((await global.source.filter(async (x) => (x < 3) || (x > 35))));
+  await _stdlib.printNoLine((await global.source.filter(async (x) => x > 20)));
+  await _stdlib.printNoLine((await global.source.filter(async (x) => x > 20)));
+  await _stdlib.printNoLine((await global.source.filter(async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -58,18 +58,18 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.filter(lambda x as Int => x > 20)
-  print source.filter(lambda x as Int => x > 20)
-  print source.filter(lambda x as Int => (x < 3) or (x > 35))
+  call printNoLine(source.filter(lambda x as Int => x > 20))
+  call printNoLine(source.filter(lambda x as Int => x > 20))
+  call printNoLine(source.filter(lambda x as Int => (x < 3) or (x > 35)))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.filter(async (x) => x > 20)));
-  await system.print((await source.filter(async (x) => x > 20)));
-  await system.print((await source.filter(async (x) => (x < 3) || (x > 35))));
+  await _stdlib.printNoLine((await source.filter(async (x) => x > 20)));
+  await _stdlib.printNoLine((await source.filter(async (x) => x > 20)));
+  await _stdlib.printNoLine((await source.filter(async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -95,7 +95,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  print li.filter(lambda x as String => x is "o")
+  call printNoLine(li.filter(lambda x as String => x.isSameValueAs("o")))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -105,7 +105,7 @@ const global = new class {
 };
 async function main() {
   let li = _stdlib.split(global.source, "");
-  await system.print((await li.filter(async (x) => x === "o")));
+  await _stdlib.printNoLine((await li.filter(async (x) => _stdlib.isSameValueAs(x, "o"))));
 }
 return [main, _tests];}`;
 
@@ -130,7 +130,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print filterIt(source)
+  call printNoLine(filterIt(source))
 end main
 
 function filterIt(tofilter as ListImmutable<of Int>) returns ListImmutable<of Int>
@@ -144,7 +144,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.filterIt(global.source)));
+  await _stdlib.printNoLine((await global.filterIt(global.source)));
 }
 
 async function filterIt(tofilter) {
@@ -174,8 +174,8 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1)
-  print source.map(lambda x as Int => x.asString() + "*")
+  call printNoLine(source.map(lambda x as Int => x + 1))
+  call printNoLine(source.map(lambda x as Int => x.asString() + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -184,8 +184,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.map(async (x) => x + 1)));
-  await system.print((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+  await _stdlib.printNoLine((await global.source.map(async (x) => x + 1)));
+  await _stdlib.printNoLine((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -214,16 +214,16 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.map(lambda x as Int => x + 1)
-  print source.map(lambda x as Int => x.asString() + "*")
+  call printNoLine(source.map(lambda x as Int => x + 1))
+  call printNoLine(source.map(lambda x as Int => x.asString() + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.map(async (x) => x + 1)));
-  await system.print((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+  await _stdlib.printNoLine((await source.map(async (x) => x + 1)));
+  await _stdlib.printNoLine((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -252,7 +252,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  print li.map(lambda x as String => x + "*")
+  call printNoLine(li.map(lambda x as String => x + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -262,7 +262,7 @@ const global = new class {
 };
 async function main() {
   let li = _stdlib.split(global.source, "");
-  await system.print((await li.map(async (x) => x + "*")));
+  await _stdlib.printNoLine((await li.map(async (x) => x + "*")));
 }
 return [main, _tests];}`;
 
@@ -288,7 +288,7 @@ return [main, _tests];}`;
 main
   variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
   set source to source.map(lambda x as Int => x + 1)
-  print source.asList()
+  call printNoLine(source.asList())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -296,7 +296,7 @@ const global = new class {};
 async function main() {
   let source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await source.map(async (x) => x + 1));
-  await system.print(source.asList());
+  await _stdlib.printNoLine(source.asList());
 }
 return [main, _tests];}`;
 
@@ -321,9 +321,9 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.reduce(0, lambda s as Int, x as Int => s + x)
-  print source.reduce(100, lambda s as Int, x as Int => s + x)
-  print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
+  call printNoLine(source.reduce(0, lambda s as Int, x as Int => s + x))
+  call printNoLine(source.reduce(100, lambda s as Int, x as Int => s + x))
+  call printNoLine(source.reduce("Concat:", lambda s as String, x as Int => s + x.asString()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -332,9 +332,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.reduce(0, async (s, x) => s + x)));
-  await system.print((await global.source.reduce(100, async (s, x) => s + x)));
-  await system.print((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await _stdlib.printNoLine((await global.source.reduce(0, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await global.source.reduce(100, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 
@@ -360,18 +360,18 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.reduce(0, lambda s as Int, x as Int => s + x)
-  print source.reduce(100, lambda s as Int, x as Int => s + x)
-  print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
+  call printNoLine(source.reduce(0, lambda s as Int, x as Int => s + x))
+  call printNoLine(source.reduce(100, lambda s as Int, x as Int => s + x))
+  call printNoLine(source.reduce("Concat:", lambda s as String, x as Int => s + x.asString()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.reduce(0, async (s, x) => s + x)));
-  await system.print((await source.reduce(100, async (s, x) => s + x)));
-  await system.print((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await _stdlib.printNoLine((await source.reduce(0, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await source.reduce(100, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 
@@ -397,7 +397,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  print li.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
+  call printNoLine(li.reduce("Concat:", lambda s as String, x as String => s + "*" + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -407,7 +407,7 @@ const global = new class {
 };
 async function main() {
   let li = _stdlib.split(global.source, "");
-  await system.print((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
+  await _stdlib.printNoLine((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
 }
 return [main, _tests];}`;
 
@@ -434,7 +434,7 @@ constant source set to {"three", "four"}
 main
   variable ed set to {"one":1, "two":2}
   set ed to source.reduce(ed, lambda d as DictionaryImmutable<of String, Int>, x as String => d.withPut(x, 1))
-  print ed
+  call printNoLine(ed)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -445,7 +445,7 @@ const global = new class {
 async function main() {
   let ed = system.dictionaryImmutable([["one", 1], ["two", 2]]);
   ed = (await global.source.reduce(ed, async (d, x) => d.withPut(x, 1)));
-  await system.print(ed);
+  await _stdlib.printNoLine(ed);
 }
 return [main, _tests];}`;
 
@@ -470,7 +470,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print maxInt(source)
+  call printNoLine(maxInt(source))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -494,7 +494,7 @@ end main`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.maxBy(lambda x as Int => x mod 5)
+  call printNoLine(source.maxBy(lambda x as Int => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -503,7 +503,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.maxBy(async (x) => x % 5)));
+  await _stdlib.printNoLine((await global.source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -528,14 +528,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.maxBy(lambda x as Int => x mod 5)
+  call printNoLine(source.maxBy(lambda x as Int => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.maxBy(async (x) => x % 5)));
+  await _stdlib.printNoLine((await source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -560,7 +560,7 @@ return [main, _tests];}`;
 
 constant source set to {{1}, {2, 2}}
 main
-  print source.maxBy(lambda x as ListImmutable<of Int> => x.length())
+  call printNoLine(source.maxBy(lambda x as ListImmutable<of Int> => x.length()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -569,7 +569,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.maxBy(async (x) => x.length())));
+  await _stdlib.printNoLine((await global.source.maxBy(async (x) => x.length())));
 }
 return [main, _tests];}`;
 
@@ -594,7 +594,7 @@ return [main, _tests];}`;
 
 constant source set to {"apple", "orange", "pear"}
 main
-  print source.maxBy(lambda t as String => t.length())
+  call printNoLine(source.maxBy(lambda t as String => t.length()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -603,7 +603,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.maxBy(async (t) => _stdlib.length(t))));
+  await _stdlib.printNoLine((await global.source.maxBy(async (t) => _stdlib.length(t))));
 }
 return [main, _tests];}`;
 
@@ -628,7 +628,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.length()
+  call printNoLine(source.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -637,7 +637,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.source.length());
+  await _stdlib.printNoLine(global.source.length());
 }
 return [main, _tests];}`;
 
@@ -662,14 +662,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.length()
+  call printNoLine(source.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print(source.length());
+  await _stdlib.printNoLine(source.length());
 }
 return [main, _tests];}`;
 
@@ -694,14 +694,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print minInt(source)
+  call printNoLine(minInt(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print(_stdlib.minInt(source));
+  await _stdlib.printNoLine(_stdlib.minInt(source));
 }
 return [main, _tests];}`;
 
@@ -726,14 +726,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print minFloat(source)
+  call printNoLine(minFloat(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print(_stdlib.minFloat(source));
+  await _stdlib.printNoLine(_stdlib.minFloat(source));
 }
 return [main, _tests];}`;
 
@@ -758,14 +758,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print maxInt(source)
+  call printNoLine(maxInt(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print(_stdlib.maxInt(source));
+  await _stdlib.printNoLine(_stdlib.maxInt(source));
 }
 return [main, _tests];}`;
 
@@ -790,14 +790,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print maxFloat(source)
+  call printNoLine(maxFloat(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print(_stdlib.maxFloat(source));
+  await _stdlib.printNoLine(_stdlib.maxFloat(source));
 }
 return [main, _tests];}`;
 
@@ -822,7 +822,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print minInt(source)
+  call printNoLine(minInt(source))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -846,7 +846,7 @@ end main`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.minBy(lambda x as Int => x mod 5)
+  call printNoLine(source.minBy(lambda x as Int => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -855,7 +855,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.minBy(async (x) => x % 5)));
+  await _stdlib.printNoLine((await global.source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -880,14 +880,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.minBy(lambda x as Int => x mod 5)
+  call printNoLine(source.minBy(lambda x as Int => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.minBy(async (x) => x % 5)));
+  await _stdlib.printNoLine((await source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -913,8 +913,8 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
-  print source
+  call printNoLine(source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1))
+  call printNoLine(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -923,8 +923,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
-  await system.print(global.source);
+  await _stdlib.printNoLine((await global.source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
+  await _stdlib.printNoLine(global.source);
 }
 return [main, _tests];}`;
 
@@ -952,8 +952,8 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.orderBy(lambda x as Int, y as Int => x < y)
-  print source
+  call printNoLine(source.orderBy(lambda x as Int, y as Int => x < y))
+  call printNoLine(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -962,8 +962,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.source.orderBy(async (x, y) => x < y)));
-  await system.print(global.source);
+  await _stdlib.printNoLine((await global.source.orderBy(async (x, y) => x < y)));
+  await _stdlib.printNoLine(global.source);
 }
 return [main, _tests];}`;
 
@@ -992,16 +992,16 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
-  print source
+  call printNoLine(source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1))
+  call printNoLine(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
-  await system.print(source);
+  await _stdlib.printNoLine((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
+  await _stdlib.printNoLine(source);
 }
 return [main, _tests];}`;
 
@@ -1029,16 +1029,16 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  print source.orderBy(lambda x as Int, y as Int => x < y)
-  print source
+  call printNoLine(source.orderBy(lambda x as Int, y as Int => x < y))
+  call printNoLine(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.print((await source.orderBy(async (x, y) => x < y)));
-  await system.print(source);
+  await _stdlib.printNoLine((await source.orderBy(async (x, y) => x < y)));
+  await _stdlib.printNoLine(source);
 }
 return [main, _tests];}`;
 
@@ -1066,8 +1066,8 @@ return [main, _tests];}`;
 
 constant source set to {"apple", "orange", "pair", "apple"}
 main
-  print source.asSet()
-  print source.asList().asSet()
+  call printNoLine(source.asSet())
+  call printNoLine(source.asList().asSet())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1076,8 +1076,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.print(global.source.asSet());
-  await system.print(global.source.asList().asSet());
+  await _stdlib.printNoLine(global.source.asSet());
+  await _stdlib.printNoLine(global.source.asList().asSet());
 }
 return [main, _tests];}`;
 
@@ -1102,11 +1102,11 @@ return [main, _tests];}`;
 
 constant numberChars set to "-.0123456789"
 main
-  print getTrailingNumber("aa1")
+  call printNoLine(getTrailingNumber("aa1"))
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if s is "" then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
@@ -1123,11 +1123,11 @@ const global = new class {
 
 };
 async function main() {
-  await system.print((await global.getTrailingNumber("aa1")));
+  await _stdlib.printNoLine((await global.getTrailingNumber("aa1")));
 }
 
 async function getTrailingNumber(s) {
-  return (s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
+  return (_stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 
@@ -1163,7 +1163,7 @@ return [main, _tests];}`;
 
 main
   variable source set to ["apple", "orange", "pair"]
-  print maxInt(source)
+  call printNoLine(maxInt(source))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1187,7 +1187,7 @@ end main`;
 
 constant source set to {"apple", "orange", "pair"}
 main
-  print source.maxBy(lambda t as String => t)
+  call printNoLine(source.maxBy(lambda t as String => t))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1211,7 +1211,7 @@ end main`;
 
 constant source set to {"apple":"apple", "orange":"orange", "pair":"pair"}
 main
-  print source.keys.map(lambda s as String => s)
+  call printNoLine(source.keys.map(lambda s as String => s))
 end main`;
 
     const fileImpl = new FileImpl(

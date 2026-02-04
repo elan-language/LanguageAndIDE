@@ -159,7 +159,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 80);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 85);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -878,6 +878,8 @@ end main`;
       ["asDictionaryImmutable", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -909,6 +911,8 @@ end main`;
       ["asDictionary", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -1306,6 +1310,8 @@ end test`;
     const expected = [
       ["asString", "*", "*"],
       ["ff", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
@@ -1582,6 +1588,8 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1629,6 +1637,8 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1869,6 +1879,8 @@ end main`;
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
 
@@ -2233,7 +2245,7 @@ end class`;
 
 constant a set to {0,0}
 main
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2377,6 +2389,7 @@ end main`;
     const expected = [
       ["black", "black", "black"],
       ["blue", "blue", "blue"],
+      ["createBlockGraphicsArray", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);
@@ -2928,7 +2941,7 @@ main
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -2968,7 +2981,7 @@ class Foo
 end class
 
 procedure printModified(f as Func<of Foo => Int>, i as Foo)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3000,7 +3013,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3037,7 +3050,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3074,7 +3087,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -3090,6 +3103,8 @@ end procedure`;
     const expected = [
       ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
@@ -3114,7 +3129,7 @@ class Foo
 end class
 
 procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(

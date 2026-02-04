@@ -42,7 +42,6 @@ import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
-import { Print } from "./statements/print";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
@@ -102,8 +101,6 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof Print) {
-      html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.NONE}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
@@ -146,8 +143,6 @@ export class LanguagePython implements Language {
       source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof ConstantStatement) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
-    } else if (frame instanceof Print) {
-      source = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsExport()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Property) {
       source = `${frame.name.renderAsExport()}: ${frame.type.renderAsExport()} = <el-kw>${this.NONE}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {

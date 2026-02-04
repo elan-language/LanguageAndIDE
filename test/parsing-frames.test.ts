@@ -10,13 +10,12 @@ import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { ConstantStatement } from "../src/ide/frames/statements/constant-statement";
-import { Print } from "../src/ide/frames/statements/print";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -149,23 +148,6 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(v.renderAsElanSource(), code);
   });
 
-  test("parse Frames - print", () => {
-    const code = `  print "Hello World!"`;
-    const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    const m = new MainFrame(fl);
-    const p = new Print(m);
-    p.parseFrom(source);
-    assert.equal(source.hasMoreCode(), false);
-    assert.equal(p.renderAsElanSource(), code);
-  });
   test("parse Frames - throw", () => {
     const code = `  throw exception "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
@@ -336,7 +318,7 @@ end main
 # my comment
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main
 `;
     const source = new CodeSourceFromString(code);
@@ -364,7 +346,7 @@ main
   set a to 3 + 4
   throw exception "message"
   call signIn(rwp, password)
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main
 `;
     const source = new CodeSourceFromString(code);
@@ -425,7 +407,7 @@ class Player inherits Foo, Bar
   property score as Int
 
   procedure foo()
-    print 1
+    call printNoLine(1)
   end procedure
 
   function bar() returns Int
