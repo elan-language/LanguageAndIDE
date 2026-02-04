@@ -1,4 +1,4 @@
-# b3a108e44d4daea36d806ee085f2c450fb0dba793eacf8e77078b85346073880 Elan 2.0.0-alpha guest default_profile valid
+# 8dbe4f4939c37c7bdd876251f19c362ffd2cbf11d5f954de051dd2e3cacc3344 Elan 2.0.0-alpha guest default_profile valid
 
 test test_floor
   variable p set to pi
@@ -10,6 +10,6 @@ test test_floor
   assert p.round(3) is 3.142
   assert mp.round(2) is -3.14
   assert sqrt(-p).isNaN() is true
-  variable q set to 1/0
+  variable q set to divAsInteger(1, 0).floor()
   assert q.isInfinite() is true
 end test

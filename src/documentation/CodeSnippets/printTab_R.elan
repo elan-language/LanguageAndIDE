@@ -1,10 +1,10 @@
-# 6d3fc403720fc3697416ae078e2c4f8c68364862f48083f6e6ce06aa6b72f5ae Elan 2.0.0-alpha guest default_profile valid
+# 613adf1de2e35584c94a67f8f51adc0b13c093ad3252ea0431d5506678a5e997 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable tab set to 10
   variable i set to 0
   for i from 1 to (tab - 1) step 1
-    variable j set to 9^i
+    variable j set to power(9, i)
     variable f set to lambda j as Int => j.asString().length()
     call printTab(tab - f(j), "{j}\n")
   end for

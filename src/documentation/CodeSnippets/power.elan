@@ -1,0 +1,6 @@
+# dfed92148c3929fc45b51f38e10a6c7f8ffebf004fab683ac3480f85193c5422 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable n set to 10
+  set n to power(n, 5)
+end main

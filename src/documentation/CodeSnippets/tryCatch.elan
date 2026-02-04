@@ -1,4 +1,4 @@
-# 848404178e971c2a39c895a1d2f68e0b2dac01df43c8ffd55c1ef47be8e1c142 Elan 2.0.0-alpha guest default_profile valid
+# 31aa153ecf3c22e18df0712766186069b97a12dcce02ae96c8f9d343f67fb269 Elan 2.0.0-alpha guest default_profile valid
 
 test test_try1
   try
@@ -14,7 +14,7 @@ test test_try2
     call foo()
     call print("not caught")
   catch exception in e
-    if e isnt "an expected message" then
+    if not (e.isSameValueAs("an expected message")) then
       throw exception e
     end if
   end try
