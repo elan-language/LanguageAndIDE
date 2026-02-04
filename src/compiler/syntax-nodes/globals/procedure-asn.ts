@@ -2,7 +2,7 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { ProcedureType } from "../../../compiler/symbols/procedure-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
@@ -33,7 +33,7 @@ export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Sc
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (getId(this.name) === id) {
+    if (match(getId(this.name), id, caseSensitive)) {
       return this;
     }
     const s =

@@ -1,7 +1,7 @@
 import { Class } from "../../../compiler/compiler-interfaces/class";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getClassScope, getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import {
   getId,
@@ -55,7 +55,7 @@ ${this.indent()}}\r
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (getId(this.name) === id) {
+    if (match(getId(this.name), id, caseSensitive)) {
       return this;
     }
 

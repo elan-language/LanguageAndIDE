@@ -514,7 +514,12 @@ export function childSymbolMatches(
   return localMatches.concat(matches);
 }
 
-export function getChildSymbol(compileChildren: AstNode[], id: string, initialScope: Scope) {
+export function getChildSymbol(
+  compileChildren: AstNode[],
+  id: string,
+  _caseSensitive: boolean,
+  initialScope: Scope,
+) {
   if (compileChildren.length > 0) {
     let range = getChildRange(compileChildren, initialScope);
 

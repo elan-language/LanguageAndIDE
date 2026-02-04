@@ -62,7 +62,7 @@ ${compileNodes(this.compileChildren)}`;
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     return (
-      getChildSymbol(this.compileChildren, id, initialScope) ??
+      getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
       this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
     );
   }

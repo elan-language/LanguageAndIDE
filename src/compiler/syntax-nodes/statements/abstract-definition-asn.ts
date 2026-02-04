@@ -5,6 +5,7 @@ import {
   getDeconstructionIds,
   getGlobalScope,
   mapSymbolType,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -85,7 +86,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (id === this.symbolId) {
+    if (match(id, this.symbolId, caseSensitive)) {
       return this;
     }
 

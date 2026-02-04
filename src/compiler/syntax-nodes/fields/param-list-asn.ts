@@ -7,6 +7,7 @@ import { DuplicateSymbol } from "../../../compiler/symbols/duplicate-symbol";
 import {
   getGlobalScope,
   isFunction,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -66,9 +67,9 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     return [names, types];
   }
 
-  resolveSymbol(id: string, _caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
-    const matches = allSymbols.filter((n) => n.symbolId === id);
+    const matches = allSymbols.filter((n) => match(n.symbolId, id, caseSensitive));
 
     if (matches.length === 1) {
       return matches[0];

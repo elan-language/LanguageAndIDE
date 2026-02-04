@@ -5,6 +5,7 @@ import { FunctionType } from "../../../compiler/symbols/function-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId } from "../../compile-rules";
+import { match } from "../../symbols/symbol-helpers";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
@@ -39,7 +40,7 @@ export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (getId(this.name) === id) {
+    if (match(getId(this.name), id, caseSensitive)) {
       return this;
     }
     const s =

@@ -4,6 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import {
   getGlobalScope,
   isGenericSymbolType,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -42,7 +43,7 @@ ${this.indent()}}`;
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
-    if (id === v) {
+    if (match(id, v, caseSensitive)) {
       const iterSt = this.iter.symbolType();
       const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
       return {

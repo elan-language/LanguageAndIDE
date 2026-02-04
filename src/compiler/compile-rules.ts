@@ -566,7 +566,7 @@ export function mustCallMemberViaQualifier(
   location: string,
 ) {
   if (!ft.isExtension && isClass(scope)) {
-    const t = scope.resolveOwnSymbol(id);
+    const t = scope.resolveOwnSymbol(id, true);
     if (t instanceof UnknownSymbol) {
       compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
     }

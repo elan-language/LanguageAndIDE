@@ -2,7 +2,7 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { IntType } from "../../../compiler/symbols/int-type";
-import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, match, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeOfSymbolType } from "../../compile-rules";
@@ -60,7 +60,7 @@ ${this.indent()}}`;
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
-    if (id === v) {
+    if (match(id, v, caseSensitive)) {
       const st = this.from.symbolType();
       return {
         symbolId: id,

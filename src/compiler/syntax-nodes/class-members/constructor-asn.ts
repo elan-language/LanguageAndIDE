@@ -42,7 +42,7 @@ ${this.indent()}}\r
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, true, this)
+        ? this.params.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }

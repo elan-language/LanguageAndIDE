@@ -52,7 +52,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
-      return searchScope.resolveOwnSymbol(this.id);
+      return searchScope.resolveOwnSymbol(this.id, true);
     }
 
     if (isTuple(searchScope)) {

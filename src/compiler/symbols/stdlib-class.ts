@@ -8,7 +8,7 @@ import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isMember, isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
+import { isMember, isProperty, isSymbol, match, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -84,12 +84,14 @@ export class StdLibClass implements Class {
     return this.children;
   }
 
-  resolveOwnSymbol(id: string): ElanSymbol {
+  resolveOwnSymbol(id: string, caseSensitive: boolean): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
 
-    const matches = this.getChildren().filter((f) => isSymbol(f) && f.symbolId === id);
+    const matches = this.getChildren().filter(
+      (f) => isSymbol(f) && match(f.symbolId, id, caseSensitive),
+    );
 
     if (matches.length === 1) {
       return matches[0];
@@ -101,7 +103,7 @@ export class StdLibClass implements Class {
     const types = this.inheritTypes.filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id);
+      const s = ct.scope!.resolveOwnSymbol(id, caseSensitive);
       if (isMember(s)) {
         matches.push(s);
       }
@@ -118,7 +120,7 @@ export class StdLibClass implements Class {
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id);
+    const symbol = this.resolveOwnSymbol(id, caseSensitive);
 
     if (symbol instanceof UnknownSymbol) {
       return this.getParentScope().resolveSymbol(id, caseSensitive, this);
