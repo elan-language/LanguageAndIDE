@@ -1,9 +1,9 @@
-# b88eb1639611c75226a3adea16c0d272819632ebfa24cea09ee0f54e7dba46d2 Elan 2.0.0-alpha guest default_profile valid
+# 4479717cb893d5e5540a3b8631e3843a21252ed7546e93ec13502ee77e07cee5 Elan 2.0.0-alpha guest default_profile valid
 
 main
   for n from 50 to 72 step 1
     variable s set to lambda n as Int => n.asString().length()
-    variable np set to power(2, n)
+    variable np set to power(2, n).floor()
     call printTab(-s(n), "{n}")
     call printTab(30 - s(np), "{np}\n")
   end for
