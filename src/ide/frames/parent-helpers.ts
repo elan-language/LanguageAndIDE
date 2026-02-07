@@ -122,7 +122,7 @@ export function parentHelper_renderChildrenAsExport(parent: Parent): string {
     for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
       ss.push(frame.renderAsExport());
     }
-    result = ss.join("\r\n");
+    result = ss.join("");
   }
   return result;
 }

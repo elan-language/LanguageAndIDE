@@ -1,4 +1,5 @@
 import { AbstractFrame } from "./abstract-frame";
+import { removeHtmlTags } from "./frame-helpers";
 
 export abstract class SingleLineFrame extends AbstractFrame {
   outerHtmlTag: string = "el-statement"; // Overridden by non-statement single line frames
@@ -8,6 +9,7 @@ export abstract class SingleLineFrame extends AbstractFrame {
   }
 
   renderAsExport(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.language().renderSingleLineAsExport(this)}${this.annotationAsSource()}`;
+    const strippedHtml = removeHtmlTags(this.renderAsHtml());
+    return `${this.indent()}${this.sourceAnnotations()}${strippedHtml}${this.annotationAsSource()}\r\n`;
   }
 }

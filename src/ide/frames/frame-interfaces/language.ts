@@ -12,15 +12,9 @@ export interface Language {
 
   renderSingleLineAsHtml(frame: Frame): string;
 
-  renderSingleLineAsExport(frame: Frame): string;
-
   renderTopAsHtml(frame: Frame): string;
 
-  renderTopAsExport(frame: Frame): string;
-
   renderBottomAsHtml(frame: Frame): string;
-
-  renderBottomAsExport(frame: Frame): string;
 
   renderNodeAsHtml(node: ParseNode): string;
 
