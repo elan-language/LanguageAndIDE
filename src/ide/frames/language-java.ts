@@ -94,10 +94,6 @@ export class LanguageJava implements Language {
     return html;
   }
 
-  renderSingleLineAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
-  }
-
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
@@ -137,16 +133,8 @@ export class LanguageJava implements Language {
     return html;
   }
 
-  renderTopAsExport(frame: Frame): string {
-    return frame ? "" : ""; // TODO
-  }
-
   renderBottomAsHtml(frame: Frame): string {
     return frame ? `<el-punc>}<el-punc>` : ``;
-  }
-
-  renderBottomAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderNodeAsHtml(node: ParseNode): string {
