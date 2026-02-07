@@ -1,4 +1,3 @@
-import { removeHtmlTags } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
