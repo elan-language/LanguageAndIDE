@@ -334,11 +334,14 @@ export function modifierAsSource(member: MemberFrame): string {
 export function removeHtmlTags(html: string): string {
   //First remove tag-pairs *and contents* for things that aren't source
   let result = html;
+  result = result.replace(/<script.*?<\/el-place>/gm, ""); //Added to avoid
   result = result.replace(/<el-place.*?<\/el-place>/gm, "");
   result = result.replace(/<el-compl.*?<\/el-compl>/gm, "");
   result = result.replace(/<el-msg.*?<\/el-msg>/gm, "");
   result = result.replace(/<el-help.*?<\/el-help>/gm, "");
   result = result.replace(/<el-fr>.*?<\/el-fr>/gm, "");
-  result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
+  while (result.match(/<[^>]*>/gm)) {
+    result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
+  }
   return result;
 }
