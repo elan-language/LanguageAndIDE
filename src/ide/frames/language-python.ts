@@ -115,48 +115,6 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  renderSingleLineAsExport(frame: Frame): string {
-    let source = `Source not specified for ${typeof frame}`;
-    if (frame instanceof AbstractFunction) {
-      source = `TBD`;
-    } else if (frame instanceof AbstractProcedure) {
-      source = `TBD`;
-    } else if (frame instanceof AbstractProperty) {
-      source = `TBD`;
-    } else if (frame instanceof AssertStatement) {
-      source = `assertEqual(${frame.actual.renderAsExport()}, ${frame.expected.renderAsExport()})`;
-    } else if (frame instanceof CallStatement) {
-      source = `${frame.proc.renderAsExport()}<el-punc>(</el-punc>${frame.args.renderAsExport()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof CatchStatement) {
-      source = `${this.EXCEPT}<el-punc>:</el-punc>`;
-    } else if (frame instanceof CommentStatement) {
-      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
-    } else if (frame instanceof ConstantGlobal) {
-      source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.value.renderAsExport()}`;
-    } else if (frame instanceof Elif) {
-      source = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsExport()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof Else) {
-      source = `<el-kw>${this.ELSE}</el-kw><el-punc>:</el-punc>`;
-    } else if (frame instanceof Enum) {
-      source = `${frame.name.renderAsExport()} = <el-type>Enum</el-type>('${frame.name.renderAsExport()}', '${frame.values.renderAsExport()}')`;
-    } else if (frame instanceof GlobalComment) {
-      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
-    } else if (frame instanceof ConstantStatement) {
-      source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
-    } else if (frame instanceof Property) {
-      source = `${frame.name.renderAsExport()}: ${frame.type.renderAsExport()} = <el-kw>${this.NONE}</el-kw>`;
-    } else if (frame instanceof ReturnStatement) {
-      source = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsExport()}`;
-    } else if (frame instanceof SetStatement) {
-      source = `${frame.assignable.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
-    } else if (frame instanceof Throw) {
-      source = `<el-kw>${this.RAISE}</el-kw><el-punc>("</el-punc>${frame.text.renderAsExport()}<el-punc>")</el-punc>`;
-    } else if (frame instanceof VariableStatement) {
-      source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
-    }
-    return source;
-  }
-
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
@@ -199,16 +157,8 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  renderTopAsExport(frame: Frame): string {
-    return frame ? "TBD" : "TBD";
-  }
-
   renderBottomAsHtml(frame: Frame): string {
     return frame ? "" : ""; // Python blocks have no textual ending;
-  }
-
-  renderBottomAsExport(frame: Frame): string {
-    return frame ? "TBD" : "TBD";
   }
 
   renderNodeAsHtml(node: ParseNode): string {

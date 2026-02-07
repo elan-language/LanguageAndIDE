@@ -63,12 +63,14 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, htmlFile: string) {
+export async function assertGeneratesHtmlandSameSourceAndExport(sourceFile: string, htmlFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
+  const renderedExport = await fl.renderAsExport();
+  const actualExport = renderedExport.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
   const renderedHtml = await fl.renderAsHtml();
   const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
@@ -76,6 +78,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
   try {
     assert.strictEqual(actualSource, expectedSource);
     assert.strictEqual(actualHtml, expectedHtml);
+    assert.strictEqual(actualExport, expectedSource);
   } catch (e) {
     if (updateTestFiles) {
       // update original not copied 

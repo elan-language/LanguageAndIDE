@@ -6,6 +6,7 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
+  removeHtmlTags,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
@@ -730,7 +731,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsExport(): string {
-    return `${this.textAsHtml()}`;
+    return removeHtmlTags(this.textAsHtml());
   }
 
   indent(): string {

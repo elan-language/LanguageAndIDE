@@ -2,7 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
-import { isSelector } from "./frame-helpers";
+import { isSelector, removeHtmlTags } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
@@ -265,8 +265,10 @@ ${this.language().renderBottomAsHtml(this)}
   }
 
   renderAsExport(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.language().renderTopAsExport(this)}${this.annotationAsSource()}
+    const topAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
+    const bottomAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
+    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
     ${this.renderChildrenAsExport()}
-    ${this.language().renderBottomAsExport(this)}`;
+    ${bottomAsExport}\r\n`;
   }
 }

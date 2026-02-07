@@ -15,7 +15,7 @@ import { Property } from "../class-members/property";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor } from "../frame-helpers";
+import { isConstructor, removeHtmlTags } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -313,8 +313,10 @@ ${this.language().renderBottomAsHtml(this)}
   }
 
   public renderAsExport(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.language().renderTopAsHtml(this)}${this.annotationAsSource()}
+    const topAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
+    const bottomAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
+    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
-${this.language().renderBottomAsExport(this)}`;
+${bottomAsExport}\r\n\r\n`;
   }
 }
