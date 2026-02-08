@@ -159,11 +159,7 @@ export class LanguageCS implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
-      const generics = node.genericTypes?.renderAsHtml();
-      const chopped = generics?.substring(22, generics.length - 4);
-      html =
-        node.simpleType?.renderAsHtml() +
-        `<el-punc>&lt;</el-punc><el-type>${chopped}</el-type><el-punc>&gt;</el-punc>`;
+      html = `${node.simpleType?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
     } else if (node instanceof ParamDefNode) {
       html = `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
     } else if (node instanceof BinaryOperation) {

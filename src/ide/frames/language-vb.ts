@@ -194,11 +194,7 @@ export class LanguageVB implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
-      const generics = node.genericTypes?.renderAsHtml();
-      const chopped = generics?.substring(22, generics.length - 4);
-      html =
-        node.simpleType?.renderAsHtml() +
-        `<el-punc>(</el-punc><el-kw>${this.OF} </el-kw><el-type>${chopped}</el-type><el-punc>)</el-punc>`;
+      html = `${node.simpleType?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
     } else if (node instanceof ParamDefNode) {
       html = `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
     } else if (node instanceof BinaryOperation) {

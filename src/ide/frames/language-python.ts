@@ -166,9 +166,7 @@ export class LanguagePython implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof TypeGenericNode) {
-      const simpleType = node.simpleType?.renderAsHtml();
-      const generics = node.genericTypes?.renderAsHtml();
-      html = `${simpleType}${generics}`;
+      html = `${node.simpleType?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
     } else if (node instanceof ParamDefNode) {
       html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
     } else if (node instanceof BinaryOperation) {
