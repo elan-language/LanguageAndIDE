@@ -1,4 +1,4 @@
-# 418996796841bc1e32ff97a99ccddb160c36853895fd8cf92494b578599b3ffb Elan 2.0.0-alpha guest default_profile valid
+# acdfc88a4175adf89b588d5210489fbaef633f8be01b93b31d172fc371708e6c Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -14,7 +14,7 @@ main
   while true
     constant option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
     call clearPrintedText()
-    constant alg set to algFromLetter[option]
+    constant alg set to getAlgFromLetter(option)
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
@@ -271,13 +271,23 @@ enum Algorithm dijkstra, aStar, heuristic
 # 'infinity' need only be larger than longest possible route
 constant infinity set to 2000.0
 
-constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
-
 constant algPrompt set to "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
 
 constant lightBlue set to 0x80abff
 
 constant orange set to 0xe97132
+
+function getAlgFromLetter(letter as String) returns Algorithm
+  variable dict set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
+  return dict[letter]
+end function
+
+test test_getAlgFromLetter
+  assert getAlgFromLetter("a") is Algorithm.aStar
+  assert getAlgFromLetter("h") is Algorithm.heuristic
+  assert getAlgFromLetter("d") is Algorithm.dijkstra
+  assert getAlgFromLetter("x") is "No such key: x"
+end test
 
 test test_point
   constant p set to newPoint(0, 0)

@@ -1,4 +1,4 @@
-# 6908db3d4fa6dc535f7d0677a9ef304eccdb51583d96c09ac9db2329cc628e26 Elan 2.0.0-alpha guest default_profile valid
+# 6dbcd0a8a811f11c3e5bd25005f6e9ad1b917af04c9c38aef2d9c1c6b48db03b Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
@@ -20,9 +20,10 @@ procedure printDate(unixSecs as Int)
   constant h set to pad("L", z2, hour.asString())
   constant m set to pad("L", z2, minute.asString())
   constant s set to pad("L", z2, second.asString())
+  variable startDays set to getStartDays()
   constant startDaysL set to startDaysList(year, startDays)
   constant month, day set to monthDay(startDaysL, (days mod startDays[12]))
-  call print(weekdayNames[weekday] + cs + pad("L", z2, day.asString()) + s1 + monthNames[month - 1] + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
+  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
@@ -84,9 +85,9 @@ function monthDay(startDays as List<of Int>, dayNumber as Int) returns (Int, Int
   return tuple(month, day)
 end function
 
-function startDaysList(year as Int, startDays as ListImmutable<of Int>) returns List<of Int>
+function startDaysList(year as Int, startDays as List<of Int>) returns List<of Int>
   # alter month start days if leap year
-  variable startDaysL set to startDays.asList()
+  variable startDaysL set to getStartDays()
   if leap(year) then
     for m from 2 to 12 step 1
       set startDaysL to startDaysL.withPut(m, startDaysL[m] + 1)
@@ -103,11 +104,19 @@ constant unixWeekday set to 4
 # day and month names, and day numbers
 constant daySecs set to 86400
 
-constant weekdayNames set to {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
+function getWeekdayName(weekDay as Int) returns String
+  variable names set to ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  return names[weekDay]
+end function
 
-constant monthNames set to {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}
+function getMonthName(month as Int) returns String
+  variable names set to ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  return names[month - 1]
+end function
 
-constant startDays set to {1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
+function getStartDays() returns List<of Int>
+  return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
+end function
 
 # output edit strings
 constant s1 set to " "

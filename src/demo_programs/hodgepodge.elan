@@ -1,4 +1,4 @@
-# 727704f5e98de05d8b09be4bbfbcd5abc1a464f896b70fee811526c2d1ca38c5 Elan 2.0.0-alpha guest default_profile valid
+# ea7b9be5d1ddc568305e4a094fcc5e979d543895092e90a3ed3faee33bb7efc4 Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -23,7 +23,9 @@ constant healthy set to white
 
 constant ill set to black
 
-constant colours set to {healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill}
+function getColours() returns List<of Int>
+  return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]
+end function
 
 # vN : neighbourhood: von Neumann (4) true, Moore (8) false
 constant vN set to false
@@ -43,6 +45,7 @@ main
 end main
 
 procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, initial as Boolean)
+  variable colours set to getColours()
   for j from 0 to gH - 1 step 1
     for i from 0 to gW - 1 step 1
       if initial then
@@ -84,6 +87,7 @@ function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) return
 end function
 
 function newColour(neighbourColours as List<of Int>, nowColour as Int) returns Int
+  variable colours set to getColours()
   variable nInfected set to 0
   variable nIll set to 0
   variable sumStates set to colours.indexOf(nowColour)
@@ -100,6 +104,7 @@ function newColour(neighbourColours as List<of Int>, nowColour as Int) returns I
 end function
 
 function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll as Int) returns Int
+  variable colours set to getColours()
   variable state set to 0
   if nowColour is healthy then
     set state to divAsInteger(nInfected, w1) + divAsInteger(nIll, w2)
