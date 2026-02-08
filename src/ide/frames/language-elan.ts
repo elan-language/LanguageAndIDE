@@ -43,6 +43,8 @@ export class LanguageElan implements Language {
     return /# [^\r\n]*/;
   }
   languageFullName: string = "Elan";
+  defaultFileExtension: string = "elan";
+  defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
     return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
