@@ -46,6 +46,8 @@ export class LanguageJava implements Language {
     return /\/\/ [^\r\n]*/;
   }
   languageFullName: string = "Java";
+  defaultFileExtension: string = "java";
+  defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
     return frame.frameSpecificAnnotation();

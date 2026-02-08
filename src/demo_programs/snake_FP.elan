@@ -1,8 +1,8 @@
-# 9a5a4eac9377209b322261df415f80d723414885223bfea2410f5d231597be3c Elan 2.0.0-alpha guest default_profile valid
+# ec882b230614f50224a9462d468c659b377afe012217ee7604e710006deb2bc5 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to createBlockGraphicsArray()
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   variable game set to newGame(rnd)

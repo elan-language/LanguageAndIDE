@@ -1,7 +1,7 @@
-# 91251549ab1f66a7c24b42fc4a8d0d1ee317ed5b5808c129c1538f17c809391a Elan 2.0.0-alpha guest default_profile valid
+# 7a25752b4ff1a37a1b0ce74859683f0a88d61affd13acb85bf221ade445c5307 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable blocks set to new Array2D<of Int>(40, 30, black)
+  variable blocks set to createBlockGraphicsArray()
   set blocks to createStart(blocks)
   for i from 0 to displayWidth step 1
     constant x set to randomInt(0, 39)

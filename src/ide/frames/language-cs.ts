@@ -53,6 +53,8 @@ export class LanguageCS implements Language {
     return /\/\/ [^\r\n]*/;
   }
   languageFullName: string = "C#";
+  defaultFileExtension: string = "cs";
+  defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
     let annotation = "";

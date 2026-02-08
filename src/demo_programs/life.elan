@@ -1,7 +1,7 @@
-# 3cc309ad77f75bac01cd69ae5d45195168cce3372f37c85c9d7b25a66e9a082d Elan 2.0.0-alpha guest default_profile valid
+# 7f7b989a3e22f65399cb9a838237acbd4899d53f2d60bbf754023ddb996452e2 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable grid set to new Array2D<of Int>(40, 30, white)
+  variable grid set to createBlockGraphicsArray()
   call fillRandom(grid)
   while true
     call displayBlocks(grid)

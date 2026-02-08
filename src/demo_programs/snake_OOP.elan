@@ -1,8 +1,8 @@
-# 835a29cb638e365c4d933237f49e584a611c9c3b83a7023dc4cd2b5326a48553 Elan 2.0.0-alpha guest default_profile valid
+# 904d75500aed156024ca315ad7c84f278c173922e674afb08abaf6dd0b78bc30 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to createBlockGraphicsArray()
   variable snake set to new Snake()
   variable apple set to new Apple()
   call apple.newRandomPosition(snake)
