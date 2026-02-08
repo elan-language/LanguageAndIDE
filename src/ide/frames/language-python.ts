@@ -56,6 +56,8 @@ export class LanguagePython implements Language {
     return /# [^\r\n]*/;
   }
   languageFullName: string = "Python";
+  defaultFileExtension: string = "py";
+  defaultMimeType: string = "text/x-python";
 
   annotation(frame: Frame): string {
     let annotation = "";

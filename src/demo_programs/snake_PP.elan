@@ -1,8 +1,8 @@
-# 85bce80a6918727392ee7c348ce4e665557eedda793c66c7aacd402e7c0602ca Elan 2.0.0-alpha guest default_profile valid
+# 72b6a81253b5f4c42782421505e6d41142d6d1887d4353e46ea7506bc50de945 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to createBlockGraphicsArray()
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]

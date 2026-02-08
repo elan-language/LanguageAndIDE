@@ -55,7 +55,9 @@ export class LanguageVB implements Language {
   commentRegex(): RegExp {
     return /' [^\r\n]*/;
   }
-  languageFullName: string = "VB";
+  languageFullName: string = "VB.NET";
+  defaultFileExtension: string = "vb";
+  defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
     let annotation = "";

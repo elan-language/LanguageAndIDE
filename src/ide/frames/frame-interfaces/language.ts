@@ -3,8 +3,8 @@ import { ParseNode } from "./parse-node";
 
 export interface Language {
   languageFullName: string;
-  /* defaultFileExtension: string;
-  defaultMimeType: string; */
+  defaultFileExtension: string;
+  defaultMimeType: string;
 
   annotation(frame: Frame): string;
 

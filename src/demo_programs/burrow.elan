@@ -1,7 +1,7 @@
-# 895a5c89c7053be06fcc9480c46296f5a4b6c09d2cbe872e2adab7732dc3cd77 Elan 2.0.0-alpha guest default_profile valid
+# 942f52a826648fe324ace41ec59f62417095007fb7afb6b54756cc1a9903ec1c Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to createBlockGraphicsArray()
   variable x set to 20
   variable y set to 15
   while true
