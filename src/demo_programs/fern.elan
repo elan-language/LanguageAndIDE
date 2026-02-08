@@ -1,9 +1,9 @@
-# 6ad97c2c07c248fa1abab3fb6b1cd629dc72f19d8912c06c316e922c78875e74 Elan 2.0.0-alpha guest default_profile valid
+# a04663415d2135a634108824328a49a2373096d6319cf0cd4e2942a150fd31dd Elan 2.0.0-alpha guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to createListOfVectorGraphics()
   # coordinates
   variable x set to 0.0
   variable y set to 0.16
@@ -37,11 +37,11 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   # Currently you can't make the params into one long line
   # as it makes the browser use 100% CPU
   # xx xy yx yy cx cy probablity
-  constant p1 set to {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}
-  constant p2 set to {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}
-  constant p3 set to {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}
-  constant p4 set to {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}
-  constant params set to {p1, p2, p3, p4}
+  variable p1 set to [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
+  variable p2 set to [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
+  variable p3 set to [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07]
+  variable p4 set to [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]
+  variable params set to [p1, p2, p3, p4]
   # cumulative probabilty
   variable cumuprob set to 0.0
   variable done set to false
@@ -59,8 +59,8 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
 end function
 
 test test_one
-  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
-  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
+  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is [0.0064, 1.736]
+  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is [-0.0416, 1.6352]
 end test
 
 # two approaches to rounding a tuple to N decimal places
@@ -69,9 +69,9 @@ function roundtuple1(n as (Float, Float)) returns (Float, Float)
   return tuple(a.round(8), b.round(8))
 end function
 
-function roundtuple2(n as (Float, Float)) returns ListImmutable<of Float>
+function roundtuple2(n as (Float, Float)) returns List<of Float>
   constant a, b set to n
-  return {a, b}.map(lambda x as Float => x.round(8))
+  return [a, b].map(lambda x as Float => x.round(8))
 end function
 
 constant scale set to 7
