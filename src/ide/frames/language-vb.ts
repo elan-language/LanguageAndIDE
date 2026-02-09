@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
@@ -239,6 +240,10 @@ export class LanguageVB implements Language {
       result = this.parseParamDefNode(node, text);
     }
     return result;
+  }
+
+  getFields(node: Frame): Field[] {
+    return node ? [] : [];
   }
 
   private spaced(text: string): string {

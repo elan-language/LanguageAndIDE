@@ -18,7 +18,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     return mainKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return []; //no direct fields
   }
 

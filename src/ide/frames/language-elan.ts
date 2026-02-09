@@ -39,6 +39,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { Field } from "./frame-interfaces/field";
 
 export class LanguageElan implements Language {
   commentRegex(): RegExp {
@@ -167,6 +168,10 @@ export class LanguageElan implements Language {
 
   parseText(node: ParseNode, text: string): boolean {
     return node && text ? false : false;
+  }
+
+  getFields(node: Frame): Field[] {
+    return node ? [] : [];
   }
 
   private ABSTRACT = "abstract";

@@ -1,6 +1,7 @@
 import { BinaryOperation } from "../parse-nodes/binary-operation";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
+import { Field } from "./field";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
 
@@ -26,6 +27,8 @@ export interface Language {
   renderNodeAsHtml(node: ParseNode): string; // To pick up optional overrides
 
   parseText(node: ParseNode, text: string): boolean;
+
+  getFields(node: Frame): Field[];
 
   POWER: string;
   MOD: string;
