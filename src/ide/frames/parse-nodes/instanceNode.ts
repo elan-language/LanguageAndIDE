@@ -10,7 +10,6 @@ export class InstanceNode extends AbstractSequence {
   index: OptionalNode | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
-    TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
     TokenType.id_property,
     TokenType.id_variable,

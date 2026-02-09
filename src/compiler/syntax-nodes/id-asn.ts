@@ -116,13 +116,11 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
         ? ""
         : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
 
-    const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
-
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     const body = this.getBody();
 
-    return `${prefix}${body}${postfix}`;
+    return `${prefix}${body}`;
   }
 
   symbolType() {

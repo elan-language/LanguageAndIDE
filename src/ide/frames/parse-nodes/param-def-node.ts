@@ -1,38 +1,25 @@
-import { asKeyword, outKeyword } from "../../../compiler/keywords";
+import { asKeyword } from "../../../compiler/keywords";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
-import { OptionalNode } from "./optional-node";
 import { Space } from "./parse-node-helpers";
-import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
   name: IdentifierNode | undefined;
   type: TypeNode | undefined;
-  out: OptionalNode | undefined;
-  outPermitted: boolean;
 
-  constructor(file: File, outPermitted: boolean) {
+  constructor(file: File) {
     super(file);
-    this.outPermitted = outPermitted;
     this.completionWhenEmpty = "<i>name</i> as <i>Type</i>";
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
       if (!this.file.language().parseText(this, text)) {
-        const outSpace = new Sequence(this.file, [
-          () => new KeywordNode(this.file, outKeyword),
-          () => new SpaceNode(this.file, Space.required),
-        ]);
-        if (this.outPermitted) {
-          this.out = new OptionalNode(this.file, outSpace);
-          this.addElement(this.out);
-        }
         this.name = new IdentifierNode(this.file);
         this.addElement(this.name);
         this.addElement(new SpaceNode(this.file, Space.required));
@@ -54,9 +41,7 @@ export class ParamDefNode extends AbstractSequence {
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? this.outPermitted
-        ? new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
-        : new Set<KeywordCompletion>([])
+      ? new Set<KeywordCompletion>([])
       : super.symbolCompletion_keywords();
   }
 

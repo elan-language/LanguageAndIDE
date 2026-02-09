@@ -4,21 +4,15 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { DuplicateSymbol } from "../../../compiler/symbols/duplicate-symbol";
-import {
-  getGlobalScope,
-  isFunction,
-  symbolMatches,
-} from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
+import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import {
   mustBeUniqueNameInScope,
-  mustNotBeOutParameter,
   mustNotBeRedefined,
   mustNotBeSameAsMethodName,
 } from "../../compile-rules";
 import { AbstractAstNode } from "../abstract-ast-node";
-import { isAstCollectionNode, isAstIdNode, isConstructor } from "../ast-helpers";
+import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
 export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
@@ -87,18 +81,6 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     mustNotBeRedefined(symbol, id, this.compileErrors, this.fieldId);
   }
 
-  private mustNotBeOutOnFunctionOrConstructor(id: string) {
-    // up two or we just get the parameter again
-    const parentScope = this.getParentScope();
-
-    if (isFunction(parentScope) || isConstructor(parentScope)) {
-      const symbol = parentScope.resolveSymbol(id, this);
-      if (symbol.symbolScope === SymbolScope.outParameter) {
-        mustNotBeOutParameter(this.compileErrors, this.fieldId);
-      }
-    }
-  }
-
   private getIdNodes(parms: AstNode): AstIdNode[] {
     if (isAstCollectionNode(parms)) {
       return parms.items.filter((n) => isAstIdNode(n));
@@ -115,7 +97,6 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     const idNodes = this.getIdNodes(parms);
 
     for (const idNode of idNodes) {
-      this.mustNotBeOutOnFunctionOrConstructor(idNode.id);
       mustNotBeSameAsMethodName(idNode.id, this.scope, this.compileErrors, this.fieldId);
 
       if (idNodes.length > 1) {

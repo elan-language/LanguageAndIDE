@@ -143,10 +143,6 @@ export function isEnumValue(s?: ElanSymbol): boolean {
   return s?.symbolType() instanceof EnumValueType;
 }
 
-export function isOutParameter(s?: ElanSymbol): boolean {
-  return s?.symbolScope === SymbolScope.outParameter;
-}
-
 export function isParameter(s?: ElanSymbol): boolean {
   return s?.symbolScope === SymbolScope.parameter;
 }
@@ -254,13 +250,7 @@ export function isNotInheritableTypeName(s?: ElanSymbol): boolean {
 
 export function isId(f: ElanSymbol): boolean {
   return (
-    isConstant(f) ||
-    isLet(f) ||
-    isVariable(f) ||
-    isParameter(f) ||
-    isOutParameter(f) ||
-    isProperty(f) ||
-    isEnumValue(f)
+    isConstant(f) || isLet(f) || isVariable(f) || isParameter(f) || isProperty(f) || isEnumValue(f)
   );
 }
 
@@ -544,7 +534,6 @@ export function symbolScopeToFriendlyName(ss: SymbolScope) {
     case SymbolScope.member:
       return "property";
     case SymbolScope.parameter:
-    case SymbolScope.outParameter:
       return "parameter";
     default:
       return "identifier";

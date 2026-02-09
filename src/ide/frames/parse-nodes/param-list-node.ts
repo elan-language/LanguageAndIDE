@@ -4,11 +4,8 @@ import { removeUnmatchedClosingBracket } from "./parse-node-helpers";
 import { File } from "../frame-interfaces/file";
 
 export class ParamListNode extends CSV {
-  outPermitted: boolean;
-
-  constructor(file: File, outPermitted: boolean) {
-    super(file, () => new ParamDefNode(file, outPermitted), 0);
-    this.outPermitted = outPermitted;
+  constructor(file: File) {
+    super(file, () => new ParamDefNode(file), 0);
     this.setSyntaxCompletionWhenEmpty("<i>parameter definitions</i>");
   }
   parseText(text: string): void {

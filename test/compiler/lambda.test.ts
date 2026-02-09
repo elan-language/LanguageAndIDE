@@ -709,28 +709,4 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'l' is not defined.LangRef.html#compile_error"]);
   });
-
-  test("Fail_cannotbeOut", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(4, lambda out x as Int => x * 3)
-end main
-  
-procedure printModified(i as Int, f as Func<of Int => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
 });

@@ -16,7 +16,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     super(parent);
     this.file = parent as File;
     this.name = new MethodNameField(this);
-    this.params = new ParamListField(this, true);
+    this.params = new ParamListField(this);
   }
 
   isProcedure = true;

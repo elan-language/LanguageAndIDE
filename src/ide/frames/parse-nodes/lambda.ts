@@ -20,7 +20,7 @@ export class Lambda extends AbstractSequence {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(this.file, lambdaKeyword));
       this.addElement(new SpaceNode(this.file, Space.required));
-      const paramList = () => new CSV(this.file, () => new ParamDefNode(this.file, false), 1);
+      const paramList = () => new CSV(this.file, () => new ParamDefNode(this.file), 1);
       const sp = () => new SpaceNode(this.file, Space.required);
       const paramListSp = new Sequence(this.file, [paramList, sp]);
       this.params = new OptionalNode(this.file, paramListSp);

@@ -9,9 +9,7 @@ import {
   scopePrefix,
   updateScopeAndQualifier,
 } from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import {
-  cannotPassAsOutParameter,
   checkForDeprecation,
   getQualifierId,
   mustBeKnownSymbol,
@@ -30,12 +28,8 @@ import {
 } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { ParamListAsn } from "../fields/param-list-asn";
-import { ProcedureAsn } from "../globals/procedure-asn";
 import { LambdaAsn } from "../lambda-asn";
 import { QualifierAsn } from "../qualifier-asn";
-import { LetAsn } from "./let-asn";
-import { VariableAsn } from "./variable-asn";
 
 export class CallAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
@@ -45,52 +39,17 @@ export class CallAsn extends BreakpointAsn {
   proc: AstNode = EmptyAsn.Instance;
   args: AstNode = EmptyAsn.Instance;
 
-  wrapParameters(
-    procSymbol: ElanSymbol,
-    callParameters: AstNode[],
-  ): [string[], string[], string[]] {
-    const postFix = getGlobalScope(this.scope).getNextId();
+  wrapParameters(callParameters: AstNode[]): [string[], string[]] {
     const wrappedInParameters: string[] = [];
-    const wrappedOutParameters: string[] = [];
     const passedParameters: string[] = [];
-
-    const parameterDefScopes =
-      procSymbol instanceof ProcedureAsn
-        ? procSymbol.params instanceof ParamListAsn
-          ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
-          : []
-        : [];
 
     for (let i = 0; i < callParameters.length; i++) {
       const p = callParameters[i];
-      let pName = p.compile();
-
-      const parameterDefScope =
-        i < parameterDefScopes.length ? parameterDefScopes[i] : SymbolScope.parameter;
-      if (parameterDefScope === SymbolScope.outParameter) {
-        if (isAstIdNode(p)) {
-          const callParamSymbol = this.getParentScope().resolveSymbol(p.id, this);
-          if (
-            callParamSymbol instanceof VariableAsn ||
-            callParamSymbol.symbolScope === SymbolScope.parameter ||
-            callParamSymbol.symbolScope === SymbolScope.outParameter
-          ) {
-            const tpName = `_${p.id}${postFix}`;
-            wrappedInParameters.push(`let ${tpName} = [${pName}]`);
-            wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
-            pName = tpName;
-          } else {
-            const msg = callParamSymbol instanceof LetAsn ? `let ${p.id}` : p;
-            cannotPassAsOutParameter(msg, this.compileErrors, this.fieldId);
-          }
-        } else {
-          cannotPassAsOutParameter(p, this.compileErrors, this.fieldId);
-        }
-      }
+      const pName = p.compile();
       passedParameters.push(pName);
     }
 
-    return [wrappedInParameters, wrappedOutParameters, passedParameters];
+    return [wrappedInParameters, passedParameters];
   }
 
   compile(): string {
@@ -170,10 +129,7 @@ export class CallAsn extends BreakpointAsn {
         isAsync = procSymbolType.isAsync;
       }
 
-      const [wrappedInParameters, wrappedOutParameters, passedParameters] = this.wrapParameters(
-        procSymbol,
-        callParameters,
-      );
+      const [wrappedInParameters, passedParameters] = this.wrapParameters(callParameters);
 
       const parms = passedParameters.join(", ");
       const prefix = !isEmptyNode(qualifier)
@@ -181,19 +137,14 @@ export class CallAsn extends BreakpointAsn {
         : scopePrefix(procSymbol, this.compileErrors, this, this.fieldId);
       const async = isAsync ? "await " : "";
       let wrappedInParms = "";
-      let wrappedOutParms = "";
 
       if (wrappedInParameters.length > 0) {
         wrappedInParms = `${this.indent()}${wrappedInParameters.join("; ")};\n`;
       }
 
-      if (wrappedOutParameters.length > 0) {
-        wrappedOutParms = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
-      }
-
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
+      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});`;
     }
     return "";
   }

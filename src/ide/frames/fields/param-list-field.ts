@@ -6,11 +6,9 @@ import { AbstractField } from "./abstract-field";
 
 export class ParamListField extends AbstractField {
   isParseByNodes = true;
-  outPermitted: boolean;
 
-  constructor(holder: Frame, outPermitted: boolean) {
+  constructor(holder: Frame) {
     super(holder);
-    this.outPermitted = outPermitted;
     this.setPlaceholder("<i>parameter definitions</i>");
     this.useHtmlTags = true;
     this.setOptional(true);
@@ -31,7 +29,7 @@ export class ParamListField extends AbstractField {
     }
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ParamListNode(this.getFile(), this.outPermitted);
+    this.rootNode = new ParamListNode(this.getFile());
     return this.rootNode;
   }
 
