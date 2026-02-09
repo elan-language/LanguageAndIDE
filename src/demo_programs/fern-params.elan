@@ -1,4 +1,4 @@
-# 02b9c67a1ea5c7e37008ee98a32e8e10ec98db0716a1afb255db0143db77dad4 Elan 2.0.0-alpha guest default_profile valid
+# 755aa518887f1f9cf789e15547fe1ccf4c21b4d1d3a2502c0bf0673d0792a7b7 Elan 2.0.0-alpha guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -21,17 +21,17 @@
 main
   variable openbrace set to unicode(123)
   variable file set to openFileForReading()
-  variable result set to openbrace + openbrace
-  variable skipping set to true
+  variable result set to new Ref<of String>(openbrace + openbrace)
+  variable skipping set to new Ref<of Boolean>(true)
   while not file.endOfFile()
     variable line set to file.readLine()
     call processoneline(line, result, skipping)
   end while
   call file.close()
-  call print(result)
+  call print(result.value())
 end main
 
-procedure processoneline(line as String, out result as String, out skipping as Boolean)
+procedure processoneline(line as String, result as Ref<of String>, skipping as Ref<of Boolean>)
   variable openbrace set to unicode(123)
   variable closebrace set to unicode(125)
   if line.contains("Portion generated") then
@@ -50,18 +50,18 @@ procedure processoneline(line as String, out result as String, out skipping as B
         # all values must be Floats
         set num to "0.0"
       end if
-      set result to result + num + ","
+      call result.set(result.value() + num + ",")
     end if
     if linem.contains("texhtml") then
       # next row of parameters
-      set result to result + closebrace + "," + openbrace
+      call result.set(result.value() + closebrace + "," + openbrace)
     end if
     if linem.contains("Largest right-hand") then
       # end of parameters
-      set result to result + closebrace + closebrace
+      call result.set(result.value() + closebrace + closebrace)
       set skipping to true
       # we are done, tidy up result to remove excess separators
-      set result to result.replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace)
+      call result.set(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
     end if
   end if
 end procedure

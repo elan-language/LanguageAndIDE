@@ -1,4 +1,4 @@
-# ea7b9be5d1ddc568305e4a094fcc5e979d543895092e90a3ed3faee33bb7efc4 Elan 2.0.0-alpha guest default_profile valid
+# 41dba512f85cd131bd04baf1a8e610820354e93d74894879ad90e949ab58521b Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -33,18 +33,18 @@ constant vN set to false
 main
   # colour grids: hodge for display, podge for working
   variable podge set to new Array2D<of Int>(gW, gH, healthy)
-  variable hodge set to new Array2D<of Int>(gW, gH, healthy)
+  variable hodge set to new Ref<of Array2D<of Int>>(new Array2D<of Int>(gW, gH, healthy))
   constant blank set to new Array2D<of Int>(gW, gH, healthy)
   # initial colours of grid
   call updateGrid(hodge, podge, true)
-  while not uniform(hodge)
+  while not uniform(hodge.value())
     # successive updates to grid in blank podge
     set podge to blank
     call updateGrid(hodge, podge, false)
   end while
 end main
 
-procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, initial as Boolean)
+procedure updateGrid(hodge as Ref<of Array2D<of Int>>, podge as Array2D<of Int>, initial as Boolean)
   variable colours set to getColours()
   for j from 0 to gH - 1 step 1
     for i from 0 to gW - 1 step 1
@@ -52,13 +52,13 @@ procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, ini
         call podge.put(i, j, colours[randomInt(0, (colours.length() - 1))])
         [ghosted] call podge.put(1, 1, 0x1a001a)
       else
-        call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge[i, j]))
+        call podge.put(i, j, newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i, j]))
       end if
     end for
   end for
   constant a set to 0
-  set hodge to podge
-  call displayBlocks(hodge)
+  call hodge.set(podge)
+  call displayBlocks(hodge.value())
   call pause(50)
 end procedure
 
