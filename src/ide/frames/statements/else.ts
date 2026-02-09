@@ -16,7 +16,7 @@ export class Else extends SingleLineFrame implements Statement {
     return elseKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [];
   }
 

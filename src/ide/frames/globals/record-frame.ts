@@ -18,7 +18,7 @@ export class RecordFrame extends ClassFrame {
     return recordKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name];
   }
 

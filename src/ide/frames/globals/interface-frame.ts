@@ -20,7 +20,7 @@ export class InterfaceFrame extends ClassFrame {
     return this.inheritance.text !== "";
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name, this.inheritance];
   }
 

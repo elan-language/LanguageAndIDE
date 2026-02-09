@@ -24,7 +24,7 @@ export class Each extends FrameWithStatements implements Statement {
     return eachKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.variable, this.iter];
   }
 

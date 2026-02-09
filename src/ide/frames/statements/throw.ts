@@ -22,7 +22,7 @@ export class Throw extends SingleLineFrame implements Statement {
     this.text.parseFrom(source);
     source.removeNewLine();
   }
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.text];
   }
   getIdPrefix(): string {

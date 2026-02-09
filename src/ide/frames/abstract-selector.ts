@@ -151,6 +151,11 @@ export abstract class AbstractSelector extends AbstractFrame {
   getFields(): Field[] {
     return [];
   }
+
+  getFieldsDefaultImpl(): Field[] {
+    return [];
+  }
+
   getIdPrefix(): string {
     return "select";
   }

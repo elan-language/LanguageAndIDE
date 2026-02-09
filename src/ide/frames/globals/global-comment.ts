@@ -18,7 +18,7 @@ export class GlobalComment extends SingleLineFrame implements GlobalFrame {
   initialKeywords(): string {
     return commentMarker;
   }
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.text];
   }
 

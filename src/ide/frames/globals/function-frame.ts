@@ -43,7 +43,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return this.getChildren().length > 1; // return may be the only statement
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name, this.params, this.returnType];
   }
 

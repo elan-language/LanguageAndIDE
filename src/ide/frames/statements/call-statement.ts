@@ -32,7 +32,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
     source.remove(")");
     source.removeNewLine();
   }
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.proc, this.args];
   }
 

@@ -30,7 +30,7 @@ export class For extends FrameWithStatements implements Statement {
     return forKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.variable, this.from, this.to, this.step];
   }
 

@@ -22,7 +22,7 @@ export class TryStatement extends FrameWithStatements {
     return this.getChildren().length > 2;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return []; //Try has no direct Fields.
   }
 
