@@ -1,4 +1,4 @@
-# 72b6a81253b5f4c42782421505e6d41142d6d1887d4353e46ea7506bc50de945 Elan 2.0.0-alpha guest default_profile valid
+# f5b993256c72e039a28b119847c8ce1f2d37cd3636414ed6215c88acf278058d Elan 2.0.0-alpha guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -12,7 +12,13 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    call updateSnake(currentDir, tail, head, body)
+    variable currentDirRef set to new Ref<of String>(currentDir)
+    variable headRef set to new Ref<of List<of Int>>(head)
+    variable tailRef set to new Ref<of List<of Int>>(tail)
+    call updateSnake(currentDirRef, tailRef, headRef, body)
+    set head to headRef.value()
+    set tail to tailRef.value()
+    set currentDir to currentDirRef.value()
     set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head.isSameValueAs(apple) then
       call setAppleToRandomPosition(apple, body)
@@ -24,11 +30,15 @@ main
   call print("Game Over! Score: {body.length() - 1}")
 end main
 
-procedure updateSnake(out currentDir as String, out tail as List<of Int>, out head as List<of Int>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as Ref<of String>, tailRef as Ref<of List<of Int>>, headRef as Ref<of List<of Int>>, body as List<of List<of Int>>)
+  variable head set to headRef.value()
+  variable tail set to tailRef.value()
+  variable currentDir set to currentDirRef.value()
   set currentDir to directionByKey(currentDir, getKey())
-  set tail to body[0]
+  call tailRef.set(body[0])
   call body.append(head)
-  set head to getAdjacentSquare(head, currentDir)
+  call headRef.set(getAdjacentSquare(head, currentDir))
+  call currentDirRef.set(currentDir)
 end procedure
 
 procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)

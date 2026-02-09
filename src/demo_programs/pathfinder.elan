@@ -1,4 +1,4 @@
-# acdfc88a4175adf89b588d5210489fbaef633f8be01b93b31d172fc371708e6c Elan 2.0.0-alpha guest default_profile valid
+# f9056016fa111e254e535985b975b8371bcff79d0a22c80f6f6b1afe3b7ec736 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -19,7 +19,7 @@ main
   end while
 end main
 
-procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point, rocks as List<of Point>, out solver as Solver, alg as Algorithm)
+procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point, rocks as List<of Point>, solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -38,7 +38,7 @@ procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point,
   end if
 end procedure
 
-procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, out nodes as List<of Node>, start as Point, dest as Point)
+procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
       variable p set to newPoint(x, y)
