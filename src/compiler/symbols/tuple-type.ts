@@ -1,10 +1,10 @@
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { immutableTypeOptions } from "../compiler-interfaces/type-options";
+import { noTypeOptions } from "../compiler-interfaces/type-options";
 
 export class TupleType implements SymbolType {
   constructor(public readonly ofTypes: SymbolType[]) {}
 
-  typeOptions = immutableTypeOptions;
+  typeOptions = noTypeOptions;
 
   get initialValue() {
     const init = this.ofTypes.map((t) => t.initialValue).join(", ");
