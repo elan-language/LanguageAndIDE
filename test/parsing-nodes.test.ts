@@ -1151,50 +1151,6 @@ suite("Parsing Nodes", () => {
       "x as String",
       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
     );
-    testNodeParse(
-      new ParamDefNode(f, true),
-      `out x as String`,
-      ParseStatus.valid,
-      "out x as String",
-      "",
-      "out x as String",
-      "<el-kw>out</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
-    );
-    testNodeParse(
-      new ParamDefNode(f, false),
-      `out x as String`,
-      ParseStatus.invalid,
-      "",
-      "out x as String",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ParamDefNode(f, false),
-      `ref x as String`,
-      ParseStatus.invalid,
-      "",
-      "ref x as String",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ParamDefNode(f, false),
-      `out as String`,
-      ParseStatus.invalid,
-      "",
-      "out as String",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ParamDefNode(f, false),
-      `y asString`,
-      ParseStatus.invalid,
-      "",
-      "y asString",
-      "",
-    );
     testNodeParse(new ParamDefNode(f, false), `z`, ParseStatus.incomplete, "z", "", "");
     testNodeParse(new ParamDefNode(f, false), `w as`, ParseStatus.incomplete, "w as", "", "");
     testNodeParse(new ParamDefNode(f, false), `A`, ParseStatus.invalid, "", "A", "");

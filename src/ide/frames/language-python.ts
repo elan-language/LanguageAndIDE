@@ -163,27 +163,32 @@ export class LanguagePython implements Language {
     return frame ? "" : ""; // Python blocks have no textual ending;
   }
 
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.simpleType?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
+  }
+
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = " == ";
+    } else if (text === "isnt") {
+      text = " != ";
+    } else if (text === "mod") {
+      text = " % ";
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
-    if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
-    } else if (node instanceof ParamDefNode) {
-      html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
-    } else if (node instanceof BinaryOperation) {
-      const open = node.keyword ? "<el-kw>" : "";
-      const close = node.keyword ? "</el-kw>" : "";
-      let text = node.matchedText.trim();
-      if (text === "is") {
-        text = " == ";
-      } else if (text === "isnt") {
-        text = " != ";
-      } else if (text === "mod") {
-        text = " % ";
-      } else {
-        text = node.renderAsElanSource();
-      }
-      html = `${open}${text}${close}`;
-    } else if (node instanceof InheritanceNode) {
+    if (node instanceof InheritanceNode) {
       html =
         node.matchedText.length > 0
           ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`

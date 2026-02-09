@@ -191,33 +191,37 @@ export class LanguageVB implements Language {
     return html;
   }
 
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.simpleType?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
+  }
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = this.spaced(this.EQUALS);
+    } else if (text === "isnt") {
+      text = this.spaced(this.NOT_EQUALS);
+    } else if (text === "and") {
+      text = this.spaced(this.AND);
+    } else if (text === "or") {
+      text = this.spaced(this.OR);
+    } else if (text === "not") {
+      text = this.spaced(this.NOT);
+    } else if (text === "mod") {
+      text = this.spaced(this.MOD);
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
-    } else if (node instanceof ParamDefNode) {
-      html = `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
-    } else if (node instanceof BinaryOperation) {
-      const open = node.keyword ? "<el-kw>" : "";
-      const close = node.keyword ? "</el-kw>" : "";
-      let text = node.matchedText.trim();
-      if (text === "is") {
-        text = this.spaced(this.EQUALS);
-      } else if (text === "isnt") {
-        text = this.spaced(this.NOT_EQUALS);
-      } else if (text === "and") {
-        text = this.spaced(this.AND);
-      } else if (text === "or") {
-        text = this.spaced(this.OR);
-      } else if (text === "not") {
-        text = this.spaced(this.NOT);
-      } else if (text === "mod") {
-        text = this.spaced(this.MOD);
-      } else {
-        text = node.renderAsElanSource();
-      }
-      html = `${open}${text}${close}`;
-    } else if (node instanceof Index) {
+    if (node instanceof Index) {
       html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (node instanceof IndexDouble) {
       html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;

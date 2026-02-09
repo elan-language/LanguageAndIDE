@@ -156,33 +156,37 @@ export class LanguageCS implements Language {
     return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.simpleType?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
+  }
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = this.spaced(this.EQUAL);
+    } else if (text === "isnt") {
+      text = this.spaced(this.NOT_EQUAL);
+    } else if (text === "and") {
+      text = this.spaced(this.AND);
+    } else if (text === "or") {
+      text = this.spaced(this.OR);
+    } else if (text === "not") {
+      text = this.spaced(this.NOT);
+    } else if (text === "mod") {
+      text = this.spaced(this.MOD);
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
-    } else if (node instanceof ParamDefNode) {
-      html = `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
-    } else if (node instanceof BinaryOperation) {
-      const open = node.keyword ? "<el-kw>" : "";
-      const close = node.keyword ? "</el-kw>" : "";
-      let text = node.matchedText.trim();
-      if (text === "is") {
-        text = this.spaced(this.EQUAL);
-      } else if (text === "isnt") {
-        text = this.spaced(this.NOT_EQUAL);
-      } else if (text === "and") {
-        text = this.spaced(this.AND);
-      } else if (text === "or") {
-        text = this.spaced(this.OR);
-      } else if (text === "not") {
-        text = this.spaced(this.NOT);
-      } else if (text === "mod") {
-        text = this.spaced(this.MOD);
-      } else {
-        text = node.renderAsElanSource();
-      }
-      html = `${open}${text}${close}`;
-    } else if (node instanceof InheritanceNode) {
+    if (node instanceof InheritanceNode) {
       html =
         node.matchedText.length > 0
           ? `<el-kw>${this.INHERITS} ${node.typeList?.renderAsHtml()}`

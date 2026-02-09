@@ -1,3 +1,6 @@
+import { BinaryOperation } from "../parse-nodes/binary-operation";
+import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
 
@@ -16,7 +19,11 @@ export interface Language {
 
   renderBottomAsHtml(frame: Frame): string;
 
-  renderNodeAsHtml(node: ParseNode): string;
+  typeGenericNodeAsHtml(node: TypeGenericNode): string;
+  paramDefNodeAsHtml(node: ParamDefNode): string;
+  binaryOperationAsHtml(node: BinaryOperation): string;
+
+  renderNodeAsHtml(node: ParseNode): string; // To pick up optional overrides
 
   parseText(node: ParseNode, text: string): boolean;
 
