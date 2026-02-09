@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -279,19 +280,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
+  variable a set to [tuple(1,2)]
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
   variable fst, _ set to t
   call printNoLine(fst)
-end main
-constant a set to {tuple(1,2)}`;
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.listImmutable([system.tuple([1, 2])]);
-
-};
+const global = new class {};
 async function main() {
-  let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  let a = system.list([system.tuple([1, 2])]);
+  let t = (await a.reduce(system.tuple([1, 1]), async (i, j) => j));
   let [fst, ] = t;
   await _stdlib.printNoLine(fst);
 }
@@ -317,19 +316,17 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
+  variable a set to [tuple(1,2)]
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
   variable fst set to t.item0
   call printNoLine(fst)
-end main
-constant a set to {tuple(1,2)}`;
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.listImmutable([system.tuple([1, 2])]);
-
-};
+const global = new class {};
 async function main() {
-  let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  let a = system.list([system.tuple([1, 2])]);
+  let t = (await a.reduce(system.tuple([1, 1]), async (i, j) => j));
   let fst = t[0];
   await _stdlib.printNoLine(fst);
 }
