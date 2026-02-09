@@ -43,6 +43,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { Ref } from "./ref";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -111,6 +112,9 @@ export class StdLib {
 
   @elanClassExport(DictionaryImmutable)
   DictionaryImmutable = DictionaryImmutable;
+
+  @elanClassExport(Ref)
+  Ref = Ref;
 
   // Standard colours
 
