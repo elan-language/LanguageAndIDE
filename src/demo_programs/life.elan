@@ -1,11 +1,13 @@
-# 7f7b989a3e22f65399cb9a838237acbd4899d53f2d60bbf754023ddb996452e2 Elan 2.0.0-alpha guest default_profile valid
+# 67cbc195c35f154696f7b6b71ca56278315c1121258a83b5a55df40e9c9874ed Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphicsArray()
   call fillRandom(grid)
   while true
     call displayBlocks(grid)
-    call nextGeneration(grid)
+    variable gridRef set to new Ref<of Array2D<of Int>>(grid)
+    call nextGeneration(gridRef)
+    set grid to gridRef.value()
     call pause(50)
   end while
 end main
@@ -105,15 +107,16 @@ function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Int
   return colour
 end function
 
-procedure nextGeneration(out grid as Array2D<of Int>)
+procedure nextGeneration(gridRef as Ref<of Array2D<of Int>>)
   variable next set to new Array2D<of Int>(40, 30, white)
+  variable grid set to gridRef.value()
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       constant colour set to nextCellValue(grid, x, y)
       call next.put(x, y, colour)
     end for
   end for
-  set grid to next
+  call gridRef.set(next)
 end procedure
 
 test test_north
