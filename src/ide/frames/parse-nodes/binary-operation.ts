@@ -128,8 +128,7 @@ export class BinaryOperation extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    const fromLanguage = this.file.language().renderNodeAsHtml(this);
-    return fromLanguage.length > 0 ? fromLanguage : this.defaultHtml();
+    return this.file.language().binaryOperationAsHtml(this);
   }
 
   renderAsElanSource(): string {

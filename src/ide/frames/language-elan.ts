@@ -20,7 +20,9 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -147,12 +149,20 @@ export class LanguageElan implements Language {
     return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
+  }
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    return `${open}${node.renderAsElanSource()}${close}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
-    let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
-    }
-    return html;
+    return node ? "" : "";
   }
 
   parseText(node: ParseNode, text: string): boolean {

@@ -48,7 +48,6 @@ export class TypeGenericNode extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    const fromLanguage = this.file.language().renderNodeAsHtml(this);
-    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
+    return this.file.language().typeGenericNodeAsHtml(this);
   }
 }
