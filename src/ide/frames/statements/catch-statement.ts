@@ -32,7 +32,7 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     return catchKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.variable];
   }
 

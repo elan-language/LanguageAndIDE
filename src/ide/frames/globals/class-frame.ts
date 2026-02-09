@@ -182,7 +182,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return this.inheritance.text !== "";
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name, this.inheritance];
   }
 

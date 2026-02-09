@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
@@ -13,6 +14,7 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -108,7 +110,8 @@ export class LanguageJava implements Language {
       html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof For) {
       const v = frame.variable.renderAsHtml();
-      html = `<el-kw>${this.FOR} </el-kw><el-punc>(</el-punc>${v}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-punc>; </el-punc>${v} <el-punc>&lt;=</el-punc>${frame.to.renderAsHtml()}<el-punc>; </el-punc>${v}<el-punc> = </el-punc>${v}<el-punc> + </el-punc>${frame.step.renderAsHtml()}<el-punc>) {</el-punc>`;
+      const vRep = `<el-id>${frame.variable.textAsSource()}</el-id>`;
+      html = `<el-kw>${this.FOR} </el-kw><el-punc>(<el-type>int</el-type> </el-punc>${v}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-punc>; </el-punc>${vRep} <el-punc>&lt;=</el-punc> ${frame.to.renderAsHtml()}<el-punc>; </el-punc>${vRep}<el-punc> = </el-punc>${vRep}<el-punc> + </el-punc>${frame.step.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)} ${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
@@ -181,6 +184,14 @@ export class LanguageJava implements Language {
 
   parseText(node: ParseNode, text: string): boolean {
     return node && text ? false : false;
+  }
+
+  getFields(frame: Frame): Field[] {
+    let fields: Field[] = [];
+    if (frame instanceof FunctionFrame) {
+      fields = [frame.returnType, frame.name, frame.params];
+    }
+    return fields;
   }
 
   private spaced(text: string): string {

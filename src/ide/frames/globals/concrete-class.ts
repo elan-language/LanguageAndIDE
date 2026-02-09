@@ -18,7 +18,7 @@ export class ConcreteClass extends ClassFrame {
     return this.inheritance.text !== "";
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name, this.inheritance];
   }
 

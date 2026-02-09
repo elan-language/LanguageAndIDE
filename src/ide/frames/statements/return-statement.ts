@@ -25,7 +25,7 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     return false;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.expr];
   }
 

@@ -34,7 +34,7 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     return propertyKeyword;
   }
 
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.name, this.type];
   }
 

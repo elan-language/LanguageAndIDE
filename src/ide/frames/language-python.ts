@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
@@ -130,7 +131,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw><el-method>sequenceWithStep</el-method><el-punc>(</el-punc>${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()}<el-punc>):</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.SELF}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
@@ -205,6 +206,10 @@ export class LanguagePython implements Language {
       result = this.parseParamDefNode(node, text);
     }
     return result;
+  }
+
+  getFields(node: Frame): Field[] {
+    return node ? [] : [];
   }
 
   private DEF = "def";

@@ -35,7 +35,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     this.expected.parseFrom(source);
     source.removeNewLine();
   }
-  getFields(): Field[] {
+  getFieldsDefaultImpl(): Field[] {
     return [this.actual, this.expected];
   }
 
