@@ -14,7 +14,6 @@ export class InstanceProcRef extends AbstractSequence {
   procName: IdentifierNode | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
-    TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
     TokenType.id_property,
     TokenType.id_variable,

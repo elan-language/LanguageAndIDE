@@ -349,42 +349,6 @@ end class`;
     await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
   });
 
-  test("Pass_InProcedureOutParameter", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-  end constructor
-
-  procedure pp(out aa4 as Int)
-    variable a set to 0
-    set a to 0
-  end procedure
-
-  property aa2 as Int
-  property aa3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["a", "a", "a"],
-      ["aa2", "property.aa2", "property.aa2"],
-      ["aa3", "property.aa3", "property.aa3"],
-      ["aa4", "aa4", "aa4"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
-  });
-
   test("Pass_FiltersByInput", async () => {
     const code = `${testHeader}
 
@@ -1944,6 +1908,7 @@ end main`;
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
+      ["Ref", "*", "*"],
       ["RegExp", "*", "*"],
       ["Set", "*", "*"],
       ["Stack", "*", "*"],
@@ -2136,6 +2101,7 @@ end main`;
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
+      ["Ref", "*", "*"],
       ["RegExp", "*", "*"],
       ["Set", "*", "*"],
       ["Stack", "*", "*"],

@@ -266,7 +266,7 @@ main
   call foo(a)
 end main
 
-procedure foo(out arr as List<of Int>)
+procedure foo(arr as List<of Int>)
   for i from 0 to 10 step 1
     call arr.put(i, 1)
   end for
@@ -277,17 +277,15 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createList(11, 0);
-  let _a0 = [a];
-  await foo(_a0);
-  a = _a0[0];
+  await foo(a);
 }
 
 async function foo(arr) {
   const _tofor13 = 10;
   for (let i = 0; i <= _tofor13; i = i + 1) {
-    arr[0].put(i, 1);
+    arr.put(i, 1);
   }
-  await _stdlib.printNoLine(system.safeIndex(arr[0], 0));
+  await _stdlib.printNoLine(system.safeIndex(arr, 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;

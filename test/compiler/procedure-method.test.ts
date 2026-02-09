@@ -168,7 +168,7 @@ class Foo
 
     property p1 as Float
 
-    procedure times(out b as Bar)
+    procedure times(b as Bar)
         call b.p1PlusOne()
         call p1PlusOne()
         set property.p1 to property.p1 + b.p1
@@ -207,9 +207,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let b = system.initialise(await new Bar()._initialise());
-  let _b0 = [b];
-  await f.times(_b0);
-  b = _b0[0];
+  await f.times(b);
 }
 
 class Foo {
@@ -223,9 +221,9 @@ class Foo {
   p1 = 0;
 
   async times(b) {
-    await b[0].p1PlusOne();
+    await b.p1PlusOne();
     await this.p1PlusOne();
-    this.p1 = this.p1 + b[0].p1;
+    this.p1 = this.p1 + b.p1;
     await _stdlib.printNoLine(this.p1);
   }
 

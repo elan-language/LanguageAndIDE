@@ -62,7 +62,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -83,7 +82,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -104,7 +102,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -126,7 +123,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -147,7 +143,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -168,7 +163,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -221,7 +215,6 @@ suite("Symbol Completion Spec", () => {
       "f",
       [
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -337,7 +330,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -360,7 +352,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -487,7 +478,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -522,7 +512,6 @@ suite("Symbol Completion Spec", () => {
       [
         TokenType.id_constant,
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
@@ -688,7 +677,6 @@ suite("Symbol Completion Spec", () => {
       "",
       [
         TokenType.id_let,
-        TokenType.id_parameter_out,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,

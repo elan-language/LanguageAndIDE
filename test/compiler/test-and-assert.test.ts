@@ -858,7 +858,7 @@ return [main, _tests];}`;
 main
 end main
 
-procedure square(x as Int, out y as List<of Int>)
+procedure square(x as Int, y as List<of Int>)
   call y.put(0,  x ^ 2)
 end procedure
 

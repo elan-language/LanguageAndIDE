@@ -50,7 +50,6 @@ export const noTokenTypes = new Set<TokenType>();
 export const allIds: TokenType[] = [
   TokenType.id_constant,
   TokenType.id_let,
-  TokenType.id_parameter_out,
   TokenType.id_parameter_regular,
   TokenType.id_property,
   TokenType.id_variable,
@@ -64,7 +63,6 @@ export const allMethods: TokenType[] = [
 export const allIdsAndMethods: TokenType[] = [
   TokenType.id_constant,
   TokenType.id_let,
-  TokenType.id_parameter_out,
   TokenType.id_parameter_regular,
   TokenType.id_property,
   TokenType.id_variable,
@@ -73,11 +71,7 @@ export const allIdsAndMethods: TokenType[] = [
   TokenType.method_function,
   TokenType.method_system,
 ];
-export const assignableIds: TokenType[] = [
-  TokenType.id_parameter_out,
-  TokenType.id_variable,
-  TokenType.id_property,
-];
+export const assignableIds: TokenType[] = [TokenType.id_variable, TokenType.id_property];
 export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_abstract,
   TokenType.type_notInheritable,

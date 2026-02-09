@@ -93,14 +93,14 @@ suite("Parsing - Completions", () => {
   });
 
   test("ParamDef", () => {
-    testCompletion(new ParamDefNode(f, false), "", ParseStatus.empty, "<i>name</i> as <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "a", ParseStatus.incomplete, " as <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax", ParseStatus.incomplete, " as <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax ", ParseStatus.incomplete, "as <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax a", ParseStatus.incomplete, "s <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax as", ParseStatus.incomplete, " <i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax as ", ParseStatus.incomplete, "<i>Type</i>");
-    testCompletion(new ParamDefNode(f, false), "ax as Int", ParseStatus.valid, "");
+    testCompletion(new ParamDefNode(f), "", ParseStatus.empty, "<i>name</i> as <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "a", ParseStatus.incomplete, " as <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax", ParseStatus.incomplete, " as <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax ", ParseStatus.incomplete, "as <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax a", ParseStatus.incomplete, "s <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax as", ParseStatus.incomplete, " <i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax as ", ParseStatus.incomplete, "<i>Type</i>");
+    testCompletion(new ParamDefNode(f), "ax as Int", ParseStatus.valid, "");
   });
 
   test("BinaryExpression", () => {
@@ -156,7 +156,7 @@ suite("Parsing - Completions", () => {
   });
   test("Func 2", () => {
     testCompletion(
-      new ParamDefNode(f, false),
+      new ParamDefNode(f),
       "f as Func",
       ParseStatus.incomplete,
       "<of <i>InputType(s) </i>=> <i>ReturnType</i>>",
@@ -164,7 +164,7 @@ suite("Parsing - Completions", () => {
   });
   test("Func 3", () => {
     testCompletion(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       "f as Func",
       ParseStatus.incomplete,
       "<of <i>InputType(s) </i>=> <i>ReturnType</i>>",

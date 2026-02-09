@@ -784,10 +784,9 @@ export function transform(
   if (node instanceof ParamDefNode) {
     const id = node.name?.matchedText ?? "";
     const type = transform(node.type, fieldId, scope);
-    const out = !!node.out?.matchedNode;
 
     if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, out, fieldId, scope);
+      return new ParamDefAsn(id, type, fieldId, scope);
     }
 
     return undefined;

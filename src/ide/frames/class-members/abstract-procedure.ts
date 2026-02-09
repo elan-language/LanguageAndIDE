@@ -16,7 +16,7 @@ export class AbstractProcedure extends SingleLineFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.params = new ParamListField(this, true);
+    this.params = new ParamListField(this);
     this.canHaveBreakPoint = false;
   }
 

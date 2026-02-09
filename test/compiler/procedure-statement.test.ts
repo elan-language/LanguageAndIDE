@@ -198,7 +198,7 @@ main
   call printNoLine(a)
 end main
 
-procedure changeFirst(out a as List<of Int>)
+procedure changeFirst(a as List<of Int>)
     call a.put(0, 5)
 end procedure`;
 
@@ -206,14 +206,12 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.list([2, 3]);
-  let _a0 = [a];
-  await changeFirst(_a0);
-  a = _a0[0];
+  await changeFirst(a);
   await _stdlib.printNoLine(a);
 }
 
 async function changeFirst(a) {
-  a[0].put(0, 5);
+  a.put(0, 5);
 }
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
@@ -529,37 +527,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_OutParameters", async () => {
+  test("Pass_RefParameters", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to 2
-  variable b set to "hello"
+  variable a set to new Ref<of Int>(2)
+  variable b set to new Ref<of String>("hello")
   call foo(a, b)
-  call printNoLine(a)
-  call printNoLine(b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
 end main
 
-procedure foo(out x as Float, out y as String)
-  set x to 3
-  set y to "goodbye"
+procedure foo(x as Ref<of Float>, y as Ref<of String>)
+  call x.set(3)
+  call y.set("goodbye")
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = 2;
-  let b = "hello";
-  let _a0 = [a]; let _b0 = [b];
-  await foo(_a0, _b0);
-  a = _a0[0]; b = _b0[0];
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
+  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
+  let b = system.initialise(await new _stdlib.Ref()._initialise("hello"));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
 }
 
 async function foo(x, y) {
-  x[0] = 3;
-  y[0] = "goodbye";
+  x.set(3);
+  y.set("goodbye");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -584,35 +580,33 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to 2
-  variable b set to 3
+  variable a set to new Ref<of Float>(2)
+  variable b set to new Ref<of Float>(3)
   call foo(a, b)
-  call printNoLine(a)
-  call printNoLine(b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
 end main
 
-procedure foo(out x as Float, out y as Float)
-  variable c set to x
-  set x to y
-  set y to c
+procedure foo(x as Ref<of Float>, y as Ref<of Float>)
+  variable c set to x.value()
+  call x.set(y.value())
+  call y.set(c)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = 2;
-  let b = 3;
-  let _a0 = [a]; let _b0 = [b];
-  await foo(_a0, _b0);
-  a = _a0[0]; b = _b0[0];
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
+  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
+  let b = system.initialise(await new _stdlib.Ref()._initialise(3));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
 }
 
 async function foo(x, y) {
-  let c = x[0];
-  x[0] = y[0];
-  y[0] = c;
+  let c = x.value();
+  x.set(y.value());
+  y.set(c);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -637,46 +631,42 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to 2
-  variable b set to 3
+  variable a set to new Ref<of Float>(2)
+  variable b set to new Ref<of Float>(3)
   call foo(a, b)
-  call printNoLine(a)
-  call printNoLine(b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
 end main
 
-procedure foo(out a as Float, out b as Float)
+procedure foo(a as Ref<of Float>, b as Ref<of Float>)
   call bar(a, b)
 end procedure
 
-procedure bar(out a as Float, out b as Float)
-  variable c set to a
-  set a to b
-  set b to c
+procedure bar(a as Ref<of Float>, b as Ref<of Float>)
+  variable c set to a.value()
+  call a.set(b.value())
+  call b.set(c)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = 2;
-  let b = 3;
-  let _a0 = [a]; let _b0 = [b];
-  await foo(_a0, _b0);
-  a = _a0[0]; b = _b0[0];
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
+  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
+  let b = system.initialise(await new _stdlib.Ref()._initialise(3));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
 }
 
 async function foo(a, b) {
-  let _a3 = [a[0]]; let _b3 = [b[0]];
-  await bar(_a3, _b3);
-  a[0] = _a3[0]; b[0] = _b3[0];
+  await bar(a, b);
 }
 global["foo"] = foo;
 
 async function bar(a, b) {
-  let c = a[0];
-  a[0] = b[0];
-  b[0] = c;
+  let c = a.value();
+  a.set(b.value());
+  b.set(c);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -701,40 +691,38 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Foo()
-  variable b set to 0
+  variable a set to new Ref<of Foo>(new Foo())
+  variable b set to new Ref<of Int>(0)
   call foo(a, b)
-  call printNoLine(b)
+  call printNoLine(b.value())
 end main
 
-procedure foo(out f as Foo, out y as Int)
-  call f.bar(y)
+procedure foo(f as Ref<of Foo>, y as Ref<of Int>)
+  variable ff set to f.value()
+  call ff.bar(y)
 end procedure
 
 class Foo
   constructor()
   end constructor
 
-  procedure bar(out z as Int)
-    set z to 1
+  procedure bar(z as Ref<of Int>)
+    call z.set(1)
   end procedure
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new Foo()._initialise());
-  let b = 0;
-  let _a0 = [a]; let _b0 = [b];
-  await foo(_a0, _b0);
-  a = _a0[0]; b = _b0[0];
-  await _stdlib.printNoLine(b);
+  let a = system.initialise(await new _stdlib.Ref()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.Ref()._initialise(0));
+  await foo(a, b);
+  await _stdlib.printNoLine(b.value());
 }
 
 async function foo(f, y) {
-  let _y2 = [y[0]];
-  await f[0].bar(_y2);
-  y[0] = _y2[0];
+  let ff = f.value();
+  await ff.bar(y);
 }
 global["foo"] = foo;
 
@@ -747,7 +735,7 @@ class Foo {
   }
 
   async bar(z) {
-    z[0] = 1;
+    z.set(1);
   }
 
 }
@@ -773,14 +761,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Foo()
-  variable b set to 100
+  variable a set to new Ref<of Foo>(new Foo())
+  variable b set to new Ref<of Int>(100)
   call foo(a, b)
-  call printNoLine(b)
+  call printNoLine(b.value())
 end main
 
-procedure foo(out f as Foo, out y as Int)
-  set y to f.ff + y
+procedure foo(f as  Ref<of Foo>, y as  Ref<of Int>)
+  call y.set(f.value().ff + y.value())
 end procedure
 
 class Foo
@@ -794,16 +782,14 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new Foo()._initialise());
-  let b = 100;
-  let _a0 = [a]; let _b0 = [b];
-  await foo(_a0, _b0);
-  a = _a0[0]; b = _b0[0];
-  await _stdlib.printNoLine(b);
+  let a = system.initialise(await new _stdlib.Ref()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.Ref()._initialise(100));
+  await foo(a, b);
+  await _stdlib.printNoLine(b.value());
 }
 
 async function foo(f, y) {
-  y[0] = f[0].ff + y[0];
+  y.set(f.value().ff + y.value());
 }
 global["foo"] = foo;
 
@@ -840,33 +826,29 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to 1
+  variable x set to new Ref<of Int>(1)
   call addOne(x)
-  call printNoLine(x)
+  call printNoLine(x.value())
   call addOne(x)
-  call printNoLine(x)
+  call printNoLine(x.value())
 end main
 
-procedure addOne(out n as Int)
-  set n to n + 1
+procedure addOne(n as Ref<of Int>)
+  call n.set(n.value() + 1)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 1;
-  let _x0 = [x];
-  await addOne(_x0);
-  x = _x0[0];
-  await _stdlib.printNoLine(x);
-  let _x2 = [x];
-  await addOne(_x2);
-  x = _x2[0];
-  await _stdlib.printNoLine(x);
+  let x = system.initialise(await new _stdlib.Ref()._initialise(1));
+  await addOne(x);
+  await _stdlib.printNoLine(x.value());
+  await addOne(x);
+  await _stdlib.printNoLine(x.value());
 }
 
 async function addOne(n) {
-  n[0] = n[0] + 1;
+  n.set(n.value() + 1);
 }
 global["addOne"] = addOne;
 return [main, _tests];}`;
@@ -891,25 +873,23 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to 1
+  variable x set to new Ref<of Int>(1)
   call printParameter(x)
 end main
 
-procedure printParameter(out n as Int)
-  call printNoLine(n)
+procedure printParameter(n as Ref<of Int>)
+  call printNoLine(n.value())
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = 1;
-  let _x0 = [x];
-  await printParameter(_x0);
-  x = _x0[0];
+  let x = system.initialise(await new _stdlib.Ref()._initialise(1));
+  await printParameter(x);
 }
 
 async function printParameter(n) {
-  await _stdlib.printNoLine(n[0]);
+  await _stdlib.printNoLine(n.value());
 }
 global["printParameter"] = printParameter;
 return [main, _tests];}`;
@@ -1550,185 +1530,6 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Cannot call procedure 'append' within an expression.LangRef.html#compile_error",
       "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).LangRef.html#TypesCompileError",
-    ]);
-  });
-
-  test("Fail_PassLiteralAsOut", async () => {
-    const code = `${testHeader}
-
-main
-  call foo(0)
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass '0' as an out parameter.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_PassExpressionAsOut", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to 1
-  variable b set to 2
-  call foo(a + b)
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'a + b' as an out parameter.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_PassConstantAsOut", async () => {
-    const code = `${testHeader}
-
-main
-  constant a set to 1
-  call foo(a)
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'let a' as an out parameter.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_PassFuncCall", async () => {
-    const code = `${testHeader}
-
-main
-  call foo(bar())
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure
-
-function bar() returns Int
-  return 0
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'bar()' as an out parameter.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_PassProperty", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
-  call foo(f.ff)
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure
-
-class Foo
-  constructor()
-    set property.ff to 1
-  end constructor
-
-  property ff as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f.ff' as an out parameter.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_PassIndex", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to [1,2]
-  call foo(f[0])
-end main
-
-procedure foo(out a as Int)
-  set a to 1
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f[0]' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 

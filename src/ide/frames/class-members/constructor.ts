@@ -13,7 +13,7 @@ export class Constructor extends FrameWithStatements {
   public params: ParamListField;
   constructor(parent: Parent) {
     super(parent);
-    this.params = new ParamListField(this, false);
+    this.params = new ParamListField(this);
   }
 
   initialKeywords(): string {

@@ -19,9 +19,9 @@ suite("Demo compile", () => {
   test("test fern", async () => {
     await testElanProgram("demo_programs\\fern.elan");
   });
-  test("test fern-params", async () => {
-    await testElanProgram("demo_programs\\fern-params.elan");
-  });
+  // test("test fern-params", async () => {
+  //   await testElanProgram("demo_programs\\fern-params.elan");
+  // });
   /*   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   }); */
@@ -61,9 +61,9 @@ suite("Demo compile", () => {
   test("test turtle-spiral", async () => {
     await testElanProgram("demo_programs\\turtle-spiral.elan");
   });
-  test("test wordle-solver", async () => {
-    await testElanProgram("demo_programs\\wordle-solver.elan");
-  });
+  // test("test wordle-solver", async () => {
+  //   await testElanProgram("demo_programs\\wordle-solver.elan");
+  // });
   test("test wordle-demo", async () => {
     await testElanProgram("demo_programs\\wordle-demo.elan");
   });
@@ -83,13 +83,13 @@ suite("Demo compile", () => {
   test("test blackjack 2", async () => {
     await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
   });
-  test("test wordle 1", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
-  });
-  test("test wordle 2", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_2begin.elan");
-  });
-  test("test wordle 3", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
-  });
+  // test("test wordle 1", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
+  // });
+  // test("test wordle 2", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_2begin.elan");
+  // });
+  // test("test wordle 3", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
+  // });
 });

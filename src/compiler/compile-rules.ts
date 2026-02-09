@@ -1196,12 +1196,6 @@ export function mustNotBeRedefined(
   );
 }
 
-export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
-  compileErrors.push(
-    new SyntaxCompileError("'out' parameters are only supported on procedures.", location),
-  );
-}
-
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError("There can only be one 'main' in a program.", location),

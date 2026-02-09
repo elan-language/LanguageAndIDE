@@ -13,9 +13,7 @@ export class CopyWith extends AbstractSequence {
   withClause: WithClause | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
-    TokenType.id_parameter_out,
     TokenType.id_parameter_regular,
-    TokenType.id_parameter_out,
     TokenType.id_property,
     TokenType.id_variable,
   ]);

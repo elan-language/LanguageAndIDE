@@ -200,10 +200,8 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
               ? "this."
               : "";
 
-      const scopePostfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
-
       const id = `${idPrefix}${symbol.symbolId}`;
-      const value = `${scopePrefix}${symbol.symbolId}${scopePostfix}`;
+      const value = `${scopePrefix}${symbol.symbolId}`;
       const type = symbol.symbolType();
       const typeMap = JSON.stringify(this.getClassTypeMap(type));
 

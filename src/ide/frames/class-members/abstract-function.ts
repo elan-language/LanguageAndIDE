@@ -25,7 +25,7 @@ export class AbstractFunction extends SingleLineFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.params = new ParamListField(this, false);
+    this.params = new ParamListField(this);
     this.returnType = new TypeField(this);
     this.canHaveBreakPoint = false;
   }

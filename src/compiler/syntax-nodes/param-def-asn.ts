@@ -11,7 +11,6 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
     private readonly type: AstIdNode,
-    private readonly out: boolean,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -35,7 +34,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   toString() {
-    return `${this.out ? "out " : ""}${this.id} as ${this.type}`;
+    return `${this.id} as ${this.type}`;
   }
 
   get symbolId() {
@@ -43,7 +42,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   get symbolScope() {
-    return this.out ? SymbolScope.outParameter : SymbolScope.parameter;
+    return SymbolScope.parameter;
   }
 
   resolveSymbol(id: string, _scope: Scope): ElanSymbol {
