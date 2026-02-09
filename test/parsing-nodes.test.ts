@@ -1143,7 +1143,7 @@ suite("Parsing Nodes", () => {
   });
   test("ParamDefNode", () => {
     testNodeParse(
-      new ParamDefNode(f, false),
+      new ParamDefNode(f),
       `x as String`,
       ParseStatus.valid,
       "x as String",
@@ -1151,30 +1151,23 @@ suite("Parsing Nodes", () => {
       "x as String",
       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
     );
-    testNodeParse(new ParamDefNode(f, false), `z`, ParseStatus.incomplete, "z", "", "");
-    testNodeParse(new ParamDefNode(f, false), `w as`, ParseStatus.incomplete, "w as", "", "");
-    testNodeParse(new ParamDefNode(f, false), `A`, ParseStatus.invalid, "", "A", "");
-    testNodeParse(new ParamDefNode(f, false), `v String`, ParseStatus.invalid, "", "v String", "");
+    testNodeParse(new ParamDefNode(f), `z`, ParseStatus.incomplete, "z", "", "");
+    testNodeParse(new ParamDefNode(f), `w as`, ParseStatus.incomplete, "w as", "", "");
+    testNodeParse(new ParamDefNode(f), `A`, ParseStatus.invalid, "", "A", "");
+    testNodeParse(new ParamDefNode(f), `v String`, ParseStatus.invalid, "", "v String", "");
   });
   test("Param List", () => {
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `A as string`,
       ParseStatus.valid,
       "",
       "A as string",
       "",
     ); //i.e. all leftover
+    testNodeParse(new CSV(f, () => new ParamDefNode(f), 0), ``, ParseStatus.valid, "", "", "");
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
-      ``,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `a as String`,
       ParseStatus.valid,
       "",
@@ -1182,7 +1175,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `a as String, bb as Int, foo as Bar`,
       ParseStatus.valid,
       "",
@@ -1190,7 +1183,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `a`,
       ParseStatus.incomplete,
       "a",
@@ -1198,7 +1191,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `a as String,`,
       ParseStatus.incomplete,
       "a as String,",
@@ -1206,7 +1199,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new ParamDefNode(f, false), 0),
+      new CSV(f, () => new ParamDefNode(f), 0),
       `a as String, bb as`,
       ParseStatus.incomplete,
       "",

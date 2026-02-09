@@ -573,33 +573,6 @@ end function
     await assertDebugBreakPoint(fileImpl, "return14", expected);
   });
 
-  test("Pass_OutParameter", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to 1
-  call printParameter(x)
-end main
-  
-procedure printParameter(out n as Int)
-  call printNoLine(n)
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [asDebugSymbol("n", 1, '{"Type":"Int"}')];
-
-    await assertDebugBreakPoint(fileImpl, "call13", expected);
-  });
-
   test("Pass_ClassTypeInfo", async () => {
     const code = `${testHeader}
 
