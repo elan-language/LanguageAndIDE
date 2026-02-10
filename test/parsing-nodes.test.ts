@@ -9,7 +9,6 @@ import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expressio
 import { BinaryOperation } from "../src/ide/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../src/ide/frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../src/ide/frames/parse-nodes/comma-node";
-import { ConstantValueNode } from "../src/ide/frames/parse-nodes/constant-value-node";
 import { CSV } from "../src/ide/frames/parse-nodes/csv";
 import { DeconstructedList } from "../src/ide/frames/parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../src/ide/frames/parse-nodes/deconstructed-tuple";
@@ -25,7 +24,6 @@ import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
-import { ListImmutableNode } from "../src/ide/frames/parse-nodes/list-immutable-node";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
@@ -125,14 +123,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(f),
-      "reduce(0.0, lambda s as String, p as ListImmutable<of String> => s + p[0] * p[0])",
-      ParseStatus.valid,
-      "reduce(0.0, lambda s as String, p as ListImmutable<of String> => s + p[0] * p[0])",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ExprNode(f),
       "this",
       ParseStatus.valid,
       "this",
@@ -158,15 +148,6 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
-    );
-    testNodeParse(
-      new ExprNode(f),
-      "empty ListImmutable<of Int>",
-      ParseStatus.valid,
-      "empty ListImmutable<of Int>",
-      "",
-      "",
-      "<el-kw>empty</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
     );
     testNodeParse(
       new ExprNode(f),
@@ -756,114 +737,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   });
-  test("Lists", () => {
-    testNodeParse(new ListImmutableNode(f, () => new LitInt(f)), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(
-      new ListImmutableNode(f, () => new LitInt(f)),
-      `{1, 2, 3, 4, 5}`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "{1, 2, 3, 4, 5}",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new LitInt(f)),
-      `{}`,
-      ParseStatus.invalid,
-      ``,
-      "{}",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new LitInt(f)),
-      `{`,
-      ParseStatus.incomplete,
-      `{`,
-      "",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new LitInt(f)),
-      `{1,2,3.1}`,
-      ParseStatus.invalid,
-      ``,
-      "{1,2,3.1}",
-      "",
-    );
-    // list of list
-    testNodeParse(
-      new ListImmutableNode(f, () => new ListImmutableNode(f, () => new LitInt(f))),
-      ``,
-      ParseStatus.empty,
-      ``,
-      "",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ListImmutableNode(f, () => new LitInt(f))),
-      `{{}, {}, {}}`,
-      ParseStatus.invalid,
-      ``,
-      "{{}, {}, {}}",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ListImmutableNode(f, () => new LitInt(f))),
-      `{{1,2}, {3,4}}`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "{{1, 2}, {3, 4}}",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ListImmutableNode(f, () => new LitInt(f))),
-      `{{1,2}, {3,4}`,
-      ParseStatus.incomplete,
-      `{{1,2}, {3,4}`,
-      "",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ListImmutableNode(f, () => new LitInt(f))),
-      `{{1,2, {}}`,
-      ParseStatus.invalid,
-      ``,
-      `{{1,2, {}}`,
-      "",
-      "",
-    );
-
-    testNodeParse(
-      new ListImmutableNode(f, () => new LitString(f)),
-      `{"apple", "pear"}`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
-    );
-  });
-  test("List of expressions", () => {
-    testNodeParse(
-      new ListImmutableNode(f, () => new ExprNode(f)),
-      `{a, 3 + 4, func(a, 3)- 1, new Foo()}`,
-      ParseStatus.valid,
-      "{a, 3 + 4, func(a, 3)- 1, new Foo()}",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ExprNode(f)),
-      `{a, 3+ 4, foo(a, 3) - 1}`,
-      ParseStatus.valid,
-      "",
-      "",
-      "{a, 3 + 4, foo(a, 3) - 1}",
-      "",
-    );
-  });
   test("TypeSimpleNode", () => {
     testNodeParse(
       new TypeNameNode(f),
@@ -901,15 +774,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeSimpleOrGeneric(f),
-      `Foo<of ListImmutable<of Bar>>`,
-      ParseStatus.valid,
-      "Foo<of ListImmutable<of Bar>>",
-      "",
-      "",
-      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;&gt;",
-    );
-    testNodeParse(
-      new TypeSimpleOrGeneric(f),
       `Dictionary<of Bar, Yon>`,
       ParseStatus.valid,
       "Dictionary<of Bar, Yon>",
@@ -917,25 +781,9 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
     );
-    testNodeParse(
-      new TypeSimpleOrGeneric(f),
-      `ListImmutable<of (Bar, Yon)>`,
-      ParseStatus.valid,
-      "ListImmutable<of (Bar, Yon)>",
-      "",
-      "",
-      "<el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> (<el-type>Bar</el-type>, <el-type>Yon</el-type>)&gt;",
-    );
   });
   test("TypeNode", () => {
-    testNodeParse(
-      new TypeNode(f),
-      `Foo<of ListImmutable<of Bar>>`,
-      ParseStatus.valid,
-      "Foo<of ListImmutable<of Bar>>",
-      "",
-      "",
-    ); //Single
+    //Single
     testNodeParse(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
     testNodeParse(new TypeNode(f), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
     testNodeParse(
@@ -959,14 +807,6 @@ suite("Parsing Nodes", () => {
       `(Foo, Bar< of Yon>)`,
       ParseStatus.valid,
       "(Foo, Bar< of Yon>)",
-      "",
-      "",
-    );
-    testNodeParse(
-      new TypeNode(f),
-      `Foo<of ListImmutable<of (Bar, Qux)>>`,
-      ParseStatus.valid,
-      "Foo<of ListImmutable<of (Bar, Qux)>>",
       "",
       "",
     );
@@ -1078,14 +918,6 @@ suite("Parsing Nodes", () => {
       ParseStatus.invalid,
       "",
       "lambda x => x * x",
-      "",
-    );
-    testNodeParse(
-      new Lambda(f),
-      `lambda s as Int, p as ListImmutable<of Int> => s + p[0]`,
-      ParseStatus.valid,
-      "",
-      "",
       "",
     );
     testNodeParse(
@@ -1376,24 +1208,6 @@ suite("Parsing Nodes", () => {
   test("Literal", () => {
     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
     testNodeParse(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
-    testNodeParse(
-      new ListImmutableNode(f, () => new ConstantValueNode(f)),
-      `{"apple", "pear"}`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
-    );
-    testNodeParse(
-      new ListImmutableNode(f, () => new ConstantValueNode(f)),
-      `{4, 5, 2, 3}`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      `{<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}`,
-    );
   });
   test("DeconstructedList", () => {
     testNodeParse(new DeconstructedList(f), `a:b`, ParseStatus.valid, "", "", "");
@@ -1546,13 +1360,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new ExprNode(f), `tuple(def, ghi)`, ParseStatus.valid, "tuple(def, ghi)", ""); // tuple
     testNodeParse(new TermSimple(f), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
-    testNodeParse(
-      new TermSimple(f),
-      `{def:true, ghi: false}`,
-      ParseStatus.valid,
-      "{def:true, ghi: false}",
-      "",
-    );
     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
@@ -1847,14 +1654,14 @@ suite("Parsing Nodes", () => {
   test("Parse list of list of floats", () => {
     testNodeParse(
       new ExprNode(f),
-      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
       ParseStatus.valid,
-      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
       "",
     );
   });
   test("Parse list of floats 2", () => {
-    testNodeParse(new ExprNode(f), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
+    testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
   });
   test("Six open brackets", () => {
     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");

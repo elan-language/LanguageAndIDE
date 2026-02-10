@@ -1,4 +1,4 @@
-# 43c637020acdce59bcac27a3533c31b79c5cd0b0f7dad8817ee285f636b1e544 Elan 2.0.0-alpha guest default_profile valid
+# ac5bba050a159c03ded44b38706d4927235ead67748eef926b5ec22c97adc75d Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable game set to new Game(1000)
@@ -117,7 +117,7 @@ end test
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue.keys()[divAsInteger(number, 4)]
+  variable rank set to rankValue().keys()[divAsInteger(number, 4)]
   variable suit set to number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
@@ -201,13 +201,13 @@ function htmlForCard(card as Card) returns String
   else
     variable rank set to card.rank
     variable suit set to card.suit
-    variable colour set to colours[suit]
-    variable symbol set to symbols[suit]
+    variable colour set to colourForSuit(suit)
+    variable symbol set to symbolForSuit(suit)
     set html to "<div class='card {colour}'>"
     variable u set to htmlForSpot("u", rank)
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
-    each location in gridByRank[rank]
+    each location in gridForRank(rank)
       if location.isSameValueAs("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
@@ -335,7 +335,7 @@ abstract class Player
     if newCard.rank.isSameValueAs("A") then
       call addAce()
     else
-      set property.handTotal to property.handTotal + rankValue[newCard.rank]
+      set property.handTotal to property.handTotal + rankValue()[newCard.rank]
     end if
     call evaluateStatus(newCard)
   end procedure
@@ -476,12 +476,23 @@ enum Status active, standing, blackjack, bust
 
 enum Suit clubs, diamonds, hearts, spades
 
-constant symbols set to {Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"}
+function symbolForSuit(suit as Suit) returns String
+  variable dict set to [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"]
+  return dict[suit]
+end function
 
-constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+function rankValue() returns Dictionary<of String, Int>
+  return ["2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11]
+end function
 
-constant gridByRank set to {"A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}}
+function gridForRank(rank as String) returns List<of String>
+  variable dict set to ["A":["royal"], "2":["b", "c"], "3":["a", "b", "c"], "4":["d", "e", "f", "g"], "5":["a", "d", "e", "f", "g"], "6":["d", "e", "f", "g", "h", "i"], "7":["d", "e", "f", "g", "h", "i", "l"], "8":["d", "e", "f", "g", "h", "i", "l", "m"], "9":["a", "d", "e", "f", "g", "n", "o", "p", "r"], "10":["d", "e", "f", "g", "n", "o", "p", "r", "s", "t"], "J":["royal"], "Q":["royal"], "K":["royal"]]
+  return dict[rank]
+end function
 
-constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
+function colourForSuit(suit as Suit) returns String
+  variable dict set to [Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"]
+  return dict[suit]
+end function
 
 constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'

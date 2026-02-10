@@ -25,7 +25,6 @@ import {
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
-import { DictionaryImmutable } from "./dictionary-immutable";
 import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
 import { ElanRuntimeError } from "./elan-runtime-error";
@@ -33,7 +32,6 @@ import { ElanSet } from "./elan-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
-import { ListImmutable } from "./list-immutable";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { RawVG } from "./raw-vg";
@@ -104,14 +102,8 @@ export class StdLib {
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;
 
-  @elanClassExport(ListImmutable)
-  ListImmutable = ListImmutable;
-
   @elanClassExport(Dictionary)
   Dictionary = Dictionary;
-
-  @elanClassExport(DictionaryImmutable)
-  DictionaryImmutable = DictionaryImmutable;
 
   @elanClassExport(Ref)
   Ref = Ref;

@@ -64,13 +64,13 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 2]
-  variable b set to {3, 4}
+  variable b set to [3, 4]
   variable c set to ["a":true, "b":false]
-  variable d set to {"a":true, "b":false}
+  variable d set to ["a":true, "b":false]
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as List<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
+procedure foo(x as List<of Int>, y as List<of Int>, z as Dictionary<of String, Boolean>, t as Dictionary<of String, Boolean>)
   call printNoLine(x)
   call printNoLine(y)
   call printNoLine(z)
@@ -81,9 +81,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2]);
-  let b = system.listImmutable([3, 4]);
+  let b = system.list([3, 4]);
   let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
-  let d = system.dictionaryImmutable([["a", _stdlib.true], ["b", _stdlib.false]]);
+  let d = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
   await foo(a, b, c, d);
 }
 
@@ -109,7 +109,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2]{3, 4}[a:true, b:false]{a:true, b:false}");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2][3, 4][a:true, b:false][a:true, b:false]");
   });
 
   test("Pass_ExternalCall", async () => {
@@ -1208,13 +1208,13 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {2, 3}
+  variable a set to [2, 3]
   call changeAll(a)
   call printNoLine(a)
 end main
 
-procedure changeAll(a as ListImmutable<of Int>)
-    set a to {1, 2, 3}
+procedure changeAll(a as List<of Int>)
+  set a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1244,7 +1244,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-    set a to [1, 2, 3]
+  set a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1560,30 +1560,6 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-procedure p1(a as ListImmutable<of List<of Int>>)
-  
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

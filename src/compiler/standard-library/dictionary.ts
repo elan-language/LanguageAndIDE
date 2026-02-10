@@ -3,7 +3,6 @@ import {
   ElanBoolean,
   elanClass,
   ElanClass,
-  ElanClassName,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -133,10 +132,5 @@ export class Dictionary<T1, T2> {
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);
     return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
-  }
-
-  @elanFunction([], FunctionOptions.pure, ElanClassName("DictionaryImmutable"))
-  asDictionaryImmutable() {
-    return this.system!.dictionaryAsDictionaryImmutable(this);
   }
 }

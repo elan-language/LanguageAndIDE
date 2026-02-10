@@ -18,7 +18,7 @@ suite("Chaining", () => {
     const code = `${testHeader}
 
 main 
-  variable a set to {{1,2}, {3,4}}
+  variable a set to [[1,2], [3,4]]
   variable b set to a[1][1]
   call printNoLine(b)
 end main`;
@@ -26,7 +26,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([system.listImmutable([1, 2]), system.listImmutable([3, 4])]);
+  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
   let b = system.safeIndex(system.safeIndex(a, 1), 1);
   await _stdlib.printNoLine(b);
 }
@@ -93,10 +93,10 @@ end main
 
 class Foo
   constructor()
-    set property.a to {1}
+    set property.a to [1]
   end constructor
   
-  property a as ListImmutable<of Int>
+  property a as List<of Int>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -108,14 +108,14 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
-    this.a = system.listImmutable([1]);
+    this.a = system.list([1]);
     return this;
   }
 
-  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  a = system.initialise(_stdlib.List.emptyInstance());
 
 }
 return [main, _tests];}`;
@@ -684,14 +684,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main 
-  variable a set to {1,2,3,4,5,6}
+  variable a set to [1,2,3,4,5,6]
   call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3, 4, 5, 6]);
+  let a = system.list([1, 2, 3, 4, 5, 6]);
   await _stdlib.printNoLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;

@@ -28,13 +28,13 @@ class Game
     constructor()
       set property.p2 to new Player("Chloe")
       set property.p1 to new Player("Joe")
-      set property.previousScores to {5, 2, 4}
+      set property.previousScores to [5, 2, 4]
     end constructor
 
     property p1 as Player
     property p2 as Player
 
-    property previousScores as ListImmutable<of Int>
+    property previousScores as List<of Int>
 
     function asString() returns String
         return "A game"
@@ -65,12 +65,12 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p2 = system.initialise(await new Player()._initialise("Chloe"));
     this.p1 = system.initialise(await new Player()._initialise("Joe"));
-    this.previousScores = system.listImmutable([5, 2, 4]);
+    this.previousScores = system.list([5, 2, 4]);
     return this;
   }
 
@@ -90,7 +90,7 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  previousScores = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A game";
@@ -128,7 +128,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ChloeJoe{5, 2, 4}");
+    await assertObjectCodeExecutes(fileImpl, "ChloeJoe[5, 2, 4]");
   });
 
   test("Pass_AssignProperty", async () => {
@@ -199,9 +199,7 @@ main
   call printNoLine(g.f)
   call printNoLine(g.b)
   call printNoLine(g.s)
-  call printNoLine(g.li)
   call printNoLine(g.ds)
-  call printNoLine(g.dsi)
   call printNoLine(g.ai)
   call printNoLine(g.t)
   call printNoLine(g.ff("a", "b"))
@@ -216,11 +214,9 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as DictionaryImmutable<of String, Int>
     property ai as List<of Int>
-    property t as Tuple<of Int, String, ListImmutable<of Int>>
+    property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
 
@@ -238,9 +234,7 @@ async function main() {
   await _stdlib.printNoLine(g.f);
   await _stdlib.printNoLine(g.b);
   await _stdlib.printNoLine(g.s);
-  await _stdlib.printNoLine(g.li);
   await _stdlib.printNoLine(g.ds);
-  await _stdlib.printNoLine(g.dsi);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
   await _stdlib.printNoLine((await g.ff("a", "b")));
@@ -248,7 +242,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -263,15 +257,11 @@ class Game {
 
   s = "";
 
-  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
-
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
-
-  dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
   ai = system.initialise(_stdlib.List.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
   ff = system.emptyFunc(0);
 
@@ -297,7 +287,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})0true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])0true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -310,9 +300,7 @@ main
   call printNoLine(g.f)
   call printNoLine(g.b)
   call printNoLine(g.s)
-  call printNoLine(g.li)
   call printNoLine(g.ds)
-  call printNoLine(g.dsi)
   call printNoLine(g.ai)
   call printNoLine(g.t)
   call printNoLine(g.r)
@@ -333,11 +321,10 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as ListImmutable<of Int>
+    property li as List<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as DictionaryImmutable<of String, Int>
     property ai as List<of Int>
-    property t as Tuple<of Int, String, ListImmutable<of Int>>
+    property t as Tuple<of Int, String, List<of Int>>
     property r as RegExp
 
     function asString() returns String
@@ -355,9 +342,7 @@ async function main() {
   await _stdlib.printNoLine(g.f);
   await _stdlib.printNoLine(g.b);
   await _stdlib.printNoLine(g.s);
-  await _stdlib.printNoLine(g.li);
   await _stdlib.printNoLine(g.ds);
-  await _stdlib.printNoLine(g.dsi);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
   await _stdlib.printNoLine(g.r);
@@ -382,7 +367,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.DictionaryImmutable.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -397,15 +382,13 @@ class Game {
 
   s = "";
 
-  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  li = system.initialise(_stdlib.List.emptyInstance());
 
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
 
-  dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
-
   ai = system.initialise(_stdlib.List.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
   r = system.emptyRegExp();
 
@@ -429,7 +412,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])A RegExp");
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
@@ -607,7 +590,7 @@ main
   call printNoLine(g.p1.isSameValueAs(empty Player))
   call printNoLine(g.p2.isSameValueAs(empty Player))
   call printNoLine(g.previousGame.isSameValueAs(empty Game))
-  call printNoLine(g.previousScores.isSameValueAs(empty ListImmutable<of Int>))
+  call printNoLine(g.previousScores.isSameValueAs(empty List<of Int>))
   call printNoLine(g.score is empty Int)
   call printNoLine(g.best is empty Int)
   call printNoLine(g.r is empty RegExp)
@@ -626,7 +609,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as ListImmutable<of Int>
+  property previousScores as List<of Int>
 
   property r as RegExp
 
@@ -656,14 +639,14 @@ async function main() {
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(g.score === 0);
   await _stdlib.printNoLine(g.best === 0);
   await _stdlib.printNoLine(g.r === system.emptyRegExp());
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.List.emptyInstance())], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
     this.score = 1;
@@ -698,7 +681,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  previousScores = system.initialise(_stdlib.List.emptyInstance());
 
   r = system.emptyRegExp();
 
@@ -749,7 +732,7 @@ main
   call printNoLine(g.p1.isSameReferenceAs(empty Player))
   call printNoLine(g.p2.isSameReferenceAs(empty Player))
   call printNoLine(g.previousGame.isSameReferenceAs(empty Game))
-  call printNoLine(g.previousScores.isSameReferenceAs(empty ListImmutable<of Int>))
+  call printNoLine(g.previousScores.isSameReferenceAs(empty List<of Int>))
   call printNoLine(g.score.isSameReferenceAs(empty Int))
   call printNoLine(g.best.isSameReferenceAs(empty Int))
   call printNoLine(g.r.isSameReferenceAs(empty RegExp))
@@ -768,7 +751,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as ListImmutable<of Int>
+  property previousScores as List<of Int>
 
   property r as RegExp
 
@@ -798,14 +781,14 @@ async function main() {
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.p1, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.p2, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.previousGame, Game.emptyInstance()));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.previousScores, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.score, 0));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.best, 0));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(g.r, system.emptyRegExp()));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.List.emptyInstance())], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
     this.score = 1;
@@ -840,7 +823,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  previousScores = system.initialise(_stdlib.List.emptyInstance());
 
   r = system.emptyRegExp();
 
@@ -910,7 +893,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as ListImmutable<of Int>
+  property previousScores as List<of Int>
 
   function asString() returns String
     return "A game"
@@ -941,7 +924,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.score = 10;
@@ -980,7 +963,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  previousScores = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A game";
@@ -1030,7 +1013,7 @@ main
   call printNoLine(f.b)
   call printNoLine(f.c)
   call printNoLine(f.d)
-  call printNoLine(f.a.isSameValueAs(empty ListImmutable<of Int>))
+  call printNoLine(f.a.isSameValueAs(empty List<of Int>))
   call printNoLine(f.b.isSameValueAs(empty String))
   call printNoLine(f.c.isSameValueAs(empty Dictionary<of String,Int>))
   call printNoLine(f.d.isSameValueAs(empty List<of Int>))
@@ -1040,7 +1023,7 @@ class Foo
   constructor()
   end constructor
 
-  property a as ListImmutable<of Int>
+  property a as List<of Int>
   property b as String
   property c as Dictionary<of String, Int>
   property d as List<of Int>
@@ -1059,21 +1042,21 @@ async function main() {
   await _stdlib.printNoLine(f.b);
   await _stdlib.printNoLine(f.c);
   await _stdlib.printNoLine(f.d);
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(f.a, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(f.b, ""));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -1101,7 +1084,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}[][]truetruetruetrue");
+    await assertObjectCodeExecutes(fileImpl, "[][][]truetruetruetrue");
   });
 
   test("Pass_emptyForStandardDataStructuresByReference", async () => {
@@ -1113,7 +1096,7 @@ main
   call printNoLine(f.b)
   call printNoLine(f.c)
   call printNoLine(f.d)
-  call printNoLine(f.a.isSameReferenceAs(empty ListImmutable<of Int>))
+  call printNoLine(f.a.isSameReferenceAs(empty List<of Int>))
   call printNoLine(f.b.isSameReferenceAs(empty String))
   call printNoLine(f.c.isSameReferenceAs(empty Dictionary<of String,Int>))
   call printNoLine(f.d.isSameReferenceAs(empty List<of Int>))
@@ -1123,7 +1106,7 @@ class Foo
   constructor()
   end constructor
 
-  property a as ListImmutable<of Int>
+  property a as List<of Int>
   property b as String
   property c as Dictionary<of String, Int>
   property d as List<of Int>
@@ -1142,21 +1125,21 @@ async function main() {
   await _stdlib.printNoLine(f.b);
   await _stdlib.printNoLine(f.c);
   await _stdlib.printNoLine(f.d);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.a, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.b, ""));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.List.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
 
     return this;
   }
 
-  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  a = system.initialise(_stdlib.List.emptyInstance());
 
   b = "";
 
@@ -1184,7 +1167,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}[][]falsetruefalsefalse");
+    await assertObjectCodeExecutes(fileImpl, "[][][]falsetruefalsefalse");
   });
 
   test("Pass_PropertyOfAbstractType", async () => {

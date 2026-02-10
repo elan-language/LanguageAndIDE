@@ -628,8 +628,8 @@ main
 end main
 
 test test_list_
-  variable a set to {3, 2, 4, 0}
-  variable b set to {3, 2, 4, 0}
+  variable a set to [3, 2, 4, 0]
+  variable b set to [3, 2, 4, 0]
   assert a is b
 end test
 
@@ -688,9 +688,9 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let a = system.listImmutable([3, 2, 4, 0]);
-  let b = system.listImmutable([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "ListImmutable<of Int>"], [b, "ListImmutable<of Int>"], "assert12", _stdlib, false));
+  let a = system.list([3, 2, 4, 0]);
+  let b = system.list([3, 2, 4, 0]);
+  _outcomes.push(await system.assert([async () => a, "List<of Int>"], [b, "List<of Int>"], "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
@@ -755,7 +755,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "{3, 2, 4, 0}", "{3, 2, 4, 0}", "assert12")]],
+      ["test3", [new AssertOutcome(TestStatus.pass, "[3, 2, 4, 0]", "[3, 2, 4, 0]", "assert12")]],
       [
         "test15",
         [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "assert24")],

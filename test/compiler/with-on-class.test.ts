@@ -661,7 +661,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {0,2}
+  variable a set to [0,2]
   variable b set to new Foo()
   variable c set to copy b with b set to a[1]
   call printNoLine(b.b)
@@ -675,7 +675,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([0, 2]);
+  let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
   await _stdlib.printNoLine(b.b);
@@ -710,7 +710,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {0,2,3}
+  variable a set to [0,2,3]
   variable b set to new Foo()
   variable c set to copy b with b set to a.length()
   call printNoLine(b.b)
@@ -724,7 +724,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([0, 2, 3]);
+  let a = system.list([0, 2, 3]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = a.length(); return _a;})();
   await _stdlib.printNoLine(b.b);
@@ -938,7 +938,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable a set to {1, 2}
+  variable a set to [1, 2]
   variable b set to copy a with a set to 0
   call printNoLine(b)
 end main`;
@@ -961,7 +961,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {3}
+  variable a set to [3]
   variable b set to copy a with a set to 0
   call printNoLine(b)
 end main`;

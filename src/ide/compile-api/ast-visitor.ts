@@ -59,12 +59,10 @@ import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionary-asn";
-import { LiteralDictionaryImmutableAsn } from "../../compiler/syntax-nodes/literal-dictionary-immutable-asn";
 import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
 import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
 import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
-import { LiteralListImmutableAsn } from "../../compiler/syntax-nodes/literal-list-immutable-asn";
 import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
 import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 import { LiteralStringNonInterpAsn } from "../../compiler/syntax-nodes/literal-string-non-interp-asn";
@@ -144,7 +142,6 @@ import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ImageNode } from "../frames/parse-nodes/image-node";
-import { DictionaryImmutableNode } from "../frames/parse-nodes/immutable-dictionary-node";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
 import { IndexRange } from "../frames/parse-nodes/index-range";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
@@ -153,7 +150,6 @@ import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { KVPnode } from "../frames/parse-nodes/kvp-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
-import { ListImmutableNode } from "../frames/parse-nodes/list-immutable-node";
 import { ListNode } from "../frames/parse-nodes/list-node";
 import { LitFloat } from "../frames/parse-nodes/lit-float";
 import { LitInt } from "../frames/parse-nodes/lit-int";
@@ -897,12 +893,6 @@ export function transform(
     }
     return EmptyAsn.Instance;
   }
-
-  if (node instanceof ListImmutableNode) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListImmutableAsn(items, fieldId, scope);
-  }
-
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralListAsn(items, fieldId, scope);
@@ -912,12 +902,6 @@ export function transform(
     const items = transformMany(node.csv!, fieldId, scope);
     return new LiteralDictionaryAsn(items, fieldId, scope);
   }
-
-  if (node instanceof DictionaryImmutableNode) {
-    const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryImmutableAsn(items, fieldId, scope);
-  }
-
   if (node instanceof TupleNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralTupleAsn(items, fieldId);

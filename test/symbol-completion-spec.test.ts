@@ -608,42 +608,6 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#909 ImmutableList 1", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "{",
-      ParseStatus.incomplete,
-      TermSimple.name,
-      "",
-      allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
-      "",
-    );
-  });
-  test("#909 ImmutableList 2", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "{a",
-      ParseStatus.incomplete,
-      TermSimple.name,
-      "a",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      [""],
-      "",
-    );
-  });
-  test("#909 ImmutableList 3", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "{a, a",
-      ParseStatus.incomplete,
-      ReferenceNode.name,
-      "a",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      [""],
-      "",
-    );
-  });
   test("#930 var def node", () => {
     testSymbolCompletionSpec(
       new ValueDefNode(f),

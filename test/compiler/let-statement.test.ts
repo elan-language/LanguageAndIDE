@@ -60,7 +60,7 @@ return [main, _tests];}`;
   test("Pass_InLoop", async () => {
     const code = `${testHeader}
 
-constant li set to {1,2,3,4,5}
+constant li set to [1,2,3,4,5]
 
 main
   call foo()
@@ -75,7 +75,7 @@ end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  li = system.listImmutable([1, 2, 3, 4, 5]);
+  li = system.list([1, 2, 3, 4, 5]);
 
 };
 async function main() {
@@ -116,7 +116,7 @@ main
 end main
 
 procedure foo()
-  variable li set to {1,2,3,4,5}
+  variable li set to [1,2,3,4,5]
   for i from 0 to 3 step 1
     constant temp set to li[i]
     set li to li.withPut(i, li[i + 1])
@@ -132,7 +132,7 @@ async function main() {
 }
 
 async function foo() {
-  let li = system.listImmutable([1, 2, 3, 4, 5]);
+  let li = system.list([1, 2, 3, 4, 5]);
   const _tofor13 = 3;
   for (let i = 0; i <= _tofor13; i = i + 1) {
     const temp = system.safeIndex(li, i);
@@ -157,7 +157,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 3, 4, 5, 1}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 3, 4, 5, 1]");
   });
 
   test("Pass_Scoped", async () => {

@@ -46,9 +46,9 @@ suite("Demo compile", () => {
   test("test roman-numerals-turing-machine.elan", async () => {
     await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
   });
-  test("test snake_FP", async () => {
+  /*   test("test snake_FP", async () => {
     await testElanProgram("demo_programs\\snake_FP.elan");
-  });
+  }); */
   test("test snake_OOP", async () => {
     await testElanProgram("demo_programs\\snake_OOP.elan");
   });

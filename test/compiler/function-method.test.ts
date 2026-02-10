@@ -162,7 +162,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable x set to empty ListImmutable<of Float>
+  variable x set to empty List<of Float>
   set x to f.times(2)
   call printNoLine(x)
 end main
@@ -174,8 +174,8 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns ListImmutable<of Float>
-        return {property.p1 * value}
+    function times(value as Float) returns List<of Float>
+        return [property.p1 * value]
     end function
 
     function asString() returns String
@@ -188,7 +188,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let x = system.initialise(_stdlib.List.emptyInstance());
   x = (await f.times(2));
   await _stdlib.printNoLine(x);
 }
@@ -204,7 +204,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.listImmutable([this.p1 * value]);
+    return system.list([this.p1 * value]);
   }
 
   async asString() {
@@ -227,7 +227,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{10}");
+    await assertObjectCodeExecutes(fileImpl, "[10]");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
@@ -246,8 +246,8 @@ class Bar
 
   property p1 as Foo
 
-  function getTimes() returns ListImmutable<of Float>
-    variable x set to empty ListImmutable<of Float>
+  function getTimes() returns List<of Float>
+    variable x set to empty List<of Float>
     set x to property.p1.times(2)
     return x
   end function
@@ -261,8 +261,8 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) returns ListImmutable<of Float>
-        return {property.p1 * value}
+    function times(value as Float) returns List<of Float>
+        return [property.p1 * value]
     end function
 
 end class`;
@@ -292,7 +292,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.ListImmutable.emptyInstance());
+    let x = system.initialise(_stdlib.List.emptyInstance());
     x = (await this.p1.times(2));
     return x;
   }
@@ -310,7 +310,7 @@ class Foo {
   p1 = 0;
 
   async times(value) {
-    return system.listImmutable([this.p1 * value]);
+    return system.list([this.p1 * value]);
   }
 
 }
@@ -329,7 +329,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{10}");
+    await assertObjectCodeExecutes(fileImpl, "[10]");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
@@ -1161,58 +1161,6 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ReturnListOfMutableType", async () => {
-    const code = `${testHeader}
-
-class Foo
-  function p1() returns ListImmutable<of List<of Int>>
-    return p1()
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-class Foo
-  function p1(a as ListImmutable<of List<of Int>>) returns Int
-    return 0
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 
