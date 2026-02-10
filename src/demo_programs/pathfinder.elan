@@ -1,4 +1,4 @@
-# f9056016fa111e254e535985b975b8371bcff79d0a22c80f6f6b1afe3b7ec736 Elan 2.0.0-alpha guest default_profile valid
+# 903a9ef37028a4596756db8b59123dbabaa3f1d2ddf3d1ea8e014517d74151bd Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -30,8 +30,8 @@ procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point,
   end while
   if solver.getLastVisited().isSameValueAs(destination) then
     variable rl set to solver.getRouteAndLength()
-    variable route set to rl.item1
-    constant length set to rl.item2
+    variable route set to rl.item0
+    constant length set to rl.item1
     set gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
     call printNoLine("Length of route: {length.round(2)} ")
