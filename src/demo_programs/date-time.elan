@@ -7,9 +7,9 @@ main
     if reply.isSameValueAs("") then
       call printDate(divAsInteger(clock(), 1000))
     else
-      variable t, d set to parseAsInt(reply)
-      if t and (d >= 0) then
-        call printDate(d)
+      variable td set to parseAsInt(reply)
+      if td.item1 and (td.item2 >= 0) then
+        call printDate(td.item2)
       end if
     end if
   end while

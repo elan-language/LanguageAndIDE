@@ -29,7 +29,8 @@ function blackOrWhite(random as Float) returns Int
 end function
 
 function north(cell as (Int, Int)) returns (Int, Int)
-  variable x, y set to cell
+  variable x set to cell.item1
+  variable y set to cell.item2
   if y is 0 then
     set y to 29
   else

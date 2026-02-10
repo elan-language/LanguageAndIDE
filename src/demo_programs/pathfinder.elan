@@ -29,7 +29,9 @@ procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point,
     call pause(0)
   end while
   if solver.getLastVisited().isSameValueAs(destination) then
-    variable route, length set to solver.getRouteAndLength()
+    variable rl set to solver.getRouteAndLength()
+    variable route set to rl.item1
+    constant length set to rl.item2
     set gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
     call printNoLine("Length of route: {length.round(2)} ")

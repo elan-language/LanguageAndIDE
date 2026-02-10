@@ -2,7 +2,7 @@
 
 main
   variable myString set to "1"
-  variable success, parsedValue set to parseAsInt(myString)
-  call print(success)
-  call print(parsedValue)
+  constant successValue set to parseAsInt(myString)
+  call print(successValue.item1)
+  call print(successValue.item2)
 end main
