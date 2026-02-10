@@ -62,7 +62,7 @@ test test_setTargetIfGreen
 end test
 
 function evaluateGreens(attempt as String, target as String) returns List<of String>
-  return sequence(0, 4).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
+  return sequence(0, 4, 1).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
 end function
 
 test test_evaluateGreens
@@ -123,7 +123,7 @@ test test_setTargetIfYellow
 end test
 
 function evaluateYellows(attempt as String, target as String) returns List<of String>
-  return sequence(0, 4).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
+  return sequence(0, 4, 1).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
 end function
 
 test test_evaluateYellows

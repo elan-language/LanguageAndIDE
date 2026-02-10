@@ -73,7 +73,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() - 1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean

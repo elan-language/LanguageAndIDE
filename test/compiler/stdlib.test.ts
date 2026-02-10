@@ -1992,13 +1992,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 5))
+  call printNoLine(sequence(1, 5, 1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 5));
+  await _stdlib.printNoLine(_stdlib.sequence(1, 5, 1));
 }
 return [main, _tests];}`;
 
@@ -2021,13 +2021,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(5, 1))
+  call printNoLine(sequence(5, 1, 1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(5, 1));
+  await _stdlib.printNoLine(_stdlib.sequence(5, 1, 1));
 }
 return [main, _tests];}`;
 
@@ -2050,15 +2050,15 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequenceWithStep(1, 6, 2))
-  call printNoLine(sequenceWithStep(5, -4, -2))
+  call printNoLine(sequence(1, 6, 2))
+  call printNoLine(sequence(5, -4, -2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, 2));
-  await _stdlib.printNoLine(_stdlib.sequenceWithStep(5, (-4), (-2)));
+  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 2));
+  await _stdlib.printNoLine(_stdlib.sequence(5, (-4), (-2)));
 }
 return [main, _tests];}`;
 
@@ -2081,13 +2081,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequenceWithStep(1, 6, 0))
+  call printNoLine(sequence(1, 6, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, 0));
+  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 0));
 }
 return [main, _tests];}`;
 
@@ -2110,13 +2110,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequenceWithStep(1, 6, -1))
+  call printNoLine(sequence(1, 6, -1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequenceWithStep(1, 6, (-1)));
+  await _stdlib.printNoLine(_stdlib.sequence(1, 6, (-1)));
 }
 return [main, _tests];}`;
 
@@ -2142,13 +2142,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(sequenceWithStep(6, 1, 2))
+  call printNoLine(sequence(6, 1, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequenceWithStep(6, 1, 2));
+  await _stdlib.printNoLine(_stdlib.sequence(6, 1, 2));
 }
 return [main, _tests];}`;
 
