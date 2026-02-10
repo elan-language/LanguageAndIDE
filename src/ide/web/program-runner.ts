@@ -531,7 +531,6 @@ function getDebugSymbolHtml(
     case "Array":
       return getDebugSymbolList(name, nameType, value, typeMap, asIndex);
     case "Dictionary":
-    case "DictionaryImmutable":
       return getDebugSymbolDictionary(name, nameType, value, typeMap, asIndex);
     case "Array2D":
       return getDebugSymbolArray2D(name, nameType, value, typeMap, asIndex);

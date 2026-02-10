@@ -312,11 +312,6 @@ export class List<T1> {
     return asStrings.join(separator);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClassName("ListImmutable"))
-  asListImmutable() {
-    return this.system!.listAsListImmutable(this);
-  }
-
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
   asSet() {
     return this.system!.listAsSet(this);

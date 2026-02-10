@@ -4,7 +4,6 @@ export const FloatName = "Float";
 export const StringName = "String";
 export const RegExpName = "RegExp";
 export const ListName = "List";
-export const ListImmutableName = "ListImmutable";
 export const DictionaryName = "Dictionary";
 export const DictionaryImmutableName = "DictionaryImmutable";
 export const Array2DName = "Array2D";

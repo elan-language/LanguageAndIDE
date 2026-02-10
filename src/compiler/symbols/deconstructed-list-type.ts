@@ -1,7 +1,7 @@
 import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
-import { ListImmutableName, ListName } from "./elan-type-names";
+import { ListName } from "./elan-type-names";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";
 
@@ -31,9 +31,7 @@ export class DeconstructedListType implements DeconstructedSymbolType {
   private typeMap = {} as { [index: string]: SymbolType };
 
   get name() {
-    return this.tailId
-      ? this.tailType.name
-      : `${ListImmutableName}<of ${this.headType}> or ${ListName}<of ${this.headType}>`;
+    return this.tailId ? this.tailType.name : `${ListName}<of ${this.headType}>`;
   }
 
   toString(): string {

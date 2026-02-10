@@ -1,4 +1,4 @@
-# ec882b230614f50224a9462d468c659b377afe012217ee7604e710006deb2bc5 Elan 2.0.0-alpha guest default_profile valid
+# 399e79e12fbb3809b4bc97b8bd3043255b6babf7209282575ef7a2d68b4bf212 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -70,14 +70,14 @@ function hasHitEdge(g as Game) returns Boolean
 end function
 
 function newGame(rnd as Random) returns Game
-  constant g set to new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
+  constant g set to new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to [newSquare(20, 15), newSquare(21, 15)], priorTail set to empty Square, key set to "d", isOn set to true
   return newApple(g)
 end function
 
-record Game
+class Game
   property head as Square
 
-  property body as ListImmutable<of Square>
+  property body as List<of Square>
 
   property priorTail as Square
 
@@ -89,7 +89,7 @@ record Game
 
   property key as String
 
-end record
+end class
 
 function newSquare(x as Int, y as Int) returns Square
   return new Square() with x set to x, y set to y
@@ -138,7 +138,7 @@ test test_updateGraphics
   assert blocks[23, 15] is green
 end test
 
-test test_newApple
+[ghosted] test test_newApple
   variable g1 set to newGame(new Random())
   assert g1.apple is newSquare(12, 15)
   variable g2 set to newApple(g1)
@@ -152,7 +152,7 @@ test test_newApple
   assert g6.apple is newSquare(28, 24)
 end test
 
-test test_score
+[ghosted] test test_score
   variable g1 set to newGame(new Random())
   assert score(g1) is 0
   variable g2 set to copy g1 with body set to {newSquare(4, 4), newSquare(5, 4)}

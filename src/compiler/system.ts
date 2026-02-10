@@ -3,12 +3,10 @@ import { AssertOutcome } from "./assert-outcome";
 import { DebugSymbol } from "./compiler-interfaces/debug-symbol";
 import { ElanInputOutput } from "./compiler-interfaces/elan-input-output";
 import { Dictionary } from "./standard-library/dictionary";
-import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
 import { ElanRuntimeError } from "./standard-library/elan-runtime-error";
 import { ElanSet } from "./standard-library/elan-set";
 import { List } from "./standard-library/list";
-import { ListImmutable } from "./standard-library/list-immutable";
 import { TestStatus } from "./test-status";
 
 export class System {
@@ -19,10 +17,6 @@ export class System {
   set stdlib(stdlib: any) {
     this._stdlib = stdlib;
   }
-
-  // constant immutables
-  emptyImmutableListSingleton = this.initialise(new ListImmutable([]));
-  emptyDictionaryImmutableSingleton = this.dictionaryImmutable([]);
 
   emptyRegExpSingleton = /(?:)/;
 
@@ -43,16 +37,8 @@ export class System {
     return t;
   }
 
-  listImmutable(t: Array<any>) {
-    return this.initialise(new ListImmutable(t));
-  }
-
   dictionary(t: []) {
     return this.initialise(new Dictionary(t));
-  }
-
-  dictionaryImmutable(t: []) {
-    return this.initialise(new DictionaryImmutable(t));
   }
 
   list(t: Array<any>) {
@@ -325,7 +311,7 @@ export class System {
     return new AssertOutcome(testStatus, actualValue, expectedValue, htmlId);
   }
 
-  deconstructList<T>(list: List<T> | ListImmutable<T>): [T, List<T> | ListImmutable<T>] {
+  deconstructList<T>(list: List<T>): [T, List<T>] {
     return list.deconstructList();
   }
 
@@ -531,26 +517,6 @@ export class System {
     return arr;
   }
 
-  listImmutableAsList<T1>(list: ListImmutable<T1>): List<T1> {
-    const newList = [...list];
-    return this.initialise(new List(newList));
-  }
-
-  listImmutableAsSet<T1>(list: ListImmutable<T1>): ElanSet<T1> {
-    const newList = [...list];
-    return this.initialise(new ElanSet<T1>(newList));
-  }
-
-  listImmutableAsArray<T1>(list: ListImmutable<T1>): ElanArray<T1> {
-    const newList = [...list];
-    return this.initialise(new ElanArray(newList));
-  }
-
-  listAsListImmutable<T1>(list: List<T1>): ListImmutable<T1> {
-    const newList = [...list];
-    return this.initialise(new ListImmutable(newList));
-  }
-
   listAsSet<T1>(list: List<T1>): ElanSet<T1> {
     const newList = [...list];
     return this.initialise(new ElanSet<T1>(newList));
@@ -561,11 +527,6 @@ export class System {
     return this.initialise(new ElanArray(newList));
   }
 
-  arrayAsListImmutable<T1>(list: ElanArray<T1>): ListImmutable<T1> {
-    const newList = [...list];
-    return this.initialise(new ListImmutable(newList));
-  }
-
   arrayAsSet<T1>(list: ElanArray<T1>): ElanSet<T1> {
     const newList = [...list];
     return this.initialise(new ElanSet<T1>(newList));
@@ -574,17 +535,5 @@ export class System {
   arrayAsList<T1>(list: ElanArray<T1>): List<T1> {
     const newList = [...list];
     return this.initialise(new List(newList));
-  }
-
-  dictionaryAsDictionaryImmutable<T1, T2>(
-    dictionary: Dictionary<T1, T2>,
-  ): DictionaryImmutable<T1, T2> {
-    return this.initialise(new DictionaryImmutable([...dictionary.contents.entries()]));
-  }
-
-  dictionaryImmutableAsDictionary<T1, T2>(
-    dictionary: DictionaryImmutable<T1, T2>,
-  ): Dictionary<T1, T2> {
-    return this.initialise(new Dictionary([...dictionary.contents.entries()]));
   }
 }

@@ -19,7 +19,6 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
-  ImmutableCollectionCompileError,
   InvalidSourceForEachCompileError,
   IsDeprecated,
   MemberTypeCompileError,
@@ -72,8 +71,6 @@ import {
   isIterableType,
   isKnownType,
   isLet,
-  isListImmutableType,
-  isListType,
   isMember,
   isNumber,
   isProcedure,
@@ -644,11 +641,7 @@ function FailNotAssignable(
 ) {
   if (isKnownType(lhs) && isKnownType(rhs)) {
     // special case
-    const addInfo =
-      isListImmutableType(lhs) && isListType(rhs)
-        ? " try converting with '.asListImmutable()'"
-        : "";
-    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
+    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, "", location));
   }
 }
 
@@ -863,14 +856,6 @@ export function mustBeAssignableType(
   if (!lhs.isAssignableFrom(rhs)) {
     FailNotAssignable(lhs, rhs, compileErrors, location);
   }
-}
-
-export function mustBeImmutableCollection(
-  list: boolean,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(new ImmutableCollectionCompileError(list, location));
 }
 
 function mustBeCompatibleRecordDeconstruction(

@@ -343,7 +343,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("a", [7, 8, 9], '{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("a", [7, 8, 9], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("n", 0, '{"Type":"Int"}'),
       asDebugSymbol("x", 7, '{"Type":"Int"}'),
       asDebugSymbol("z", 101, '{"Type":"Int"}'),

@@ -771,29 +771,6 @@ end main`;
     await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
   });
 
-  test("Pass_CallImmutableDict", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to {"a":1}
-  call foo()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
-  });
-
   test("Pass_CallDict", async () => {
     const code = `${testHeader}
 
@@ -839,40 +816,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asDictionaryImmutable", "*", "*"],
-      ["asString", "*", "*"],
-      ["hasKey", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
-      ["keys", "*", "*"],
-      ["values", "*", "*"],
-      ["withPut", "*", "*"],
-      ["withRemoveAt", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
-  });
-
-  test("Pass_ExprImmutableDict", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to {"a":1}
-  variable bar set to foo
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["asDictionary", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
       ["isSameReferenceAs", "*", "*"],
@@ -1335,42 +1278,9 @@ end function`;
     const expected = [
       ["ImageVG", "*", "*"],
       ["Int", "*", "*"],
-      ["DictionaryImmutable", "*", "*"],
-      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
-  });
-
-  test("Pass_type_dictionaryImmutable", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "params6",
-      "a as Dictionary<of Float, B",
-      expected,
-    );
   });
 
   test("Pass_typeName5", async () => {
@@ -1423,8 +1333,6 @@ end function`;
     const expected = [
       ["ImageVG", "*", "*"],
       ["Int", "*", "*"],
-      ["DictionaryImmutable", "*", "*"],
-      ["ListImmutable", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as Set<of I", expected);
@@ -1897,13 +1805,11 @@ end main`;
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
-      ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
       ["ImageVG", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "List<of "],
-      ["ListImmutable", "*", "ListImmutable<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
@@ -2090,13 +1996,11 @@ end main`;
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
-      ["DictionaryImmutable", "*", "*"],
       ["Float", "*", "*"],
       ["ImageVG", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "*"],
-      ["ListImmutable", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
@@ -2303,36 +2207,6 @@ end main`;
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "sequence(1,4).ma", expected);
-  });
-
-  // outstanding symbol completion bugs eg #1063
-  ignore_test("Pass_listExtension2", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to range(1,4)
-end main
-
-function last(l as ListImmutable<of Int>) returns Int
-  return l[l.length() - 1]
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["map", "map", "map("],
-      ["maxBy", "maxBy", "maxBy("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "last(range(1,4).ma", expected);
   });
 
   test("Pass_bracketedExpression", async () => {

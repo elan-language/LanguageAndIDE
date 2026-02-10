@@ -1,4 +1,4 @@
-# f9056016fa111e254e535985b975b8371bcff79d0a22c80f6f6b1afe3b7ec736 Elan 2.0.0-alpha guest default_profile valid
+# 4a332e2bcf984013deacf340dc579ce64577c9c7296faf7d1c903f26ef5a7c09 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -69,7 +69,7 @@ function addVisited(gr as Array2D<of Int>, visited as Point) returns Array2D<of 
   return gr.withPut(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as Array2D<of Int>, route as ListImmutable<of Point>) returns Array2D<of Int>
+function addRoute(gr as Array2D<of Int>, route as List<of Point>) returns Array2D<of Int>
   variable gr2 set to gr
   each p in route
     set gr2 to gr2.withPut(p.x, p.y, orange)
@@ -183,8 +183,8 @@ class Solver
     return cost
   end function
 
-  function getRouteAndLength() returns (ListImmutable<of Point>, Float)
-    variable route set to {property.destination}
+  function getRouteAndLength() returns (List<of Point>, Float)
+    variable route set to [property.destination]
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
     while not node.point.isSameValueAs(property.start)
@@ -252,8 +252,8 @@ record Point
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns ListImmutable<of Point>
-    return {newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)}
+  function neighbouringPoints() returns List<of Point>
+    return [newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)]
   end function
 
   function asString() returns String
@@ -292,6 +292,6 @@ end test
 test test_point
   constant p set to newPoint(0, 0)
   constant n set to p.neighbouringPoints()
-  constant expected set to {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+  constant expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
   assert n is expected
 end test

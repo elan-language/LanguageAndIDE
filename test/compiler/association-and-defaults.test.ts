@@ -28,13 +28,13 @@ class Game
     constructor()
       set property.p2 to new Player("Chloe")
       set property.p1 to new Player("Joe")
-      set property.previousScores to {5, 2, 4}
+      set property.previousScores to [5, 2, 4]
     end constructor
 
     property p1 as Player
     property p2 as Player
 
-    property previousScores as ListImmutable<of Int>
+    property previousScores as List<of Int>
 
     function asString() returns String
         return "A game"
@@ -65,12 +65,12 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p2 = system.initialise(await new Player()._initialise("Chloe"));
     this.p1 = system.initialise(await new Player()._initialise("Joe"));
-    this.previousScores = system.listImmutable([5, 2, 4]);
+    this.previousScores = system.list([5, 2, 4]);
     return this;
   }
 
@@ -90,7 +90,7 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  previousScores = system.initialise(_stdlib.emptyInstance());
 
   async asString() {
     return "A game";
@@ -216,11 +216,9 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as ListImmutable<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as DictionaryImmutable<of String, Int>
     property ai as List<of Int>
-    property t as Tuple<of Int, String, ListImmutable<of Int>>
+    property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
     property r as RegExp
 
@@ -263,15 +261,11 @@ class Game {
 
   s = "";
 
-  li = system.initialise(_stdlib.ListImmutable.emptyInstance());
-
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
-
-  dsi = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
 
   ai = system.initialise(_stdlib.List.emptyInstance());
 
-  t = system.emptyTuple([0, "", system.initialise(_stdlib.ListImmutable.emptyInstance())]);
+  t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
   ff = system.emptyFunc(0);
 
