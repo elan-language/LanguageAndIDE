@@ -2,7 +2,6 @@ import { AstNode } from "../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
-import { isRecord } from "../compiler/compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { allKeywords, reservedWords } from "./keywords";
 
@@ -52,19 +51,15 @@ import {
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
-import { DeconstructedListType } from "./symbols/deconstructed-list-type";
-import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
-  displayName,
   getGlobalScope,
   isClass,
   isConstant,
-  isDeconstructedType,
   isDoubleIndexableType,
   isFunction,
   isIndexableType,
@@ -74,17 +69,15 @@ import {
   isMember,
   isNumber,
   isProcedure,
-  isProperty,
   isSymbol,
   isValueTypeExcludingString,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
-import { TupleType } from "./symbols/tuple-type";
+import { TestType } from "./symbols/test-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
-  getIds,
   inFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
@@ -98,7 +91,6 @@ import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { TestType } from "./symbols/test-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -248,16 +240,6 @@ export function mustBeCallable(
     compileErrors.push(
       new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
     );
-  }
-}
-
-export function mustBeDeconstructableType(
-  symbolType: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (isKnownType(symbolType) && !isDeconstructedType(symbolType)) {
-    compileErrors.push(new TypeCompileError("able to be deconstructed", location));
   }
 }
 
@@ -858,86 +840,13 @@ export function mustBeAssignableType(
   }
 }
 
-function mustBeCompatibleRecordDeconstruction(
-  ids: string[],
-  lst: TupleType,
-  rst: ClassType,
-  scope: Scope,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  const classDef = scope.resolveSymbol(rst.name, scope);
-
-  if (isClass(classDef)) {
-    const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
-
-    for (let i = 0; i < ids.length; i++) {
-      const id = ids[i];
-      const childSymbol = childSymbols.find((s) => s.symbolId === id);
-      if (childSymbol) {
-        const llst = lst.ofTypes[i];
-        const rrst = childSymbol.symbolType();
-
-        mustBeAssignableType(llst, rrst, compileErrors, location);
-      } else {
-        const msg = id
-          ? `No such property '${id}' on record '${rst.name}.`
-          : "Cannot discard in record deconstruction.";
-        compileErrors.push(new SyntaxCompileError(msg, location));
-      }
-    }
-  }
-}
-
-function mustBeCompatibleDeconstruction(
-  ids: string[],
-  lst: SymbolType,
-  rst: SymbolType,
-  scope: Scope,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (lst instanceof DeconstructedTupleType) {
-    if (rst instanceof ClassType) {
-      if (isRecord(rst.typeOptions)) {
-        mustBeCompatibleRecordDeconstruction(ids, lst, rst, scope, compileErrors, location);
-      } else {
-        compileErrors.push(
-          new SyntaxCompileError(`Cannot deconstruct ${rst.name} as tuple.`, location),
-        );
-      }
-      return true;
-    }
-    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
-      compileErrors.push(
-        new SyntaxCompileError(`Wrong number of deconstructed variables.`, location),
-      );
-      return true;
-    }
-  }
-  if (lst instanceof DeconstructedListType) {
-    if (rst instanceof TupleType) {
-      compileErrors.push(
-        new SyntaxCompileError(`Cannot deconstruct ${rst.name} as list.`, location),
-      );
-      return true;
-    }
-  }
-  return false;
-}
-
 export function mustBeCompatibleDefinitionNode(
-  lhs: AstNode,
   rhs: AstNode,
-  scope: Scope,
+
   compileErrors: CompileError[],
   location: string,
 ) {
-  const ids = getIds(lhs);
-  const lst = lhs.symbolType();
   const rst = rhs.symbolType();
-
-  mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location);
 
   if (rst instanceof TestType) {
     compileErrors.push(new SyntaxCompileError(`Cannot assign a test to a variable.`, location));
@@ -947,17 +856,13 @@ export function mustBeCompatibleDefinitionNode(
 export function mustBeCompatibleNode(
   lhs: AstNode,
   rhs: AstNode,
-  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const ids = getIds(lhs);
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (!mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location)) {
-    mustBeAssignableType(lst, rst, compileErrors, location);
-  }
+  mustBeAssignableType(lst, rst, compileErrors, location);
 }
 
 export function getId(astNode: AstNode) {
@@ -1124,16 +1029,9 @@ export function mustBeUniqueValueInScope(
   compileErrors.push(new NotUniqueNameCompileError(name, "", location));
 }
 
-export function mustNotBeLet(
-  symbol: ElanSymbol,
-  id: string,
-  compileErrors: CompileError[],
-  location: string,
-) {
+export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (symbol instanceof LetAsn) {
-    compileErrors.push(
-      new MutateCompileError(displayName(symbol, id), mapToPurpose(symbol), location),
-    );
+    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }
 
@@ -1163,7 +1061,6 @@ function mapToPurpose(symbol: ElanSymbol) {
 
 export function mustNotBeRedefined(
   variable: ElanSymbol,
-  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1177,7 +1074,7 @@ export function mustNotBeRedefined(
     return;
   }
   compileErrors.push(
-    new RedefinedCompileError(displayName(variable, id), mapToPurpose(variable), location),
+    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
   );
 }
 
@@ -1228,7 +1125,6 @@ export function adviseAgainstDiv(compileErrors: CompileError[], location: string
 
 export function mustNotBeGlobalFunctionIfRef(
   symbol: ElanSymbol,
-  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1236,7 +1132,7 @@ export function mustNotBeGlobalFunctionIfRef(
     symbol.symbolType() instanceof FunctionType &&
     (symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member)
   ) {
-    compileErrors.push(new NotGlobalFunctionRefCompileError(displayName(symbol, id), location));
+    compileErrors.push(new NotGlobalFunctionRefCompileError(symbol.symbolId, location));
   }
 }
 

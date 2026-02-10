@@ -1,4 +1,4 @@
-# 6dbcd0a8a811f11c3e5bd25005f6e9ad1b917af04c9c38aef2d9c1c6b48db03b Elan 2.0.0-alpha guest default_profile valid
+# eef8cbc3792ccef44ed16115420b948614ab3b19291bff4a89d4f8bd7618ceb4 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
@@ -7,9 +7,9 @@ main
     if reply.isSameValueAs("") then
       call printDate(divAsInteger(clock(), 1000))
     else
-      variable t, d set to parseAsInt(reply)
-      if t and (d >= 0) then
-        call printDate(d)
+      variable td set to parseAsInt(reply)
+      if td.item0 and (td.item1 >= 0) then
+        call printDate(td.item1)
       end if
     end if
   end while

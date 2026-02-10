@@ -1,9 +1,9 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { getGlobalScope, mapSymbolType } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import {
+  getId,
   mustBeCompatibleNode,
-  mustBeDeconstructableType,
   mustNotBeConstant,
   mustNotBeCounter,
   mustNotBeLet,
@@ -12,7 +12,6 @@ import {
   mustNotSetIndexInFunctionMethod,
   mustNotSetRangedIndex,
 } from "../../compile-rules";
-import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { VarAsn } from "../var-asn";
@@ -25,14 +24,9 @@ export class SetAsn extends BreakpointAsn {
   assignable: AstNode = EmptyAsn.Instance;
   expr: AstNode = EmptyAsn.Instance;
 
-  ids() {
-    return getIds(this.assignable);
-  }
-
   symbolType() {
-    const ids = this.ids();
     const st = this.expr.symbolType();
-    return mapSymbolType(ids, st);
+    return st;
   }
 
   compile(): string {
@@ -40,11 +34,7 @@ export class SetAsn extends BreakpointAsn {
     const assignableAstNode = this.assignable;
     const exprAstNode = this.expr;
 
-    const ids = this.ids();
-
-    if (ids.length > 1) {
-      mustBeDeconstructableType(this.symbolType(), this.compileErrors, this.fieldId);
-    }
+    const id = getId(this.assignable);
 
     mustNotBePropertyOnFunctionMethod(
       assignableAstNode,
@@ -53,21 +43,13 @@ export class SetAsn extends BreakpointAsn {
       this.fieldId,
     );
 
-    mustBeCompatibleNode(
-      assignableAstNode,
-      exprAstNode,
-      this.getParentScope(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.fieldId);
     mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
 
-    for (const id of ids) {
-      const symbol = this.getParentScope().resolveSymbol(id, this);
-      mustNotBeLet(symbol, id, this.compileErrors, this.fieldId);
-    }
+    const symbol = this.getParentScope().resolveSymbol(id, this);
+    mustNotBeLet(symbol, this.compileErrors, this.fieldId);
 
     if (this.assignable instanceof VarAsn) {
       if (this.assignable.isSimpleSubscript()) {
@@ -83,9 +65,9 @@ export class SetAsn extends BreakpointAsn {
       }
     }
 
-    const lhs = wrapDeconstructionLhs(assignableAstNode, exprAstNode, true);
+    const lhs = assignableAstNode.compile();
 
-    const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode, true);
+    const rhs = exprAstNode.compile();
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

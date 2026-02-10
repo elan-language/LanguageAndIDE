@@ -7,9 +7,6 @@ import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { BreakpointStatus } from "../debugging/breakpoint-status";
 import { TypeDict } from "../debugging/type-dict";
 import { ClassType } from "../symbols/class-type";
-import { DeconstructedListType } from "../symbols/deconstructed-list-type";
-import { DeconstructedRecordType } from "../symbols/deconstructed-record-type";
-import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { EnumType } from "../symbols/enum-type";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -150,20 +147,6 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
 
       for (const s of ofTypes) {
         typeDict["OfTypes"].push(this.getClassTypeMap(s, [...seenClasses]));
-      }
-
-      return typeDict;
-    } else if (
-      type instanceof DeconstructedTupleType ||
-      type instanceof DeconstructedRecordType ||
-      type instanceof DeconstructedListType
-    ) {
-      const typeDict: TypeDict = { Type: "Deconstructed" };
-
-      typeDict["Ids"] = {} as TypeDict;
-
-      for (const id of type.ids) {
-        typeDict["Ids"][id] = this.getClassTypeMap(type.symbolTypeFor(id), [...seenClasses]);
       }
 
       return typeDict;

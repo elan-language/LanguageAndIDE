@@ -27,9 +27,13 @@ main
   call printNoLine(st.length())
   call printNoLine(st.peek())
   variable fruit set to ""
-  set fruit, st to st.pop()
+  variable t set to st.pop()
+  set fruit to t.item0
+  set st to t.item1
   call printNoLine(fruit)
-  set fruit, st to st.pop()
+  set t to st.pop()
+  set fruit to t.item0
+  set st to t.item1
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
@@ -46,9 +50,13 @@ async function main() {
   await _stdlib.printNoLine(st.length());
   await _stdlib.printNoLine(st.peek());
   let fruit = "";
-  [fruit, st] = st.pop();
+  let t = st.pop();
+  fruit = t[0];
+  st = t[1];
   await _stdlib.printNoLine(fruit);
-  [fruit, st] = st.pop();
+  t = st.pop();
+  fruit = t[0];
+  st = t[1];
   await _stdlib.printNoLine(fruit);
   await _stdlib.printNoLine(st.length());
   await _stdlib.printNoLine(st);

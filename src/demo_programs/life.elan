@@ -1,4 +1,4 @@
-# 67cbc195c35f154696f7b6b71ca56278315c1121258a83b5a55df40e9c9874ed Elan 2.0.0-alpha guest default_profile valid
+# 09abf980e6bdf72e986809610d1efcee241e88be4477ac4391736b059d06b251 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphicsArray()
@@ -29,7 +29,8 @@ function blackOrWhite(random as Float) returns Int
 end function
 
 function north(cell as (Int, Int)) returns (Int, Int)
-  variable x, y set to cell
+  variable x set to cell.item0
+  variable y set to cell.item1
   if y is 0 then
     set y to 29
   else

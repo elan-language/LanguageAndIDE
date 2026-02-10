@@ -26,7 +26,9 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
   variable correctSoFar set to true
   while (counter < sequence.length()) and correctSoFar
     variable k set to waitForKey()
-    variable valid, move set to parseAsInt(k)
+    constant validMove set to parseAsInt(k)
+    constant valid set to validKey.item1
+    constant move set to validMove.item2
     if valid and (sequence[counter] is move) then
       call displayMove(move, interval)
     else

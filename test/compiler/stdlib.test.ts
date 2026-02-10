@@ -783,7 +783,9 @@ main
   variable val set to 0
   call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
-    set val, rnd to rnd.nextInt(0, 1)
+    variable t set to rnd.nextInt(0, 1)
+    set val to t.item0
+    set rnd to t.item1
     call results.put(val, results[val] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -800,7 +802,9 @@ async function main() {
   rnd.initialiseFromClock();
   const _tofor15 = 10000;
   for (let i = 1; i <= _tofor15; i = i + 1) {
-    [val, rnd] = rnd.nextInt(0, 1);
+    let t = rnd.nextInt(0, 1);
+    val = t[0];
+    rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
@@ -832,7 +836,9 @@ main
   variable rnd set to new Random()
   variable val set to 0
   for i from 1 to 10000 step 1
-    set val, rnd to rnd.nextInt(3, 5)
+    variable t set to rnd.nextInt(3, 5)
+    set val to t.item0
+    set rnd to t.item1
     call results.put(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
@@ -850,11 +856,13 @@ async function main() {
   let val = 0;
   const _tofor12 = 10000;
   for (let i = 1; i <= _tofor12; i = i + 1) {
-    [val, rnd] = rnd.nextInt(3, 5);
+    let t = rnd.nextInt(3, 5);
+    val = t[0];
+    rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const _tofor24 = 6;
-  for (let i = 0; i <= _tofor24; i = i + 1) {
+  const _tofor30 = 6;
+  for (let i = 0; i <= _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -885,7 +893,9 @@ main
   variable rnd set to new Random()
   variable dice set to 0
   for i from 1 to 10000 step 1
-    set dice, rnd to rollDice(rnd)
+    variable t set to rollDice(rnd)
+    set dice to t.item0
+    set rnd to t.item1
     call results.put(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1
@@ -907,11 +917,13 @@ async function main() {
   let dice = 0;
   const _tofor12 = 10000;
   for (let i = 1; i <= _tofor12; i = i + 1) {
-    [dice, rnd] = (await global.rollDice(rnd));
+    let t = (await global.rollDice(rnd));
+    dice = t[0];
+    rnd = t[1];
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  const _tofor24 = 6;
-  for (let i = 0; i <= _tofor24; i = i + 1) {
+  const _tofor30 = 6;
+  for (let i = 0; i <= _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");

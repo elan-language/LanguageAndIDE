@@ -608,18 +608,6 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("#930 var def node", () => {
-    testSymbolCompletionSpec(
-      new ValueDefNode(f),
-      "",
-      ParseStatus.empty,
-      ValueDefNode.name,
-      "",
-      [],
-      [""],
-      "",
-    );
-  });
   test("#932 assert actual node", () => {
     testSymbolCompletionSpec(
       new AssertActualNode(f),

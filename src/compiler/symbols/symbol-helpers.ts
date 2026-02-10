@@ -3,7 +3,6 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
 import { Constant } from "../compiler-interfaces/constant";
-import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
 import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
@@ -13,7 +12,6 @@ import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-typ
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { isRecord } from "../compiler-interfaces/type-options";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import {
@@ -32,9 +30,6 @@ import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { DeconstructedListType } from "./deconstructed-list-type";
-import { DeconstructedRecordType } from "./deconstructed-record-type";
-import { DeconstructedTupleType } from "./deconstructed-tuple-type";
 import { ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
@@ -63,10 +58,6 @@ export function isGenericClass(s?: ElanSymbol | Scope): s is Class {
 
 export function isScope(s?: ElanSymbol | Scope): s is Scope {
   return !!s && "resolveSymbol" in s && "getParentScope" in s;
-}
-
-export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
-  return !!s && "symbolTypeFor" in s;
 }
 
 export function isSymbol(s?: ElanSymbol | AstNode | Scope): s is ElanSymbol {
@@ -599,28 +590,4 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
 export function allPropertiesInScope(scope: Scope): ElanSymbol[] {
   const all = scope.symbolMatches("", true, scope);
   return all.filter((s) => isProperty(s));
-}
-
-export function mapSymbolType(ids: string[], st: SymbolType) {
-  if (ids.length > 1 && st instanceof TupleType) {
-    return new DeconstructedTupleType(ids, st.ofTypes);
-  }
-
-  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
-    return new DeconstructedRecordType(ids, st.scope as Class);
-  }
-
-  if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
-    return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
-  }
-
-  return st;
-}
-
-export function displayName(symbol: ElanSymbol, id: string) {
-  const type = symbol.symbolType();
-  if (isDeconstructedType(type)) {
-    return id;
-  }
-  return symbol.symbolId;
 }

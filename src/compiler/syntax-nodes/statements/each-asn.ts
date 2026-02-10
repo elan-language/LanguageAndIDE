@@ -26,7 +26,7 @@ export class EachAsn extends CompoundAsn {
     const id = this.variable.compile();
     const symbol = this.scope.resolveSymbol(id, this);
 
-    mustNotBeRedefined(symbol, id, this.compileErrors, this.fieldId);
+    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
 
     const iterType = this.iter.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.fieldId);

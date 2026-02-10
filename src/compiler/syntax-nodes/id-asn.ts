@@ -5,9 +5,10 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import {
   getGlobalScope,
-  isDeconstructedType,
+  isClass,
   isDefinitionScope,
   isMemberOnFieldsClass,
+  isTuple,
   scopePrefix,
 } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
@@ -23,7 +24,6 @@ import {
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleAsn } from "./globals/tuple-asn";
-import { isClass, isTuple } from "../../compiler/symbols/symbol-helpers";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -109,7 +109,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       adviseAgainstFunctionRef(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustNotBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
+    mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
 
     const prefix =
       this.updatedScope !== NullScope.Instance
@@ -125,10 +125,6 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   symbolType() {
     const st = this.getSymbol().symbolType();
-
-    if (isDeconstructedType(st)) {
-      return st.symbolTypeFor(this.id);
-    }
     return st;
   }
 
