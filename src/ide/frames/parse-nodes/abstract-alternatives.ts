@@ -65,9 +65,9 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
 
   override getActiveNode(): ParseNode {
     if (this.bestMatchIsOnlyMatch()) {
-      return this.bestMatch!.getActiveNode();
+      return this.bestMatch?.getActiveNode() ?? this;
     } else {
-      return this as ParseNode;
+      return this;
     }
   }
 
