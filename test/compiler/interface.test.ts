@@ -1364,7 +1364,7 @@ end class`;
     const code = `${testHeader}
 
 interface Foo
-  abstract function p1() returns ListImmutable<of List<of Int>>
+  abstract function p1() returns List<of List<of Int>>
 end interface`;
 
     const fileImpl = new FileImpl(
@@ -1380,7 +1380,7 @@ end interface`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1388,7 +1388,7 @@ end interface`;
     const code = `${testHeader}
 
 interface Foo
-  abstract function p1(a as ListImmutable<of List<of Int>>) returns Int
+  abstract function p1(a as List<of List<of Int>>) returns Int
 end interface`;
 
     const fileImpl = new FileImpl(
@@ -1404,7 +1404,7 @@ end interface`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 });

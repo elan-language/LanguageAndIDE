@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -95,14 +94,14 @@ main
   call printNoLine(filterIt(source))
 end main
 
-function filterIt(tofilter as ListImmutable<of Int>) returns ListImmutable<of Int>
+function filterIt(tofilter as List<of Int>) returns List<of Int>
     return tofilter.filter(lambda x as Int => x > 20)
 end function
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 };
 async function main() {
@@ -217,7 +216,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await source.map(async (x) => x + 1));
   await _stdlib.printNoLine(source.asList());
 }
@@ -312,23 +311,23 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Concat:*o*n*e*t*w*o");
   });
 
-  test("Pass_reduceToDictionaryImmutable", async () => {
+  test("Pass_reduceToDictionary", async () => {
     const code = `${testHeader}
 
 constant source set to {"three", "four"}
 main
   variable ed set to {"one":1, "two":2}
-  set ed to source.reduce(ed, lambda d as DictionaryImmutable<of String, Int>, x as String => d.withPut(x, 1))
+  set ed to source.reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withPut(x, 1))
   call printNoLine(ed)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable(["three", "four"]);
+  source = system.list(["three", "four"]);
 
 };
 async function main() {
-  let ed = system.dictionaryImmutable([["one", 1], ["two", 2]]);
+  let ed = system.dictionary([["one", 1], ["two", 2]]);
   ed = (await global.source.reduce(ed, async (d, x) => d.withPut(x, 1)));
   await _stdlib.printNoLine(ed);
 }
@@ -386,12 +385,12 @@ return [main, _tests];}`;
 
 constant source set to {{1}, {2, 2}}
 main
-  call printNoLine(source.maxBy(lambda x as ListImmutable<of Int> => x.length()))
+  call printNoLine(source.maxBy(lambda x as List<of Int> => x.length()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable([system.listImmutable([1]), system.listImmutable([2, 2])]);
+  source = system.list([system.list([1]), system.list([2, 2])]);
 
 };
 async function main() {
@@ -425,7 +424,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable(["apple", "orange", "pear"]);
+  source = system.list(["apple", "orange", "pear"]);
 
 };
 async function main() {
@@ -710,7 +709,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable(["apple", "orange", "pair", "apple"]);
+  source = system.list(["apple", "orange", "pair", "apple"]);
 
 };
 async function main() {

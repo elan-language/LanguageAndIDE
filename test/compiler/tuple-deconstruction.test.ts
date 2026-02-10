@@ -166,7 +166,7 @@ main
   call printNoLine(b)
 end main
 
-function foo() returns (ListImmutable<of Float>, Int)
+function foo() returns (List<of Float>, Int)
   return tuple({0.0}, 0)
 end function`;
 
@@ -179,7 +179,7 @@ async function main() {
 }
 
 async function foo() {
-  return system.tuple([system.listImmutable([0]), 0]);
+  return system.tuple([system.list([0]), 0]);
 }
 global["foo"] = foo;
 return [main, _tests];}`;

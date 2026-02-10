@@ -294,12 +294,12 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  a = system.listImmutable([1, 2]);
+  a = system.list([1, 2]);
 
 };
 async function main() {
   let b = (await global.a.map(async (x) => x));
-  b = system.listImmutable([1, 2]);
+  b = system.list([1, 2]);
   await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
@@ -549,7 +549,7 @@ end main`;
       "Incompatible types. Expected: Boolean, Provided: Float.LangRef.html#TypesCompileError",
 
       "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: String, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: List<of Float>.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
@@ -578,9 +578,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()', Provided: List<of String>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Float>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Float> try converting with '.asList()', Provided: List<of String>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: List<of Float>.LangRef.html#TypesCompileError",
     ]);
   });
 

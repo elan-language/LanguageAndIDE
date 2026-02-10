@@ -35,7 +35,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  lst = system.listImmutable([1, 2]);
+  lst = system.list([1, 2]);
 
 };
 async function main() {
@@ -1559,7 +1559,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 3, 5, 7, 9]);
-  let b = system.listImmutable([2, 4, 6, 8]);
+  let b = system.list([2, 4, 6, 8]);
   let c = "Hello World!";
   await _stdlib.printNoLine(a.indexOf(9));
   await _stdlib.printNoLine(a.indexOf(5));

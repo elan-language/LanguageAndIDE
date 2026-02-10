@@ -30,7 +30,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([7, 8, 9]);
+  let a = system.list([7, 8, 9]);
   let n = 0;
   const _itereach9 = [...a];
   for (const x of _itereach9) {
@@ -71,7 +71,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([7, 8, 9]).asList();
+  let a = system.list([7, 8, 9]).asList();
   let n = 0;
   const _itereach9 = [...a];
   for (const x of _itereach9) {
@@ -183,7 +183,7 @@ main
   end each
 end main
 
-function fruit() returns ListImmutable<of String>
+function fruit() returns List<of String>
   return {"apple","orange", "pear"}
 end function`;
 
@@ -197,7 +197,7 @@ async function main() {
 }
 
 async function fruit() {
-  return system.listImmutable(["apple", "orange", "pear"]);
+  return system.list(["apple", "orange", "pear"]);
 }
 global["fruit"] = fruit;
 return [main, _tests];}`;
@@ -229,7 +229,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  ints = system.listImmutable([1, 2, 3]);
+  ints = system.list([1, 2, 3]);
 
 };
 async function main() {
@@ -545,7 +545,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3, 4, 5]);
+  let a = system.list([1, 2, 3, 4, 5]);
   const _itereach6 = [...a];
   for (const x of _itereach6) {
     a = a.withAppend(x);

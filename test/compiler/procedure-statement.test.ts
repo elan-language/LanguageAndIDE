@@ -70,7 +70,7 @@ main
   call foo(a, b, c, d)
 end main
 
-procedure foo(x as List<of Int>, y as ListImmutable<of Int>, z as Dictionary<of String, Boolean>, t as DictionaryImmutable<of String, Boolean>)
+procedure foo(x as List<of Int>, y as List<of Int>, z as Dictionary<of String, Boolean>, t as Dictionary<of String, Boolean>)
   call printNoLine(x)
   call printNoLine(y)
   call printNoLine(z)
@@ -81,9 +81,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2]);
-  let b = system.listImmutable([3, 4]);
+  let b = system.list([3, 4]);
   let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
-  let d = system.dictionaryImmutable([["a", _stdlib.true], ["b", _stdlib.false]]);
+  let d = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
   await foo(a, b, c, d);
 }
 
@@ -1213,7 +1213,7 @@ main
   call printNoLine(a)
 end main
 
-procedure changeAll(a as ListImmutable<of Int>)
+procedure changeAll(a as List<of Int>)
     set a to {1, 2, 3}
 end procedure`;
 
@@ -1566,7 +1566,7 @@ end procedure`;
   test("Fail_ParameterListOfMutableType", async () => {
     const code = `${testHeader}
 
-procedure p1(a as ListImmutable<of List<of Int>>)
+procedure p1(a as List<of List<of Int>>)
   
 end procedure`;
 
@@ -1583,7 +1583,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

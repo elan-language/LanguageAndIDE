@@ -158,7 +158,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([system.listImmutable([4]), system.listImmutable([5])]);
+  let a = system.list([system.list([4]), system.list([5])]);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -722,7 +722,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable(["foo", "bar", "yon"]).asList();
+  let a = system.list(["foo", "bar", "yon"]).asList();
   await _stdlib.printNoLine(a.length());
 }
 return [main, _tests];}`;
@@ -1464,11 +1464,11 @@ return [main, _tests];}`;
 
 main
   variable a set to ["one", "two", "three"]
-  variable b set to a.asListImmutable()
+  variable b set to a.asList()
   variable c set to a.asArray()
   variable d set to a.asSet()
   variable aa set to empty List<of String>
-  variable bb set to empty ListImmutable<of String>
+  variable bb set to empty List<of String>
   variable cc set to empty Array<of String>
   variable dd set to empty Set<of String>
   set aa to a
@@ -1485,11 +1485,11 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  let b = a.asListImmutable();
+  let b = a.asList();
   let c = a.asArray();
   let d = a.asSet();
   let aa = system.initialise(_stdlib.List.emptyInstance());
-  let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let bb = system.initialise(_stdlib.List.emptyInstance());
   let cc = system.initialise(_stdlib.Array.emptyInstance());
   let dd = system.initialise(_stdlib.Set.emptyInstance());
   aa = a;

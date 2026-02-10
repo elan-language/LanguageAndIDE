@@ -61,7 +61,7 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = "Apple";
-  let c = system.listImmutable([1, 2, 3]);
+  let c = system.list([1, 2, 3]);
   await _stdlib.printNoLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
   await _stdlib.printNoLine('{a} {b} {c}');
 }

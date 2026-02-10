@@ -60,7 +60,7 @@ end main`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
     ];
 
@@ -99,7 +99,7 @@ end procedure`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
@@ -140,7 +140,7 @@ end function`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
@@ -186,7 +186,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -234,7 +234,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -281,7 +281,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -732,12 +732,12 @@ constant a set to {1, 2, 3}`;
       asDebugSymbol(
         "x",
         1,
-        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}}}',
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}}}',
       ),
       asDebugSymbol(
         "y",
         [2, 3],
-        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}}}',
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}}}',
       ),
     ];
 

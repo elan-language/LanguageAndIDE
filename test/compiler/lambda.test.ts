@@ -625,7 +625,7 @@ end procedure`;
   test("Fail_LambdaWithListOfMutableType1", async () => {
     const code = `${testHeader}
 
-procedure printModified(i as Int, f as Func<of => ListImmutable<of List<of Int>>>)
+procedure printModified(i as Int, f as Func<of => List<of List<of Int>>>)
   
 end procedure`;
 
@@ -641,14 +641,14 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 
   test("Fail_LambdaWithListOfMutableType2", async () => {
     const code = `${testHeader}
 
-procedure printModified(i as Int, f as Func<of ListImmutable<of List<of Int>> => Int>)
+procedure printModified(i as Int, f as Func<of List<of List<of Int>> => Int>)
   
 end procedure`;
 
@@ -664,7 +664,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

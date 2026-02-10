@@ -1294,12 +1294,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98][42] true");
   });
 
-  test("Pass_asDictionaryImmutable", async () => {
+  test("Pass_asDictionary", async () => {
     const code = `${testHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.asDictionaryImmutable()
+  variable b set to a.asDictionary()
   call printNoLine(a)
   call printNoLine(b)
 end main`;
@@ -1308,7 +1308,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.asDictionaryImmutable();
+  let b = a.asDictionary();
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
 }
@@ -1583,11 +1583,11 @@ end main`;
     ]);
   });
 
-  test("Fail_DictionaryOfDictionaryImmutableKey", async () => {
+  test("Fail_DictionaryOfDictionaryKey", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of DictionaryImmutable<of Int, Int>, Int>
+  variable a set to empty Dictionary<of Dictionary<of Int, Int>, Int>
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1602,7 +1602,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'DictionaryImmutable<of Int, Int>'.LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1633,7 +1633,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of ListImmutable<of Int>, Int>
+  variable a set to empty Dictionary<of List<of Int>, Int>
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1648,7 +1648,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'ListImmutable<of Int>'.LangRef.html#compile_error",
+      "Dictionary cannot have key of type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

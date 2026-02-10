@@ -523,7 +523,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([system.listImmutable(["foo"]), system.listImmutable(["bar", "yon"])]).asList();
+  let a = system.list([system.list(["foo"]), system.list(["bar", "yon"])]).asList();
   await _stdlib.printNoLine(a.length());
   await _stdlib.printNoLine(a);
 }

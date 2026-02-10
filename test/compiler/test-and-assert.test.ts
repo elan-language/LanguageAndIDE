@@ -688,9 +688,9 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let a = system.listImmutable([3, 2, 4, 0]);
-  let b = system.listImmutable([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "ListImmutable<of Int>"], [b, "ListImmutable<of Int>"], "assert12", _stdlib, false));
+  let a = system.list([3, 2, 4, 0]);
+  let b = system.list([3, 2, 4, 0]);
+  _outcomes.push(await system.assert([async () => a, "List<of Int>"], [b, "List<of Int>"], "assert12", _stdlib, false));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {

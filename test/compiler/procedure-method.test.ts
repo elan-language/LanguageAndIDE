@@ -516,7 +516,7 @@ end class`;
     const code = `${testHeader}
 
 class Foo
-  procedure p1(a as ListImmutable<of List<of Int>>)
+  procedure p1(a as List<of List<of Int>>)
     
   end procedure
 end class`;
@@ -534,7 +534,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
+      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

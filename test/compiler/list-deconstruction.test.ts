@@ -338,7 +338,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   await _stdlib.printNoLine(x);
   await _stdlib.printNoLine(y);
@@ -374,7 +374,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [x, ] = system.deconstructList(a);
   await _stdlib.printNoLine(x);
 }
@@ -409,7 +409,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [, y] = system.deconstructList(a);
   await _stdlib.printNoLine(y);
 }
@@ -519,7 +519,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   await _stdlib.printNoLine(x);
   await _stdlib.printNoLine(y);
@@ -548,7 +548,7 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x set to 1
-  variable y set to empty ListImmutable<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
   call printNoLine(x)
   call printNoLine(y)
@@ -558,9 +558,9 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let x = 1;
-  let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
   await _stdlib.printNoLine(x);
   await _stdlib.printNoLine(y);
@@ -597,7 +597,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3]);
+  let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
   x = x;
   y = y;
@@ -767,7 +767,7 @@ end main
 main
   variable a set to [1,2]
   variable x set to 0
-  variable y set to empty ListImmutable<of Int>
+  variable y set to empty List<of Int>
   set x:y to a
 end main
 `;
@@ -785,7 +785,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int>, Provided: List<of Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Int>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -812,7 +812,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of String> or List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String> or List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
