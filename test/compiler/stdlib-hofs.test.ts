@@ -1106,7 +1106,7 @@ main
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() -1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
@@ -1127,7 +1127,7 @@ async function main() {
 }
 
 async function getTrailingNumber(s) {
-  return (_stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
+  return (_stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1, 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 

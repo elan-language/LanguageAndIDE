@@ -38,12 +38,12 @@ import { Queue } from "./queue";
 import { Random } from "./random";
 import { RawVG } from "./raw-vg";
 import { RectangleVG } from "./rectangle-vg";
+import { Ref } from "./ref";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { Ref } from "./ref";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -233,17 +233,8 @@ export class StdLib {
     return s.indexOf(item);
   }
 
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
-  sequence(@elanIntType() start: number, @elanIntType() end: number): List<number> {
-    const seq = [];
-    for (let i = start; i <= end; i++) {
-      seq.push(i);
-    }
-    return this.system.initialise(new List(seq));
-  }
-
   @elanFunction(["start", "end", "step"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
-  sequenceWithStep(
+  sequence(
     @elanIntType() start: number,
     @elanIntType() end: number,
     @elanIntType() step: number,

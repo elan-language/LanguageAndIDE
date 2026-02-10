@@ -159,7 +159,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 85);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 84);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
