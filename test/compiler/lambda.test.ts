@@ -63,7 +63,7 @@ main
 end main
 
 function first(t as (Int, Int)) returns Int
-    variable a, _ set to t
+    variable a set to t.item1
     return a
 end function
   

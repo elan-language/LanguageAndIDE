@@ -35,19 +35,13 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     return this.compileScope ?? this.scope;
   }
 
-  ids() {
-    return getId(this.name);
-  }
-
   compile(): string {
     this.compileErrors = [];
-    const ids = this.ids();
+    const id = getId(this.name);
 
-    for (const i of ids) {
-      mustNotBeKeyword(i, this.compileErrors, this.fieldId);
-      const symbol = this.getScope().resolveSymbol(i!, this);
-      mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
-    }
+    mustNotBeKeyword(id, this.compileErrors, this.fieldId);
+    const symbol = this.getScope().resolveSymbol(id, this);
+    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
 
     const lhs = this.name;
     const rhs = this.expr;

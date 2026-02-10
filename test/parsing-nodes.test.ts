@@ -11,8 +11,6 @@ import { BracketedExpression } from "../src/ide/frames/parse-nodes/bracketed-exp
 import { CommaNode } from "../src/ide/frames/parse-nodes/comma-node";
 import { ConstantValueNode } from "../src/ide/frames/parse-nodes/constant-value-node";
 import { CSV } from "../src/ide/frames/parse-nodes/csv";
-import { DeconstructedList } from "../src/ide/frames/parse-nodes/deconstructed-list";
-import { DeconstructedTuple } from "../src/ide/frames/parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../src/ide/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../src/ide/frames/parse-nodes/dot-after";
 import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
@@ -1358,21 +1356,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitValueNode(f), `''`, ParseStatus.valid, "", "", "");
     testNodeParse(new LitValueNode(f), `'`, ParseStatus.incomplete, "", "", "");
   });
-  test("DeconstructedTuple", () => {
-    testNodeParse(new DeconstructedTuple(f), `a, b`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedTuple(f), `a,b`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedTuple(f), `a,`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedTuple(f), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");
-    testNodeParse(new DeconstructedTuple(f), `3,4`, ParseStatus.invalid, "", "3,4", "");
-    testNodeParse(
-      new DeconstructedTuple(f),
-      `property.a, b`,
-      ParseStatus.invalid,
-      "",
-      "property.a, b",
-      "",
-    );
-  });
   test("Literal", () => {
     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
     testNodeParse(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
@@ -1394,13 +1377,6 @@ suite("Parsing Nodes", () => {
       "",
       `{<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}`,
     );
-  });
-  test("DeconstructedList", () => {
-    testNodeParse(new DeconstructedList(f), `a:b`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedList(f), `a:`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedList(f), `[a,b]`, ParseStatus.invalid, "", "[a,b]", "");
-    testNodeParse(new DeconstructedList(f), `[a:3]`, ParseStatus.invalid, "", "[a:3]", "");
-    testNodeParse(new DeconstructedList(f), `(a:b)`, ParseStatus.invalid, "", "(a:b)", "");
   });
   test("SpaceNode", () => {
     testNodeParse(new SpaceNode(f, Space.ignored), ``, ParseStatus.valid, "", "", "", "");

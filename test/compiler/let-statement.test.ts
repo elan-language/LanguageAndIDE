@@ -327,7 +327,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  constant a, length set to foo()
+  constant a set to foo().item1
+  constant length set to foo().item2
 end main
 
 function foo() returns (Int, Int)
