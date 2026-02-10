@@ -1,4 +1,4 @@
-# 755aa518887f1f9cf789e15547fe1ccf4c21b4d1d3a2502c0bf0673d0792a7b7 Elan 2.0.0-alpha guest default_profile valid
+# 603db19fb29eff9626a06f91d15e04d73d48848dc8662d4e97a155d7f3d6d200 Elan 2.0.0-alpha guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -31,7 +31,8 @@ main
   call print(result.value())
 end main
 
-procedure processoneline(line as String, result as Ref<of String>, skipping as Ref<of Boolean>)
+procedure processoneline(line as String, result as Ref<of String>, skippingRef as Ref<of Boolean>)
+  variable skipping set to skippingRef.value()
   variable openbrace set to unicode(123)
   variable closebrace set to unicode(125)
   if line.contains("Portion generated") then
@@ -64,6 +65,7 @@ procedure processoneline(line as String, result as Ref<of String>, skipping as R
       call result.set(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
     end if
   end if
+  call skippingRef.set(skipping)
 end procedure
 
 # find any number at the end of the given string
