@@ -7,7 +7,6 @@ import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { FunctionType } from "../../compiler/symbols/function-type";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import {
-  displayName,
   getGlobalScope,
   isDefinitionScope,
   isMemberOnFieldsClass,
@@ -113,7 +112,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       );
 
       mustCallMemberViaQualifier(
-        displayName(funcSymbol, this.id),
+        funcSymbol.symbolId,
         funcSymbolType,
         this.updatedScope,
         this.compileErrors,
@@ -126,7 +125,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       }
 
       matchParametersAndTypes(
-        displayName(funcSymbol, this.id),
+        funcSymbol.symbolId,
         funcSymbolType,
         parameters,
         this.compileErrors,
@@ -139,7 +138,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.isAsync = funcSymbolType.isAsync;
     } else {
       mustBeCallable(
-        displayName(funcSymbol, this.id),
+        funcSymbol.symbolId,
         funcSymbolType,
         funcSymbol.symbolScope,
         this.compileErrors,

@@ -4,7 +4,6 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import {
   getGlobalScope,
-  isDeconstructedType,
   isMemberOnFieldsClass,
   scopePrefix,
   updateScope,
@@ -108,10 +107,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
   symbolType() {
     const rootType = this.rootSymbolType();
-
-    if (isDeconstructedType(rootType)) {
-      return rootType.symbolTypeFor(this.id);
-    }
 
     return this.isSimpleSubscript() ? getIndexAndOfType(rootType)[1] : rootType;
   }

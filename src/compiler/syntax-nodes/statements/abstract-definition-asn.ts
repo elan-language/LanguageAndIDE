@@ -4,19 +4,16 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import {
   getDeconstructionIds,
   getGlobalScope,
-  mapSymbolType,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import {
   getId,
   mustBeCompatibleDefinitionNode,
-  mustBeDeconstructableType,
   mustNotBeKeyword,
   mustNotBeRedefined,
 } from "../../compile-rules";
 import { Definition } from "../../compiler-interfaces/definition";
-import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { DefinitionAdapter } from "./definition-adapter";
@@ -39,31 +36,27 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
   }
 
   ids() {
-    return getIds(this.name);
+    return getId(this.name);
   }
 
   compile(): string {
     this.compileErrors = [];
     const ids = this.ids();
 
-    if (ids.length > 1) {
-      mustBeDeconstructableType(this.symbolType(), this.compileErrors, this.fieldId);
-    }
-
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.fieldId);
       const symbol = this.getScope().resolveSymbol(i!, this);
-      mustNotBeRedefined(symbol, i, this.compileErrors, this.fieldId);
+      mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
     }
 
     const lhs = this.name;
     const rhs = this.expr;
 
-    mustBeCompatibleDefinitionNode(lhs, rhs, this.getScope(), this.compileErrors, this.fieldId);
+    mustBeCompatibleDefinitionNode(rhs, this.compileErrors, this.fieldId);
 
-    const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
+    const lhsCode = lhs.compile();
 
-    const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
+    const rhsCode = rhs.compile();
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
@@ -75,9 +68,8 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
   }
 
   symbolType() {
-    const ids = this.ids();
     const st = this.expr.symbolType();
-    return mapSymbolType(ids, st);
+    return st;
   }
 
   get symbolScope() {

@@ -26,8 +26,6 @@ import { CommentAsn } from "../../compiler/syntax-nodes/comment-asn";
 import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
 import { CopyWithAsn } from "../../compiler/syntax-nodes/copy-with-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
-import { DeconstructedListAsn } from "../../compiler/syntax-nodes/deconstructed-list-asn";
-import { DeconstructedTupleAsn } from "../../compiler/syntax-nodes/deconstructed-tuple-asn";
 import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { EmptyTypeAsn } from "../../compiler/syntax-nodes/empty-type-asn";
@@ -131,8 +129,6 @@ import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CommentNode } from "../frames/parse-nodes/comment-node";
 import { CopyWith } from "../frames/parse-nodes/copy-with";
 import { CSV } from "../frames/parse-nodes/csv";
-import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
-import { DeconstructedTuple } from "../frames/parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
 import { DottedTerm } from "../frames/parse-nodes/dotted-term";
@@ -921,19 +917,6 @@ export function transform(
   if (node instanceof TupleNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralTupleAsn(items, fieldId);
-  }
-
-  if (node instanceof DeconstructedTuple) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items.filter((i) =>
-      isAstIdNode(i),
-    );
-    return new DeconstructedTupleAsn(items, fieldId);
-  }
-
-  if (node instanceof DeconstructedList) {
-    const hd = transform(node.head, fieldId, scope)!;
-    const tl = transform(node.tail, fieldId, scope)!;
-    return new DeconstructedListAsn(hd, tl, fieldId, scope);
   }
 
   if (node instanceof NewInstance) {

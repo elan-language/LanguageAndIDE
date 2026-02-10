@@ -37,8 +37,6 @@ import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { ConstructorAsn } from "./class-members/constructor-asn";
-import { DeconstructedListAsn } from "./deconstructed-list-asn";
-import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
@@ -354,46 +352,6 @@ export function mapOperation(op: string): OperationSymbol {
     }
   }
   return OperationSymbol.Unknown;
-}
-
-export function wrapDeconstructionRhs(lhs: AstNode, rhs: AstNode, isAssignment: boolean) {
-  const code = rhs.compile();
-  const closeBracket = isAssignment ? ")" : "";
-
-  if (lhs instanceof DeconstructedListAsn) {
-    return `system.deconstructList(${code})`;
-  }
-
-  if (lhs instanceof DeconstructedTupleAsn && rhs.symbolType() instanceof ClassType) {
-    return `${code}${closeBracket}`;
-  }
-  return code;
-}
-
-export function wrapDeconstructionLhs(lhs: AstNode, rhs: AstNode, isAssignment: boolean) {
-  const code = lhs.compile();
-  const openBracket = isAssignment ? "(" : "";
-
-  if (lhs instanceof DeconstructedListAsn) {
-    return `[${code}]`;
-  }
-
-  if (lhs instanceof DeconstructedTupleAsn && rhs.symbolType() instanceof ClassType) {
-    return `${openBracket}{${code}}`;
-  }
-
-  if (lhs instanceof DeconstructedTupleAsn) {
-    return `[${code}]`;
-  }
-  return code;
-}
-
-export function getIds(ast: AstNode) {
-  if (isAstIdNode(ast)) {
-    const id = ast.id;
-    return id.includes(",") ? id.split(",") : [id];
-  }
-  return [];
 }
 
 export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {

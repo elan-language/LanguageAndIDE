@@ -43,7 +43,3 @@ export function isImmutableDictionary(t: TypeOptions) {
 export function isAnyDictionary(t: TypeOptions) {
   return t.isIndexable && !t.isIterable;
 }
-
-export function isRecord(t: TypeOptions) {
-  return t.isImmutable && !t.isIndexable && !t.isIterable;
-}

@@ -3,7 +3,6 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { ProcedureType } from "../../../compiler/symbols/procedure-type";
 import {
-  displayName,
   getGlobalScope,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -73,7 +72,7 @@ export class CallAsn extends BreakpointAsn {
       this.fieldId,
     );
     mustBeProcedure(
-      displayName(procSymbol, id),
+      procSymbol.symbolId,
       procSymbol.symbolType(),
       procSymbol.symbolScope,
       this.compileErrors,
