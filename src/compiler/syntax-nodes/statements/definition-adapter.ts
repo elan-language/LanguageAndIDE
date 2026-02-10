@@ -1,6 +1,10 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { getDeconstructionIds, isLet, isVariable } from "../../../compiler/symbols/symbol-helpers";
+import {
+  getDeconstructionIds,
+  isLocalConstant,
+  isVariable,
+} from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { Definition } from "../../compiler-interfaces/definition";
 
@@ -14,8 +18,8 @@ export class DefinitionAdapter implements Definition {
     this.symbolScope = adapted.symbolScope;
   }
 
-  isLet() {
-    return isLet(this.adapted);
+  isLocalConstant() {
+    return isLocalConstant(this.adapted);
   }
 
   isVariable() {

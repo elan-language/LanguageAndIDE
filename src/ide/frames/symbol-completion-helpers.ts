@@ -14,7 +14,7 @@ import {
   isEnum,
   isEnumValue,
   isInsideClass,
-  isLet,
+  isLocalConstant,
   isNotInheritableTypeName,
   isParameter,
   isProcedure,
@@ -140,7 +140,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
     case TokenType.id_constant:
       return isConstant;
     case TokenType.id_let:
-      return isLet;
+      return isLocalConstant;
     case TokenType.id_variable:
       return isVariable;
     case TokenType.id_parameter_regular:

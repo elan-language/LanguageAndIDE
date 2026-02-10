@@ -78,7 +78,7 @@ import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { ForAsn } from "../../compiler/syntax-nodes/statements/for-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
-import { LetAsn } from "../../compiler/syntax-nodes/statements/let-asn";
+import { LocalConstantAsn } from "../../compiler/syntax-nodes/statements/local-constant-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -385,7 +385,7 @@ export function transform(
   }
 
   if (node instanceof ConstantStatement) {
-    const letAsn = new LetAsn(node.getHtmlId(), scope);
+    const letAsn = new LocalConstantAsn(node.getHtmlId(), scope);
     letAsn.breakpointStatus = node.breakpointStatus;
 
     letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;

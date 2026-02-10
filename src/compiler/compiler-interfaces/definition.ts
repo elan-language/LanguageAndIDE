@@ -1,6 +1,6 @@
 import { ElanSymbol } from "./elan-symbol";
 
 export interface Definition extends ElanSymbol {
-  isLet(): boolean;
+  isLocalConstant(): boolean;
   isVariable(): boolean;
 }

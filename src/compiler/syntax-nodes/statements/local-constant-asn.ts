@@ -1,8 +1,8 @@
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
 import { AbstractDefinitionAsn } from "./abstract-definition-asn";
 
-export class LetAsn extends AbstractDefinitionAsn implements ElanSymbol {
+export class LocalConstantAsn extends AbstractDefinitionAsn implements ElanSymbol {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -11,9 +11,10 @@ export class LetAsn extends AbstractDefinitionAsn implements ElanSymbol {
     return "const";
   }
 
-  isLet() {
+  isLocalConstant() {
     return true;
   }
+
   isVariable() {
     return false;
   }
