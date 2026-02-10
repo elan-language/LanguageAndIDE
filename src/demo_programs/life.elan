@@ -1,4 +1,4 @@
-# 09abf980e6bdf72e986809610d1efcee241e88be4477ac4391736b059d06b251 Elan 2.0.0-alpha guest default_profile valid
+# 637f86f88fe157497ab05431f9d3f41ad7fa4ad921665efd08ff5b27071e94d1 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphicsArray()
@@ -29,30 +29,29 @@ function blackOrWhite(random as Float) returns Int
 end function
 
 function north(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item0
-  variable y set to cell.item1
-  if y is 0 then
-    set y to 29
-  else
-    set y to y - 1
-  end if
-  return tuple(x, y)
+  constant x set to cell.item0
+  constant y set to cell.item1
+  constant y2 set to if y is 0 then 29 else y - 1
+  return tuple(x, y2)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
-  constant x, y set to cell
+  constant x set to cell.item0
+  constant y set to cell.item1
   constant y2 set to if y is 29 then 0 else y + 1
   return tuple(x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
-  constant x, y set to cell
+  constant x set to cell.item0
+  constant y set to cell.item1
   constant x2 set to if x is 39 then 0 else x + 1
   return tuple(x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
-  constant x, y set to cell
+  constant x set to cell.item0
+  constant y set to cell.item1
   constant x2 set to if x is 0 then 39 else x - 1
   return tuple(x2, y)
 end function
@@ -81,7 +80,8 @@ end function
 function liveNeighbours(grid as Array2D<of Int>, x as Int, y as Int) returns Int
   variable count set to 0
   each cell in neighbourCells(x, y)
-    constant cx, cy set to cell
+    constant cx set to cell.item0
+    constant cy set to cell.item1
     if grid[cx, cy] is black then
       set count to count + 1
     end if

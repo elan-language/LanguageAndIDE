@@ -1,4 +1,4 @@
-# d9ba830760bc5b2e92f8a688f9579578ee5413cfff4c7d30a0ecf273052675c4 Elan 2.0.0-alpha guest default_profile valid
+# f342a3bcaa38d9406a038af848dd5b503f9fac08803c1cb6ca985aa605986218 Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -136,9 +136,9 @@ test test_evaluateYellows
 end test
 
 function markAttempt(attempt as String, target as String) returns String
-  variable greens set to evaluateGreens(attempt, target)
-  variable markedAttempt:_ set to evaluateYellows(greens[0], greens[1])
-  return markedAttempt
+  constant greens set to evaluateGreens(attempt, target)
+  variable markedAttempt set to evaluateYellows(greens[0], greens[1])
+  return markedAttempt[0]
 end function
 
 test test_markAttempt

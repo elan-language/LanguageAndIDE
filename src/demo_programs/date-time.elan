@@ -1,4 +1,4 @@
-# eef8cbc3792ccef44ed16115420b948614ab3b19291bff4a89d4f8bd7618ceb4 Elan 2.0.0-alpha guest default_profile valid
+# 1db034b27eb7ce775abf44b8cbc1360ffe34c16698c2eaac37556bdcc39981d3 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
@@ -16,13 +16,21 @@ main
 end main
 
 procedure printDate(unixSecs as Int)
-  constant hour, minute, second, days, year, weekday set to dateTime(unixSecs)
+  constant dt set to dateTime(unixSecs)
+  constant hour set to dt.item0
+  constant minute set to dt.item1
+  constant second set to dt.item2
+  constant days set to dt.item3
+  constant year set to dt.item4
+  constant weekday set to dt.item5
   constant h set to pad("L", z2, hour.asString())
   constant m set to pad("L", z2, minute.asString())
   constant s set to pad("L", z2, second.asString())
   variable startDays set to getStartDays()
   constant startDaysL set to startDaysList(year, startDays)
-  constant month, day set to monthDay(startDaysL, (days mod startDays[12]))
+  constant month_day set to monthDay(startDaysL, (days mod startDays[12]))
+  constant month set to month_day.item0
+  constant day set to month_day.item1
   call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
 end procedure
 
