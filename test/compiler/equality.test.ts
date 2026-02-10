@@ -519,12 +519,12 @@ return [main, _tests];}`;
 main
   variable f1 set to new Foo() with p set to 1
   variable f2 set to new Foo() with p set to 2
-  variable l1 set to {f1, f2}
-  variable l2 set to {f1, f2}
+  variable l1 set to [f1, f2]
+  variable l2 set to [f1, f2]
   call printNoLine(l1.isSameValueAs(l2))
-  variable l3 set to {f2, f1}
+  variable l3 set to [f2, f1]
   call printNoLine(l1.isSameValueAs(l3))
-  variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
+  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
   call printNoLine( l4.isSameValueAs(l1))
 end main
 
@@ -656,12 +656,12 @@ return [main, _tests];}`;
 main
   variable f1 set to new Foo() with p set to 1
   variable f2 set to new Foo() with p set to 2
-  variable l1 set to {f1, f2}
-  variable l2 set to {f1, f2}
+  variable l1 set to [f1, f2]
+  variable l2 set to [f1, f2]
   call printNoLine(l1.isSameReferenceAs(l2))
-  variable l3 set to {f2, f1}
+  variable l3 set to [f2, f1]
   call printNoLine(l1.isSameReferenceAs(l3))
-  variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
+  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
   call printNoLine( l4.isSameReferenceAs(l1))
 end main
 

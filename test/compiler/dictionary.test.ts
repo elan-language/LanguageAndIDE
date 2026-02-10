@@ -1299,18 +1299,14 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.asDictionary()
   call printNoLine(a)
-  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.asDictionary();
   await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -1327,7 +1323,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]{a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
   test("Fail_SetInvalidValueType", async () => {

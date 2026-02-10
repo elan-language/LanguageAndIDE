@@ -60,7 +60,7 @@ return [main, _tests];}`;
   test("Pass_InLoop", async () => {
     const code = `${testHeader}
 
-constant li set to {1,2,3,4,5}
+constant li set to [1,2,3,4,5]
 
 main
   call foo()
@@ -116,7 +116,7 @@ main
 end main
 
 procedure foo()
-  variable li set to {1,2,3,4,5}
+  variable li set to [1,2,3,4,5]
   for i from 0 to 3 step 1
     constant temp set to li[i]
     set li to li.withPut(i, li[i + 1])
@@ -157,7 +157,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 3, 4, 5, 1}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 3, 4, 5, 1]");
   });
 
   test("Pass_Scoped", async () => {

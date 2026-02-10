@@ -18,7 +18,7 @@ suite("Chaining", () => {
     const code = `${testHeader}
 
 main 
-  variable a set to {{1,2}, {3,4}}
+  variable a set to [[1,2], [3,4]]
   variable b set to a[1][1]
   call printNoLine(b)
 end main`;
@@ -93,7 +93,7 @@ end main
 
 class Foo
   constructor()
-    set property.a to {1}
+    set property.a to [1]
   end constructor
   
   property a as List<of Int>
@@ -684,7 +684,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main 
-  variable a set to {1,2,3,4,5,6}
+  variable a set to [1,2,3,4,5,6]
   call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x))
 end main`;
 

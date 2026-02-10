@@ -375,163 +375,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
-  test("Pass_List", async () => {
-    const code = `${testHeader}
-
-constant a set to {1,2,3}
-main
-  call printNoLine(a)
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.list([1, 2, 3]);
-
-};
-async function main() {
-  await _stdlib.printNoLine(global.a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}");
-  });
-
-  test("Fail_List", async () => {
-    const code = `${testHeader}
-
-constant a set to [1,2,3]
-main
-  call printNoLine(a)
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "An ordinary List cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable List.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Pass_ListofList", async () => {
-    const code = `${testHeader}
-
-constant a set to {{4, 5}, {6, 7, 8}}
-main
-  call printNoLine(a)
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.list([system.list([4, 5]), system.list([6, 7, 8])]);
-
-};
-async function main() {
-  await _stdlib.printNoLine(global.a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{{4, 5}, {6, 7, 8}}");
-  });
-
-  test("Pass_LargeConstant", async () => {
-    const code = `${testHeader}
-
-constant a set to {{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}
-main
-  call printNoLine(a)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.list([system.list([0, 0, 0, 0.16, 0, 0, 0.01]), system.list([0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85]), system.list([0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07]), system.list([-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
-
-};
-async function main() {
-  await _stdlib.printNoLine(global.a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "{{0, 0, 0, 0.16, 0, 0, 0.01}, {0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85}, {0.2, -0.26, 0.23, 0.22, 0, 1.6, 0.07}, {-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07}}",
-    );
-  });
-
-  test("Fail_Dictionary", async () => {
-    const code = `${testHeader}
-
-constant a set to ["a":1]
-main
-  call printNoLine(a)
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "An ordinary Dictionary cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable Dictionary.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Pass_useInsideMain", async () => {
     const code = `${testHeader}
 
@@ -778,41 +621,6 @@ end main
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
 
-  test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
-    const code = `${testHeader}
-
-constant a set to {openBrace:blue, closeBrace:red}
-main
-  call printNoLine(a)
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.dictionary([[_stdlib.openBrace, _stdlib.blue], [_stdlib.closeBrace, _stdlib.red]]);
-
-};
-async function main() {
-  await _stdlib.printNoLine(global.a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{{:255, }:16711680}");
-  });
-
   test("Fail_UseConstantBeforeDefinition1", async () => {
     const code = `${testHeader}
 
@@ -841,7 +649,7 @@ end main
   test("Fail_UseConstantBeforeDefinition2", async () => {
     const code = `${testHeader}
 
-constant a set to { b }
+constant a set to [ b ]
 constant b set to 2
 main
   call printNoLine(a[0])

@@ -1360,13 +1360,6 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new ExprNode(f), `tuple(def, ghi)`, ParseStatus.valid, "tuple(def, ghi)", ""); // tuple
     testNodeParse(new TermSimple(f), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
-    testNodeParse(
-      new TermSimple(f),
-      `{def:true, ghi: false}`,
-      ParseStatus.valid,
-      "{def:true, ghi: false}",
-      "",
-    );
     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
@@ -1661,14 +1654,14 @@ suite("Parsing Nodes", () => {
   test("Parse list of list of floats", () => {
     testNodeParse(
       new ExprNode(f),
-      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
       ParseStatus.valid,
-      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
       "",
     );
   });
   test("Parse list of floats 2", () => {
-    testNodeParse(new ExprNode(f), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
+    testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
   });
   test("Six open brackets", () => {
     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");

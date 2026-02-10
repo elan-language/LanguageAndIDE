@@ -3,7 +3,7 @@ import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string"
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
@@ -723,7 +723,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable foo set to {"a":1}
+  variable foo set to ["a":1]
   variable bar set to foo.w
 end main`;
 
@@ -749,7 +749,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable foo set to {"a":1}
+  variable foo set to ["a":1]
   variable bar set to foo.k
 end main`;
 
@@ -2113,7 +2113,7 @@ end class`;
   test("Pass_largeConstant", async () => {
     const code = `${testHeader}
 
-constant a set to {0,0}
+constant a set to [0,0]
 main
   call printNoLine(a)
 end main`;

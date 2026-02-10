@@ -661,7 +661,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {0,2}
+  variable a set to [0,2]
   variable b set to new Foo()
   variable c set to copy b with b set to a[1]
   call printNoLine(b.b)
@@ -710,7 +710,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {0,2,3}
+  variable a set to [0,2,3]
   variable b set to new Foo()
   variable c set to copy b with b set to a.length()
   call printNoLine(b.b)
@@ -938,7 +938,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable a set to {1, 2}
+  variable a set to [1, 2]
   variable b set to copy a with a set to 0
   call printNoLine(b)
 end main`;
@@ -961,7 +961,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {3}
+  variable a set to [3]
   variable b set to copy a with a set to 0
   call printNoLine(b)
 end main`;

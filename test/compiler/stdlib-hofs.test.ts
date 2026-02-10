@@ -89,7 +89,7 @@ return [main, _tests];}`;
   test("Pass_filterInFunction", async () => {
     const code = `${testHeader}
 
-constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
 main
   call printNoLine(filterIt(source))
 end main
@@ -127,7 +127,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{23, 27, 31, 37}");
+    await assertObjectCodeExecutes(fileImpl, "[23, 27, 31, 37]");
   });
 
   test("Pass_mapList", async () => {
@@ -208,9 +208,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   set source to source.map(lambda x as Int => x + 1)
-  call printNoLine(source.asList())
+  call printNoLine(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -218,7 +218,7 @@ const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await source.map(async (x) => x + 1));
-  await _stdlib.printNoLine(source.asList());
+  await _stdlib.printNoLine(source);
 }
 return [main, _tests];}`;
 
@@ -314,9 +314,9 @@ return [main, _tests];}`;
   test("Pass_reduceToDictionary", async () => {
     const code = `${testHeader}
 
-constant source set to {"three", "four"}
+constant source set to ["three", "four"]
 main
-  variable ed set to {"one":1, "two":2}
+  variable ed set to ["one":1, "two":2]
   set ed to source.reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withPut(x, 1))
   call printNoLine(ed)
 end main`;
@@ -346,7 +346,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one:1, two:2, three:1, four:1}");
+    await assertObjectCodeExecutes(fileImpl, "[one:1, two:2, three:1, four:1]");
   });
   test("Pass_maxByList", async () => {
     const code = `${testHeader}
@@ -383,18 +383,16 @@ return [main, _tests];}`;
   test("Pass_maxBy1", async () => {
     const code = `${testHeader}
 
-constant source set to {{1}, {2, 2}}
 main
+  variable source set to [[1], [2, 2]]
   call printNoLine(source.maxBy(lambda x as List<of Int> => x.length()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list([system.list([1]), system.list([2, 2])]);
-
-};
+const global = new class {};
 async function main() {
-  await _stdlib.printNoLine((await global.source.maxBy(async (x) => x.length())));
+  let source = system.list([system.list([1]), system.list([2, 2])]);
+  await _stdlib.printNoLine((await source.maxBy(async (x) => x.length())));
 }
 return [main, _tests];}`;
 
@@ -411,13 +409,13 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 2}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 2]");
   });
 
   test("Pass_maxBy2", async () => {
     const code = `${testHeader}
 
-constant source set to {"apple", "orange", "pear"}
+constant source set to ["apple", "orange", "pear"]
 main
   call printNoLine(source.maxBy(lambda t as String => t.length()))
 end main`;
@@ -701,20 +699,16 @@ return [main, _tests];}`;
   test("Pass_asSet", async () => {
     const code = `${testHeader}
 
-constant source set to {"apple", "orange", "pair", "apple"}
 main
+  variable source set to ["apple", "orange", "pair", "apple"]
   call printNoLine(source.asSet())
-  call printNoLine(source.asList().asSet())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list(["apple", "orange", "pair", "apple"]);
-
-};
+const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(global.source.asSet());
-  await _stdlib.printNoLine(global.source.asList().asSet());
+  let source = system.list(["apple", "orange", "pair", "apple"]);
+  await _stdlib.printNoLine(source.asSet());
 }
 return [main, _tests];}`;
 
@@ -731,7 +725,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{apple, orange, pair}{apple, orange, pair}");
+    await assertObjectCodeExecutes(fileImpl, "[apple, orange, pair]");
   });
 
   test("Pass_complexHof", async () => {
@@ -822,7 +816,7 @@ end main`;
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `${testHeader}
 
-constant source set to {"apple", "orange", "pair"}
+constant source set to ["apple", "orange", "pair"]
 main
   call printNoLine(source.maxBy(lambda t as String => t))
 end main`;
@@ -846,7 +840,7 @@ end main`;
   test("Fail_MissingBrackets", async () => {
     const code = `${testHeader}
 
-constant source set to {"apple":"apple", "orange":"orange", "pair":"pair"}
+constant source set to ["apple":"apple", "orange":"orange", "pair":"pair"]
 main
   call printNoLine(source.keys.map(lambda s as String => s))
 end main`;

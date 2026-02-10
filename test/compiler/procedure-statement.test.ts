@@ -64,9 +64,9 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 2]
-  variable b set to {3, 4}
+  variable b set to [3, 4]
   variable c set to ["a":true, "b":false]
-  variable d set to {"a":true, "b":false}
+  variable d set to ["a":true, "b":false]
   call foo(a, b, c, d)
 end main
 
@@ -109,7 +109,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2]{3, 4}[a:true, b:false]{a:true, b:false}");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2][3, 4][a:true, b:false][a:true, b:false]");
   });
 
   test("Pass_ExternalCall", async () => {
@@ -1208,13 +1208,13 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {2, 3}
+  variable a set to [2, 3]
   call changeAll(a)
   call printNoLine(a)
 end main
 
 procedure changeAll(a as List<of Int>)
-    set a to {1, 2, 3}
+  set a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1244,7 +1244,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-    set a to [1, 2, 3]
+  set a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1560,30 +1560,6 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-procedure p1(a as List<of List<of Int>>)
-  
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

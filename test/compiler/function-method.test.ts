@@ -175,7 +175,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return {property.p1 * value}
+        return [property.p1 * value]
     end function
 
     function asString() returns String
@@ -227,7 +227,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{10}");
+    await assertObjectCodeExecutes(fileImpl, "[10]");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
@@ -262,7 +262,7 @@ class Foo
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return {property.p1 * value}
+        return [property.p1 * value]
     end function
 
 end class`;
@@ -329,7 +329,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{10}");
+    await assertObjectCodeExecutes(fileImpl, "[10]");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
@@ -1161,58 +1161,6 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ReturnListOfMutableType", async () => {
-    const code = `${testHeader}
-
-class Foo
-  function p1() returns List<of List<of Int>>
-    return p1()
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-class Foo
-  function p1(a as List<of List<of Int>>) returns Int
-    return 0
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 

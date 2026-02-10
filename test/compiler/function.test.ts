@@ -1614,54 +1614,6 @@ end function`;
     ]);
   });
 
-  test("Fail_ReturnListOfMutableType", async () => {
-    const code = `${testHeader}
-
-function p1() returns List<of List<of Int>>
-  return p1()
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-function p1(a as List<of List<of Int>>) returns Int
-  return 0
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_noMatchingExtension1", async () => {
     const code = `${testHeader}
 

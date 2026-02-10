@@ -90,7 +90,7 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.initialise(_stdlib.emptyInstance());
+  previousScores = system.initialise(_stdlib.List.emptyInstance());
 
   async asString() {
     return "A game";
@@ -128,7 +128,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ChloeJoe{5, 2, 4}");
+    await assertObjectCodeExecutes(fileImpl, "ChloeJoe[5, 2, 4]");
   });
 
   test("Pass_AssignProperty", async () => {
@@ -199,9 +199,7 @@ main
   call printNoLine(g.f)
   call printNoLine(g.b)
   call printNoLine(g.s)
-  call printNoLine(g.li)
   call printNoLine(g.ds)
-  call printNoLine(g.dsi)
   call printNoLine(g.ai)
   call printNoLine(g.t)
   call printNoLine(g.ff("a", "b"))
@@ -236,9 +234,7 @@ async function main() {
   await _stdlib.printNoLine(g.f);
   await _stdlib.printNoLine(g.b);
   await _stdlib.printNoLine(g.s);
-  await _stdlib.printNoLine(g.li);
   await _stdlib.printNoLine(g.ds);
-  await _stdlib.printNoLine(g.dsi);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
   await _stdlib.printNoLine((await g.ff("a", "b")));
@@ -246,7 +242,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -291,7 +287,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})0true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])0true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -304,9 +300,7 @@ main
   call printNoLine(g.f)
   call printNoLine(g.b)
   call printNoLine(g.s)
-  call printNoLine(g.li)
   call printNoLine(g.ds)
-  call printNoLine(g.dsi)
   call printNoLine(g.ai)
   call printNoLine(g.t)
   call printNoLine(g.r)
@@ -329,7 +323,6 @@ class Game
     property s as String
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
-    property dsi as Dictionary<of String, Int>
     property ai as List<of Int>
     property t as Tuple<of Int, String, List<of Int>>
     property r as RegExp
@@ -349,9 +342,7 @@ async function main() {
   await _stdlib.printNoLine(g.f);
   await _stdlib.printNoLine(g.b);
   await _stdlib.printNoLine(g.s);
-  await _stdlib.printNoLine(g.li);
   await _stdlib.printNoLine(g.ds);
-  await _stdlib.printNoLine(g.dsi);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
   await _stdlib.printNoLine(g.r);
@@ -376,7 +367,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["dsi", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
 
@@ -394,8 +385,6 @@ class Game {
   li = system.initialise(_stdlib.List.emptyInstance());
 
   ds = system.initialise(_stdlib.Dictionary.emptyInstance());
-
-  dsi = system.initialise(_stdlib.Dictionary.emptyInstance());
 
   ai = system.initialise(_stdlib.List.emptyInstance());
 
@@ -423,7 +412,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false{}[]{}[]tuple(0, , {})A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])A RegExp");
   });
 
   test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
@@ -1095,7 +1084,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}[][]truetruetruetrue");
+    await assertObjectCodeExecutes(fileImpl, "[][][]truetruetruetrue");
   });
 
   test("Pass_emptyForStandardDataStructuresByReference", async () => {
@@ -1178,7 +1167,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{}[][]falsetruefalsefalse");
+    await assertObjectCodeExecutes(fileImpl, "[][][]falsetruefalsefalse");
   });
 
   test("Pass_PropertyOfAbstractType", async () => {

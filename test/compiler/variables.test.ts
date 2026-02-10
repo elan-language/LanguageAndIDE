@@ -284,21 +284,18 @@ return [main, _tests];}`;
   test("Pass_Iter", async () => {
     const code = `${testHeader}
 
-constant a set to {1, 2}
-
 main
+  variable a set to [1, 2]
   variable b set to a.map(lambda x as Int => x)
-  set b to {1, 2}
+  set b to [1, 2]
   call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = system.list([1, 2]);
-
-};
+const global = new class {};
 async function main() {
-  let b = (await global.a.map(async (x) => x));
+  let a = system.list([1, 2]);
+  let b = (await a.map(async (x) => x));
   b = system.list([1, 2]);
   await _stdlib.printNoLine(b);
 }
@@ -317,7 +314,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2}");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2]");
   });
 
   //   test("Pass_Security", async () => {
@@ -530,7 +527,7 @@ main
   variable d set to f()
   set a to 1.0
   set b to false
-  set c to {1.0, 2}
+  set c to [1.0, 2]
   set d to 1.0
 end main`;
 
@@ -559,9 +556,9 @@ end main`;
 
 main
   variable a set to createList(3, "")
-  variable b set to {1.0, 2}
+  variable b set to [1.0, 2]
   variable c set to ["a":1.0, "b":3, "z":10]
-  set a to {1.0, 2}
+  set a to [1.0, 2]
   set b to a
   set c to b
 end main`;
@@ -579,7 +576,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: List<of String>, Provided: List<of Float>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: List<of Float> try converting with '.asList()', Provided: List<of String>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Float>, Provided: List<of String>.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Dictionary<of String, Float>, Provided: List<of Float>.LangRef.html#TypesCompileError",
     ]);
   });

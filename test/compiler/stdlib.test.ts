@@ -22,7 +22,7 @@ suite("StdLib", () => {
   test("Pass_contains", async () => {
     const code = `${testHeader}
 
-constant lst set to {1, 2}
+constant lst set to [1, 2]
 main
   variable arr set to ["three", "four"]
   call printNoLine(lst.contains(1))
@@ -1542,7 +1542,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 3, 5, 7, 9]
-  variable b set to {2, 4, 6, 8}
+  variable b set to [2, 4, 6, 8]
   variable c set to "Hello World!"
   call printNoLine(a.indexOf(9))
   call printNoLine(a.indexOf(5))

@@ -511,40 +511,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[one], [], [three], [one], [two], [three]]");
   });
 
-  test("Pass_InitializeAnListFromAList", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to {{"foo"},{"bar","yon"}}.asList()
-  call printNoLine(a.length())
-  call printNoLine(a)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list([system.list(["foo"]), system.list(["bar", "yon"])]).asList();
-  await _stdlib.printNoLine(a.length());
-  await _stdlib.printNoLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2[{foo}, {bar, yon}]");
-  });
-
   test("Pass_EmptyListByValue", async () => {
     const code = `${testHeader}
 

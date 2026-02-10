@@ -512,32 +512,6 @@ end class`;
     ]);
   });
 
-  test("Fail_ParameterListOfMutableType", async () => {
-    const code = `${testHeader}
-
-class Foo
-  procedure p1(a as List<of List<of Int>>)
-    
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "List cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_standaloneLibProcedureAsExtension", async () => {
     const code = `${testHeader}
 

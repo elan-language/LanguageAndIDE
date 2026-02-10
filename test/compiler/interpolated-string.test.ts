@@ -51,7 +51,7 @@ return [main, _tests];}`;
 main
   variable a set to 1
   variable b set to "Apple"
-  variable c set to {1,2,3}
+  variable c set to [1,2,3]
   call printNoLine("{a} {b} {c}")
   call printNoLine('{a} {b} {c}')
 end main`;
@@ -80,7 +80,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple {1, 2, 3}{a} {b} {c}");
+    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]{a} {b} {c}");
   });
 
   test("Fail_missingBrace", async () => {
@@ -89,7 +89,7 @@ return [main, _tests];}`;
 main
   variable a set to 1
   variable b set to "Apple"
-  variable c set to {1,2,3}
+  variable c set to [1,2,3]
   call printNoLine("{a {b} {c}")
 end main`;
 
@@ -112,7 +112,7 @@ end main`;
 main
   variable a set to 1
   variable b set to "Apple"
-  variable c set to {1,2,3}
+  variable c set to [1,2,3]
   call printNoLine("{a} {b} {{c}")
 end main`;
 

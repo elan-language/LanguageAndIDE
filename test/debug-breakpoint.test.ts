@@ -39,7 +39,7 @@ main
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
 end main`;
 
@@ -78,7 +78,7 @@ procedure pp(e as Int)
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
 end procedure`;
 
@@ -118,7 +118,7 @@ function ff(e as Int) returns Int
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
   return a
 end function`;
@@ -164,7 +164,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
   end procedure
 end class`;
@@ -211,7 +211,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
     return a
   end function
@@ -256,7 +256,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
   end constructor
 
@@ -323,7 +323,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {7,8,9}
+  variable a set to [7,8,9]
   variable n set to 0
   each x in a
     variable z set to 101
@@ -716,7 +716,7 @@ main
   call printNoLine(x)
 end main
 
-constant a set to {1, 2, 3}`;
+constant a set to [1, 2, 3]`;
 
     const fileImpl = new FileImpl(
       testHash,
