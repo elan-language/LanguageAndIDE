@@ -59,7 +59,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3322{7, 5}");
+    await assertObjectCodeExecutes(fileImpl, "3322[7, 5]");
   });
 
   test("Pass_SetUnion", async () => {
@@ -99,7 +99,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 1, 9}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 4, 6, 1, 9]");
   });
 
   test("Pass_SetIntersection", async () => {
@@ -139,7 +139,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{4, 3}");
+    await assertObjectCodeExecutes(fileImpl, "[4, 3]");
   });
 
   test("Pass_SetDifference", async () => {
@@ -179,7 +179,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 6}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 6]");
   });
 
   test("Pass_IsDisjointFrom", async () => {
@@ -306,7 +306,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{2, 4, 6, 3}{2, 4, 6, 3, 5}");
+    await assertObjectCodeExecutes(fileImpl, "[2, 4, 6, 3][2, 4, 6, 3, 5]");
   });
 
   test("Pass_Conversions", async () => {
@@ -350,7 +350,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{one, two, three}[one, two, three]");
+    await assertObjectCodeExecutes(fileImpl, "[one, two, three][one, two, three]");
   });
 
   test("Pass_Contains1", async () => {

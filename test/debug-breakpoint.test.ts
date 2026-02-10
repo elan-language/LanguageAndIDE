@@ -39,7 +39,7 @@ main
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
 end main`;
 
@@ -60,7 +60,7 @@ end main`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
     ];
 
@@ -78,7 +78,7 @@ procedure pp(e as Int)
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
 end procedure`;
 
@@ -99,7 +99,7 @@ end procedure`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
@@ -118,7 +118,7 @@ function ff(e as Int) returns Int
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to {1:2}
+  variable d set to [1:2]
   set a to 2
   return a
 end function`;
@@ -140,7 +140,7 @@ end function`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
@@ -164,7 +164,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
   end procedure
 end class`;
@@ -186,7 +186,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -211,7 +211,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
     return a
   end function
@@ -234,7 +234,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -256,7 +256,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to {1:2}
+    variable d set to [1:2]
     set a to 2
   end constructor
 
@@ -281,7 +281,7 @@ end class`;
       asDebugSymbol(
         "d",
         { 1: 2 },
-        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
@@ -323,7 +323,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to {7,8,9}
+  variable a set to [7,8,9]
   variable n set to 0
   each x in a
     variable z set to 101
@@ -343,7 +343,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("a", [7, 8, 9], '{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("a", [7, 8, 9], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("n", 0, '{"Type":"Int"}'),
       asDebugSymbol("x", 7, '{"Type":"Int"}'),
       asDebugSymbol("z", 101, '{"Type":"Int"}'),
@@ -666,6 +666,117 @@ end main`;
         "x",
         [1, "fred"],
         '{"Type":"tuple(Int, String)","OfTypes":[{"Type":"Int"},{"Type":"String"}]}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
+  });
+
+  test("Pass_TupleDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  variable x, y set to a
+  call printNoLine(x)
+end main
+
+constant a set to tuple(1, "fred")`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        "fred",
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
+  });
+
+  test("Pass_ListDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  variable x:y set to a
+  call printNoLine(x)
+end main
+
+constant a set to [1, 2, 3]`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        [2, 3],
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "call6", expected);
+  });
+
+  test("Pass_RecordDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  variable x, y set to new Foo() with x set to 1, y set to "fred"
+  call printNoLine(x)
+end main
+
+record Foo
+  property x as Int
+  property y as String
+end record`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        "fred",
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
       ),
     ];
 

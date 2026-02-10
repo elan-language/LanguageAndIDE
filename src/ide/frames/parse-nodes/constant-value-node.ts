@@ -1,8 +1,6 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { DictionaryNode } from "./dictionary-node";
 import { IdentifierNode } from "./identifier-node";
-import { DictionaryImmutableNode } from "./immutable-dictionary-node";
-import { ListImmutableNode } from "./list-immutable-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { TupleNode } from "./tuple-node";
@@ -18,17 +16,6 @@ export class ConstantValueNode extends AbstractAlternatives {
     this.alternatives.push(new IdentifierNode(this.file));
     this.alternatives.push(new LitValueNode(this.file));
     this.alternatives.push(new TupleNode(this.file)); //TODO This could do with constraints on members - as below
-    this.alternatives.push(
-      new ListImmutableNode(this.file, () => new ConstantValueNode(this.file)),
-    );
-    this.alternatives.push(
-      new DictionaryImmutableNode(
-        this.file,
-
-        () => new ConstantValueNode(this.file),
-        () => new ConstantValueNode(this.file),
-      ),
-    );
     this.alternatives.push(new ListNode(this.file, () => new ConstantValueNode(this.file)));
     this.alternatives.push(
       new DictionaryNode(

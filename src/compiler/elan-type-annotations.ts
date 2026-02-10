@@ -692,9 +692,7 @@ export enum ClassOption {
   list,
   array,
   array2D,
-  listImmutable,
   dictionary,
-  dictionaryImmutable,
 }
 
 // isExtension, isPure, isASync, retType
@@ -756,14 +754,8 @@ function mapClassOption(options: ClassOption): TypeOptions {
     case ClassOption.array2D:
       opt.isDoubleIndexable = true;
       return opt;
-    case ClassOption.listImmutable:
-      opt.isImmutable = opt.isIndexable = opt.isIterable = true;
-      return opt;
     case ClassOption.dictionary:
       opt.isIndexable = true;
-      return opt;
-    case ClassOption.dictionaryImmutable:
-      opt.isImmutable = opt.isIndexable = true;
       return opt;
   }
 }

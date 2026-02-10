@@ -13,7 +13,6 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { List } from "./list";
-import { ListImmutable } from "./list-immutable";
 
 @elanClass(ClassOption.record, [ElanT1], [], [], [], "Set")
 export class ElanSet<T1> {
@@ -127,7 +126,7 @@ export class ElanSet<T1> {
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
   async asString(): Promise<string> {
-    const listImm = this.system.initialise(new ListImmutable(Array.from(this.contents)));
-    return await this.stdlib.asString(listImm);
+    const list = this.system.initialise(new List(Array.from(this.contents)));
+    return await this.stdlib.asString(list);
   }
 }

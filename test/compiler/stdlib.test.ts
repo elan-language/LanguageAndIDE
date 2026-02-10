@@ -22,7 +22,7 @@ suite("StdLib", () => {
   test("Pass_contains", async () => {
     const code = `${testHeader}
 
-constant lst set to {1, 2}
+constant lst set to [1, 2]
 main
   variable arr set to ["three", "four"]
   call printNoLine(lst.contains(1))
@@ -35,7 +35,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  lst = system.listImmutable([1, 2]);
+  lst = system.list([1, 2]);
 
 };
 async function main() {
@@ -1364,117 +1364,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  test("Pass_joinImmutableListOfString", async () => {
-    const code = `${testHeader}
-
-main
-  variable words set to {"Now", "is","the","time..."}
-  variable s set to words.join(".")
-  call printNoLine(s)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let words = system.listImmutable(["Now", "is", "the", "time..."]);
-  let s = (await words.join("."));
-  await _stdlib.printNoLine(s);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
-  });
-
-  test("Pass_joinImmutableListOfInt", async () => {
-    const code = `${testHeader}
-
-main
-  variable words set to {1,2,3,4}
-  variable s set to words.join("")
-  call printNoLine(s)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let words = system.listImmutable([1, 2, 3, 4]);
-  let s = (await words.join(""));
-  await _stdlib.printNoLine(s);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1234");
-  });
-
-  test("Pass_joinImmutableListOfRecord", async () => {
-    const code = `${testHeader}
-
-main
-  variable words set to {new Point(), new Point()}
-  variable s set to words.join(",")
-  call printNoLine(s)
-end main
-
-record Point
-end record`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let words = system.listImmutable([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
-  let s = (await words.join(","));
-  await _stdlib.printNoLine(s);
-}
-
-class Point {
-  static emptyInstance() { return system.emptyClass(Point, []);};
-  async _initialise() { return this; }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Point,a Point");
-  });
-
   test("Pass_joinListOfRecord", async () => {
     const code = `${testHeader}
 
@@ -1653,7 +1542,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 3, 5, 7, 9]
-  variable b set to {2, 4, 6, 8}
+  variable b set to [2, 4, 6, 8]
   variable c set to "Hello World!"
   call printNoLine(a.indexOf(9))
   call printNoLine(a.indexOf(5))
@@ -1670,7 +1559,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 3, 5, 7, 9]);
-  let b = system.listImmutable([2, 4, 6, 8]);
+  let b = system.list([2, 4, 6, 8]);
   let c = "Hello World!";
   await _stdlib.printNoLine(a.indexOf(9));
   await _stdlib.printNoLine(a.indexOf(5));

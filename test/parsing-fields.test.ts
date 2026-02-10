@@ -190,13 +190,13 @@ suite("Field Parsing Tests", () => {
     );
     const a = new AssertStatement(test);
     const expected = a.expected;
-    expected.setFieldToKnownValidText(`{4, 5, 6, 24, 26, 44, 45, 46}`);
+    expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
     expected.parseCurrentText();
     assert.equal(expected.readParseStatus(), ParseStatus.valid);
-    assert.equal(expected.textAsSource(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
+    assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
     assert.equal(
       expected.textAsHtml(),
-      `{<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>24</el-lit>, <el-lit>26</el-lit>, <el-lit>44</el-lit>, <el-lit>45</el-lit>, <el-lit>46</el-lit>}`,
+      `[<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>24</el-lit>, <el-lit>26</el-lit>, <el-lit>44</el-lit>, <el-lit>45</el-lit>, <el-lit>46</el-lit>]`,
     );
   });
   test("parse instance dot method", () => {
@@ -250,7 +250,7 @@ suite("Field Parsing Tests", () => {
     );
     const v = c.value;
     v.setFieldToKnownValidText(
-      `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}`,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
     );
     v.parseCurrentText();
     assert.equal(v.readParseStatus(), ParseStatus.valid);

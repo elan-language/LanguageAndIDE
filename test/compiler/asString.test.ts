@@ -375,10 +375,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    variable l set to {1,2,3}
+    variable l set to [1,2,3]
     variable sl set to l.asString()
     call printNoLine(sl)
-    variable a set to {1,2,3}.asList()
+    variable a set to [1,2,3]
     variable sa set to a.asString()
     call printNoLine(sa)
     variable d set to ["a":1, "b":3, "z":10]
@@ -389,10 +389,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let l = system.listImmutable([1, 2, 3]);
+  let l = system.list([1, 2, 3]);
   let sl = (await _stdlib.asString(l));
   await _stdlib.printNoLine(sl);
-  let a = system.listImmutable([1, 2, 3]).asList();
+  let a = system.list([1, 2, 3]);
   let sa = (await _stdlib.asString(a));
   await _stdlib.printNoLine(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
@@ -414,6 +414,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}[1, 2, 3][a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][1, 2, 3][a:1, b:3, z:10]");
   });
 });

@@ -30,7 +30,10 @@ import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
-import { ListImmutableName, ListName } from "./elan-type-names";
+import { DeconstructedListType } from "./deconstructed-list-type";
+import { DeconstructedRecordType } from "./deconstructed-record-type";
+import { DeconstructedTupleType } from "./deconstructed-tuple-type";
+import { ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
 import { FloatType } from "./float-type";
@@ -98,10 +101,6 @@ export function isEnum(s?: ElanSymbol): s is EnumAsn {
 
 export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
   return s instanceof CallAsn;
-}
-
-export function isListImmutableType(s?: SymbolType): s is ClassType {
-  return s instanceof ClassType && s.className === ListImmutableName;
 }
 
 export function isListType(s?: SymbolType): s is ClassType {

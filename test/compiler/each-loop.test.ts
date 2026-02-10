@@ -19,7 +19,7 @@ suite("Each Loop", () => {
     const code = `${testHeader}
 
 main
-  variable a set to {7,8,9}
+  variable a set to [7,8,9]
   variable n set to 0
   each x in a
       set n to n + x
@@ -30,7 +30,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([7, 8, 9]);
+  let a = system.list([7, 8, 9]);
   let n = 0;
   const _itereach9 = [...a];
   for (const x of _itereach9) {
@@ -60,7 +60,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {7,8,9}.asList()
+  variable a set to [7,8,9]
   variable n set to 0
   each x in a
     set n to n + x
@@ -71,7 +71,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([7, 8, 9]).asList();
+  let a = system.list([7, 8, 9]);
   let n = 0;
   const _itereach9 = [...a];
   for (const x of _itereach9) {
@@ -183,8 +183,8 @@ main
   end each
 end main
 
-function fruit() returns ListImmutable<of String>
-  return {"apple","orange", "pear"}
+function fruit() returns List<of String>
+  return ["apple","orange", "pear"]
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -197,7 +197,7 @@ async function main() {
 }
 
 async function fruit() {
-  return system.listImmutable(["apple", "orange", "pear"]);
+  return system.list(["apple", "orange", "pear"]);
 }
 global["fruit"] = fruit;
 return [main, _tests];}`;
@@ -221,7 +221,7 @@ return [main, _tests];}`;
   test("Pass_EachOfConstant", async () => {
     const code = `${testHeader}
 
-constant ints set to {1, 2, 3}
+constant ints set to [1, 2, 3]
 main
   each i1 in ints
   end each
@@ -229,7 +229,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  ints = system.listImmutable([1, 2, 3]);
+  ints = system.list([1, 2, 3]);
 
 };
 async function main() {
@@ -361,7 +361,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable a set to {7, 8, 9}
+  variable a set to [7, 8, 9]
   variable x set to "hello"
   each x in a
     call printNoLine(x)
@@ -390,7 +390,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to {7, 8, 9}
+  variable a set to [7, 8, 9]
   each x in a
     call printNoLine(x)
   end each
@@ -416,7 +416,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable ids set to {7, 8, 9}
+  variable ids set to [7, 8, 9]
   each id in id
     call printNoLine(id)
   end each
@@ -534,7 +534,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to {1, 2, 3, 4, 5}
+  variable a set to [1, 2, 3, 4, 5]
   each x in a
     set a to a.withAppend(x)
     call printNoLine(x)
@@ -545,7 +545,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.listImmutable([1, 2, 3, 4, 5]);
+  let a = system.list([1, 2, 3, 4, 5]);
   const _itereach6 = [...a];
   for (const x of _itereach6) {
     a = a.withAppend(x);

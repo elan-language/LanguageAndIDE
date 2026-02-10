@@ -18,7 +18,6 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
-  ImmutableCollectionCompileError,
   InvalidSourceForEachCompileError,
   IsDeprecated,
   MemberTypeCompileError,
@@ -67,8 +66,6 @@ import {
   isIterableType,
   isKnownType,
   isLet,
-  isListImmutableType,
-  isListType,
   isMember,
   isNumber,
   isProcedure,
@@ -626,11 +623,7 @@ function FailNotAssignable(
 ) {
   if (isKnownType(lhs) && isKnownType(rhs)) {
     // special case
-    const addInfo =
-      isListImmutableType(lhs) && isListType(rhs)
-        ? " try converting with '.asListImmutable()'"
-        : "";
-    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
+    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, "", location));
   }
 }
 
@@ -847,12 +840,72 @@ export function mustBeAssignableType(
   }
 }
 
-export function mustBeImmutableCollection(
-  list: boolean,
+function mustBeCompatibleRecordDeconstruction(
+  ids: string[],
+  lst: TupleType,
+  rst: ClassType,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new ImmutableCollectionCompileError(list, location));
+  const classDef = scope.resolveSymbol(rst.name, scope);
+
+  if (isClass(classDef)) {
+    const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
+
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const childSymbol = childSymbols.find((s) => s.symbolId === id);
+      if (childSymbol) {
+        const llst = lst.ofTypes[i];
+        const rrst = childSymbol.symbolType();
+
+        mustBeAssignableType(llst, rrst, compileErrors, location);
+      } else {
+        const msg = id
+          ? `No such property '${id}' on record '${rst.name}.`
+          : "Cannot discard in record deconstruction.";
+        compileErrors.push(new SyntaxCompileError(msg, location));
+      }
+    }
+  }
+}
+
+function mustBeCompatibleDeconstruction(
+  ids: string[],
+  lst: SymbolType,
+  rst: SymbolType,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lst instanceof DeconstructedTupleType) {
+    if (rst instanceof ClassType) {
+      if (isRecord(rst.typeOptions)) {
+        mustBeCompatibleRecordDeconstruction(ids, lst, rst, scope, compileErrors, location);
+      } else {
+        compileErrors.push(
+          new SyntaxCompileError(`Cannot deconstruct ${rst.name} as tuple.`, location),
+        );
+      }
+      return true;
+    }
+    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
+      compileErrors.push(
+        new SyntaxCompileError(`Wrong number of deconstructed variables.`, location),
+      );
+      return true;
+    }
+  }
+  if (lst instanceof DeconstructedListType) {
+    if (rst instanceof TupleType) {
+      compileErrors.push(
+        new SyntaxCompileError(`Cannot deconstruct ${rst.name} as list.`, location),
+      );
+      return true;
+    }
+  }
+  return false;
 }
 
 export function mustBeCompatibleDefinitionNode(

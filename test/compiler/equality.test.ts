@@ -519,12 +519,12 @@ return [main, _tests];}`;
 main
   variable f1 set to new Foo() with p set to 1
   variable f2 set to new Foo() with p set to 2
-  variable l1 set to {f1, f2}
-  variable l2 set to {f1, f2}
+  variable l1 set to [f1, f2]
+  variable l2 set to [f1, f2]
   call printNoLine(l1.isSameValueAs(l2))
-  variable l3 set to {f2, f1}
+  variable l3 set to [f2, f1]
   call printNoLine(l1.isSameValueAs(l3))
-  variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
+  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
   call printNoLine( l4.isSameValueAs(l1))
 end main
 
@@ -548,12 +548,12 @@ const global = new class {};
 async function main() {
   let f1 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})();
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
-  let l1 = system.listImmutable([f1, f2]);
-  let l2 = system.listImmutable([f1, f2]);
+  let l1 = system.list([f1, f2]);
+  let l2 = system.list([f1, f2]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l2));
-  let l3 = system.listImmutable([f2, f1]);
+  let l3 = system.list([f2, f1]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l3));
-  let l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
+  let l4 = system.list([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l4, l1));
 }
 
@@ -656,12 +656,12 @@ return [main, _tests];}`;
 main
   variable f1 set to new Foo() with p set to 1
   variable f2 set to new Foo() with p set to 2
-  variable l1 set to {f1, f2}
-  variable l2 set to {f1, f2}
+  variable l1 set to [f1, f2]
+  variable l2 set to [f1, f2]
   call printNoLine(l1.isSameReferenceAs(l2))
-  variable l3 set to {f2, f1}
+  variable l3 set to [f2, f1]
   call printNoLine(l1.isSameReferenceAs(l3))
-  variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
+  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
   call printNoLine( l4.isSameReferenceAs(l1))
 end main
 
@@ -685,12 +685,12 @@ const global = new class {};
 async function main() {
   let f1 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})();
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
-  let l1 = system.listImmutable([f1, f2]);
-  let l2 = system.listImmutable([f1, f2]);
+  let l1 = system.list([f1, f2]);
+  let l2 = system.list([f1, f2]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
-  let l3 = system.listImmutable([f2, f1]);
+  let l3 = system.list([f2, f1]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
-  let l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
+  let l4 = system.list([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
 }
 
