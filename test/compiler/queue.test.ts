@@ -27,9 +27,13 @@ main
   call printNoLine(q.length())
   call printNoLine(q.peek())
   variable fruit set to ""
-  set fruit, q to q.dequeue()
+  variable t set to q.dequeue()
+  set fruit to t.item0
+  set q to t.item1
   call printNoLine(fruit)
-  set fruit, q to q.dequeue()
+  set t to q.dequeue()
+  set fruit to t.item0
+  set q to t.item1
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
@@ -46,9 +50,13 @@ async function main() {
   await _stdlib.printNoLine(q.length());
   await _stdlib.printNoLine(q.peek());
   let fruit = "";
-  [fruit, q] = q.dequeue();
+  let t = q.dequeue();
+  fruit = t[0];
+  q = t[1];
   await _stdlib.printNoLine(fruit);
-  [fruit, q] = q.dequeue();
+  t = q.dequeue();
+  fruit = t[0];
+  q = t[1];
   await _stdlib.printNoLine(fruit);
   await _stdlib.printNoLine(q.length());
   await _stdlib.printNoLine(q);

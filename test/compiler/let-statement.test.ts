@@ -327,8 +327,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  constant a set to foo().item1
-  constant length set to foo().item2
+  constant a set to foo().item0
+  constant length set to foo().item1
 end main
 
 function foo() returns (Int, Int)
@@ -338,7 +338,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, length] = (await global.foo());
+  const a = (await global.foo())[0];
+  const length = (await global.foo())[1];
 }
 
 async function foo() {

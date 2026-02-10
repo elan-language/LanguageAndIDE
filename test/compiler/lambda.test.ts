@@ -63,7 +63,7 @@ main
 end main
 
 function first(t as (Int, Int)) returns Int
-    variable a set to t.item1
+    variable a set to t.item0
     return a
 end function
   
@@ -78,7 +78,7 @@ async function main() {
 }
 
 async function first(t) {
-  let [a, ] = t;
+  let a = t[0];
   return a;
 }
 global["first"] = first;
