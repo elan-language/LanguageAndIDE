@@ -160,6 +160,7 @@ import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { OptionalNode } from "../frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../frames/parse-nodes/param-list-node";
+import { PropertyInstanceRef } from "../frames/parse-nodes/property-instance-ref";
 import { PropertyRef } from "../frames/parse-nodes/property-ref";
 import { PunctuationNode } from "../frames/parse-nodes/punctuation-node";
 import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
@@ -1024,6 +1025,12 @@ export function transform(
   }
 
   if (node instanceof PropertyRef) {
+    const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
+    const name = transform(node.name, fieldId, scope) as AstIdNode;
+    return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
+  }
+
+  if (node instanceof PropertyInstanceRef) {
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);

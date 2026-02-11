@@ -632,6 +632,63 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_UpdateParameterInFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  set f to f.withP1(1)
+  call printNoLine(f.p1)
+end main
+
+class Foo
+  property p1 as Int
+
+  function withP1(p as Int) returns Foo
+    variable nf set to new Foo()
+    set nf.p1 to p
+    return nf
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  f = (await f.withP1(1));
+  await _stdlib.printNoLine(f.p1);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  async _initialise() { return this; }
+  p1 = 0;
+
+  async withP1(p) {
+    let nf = system.initialise(await new Foo()._initialise());
+    nf.p1 = p;
+    return nf;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Pass_ProcedureNameMatchesCalledProcedureName", async () => {
     const code = `${testHeader}
 
@@ -741,7 +798,8 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot set property: p1 directly.LangRef.html#compile_error"]);
   });
 
   test("Fail_OverloadedConstructor", async () => {

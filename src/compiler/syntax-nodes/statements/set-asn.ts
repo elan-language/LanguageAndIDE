@@ -36,12 +36,7 @@ export class SetAsn extends BreakpointAsn {
 
     const id = getId(this.assignable);
 
-    mustNotBePropertyOnFunctionMethod(
-      assignableAstNode,
-      this.scope,
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustNotBePropertyOnFunctionMethod(assignableAstNode, this, this.compileErrors, this.fieldId);
 
     mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.fieldId);
     mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);

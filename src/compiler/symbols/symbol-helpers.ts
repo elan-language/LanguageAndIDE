@@ -275,6 +275,7 @@ export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope): boolean {
 
 export function scopePrefix(
   symbol: ElanSymbol,
+  qualifier: AstNode | undefined,
   _compileErors: CompileError[],
   scope: Scope,
   _location: string,
@@ -288,7 +289,7 @@ export function scopePrefix(
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return `this.`;
+    return isAstIdNode(qualifier) ? `${qualifier.id}.` : `this.`;
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {

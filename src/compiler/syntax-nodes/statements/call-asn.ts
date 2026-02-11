@@ -133,7 +133,7 @@ export class CallAsn extends BreakpointAsn {
       const parms = passedParameters.join(", ");
       const prefix = !isEmptyNode(qualifier)
         ? `${qualifier.compile()}`
-        : scopePrefix(procSymbol, this.compileErrors, this, this.fieldId);
+        : scopePrefix(procSymbol, undefined, this.compileErrors, this, this.fieldId);
       const async = isAsync ? "await " : "";
       let wrappedInParms = "";
 

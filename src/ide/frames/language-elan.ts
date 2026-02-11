@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
@@ -20,9 +21,10 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { PropertyRef } from "./parse-nodes/property-ref";
+import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -39,8 +41,6 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
-import { Field } from "./frame-interfaces/field";
-import { PropertyRef } from "./parse-nodes/property-ref";
 
 export class LanguageElan implements Language {
   commentRegex(): RegExp {
