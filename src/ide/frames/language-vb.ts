@@ -94,9 +94,9 @@ export class LanguageVB implements Language {
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.SINGLE_QUOTE} <el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
-      html = `${this.CONST} ${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} <el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
