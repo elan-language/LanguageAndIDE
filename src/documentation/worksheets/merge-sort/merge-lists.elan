@@ -6,7 +6,7 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test test_merge
-  variable emptyList set to empty List<of String>
+  variable emptyList set to new List<of String>()
   assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]
   variable l1 set to ["apple", "lime", "pear"]

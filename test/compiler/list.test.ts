@@ -323,7 +323,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [4,5,6,7,8]
-  variable b set to empty List<of Int>
+  variable b set to new List<of Int>()
   set b to a[2..5]
   call printNoLine(b)
   call printNoLine(a[1..3])
@@ -334,7 +334,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(await new _stdlib.List()._initialise());
   b = system.safeSlice(a, 2, 5);
   await _stdlib.printNoLine(b);
   await _stdlib.printNoLine(system.safeSlice(a, 1, 3));
@@ -396,7 +396,7 @@ end class
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, empty List<of Int>)
+  variable a set to createList(3, new List<of Int>())
   call printNoLine(a)
 end main`;
 
@@ -715,27 +715,27 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to empty List<of Int>
-  variable b set to empty List<of Int>
+  variable a set to new List<of Int>()
+  variable b set to new List<of Int>()
   call a.append(3)
   call printNoLine(a)
   call printNoLine(b)
   call printNoLine(a.isSameValueAs(b))
-  call printNoLine(a.isSameValueAs(empty List<of Int>))
-  call printNoLine(b.isSameValueAs(empty List<of Int>))
+  call printNoLine(a.isSameValueAs(new List<of Int>()))
+  call printNoLine(b.isSameValueAs(new List<of Int>()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.List.emptyInstance());
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  let b = system.initialise(await new _stdlib.List()._initialise());
   a.append(3);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.List.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(await new _stdlib.List()._initialise())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(await new _stdlib.List()._initialise())));
 }
 return [main, _tests];}`;
 
@@ -759,27 +759,27 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to empty List<of Int>
-  variable b set to empty List<of Int>
+  variable a set to new List<of Int>()
+  variable b set to new List<of Int>()
   call a.append(3)
   call printNoLine(a)
   call printNoLine(b)
   call printNoLine(a.isSameReferenceAs(b))
-  call printNoLine(a.isSameReferenceAs(empty List<of Int>))
-  call printNoLine(b.isSameReferenceAs(empty List<of Int>))
+  call printNoLine(a.isSameReferenceAs(new List<of Int>()))
+  call printNoLine(b.isSameReferenceAs(new List<of Int>()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(_stdlib.List.emptyInstance());
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  let b = system.initialise(await new _stdlib.List()._initialise());
   a.append(3);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.List.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.List.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(await new _stdlib.List()._initialise())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(await new _stdlib.List()._initialise())));
 }
 return [main, _tests];}`;
 
@@ -938,7 +938,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to empty List<of Int>
+  variable a set to new List<of Int>()
   call a.put(0, 3)
 end main`;
 
@@ -1433,7 +1433,7 @@ return [main, _tests];}`;
 main
   variable a set to ["one", "two", "three"]
   variable d set to a.asSet()
-  variable aa set to empty List<of String>
+  variable aa set to new List<of String>()
   variable dd set to empty Set<of String>
   set aa to a
   set dd to d
@@ -1446,7 +1446,7 @@ const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
   let d = a.asSet();
-  let aa = system.initialise(_stdlib.List.emptyInstance());
+  let aa = system.initialise(await new _stdlib.List()._initialise());
   let dd = system.initialise(_stdlib.Set.emptyInstance());
   aa = a;
   dd = d;
@@ -2193,7 +2193,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable f set to empty List
+  variable f set to new List()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2216,7 +2216,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable points set to empty List<of Tuple<of Int, Int>>
+  variable points set to new List<of Tuple<of Int, Int>>()
   set points to points + tuple(1, 2)
   call printNoLine(points)
 end main`;
@@ -2241,7 +2241,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable points set to empty List<of Tuple<of Int, Int>>
+  variable points set to new List<of Tuple<of Int, Int>>()
   call points.appendList(tuple(1, 2))
   call printNoLine(points)
 end main`;

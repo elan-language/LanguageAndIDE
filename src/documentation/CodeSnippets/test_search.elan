@@ -35,7 +35,7 @@ test test_binarySearch
   variable li3 set to {"lemon"}
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  variable li4 set to empty List<of String>
+  variable li4 set to new List<of String>()
   assert binarySearch(li4, "pear") is false
 end test
 

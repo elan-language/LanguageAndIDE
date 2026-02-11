@@ -489,7 +489,7 @@ main
 end main
 
 test test_square
-  variable arr set to empty List<of Int>
+  variable arr set to new List<of Int>()
   assert arr[1] is "Out of range index: 1 size: 0"
 end test
 `;
@@ -501,7 +501,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.initialise(_stdlib.List.emptyInstance());
+  let arr = system.initialise(await new _stdlib.List()._initialise());
   _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "Int"], ["Out of range index: 1 size: 0", "String"], "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -541,7 +541,7 @@ main
 end main
 
 test test_square
-  variable arr set to empty List<of Int>
+  variable arr set to new List<of Int>()
   assert arr[1] is 0
 end test
 `;
@@ -553,7 +553,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.initialise(_stdlib.List.emptyInstance());
+  let arr = system.initialise(await new _stdlib.List()._initialise());
   _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "Int"], [0, "Int"], "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -585,7 +585,7 @@ main
 end main
 
 test test_square
-  variable arr set to empty List<of Int>
+  variable arr set to new List<of Int>()
   variable b set to arr[1]
   assert b is 0
 end test
@@ -598,7 +598,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  let arr = system.initialise(_stdlib.List.emptyInstance());
+  let arr = system.initialise(await new _stdlib.List()._initialise());
   let b = system.safeIndex(arr, 1);
   _outcomes.push(await system.assert([async () => b, "Int"], [0, "Int"], "assert12", _stdlib, false));
 }]);

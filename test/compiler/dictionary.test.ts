@@ -186,7 +186,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to empty List<of String>
+  variable b set to new List<of String>()
   set b to a.keys()
   call printNoLine(b)
 end main`;
@@ -195,7 +195,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(await new _stdlib.List()._initialise());
   b = a.keys();
   await _stdlib.printNoLine(b);
 }
@@ -1506,7 +1506,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable f set to empty List<of Int>
+  variable f set to new List<of Int>()
   variable a set to [f:1]
 end main
 

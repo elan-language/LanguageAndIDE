@@ -225,7 +225,7 @@ end procedure
 
 [ghosted] test test_possibleTargetsAfterAttempt
   variable prior set to ["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"]
-  variable none set to empty List<of String>
+  variable none set to new List<of String>()
   assert possibleTargetsAfterAttempt(prior, "PARED", "02100") is ["FAIRY", "HAIRY", "RAINY", "RATTY"]
   assert possibleTargetsAfterAttempt(prior, "YACHT", "12001") is ["RATTY"]
   assert possibleTargetsAfterAttempt(prior, "RALLY", "22002") is ["RAINY", "RASPY", "RATTY"]

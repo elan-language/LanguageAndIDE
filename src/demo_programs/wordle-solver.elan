@@ -197,7 +197,7 @@ function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of Str
 end function
 
 test test_betterOf
-  variable possAnswers set to empty List<of String>
+  variable possAnswers set to new List<of String>()
   variable b2 set to newWordCount("B", 2)
   variable a3 set to newWordCount("A", 3)
   variable a2 set to newWordCount("A", 2)

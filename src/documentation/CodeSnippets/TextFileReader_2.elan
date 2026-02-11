@@ -2,7 +2,7 @@
 
 main
   variable file set to openFileForReading()
-  variable lines set to empty List<of String>
+  variable lines set to new List<of String>()
   while not file.endOfFile()
     variable line set to file.readLine()
     call lines.append(line)

@@ -162,7 +162,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable x set to empty List<of Float>
+  variable x set to new List<of Float>()
   set x to f.times(2)
   call printNoLine(x)
 end main
@@ -188,7 +188,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let x = system.initialise(_stdlib.List.emptyInstance());
+  let x = system.initialise(await new _stdlib.List()._initialise());
   x = (await f.times(2));
   await _stdlib.printNoLine(x);
 }
@@ -247,7 +247,7 @@ class Bar
   property p1 as Foo
 
   function getTimes() returns List<of Float>
-    variable x set to empty List<of Float>
+    variable x set to new List<of Float>()
     set x to property.p1.times(2)
     return x
   end function
@@ -292,7 +292,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.List.emptyInstance());
+    let x = system.initialise(await new _stdlib.List()._initialise());
     x = (await this.p1.times(2));
     return x;
   }
@@ -349,7 +349,7 @@ class Bar
   property p1 as Foo
 
   function getTimes() returns List<of Qux>
-    variable x set to empty List<of Qux>
+    variable x set to new List<of Qux>()
     set x to property.p1.times(2)
     return x
   end function
@@ -399,7 +399,7 @@ class Bar {
   }
 
   async getTimes() {
-    let x = system.initialise(_stdlib.List.emptyInstance());
+    let x = system.initialise(await new _stdlib.List()._initialise());
     x = (await this.p1.times(2));
     return x;
   }

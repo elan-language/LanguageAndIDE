@@ -238,7 +238,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns List<of Int>
-    return empty List<of Int>
+    return new List<of Int>()
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -248,7 +248,7 @@ async function main() {
 }
 
 async function foo(a, b) {
-  return system.initialise(_stdlib.List.emptyInstance());
+  return system.initialise(await new _stdlib.List()._initialise());
 }
 global["foo"] = foo;
 return [main, _tests];}`;
