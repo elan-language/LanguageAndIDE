@@ -165,10 +165,15 @@ test('debug array', async ({ page }) => {
   await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
-  await page.keyboard.type('new Array<of Int>(3, 1)');
+  await page.keyboard.type('new List<of Int>()');
   await page.keyboard.press('Enter');
-
-  await page.keyboard.type('ca')
+  await page.keyboard.type('ca');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('a.intialise');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('3, 1');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('ca');
   await page.keyboard.type('print'); 
   await page.keyboard.press('Tab');
   await page.keyboard.type('a');

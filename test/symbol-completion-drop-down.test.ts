@@ -508,7 +508,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable foo set to new Array<of Int>()
+  variable foo set to new List<of Int>()
   call foo()
 end main`;
 
@@ -522,7 +522,18 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["put", "put", "put"]] as [string, string, string][];
+    const expected = [
+      ["append", "append", "append"],
+      ["appendList", "appendList", "appendList"],
+      ["initialise", "initialise", "initialise"],
+      ["insert", "insert", "insert"],
+      ["prepend", "prepend", "prepend"],
+      ["prependList", "prependList", "prependList"],
+      ["put", "put", "put"],
+      ["removeAll", "removeAll", "removeAll"],
+      ["removeAt", "removeAt", "removeAt"],
+      ["removeFirst", "removeFirst", "removeFirst"],
+    ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
   });
@@ -592,6 +603,7 @@ end main`;
     const expected = [
       ["append", "*", "*"],
       ["appendList", "*", "*"],
+      ["initialise", "*", "*"],
       ["insert", "*", "*"],
       ["prepend", "*", "*"],
       ["prependList", "*", "*"],
@@ -1786,7 +1798,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable foo set to new Array<of Int>()
+  variable foo set to new List<of Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1800,7 +1812,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
@@ -1902,7 +1913,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array", "*", "Array<of "],
       ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],

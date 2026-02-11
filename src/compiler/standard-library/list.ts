@@ -35,6 +35,7 @@ import {
   withRemoveAtHelper,
   withRemoveFirstHelper,
 } from "./data-structure-helpers";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(ClassOption.list, [ElanT1], [], [], [])
 export class List<T1> {
@@ -71,6 +72,22 @@ export class List<T1> {
 
   public read(index: number): T1 {
     return this.contents[index];
+  }
+
+  @elanProcedure(["size", "value"])
+  initialise(@elanIntType() size: number, @elanGenericParamT1Type() value: T1) {
+    if (size <= 0) {
+      throw new ElanRuntimeError(`Size of Array must be non zero, positive value`);
+    }
+
+    const toInit: T1[] = [];
+    toInit.length = size;
+
+    for (let i = 0; i < size; i++) {
+      toInit[i] = value;
+    }
+    this.contents = toInit;
+    return this;
   }
 
   @elanProcedure(["index", "value"])
@@ -315,10 +332,5 @@ export class List<T1> {
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
   asSet() {
     return this.system!.listAsSet(this);
-  }
-
-  @elanFunction([], FunctionOptions.pure, ElanClassName("ElanArray"))
-  asArray() {
-    return this.system!.listAsArray(this);
   }
 }
