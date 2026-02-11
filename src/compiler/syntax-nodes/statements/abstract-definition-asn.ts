@@ -28,7 +28,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
   abstract getJsKeyword(): string;
 
-  abstract isLet(): boolean;
+  abstract isLocalConstant(): boolean;
   abstract isVariable(): boolean;
 
   getScope() {
@@ -46,7 +46,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const lhs = this.name;
     const rhs = this.expr;
 
-    mustBeCompatibleDefinitionNode(rhs, this.compileErrors, this.fieldId);
+    mustBeCompatibleDefinitionNode(rhs, this.isLocalConstant(), this.compileErrors, this.fieldId);
 
     const lhsCode = lhs.compile();
 

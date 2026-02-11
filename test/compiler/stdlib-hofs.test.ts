@@ -89,29 +89,34 @@ return [main, _tests];}`;
   test("Pass_filterInFunction", async () => {
     const code = `${testHeader}
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
 main
-  call printNoLine(filterIt(source))
+  call printNoLine(filterIt(source()))
 end main
 
 function filterIt(tofilter as List<of Int>) returns List<of Int>
     return tofilter.filter(lambda x as Int => x > 20)
 end function
+
+function source() returns List<of Int>
+  return [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+end function
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-
-};
+const global = new class {};
 async function main() {
-  await _stdlib.printNoLine((await global.filterIt(global.source)));
+  await _stdlib.printNoLine((await global.filterIt((await global.source()))));
 }
 
 async function filterIt(tofilter) {
   return (await tofilter.filter(async (x) => x > 20));
 }
 global["filterIt"] = filterIt;
+
+async function source() {
+  return system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+}
+global["source"] = source;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -314,23 +319,28 @@ return [main, _tests];}`;
   test("Pass_reduceToDictionary", async () => {
     const code = `${testHeader}
 
-constant source set to ["three", "four"]
 main
   variable ed set to ["one":1, "two":2]
-  set ed to source.reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withPut(x, 1))
+  set ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withPut(x, 1))
   call printNoLine(ed)
-end main`;
+end main
+
+function source() returns List<of String>
+  return ["three", "four"]
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list(["three", "four"]);
-
-};
+const global = new class {};
 async function main() {
   let ed = system.dictionary([["one", 1], ["two", 2]]);
-  ed = (await global.source.reduce(ed, async (d, x) => d.withPut(x, 1)));
+  ed = (await (await global.source()).reduce(ed, async (d, x) => d.withPut(x, 1)));
   await _stdlib.printNoLine(ed);
 }
+
+async function source() {
+  return system.list(["three", "four"]);
+}
+global["source"] = source;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -415,19 +425,24 @@ return [main, _tests];}`;
   test("Pass_maxBy2", async () => {
     const code = `${testHeader}
 
-constant source set to ["apple", "orange", "pear"]
 main
-  call printNoLine(source.maxBy(lambda t as String => t.length()))
-end main`;
+  call printNoLine(source().maxBy(lambda t as String => t.length()))
+end main
+
+function source() returns List<of String>
+  return ["apple", "orange", "pear"]
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  source = system.list(["apple", "orange", "pear"]);
-
-};
+const global = new class {};
 async function main() {
-  await _stdlib.printNoLine((await global.source.maxBy(async (t) => _stdlib.length(t))));
+  await _stdlib.printNoLine((await (await global.source()).maxBy(async (t) => _stdlib.length(t))));
 }
+
+async function source() {
+  return system.list(["apple", "orange", "pear"]);
+}
+global["source"] = source;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -816,10 +831,13 @@ end main`;
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `${testHeader}
 
-constant source set to ["apple", "orange", "pair"]
 main
-  call printNoLine(source.maxBy(lambda t as String => t))
-end main`;
+  call printNoLine(source().maxBy(lambda t as String => t))
+end main
+
+function source() returns List<of String>
+  return ["apple", "orange", "pair"]
+end function`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -840,8 +858,8 @@ end main`;
   test("Fail_MissingBrackets", async () => {
     const code = `${testHeader}
 
-constant source set to ["apple":"apple", "orange":"orange", "pair":"pair"]
 main
+  variable source set to ["apple":"apple", "orange":"orange", "pair":"pair"]
   call printNoLine(source.keys.map(lambda s as String => s))
 end main`;
 

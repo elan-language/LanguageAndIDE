@@ -57,16 +57,60 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
-  test("Pass_InLoop", async () => {
+  test("Pass_function", async () => {
     const code = `${testHeader}
 
-constant li set to [1,2,3,4,5]
+main
+  constant y set to add()
+  call printNoLine(y)
+end main
+
+function add() returns Int
+  constant x set to 3
+  constant y set to x + 3
+  return x + y
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const y = (await global.add());
+  await _stdlib.printNoLine(y);
+}
+
+async function add() {
+  const x = 3;
+  const y = x + 3;
+  return x + y;
+}
+global["add"] = add;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "9");
+  });
+
+  test("Pass_InLoop", async () => {
+    const code = `${testHeader}
 
 main
   call foo()
 end main
 
 procedure foo()
+  variable li set to [1,2,3,4,5]
   for i from 0 to 4 step 1
     constant temp set to li[i]
     call printNoLine(temp)
@@ -74,18 +118,16 @@ procedure foo()
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  li = system.list([1, 2, 3, 4, 5]);
-
-};
+const global = new class {};
 async function main() {
   await foo();
 }
 
 async function foo() {
+  let li = system.list([1, 2, 3, 4, 5]);
   const _tofor13 = 4;
   for (let i = 0; i <= _tofor13; i = i + 1) {
-    const temp = system.safeIndex(global.li, i);
+    const temp = system.safeIndex(li, i);
     await _stdlib.printNoLine(temp);
   }
 }
@@ -207,6 +249,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_Redefine", async () => {
+    const code = `${testHeader}
+
+main
+  constant a set to foo().item0
+  constant length set to foo().item1
+end main
+
+function foo() returns (Int, Int)
+  return tuple(0, 0)
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = (await global.foo())[0];
+  const length = (await global.foo())[1];
+}
+
+async function foo() {
+  return system.tuple([0, 0]);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_cannotRedefine ", async () => {
     const code = `${testHeader}
 
@@ -323,30 +406,17 @@ end function`;
     ]);
   });
 
-  test("Pass_Redefine", async () => {
+  test("Fail_mustBeValueType", async () => {
     const code = `${testHeader}
 
 main
-  constant a set to foo().item0
-  constant length set to foo().item1
+  call printNoLine(foo())
 end main
 
-function foo() returns (Int, Int)
-  return tuple(0, 0)
+function foo() returns Int
+  constant x set to tuple(1, 2)
+  return x.item0
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  const a = (await global.foo())[0];
-  const length = (await global.foo())[1];
-}
-
-async function foo() {
-  return system.tuple([0, 0]);
-}
-global["foo"] = foo;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -359,8 +429,35 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    assertDoesNotCompile(fileImpl, [
+      "Can only assign a value type to a constantLangRef.html#compile_error",
+    ]);
+  });
+  test("Fail_mustBeValueType1", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(foo())
+end main
+
+function foo() returns Int
+  constant x set to foo
+  return x()
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only assign a value type to a constantLangRef.html#compile_error",
+    ]);
   });
 });

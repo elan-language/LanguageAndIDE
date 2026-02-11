@@ -1,5 +1,4 @@
 import { Class } from "./compiler-interfaces/class";
-import { Constant } from "./compiler-interfaces/constant";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
   Deprecated,
@@ -15,6 +14,7 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./compiler-interfaces/elan-type-interfaces";
+import { GlobalConstant } from "./compiler-interfaces/global-constant";
 import { Property } from "./compiler-interfaces/property";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
@@ -167,7 +167,7 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
     public readonly valueType?: TypeDescriptor,
   ) {}
 
-  isConstant = true;
+  isGlobalConstant = true;
 
   mapType(_scope: Scope): SymbolType {
     switch (this.name) {
@@ -194,7 +194,7 @@ export class ElanGenericTypeDescriptor implements TypeDescriptor {
     public readonly constraint?: TypeDescriptor,
   ) {}
 
-  isConstant = true;
+  isGlobalConstant = true;
 
   mapType(scope: Scope): SymbolType {
     return new GenericParameterType(this.name, this.constraint?.mapType(scope));
@@ -207,7 +207,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
     public readonly returnType: TypeDescriptor,
   ) {}
 
-  isConstant = true;
+  isGlobalConstant = true;
 
   name = FuncName;
 
@@ -229,7 +229,7 @@ export class ElanTupleTypeDescriptor implements TypeDescriptor {
 
   name = TupleName;
 
-  isConstant = true;
+  isGlobalConstant = true;
 
   mapType(scope: Scope): SymbolType {
     return new TupleType(this.parameters.map((p) => p.mapType(scope)));
@@ -376,7 +376,7 @@ export class ElanClassNameTypeDescriptor implements TypeDescriptor {
 export class TypescriptTypeDescriptor implements TypeDescriptor {
   constructor(public readonly name: string) {}
 
-  isConstant = true;
+  isGlobalConstant = true;
 
   mapType(_scope: Scope): SymbolType {
     switch (this.name) {
@@ -804,13 +804,13 @@ export function getSymbol(
   return symbol;
 }
 
-export function getConstantSymbol(id: string, st: SymbolType, ss: SymbolScope): Constant {
+export function getConstantSymbol(id: string, st: SymbolType, ss: SymbolScope): GlobalConstant {
   const symbol = {
     symbolId: id,
     symbolType: () => st,
     symbolScope: ss,
-    isConstant: true,
-  } as Constant;
+    isGlobalConstant: true,
+  } as GlobalConstant;
 
   return symbol;
 }

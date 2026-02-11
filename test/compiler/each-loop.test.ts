@@ -218,22 +218,21 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "appleorangepear");
   });
 
-  test("Pass_EachOfConstant", async () => {
+  test("Pass_EachOfVariable", async () => {
     const code = `${testHeader}
 
-constant ints set to [1, 2, 3]
+
 main
+  variable ints set to [1, 2, 3]
   each i1 in ints
   end each
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  ints = system.list([1, 2, 3]);
-
-};
+const global = new class {};
 async function main() {
-  const _itereach6 = [...global.ints];
+  let ints = system.list([1, 2, 3]);
+  const _itereach6 = [...ints];
   for (const i1 of _itereach6) {
 
   }

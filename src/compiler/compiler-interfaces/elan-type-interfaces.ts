@@ -66,7 +66,7 @@ export function isProcedureDescriptor(
 }
 
 export function isConstantDescriptor(d: ElanDescriptor | undefined): d is TypeDescriptor {
-  return !!d && "isConstant" in d;
+  return !!d && "isGlobalConstant" in d;
 }
 
 export function isClassDescriptor(d: ElanDescriptor | undefined): d is TypeDescriptor {

@@ -163,51 +163,6 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_AssertLetTuple", async () => {
-    const code = `${testHeader}
-
-main
-end main
-
-test test_square
-  constant t set to tuple("one", "two")
-  assert t is tuple("one", "two")
-end test
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-
-}
-
-_tests.push(["test3", async (_outcomes) => {
-  const t = system.tuple(["one", "two"]);
-  _outcomes.push(await system.assert([async () => t, "tuple(String, String)"], [system.tuple(["one", "two"]), "tuple(String, String)"], "assert9", _stdlib, false));
-}]);
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert9")],
-      ],
-    ]);
-  });
-
   test("Pass_AssertTupleFromParseAsInt", async () => {
     const code = `${testHeader}
 

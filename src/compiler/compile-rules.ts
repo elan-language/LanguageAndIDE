@@ -59,17 +59,18 @@ import { ProcedureType } from "./symbols/procedure-type";
 import {
   getGlobalScope,
   isClass,
-  isConstant,
   isDoubleIndexableType,
   isFunction,
+  isGlobalConstant,
   isIndexableType,
   isIterableType,
   isKnownType,
-  isLet,
+  isLocalConstant,
   isMember,
   isNumber,
   isProcedure,
   isSymbol,
+  isValueType,
   isValueTypeExcludingString,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
@@ -89,7 +90,7 @@ import {
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
-import { LetAsn } from "./syntax-nodes/statements/let-asn";
+import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 
 export function mustBeOfSymbolType(
@@ -842,7 +843,7 @@ export function mustBeAssignableType(
 
 export function mustBeCompatibleDefinitionNode(
   rhs: AstNode,
-
+  isConstant: boolean,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -850,6 +851,12 @@ export function mustBeCompatibleDefinitionNode(
 
   if (rst instanceof TestType) {
     compileErrors.push(new SyntaxCompileError(`Cannot assign a test to a variable.`, location));
+  }
+
+  if (isConstant && !isValueType(rst)) {
+    compileErrors.push(
+      new SyntaxCompileError(`Can only assign a value type to a constant`, location),
+    );
   }
 }
 
@@ -1030,7 +1037,7 @@ export function mustBeUniqueValueInScope(
 }
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LetAsn) {
+  if (symbol instanceof LocalConstantAsn) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }
@@ -1040,7 +1047,7 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "parameter";
   }
 
-  if (isConstant(symbol)) {
+  if (isGlobalConstant(symbol)) {
     return "constant";
   }
 
@@ -1052,7 +1059,7 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "procedure";
   }
 
-  if (isLet(symbol)) {
+  if (isLocalConstant(symbol)) {
     return "constant";
   }
 

@@ -2,10 +2,10 @@ import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
-import { Constant } from "../compiler-interfaces/constant";
 import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
+import { GlobalConstant } from "../compiler-interfaces/global-constant";
 import { Member } from "../compiler-interfaces/member";
 import { Property } from "../compiler-interfaces/property";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
@@ -75,11 +75,11 @@ export function isReifyableSymbolType(
 }
 
 export function isDefinition(s?: ElanSymbol): s is Definition {
-  return !!s && "isLet" in s && "isVariable" in s;
+  return !!s && "isLocalConstant" in s && "isVariable" in s;
 }
 
-export function isConstant(s?: ElanSymbol | Scope): s is Constant {
-  return !!s && "isConstant" in s;
+export function isGlobalConstant(s?: ElanSymbol | Scope): s is GlobalConstant {
+  return !!s && "isGlobalConstant" in s;
 }
 
 export function isProperty(s?: ElanSymbol): s is Property {
@@ -138,8 +138,8 @@ export function isVariable(s?: ElanSymbol): boolean {
   return isDefinition(s) && s.isVariable();
 }
 
-export function isLet(s?: ElanSymbol): boolean {
-  return isDefinition(s) && s.isLet();
+export function isLocalConstant(s?: ElanSymbol): boolean {
+  return isDefinition(s) && s.isLocalConstant();
 }
 
 export function isIndexableType(s?: SymbolType): boolean {
@@ -237,7 +237,12 @@ export function isNotInheritableTypeName(s?: ElanSymbol): boolean {
 
 export function isId(f: ElanSymbol): boolean {
   return (
-    isConstant(f) || isLet(f) || isVariable(f) || isParameter(f) || isProperty(f) || isEnumValue(f)
+    isGlobalConstant(f) ||
+    isLocalConstant(f) ||
+    isVariable(f) ||
+    isParameter(f) ||
+    isProperty(f) ||
+    isEnumValue(f)
   );
 }
 
@@ -278,8 +283,8 @@ export function scopePrefix(
     return `_stdlib.`;
   }
 
-  if (isConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
-    return isConstant(scope) ? "this." : "global.";
+  if (isGlobalConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
+    return isGlobalConstant(scope) ? "this." : "global.";
   }
 
   if (symbol.symbolScope === SymbolScope.member) {

@@ -38,9 +38,9 @@ import { FixedIdAsn } from "../../compiler/syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
-import { ConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
 import { GlobalCommentAsn } from "../../compiler/syntax-nodes/globals/global-comment-asn";
+import { GlobalConstantAsn } from "../../compiler/syntax-nodes/globals/global-constant-asn";
 import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { InterfaceAsn } from "../../compiler/syntax-nodes/globals/interface-asn";
@@ -78,7 +78,7 @@ import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { ForAsn } from "../../compiler/syntax-nodes/statements/for-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
-import { LetAsn } from "../../compiler/syntax-nodes/statements/let-asn";
+import { LocalConstantAsn } from "../../compiler/syntax-nodes/statements/local-constant-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -385,7 +385,7 @@ export function transform(
   }
 
   if (node instanceof ConstantStatement) {
-    const letAsn = new LetAsn(node.getHtmlId(), scope);
+    const letAsn = new LocalConstantAsn(node.getHtmlId(), scope);
     letAsn.breakpointStatus = node.breakpointStatus;
 
     letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
@@ -446,7 +446,7 @@ export function transform(
   }
 
   if (node instanceof ConstantGlobal) {
-    const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
+    const constantAsn = new GlobalConstantAsn(node.getHtmlId(), scope);
     constantAsn.breakpointStatus = node.breakpointStatus;
 
     constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
