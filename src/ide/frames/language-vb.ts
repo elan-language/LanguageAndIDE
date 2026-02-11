@@ -30,6 +30,7 @@ import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
+import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -220,6 +221,10 @@ export class LanguageVB implements Language {
     return `${open}${text}${close}`;
   }
 
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof Index) {
@@ -268,6 +273,7 @@ export class LanguageVB implements Language {
   private INHERITS = "Inherits";
   private INTERFACE = "Interface";
   private IS = "Is";
+  private ME = "Me";
   private NEW = "New";
   private NEXT = "Next";
   private OF = "Of";

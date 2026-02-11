@@ -29,6 +29,7 @@ import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
+import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -185,6 +186,10 @@ export class LanguagePython implements Language {
       text = node.renderAsElanSource();
     }
     return `${open}${text}${close}`;
+  }
+
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
   renderNodeAsHtml(node: ParseNode): string {

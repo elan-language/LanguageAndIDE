@@ -28,6 +28,7 @@ import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
+import { PropertyRef } from "./parse-nodes/property-ref";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -186,6 +187,10 @@ export class LanguageCS implements Language {
     return `${open}${text}${close}`;
   }
 
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof InheritanceNode) {
@@ -233,7 +238,7 @@ export class LanguageCS implements Language {
   private PRIVATE = "private";
   private RETURN = "return";
   private STATIC = "static";
-  private thisKeyword = "this";
+  private THIS = "this";
   private THROW = "throw";
   private TRY = "try";
   private VAR = "var";
