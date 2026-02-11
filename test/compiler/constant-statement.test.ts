@@ -105,13 +105,12 @@ return [main, _tests];}`;
   test("Pass_InLoop", async () => {
     const code = `${testHeader}
 
-constant li set to [1,2,3,4,5]
-
 main
   call foo()
 end main
 
 procedure foo()
+  variable li set to [1,2,3,4,5]
   for i from 0 to 4 step 1
     constant temp set to li[i]
     call printNoLine(temp)
@@ -119,18 +118,16 @@ procedure foo()
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  li = system.list([1, 2, 3, 4, 5]);
-
-};
+const global = new class {};
 async function main() {
   await foo();
 }
 
 async function foo() {
+  let li = system.list([1, 2, 3, 4, 5]);
   const _tofor13 = 4;
   for (let i = 0; i <= _tofor13; i = i + 1) {
-    const temp = system.safeIndex(global.li, i);
+    const temp = system.safeIndex(li, i);
     await _stdlib.printNoLine(temp);
   }
 }

@@ -22,31 +22,36 @@ suite("StdLib", () => {
   test("Pass_contains", async () => {
     const code = `${testHeader}
 
-constant lst set to [1, 2]
 main
   variable arr set to ["three", "four"]
-  call printNoLine(lst.contains(1))
-  call printNoLine(lst.contains(3))
+  call printNoLine(lst().contains(1))
+  call printNoLine(lst().contains(3))
   call printNoLine(arr.contains("four"))
   call printNoLine(arr.contains("five"))
   call printNoLine("onetwo".contains("two"))
   call printNoLine("onetwo".contains("three"))
-end main`;
+end main
+
+function lst() returns List<of Int>
+  return [1, 2]
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  lst = system.list([1, 2]);
-
-};
+const global = new class {};
 async function main() {
   let arr = system.list(["three", "four"]);
-  await _stdlib.printNoLine(global.lst.contains(1));
-  await _stdlib.printNoLine(global.lst.contains(3));
+  await _stdlib.printNoLine((await global.lst()).contains(1));
+  await _stdlib.printNoLine((await global.lst()).contains(3));
   await _stdlib.printNoLine(arr.contains("four"));
   await _stdlib.printNoLine(arr.contains("five"));
   await _stdlib.printNoLine(_stdlib.contains("onetwo", "two"));
   await _stdlib.printNoLine(_stdlib.contains("onetwo", "three"));
 }
+
+async function lst() {
+  return system.list([1, 2]);
+}
+global["lst"] = lst;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

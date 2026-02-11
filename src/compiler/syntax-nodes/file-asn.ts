@@ -14,8 +14,8 @@ import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { getChildRange } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
-import { GlobalConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
+import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
