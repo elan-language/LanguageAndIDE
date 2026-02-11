@@ -210,7 +210,8 @@ watch the following video, exploring the code alongside the video:
 main
   variable score set to 0
   while true
-    variable holes set to new Array&lt;of Hole&gt;(10, Hole.vacant)
+    variable holes set to new List&lt;of Hole&gt;()
+    call holes.intialise(10, Hole.vacant)
     variable hole set to Hole.vacant
     variable numberOfMoles set to randomInt(1, 3)
     for count from 1 to numberOfMoles step 1

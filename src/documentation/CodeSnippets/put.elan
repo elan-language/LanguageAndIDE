@@ -1,7 +1,8 @@
 # ae92203d4b7db393bda416f92bc0b8df44217cd112c04e0c0993ce0025358d8b Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable a4 set to new Array<of Int>(4, 0)
+  variable a4 set to new List<of Int>()
+  call a4.initialise(4, 0)
   call a4.put(2, 5)
   call print(a4)
 end main

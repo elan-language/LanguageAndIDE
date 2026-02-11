@@ -3,7 +3,8 @@
 main
   variable score set to 0
   while true
-    variable holes set to new Array<of Hole>(10, Hole.vacant)
+    variable holes set to new List<of Hole>()
+    call holes.intialise(10, Hole.vacant)
     variable hole set to Hole.vacant
     if random() > 0.5 then
       set hole to Hole.mole
