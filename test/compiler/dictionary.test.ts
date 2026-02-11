@@ -717,182 +717,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "210");
   });
 
-  test("Pass_EmptyDictionaryByValue", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to empty Dictionary<of String, Int>
-  variable b set to empty Dictionary<of String, Int>
-  call a.put("a", 3)
-  call printNoLine(a)
-  call printNoLine(b)
-  call printNoLine(a.isSameValueAs(b))
-  call printNoLine(a.isSameValueAs(empty Dictionary<of String, Int>))
-  call printNoLine(b.isSameValueAs(empty Dictionary<of String, Int>))
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
-  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.put("a", 3);
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[a:3][]falsefalsetrue");
-  });
-
-  test("Pass_EmptyDictionaryByReference", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to empty Dictionary<of String, Int>
-  variable b set to empty Dictionary<of String, Int>
-  call a.put("a", 3)
-  call printNoLine(a)
-  call printNoLine(b)
-  call printNoLine(a.isSameReferenceAs(b))
-  call printNoLine(a.isSameReferenceAs(empty Dictionary<of String, Int>))
-  call printNoLine(b.isSameReferenceAs(empty Dictionary<of String, Int>))
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
-  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.put("a", 3);
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[a:3][]falsefalsefalse");
-  });
-
-  test("Pass_Empty2dDictionaryByValue", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
-  variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
-  call a.put("a", ["a":1])
-  call printNoLine(a)
-  call printNoLine(b)
-  call printNoLine(a.isSameValueAs(b))
-  call printNoLine(a.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>))
-  call printNoLine(b.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>))
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
-  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.put("a", system.dictionary([["a", 1]]));
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsetrue");
-  });
-
-  test("Pass_Empty2dDictionaryByReference", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to empty Dictionary<of String, Dictionary<of String, Int>>
-  variable b set to empty Dictionary<of String, Dictionary<of String, Int>>
-  call a.put("a", ["a":1])
-  call printNoLine(a)
-  call printNoLine(b)
-  call printNoLine(a.isSameReferenceAs(b))
-  call printNoLine(a.isSameReferenceAs(empty Dictionary<of String, Dictionary<of String, Int>>))
-  call printNoLine(b.isSameReferenceAs(empty Dictionary<of String, Dictionary<of String, Int>>))
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.initialise(_stdlib.Dictionary.emptyInstance());
-  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
-  a.put("a", system.dictionary([["a", 1]]));
-  await _stdlib.printNoLine(a);
-  await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsefalse");
-  });
-
   test("Pass_SetInMain", async () => {
     const code = `${testHeader}
 
@@ -1252,8 +1076,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable di set to empty Dictionary<of Int, Int>
-  variable ds set to empty Dictionary<of String, Int>
+  variable di set to new Dictionary<of Int, Int>()
+  variable ds set to new Dictionary<of String, Int>()
   variable i42 set to 42
   variable s42 set to "42"
   call di.put(i42, 99)
@@ -1266,8 +1090,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let di = system.initialise(_stdlib.Dictionary.emptyInstance());
-  let ds = system.initialise(_stdlib.Dictionary.emptyInstance());
+  let di = system.initialise(await new _stdlib.Dictionary()._initialise());
+  let ds = system.initialise(await new _stdlib.Dictionary()._initialise());
   let i42 = 42;
   let s42 = "42";
   di.put(i42, 99);
@@ -1560,7 +1384,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of Dictionary<of Int, Int>, Int>
+  variable a set to new Dictionary<of Dictionary<of Int, Int>, Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1583,7 +1407,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of Dictionary<of Int, Int>, Int>
+  variable a set to new Dictionary<of Dictionary<of Int, Int>, Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1606,7 +1430,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of List<of Int>, Int>
+  variable a set to new Dictionary<of List<of Int>, Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1629,7 +1453,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to empty Dictionary<of List<of Int>, Int>
+  variable a set to new Dictionary<of List<of Int>, Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1652,7 +1476,7 @@ end main`;
     const code = `${testHeader}
 
 main
-    variable a set to empty Dictionary<of Foo, Int>
+    variable a set to new Dictionary<of Foo, Int>()
 end main
 
 class Foo

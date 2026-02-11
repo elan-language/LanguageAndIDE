@@ -164,7 +164,7 @@ test test_possibleAnswersAfterAttempt
 end test
 
 function maxWordCountRemainingAfterAttempt(possAnswers as List<of String>, attempt as String) returns Int
-  variable d set to empty Dictionary<of String, Int>
+  variable d set to new Dictionary<of String, Int>()
   variable d2 set to possAnswers.reduce(d, lambda dd as Dictionary<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
   variable keys set to d2.keys()
   return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2[mark] > maxSoFar then d2[mark] else maxSoFar)
@@ -180,7 +180,7 @@ end function
 
 test test_maxWordCountRemainingAfterAttempt
   variable prior set to ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
-  variable d set to empty Dictionary<of String, Int>
+  variable d set to new Dictionary<of String, Int>()
   assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
   assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
