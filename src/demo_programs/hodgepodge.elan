@@ -1,4 +1,4 @@
-# 41dba512f85cd131bd04baf1a8e610820354e93d74894879ad90e949ab58521b Elan 2.0.0-alpha guest default_profile valid
+# e42e5f5116eef5ea7255ee81789ef6a52172510238cafd2f4b3598142455c7ca Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -34,7 +34,7 @@ main
   # colour grids: hodge for display, podge for working
   variable podge set to new Array2D<of Int>(gW, gH, healthy)
   variable hodge set to new Ref<of Array2D<of Int>>(new Array2D<of Int>(gW, gH, healthy))
-  constant blank set to new Array2D<of Int>(gW, gH, healthy)
+  variable blank set to new Array2D<of Int>(gW, gH, healthy)
   # initial colours of grid
   call updateGrid(hodge, podge, true)
   while not uniform(hodge.value())
@@ -63,7 +63,7 @@ procedure updateGrid(hodge as Ref<of Array2D<of Int>>, podge as Array2D<of Int>,
 end procedure
 
 function uniform(grid as Array2D<of Int>) returns Boolean
-  constant uniformGrid set to new Array2D<of Int>(gW, gH, grid[0, 0])
+  variable uniformGrid set to new Array2D<of Int>(gW, gH, grid[0, 0])
   return if grid.isSameValueAs(uniformGrid) then true else false
 end function
 

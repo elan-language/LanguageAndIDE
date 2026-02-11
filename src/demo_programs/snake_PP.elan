@@ -1,4 +1,4 @@
-# f5b993256c72e039a28b119847c8ce1f2d37cd3636414ed6215c88acf278058d Elan 2.0.0-alpha guest default_profile valid
+# 3f6027b56d1d5bcf397ef0d34e601c20c49c86ffb5335d5348524e23e0b8ccaf Elan 2.0.0-alpha guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -89,7 +89,7 @@ end function
 
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
-  constant dict set to ["w":"up", "s":"down", "a":"left", "d":"right"]
+  variable dict set to ["w":"up", "s":"down", "a":"left", "d":"right"]
   if dict.keys().contains(key) then
     set dir to dict[key]
   end if
@@ -113,7 +113,7 @@ test test_hasHitEdge
 end test
 
 test test_getAdjacentSquare
-  constant sq set to [20, 15]
+  variable sq set to [20, 15]
   assert getAdjacentSquare(sq, "up") is [20, 14]
   assert getAdjacentSquare(sq, "down") is [20, 16]
   assert getAdjacentSquare(sq, "left") is [19, 15]

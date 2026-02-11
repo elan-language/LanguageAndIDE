@@ -1,4 +1,4 @@
-# 637f86f88fe157497ab05431f9d3f41ad7fa4ad921665efd08ff5b27071e94d1 Elan 2.0.0-alpha guest default_profile valid
+# a31b40ce0d5c8522baf99d99944998c8ebfae61e8318daffdfb2c8125aaefe93 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphicsArray()
@@ -73,7 +73,7 @@ function southWest(cell as (Int, Int)) returns (Int, Int)
 end function
 
 function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
-  constant c set to tuple(x, y)
+  variable c set to tuple(x, y)
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 

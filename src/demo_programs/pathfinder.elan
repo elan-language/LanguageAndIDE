@@ -1,4 +1,4 @@
-# ecaf12d527bb0753c167d4bfcb25c89ac474b1373d40b01465c93d89667b5c35 Elan 2.0.0-alpha guest default_profile valid
+# 45765c00e351195490cf4aa5a88fc5e16dcb9a2721aa7c86752b16143dfd2c87 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -76,8 +76,8 @@ function addRoute(gr as Array2D<of Int>, route as List<of Point>) returns Array2
   each p in route
     set gr2 to gr2.withPut(p.x, p.y, orange)
   end each
-  constant start set to route[0]
-  constant dest set to route[route.length() - 1]
+  variable start set to route[0]
+  variable dest set to route[route.length() - 1]
   set gr2 to gr2.withPut(start.x, start.y, green)
   set gr2 to gr2.withPut(dest.x, dest.y, red)
   return gr2
@@ -149,7 +149,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    constant matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
+    variable matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
@@ -160,7 +160,7 @@ class Solver
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to empty Node
-    constant possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    variable possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       variable cost set to calculateCost(nd)
       if cost < lowestCostSoFar then
@@ -292,8 +292,8 @@ test test_getAlgFromLetter
 end test
 
 test test_point
-  constant p set to newPoint(0, 0)
-  constant n set to p.neighbouringPoints()
-  constant expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable p set to newPoint(0, 0)
+  variable n set to p.neighbouringPoints()
+  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
   assert n is expected
 end test
