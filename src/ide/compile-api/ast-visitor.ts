@@ -38,7 +38,7 @@ import { FixedIdAsn } from "../../compiler/syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
-import { ConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
+import { GlobalConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
 import { GlobalCommentAsn } from "../../compiler/syntax-nodes/globals/global-comment-asn";
 import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
@@ -446,7 +446,7 @@ export function transform(
   }
 
   if (node instanceof ConstantGlobal) {
-    const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
+    const constantAsn = new GlobalConstantAsn(node.getHtmlId(), scope);
     constantAsn.breakpointStatus = node.breakpointStatus;
 
     constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;

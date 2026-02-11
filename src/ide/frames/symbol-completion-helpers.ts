@@ -10,9 +10,9 @@ import {
   getClassScope,
   isAbstractTypeName,
   isConcreteTypeName,
-  isConstant,
   isEnum,
   isEnumValue,
+  isGlobalConstant,
   isInsideClass,
   isLocalConstant,
   isNotInheritableTypeName,
@@ -138,7 +138,7 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
     case TokenType.type_notInheritable:
       return isNotInheritableTypeName;
     case TokenType.id_constant:
-      return isConstant;
+      return isGlobalConstant;
     case TokenType.id_let:
       return isLocalConstant;
     case TokenType.id_variable:

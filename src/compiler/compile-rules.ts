@@ -59,9 +59,9 @@ import { ProcedureType } from "./symbols/procedure-type";
 import {
   getGlobalScope,
   isClass,
-  isConstant,
   isDoubleIndexableType,
   isFunction,
+  isGlobalConstant,
   isIndexableType,
   isIterableType,
   isKnownType,
@@ -1047,7 +1047,7 @@ function mapToPurpose(symbol: ElanSymbol) {
     return "parameter";
   }
 
-  if (isConstant(symbol)) {
+  if (isGlobalConstant(symbol)) {
     return "constant";
   }
 
