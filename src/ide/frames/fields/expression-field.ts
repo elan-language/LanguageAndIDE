@@ -1,5 +1,5 @@
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { parameterNames } from "../../../compiler/symbols/symbol-helpers";
+import { isSymbol, parameterNames } from "../../../compiler/symbols/symbol-helpers";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
@@ -56,6 +56,7 @@ export class ExpressionField extends AbstractField {
   }
 
   public textAsHtml(): string {
+    const _test = this.getElanType();
     const holder = this.getHolder();
     const descriptions = this.argumentDescriptions(
       this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
@@ -66,5 +67,13 @@ export class ExpressionField extends AbstractField {
 
   override getCompletion() {
     return this.completionOverride || super.getCompletion();
+  }
+
+  getElanType() {
+    const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
+    if (isSymbol(scope)) {
+      return scope.symbolType().name;
+    }
+    return "";
   }
 }
