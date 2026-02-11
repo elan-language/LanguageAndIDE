@@ -31,6 +31,7 @@ import { ElanSet } from "./elan-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
+import { Optional } from "./optional";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { RawVG } from "./raw-vg";
@@ -103,6 +104,9 @@ export class StdLib {
 
   @elanClassExport(Ref)
   Ref = Ref;
+
+  @elanClassExport(Optional)
+  Optional = Optional;
 
   // Standard colours
 
