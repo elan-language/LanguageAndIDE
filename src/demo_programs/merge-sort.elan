@@ -8,7 +8,7 @@ end function
 
 test test_sort
   # 1. Edge case: empty
-  constant l1 set to empty List<of String>
+  constant l1 set to new List<of String>()
   assert sort(l1) is l1
   # 2. Edge case: one item
   constant li2 set to ["plum"]
@@ -28,7 +28,7 @@ end test
 
 # Merges two already-sorted lists (of potentially different lengths) into one sorted list
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
-  variable result set to empty List<of String>
+  variable result set to new List<of String>()
   if a.length() is 0 then
     set result to b
   elif b.length() is 0 then
@@ -42,7 +42,7 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test test_merge
-  constant le set to empty List<of String>
+  constant le set to new List<of String>()
   constant l1 set to ["apple", "lime", "pear"]
   constant l2 set to ["apricot", "lemon", "plum", "watermelon"]
   assert merge(le, le) is le

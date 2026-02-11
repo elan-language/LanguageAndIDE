@@ -227,7 +227,7 @@ test test_htmlForGame
   variable c1 set to new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   variable c2 set to new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   variable p set to new HumanPlayer("fred", 10) with cards set to [c1, c2]
-  variable players set to (empty List&lt;of Player&gt;).withAppend(p)
+  variable players set to (new List&lt;of Player&gt;()).withAppend(p)
   variable g2 set to new Game(1) with players set to players
   assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
@@ -419,7 +419,7 @@ abstract class Player
   procedure newHandHelper()
     set property.hasTurn to false
     set property.softAce to false
-    set property.cards to empty List&lt;of Card&gt;
+    set property.cards to new List&lt;of Card&gt;()
     set property.handTotal to 0
     set property.status to Status.active
     call draw()

@@ -140,22 +140,14 @@ suite("Parsing Nodes", () => {
     // empty data structures
     testNodeParse(
       new ExprNode(f),
-      "empty List<of Int>",
+      "new List<of Int>()",
       ParseStatus.valid,
-      "empty List<of Int>",
+      "new List<of Int>()",
       "",
       "",
-      "<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;",
+      "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
     );
-    testNodeParse(
-      new ExprNode(f),
-      "empty String",
-      ParseStatus.valid,
-      "empty String",
-      "",
-      "",
-      "<el-kw>empty</el-kw> <el-type>String</el-type>",
-    );
+    testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
     testNodeParse(new ExprNode(f), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
       new ExprNode(f),

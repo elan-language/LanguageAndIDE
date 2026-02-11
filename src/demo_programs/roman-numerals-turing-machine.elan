@@ -32,7 +32,7 @@ class TuringMachine
   constructor(initialState as String, haltState as String)
     set property.initialState to initialState
     set property.haltState to haltState
-    set property.rules to empty List<of Rule>
+    set property.rules to new List<of Rule>()
     set property.currentState to initialState
     set property.headPosition to 0
   end constructor

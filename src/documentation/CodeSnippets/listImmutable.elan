@@ -2,7 +2,8 @@
 
 main
   # reusing variable fruit for each new ListImmutable
-  variable fruit set to empty ListImmutable<of String>
+  # RP: changed to List
+  variable fruit set to new List<of String>()
   call print(fruit)
   set fruit to fruit.withAppend("apple")
   set fruit to fruit.withAppend("pear")

@@ -193,7 +193,7 @@ suite("Symbol Completion Spec", () => {
   test("Expression4", () => {
     testSymbolCompletionSpec(
       new ExprNode(f),
-      "empty List<of I",
+      "new List<of I",
       ParseStatus.incomplete,
       TypeNode.name,
       "I",

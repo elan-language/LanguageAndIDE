@@ -324,7 +324,7 @@ abstract class Player
   procedure newHandHelper()
     set property.hasTurn to false
     set property.hasSoftAce to false
-    set property.cards to empty List<of Card>
+    set property.cards to new List<of Card>()
     set property.handTotal to 0
     set property.status to Status.active
     call draw()

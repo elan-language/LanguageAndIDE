@@ -49,7 +49,7 @@ function setTurns(turns as String) returns String
 end function
 
 function reflect(s as String) returns String
-  variable sR set to empty String
+  variable sR set to ""
   for i from 1 to s.length() step 1
     set sR to (if s[i - 1].isSameValueAs(left) then right else left) + sR
   end for

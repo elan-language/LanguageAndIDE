@@ -5,8 +5,8 @@ main
   variable destination set to newPoint(34, 24)
   variable percentRocks set to inputIntBetween("Enter % rocks (0-100): ", 0, 100)
   call clearPrintedText()
-  variable rocks set to empty List<of Point>
-  variable nodes set to empty List<of Node>
+  variable rocks set to new List<of Point>()
+  variable nodes set to new List<of Node>()
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
   call displayBlocks(gr)

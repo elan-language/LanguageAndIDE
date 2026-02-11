@@ -3,7 +3,7 @@
 main
   variable ok set to true
   variable interval set to 1000
-  variable sequence set to empty List<of Int>
+  variable sequence set to new List<of Int>()
   while ok
     call simonsTurn(sequence, interval)
     call clearVectorGraphics()
