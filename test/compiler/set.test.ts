@@ -316,7 +316,7 @@ main
   variable a set to ["one", "two", "three"].asSet()
   variable c set to a.asList()
   variable aa set to empty Set<of String>
-  variable cc set to empty List<of String>
+  variable cc set to new List<of String>()
   set aa to a
   set cc to c
   call printNoLine(aa)
@@ -329,7 +329,7 @@ async function main() {
   let a = system.list(["one", "two", "three"]).asSet();
   let c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());
-  let cc = system.initialise(_stdlib.List.emptyInstance());
+  let cc = system.initialise(await new _stdlib.List()._initialise());
   aa = a;
   cc = c;
   await _stdlib.printNoLine(aa);

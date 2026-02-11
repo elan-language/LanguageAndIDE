@@ -170,7 +170,7 @@ test test_htmlForGame
   variable c1 set to new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   variable c2 set to new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   variable p set to new HumanPlayer("fred", 10) with cards set to [c1, c2]
-  variable players set to (empty List<of Player>).withAppend(p)
+  variable players set to (new List<of Player>()).withAppend(p)
   variable g2 set to new Game(1) with players set to players
   assert htmlForGame(g2) is "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>"
 end test
@@ -362,7 +362,7 @@ abstract class Player
   procedure newHandHelper()
     set property.hasTurn to false
     set property.softAce to false
-    set property.cards to empty List<of Card>
+    set property.cards to new List<of Card>()
     set property.handTotal to 0
     set property.status to Status.active
     call draw()

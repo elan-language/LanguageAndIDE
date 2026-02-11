@@ -1842,7 +1842,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable bubbles set to empty List<of CircleVG>
+  variable bubbles set to new List<of CircleVG>()
   call bubbles.put(0, new CircleVG())
 end main`;
 

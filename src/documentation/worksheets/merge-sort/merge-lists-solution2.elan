@@ -1,7 +1,7 @@
 # f1eb3e094fb170438139a031a28a68ad123a6804f21e8edea77fc490f35b88ba Elan 2.0.0-alpha guest default_profile valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
-  variable result set to empty List<of String>
+  variable result set to new List<of String>()
   if a.length() is 0 then
     set result to b
   elif b.length() is 0 then

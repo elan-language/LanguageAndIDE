@@ -12,12 +12,12 @@ main
   call print(lj.reduce(0.0, lambda fsum as Float, item as Float => fsum + item).round(1))
   #   concatenate the strings in a list
   variable ls set to ["Eeny", "Meeny", "Miny", "Mo"]
-  call print(ls.reduce(empty String, lambda concat as String, item as String => concat + item))
+  call print(ls.reduce("", lambda concat as String, item as String => concat + item))
   #   find the longest string
-  call print(ls.reduce(empty String, lambda longest as String, item as String => if item.length() > longest.length() then item else longest))
+  call print(ls.reduce("", lambda longest as String, item as String => if item.length() > longest.length() then item else longest))
   #   reverse the order of a list
-  call print(li.reduce(empty List<of Int>, lambda liR as List<of Int>, item as Int => liR.withPrepend(item)))
+  call print(li.reduce(new List<of Int>(), lambda liR as List<of Int>, item as Int => liR.withPrepend(item)))
   #   reverse the order of a string
   variable s set to "'Twas brillig and the slithy toves"
-  call print(s.split(empty String).reduce(empty List<of String>, lambda sR as List<of String>, item as String => sR.withPrepend(item)).join(empty String))
+  call print(s.split("").reduce(new List<of String>(), lambda sR as List<of String>, item as String => sR.withPrepend(item)).join(""))
 end main
