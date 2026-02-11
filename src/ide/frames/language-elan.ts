@@ -40,6 +40,7 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { Field } from "./frame-interfaces/field";
+import { PropertyRef } from "./parse-nodes/property-ref";
 
 export class LanguageElan implements Language {
   commentRegex(): RegExp {
@@ -160,6 +161,10 @@ export class LanguageElan implements Language {
     const open = node.keyword ? "<el-kw>" : "";
     const close = node.keyword ? "</el-kw>" : "";
     return `${open}${node.renderAsElanSource()}${close}`;
+  }
+
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
   renderNodeAsHtml(node: ParseNode): string {
