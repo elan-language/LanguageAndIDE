@@ -14,7 +14,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Constants", () => {
+suite("Global Constants", () => {
   test("Pass_Int", async () => {
     const code = `${testHeader}
 
@@ -669,5 +669,75 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_NotValueType", async () => {
+    const code = `${testHeader}
+
+constant a set to 1 + 2
+main
+  call printNoLine(a)
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_Expression", async () => {
+    const code = `${testHeader}
+
+constant a set to 1 + 2
+main
+  call printNoLine(a)
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_Function", async () => {
+    const code = `${testHeader}
+
+constant a set to foo()
+main
+  call printNoLine(a)
+end main
+
+function foo() returns Int
+  return 1
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });
