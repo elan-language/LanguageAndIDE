@@ -1419,31 +1419,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Point,a Point");
   });
 
-  test("Fail_joinArrayOfString", async () => {
-    const code = `${testHeader}
-
-main
-  variable words set to ["Now", "is","the","time..."].asArray()
-  variable s set to words.join(".")
-  call printNoLine(s)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'join' is not defined for type 'Array'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Pass_replace", async () => {
     const code = `${testHeader}
 

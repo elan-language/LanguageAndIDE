@@ -25,7 +25,6 @@ import {
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
-import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { ElanSet } from "./elan-set";
@@ -95,9 +94,6 @@ export class StdLib {
 
   @elanClassExport(List)
   List = List;
-
-  @elanClassExport(ElanArray)
-  Array = ElanArray;
 
   @elanClassExport(ElanArray2D)
   Array2D = ElanArray2D;

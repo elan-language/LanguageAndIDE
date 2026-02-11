@@ -3,7 +3,6 @@ import { AssertOutcome } from "./assert-outcome";
 import { DebugSymbol } from "./compiler-interfaces/debug-symbol";
 import { ElanInputOutput } from "./compiler-interfaces/elan-input-output";
 import { Dictionary } from "./standard-library/dictionary";
-import { ElanArray } from "./standard-library/elan-array";
 import { ElanRuntimeError } from "./standard-library/elan-runtime-error";
 import { ElanSet } from "./standard-library/elan-set";
 import { List } from "./standard-library/list";
@@ -520,20 +519,5 @@ export class System {
   listAsSet<T1>(list: List<T1>): ElanSet<T1> {
     const newList = [...list];
     return this.initialise(new ElanSet<T1>(newList));
-  }
-
-  listAsArray<T1>(list: List<T1>): ElanArray<T1> {
-    const newList = [...list];
-    return this.initialise(new ElanArray(newList));
-  }
-
-  arrayAsSet<T1>(list: ElanArray<T1>): ElanSet<T1> {
-    const newList = [...list];
-    return this.initialise(new ElanSet<T1>(newList));
-  }
-
-  arrayAsList<T1>(list: ElanArray<T1>): List<T1> {
-    const newList = [...list];
-    return this.initialise(new List(newList));
   }
 }
