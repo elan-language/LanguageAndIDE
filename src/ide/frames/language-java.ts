@@ -20,6 +20,7 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
@@ -53,7 +54,18 @@ export class LanguageJava implements Language {
   defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof ConstantGlobal ||
+      frame instanceof ConstantStatement ||
+      frame instanceof FunctionFrame ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -68,7 +80,9 @@ export class LanguageJava implements Language {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof ConstantStatement) {
+      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Elif) {
       html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof Else) {
@@ -77,8 +91,6 @@ export class LanguageJava implements Language {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof ConstantStatement) {
-      html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
@@ -210,6 +222,7 @@ export class LanguageJava implements Language {
   private FOREACH = "foreach";
   private ELSE = "else";
   private ENUM = "enum";
+  private FINAL = "final";
   private FOR = "for";
   private IF = "if";
   private IN = "in";

@@ -31,8 +31,12 @@ function updateGraphics(g as Game, b as Array2D<of Int>) returns Array2D<of Int>
 end function
 
 function newApple(g as Game) returns Game
-  constant x, rnd2 set to g.rnd.nextInt(0, 39)
-  constant y, rnd3 set to rnd2.nextInt(0, 29)
+  constant x_rnd2 set to g.rnd.nextInt(0, 39)
+  constant x set to x_rnd2.item0
+  constant rnd2 set x_rnd2.item1
+  constant y_rnd3 set to rnd2.nextInt(0, 29)
+  constant y set to y_rnd3.item0
+  constant rnd3 set to y_rnd3.item1
   constant apple2 set to newSquare(x, y)
   constant g2 set to copy g with apple set to apple2, rnd set to rnd3
   return if g2.body.contains(apple2) then newApple(g2) else g2
@@ -44,7 +48,8 @@ end function
 
 function moveSnake(g as Game) returns Game
   constant k set to g.key
-  constant x, y set to g.head
+  constant x set to g.head.item0
+  constant y set to g.head.item1
   constant newX set to if k.isSameValueAs("a") then x - 1 else if k.isSameValueAs("d") then x + 1 else x
   constant newY set to if k.isSameValueAs("w") then y - 1 else if k.isSameValueAs("s") then y + 1 else y
   return copy g with body set to g.body.withAppend(g.head), head set to newSquare(newX, newY)
@@ -65,7 +70,8 @@ function gameOver(g as Game) returns Boolean
 end function
 
 function hasHitEdge(g as Game) returns Boolean
-  constant x, y set to g.head
+  constant x set to g.head.item0
+  constant y set to g.head.item1
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
 end function
 

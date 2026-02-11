@@ -84,7 +84,9 @@ export class LanguageCS implements Language {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof ConstantStatement) {
+      html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Elif) {
       html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof Else) {
@@ -93,8 +95,6 @@ export class LanguageCS implements Language {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof ConstantStatement) {
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {

@@ -1,4 +1,4 @@
-# 2996f056428c307704e1849b4df8c8979e44e92f35878d2fdc77f69c3d357fc9 Elan 2.0.0-alpha guest default_profile valid
+# 2786b7d89671c84fcc37acb1cf0b4d033b32bb6ba9d6edb4bee832af68e97b6e Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -35,18 +35,18 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
 end function
 
 test test_
-  constant li1 set to ["lemon", "lime", "orange"]
+  variable li1 set to ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
   assert binarySearch(li1, "orange") is true
   assert binarySearch(li1, "pear") is false
-  constant li2 set to ["lemon", "orange"]
+  variable li2 set to ["lemon", "orange"]
   assert binarySearch(li2, "lemon") is true
   assert binarySearch(li2, "orange") is true
   assert binarySearch(li2, "pear") is false
-  constant li3 set to ["lemon"]
+  variable li3 set to ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  constant li4 set to new List<of String>()
+  variable li4 set to new List<of String>()
   assert binarySearch(li4, "pear") is false
 end test

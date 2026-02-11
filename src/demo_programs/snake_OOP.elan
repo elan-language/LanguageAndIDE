@@ -1,4 +1,4 @@
-# 904d75500aed156024ca315ad7c84f278c173922e674afb08abaf6dd0b78bc30 Elan 2.0.0-alpha guest default_profile valid
+# c9a679339cfbc944df517e1d73a583628c72a5a683cff8f74e26f10bd3a9414d Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -139,7 +139,7 @@ end class
 enum Direction up, down, left, right
 
 test test_snake
-  constant snake set to new Snake()
+  variable snake set to new Snake()
   # bodyCovers
   assert snake.bodyCovers(new Square(20, 15)) is true
   assert snake.bodyCovers(new Square(21, 15)) is false
@@ -155,13 +155,13 @@ end test
 test test_square
   # constructor - not testable as properties are private
   # getAdjacentSquare
-  constant sq1 set to new Square(3, 4)
+  variable sq1 set to new Square(3, 4)
   assert sq1.getAdjacentSquare(Direction.up) is new Square(3, 3)
   assert sq1.getAdjacentSquare(Direction.down) is new Square(3, 5)
   assert sq1.getAdjacentSquare(Direction.left) is new Square(2, 4)
   assert sq1.getAdjacentSquare(Direction.right) is new Square(4, 4)
-  constant sq2 set to new Square(0, 0)
-  constant sq3 set to new Square(-1, 0)
+  variable sq2 set to new Square(0, 0)
+  variable sq3 set to new Square(-1, 0)
   assert sq2.getAdjacentSquare(Direction.left) is sq3
   # hasHitEdge
   assert (new Square(0, 0)).hasHitEdge() is false

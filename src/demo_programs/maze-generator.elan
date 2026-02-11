@@ -1,12 +1,17 @@
-# 7a25752b4ff1a37a1b0ce74859683f0a88d61affd13acb85bf221ade445c5307 Elan 2.0.0-alpha guest default_profile valid
+# 54cffc44c2257bf3f5b30825e8793e0c4ea7f2702ae97005cd2817812b4560a0 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphicsArray()
+  for row from 0 to 29 step 1
+    for col from 0 to 39 step 1
+      set blocks[col, row] to black
+    end for
+  end for
   set blocks to createStart(blocks)
   for i from 0 to displayWidth step 1
     constant x set to randomInt(0, 39)
     constant y set to randomInt(0, 29)
-    constant p set to newPoint(x, y)
+    variable p set to newPoint(x, y)
     constant existing set to getValue(p, blocks)
     constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
@@ -61,7 +66,7 @@ end function
 
 # colour: 0 for black, 1 for white
 function okToSet(p as Point, colour as Int, g as Array2D<of Int>) returns Boolean
-  constant n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
+  variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
   constant q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
   constant q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
   constant q3 set to isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
@@ -129,8 +134,8 @@ function newPoint(x as Int, y as Int) returns Point
 end function
 
 test test_neighbouringPoints
-  constant p set to newPoint(0, 0)
-  constant n set to p.neighbouringPoints()
-  constant expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable p set to newPoint(0, 0)
+  variable n set to p.neighbouringPoints()
+  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
   assert n is expected
 end test
