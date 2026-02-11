@@ -197,7 +197,7 @@ return [main, _tests];}`;
 constant a set to ""
 main
   call printNoLine(a)
-  call printNoLine(a.isSameValueAs(empty String))
+  call printNoLine(a.isSameValueAs(""))
 end main
 `;
 
@@ -234,7 +234,7 @@ return [main, _tests];}`;
 constant a set to ""
 main
   call printNoLine(a)
-  call printNoLine(a.isSameReferenceAs(empty String))
+  call printNoLine(a.isSameReferenceAs(""))
 end main
 `;
 

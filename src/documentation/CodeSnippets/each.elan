@@ -10,7 +10,7 @@ main
 end main
 
 function reverse(s as String) returns String
-  variable sReturn set to empty String
+  variable sReturn set to ""
   each ch in s
     set sReturn to ch + sReturn
   end each

@@ -1014,7 +1014,7 @@ main
   call printNoLine(f.c)
   call printNoLine(f.d)
   call printNoLine(f.a.isSameValueAs(empty List<of Int>))
-  call printNoLine(f.b.isSameValueAs(empty String))
+  call printNoLine(f.b.isSameValueAs(""))
   call printNoLine(f.c.isSameValueAs(empty Dictionary<of String,Int>))
   call printNoLine(f.d.isSameValueAs(empty List<of Int>))
 end main
@@ -1097,7 +1097,7 @@ main
   call printNoLine(f.c)
   call printNoLine(f.d)
   call printNoLine(f.a.isSameReferenceAs(empty List<of Int>))
-  call printNoLine(f.b.isSameReferenceAs(empty String))
+  call printNoLine(f.b.isSameReferenceAs(""))
   call printNoLine(f.c.isSameReferenceAs(empty Dictionary<of String,Int>))
   call printNoLine(f.d.isSameReferenceAs(empty List<of Int>))
 end main
