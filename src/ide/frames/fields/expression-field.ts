@@ -56,7 +56,6 @@ export class ExpressionField extends AbstractField {
   }
 
   public textAsHtml(): string {
-    const _test = this.getElanType();
     const holder = this.getHolder();
     const descriptions = this.argumentDescriptions(
       this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
