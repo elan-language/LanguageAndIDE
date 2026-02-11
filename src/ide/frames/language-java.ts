@@ -25,6 +25,7 @@ import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -170,6 +171,10 @@ export class LanguageJava implements Language {
     return `${open}${text}${close}`;
   }
 
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof BinaryOperation) {
@@ -214,7 +219,7 @@ export class LanguageJava implements Language {
   private PRIVATE = "private";
   private RETURN = "return";
   private STATIC = "static";
-  private thisKeyword = "this";
+  private THIS = "this";
   private THROW = "throw";
   private TRY = "try";
   private VAR = "var";

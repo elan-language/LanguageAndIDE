@@ -20,6 +20,6 @@ export class PropertyRef extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `<el-kw>self</el-kw>.${this.name.renderAsHtml()}`;
+    return this.file.language().propertyRefAsHtml(this);
   }
 }

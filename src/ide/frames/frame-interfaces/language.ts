@@ -1,5 +1,6 @@
 import { BinaryOperation } from "../parse-nodes/binary-operation";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { PropertyRef } from "../parse-nodes/property-ref";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
@@ -23,6 +24,7 @@ export interface Language {
   typeGenericNodeAsHtml(node: TypeGenericNode): string;
   paramDefNodeAsHtml(node: ParamDefNode): string;
   binaryOperationAsHtml(node: BinaryOperation): string;
+  propertyRefAsHtml(node: PropertyRef): string;
 
   renderNodeAsHtml(node: ParseNode): string; // To pick up optional overrides
 
