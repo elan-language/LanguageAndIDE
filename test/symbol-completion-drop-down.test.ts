@@ -592,6 +592,7 @@ end main`;
     const expected = [
       ["append", "*", "*"],
       ["appendList", "*", "*"],
+      ["initialise", "*", "*"],
       ["insert", "*", "*"],
       ["prepend", "*", "*"],
       ["prependList", "*", "*"],

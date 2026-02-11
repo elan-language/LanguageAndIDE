@@ -3,8 +3,8 @@
 main
   variable score set to 0
   while true
-    variable holes set to new Array<of Hole>(10, Hole.vacant)
-    variable hole set to Hole.vacant
+    variable holes set to new List<of Hole>()
+    call holes.intialise(10, Hole.vacant)    variable hole set to Hole.vacant
     variable holeNumber set to randomInt(0, 9)
     call holes.put(holeNumber, Hole.mole)
     variable html set to htmlForFullGame(holes, score)
