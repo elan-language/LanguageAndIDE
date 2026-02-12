@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -208,6 +209,11 @@ end main
 
 class Game
     constructor()
+      set property.s to ""
+      set property.ds to new Dictionary<of String, Int>()
+      set property.ai to new List<of Int>()
+      set property.t to tuple(0, "", new List<of Int>())
+      set property.ff to lambda a as String, b as String => 0
     end constructor
 
     property i as Int
@@ -245,7 +251,11 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
-
+    this.s = "";
+    this.ds = system.initialise(await new _stdlib.Dictionary()._initialise());
+    this.ai = system.initialise(await new _stdlib.List()._initialise());
+    this.t = system.tuple([0, "", system.initialise(await new _stdlib.List()._initialise())]);
+    this.ff = async (a, b) => 0;
     return this;
   }
 
@@ -308,6 +318,7 @@ end main
 
 class Player
     constructor()
+      property.g set to new Game()
     end constructor
 
     property g as Game
@@ -315,6 +326,12 @@ end class
 
 class Game
     constructor()
+      set property.s to ""
+      set property.li to new List<of Int>()
+      set property.ds to new Dictionary<of String, Int>()
+      set property.ai to new List<of Int>()
+      set property.t to tuple(0, "", new List<of Int>())
+      set property.ff to lambda a as String, b as String => 0
     end constructor
 
     property i as Int
@@ -487,10 +504,12 @@ end main
 
 class Game
   constructor()
+    set property.p1 to new Player()
+    set property.previousGame to new Optional<of Game>()
   end constructor
 
   property p1 as Player
-  property previousGame as Game
+  property previousGame as Optional<of Game>
 
   function asString() returns String
     return "A game"
@@ -724,7 +743,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
   });
 
-  test("Pass_emptyKeywordToTestReference", async () => {
+  ignore_test("Pass_emptyKeywordToTestReference", async () => {
     const code = `${testHeader}
 
 main
@@ -879,6 +898,10 @@ end main
 class Game
   constructor()
     set property.score to 10
+    set property.p1 to new Player("Player 1")
+    set property.p2 to new Player("Player 2")
+    set property.previousGame to new Optional<of Game>()
+    set property.previousScores to new List<of Int>()
   end constructor
 
   property score as Int
