@@ -632,7 +632,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_UpdateParameterInFunction", async () => {
+  test("Pass_UpdatePropertyInFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -1660,6 +1660,114 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'constructor' is not defined for type 'Foo'.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UpdatePropertyInFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  set f to f.withP1(f, 1)
+  call printNoLine(f.p1)
+end main
+
+class Foo
+  property p1 as Int
+
+  function withP1(nf as Foo, p as Int) returns Foo
+    set nf.p1 to p
+    return nf
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UpdatePropertyInFunction1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  set f to f.withP1(1)
+  call printNoLine(f.p1)
+end main
+
+class Foo
+  property p1 as Int
+
+  function withP1(p as Int) returns Foo
+    set property.p1 to p
+    return this
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UpdatePropertyInFunction2", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  variable b set to f.withP1(1)
+  call printNoLine(b.p1)
+end main
+
+class Bar
+  property p1 as Int
+
+end class
+
+class Foo
+  property p1 as Int
+
+  function withP1(p as Int) returns Bar
+    variable nb set to new Bar()
+    set nb.p1 to p
+    return nb
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function.LangRef.html#compile_error",
     ]);
   });
 });
