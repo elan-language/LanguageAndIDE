@@ -1064,6 +1064,16 @@ export function mustBeUniqueNameInScope(
   }
 }
 
+export function mustBeInitialisedInConstructor(
+  name: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(
+    new SyntaxCompileError(`Property ${name} must be initialised in constructor.`, location),
+  );
+}
+
 export function mustBeUniqueValueInScope(
   name: string,
   compileErrors: CompileError[],
