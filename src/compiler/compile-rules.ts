@@ -97,6 +97,7 @@ import { ThisAsn } from "./syntax-nodes/this-asn";
 import { VariableAsn } from "./syntax-nodes/statements/variable-asn";
 import { NullScope } from "./symbols/null-scope";
 import { FunctionMethodAsn } from "./syntax-nodes/class-members/function-method-asn";
+import { NewAsn } from "./syntax-nodes/new-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -905,6 +906,7 @@ export function mustNotBePropertyOnFunctionMethod(
         const symbol = scope.getParentScope().resolveSymbol(id, scope);
         const innerFunction = getInnerMostFunction(scope);
         const symbolFunction = symbol instanceof VariableAsn ? symbol.getScope() : NullScope;
+        const isNew = symbol instanceof VariableAsn ? symbol.expr instanceof NewAsn : false;
 
         const symbolType = symbol.symbolType();
         const symbolClass = symbolType instanceof ClassType ? symbolType.scope : undefined;
@@ -912,7 +914,12 @@ export function mustNotBePropertyOnFunctionMethod(
         const functionClass =
           innerFunction instanceof FunctionMethodAsn ? innerFunction.getClass() : undefined;
 
-        if (symbolClass && symbolClass === functionClass && innerFunction === symbolFunction) {
+        if (
+          isNew &&
+          symbolClass &&
+          symbolClass === functionClass &&
+          innerFunction === symbolFunction
+        ) {
           // this is allowing a property to be set when the property is on a new class instance within the function
           // and the new class instance is the same class as the function's class
           return;
