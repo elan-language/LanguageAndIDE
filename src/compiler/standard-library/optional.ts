@@ -1,6 +1,7 @@
 import {
   ClassOption,
   ElanBoolean,
+  ElanClass,
   elanClass,
   elanFunction,
   elanGenericParamT1Type,
@@ -47,7 +48,7 @@ export class Optional<T1> {
     this._value = value;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanT1)
+  @elanFunction([], FunctionOptions.pure, ElanClass(Optional))
   withSet(@elanGenericParamT1Type() value: T1): Optional<T1> {
     const opt = new Optional<T1>();
     opt.set(value);
@@ -59,7 +60,7 @@ export class Optional<T1> {
     this._value = undefined;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanT1)
+  @elanFunction([], FunctionOptions.pure, ElanClass(Optional))
   withClear(): Optional<T1> {
     return new Optional<T1>();
   }
