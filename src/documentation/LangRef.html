@@ -273,8 +273,12 @@ and the Type of the value that will be returned, for example:
 and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
 <p>You follow the <el-kw>return</el-kw> instruction with the value to be returned by the function. This may be an expression that will be evaluated before returning. for example:</p>
 <el-code-block source="returnExp.elan">
-<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw>(<el-id>a</el-id>^<el-id>b</el-id>) &lt; (<el-id>b</el-id>^<el-id>a</el-id>)<el-kw><br>then </el-kw><el-id>true</el-id><el-kw><br>else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
-</el-code-block>
+<el-func class="ok multiline" id="func1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>foo</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Bool</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>power</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) &lt; <el-method>power</el-method>(<el-id>b</el-id>, <el-id>a</el-id>)<el-kw> then </el-kw><el-id>true</el-id><el-kw> else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func></el-code-block>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
 <div class="acc-body">
@@ -1360,13 +1364,11 @@ Writing a value to a specific index location is done through a method such as in
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
 
 <p>Arithmetic operators can be applied to <el-type>Float</el-type> or <el-type>Int</el-type> arguments. The result may be a <el-type>Float</el-type> or an <el-type>Int</el-type> depending on the arguments.</p>
-<p>For the <el-code> ^ + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
-<p>For the <el-code> / </el-code> operator, the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p>For the <el-code> + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
+<p>For the <el-code> / </el-code> operator, the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.
+So for integer division, use the <el-code> / </el-code> operator and round down the (floating point) result with <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="mod"> The operator <el-kw>mod</el-kw> is applied  only to <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
-<p id="div">The operator <el-kw>div</el-kw> is <b><i>deprecated</i></b> (as of v1.8.0). The recommended coding pattern for <i>integer</i> 
-  division is to use regular division and the standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <pre>
-    <el-code>2^3</el-code>             &#x27f6;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
     <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
     <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
@@ -1388,12 +1390,12 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
 </pre>
 
-<p>The editor automatically puts spaces around the operators <el-code>+</el-code> and <el-code>&minus;</el-code>, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>.
+<p>The editor automatically puts spaces around the operators <el-code>+</el-code> and <el-code>&minus;</el-code>, but not around <el-code>/</el-code> or <el-code>*</el-code>.
 This is just to visually reinforce the precedence.</p>
 
 <p>The <el-code>+</el-code> operator is also used for concatenating <a href="LibRef.html#String"><el-type>String</el-type></a> values.</p>
 
-<p>The editor automatically inserts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
+<p>The editor automatically inserts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
 <div id="and"></div>
@@ -1452,10 +1454,10 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a  function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
-<el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var7" tabindex="0"><el-kw>variable </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)^<el-lit>2</el-lit> + <el-method>cosDeg</el-method>(<el-lit>30</el-lit>)^<el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var10" tabindex="0"><el-kw>variable </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print13" tabindex="0"><el-kw>print </el-kw><el-field id="expr14" class="optional ok" tabindex="0"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="call3" tabindex="-1"><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
