@@ -7,7 +7,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private originalKeyword: "property" | "this",
+    public originalKeyword: "property" | "this",
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {

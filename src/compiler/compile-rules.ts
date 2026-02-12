@@ -3,7 +3,7 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { allKeywords, reservedWords } from "./keywords";
+import { allKeywords, propertyKeyword, reservedWords } from "./keywords";
 
 import {
   CannotCallAFunction,
@@ -79,9 +79,11 @@ import { TestType } from "./symbols/test-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
+  getInnerMostFunction,
   inFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
+  isAstQualifiedNode,
   isAstQualifierNode,
   isEmptyNode,
   isInsideFunction,
@@ -92,6 +94,9 @@ import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { VariableAsn } from "./syntax-nodes/statements/variable-asn";
+import { NullScope } from "./symbols/null-scope";
+import { FunctionMethodAsn } from "./syntax-nodes/class-members/function-method-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -892,12 +897,43 @@ export function mustNotBePropertyOnFunctionMethod(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (isInsideFunction(scope)) {
-    const s = assignable.symbolScope;
+  const s = assignable.symbolScope;
+  if (s === SymbolScope.member) {
+    if (isInsideFunction(scope)) {
+      if (isAstQualifiedNode(assignable)) {
+        const id = isAstIdNode(assignable.qualifier) ? assignable.qualifier.id : "";
+        const symbol = scope.getParentScope().resolveSymbol(id, scope);
+        const innerFunction = getInnerMostFunction(scope);
+        const symbolFunction = symbol instanceof VariableAsn ? symbol.getScope() : NullScope;
 
-    if (s === SymbolScope.member) {
+        const symbolType = symbol.symbolType();
+        const symbolClass = symbolType instanceof ClassType ? symbolType.scope : undefined;
+
+        const functionClass =
+          innerFunction instanceof FunctionMethodAsn ? innerFunction.getClass() : undefined;
+
+        if (symbolClass && symbolClass === functionClass && innerFunction === symbolFunction) {
+          // this is allowing a property to be set when the property is on a new class instance within the function
+          // and the new class instance is the same class as the function's class
+          return;
+        }
+      }
+
       compileErrors.push(
         new ReassignInFunctionCompileError(`property: ${getId(assignable)}`, location),
+      );
+    } else {
+      if (isAstQualifiedNode(assignable)) {
+        if (
+          assignable.qualifier instanceof ThisAsn &&
+          assignable.qualifier.originalKeyword === propertyKeyword
+        ) {
+          return;
+        }
+      }
+
+      compileErrors.push(
+        new SyntaxCompileError(`Cannot set property: ${getId(assignable)} directly.`, location),
       );
     }
   }

@@ -420,6 +420,16 @@ export function isInsideFunction(scope: Scope): boolean {
   return isInsideFunction(scope.getParentScope());
 }
 
+export function getInnerMostFunction(scope: Scope): FunctionAsn | undefined {
+  if (scope instanceof FunctionAsn) {
+    return scope;
+  }
+  if (scope instanceof FileAsn) {
+    return undefined;
+  }
+  return getInnerMostFunction(scope.getParentScope());
+}
+
 export function isInsideFunctionOrConstructor(scope: Scope): boolean {
   if (scope instanceof FunctionAsn) {
     return true;

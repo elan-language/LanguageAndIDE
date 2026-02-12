@@ -2,6 +2,7 @@ import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { InstanceNode } from "./instanceNode";
+import { PropertyInstanceRef } from "./property-instance-ref";
 import { PropertyRef } from "./property-ref";
 
 export class AssignableNode extends AbstractAlternatives {
@@ -11,5 +12,6 @@ export class AssignableNode extends AbstractAlternatives {
     super(file);
     this.alternatives.push(new InstanceNode(file));
     this.alternatives.push(new PropertyRef(file));
+    this.alternatives.push(new PropertyInstanceRef(file));
   }
 }
