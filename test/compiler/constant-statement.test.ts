@@ -112,7 +112,7 @@ end main
 procedure foo()
   variable li set to [1,2,3,4,5]
   for i from 0 to 4 step 1
-    constant temp set to li[i]
+    variable temp set to li[i]
     call printNoLine(temp)
   end for
 end procedure`;
@@ -127,7 +127,7 @@ async function foo() {
   let li = system.list([1, 2, 3, 4, 5]);
   const _tofor13 = 4;
   for (let i = 0; i <= _tofor13; i = i + 1) {
-    const temp = system.safeIndex(li, i);
+    let temp = system.safeIndex(li, i);
     await _stdlib.printNoLine(temp);
   }
 }
