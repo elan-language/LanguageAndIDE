@@ -3013,11 +3013,11 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <el-statement class="ok" id="assert29" tabindex="-1"><el-kw>assert </el-kw><el-field id="text30" class="ok" tabindex="-1"><el-txt><el-id>q</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
-
 </el-code-block>
 
 <h2 id="MathsFunctions">Maths functions</h2>
-All the maths functions take a <el-type>Float</el-type> argument and return a <el-type>Float</el-type> value.
+<p>All the maths functions expect <el-type>Float</el-type> arguments, but <el-type>Int</el-type> arguments are accepted.
+They all return a value of Type <el-type>Float</el-type>, except for <el-method>divAsInt</el-method> which returns an <el-type>Int</el-type>.
 <table class="tableMethod">
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="abs"><td><el-method>abs</el-method></td><td><el-type>Float</el-type></td><td></td><td>absolute value of the input</td><td></td></tr>
@@ -3029,6 +3029,8 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <tr id="atanDeg"><td><el-method>atanDeg</el-method></td><td><el-type>Float</el-type></td><td></td><td>arctangent of the input</td><td>degrees</td></tr>
 <tr id="cos"><td><el-method>cos</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>cosine of the input</td><td></td></tr>
 <tr id="cosDeg"><td><el-method>cosDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>cosine of the input</td><td></td></tr>
+<tr id="divAsFloat"><td><el-method>divAsFloat</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value divided by second input value</td><td></td></tr>
+<tr id="divAsInt"><td><el-method>divAsInt</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value divided by second input value<br>and result rounded down to integer</td><td></td></tr>
 <tr>
   <td id="exp"><el-id><el-method>exp</el-method></el-id></td>
   <td><el-type>Float</el-type></td>
@@ -3046,7 +3048,8 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <tr id="tan"><td><el-method>tan</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>tangent of the input</td><td></td></tr>
 <tr id="tanDeg"><td><el-method>tanDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
 <tr id="degToRad"><td><el-method>degToRad</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
-<tr id="radToDeg"><td><el-method>radToDeg</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
+<tr id="radToDeg"><td><el-method>radToDeg</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr>
+</table>
 
 <p>Examples of some maths functions and constants being tested:</p>
 <el-code-block source="test_maths.elan">
