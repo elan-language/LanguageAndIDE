@@ -1,6 +1,7 @@
-# ada3d27d362e109bcc61a85daacb1088b8209553c8323f7f821d7c0462f48cac Elan 2.0.0-alpha guest default_profile valid
+# 73a4fe6a3302319c39a3878cb63da5fb8a84edea97f585f2c18390ba3078e8d8 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  # example for Sequence function
+  # snipFrom
   call print(sequence(2, 30, 1).filter(lambda n as Int => sequence(2, sqrt(n).floor(), 1).reduce(true, lambda c as Boolean, m as Int => c and ((n mod m) isnt 0))))
+  # snipTo
 end main
