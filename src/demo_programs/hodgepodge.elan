@@ -107,9 +107,9 @@ function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll
   variable colours set to getColours()
   variable state set to 0
   if nowColour is healthy then
-    set state to divAsInteger(nInfected, w1) + divAsInteger(nIll, w2)
+    set state to divAsInt(nInfected, w1) + divAsInt(nIll, w2)
   elif nowColour isnt ill then
-    set state to divAsInteger(sumStates, (nInfected + 1)) + iR
+    set state to divAsInt(sumStates, (nInfected + 1)) + iR
   end if
   return if state > (colours.length() - 1) then ill else colours[state]
 end function

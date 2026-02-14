@@ -157,7 +157,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInteger or divAsFloat.LangRef.html#compile_error",
+      "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInt or divAsFloat.LangRef.html#compile_error",
     ]);
   });
 
@@ -195,13 +195,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(divAsInteger(7, 2))
+  call printNoLine(divAsInt(7, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.divAsInteger(7, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(7, 2));
 }
 return [main, _tests];}`;
 

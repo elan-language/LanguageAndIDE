@@ -100,7 +100,7 @@ end function
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue().keys()[divAsInteger(number, 4)]
+  variable rank set to rankValue().keys()[divAsInt(number, 4)]
   variable suit set to intAsSuit(number mod 4)
   return new Card(rank, suit)
 end function
