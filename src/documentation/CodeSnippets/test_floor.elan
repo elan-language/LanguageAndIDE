@@ -10,6 +10,6 @@ test test_floor
   assert p.round(3) is 3.142
   assert mp.round(2) is -3.14
   assert sqrt(-p).isNaN() is true
-  variable q set to divAsInteger(1, 0).floor()
+  variable q set to divAsInt(1, 0).floor()
   assert q.isInfinite() is true
 end test

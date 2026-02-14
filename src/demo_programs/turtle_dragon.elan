@@ -20,7 +20,7 @@ constant left set to "1"
 constant right set to "0"
 
 procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
-  constant p set to divAsInteger(200, order)
+  constant p set to divAsInt(200, order)
   variable turnI set to 0
   each turn in turns
     set turnI to (if turn.isSameValueAs(left) then 1 else -1)

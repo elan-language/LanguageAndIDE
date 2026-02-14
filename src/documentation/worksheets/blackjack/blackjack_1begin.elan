@@ -117,7 +117,7 @@ end test
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue().keys()[divAsInteger(number, 4)]
+  variable rank set to rankValue().keys()[divAsInt(number, 4)]
   variable suit set to number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
