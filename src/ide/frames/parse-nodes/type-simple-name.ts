@@ -1,10 +1,13 @@
+import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
+import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class TypeSimpleName extends AbstractParseNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  elanTypeName: string = "";
 
   constructor(
     file: File,
@@ -20,14 +23,46 @@ export class TypeSimpleName extends AbstractParseNode {
     this.tokenTypes = tokenTypes;
   }
 
+  private langInt = RegExp(`^\\s*${this.file.language().INT_NAME}`);
+  private langFloat = RegExp(`^\\s*${this.file.language().FLOAT_NAME}`);
+  private langBool = RegExp(`^\\s*${this.file.language().BOOL_NAME}`);
+  private langString = RegExp(`^\\s*${this.file.language().STRING_NAME}`);
+  private langList = RegExp(`^\\s*${this.file.language().LIST_NAME}`);
 
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      const lang = this.file.language();
-      const rgx: string = `^\\s*${lang.INT_NAME}|^\\s*${lang.FLOAT_NAME}|^\\s*${lang.BOOL_NAME}|^\\s*${lang.STRING_NAME}|^\\s*${lang.LIST_NAME}|^\\s*[A-Z]\\w*`;
-      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, new RegExp(rgx));
+      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langInt);
+      this.elanTypeName = "Int";
+      if (this.status !== ParseStatus.valid) {
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langFloat);
+        this.elanTypeName = "Float";
+      }
+      if (this.status !== ParseStatus.valid) {
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langBool);
+        this.elanTypeName = "Boolean";
+      }
+      if (this.status !== ParseStatus.valid) {
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langString);
+        this.elanTypeName = "String";
+      }
+      if (this.status !== ParseStatus.valid) {
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
+        this.elanTypeName = "List";
+      } 
+      if (this.status !== ParseStatus.valid) {
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(
+          text,
+          Regexes.typeSimpleName,
+        );
+        this.elanTypeName = this.matchedText;
+      }
     }
+  }
+
+  private match(text: string, regx: RegExp): boolean {
+    const matches = text.match(regx);
+    return matches !== null && matches.length > 0;
   }
 
   renderAsHtml(): string {
@@ -36,23 +71,5 @@ export class TypeSimpleName extends AbstractParseNode {
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
-  }
-
-  elanSimpleTypeName(): string {
-    const lang = this.file.language();
-    const text = this.matchedText;
-    let elan = text;
-    if (text === lang.INT_NAME) {
-      elan = "Int";
-    } else if (text === lang.FLOAT_NAME) {
-      elan = "Float";
-    } else if (text === lang.BOOL_NAME) {
-      elan = "Boolean";
-    } else if (text === lang.STRING_NAME) {
-      elan = "String";
-    } else if (text === lang.LIST_NAME) {
-      elan = "List";
-    }
-    return elan;
   }
 }
