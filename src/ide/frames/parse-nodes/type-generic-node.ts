@@ -8,11 +8,11 @@ import { KeywordNode } from "./keyword-node";
 import { concreteAndAbstractTypes, Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
-import { TypeNameNode } from "./type-name-node";
+import { TypeNameQualifiedNode } from "./type-name-qualified-node";
 import { TypeNode } from "./type-node";
 
 export class TypeGenericNode extends AbstractSequence {
-  simpleType: TypeNameNode | undefined;
+  qualifiedName: TypeNameQualifiedNode | undefined;
   genericTypes: CSV | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   concreteAndAbstract = new Set<TokenType>(concreteAndAbstractTypes);
@@ -25,11 +25,11 @@ export class TypeGenericNode extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.simpleType = new TypeNameNode(this.file, this.tokenTypes);
+      this.qualifiedName = new TypeNameQualifiedNode(this.file, this.tokenTypes);
       const typeConstr = () => new TypeNode(this.file, this.concreteAndAbstract);
       this.genericTypes = new CSV(this.file, typeConstr, 1);
 
-      this.addElement(this.simpleType!);
+      this.addElement(this.qualifiedName!);
       this.addElement(new PunctuationNode(this.file, LT));
       this.addElement(new KeywordNode(this.file, ofKeyword));
       this.addElement(new SpaceNode(this.file, Space.required));

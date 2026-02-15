@@ -7,9 +7,9 @@ import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { TypeSimpleName } from "./type-simple-name";
 
-export class TypeNameNode extends AbstractSequence {
+export class TypeNameQualifiedNode extends AbstractSequence {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
-  name: TypeSimpleName | undefined;
+  private unqualifiedName: TypeSimpleName | undefined;
   libraryQualifier: OptionalNode | undefined;
 
   constructor(
@@ -26,6 +26,10 @@ export class TypeNameNode extends AbstractSequence {
     this.tokenTypes = tokenTypes;
   }
 
+  elanSimpleTypeName(): string {
+    return this.unqualifiedName!.matchedText;
+  }
+
   parseText(text: string): void {
     if (text.length > 0) {
       this.libraryQualifier = new OptionalNode(
@@ -33,14 +37,14 @@ export class TypeNameNode extends AbstractSequence {
         new DotAfter(this.file, new KeywordNode(this.file, libraryKeyword, false, true)),
       );
       this.addElement(this.libraryQualifier);
-      this.name = new TypeSimpleName(this.file);
-      this.addElement(this.name);
+      this.unqualifiedName = new TypeSimpleName(this.file);
+      this.addElement(this.unqualifiedName);
       super.parseText(text);
     }
   }
 
   renderAsHtml(): string {
-    let name = this.name?.renderAsElanSource();
+    let name = this.unqualifiedName?.renderAsElanSource();
     const lang = this.file.language();
     if (name === "Int") {
       name = lang.INT_NAME;

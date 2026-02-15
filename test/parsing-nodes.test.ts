@@ -46,7 +46,7 @@ import { TermChained } from "../src/ide/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
 import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
-import { TypeNameNode } from "../src/ide/frames/parse-nodes/type-name-node";
+import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression";
@@ -729,7 +729,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeSimpleNode", () => {
     testNodeParse(
-      new TypeNameNode(f),
+      new TypeNameQualifiedNode(f),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -737,7 +737,7 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Foo</el-type>",
     );
-    testNodeParse(new TypeNameNode(f), `foo`, ParseStatus.invalid, "", "foo", "");
+    testNodeParse(new TypeNameQualifiedNode(f), `foo`, ParseStatus.invalid, "", "foo", "");
   });
   test("TypeSimpleOrGeneric", () => {
     testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");

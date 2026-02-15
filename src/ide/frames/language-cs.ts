@@ -160,7 +160,7 @@ export class LanguageCS implements Language {
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
+    return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;

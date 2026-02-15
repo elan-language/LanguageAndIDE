@@ -3,14 +3,14 @@ import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { PunctuationNode } from "./punctuation-node";
-import { TypeNameNode } from "./type-name-node";
+import { TypeNameQualifiedNode } from "./type-name-qualified-node";
 
 export class EnumVal extends AbstractSequence {
-  type: TypeNameNode | undefined;
+  type: TypeNameQualifiedNode | undefined;
   val: IdentifierNode | undefined;
 
   parseText(text: string): void {
-    this.type = new TypeNameNode(this.file, new Set([TokenType.type_enum]));
+    this.type = new TypeNameQualifiedNode(this.file, new Set([TokenType.type_enum]));
     this.addElement(this.type);
     this.addElement(new PunctuationNode(this.file, DOT));
     this.val = new IdentifierNode(

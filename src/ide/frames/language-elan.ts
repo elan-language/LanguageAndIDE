@@ -152,7 +152,7 @@ export class LanguageElan implements Language {
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
+    return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;

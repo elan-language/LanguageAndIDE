@@ -166,7 +166,7 @@ export class LanguagePython implements Language {
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
+    return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
   }
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;

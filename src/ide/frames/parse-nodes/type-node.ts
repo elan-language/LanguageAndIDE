@@ -1,11 +1,11 @@
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { OPEN_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeNameNode } from "./type-name-node";
+import { TypeNameQualifiedNode } from "./type-name-qualified-node";
 import { TypeTupleNode } from "./type-tuple-node";
-import { File } from "../frame-interfaces/file";
 
 export class TypeNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
@@ -25,7 +25,7 @@ export class TypeNode extends AbstractAlternatives {
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode(this.file));
       } else {
-        this.alternatives.push(new TypeNameNode(this.file, this.tokenTypes));
+        this.alternatives.push(new TypeNameQualifiedNode(this.file, this.tokenTypes));
         this.alternatives.push(new TypeGenericNode(this.file, this.tokenTypes));
       }
       super.parseText(text.trimStart());

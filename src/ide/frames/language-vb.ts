@@ -194,7 +194,7 @@ export class LanguageVB implements Language {
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
