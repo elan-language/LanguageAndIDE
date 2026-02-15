@@ -1,4 +1,3 @@
-import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
@@ -25,12 +24,10 @@ export class TypeSimpleName extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      // else
-      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.typeSimpleName);
+      const lang = this.file.language();
+      const rgx: string = `^\\s*${lang.INT_NAME}|^\\s*${lang.FLOAT_NAME}|^\\s*${lang.BOOL_NAME}|^\\s*${lang.STRING_NAME}|^\\s*${lang.LIST_NAME}|^\\s*[A-Z]\\w*`;
+      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, new RegExp(rgx));
     }
-    //test for matching any of the standard types specified in the lang & parse valid or incomplete
-    //else test for match of Elan standard type names and if so parse invalid
-    //else test for anything matching Regexes.typeSimpleName
   }
 
   renderAsHtml(): string {
