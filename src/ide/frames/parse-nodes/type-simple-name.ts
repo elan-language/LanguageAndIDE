@@ -26,4 +26,22 @@ export class TypeSimpleName extends RegExMatchNode {
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }
+
+  elanSimpleTypeName(): string {
+    const lang = this.file.language();
+    const text = this.matchedText;
+    let elan = text;
+    if (text === lang.INT_NAME) {
+      elan = "Int";
+    } else if (text === lang.FLOAT_NAME) {
+      elan = "Float";
+    } else if (text === lang.BOOL_NAME) {
+      elan = "Boolean";
+    } else if (text === lang.STRING_NAME) {
+      elan = "String";
+    } else if (text === lang.LIST_NAME) {
+      elan = "List";
+    }
+    return elan;
+  }
 }

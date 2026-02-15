@@ -786,7 +786,7 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.qualifiedName!.elanSimpleTypeName();
+    const type = node.qualifiedName!.unqualifiedName!.elanSimpleTypeName();
     const qualifier =
       transform(node.qualifiedName?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
     const generic = node.genericTypes;
@@ -806,7 +806,7 @@ export function transform(
   }
 
   if (node instanceof TypeNameQualifiedNode) {
-    const type = node.libraryQualifier?.matchedText + node.elanSimpleTypeName();
+    const type = node.libraryQualifier?.matchedText + node.unqualifiedName!.elanSimpleTypeName();
     return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
   }
 

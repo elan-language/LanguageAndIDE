@@ -9,7 +9,7 @@ import { TypeSimpleName } from "./type-simple-name";
 
 export class TypeNameQualifiedNode extends AbstractSequence {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
-  private unqualifiedName: TypeSimpleName | undefined;
+  unqualifiedName: TypeSimpleName | undefined;
   libraryQualifier: OptionalNode | undefined;
 
   constructor(
@@ -24,24 +24,6 @@ export class TypeNameQualifiedNode extends AbstractSequence {
     super(file);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
-  }
-
-  elanSimpleTypeName(): string {
-    const lang = this.file.language();
-    const text = this.unqualifiedName!.matchedText;
-    let elan = text;
-    if (text === lang.INT_NAME) {
-      elan = "Int";
-    } else if (text === lang.FLOAT_NAME) {
-      elan = "Float";
-    } else if (text === lang.BOOL_NAME) {
-      elan = "Boolean";
-    } else if (text === lang.STRING_NAME) {
-      elan = "String";
-    } else if (text === lang.LIST_NAME) {
-      elan = "List";
-    }
-    return elan;
   }
 
   parseText(text: string): void {
