@@ -49,7 +49,7 @@ export class TypeSimpleName extends AbstractParseNode {
       if (this.status !== ParseStatus.valid) {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
         this.elanTypeName = "List";
-      } 
+      }
       if (this.status !== ParseStatus.valid) {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(
           text,
@@ -59,17 +59,29 @@ export class TypeSimpleName extends AbstractParseNode {
       }
     }
   }
-
-  private match(text: string, regx: RegExp): boolean {
-    const matches = text.match(regx);
-    return matches !== null && matches.length > 0;
-  }
-
   renderAsHtml(): string {
-    return `<el-type>${this.matchedText}</el-type>`;
+    return `<el-type>${this.renderAsExport()}</el-type>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
+  }
+
+  override renderAsExport(): string {
+    const lang = this.file.language();
+    const elan = this.elanTypeName;
+    let target = elan;
+    if (elan === "Int") {
+      target = lang.INT_NAME;
+    } else if (elan === "Float") {
+      target = lang.FLOAT_NAME;
+    } else if (elan === "Boolean") {
+      target = lang.BOOL_NAME;
+    } else if (elan === "String") {
+      target = lang.STRING_NAME;
+    } else if (elan === "List") {
+      target = lang.LIST_NAME;
+    }
+    return target;
   }
 }
