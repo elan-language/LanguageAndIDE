@@ -66,4 +66,6 @@ export interface Frame extends Selectable {
   deleteAllGhosted(): void;
 
   frameSpecificAnnotation(): string;
+
+  resetFieldText(): void;
 }

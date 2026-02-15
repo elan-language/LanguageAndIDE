@@ -254,3 +254,9 @@ export function setGhostOnSelectedChildren(parent: Parent, ghost: boolean): void
     }
   }
 }
+
+export function parentHelper_resetFieldTextOnChildren(parent: Parent): void {
+  for (const frame of parent.getChildren()) {
+    frame.resetFieldText();
+  }
+}

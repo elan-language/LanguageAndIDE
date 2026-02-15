@@ -29,6 +29,7 @@ import {
   parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_resetFieldTextOnChildren,
   parentHelper_selectFirstChild,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
@@ -270,5 +271,10 @@ ${this.language().renderBottomAsHtml(this)}
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
     ${this.renderChildrenAsExport()}
     ${bottomAsExport}\r\n`;
+  }
+
+  resetFieldText(): void {
+    super.resetFieldText();
+    parentHelper_resetFieldTextOnChildren(this);
   }
 }

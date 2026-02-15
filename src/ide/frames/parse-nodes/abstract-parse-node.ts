@@ -1,3 +1,4 @@
+import { removeHtmlTags } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
@@ -30,7 +31,7 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   renderAsExport(): string {
-    return this.matchedText.trim();
+    return removeHtmlTags(this.renderAsHtml());
   }
 
   renderAsHtml(): string {

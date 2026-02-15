@@ -64,6 +64,7 @@ import {
   parentHelper_removeChild,
   parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
   worstParseStatus,
@@ -886,9 +887,14 @@ export class FileImpl implements File {
   setLanguage(l: Language) {
     if (this._language.languageFullName !== l.languageFullName) {
       this._language = l;
+      this.resetFieldText();
       return true;
     }
     return false;
+  }
+
+  private resetFieldText(): void {
+    parentHelper_resetFieldTextOnChildren(this);
   }
 
   language(): Language {

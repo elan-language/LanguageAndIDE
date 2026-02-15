@@ -886,4 +886,10 @@ export abstract class AbstractFrame implements Frame {
   }
 
   abstract frameSpecificAnnotation(): string;
+
+  resetFieldText(): void {
+    for (const field of this.getFields()) {
+      field.resetText();
+    }
+  }
 }
