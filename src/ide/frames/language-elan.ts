@@ -248,4 +248,5 @@ export class LanguageElan implements Language {
   FLOAT_NAME: string = "Float";
   BOOL_NAME: string = "Bool";
   STRING_NAME: string = "String";
+  LIST_NAME: string = "List";
 }

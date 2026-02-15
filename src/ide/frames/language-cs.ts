@@ -259,6 +259,7 @@ export class LanguageCS implements Language {
   FLOAT_NAME: string = "double";
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "string";
+  LIST_NAME: string = "List";
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.type = new TypeNode(

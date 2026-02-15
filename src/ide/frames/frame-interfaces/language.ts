@@ -46,4 +46,5 @@ export interface Language {
   FLOAT_NAME: string;
   BOOL_NAME: string;
   STRING_NAME: string;
+  LIST_NAME: string;
 }

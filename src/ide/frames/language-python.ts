@@ -249,6 +249,7 @@ export class LanguagePython implements Language {
   FLOAT_NAME: string = "float";
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "str";
+  LIST_NAME: string = "list";
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);

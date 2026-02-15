@@ -253,4 +253,5 @@ export class LanguageJava implements Language {
   FLOAT_NAME: string = "double";
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "String";
+  LIST_NAME: string = "List";
 }
