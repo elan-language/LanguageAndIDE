@@ -877,6 +877,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   resetText() {
-    this.text = this.textAsExport();
+    const text = removeHtmlTags(this.renderAsHtml());
+    this.setFieldToKnownValidText(text);
   }
 }

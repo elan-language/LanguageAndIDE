@@ -40,6 +40,9 @@ export class OptionalNode extends AbstractParseNode {
   renderAsElanSource(): string {
     return this.matchedNode ? this.matchedNode.renderAsElanSource() : "";
   }
+  renderAsExport(): string {
+    return this.matchedNode ? this.matchedNode.renderAsExport() : "";
+  }
 
   getSyntaxCompletionAsHtml(): string {
     const c = this.matchedNode

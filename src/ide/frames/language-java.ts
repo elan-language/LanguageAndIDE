@@ -8,7 +8,6 @@ import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -23,11 +22,15 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -44,8 +47,9 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
-export class LanguageJava implements Language {
+export class LanguageJava extends LanguageAbstract {
   commentRegex(): RegExp {
     return /\/\/ [^\r\n]*/;
   }
@@ -155,50 +159,6 @@ export class LanguageJava implements Language {
     return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
-  }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
-    return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
-  }
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    let text = node.matchedText.trim();
-    if (text === "is") {
-      text = this.spaced(this.EQUAL);
-    } else if (text === "isnt") {
-      text = this.spaced(this.NOT_EQUAL);
-    } else if (text === "and") {
-      text = this.spaced(this.AND);
-    } else if (text === "or") {
-      text = this.spaced(this.OR);
-    } else if (text === "not") {
-      text = this.spaced(this.NOT);
-    } else if (text === "mod") {
-      text = this.spaced(this.MOD);
-    } else {
-      text = node.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
-  }
-
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
-  renderNodeAsHtml(node: ParseNode): string {
-    let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof BinaryOperation) {
-    } else if (node instanceof InheritanceNode) {
-      html =
-        node.matchedText.length > 0
-          ? `<el-kw>${this.INHERITS} ${node.typeList?.renderAsHtml()}`
-          : ``;
-    }
-    return html;
-  }
-
   parseText(node: ParseNode, text: string): boolean {
     return node && text ? false : false;
   }
@@ -254,4 +214,56 @@ export class LanguageJava implements Language {
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    return text ? true : true;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
+  }
+  paramDefNodeAsExport(node: ParamDefNode): string {
+    return `${node.type?.renderAsExport()} ${node.name?.renderAsExport()}`;
+  }
+
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
+  }
+
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = this.spaced(this.EQUAL);
+    } else if (text === "isnt") {
+      text = this.spaced(this.NOT_EQUAL);
+    } else if (text === "and") {
+      text = this.spaced(this.AND);
+    } else if (text === "or") {
+      text = this.spaced(this.OR);
+    } else if (text === "not") {
+      text = this.spaced(this.NOT);
+    } else if (text === "mod") {
+      text = this.spaced(this.MOD);
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
+  }
 }

@@ -46,8 +46,4 @@ export class TypeGenericNode extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
-
-  override renderAsHtml(): string {
-    return this.file.language().typeGenericNodeAsHtml(this);
-  }
 }

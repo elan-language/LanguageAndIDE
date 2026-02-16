@@ -6,10 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
-import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { Language } from "./frame-interfaces/language";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -23,10 +20,9 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { IndexDouble } from "./parse-nodes/index-double";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -53,7 +49,7 @@ import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
 import { COLON } from "./symbols";
 
-export class LanguagePython implements Language {
+export class LanguagePython extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
@@ -165,58 +161,6 @@ export class LanguagePython implements Language {
     return frame ? "" : ""; // Python blocks have no textual ending;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
-  }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
-  }
-
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    let text = node.matchedText.trim();
-    if (text === "is") {
-      text = " == ";
-    } else if (text === "isnt") {
-      text = " != ";
-    } else if (text === "mod") {
-      text = " % ";
-    } else {
-      text = node.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
-  }
-
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
-  renderNodeAsHtml(node: ParseNode): string {
-    let html = "";
-    if (node instanceof InheritanceNode) {
-      html =
-        node.matchedText.length > 0
-          ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
-          : ``;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>[</el-punc>${node.index1?.renderAsHtml()}<el-punc>][</el-punc>${node.index2?.renderAsHtml()}<el-punc>]</el-punc>`;
-    }
-    return html;
-  }
-
-  parseText(node: ParseNode, text: string): boolean {
-    let result = false;
-    if (node instanceof ParamDefNode) {
-      result = this.parseParamDefNode(node, text);
-    }
-    return result;
-  }
-
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
-  }
-
   private DEF = "def";
   private CLASS = "class";
   private ELIF = "elif";
@@ -266,5 +210,35 @@ export class LanguagePython implements Language {
     );
     node.addElement(node.type);
     return text ? true : true;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
+  }
+  paramDefNodeAsExport(node: ParamDefNode): string {
+    return `${node.name?.renderAsExport()}: ${node.type?.renderAsExport()}`;
+  }
+
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
+  }
+
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = " == ";
+    } else if (text === "isnt") {
+      text = " != ";
+    } else if (text === "mod") {
+      text = " % ";
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
   }
 }

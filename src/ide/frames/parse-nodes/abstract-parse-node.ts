@@ -31,11 +31,15 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   renderAsExport(): string {
-    return removeHtmlTags(this.renderAsHtml());
+    const lang = this.file.language();
+    const langSpecific = lang.renderNodeAsExport(this);
+    return langSpecific === "" ? removeHtmlTags(this.renderAsHtml()) : langSpecific;
   }
 
   renderAsHtml(): string {
-    return this.renderAsElanSource();
+    const lang = this.file.language();
+    const langSpecific = lang.renderNodeAsHtml(this);
+    return langSpecific === "" ? this.renderAsElanSource() : langSpecific;
   }
 
   abstract parseText(text: string): void;

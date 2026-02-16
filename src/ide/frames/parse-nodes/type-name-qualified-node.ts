@@ -39,22 +39,6 @@ export class TypeNameQualifiedNode extends AbstractSequence {
     }
   }
 
-  renderAsHtml(): string {
-    let name = this.unqualifiedName?.renderAsElanSource();
-    const lang = this.file.language();
-    if (name === "Int") {
-      name = lang.INT_NAME;
-    } else if (name === "Float") {
-      name = lang.FLOAT_NAME;
-    } else if (name === "Boolean") {
-      name = lang.BOOL_NAME;
-    } else if (name === "String") {
-      name = lang.STRING_NAME;
-    }
-    const qualifier = this.libraryQualifier?.matchedNode ? `<el-kw>${libraryKeyword}</el-kw>.` : ``;
-    return `${qualifier}<el-type>${name}</el-type>`;
-  }
-
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }
