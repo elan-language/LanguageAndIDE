@@ -5,7 +5,7 @@ main
   while not reply.upperCase().isSameValueAs("Q")
     set reply to inputString('RETURN for time now or\nUnix time (positive integer) or\nQ to quit')
     if reply.isSameValueAs("") then
-      call printDate(divAsInteger(clock(), 1000))
+      call printDate(divAsInt(clock(), 1000))
     else
       variable td set to parseAsInt(reply)
       if td.item0 and (td.item1 >= 0) then
@@ -36,11 +36,11 @@ end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
   # get separate values from Unix time
-  constant hour set to (divAsInteger(divAsInteger(unixSecs, 60), 60) mod 24)
-  constant minute set to divAsInteger(unixSecs, 60) mod 60
+  constant hour set to (divAsInt(divAsInt(unixSecs, 60), 60) mod 24)
+  constant minute set to divAsInt(unixSecs, 60) mod 60
   constant second set to (unixSecs mod 60)
   # days and years from Unix epoch
-  constant unixDay set to divAsInteger(unixSecs, daySecs)
+  constant unixDay set to divAsInt(unixSecs, daySecs)
   constant years set to ((unixDay + 1)/365.24).floor()
   # this year and weekday
   constant year set to unixYear + years
@@ -70,7 +70,7 @@ function leap(year as Int) returns Boolean
   variable leapYear set to false
   if (year mod 4) is 0 then
     set leapYear to true
-    if ((year mod 100) is 0) and ((divAsInteger(year, 100) mod 4) isnt 0) then
+    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
       set leapYear to false
     end if
   end if

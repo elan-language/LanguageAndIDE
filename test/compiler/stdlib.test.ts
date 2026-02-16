@@ -2231,10 +2231,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(divAsInteger(1, 2))
-  call printNoLine(divAsInteger(1.0, 2.0))
-  call printNoLine(divAsInteger(1, 2.0))
-  call printNoLine(divAsInteger(1.0, 2))
+  call printNoLine(divAsInt(1, 2))
+  call printNoLine(divAsInt(1.0, 2.0))
+  call printNoLine(divAsInt(1, 2.0))
+  call printNoLine(divAsInt(1.0, 2))
   call printNoLine(divAsFloat(1, 2))
   call printNoLine(divAsFloat(1.0, 2.0))
   call printNoLine(divAsFloat(1, 2.0))
@@ -2245,10 +2245,10 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
-  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
-  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
-  await _stdlib.printNoLine(_stdlib.divAsInteger(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
   await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
   await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
   await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));

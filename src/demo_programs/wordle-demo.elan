@@ -126,7 +126,7 @@ procedure playReverseGame()
       call print("No possible answer matches marks so far. Press any key to continue")
       set attemptNo to 6
     else
-      set attempt to possible[divAsInteger(possible.length(), 2)]
+      set attempt to possible[divAsInt(possible.length(), 2)]
     end if
   end while
 end procedure

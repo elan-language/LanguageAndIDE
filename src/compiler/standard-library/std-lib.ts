@@ -302,7 +302,7 @@ export class StdLib {
   }
 
   @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
-  divAsInteger(n1: number, n2: number) {
+  divAsInt(n1: number, n2: number) {
     return Math.floor(n1 / n2);
   }
 

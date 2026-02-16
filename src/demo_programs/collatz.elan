@@ -13,7 +13,7 @@ main
     while x > 1
       # Collatz sequence
       if (x mod 2) is 0 then
-        set x to divAsInteger(x, 2)
+        set x to divAsInt(x, 2)
       else
         set x to x*3 + 1
       end if
