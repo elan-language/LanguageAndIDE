@@ -626,6 +626,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.setSelection(this.text.length);
       }
     }
+    this.resetText();
   }
 
   isSelected(): boolean {
@@ -877,7 +878,11 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   resetText() {
-    const text = removeHtmlTags(this.renderAsHtml());
-    this.setFieldToKnownValidText(text);
+    if (!!this.rootNode) {
+      const text = removeHtmlTags(this.rootNode!.renderAsHtml());
+      if (text !== this.text) {
+        this.setFieldToKnownValidText(text);
+      }
+    }
   }
 }
