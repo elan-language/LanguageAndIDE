@@ -1,7 +1,7 @@
 # 942f52a826648fe324ace41ec59f62417095007fb7afb6b54756cc1a9903ec1c Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable blocks set to createBlockGraphics()
+  variable blocks set to createBlockGraphics(white)
   variable x set to 20
   variable y set to 15
   while true

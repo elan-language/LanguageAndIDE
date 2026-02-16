@@ -10,9 +10,9 @@ suite("Demo compile", () => {
   test("test bubbles", async () => {
     await testElanProgram("demo_programs\\bubbles.elan");
   });
-  // test("test burrow", async () => {
-  //   await testElanProgram("demo_programs\\burrow.elan");
-  // });
+  test("test burrow", async () => {
+    await testElanProgram("demo_programs\\burrow.elan");
+  });
   test("test collatz", async () => {
     await testElanProgram("demo_programs\\collatz.elan");
   });
@@ -25,36 +25,36 @@ suite("Demo compile", () => {
   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   });
-  // test("test julia-set", async () => {
-  //   await testElanProgram("demo_programs\\julia-set.elan");
-  // });
+  test("test julia-set", async () => {
+    await testElanProgram("demo_programs\\julia-set.elan");
+  });
   test("test kaleidoscope", async () => {
     await testElanProgram("demo_programs\\kaleidoscope.elan");
   });
-  // test("test life", async () => {
-  //   await testElanProgram("demo_programs\\life.elan");
-  // });
-  // test("test maze-generator", async () => {
-  //   await testElanProgram("demo_programs\\maze-generator.elan");
-  // });
+  test("test life", async () => {
+    await testElanProgram("demo_programs\\life.elan");
+  });
+  test("test maze-generator", async () => {
+    await testElanProgram("demo_programs\\maze-generator.elan");
+  });
   test("test password-generator", async () => {
     await testElanProgram("demo_programs\\password-generator.elan");
   });
   // test("test pathfinder", async () => {
   //   await testElanProgram("demo_programs\\pathfinder.elan");
   // });
-  // test("test roman-numerals-turing-machine.elan", async () => {
-  //   await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
-  // });
+  test("test roman-numerals-turing-machine.elan", async () => {
+    await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
+  });
   // test("test snake_FP", async () => {
   //   await testElanProgram("demo_programs\\snake_FP.elan");
   // });
-  // test("test snake_OOP", async () => {
-  //   await testElanProgram("demo_programs\\snake_OOP.elan");
-  // });
-  // test("test snake_PP", async () => {
-  //   await testElanProgram("demo_programs\\snake_PP.elan");
-  // });
+  test("test snake_OOP", async () => {
+    await testElanProgram("demo_programs\\snake_OOP.elan");
+  });
+  test("test snake_PP", async () => {
+    await testElanProgram("demo_programs\\snake_PP.elan");
+  });
   test("test turtle-snowflake", async () => {
     await testElanProgram("demo_programs\\turtle-snowflake.elan");
   });
