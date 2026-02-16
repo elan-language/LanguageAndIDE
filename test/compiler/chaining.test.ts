@@ -148,6 +148,7 @@ end main
 
 class Foo
   constructor()
+    set property.b to new Bar()
   end constructor
   
   property b as Bar
@@ -155,6 +156,7 @@ end class
 
 class Bar
   constructor()
+    set property.y to new Yon()
   end constructor
   
   property y as Yon
@@ -181,7 +183,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.b = system.initialise(await new Bar()._initialise());
     return this;
   }
 
@@ -199,7 +201,7 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
-
+    this.y = system.initialise(await new Yon()._initialise());
     return this;
   }
 
@@ -254,6 +256,7 @@ end main
 
 class Foo
   constructor()
+    set property.b to new Bar()
   end constructor
   
   property b as Bar
@@ -281,7 +284,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.b = system.initialise(await new Bar()._initialise());
     return this;
   }
 
@@ -338,6 +341,7 @@ end main
 
 class Foo
   constructor()
+    set property.b to new Bar()
   end constructor
   
   property b as Bar
@@ -365,7 +369,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.b = system.initialise(await new Bar()._initialise());
     return this;
   }
 

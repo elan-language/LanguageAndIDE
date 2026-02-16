@@ -328,7 +328,7 @@ end main
 class Bar
   private property l as List<of Int>
   constructor(li as List<of Int>)
-    set property.li to li
+    set property.l to li
   end constructor
 
   procedure display()

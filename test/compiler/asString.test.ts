@@ -112,9 +112,10 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to new Optional<of Foo>()
   end constructor
 
-  property p1 as Foo
+  property p1 as Optional<of Foo>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -130,13 +131,13 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Foo.emptyInstance();
+    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
     this._p1 = p1;
@@ -158,7 +159,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Foo");
+    await assertObjectCodeExecutes(fileImpl, "a Optional");
   });
 
   // this behaviour has changed from c# compiler
@@ -176,9 +177,10 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to new Optional<of Foo>()
   end constructor
 
-  property p1 as Foo
+  property p1 as Optional<of Foo>
 
   function asString() returns String
      return "Custom asString"
@@ -191,7 +193,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let s1 = (await f.asString());
   let p = f.p1;
-  let s2 = (await p.asString());
+  let s2 = (await _stdlib.asString(p));
   await _stdlib.printNoLine(s1);
   await _stdlib.printNoLine(s2);
 }
@@ -200,13 +202,13 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Foo.emptyInstance();
+    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
     this._p1 = p1;
@@ -232,7 +234,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Custom asStringCustom asString");
+    await assertObjectCodeExecutes(fileImpl, "Custom asStringa Optional");
   });
 
   test("Pass_AsStringMayBeCalled", async () => {

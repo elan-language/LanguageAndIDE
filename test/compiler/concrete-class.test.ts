@@ -27,7 +27,8 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+    set property.p1 to 5
+    set property.p2 to ""
   end constructor
 
   property p1 as Float
@@ -54,6 +55,7 @@ class Foo {
 
   async _initialise() {
     this.p1 = 5;
+    this.p2 = "";
     return this;
   }
 
@@ -258,6 +260,7 @@ end main
 
 class Foo
   constructor()
+    set property.bar to new Bar()
   end constructor
 
   property bar as Bar
@@ -270,13 +273,16 @@ end class
 
 class Bar
   constructor()
+    set property.p2 to ""
+    set property.p2 to ""
+    set property.foo to new OPtional<of Foo>()
   end constructor
 
   property p1 as Int
 
   property p2 as String
 
-  property foo as Foo
+  property foo as OPtional<of Foo>()
 
   function asString() returns String
         return ""
@@ -301,7 +307,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.bar = system.initialise(await new Bar()._initialise());
     return this;
   }
 
@@ -323,7 +329,9 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
-
+    this.p2 = "";
+    this.p2 = "";
+    this.foo = system.initialise(await new Foo()._initialise());
     return this;
   }
 
@@ -1230,6 +1238,7 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to new Bar()
   end constructor
   property p1 as Bar
 end class`;
@@ -1292,9 +1301,10 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to ""
   end constructor
-  property p1 as Int
   property p1 as String
+  property p1 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1613,6 +1623,7 @@ end main
 
 class Foo
     constructor()
+      set property.vg to new CircleVG()
     end constructor
 
     property vg as CircleVG

@@ -658,7 +658,7 @@ return [main, _tests];}`;
 main
   variable x set to new Bar()
   call printNoLine(x.foo)
-  call printNoLine(x.foo.f)
+  call printNoLine(x.foo.hasValue())
 end main
 
 interface Foo
@@ -671,9 +671,10 @@ end interface
 
 class Bar
   constructor()
+    set property.foo to new Optional<of Foo>()
   end constructor
 
-  property foo as Foo
+  property foo as Optional<of Foo>
 
 end class`;
 

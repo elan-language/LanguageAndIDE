@@ -321,6 +321,7 @@ end main
 
 class Foo
   constructor()
+    set property.p to new List<of Int>()
   end constructor
 
   property p as List<of Int>
