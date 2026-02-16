@@ -241,7 +241,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0");
+    await assertObjectCodeExecutes(fileImpl, "2");
   });
 
   test("Pass_PropertyChain3", async () => {

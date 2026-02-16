@@ -613,7 +613,7 @@ main
   variable g set to new Game()
   call printNoLine(g.p1.isSameValueAs(empty Player))
   call printNoLine(g.p2.isSameValueAs(empty Player))
-  call printNoLine(g.previousGame.isSameValueAs(empty Game))
+  call printNoLine(g.previousGame.isSameValueAs(empty Optional<of Game>))
   call printNoLine(g.previousScores.isSameValueAs(empty List<of Int>))
   call printNoLine(g.score is empty Int)
   call printNoLine(g.best is empty Int)
@@ -623,10 +623,10 @@ end main
 class Game
   constructor()
     set property.score to 1
-    set property.p1 to new Player()
-    set property.p2 to new Player()
+    set property.p1 to new Player("Player1")
+    set property.p2 to new Player("Player2")
     set property.previousGame to new Optional<of Game>()
-    set property.previousScores to new List<of Int>() 
+    set property.previousScores to new List<of Int>()
   end constructor
 
   property score as Float
@@ -666,7 +666,7 @@ async function main() {
   let g = system.initialise(await new Game()._initialise());
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, system.initialise(_stdlib.Optional.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(g.score === 0);
   await _stdlib.printNoLine(g.best === 0);
@@ -678,6 +678,10 @@ class Game {
 
   async _initialise() {
     this.score = 1;
+    this.p1 = system.initialise(await new Player()._initialise("Player1"));
+    this.p2 = system.initialise(await new Player()._initialise("Player2"));
+    this.previousGame = system.initialise(await new _stdlib.Optional()._initialise());
+    this.previousScores = system.initialise(await new _stdlib.List()._initialise());
     return this;
   }
 
@@ -703,7 +707,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.emptyInstance();
+    return this._previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -749,7 +753,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
+    await assertObjectCodeExecutes(fileImpl, "falsefalsetruetruefalsetruetrue");
   });
 
   ignore_test("Pass_emptyKeywordToTestReference", async () => {
@@ -1074,20 +1078,21 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
-  await _stdlib.printNoLine((await p.ucName()));
+  await _stdlib.printNoLine(p.hasValue());
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
 
   async _initialise() {
-
+    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
+    this.p2 = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.emptyInstance();
+    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
     this._p1 = p1;
@@ -1095,7 +1100,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.emptyInstance();
+    return this._p2 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p2(p2) {
     this._p2 = p2;

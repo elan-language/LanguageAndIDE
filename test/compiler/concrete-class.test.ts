@@ -252,7 +252,9 @@ main
   variable bar set to foo.bar
   call printNoLine(bar.p1)
   call printNoLine(bar.p2)
-  variable foo2 set to bar.foo
+  variable opt set to bar.foo
+  call opt.set(foo)
+  variable foo2 set to bar.foo.getValue()
   variable bar2 set to foo2.bar
   call printNoLine(bar2.p1)
   call printNoLine(bar2.p2)
@@ -266,7 +268,7 @@ class Foo
   property bar as Bar
 
   function asString() returns String
-        return ""
+    return ""
   end function
 
 end class
@@ -274,18 +276,17 @@ end class
 class Bar
   constructor()
     set property.p2 to ""
-    set property.p2 to ""
-    set property.foo to new OPtional<of Foo>()
+    set property.foo to new Optional<of Foo>()
   end constructor
 
   property p1 as Int
 
   property p2 as String
 
-  property foo as OPtional<of Foo>()
+  property foo as Optional<of Foo>
 
   function asString() returns String
-        return ""
+    return ""
   end function
 
 end class`;
@@ -297,7 +298,9 @@ async function main() {
   let bar = foo.bar;
   await _stdlib.printNoLine(bar.p1);
   await _stdlib.printNoLine(bar.p2);
-  let foo2 = bar.foo;
+  let opt = bar.foo;
+  opt.set(foo);
+  let foo2 = bar.foo.getValue();
   let bar2 = foo2.bar;
   await _stdlib.printNoLine(bar2.p1);
   await _stdlib.printNoLine(bar2.p2);
@@ -330,8 +333,7 @@ class Bar {
 
   async _initialise() {
     this.p2 = "";
-    this.p2 = "";
-    this.foo = system.initialise(await new Foo()._initialise());
+    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
@@ -341,7 +343,7 @@ class Bar {
 
   _foo;
   get foo() {
-    return this._foo ??= Foo.emptyInstance();
+    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
     this._foo = foo;
