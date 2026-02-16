@@ -321,6 +321,7 @@ end main
 
 class Foo
   constructor()
+    set property.p to new List<of Int>()
   end constructor
 
   property p as List<of Int>
@@ -338,7 +339,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
-
+    this.p = system.initialise(await new _stdlib.List()._initialise());
     return this;
   }
 

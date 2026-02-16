@@ -2914,6 +2914,7 @@ end class
 
 class Bar inherits Yon
   constructor()
+    set property.p1 to ""
   end constructor
   property p1 as String
   property p2 as Int

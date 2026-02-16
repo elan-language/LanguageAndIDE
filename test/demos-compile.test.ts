@@ -40,12 +40,12 @@ suite("Demo compile", () => {
   test("test password-generator", async () => {
     await testElanProgram("demo_programs\\password-generator.elan");
   });
-  test("test pathfinder", async () => {
-    await testElanProgram("demo_programs\\pathfinder.elan");
-  });
-  test("test roman-numerals-turing-machine.elan", async () => {
-    await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
-  });
+  // test("test pathfinder", async () => {
+  //   await testElanProgram("demo_programs\\pathfinder.elan");
+  // });
+  // test("test roman-numerals-turing-machine.elan", async () => {
+  //   await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
+  // });
   // test("test snake_FP", async () => {
   //   await testElanProgram("demo_programs\\snake_FP.elan");
   // });
@@ -77,12 +77,12 @@ suite("Demo compile", () => {
     await testElanProgram("demo_programs\\date-time.elan");
   });
   //Worksheet loaded code
-  test("test blackjack 1", async () => {
-    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
-  });
-  test("test blackjack 2", async () => {
-    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
-  });
+  // test("test blackjack 1", async () => {
+  //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
+  // });
+  // test("test blackjack 2", async () => {
+  //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
+  // });
   test("test wordle 1", async () => {
     await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
   });

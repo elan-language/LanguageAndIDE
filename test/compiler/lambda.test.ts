@@ -188,6 +188,7 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to lambda x as Int => 0
   end constructor
 
   procedure setP1(p as Func<of Int => Int>)
@@ -210,7 +211,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)]]);};
 
   async _initialise() {
-
+    this.p1 = async (x) => 0;
     return this;
   }
 

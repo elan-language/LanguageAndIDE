@@ -184,6 +184,7 @@ end main
 
 class Foo
     constructor()
+      set property.p2 to ""
     end constructor
     property p1 as Int
     property p2 as String
@@ -208,7 +209,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
-
+    this.p2 = "";
     return this;
   }
 
@@ -253,6 +254,7 @@ end main
 
 class Foo
     constructor()
+      set property.p2 to ""
     end constructor
     property p1 as Int
     property p2 as String
@@ -277,7 +279,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
-
+    this.p2 = "";
     return this;
   }
 

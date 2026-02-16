@@ -658,7 +658,7 @@ return [main, _tests];}`;
 main
   variable x set to new Bar()
   call printNoLine(x.foo)
-  call printNoLine(x.foo.f)
+  call printNoLine(x.foo.hasValue())
 end main
 
 interface Foo
@@ -671,9 +671,10 @@ end interface
 
 class Bar
   constructor()
+    set property.foo to new Optional<of Foo>()
   end constructor
 
-  property foo as Foo
+  property foo as Optional<of Foo>
 
 end class`;
 
@@ -682,7 +683,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
   await _stdlib.printNoLine(x.foo);
-  await _stdlib.printNoLine(x.foo.f);
+  await _stdlib.printNoLine(x.foo.hasValue());
 }
 
 class Foo {
@@ -709,13 +710,13 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
-
+    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
   _foo;
   get foo() {
-    return this._foo ??= Foo.emptyInstance();
+    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
     this._foo = foo;
@@ -737,7 +738,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Fooa Foo2");
+    await assertObjectCodeExecutes(fileImpl, "a Optionalfalse");
   });
 
   test("Pass_DiamondInheritance", async () => {

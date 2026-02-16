@@ -27,7 +27,8 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+    set property.p1 to 5
+    set property.p2 to ""
   end constructor
 
   property p1 as Float
@@ -54,6 +55,7 @@ class Foo {
 
   async _initialise() {
     this.p1 = 5;
+    this.p2 = "";
     return this;
   }
 
@@ -250,7 +252,9 @@ main
   variable bar set to foo.bar
   call printNoLine(bar.p1)
   call printNoLine(bar.p2)
-  variable foo2 set to bar.foo
+  variable opt set to bar.foo
+  call opt.set(foo)
+  variable foo2 set to bar.foo.getValue()
   variable bar2 set to foo2.bar
   call printNoLine(bar2.p1)
   call printNoLine(bar2.p2)
@@ -258,28 +262,31 @@ end main
 
 class Foo
   constructor()
+    set property.bar to new Bar()
   end constructor
 
   property bar as Bar
 
   function asString() returns String
-        return ""
+    return ""
   end function
 
 end class
 
 class Bar
   constructor()
+    set property.p2 to ""
+    set property.foo to new Optional<of Foo>()
   end constructor
 
   property p1 as Int
 
   property p2 as String
 
-  property foo as Foo
+  property foo as Optional<of Foo>
 
   function asString() returns String
-        return ""
+    return ""
   end function
 
 end class`;
@@ -291,7 +298,9 @@ async function main() {
   let bar = foo.bar;
   await _stdlib.printNoLine(bar.p1);
   await _stdlib.printNoLine(bar.p2);
-  let foo2 = bar.foo;
+  let opt = bar.foo;
+  opt.set(foo);
+  let foo2 = bar.foo.getValue();
   let bar2 = foo2.bar;
   await _stdlib.printNoLine(bar2.p1);
   await _stdlib.printNoLine(bar2.p2);
@@ -301,7 +310,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-
+    this.bar = system.initialise(await new Bar()._initialise());
     return this;
   }
 
@@ -323,7 +332,8 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
-
+    this.p2 = "";
+    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
@@ -333,7 +343,7 @@ class Bar {
 
   _foo;
   get foo() {
-    return this._foo ??= Foo.emptyInstance();
+    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
     this._foo = foo;
@@ -1230,6 +1240,7 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to new Bar()
   end constructor
   property p1 as Bar
 end class`;
@@ -1292,9 +1303,10 @@ end main
 
 class Foo
   constructor()
+    set property.p1 to ""
   end constructor
-  property p1 as Int
   property p1 as String
+  property p1 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1613,6 +1625,7 @@ end main
 
 class Foo
     constructor()
+      set property.vg to new CircleVG()
     end constructor
 
     property vg as CircleVG

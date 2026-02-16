@@ -328,7 +328,7 @@ end main
 class Bar
   private property l as List<of Int>
   constructor(li as List<of Int>)
-    set property.li to li
+    set property.l to li
   end constructor
 
   procedure display()
@@ -350,10 +350,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'li' is not defined.LangRef.html#compile_error",
-      "'li' is not defined.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'li' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_variableIsScoped", async () => {
