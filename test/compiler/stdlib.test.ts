@@ -2276,8 +2276,6 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new List<of VectorGraphic>()
-  set a to createListOfVectorGraphics()
   variable b set to new Array2D<of Int>(40, 30, white)
   set b to createBlockGraphics(white)
 end main
@@ -2286,8 +2284,6 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.List()._initialise());
-  a = (await _stdlib.createListOfVectorGraphics());
   let b = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   b = (await _stdlib.createBlockGraphics(_stdlib.white));
 }

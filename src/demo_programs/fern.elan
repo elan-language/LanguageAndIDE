@@ -3,7 +3,7 @@
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  variable vg set to createListOfVectorGraphics()
+  variable vg set to new List<of VectorGraphic>()
   # coordinates
   variable x set to 0.0
   variable y set to 0.16
