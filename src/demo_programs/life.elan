@@ -1,7 +1,7 @@
 # a31b40ce0d5c8522baf99d99944998c8ebfae61e8318daffdfb2c8125aaefe93 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable grid set to createBlockGraphics()
+  variable grid set to createBlockGraphics(white)
   call fillRandom(grid)
   while true
     call displayBlocks(grid)

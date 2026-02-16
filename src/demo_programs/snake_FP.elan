@@ -2,7 +2,7 @@
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to createBlockGraphics()
+  variable blocks set to createBlockGraphics(white)
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   variable game set to newGame(rnd)

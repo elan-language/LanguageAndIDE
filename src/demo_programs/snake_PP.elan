@@ -2,7 +2,7 @@
 
 # Use the w,a,s,d keys to change snake's direction
 main
-  variable blocks set to createBlockGraphics()
+  variable blocks set to createBlockGraphics(white)
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]

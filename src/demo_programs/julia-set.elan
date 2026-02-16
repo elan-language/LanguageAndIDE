@@ -1,4 +1,4 @@
-# 0c6a15f48ba7c23c578d80775e5febf87f2a3a3a5656ae690eb294d5cc492c64 Elan 2.0.0-alpha guest default_profile valid
+# 55f38bcf4aff2b4dec59650a6e418601654c7d4ac11f83ff59d9eb50c305752a Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -26,7 +26,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point
       constant col set to if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      constant rect set to new RectangleVG() with x set to divAsFloat(xp, 2), y set to divAsFloat(yp, 2), width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
+      variable rect set to new RectangleVG() with x set to divAsFloat(xp, 2), y set to divAsFloat(yp, 2), width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
       set vg2 to vg2.withAppend(rect)
     end for
   end for
@@ -119,7 +119,7 @@ class Coords
 end class
 
 test test_one
-  constant p set to new Coords()
+  variable p set to new Coords()
   assert onepoint(0, 0, 100, p) is 100
   assert onepoint(0.5, 0.5, 100, p) is 3
 end test
