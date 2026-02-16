@@ -2152,7 +2152,7 @@ end main`;
     const expected = [
       ["black", "black", "black"],
       ["blue", "blue", "blue"],
-      ["createBlockGraphicsArray", "*", "*"],
+      ["createBlockGraphics", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);

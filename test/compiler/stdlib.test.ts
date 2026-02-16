@@ -2279,7 +2279,7 @@ main
   variable a set to new List<of VectorGraphic>()
   set a to createListOfVectorGraphics()
   variable b set to new Array2D<of Int>(40, 30, white)
-  set b to createBlockGraphicsArray()
+  set b to createBlockGraphics(white)
 end main
 `;
 
@@ -2289,7 +2289,7 @@ async function main() {
   let a = system.initialise(await new _stdlib.List()._initialise());
   a = (await _stdlib.createListOfVectorGraphics());
   let b = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
-  b = (await _stdlib.createBlockGraphicsArray());
+  b = (await _stdlib.createBlockGraphics(_stdlib.white));
 }
 return [main, _tests];}`;
 
