@@ -8,7 +8,6 @@ import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -159,20 +158,12 @@ export class LanguageJava extends LanguageAbstract {
     return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
-  parseText(node: ParseNode, text: string): boolean {
-    return node && text ? false : false;
-  }
-
   getFields(frame: Frame): Field[] {
     let fields: Field[] = [];
     if (frame instanceof FunctionFrame) {
       fields = [frame.returnType, frame.name, frame.params];
     }
     return fields;
-  }
-
-  private spaced(text: string): string {
-    return ` ${text} `;
   }
 
   private ABSTRACT = "abstract";

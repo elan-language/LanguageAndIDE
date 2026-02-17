@@ -165,10 +165,6 @@ export class LanguageCS extends LanguageAbstract {
     return fields;
   }
 
-  private spaced(text: string): string {
-    return ` ${text} `;
-  }
-
   private ABSTRACT = "abstract";
   private CATCH = "catch";
   private CLASS = "class";

@@ -193,20 +193,6 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  renderNodeAsHtml(node: ParseNode): string {
-    let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof Index) {
-      html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof InheritanceNode) {
-      html = `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof ListNode) {
-      html = `<el-punc>{</el-punc>${node.csv?.renderAsHtml()}<el-punc>}</el-punc>`;
-    }
-    return html;
-  }
-
   renderNodeAsExport(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof ParamDefNode) {
@@ -223,20 +209,8 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  parseText(node: ParseNode, text: string): boolean {
-    let result = false;
-    if (node instanceof ParamDefNode) {
-      result = this.parseParamDefNode(node, text);
-    }
-    return result;
-  }
-
   getFields(node: Frame): Field[] {
     return node ? [] : [];
-  }
-
-  private spaced(text: string): string {
-    return ` ${text} `;
   }
 
   private ABSTRACT = "abstract";
