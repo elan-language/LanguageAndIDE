@@ -454,14 +454,15 @@ export function ctrl_v() {
   return key("v", false, true);
 }
 
-export function testNodeParse(
+export function testNodeParseElan(
   node: ParseNode,
   text: string,
   status: ParseStatus,
   matchedText: string,
   remainingText: string,
-  source = "",
+  elanSource = "",
   html = "",
+  exportTest = "",
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
@@ -469,11 +470,14 @@ export function testNodeParse(
     assert.equal(node.matchedText, matchedText);
   }
   assert.equal(node.remainingText, remainingText);
-  if (source !== "") {
-    assert.equal(node.renderAsElanSource(), source);
+  if (elanSource !== "") {
+    assert.equal(node.renderAsElanSource(), elanSource);
   }
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);
+  }
+  if (exportTest && exportTest !== "") {
+    assert.equal(node.renderAsExport(), exportTest);
   }
 }
 
