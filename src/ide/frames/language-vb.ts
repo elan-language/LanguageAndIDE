@@ -8,7 +8,6 @@ import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -22,12 +21,8 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { IndexDouble } from "./parse-nodes/index-double";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
-import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -193,22 +188,6 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  renderNodeAsExport(node: ParseNode): string {
-    let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof ParamDefNode) {
-      html = this.paramDefNodeAsExport(node);
-    } else if (node instanceof Index) {
-      html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof InheritanceNode) {
-      html = `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof ListNode) {
-      html = `<el-punc>{</el-punc>${node.csv?.renderAsHtml()}<el-punc>}</el-punc>`;
-    }
-    return html;
-  }
-
   getFields(node: Frame): Field[] {
     return node ? [] : [];
   }
@@ -287,10 +266,6 @@ export class LanguageVB extends LanguageAbstract {
 
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
-  }
-
-  paramDefNodeAsExport(node: ParamDefNode): string {
-    return `${node.name?.renderAsExport()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsExport()}`;
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {

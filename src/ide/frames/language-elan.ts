@@ -220,11 +220,8 @@ export class LanguageElan extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
-  paramDefNodeAsExport(node: ParamDefNode): string {
-    return node ? "" : "";
-  }
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
-    return node || text ? false : false;
+    return node || text ? false : false; // so will use the default on the node
   }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {

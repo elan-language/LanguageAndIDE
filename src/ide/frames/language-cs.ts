@@ -222,9 +222,6 @@ export class LanguageCS extends LanguageAbstract {
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }
-  paramDefNodeAsExport(node: ParamDefNode): string {
-    return `${node.type?.renderAsExport()} ${node.name?.renderAsExport()}`;
-  }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;

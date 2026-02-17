@@ -138,6 +138,10 @@ export class BinaryOperation extends AbstractParseNode {
     return source;
   }
 
+  renderAsHtml() {
+    return this.file.language().renderNodeAsHtml(this);
+  }
+
   getSyntaxCompletionAsHtml(): string {
     let completion = this.completion;
     if (this.matchedText === "" || this.matchedText === " ") {

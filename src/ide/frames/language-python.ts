@@ -214,9 +214,6 @@ export class LanguagePython extends LanguageAbstract {
   paramDefNodeAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
-  paramDefNodeAsExport(node: ParamDefNode): string {
-    return `${node.name?.renderAsExport()}: ${node.type?.renderAsExport()}`;
-  }
 
   typeGenericNodeAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;

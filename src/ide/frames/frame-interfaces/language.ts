@@ -18,7 +18,6 @@ export interface Language {
   renderBottomAsHtml(frame: Frame): string;
 
   renderNodeAsHtml(node: ParseNode): string;
-  renderNodeAsExport(node: ParseNode): string;
 
   parseText(node: ParseNode, text: string): boolean;
 

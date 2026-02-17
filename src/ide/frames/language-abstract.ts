@@ -46,39 +46,24 @@ export abstract class LanguageAbstract implements Language {
 
   abstract renderBottomAsHtml(frame: Frame): string;
 
-  abstract paramDefNodeAsHtml(node: ParamDefNode): string;
-  abstract paramDefNodeAsExport(node: ParamDefNode): string;
-  abstract parseParamDefNode(node: ParamDefNode, text: string): boolean;
-
-  abstract typeGenericNodeAsHtml(node: TypeGenericNode): string;
-
-  abstract binaryOperationAsHtml(node: BinaryOperation): string;
-
-  abstract propertyRefAsHtml(node: PropertyRef): string;
-
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof ParamDefNode) {
       html = this.paramDefNodeAsHtml(node);
-    }
-    if (node instanceof InheritanceNode) {
-      html =
-        node.matchedText.length > 0
-          ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
-          : ``;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>[</el-punc>${node.index1?.renderAsHtml()}<el-punc>][</el-punc>${node.index2?.renderAsHtml()}<el-punc>]</el-punc>`;
-    }
+    } else  if (node instanceof BinaryOperation) {
+      html = this.binaryOperationAsHtml(node);
+    } else  if (node instanceof TypeGenericNode) {
+      html = this.typeGenericNodeAsHtml(node);
+    } else  if (node instanceof PropertyRef) {
+      html = this.propertyRefAsHtml(node);
+    } 
     return html;
   }
 
-  renderNodeAsExport(node: ParseNode): string {
-    let exp = "";
-    if (node instanceof ParamDefNode) {
-      exp = this.paramDefNodeAsExport(node);
-    }
-    return exp;
-  }
+  abstract paramDefNodeAsHtml(node: ParamDefNode): string;
+  abstract binaryOperationAsHtml(node: BinaryOperation): string;
+  abstract typeGenericNodeAsHtml(node: TypeGenericNode): string;
+  abstract propertyRefAsHtml(node: PropertyRef): string;
 
   parseText(node: ParseNode, text: string): boolean {
     let result = false;
@@ -87,6 +72,8 @@ export abstract class LanguageAbstract implements Language {
     }
     return result;
   }
+
+  abstract parseParamDefNode(node: ParamDefNode, text: string): boolean;
 
   getFields(node: Frame): Field[] {
     return node ? [] : [];
