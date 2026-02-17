@@ -626,7 +626,6 @@ export abstract class AbstractField implements Selectable, Field {
         this.setSelection(this.text.length);
       }
     }
-    this.resetText();
   }
 
   isSelected(): boolean {
