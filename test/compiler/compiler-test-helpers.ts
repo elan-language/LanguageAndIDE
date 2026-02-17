@@ -15,6 +15,11 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
 import { Transforms } from "../../src/ide/compile-api/transforms";
 import { Severity } from "../../src/compiler/compile-error";
+import { LanguagePython } from "../../src/ide/frames/language-python";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
+import { LanguageJava } from "../../src/ide/frames/language-java";
+import { LanguageCS } from "../../src/ide/frames/language-cs";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -250,3 +255,37 @@ const pre = elanVersion.preRelease === "" ? "" : `-${elanVersion.preRelease}`;
 export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
+
+export const testPythonHeader = `#  Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+export const testJavaHeader = `//  Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+export const testCSHeader = `//  C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+export const testElanHeader = `#  Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+
+export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
+  let actual;
+
+  try {
+    assert.ok(file.setLanguage(language), "Failed to set language");
+    actual = await file.renderAsExport();   
+
+  } catch (e) {
+    assert.fail((e as { message: string }).message ?? "");
+  }
+  assert.strictEqual(actual.replaceAll("\r", ""), code.replaceAll("\r", ""));
+}
+
+export async function assertExportedPythonIs(file: FileImpl, code : string) {
+  await assertExportedFileIs(file, new LanguagePython(), code);
+}
+
+export async function assertExportedJavaIs(file: FileImpl, code : string) {
+  await assertExportedFileIs(file, new LanguageJava(), code);
+}
+
+export async function assertExportedCSIs(file: FileImpl, code : string) {
+  await assertExportedFileIs(file, new LanguageCS(), code);
+}
+
+export async function assertExportedElanIs(file: FileImpl, code : string) {
+  await assertExportedFileIs(file, new LanguageElan(), code);
+}
