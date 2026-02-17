@@ -46,6 +46,15 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
+  private exporting: boolean = false;
+  setExporting(e: boolean) {
+    this.exporting = e;
+  }
+
+  isExporting() {
+    return this.exporting;
+  }
+
   get fileName() {
     return this.file!.fileName;
   }
@@ -60,6 +69,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   setRunStatus(s: RunStatus) {
     this.file?.setRunStatus(s);
+  }
+
+  getLanguage(): Language {
+    return this.file!.language();
   }
 
   getRunStatusLabel() {
@@ -136,6 +149,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.renderAsElanSource();
   }
 
+  renderAsExport() {
+    return this.file!.renderAsExport();
+  }
+
   parseFrom(source: CodeSource) {
     return this.file!.parseFrom(source);
   }
@@ -164,7 +181,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     const existingLanguage = this.file?.language() ?? new LanguageElan();
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
     this.file.setLanguage(existingLanguage);
-    vm.setDisplayLanguage(this.file?.language().languageFullName);
+    vm.setDisplayLanguage(this.file?.language());
   }
 
   get currentHash() {
@@ -419,7 +436,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean) {
     await vm.clearDisplays();
-    vm.setDisplayLanguage(this.file?.language().languageFullName ?? "Elan");
+    vm.setDisplayLanguage(this.file?.language() ?? new LanguageElan());
     const ps = this.readParseStatus();
     if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
       await this.refreshAndDisplay(vm, tr, false, false);
@@ -689,7 +706,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner) {
     if (this.file?.setLanguage(l)) {
-      vm.setDisplayLanguage(l.languageFullName);
+      vm.setDisplayLanguage(l);
       await this.refreshAndDisplay(vm, tr, true, false);
     }
   }

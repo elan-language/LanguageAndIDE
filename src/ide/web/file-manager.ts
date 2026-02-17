@@ -2,6 +2,7 @@
 
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
+import { LanguageElan } from "../frames/language-elan";
 import { ParseStatus } from "../frames/status-enums";
 import { TestRunner } from "./test-runner";
 import { cursorWait, ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
@@ -122,11 +123,17 @@ export class FileManager {
   async chromeSave(cvm: ICodeEditorViewModel, code: string, updateName: boolean, newName?: string) {
     const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
+    const nameWithoutExt = name.slice(0, name.lastIndexOf("."));
+    const language = cvm.isExporting() ? cvm.getLanguage() : new LanguageElan();
+    const ext = html ? "html" : language.defaultFileExtension;
+    const mime = html ? "text/html" : language.defaultMimeType;
+
+    const type = { [mime]: `.${ext}` } as any;
 
     const fh = await showSaveFilePicker({
-      suggestedName: name,
+      suggestedName: `${nameWithoutExt}.${ext}`,
       startIn: "documents",
-      types: html ? [{ accept: { "text/html": ".html" } }] : [{ accept: { "text/elan": ".elan" } }],
+      types: [{ accept: type }],
       id: lastDirId,
     });
 
@@ -153,10 +160,13 @@ export class FileManager {
   }
 
   async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
-    const code = await cvm.renderAsSource();
-    await this.chromeSave(cvm, code, true);
-    this.resetHash(cvm);
-    await vm.renderAsHtml(false);
+    const isSaving = !cvm.isExporting();
+    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
+    await this.chromeSave(cvm, code, isSaving);
+    if (isSaving) {
+      this.resetHash(cvm);
+      await vm.renderAsHtml(false);
+    }
   }
 
   getLastCodeVersion() {
