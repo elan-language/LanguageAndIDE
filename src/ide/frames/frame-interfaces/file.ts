@@ -24,6 +24,8 @@ export interface File extends Parent {
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
+
+  renderAsSource(): Promise<string>;
   renderAsElanSource(): Promise<string>;
   renderAsExport(): Promise<string>;
 
@@ -112,7 +114,7 @@ export interface File extends Parent {
   updateBreakpoints(event: BreakpointEvent): void;
 
   getVersion(): Semver;
-  getVersionString(): string;
+  getVersionString(lang: string): string;
 
   getAst(invalidate: boolean): RootAstNode | undefined;
 

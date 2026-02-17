@@ -136,7 +136,7 @@ export interface ICodeEditorViewModel {
 
   expandCollapseAll(): void;
 
-  getVersionString(): string;
+  getVersionString(lang: string): string;
 
   refreshParseAndCompileStatuses(compileIfParsed: boolean): void;
 

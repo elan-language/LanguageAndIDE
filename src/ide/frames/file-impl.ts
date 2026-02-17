@@ -220,14 +220,24 @@ export class FileImpl implements File {
       : globals;
   }
 
-  async renderAsElanSource(): Promise<string> {
-    const content = this.renderHashableContent();
+  async renderAsSource(): Promise<string> {
+    const content = this.renderHashableContent(this.language().languageFullName);
     this.currentHash = await this.getHash(content);
     return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
+  async renderAsElanSource(): Promise<string> {
+    const lang = this.language();
+    this.setLanguage(new LanguageElan());
+
+    const content = this.renderHashableContent(lang.languageFullName);
+    this.currentHash = await this.getHash(content);
+    this.setLanguage(lang);
+    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
+  }
+
   async renderAsExport(): Promise<string> {
-    const content = this.renderHashableContent();
+    const content = this.renderHashableContent(this.language().languageFullName);
     this.currentHash = await this.getHash(content);
     return `${this.language().COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
@@ -237,7 +247,9 @@ export class FileImpl implements File {
   }
 
   private async getHash(body?: string): Promise<string> {
-    body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
+    body = (body || this.renderHashableContent(this.language().languageFullName))
+      .trim()
+      .replaceAll("\r", "");
     return await this.hash(body);
   }
 
@@ -252,14 +264,13 @@ export class FileImpl implements File {
     return `${v.major}.${v.minor}.${v.patch}${suffix}`;
   }
 
-  getVersionString() {
-    const lang = this.language().languageFullName;
+  getVersionString(lang: string) {
     const prefix = lang === "Elan" ? "" : `${lang} with `;
     return `${prefix}Elan ${this.getSemverString()}`;
   }
 
   getVersionAsHtml() {
-    const v = this.getVersionString();
+    const v = this.getVersionString(this.language().languageFullName);
     return `<el-version>${v}</el-version>`;
   }
 
@@ -328,9 +339,9 @@ export class FileImpl implements File {
     return ast?.compile() ?? "";
   }
 
-  renderHashableContent(): string {
+  renderHashableContent(lang: string): string {
     const globals = parentHelper_renderChildrenAsElanSource(this);
-    const code = `${this.getVersionString()} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    const code = `${this.getVersionString(lang)} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 

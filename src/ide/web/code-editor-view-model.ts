@@ -121,7 +121,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   getVersionString() {
-    return this.file!.getVersionString();
+    return this.file!.getVersionString(this.file!.language().languageFullName);
   }
 
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
