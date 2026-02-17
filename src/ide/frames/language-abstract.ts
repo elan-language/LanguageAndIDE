@@ -6,8 +6,6 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { IndexDouble } from "./parse-nodes/index-double";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
