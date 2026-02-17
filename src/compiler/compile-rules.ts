@@ -91,13 +91,10 @@ import {
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
+import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { VariableAsn } from "./syntax-nodes/statements/variable-asn";
-import { NullScope } from "./symbols/null-scope";
-import { FunctionMethodAsn } from "./syntax-nodes/class-members/function-method-asn";
-import { NewAsn } from "./syntax-nodes/new-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -866,6 +863,36 @@ export function mustBeCompatibleDefinitionNode(
   }
 }
 
+export function mustConformToCopyOfThisBoilerPlate(
+  lhs: AstNode,
+  rhs: AstNode,
+  scope: Scope,
+  isVariable: boolean,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isAstIdNode(lhs) && lhs.id === "copyOfThis") {
+    const innerFunction = getInnerMostFunction(scope);
+    if (
+      isVariable &&
+      rhs instanceof FuncCallAsn &&
+      rhs.id === "shallowCopy" &&
+      rhs.parameters.length === 1 &&
+      rhs.parameters[0] instanceof ThisAsn &&
+      innerFunction &&
+      isMember(innerFunction)
+    ) {
+      return;
+    }
+    compileErrors.push(
+      new SyntaxCompileError(
+        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).",
+        location,
+      ),
+    );
+  }
+}
+
 export function mustBeCompatibleNode(
   lhs: AstNode,
   rhs: AstNode,
@@ -903,23 +930,8 @@ export function mustNotBePropertyOnFunctionMethod(
     if (isInsideFunction(scope)) {
       if (isAstQualifiedNode(assignable)) {
         const id = isAstIdNode(assignable.qualifier) ? assignable.qualifier.id : "";
-        const symbol = scope.getParentScope().resolveSymbol(id, scope);
-        const innerFunction = getInnerMostFunction(scope);
-        const symbolFunction = symbol instanceof VariableAsn ? symbol.getScope() : NullScope;
-        const isNew = symbol instanceof VariableAsn ? symbol.expr instanceof NewAsn : false;
 
-        const symbolType = symbol.symbolType();
-        const symbolClass = symbolType instanceof ClassType ? symbolType.scope : undefined;
-
-        const functionClass =
-          innerFunction instanceof FunctionMethodAsn ? innerFunction.getClass() : undefined;
-
-        if (
-          isNew &&
-          symbolClass &&
-          symbolClass === functionClass &&
-          innerFunction === symbolFunction
-        ) {
+        if (id === "copyOfThis") {
           // this is allowing a property to be set when the property is on a new class instance within the function
           // and the new class instance is the same class as the function's class
           return;
@@ -1019,6 +1031,18 @@ export function mustNotBeConstant(
 
   if (s === SymbolScope.program || s === SymbolScope.stdlib) {
     compileErrors.push(new MutateCompileError(getId(assignable), "constant", location));
+  }
+}
+
+export function mustNotBeCopyOfThis(
+  assignable: AstNode,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isAstIdNode(assignable) && assignable.id === "copyOfThis") {
+    compileErrors.push(
+      new SyntaxCompileError("May not assign to special variable 'copyOfThis'", location),
+    );
   }
 }
 

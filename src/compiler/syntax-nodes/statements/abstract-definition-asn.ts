@@ -10,6 +10,7 @@ import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import {
   getId,
   mustBeCompatibleDefinitionNode,
+  mustConformToCopyOfThisBoilerPlate,
   mustNotBeKeyword,
   mustNotBeRedefined,
 } from "../../compile-rules";
@@ -47,6 +48,15 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const rhs = this.expr;
 
     mustBeCompatibleDefinitionNode(rhs, this.isLocalConstant(), this.compileErrors, this.fieldId);
+
+    mustConformToCopyOfThisBoilerPlate(
+      lhs,
+      rhs,
+      this.scope,
+      this.isVariable(),
+      this.compileErrors,
+      this.fieldId,
+    );
 
     const lhsCode = lhs.compile();
 

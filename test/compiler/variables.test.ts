@@ -653,6 +653,29 @@ end main`;
     ]);
   });
 
+  test("Fail_invalidCopyOfThisVariable", async () => {
+    const code = `${testHeader}
+
+main
+  variable copyOfThis set to 1
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
+    ]);
+  });
+
   test("Pass_Redefine", async () => {
     const code = `${testHeader}
 
@@ -693,6 +716,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
   });
+
   test("Pass_fourOpenBrackets", async () => {
     const code = `${testHeader}
 

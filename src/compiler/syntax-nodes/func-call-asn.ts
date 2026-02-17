@@ -37,9 +37,9 @@ import { EmptyAsn } from "./empty-asn";
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
-    private readonly parameters: Array<AstNode>,
+    public readonly parameters: Array<AstNode>,
     public readonly fieldId: string,
-    private scope: Scope,
+    public scope: Scope,
   ) {
     super();
   }

@@ -5,6 +5,7 @@ import {
   getId,
   mustBeCompatibleNode,
   mustNotBeConstant,
+  mustNotBeCopyOfThis,
   mustNotBeCounter,
   mustNotBeLet,
   mustNotBeParameter,
@@ -42,6 +43,7 @@ export class SetAsn extends BreakpointAsn {
     mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
+    mustNotBeCopyOfThis(assignableAstNode, this.compileErrors, this.fieldId);
 
     const symbol = this.getParentScope().resolveSymbol(id, this);
     mustNotBeLet(symbol, this.compileErrors, this.fieldId);
