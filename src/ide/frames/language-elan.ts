@@ -6,10 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
-import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { Language } from "./frame-interfaces/language";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -21,6 +18,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -42,7 +40,7 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
-export class LanguageElan implements Language {
+export class LanguageElan extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
@@ -151,34 +149,6 @@ export class LanguageElan implements Language {
     return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
-  }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
-  }
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    return `${open}${node.renderAsElanSource()}${close}`;
-  }
-
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
-  renderNodeAsHtml(node: ParseNode): string {
-    return node ? "" : "";
-  }
-
-  parseText(node: ParseNode, text: string): boolean {
-    return node && text ? false : false;
-  }
-
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
-  }
-
   private ABSTRACT = "abstract";
   private AS = "as";
   private ASSERT = "assert";
@@ -246,6 +216,26 @@ export class LanguageElan implements Language {
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
-  BOOL_NAME: string = "Bool";
+  BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
+  LIST_NAME: string = "List";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    return node || text ? false : false; // so will use the default on the node
+  }
+
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
+  }
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
+  }
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    return `${open}${node.renderAsElanSource()}${close}`;
+  }
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
+  }
 }

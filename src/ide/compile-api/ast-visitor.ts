@@ -172,7 +172,7 @@ import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-o
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
-import { TypeNameNode } from "../frames/parse-nodes/type-name-node";
+import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { WithClause } from "../frames/parse-nodes/with-clause";
@@ -786,9 +786,9 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.simpleType!.name!.matchedText;
+    const type = node.qualifiedName!.unqualifiedName!.elanTypeName;
     const qualifier =
-      transform(node.simpleType?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
+      transform(node.qualifiedName?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
     const generic = node.genericTypes;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as CSV, fieldId, scope).items;
@@ -805,9 +805,8 @@ export function transform(
     return new TypeAsn(FuncName, EmptyAsn.Instance, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeNameNode) {
-    const type = node.matchedText;
-
+  if (node instanceof TypeNameQualifiedNode) {
+    const type = node.libraryQualifier?.matchedText + node.unqualifiedName!.elanTypeName;
     return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
   }
 

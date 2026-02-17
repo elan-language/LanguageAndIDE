@@ -45,7 +45,7 @@ export class ParamDefNode extends AbstractSequence {
       : super.symbolCompletion_keywords();
   }
 
-  override renderAsHtml(): string {
-    return this.file.language().paramDefNodeAsHtml(this);
+  renderAsHtml() {
+    return this.file.language().renderNodeAsHtml(this);
   }
 }

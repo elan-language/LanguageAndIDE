@@ -43,6 +43,7 @@ import {
   parentHelper_removeChild,
   parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
@@ -318,5 +319,10 @@ ${this.language().renderBottomAsHtml(this)}
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}\r\n\r\n`;
+  }
+
+  resetFieldText(): void {
+    super.resetFieldText();
+    parentHelper_resetFieldTextOnChildren(this);
   }
 }

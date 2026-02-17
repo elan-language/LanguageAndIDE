@@ -657,15 +657,9 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   public textAsExport(): string {
-    let exp = "";
-    if (this.selected) {
-      exp = this.fieldAsInput() + this.symbolCompletion();
-    } else {
-      if (this.rootNode && this._parseStatus === ParseStatus.valid) {
-        exp = this.rootNode.renderAsExport();
-      }
-    }
-    return exp;
+    return this.rootNode && this._parseStatus === ParseStatus.valid
+      ? this.rootNode.renderAsExport()
+      : "";
   }
 
   protected fieldAsInput(): string {
@@ -880,5 +874,14 @@ export abstract class AbstractField implements Selectable, Field {
 
   isWithinAGhostedFrame() {
     return this.getHolder().isGhostedOrWithinAGhostedFrame();
+  }
+
+  resetText() {
+    if (!!this.rootNode) {
+      const text = removeHtmlTags(this.rootNode!.renderAsHtml());
+      if (text !== this.text) {
+        this.setFieldToKnownValidText(text);
+      }
+    }
   }
 }

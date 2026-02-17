@@ -8,8 +8,6 @@ import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
-import { Language } from "./frame-interfaces/language";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -22,12 +20,9 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { Index } from "./parse-nodes";
+import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { IndexDouble } from "./parse-nodes/index-double";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
-import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -53,7 +48,7 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
 
-export class LanguageVB implements Language {
+export class LanguageVB extends LanguageAbstract {
   commentRegex(): RegExp {
     return /' [^\r\n]*/;
   }
@@ -193,66 +188,8 @@ export class LanguageVB implements Language {
     return html;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.simpleType?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
-  }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
-  }
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    let text = node.matchedText.trim();
-    if (text === "is") {
-      text = this.spaced(this.EQUALS);
-    } else if (text === "isnt") {
-      text = this.spaced(this.NOT_EQUALS);
-    } else if (text === "and") {
-      text = this.spaced(this.AND);
-    } else if (text === "or") {
-      text = this.spaced(this.OR);
-    } else if (text === "not") {
-      text = this.spaced(this.NOT);
-    } else if (text === "mod") {
-      text = this.spaced(this.MOD);
-    } else {
-      text = node.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
-  }
-
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
-  renderNodeAsHtml(node: ParseNode): string {
-    let html = ""; // If "" returned the node will use its own generic implementation
-    if (node instanceof Index) {
-      html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof InheritanceNode) {
-      html = `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof ListNode) {
-      html = `<el-punc>{</el-punc>${node.csv?.renderAsHtml()}<el-punc>}</el-punc>`;
-    }
-    return html;
-  }
-
-  parseText(node: ParseNode, text: string): boolean {
-    let result = false;
-    if (node instanceof ParamDefNode) {
-      result = this.parseParamDefNode(node, text);
-    }
-    return result;
-  }
-
   getFields(node: Frame): Field[] {
     return node ? [] : [];
-  }
-
-  private spaced(text: string): string {
-    return ` ${text} `;
   }
 
   private ABSTRACT = "abstract";
@@ -307,6 +244,7 @@ export class LanguageVB implements Language {
   FLOAT_NAME: string = "Double";
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
+  LIST_NAME: string = "List";
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
@@ -324,5 +262,39 @@ export class LanguageVB implements Language {
     );
     node.addElement(node.type);
     return text ? true : true;
+  }
+
+  paramDefNodeAsHtml(node: ParamDefNode): string {
+    return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
+  }
+
+  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+  }
+
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    const open = node.keyword ? "<el-kw>" : "";
+    const close = node.keyword ? "</el-kw>" : "";
+    let text = node.matchedText.trim();
+    if (text === "is") {
+      text = this.spaced(this.EQUALS);
+    } else if (text === "isnt") {
+      text = this.spaced(this.NOT_EQUALS);
+    } else if (text === "and") {
+      text = this.spaced(this.AND);
+    } else if (text === "or") {
+      text = this.spaced(this.OR);
+    } else if (text === "not") {
+      text = this.spaced(this.NOT);
+    } else if (text === "mod") {
+      text = this.spaced(this.MOD);
+    } else {
+      text = node.renderAsElanSource();
+    }
+    return `${open}${text}${close}`;
+  }
+
+  propertyRefAsHtml(node: PropertyRef): string {
+    return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
   }
 }

@@ -13,4 +13,5 @@ export interface Field extends Selectable {
   allPossibleSymbolCompletions: SymbolWrapper[];
   helpActive: boolean;
   renderAsExport(): string;
+  resetText(): void;
 }

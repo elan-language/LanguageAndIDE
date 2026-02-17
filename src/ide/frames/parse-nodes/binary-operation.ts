@@ -127,10 +127,6 @@ export class BinaryOperation extends AbstractParseNode {
     return `${open}${this.renderAsElanSource()}${close}`;
   }
 
-  override renderAsHtml(): string {
-    return this.file.language().binaryOperationAsHtml(this);
-  }
-
   renderAsElanSource(): string {
     let source = "";
     if (this.status === ParseStatus.valid) {
@@ -140,6 +136,10 @@ export class BinaryOperation extends AbstractParseNode {
       source = this.matchedText;
     }
     return source;
+  }
+
+  renderAsHtml() {
+    return this.file.language().renderNodeAsHtml(this);
   }
 
   getSyntaxCompletionAsHtml(): string {

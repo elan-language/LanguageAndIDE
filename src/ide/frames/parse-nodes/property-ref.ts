@@ -18,8 +18,4 @@ export class PropertyRef extends AbstractSequence {
     this.name = new InstanceNode(file);
     this.addElement(this.name);
   }
-
-  override renderAsHtml(): string {
-    return this.file.language().propertyRefAsHtml(this);
-  }
 }
