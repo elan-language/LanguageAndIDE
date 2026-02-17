@@ -7,6 +7,7 @@ import {
   ElanFloat,
   ElanInt,
   ElanString,
+  ElanT1,
   ElanT1Constrained,
   ElanTuple,
   FunctionOptions,
@@ -834,6 +835,12 @@ export class StdLib {
     }
     const html = `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">\n${content}</svg>\n`;
     return html;
+  }
+
+  @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
+  shallowCopy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
+    const newObject = Object.create(toCopy);
+    return Object.assign(newObject, toCopy);
   }
 
   @elanProcedure(["listOfVGs"], ProcedureOptions.async)

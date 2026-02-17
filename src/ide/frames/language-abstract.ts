@@ -48,13 +48,13 @@ export abstract class LanguageAbstract implements Language {
     let html = "";
     if (node instanceof ParamDefNode) {
       html = this.paramDefNodeAsHtml(node);
-    } else  if (node instanceof BinaryOperation) {
+    } else if (node instanceof BinaryOperation) {
       html = this.binaryOperationAsHtml(node);
-    } else  if (node instanceof TypeGenericNode) {
+    } else if (node instanceof TypeGenericNode) {
       html = this.typeGenericNodeAsHtml(node);
-    } else  if (node instanceof PropertyRef) {
+    } else if (node instanceof PropertyRef) {
       html = this.propertyRefAsHtml(node);
-    } 
+    }
     return html;
   }
 

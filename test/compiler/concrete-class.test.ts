@@ -655,9 +655,9 @@ class Foo
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    variable nf set to new Foo()
-    set nf.p1 to p
-    return nf
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.p1 to p
+    return copyOfThis
   end function
 end class`;
 
@@ -675,9 +675,9 @@ class Foo {
   p1 = 0;
 
   async withP1(p) {
-    let nf = system.initialise(await new Foo()._initialise());
-    nf.p1 = p;
-    return nf;
+    let copyOfThis = _stdlib.shallowCopy(this);
+    copyOfThis.p1 = p;
+    return copyOfThis;
   }
 
 }
@@ -705,15 +705,13 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   call f.setup(100, "initial")
-  variable f1 set to f.cpy()
-  variable f2 set to f1.withP1(101)
-  variable f3 set to f2.withP2("updated")
-  variable f4 set to f3.cpy().withP1(102).withP2("updated2")
+  variable f1 set to f.withP1(101)
+  variable f2 set to f1.withP2("updated")
+  variable f3 set to f2.withP1(102).withP2("updated2")
   call printNoLine(f)
   call printNoLine(f1)
   call printNoLine(f2)
   call printNoLine(f3)
-  call printNoLine(f4)
 end main
 
 class Foo
@@ -723,26 +721,16 @@ class Foo
 
   property p3 as String
 
-  function cpy() returns Foo
-    variable nf set to new Foo()
-    set nf.p1 to property.p1
-    set nf.p2 to property.p2
-    set nf.p3 to property.p3
-    return nf
-  end function
-
   function withP1(p as Int) returns Foo
-    variable nf set to new Foo()
-    set nf to cpy()
-    set nf.p1 to p
-    return nf
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.p1 to p
+    return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
-    variable nf set to new Foo()
-    set nf to cpy()
-    set nf.p2 to p
-    return nf
+     variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.p2 to p
+    return copyOfThis
   end function
 
   procedure setup(pI as Int, pS as String)
@@ -762,15 +750,13 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   await f.setup(100, "initial");
-  let f1 = (await f.cpy());
-  let f2 = (await f1.withP1(101));
-  let f3 = (await f2.withP2("updated"));
-  let f4 = (await (await (await f3.cpy()).withP1(102)).withP2("updated2"));
+  let f1 = (await f.withP1(101));
+  let f2 = (await f1.withP2("updated"));
+  let f3 = (await (await f2.withP1(102)).withP2("updated2"));
   await _stdlib.printNoLine(f);
   await _stdlib.printNoLine(f1);
   await _stdlib.printNoLine(f2);
   await _stdlib.printNoLine(f3);
-  await _stdlib.printNoLine(f4);
 }
 
 class Foo {
@@ -782,26 +768,16 @@ class Foo {
 
   p3 = "";
 
-  async cpy() {
-    let nf = system.initialise(await new Foo()._initialise());
-    nf.p1 = this.p1;
-    nf.p2 = this.p2;
-    nf.p3 = this.p3;
-    return nf;
-  }
-
   async withP1(p) {
-    let nf = system.initialise(await new Foo()._initialise());
-    nf = (await this.cpy());
-    nf.p1 = p;
-    return nf;
+    let copyOfThis = _stdlib.shallowCopy(this);
+    copyOfThis.p1 = p;
+    return copyOfThis;
   }
 
   async withP2(p) {
-    let nf = system.initialise(await new Foo()._initialise());
-    nf = (await this.cpy());
-    nf.p2 = p;
-    return nf;
+    let copyOfThis = _stdlib.shallowCopy(this);
+    copyOfThis.p2 = p;
+    return copyOfThis;
   }
 
   async setup(pI, pS) {
@@ -832,7 +808,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Foo:100:initial:unchangedFoo:100:initial:unchangedFoo:101:initial:unchangedFoo:101:updated:unchangedFoo:102:updated2:unchanged",
+      "Foo:100:initial:unchangedFoo:101:initial:unchangedFoo:101:updated:unchangedFoo:102:updated2:unchanged",
     );
   });
 
@@ -1953,6 +1929,109 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "May not set property: p1 in a function.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InvalidUpdateProperty", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  set f to f.withP1(1)
+  call printNoLine(f.p1)
+end main
+
+class Foo
+  property p1 as Int
+
+  function withP1(p as Int) returns Foo
+    variable copyOfThis set to new Foo()
+    set copyOfThis.p1 to p
+    return copyOfThis
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InvalidUpdateProperty1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  set f to f.withP1(1)
+  call printNoLine(f.p1)
+end main
+
+class Foo
+  property p1 as Int
+
+  function withP1(p as Int) returns Foo
+    variable cpy set to shallowCopy(this)
+    set cpy.p1 to p
+    return cpy
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not set property: p1 in a function.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InvalidUpdateProperty2", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.withP1(1)
+end main
+
+class Foo
+  property p1 as Int
+
+  procedure withP1(p as Int)
+    variable copyOfThis set to shallowCopy(this)
+    set cpy.p1 to p
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
     ]);
   });
 });

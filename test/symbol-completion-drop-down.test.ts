@@ -159,7 +159,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 83);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 84);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1549,6 +1549,7 @@ end main`;
     const expected = [
       ["alpha", "*", "*"],
       ["false", "*", "*"],
+      ["shallowCopy", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);
