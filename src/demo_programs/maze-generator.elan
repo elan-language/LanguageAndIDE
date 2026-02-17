@@ -1,12 +1,7 @@
 # 54cffc44c2257bf3f5b30825e8793e0c4ea7f2702ae97005cd2817812b4560a0 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable blocks set to createBlockGraphicsArray()
-  for row from 0 to 29 step 1
-    for col from 0 to 39 step 1
-      set blocks[col, row] to black
-    end for
-  end for
+  variable blocks set to createBlockGraphics(black)
   set blocks to createStart(blocks)
   for i from 0 to displayWidth step 1
     constant x set to randomInt(0, 39)

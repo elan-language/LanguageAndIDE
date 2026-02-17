@@ -159,7 +159,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 84);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 83);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -2152,7 +2152,7 @@ end main`;
     const expected = [
       ["black", "black", "black"],
       ["blue", "blue", "blue"],
-      ["createBlockGraphicsArray", "*", "*"],
+      ["createBlockGraphics", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);

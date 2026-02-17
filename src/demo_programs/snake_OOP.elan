@@ -2,7 +2,7 @@
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to createBlockGraphicsArray()
+  variable blocks set to createBlockGraphics(white)
   variable snake set to new Snake()
   variable apple set to new Apple()
   call apple.newRandomPosition(snake)

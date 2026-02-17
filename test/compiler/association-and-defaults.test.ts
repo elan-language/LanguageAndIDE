@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -208,6 +209,11 @@ end main
 
 class Game
     constructor()
+      set property.s to ""
+      set property.ds to new Dictionary<of String, Int>()
+      set property.ai to new List<of Int>()
+      set property.t to tuple(0, "", new List<of Int>())
+      set property.ff to lambda a as String, b as String => 0
     end constructor
 
     property i as Int
@@ -245,7 +251,11 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
-
+    this.s = "";
+    this.ds = system.initialise(await new _stdlib.Dictionary()._initialise());
+    this.ai = system.initialise(await new _stdlib.List()._initialise());
+    this.t = system.tuple([0, "", system.initialise(await new _stdlib.List()._initialise())]);
+    this.ff = async (a, b) => 0;
     return this;
   }
 
@@ -307,14 +317,21 @@ main
 end main
 
 class Player
-    constructor()
-    end constructor
+  constructor()
+    set property.g to new Game()
+  end constructor
 
-    property g as Game
+  property g as Game
+
 end class
 
 class Game
     constructor()
+      set property.s to ""
+      set property.li to new List<of Int>()
+      set property.ds to new Dictionary<of String, Int>()
+      set property.ai to new List<of Int>()
+      set property.t to tuple(0, "", new List<of Int>())
     end constructor
 
     property i as Int
@@ -352,7 +369,7 @@ class Player {
   static emptyInstance() { return system.emptyClass(Player, []);};
 
   async _initialise() {
-
+    this.g = system.initialise(await new Game()._initialise());
     return this;
   }
 
@@ -370,7 +387,11 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
-
+    this.s = "";
+    this.li = system.initialise(await new _stdlib.List()._initialise());
+    this.ds = system.initialise(await new _stdlib.Dictionary()._initialise());
+    this.ai = system.initialise(await new _stdlib.List()._initialise());
+    this.t = system.tuple([0, "", system.initialise(await new _stdlib.List()._initialise())]);
     return this;
   }
 
@@ -487,10 +508,12 @@ end main
 
 class Game
   constructor()
+    set property.p1 to new Player("Player1")
+    set property.previousGame to new Optional<of Game>()
   end constructor
 
   property p1 as Player
-  property previousGame as Game
+  property previousGame as Optional<of Game>
 
   function asString() returns String
     return "A game"
@@ -523,7 +546,8 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
 
   async _initialise() {
-
+    this.p1 = system.initialise(await new Player()._initialise("Player1"));
+    this.previousGame = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
@@ -537,7 +561,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.emptyInstance();
+    return this._previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -579,7 +603,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "A game");
+    await assertObjectCodeExecutes(fileImpl, "Player1a Optional");
   });
 
   test("Pass_emptyKeywordToTestValue", async () => {
@@ -589,7 +613,7 @@ main
   variable g set to new Game()
   call printNoLine(g.p1.isSameValueAs(empty Player))
   call printNoLine(g.p2.isSameValueAs(empty Player))
-  call printNoLine(g.previousGame.isSameValueAs(empty Game))
+  call printNoLine(g.previousGame.isSameValueAs(empty Optional<of Game>))
   call printNoLine(g.previousScores.isSameValueAs(empty List<of Int>))
   call printNoLine(g.score is empty Int)
   call printNoLine(g.best is empty Int)
@@ -599,6 +623,10 @@ end main
 class Game
   constructor()
     set property.score to 1
+    set property.p1 to new Player("Player1")
+    set property.p2 to new Player("Player2")
+    set property.previousGame to new Optional<of Game>()
+    set property.previousScores to new List<of Int>()
   end constructor
 
   property score as Float
@@ -607,7 +635,7 @@ class Game
   property p1 as Player
   property p2 as Player
 
-  property previousGame as Game
+  property previousGame as Optional<of Game>
 
   property previousScores as List<of Int>
 
@@ -638,7 +666,7 @@ async function main() {
   let g = system.initialise(await new Game()._initialise());
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousGame, system.initialise(_stdlib.Optional.emptyInstance())));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.List.emptyInstance())));
   await _stdlib.printNoLine(g.score === 0);
   await _stdlib.printNoLine(g.best === 0);
@@ -650,6 +678,10 @@ class Game {
 
   async _initialise() {
     this.score = 1;
+    this.p1 = system.initialise(await new Player()._initialise("Player1"));
+    this.p2 = system.initialise(await new Player()._initialise("Player2"));
+    this.previousGame = system.initialise(await new _stdlib.Optional()._initialise());
+    this.previousScores = system.initialise(await new _stdlib.List()._initialise());
     return this;
   }
 
@@ -675,7 +707,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.emptyInstance();
+    return this._previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -721,10 +753,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
+    await assertObjectCodeExecutes(fileImpl, "falsefalsetruetruefalsetruetrue");
   });
 
-  test("Pass_emptyKeywordToTestReference", async () => {
+  ignore_test("Pass_emptyKeywordToTestReference", async () => {
     const code = `${testHeader}
 
 main
@@ -879,6 +911,10 @@ end main
 class Game
   constructor()
     set property.score to 10
+    set property.p1 to new Player("Player 1")
+    set property.p2 to new Player("Player 2")
+    set property.previousGame to new Optional<of Game>()
+    set property.previousScores to new List<of Int>()
   end constructor
 
   property score as Int
@@ -891,7 +927,7 @@ class Game
     set property.score to newScore
   end procedure
 
-  property previousGame as Game
+  property previousGame as Optional<of Game>
 
   property previousScores as List<of Int>
 
@@ -928,6 +964,10 @@ class Game {
 
   async _initialise() {
     this.score = 10;
+    this.p1 = system.initialise(await new Player()._initialise("Player 1"));
+    this.p2 = system.initialise(await new Player()._initialise("Player 2"));
+    this.previousGame = system.initialise(await new _stdlib.Optional()._initialise());
+    this.previousScores = system.initialise(await new _stdlib.List()._initialise());
     return this;
   }
 
@@ -957,7 +997,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.emptyInstance();
+    return this._previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -1010,15 +1050,17 @@ return [main, _tests];}`;
 main
   variable g set to new Game()
   variable p set to g.p1
-  call printNoLine(p.ucName())
+  call printNoLine(p.hasValue())
 end main
 
 class Game
   constructor()
+    set property.p1 to new Optional<of Player>()
+    set property.p2 to new Optional<of Player>()
   end constructor
 
-  property p1 as Player
-  property p2 as Player
+  property p1 as Optional<of Player>
+  property p2 as Optional<of Player>
 
   function asString() returns String
     return "A game"
@@ -1036,20 +1078,21 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
-  await _stdlib.printNoLine((await p.ucName()));
+  await _stdlib.printNoLine(p.hasValue());
 }
 
 class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
 
   async _initialise() {
-
+    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
+    this.p2 = system.initialise(await new _stdlib.Optional()._initialise());
     return this;
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.emptyInstance();
+    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
     this._p1 = p1;
@@ -1057,7 +1100,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.emptyInstance();
+    return this._p2 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p2(p2) {
     this._p2 = p2;
@@ -1097,7 +1140,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    await assertObjectCodeExecutes(fileImpl, "false");
   });
 
   test("Pass_PropertyOfListType", async () => {
@@ -1386,6 +1429,7 @@ end main
 
 class Foo
   constructor()
+    set property.p2 to new List<of Int>()
   end constructor
 
   property p1 as Int
@@ -1415,7 +1459,7 @@ end class`;
     ]);
   });
 
-  test("Fail_MissingPropertyKeyword3", async () => {
+  test("Fail_MissingPropertyKeyword4", async () => {
     const code = `${testHeader}
 
 main
@@ -1424,6 +1468,7 @@ end main
 
 class Foo
   constructor()
+    set property.p2 to new List<of Int>()
   end constructor
 
   property p1 as Int

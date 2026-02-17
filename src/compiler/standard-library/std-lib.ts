@@ -818,18 +818,9 @@ export class StdLib {
     await this.system!.elanInputOutput.clearBlockGraphics();
   }
 
-  @elanFunction(
-    [],
-    FunctionOptions.pureAsync,
-    ElanClass(List, [ElanT1Constrained(ElanClass(VectorGraphic))]),
-  )
-  async createListOfVectorGraphics(): Promise<List<VectorGraphic>> {
-    return this.system.initialise(await new List<VectorGraphic>()._initialise());
-  }
-
-  @elanFunction([], FunctionOptions.pureAsync, ElanClass(ElanArray2D, [ElanInt]))
-  async createBlockGraphicsArray(): Promise<ElanArray2D<number>> {
-    return this.system.initialise(await new ElanArray2D<number>()._initialise(40, 30, this.white));
+  @elanFunction(["colour"], FunctionOptions.pureAsync, ElanClass(ElanArray2D, [ElanInt]))
+  async createBlockGraphics(@elanIntType() colour: number): Promise<ElanArray2D<number>> {
+    return this.system.initialise(await new ElanArray2D<number>()._initialise(40, 30, colour));
   }
 
   @elanFunction([""], FunctionOptions.pureExtension)

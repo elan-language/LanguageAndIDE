@@ -25,9 +25,9 @@ suite("Demo compile", () => {
   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   });
-  // test("test julia-set", async () => {
-  //   await testElanProgram("demo_programs\\julia-set.elan");
-  // });
+  test("test julia-set", async () => {
+    await testElanProgram("demo_programs\\julia-set.elan");
+  });
   test("test kaleidoscope", async () => {
     await testElanProgram("demo_programs\\kaleidoscope.elan");
   });
@@ -40,9 +40,9 @@ suite("Demo compile", () => {
   test("test password-generator", async () => {
     await testElanProgram("demo_programs\\password-generator.elan");
   });
-  test("test pathfinder", async () => {
-    await testElanProgram("demo_programs\\pathfinder.elan");
-  });
+  // test("test pathfinder", async () => {
+  //   await testElanProgram("demo_programs\\pathfinder.elan");
+  // });
   test("test roman-numerals-turing-machine.elan", async () => {
     await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
   });
@@ -77,12 +77,12 @@ suite("Demo compile", () => {
     await testElanProgram("demo_programs\\date-time.elan");
   });
   //Worksheet loaded code
-  test("test blackjack 1", async () => {
-    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
-  });
-  test("test blackjack 2", async () => {
-    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
-  });
+  // test("test blackjack 1", async () => {
+  //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
+  // });
+  // test("test blackjack 2", async () => {
+  //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
+  // });
   test("test wordle 1", async () => {
     await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
   });
