@@ -355,7 +355,7 @@ export function mapOperation(op: string): OperationSymbol {
 }
 
 function getOfType(type: SymbolType, depth: number) {
-  if (isClassType(type) && isClass(type.scope) && depth === 0) {
+  if (isClassType(type) && isClass(type.scope)) {
     if (depth === 0) {
       return type.scope.ofTypes[0];
     }

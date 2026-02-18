@@ -697,6 +697,31 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_FailListOfListWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [[1,2],[3,4]]
+  set a[0][0] to ""
+  call printNoLine(a[0][0])
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
   test("Fail_EmptyList1", async () => {
     const code = `${testHeader}
 
