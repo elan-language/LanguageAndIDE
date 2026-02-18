@@ -196,7 +196,7 @@ export interface ICodeEditorViewModel {
   isPausedState(): boolean;
   isTestRunningState(): boolean;
   collapseContextMenu(vm: IIDEViewModel, tr: TestRunner): Promise<void>;
-  updateFileName(): void;
+  updateFileName(ext: string): void;
 
   readAndParse(
     vm: IIDEViewModel,

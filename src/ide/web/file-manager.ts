@@ -303,8 +303,10 @@ export class FileManager {
   }
 
   async doGenericDownload(cvm: ICodeEditorViewModel, vm: IIDEViewModel, fm: FileManager) {
-    cvm.updateFileName();
-    const code = await cvm.renderAsSource();
+    const isSaving = !cvm.isExporting();
+    const language = isSaving ? new LanguageElan() : cvm.getLanguage();
+    cvm.updateFileName(`.${language.defaultFileExtension}`);
+    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
     const blob = new Blob([code], { type: "plain/text" });
     const aElement = document.createElement("a");
     aElement.setAttribute("download", cvm.fileName!);

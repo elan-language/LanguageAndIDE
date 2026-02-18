@@ -224,7 +224,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     );
   }
 
-  updateFileName() {
+  updateFileName(ext: string) {
     let fileName = prompt("Please enter your file name", this.fileName);
 
     if (fileName === null) {
@@ -236,8 +236,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       fileName = this.defaultFileName;
     }
 
-    if (!fileName.endsWith(".elan")) {
-      fileName = fileName + ".elan";
+    if (!fileName.endsWith(ext)) {
+      fileName = fileName + ext;
     }
 
     this.fileName = fileName;

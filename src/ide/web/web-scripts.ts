@@ -810,9 +810,15 @@ loadButton.addEventListener("click", chooser(getUploader(), false));
 
 appendButton.addEventListener("click", chooser(getAppender(), true));
 
-saveButton.addEventListener("click", getDownloader(false));
+saveButton.addEventListener("click", async (e: Event) => {
+  codeViewModel.setExporting(false);
+  await getDownloader()(e);
+});
 
-exportButton.addEventListener("click", getDownloader(true));
+exportButton.addEventListener("click", async (e: Event) => {
+  codeViewModel.setExporting(true);
+  await getDownloader()(e);
+});
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
@@ -1029,9 +1035,8 @@ function getUploader() {
   return useChromeFileAPI() ? handleChromeUpload : handleUpload;
 }
 
-function getDownloader(exprt: boolean) {
+function getDownloader() {
   // The `showOpenFilePicker()` method of the File System Access API is supported.
-  codeViewModel.setExporting(exprt);
   return useChromeFileAPI() ? handleChromeDownload : handleDownload;
 }
 
