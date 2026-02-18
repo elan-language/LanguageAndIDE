@@ -354,10 +354,21 @@ export function mapOperation(op: string): OperationSymbol {
   return OperationSymbol.Unknown;
 }
 
-export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
+function getOfType(type: SymbolType, depth: number) {
+  if (isClassType(type) && isClass(type.scope)) {
+    if (depth === 0) {
+      return type.scope.ofTypes[0];
+    }
+    return getOfType(type.scope.ofTypes[0], depth - 1);
+  }
+
+  return UnknownType.Instance;
+}
+
+export function getIndexAndOfType(rootType: SymbolType, depth: number): [SymbolType, SymbolType] {
   if (isClassType(rootType) && isClass(rootType.scope)) {
     if (rootType.scope.ofTypes.length === 1) {
-      return [IntType.Instance, rootType.scope.ofTypes[0]];
+      return [IntType.Instance, getOfType(rootType, depth)];
     }
 
     if (rootType.scope.ofTypes.length === 2) {
@@ -379,14 +390,16 @@ export function wrapSimpleSubscript(code: string): string {
 export function compileSimpleSubscript(
   id: string,
   rootType: SymbolType,
-  index: IndexAsn,
+  indices: AstCollectionNode,
   prefix: string,
   code: string,
   postfix: string,
   compileErrors: CompileError[],
   fieldId: string,
 ) {
-  const [indexType] = getIndexAndOfType(rootType);
+  const index = indices.items[indices.items.length - 1] as IndexAsn;
+
+  const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
   if (index.index instanceof IndexDoubleAsn) {
     mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
     mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId);

@@ -983,8 +983,7 @@ export function transform(
 
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
-    const index =
-      (transform(node.index, fieldId, scope) as IndexAsn | undefined) ?? EmptyAsn.Instance;
+    const index = transformMany(node.index!, fieldId, scope);
     return new VarAsn(id, false, EmptyAsn.Instance, index, fieldId, scope);
   }
 

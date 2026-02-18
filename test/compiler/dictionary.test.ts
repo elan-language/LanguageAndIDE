@@ -731,7 +731,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 2], ["b", 2]]);
-  system.safeSet(a, 1, "a");
+  system.safeSet(a, 1, ["a"]);
   await _stdlib.print(system.safeIndex(a, "a"));
 }
 return [main, _tests];}`;
@@ -774,7 +774,7 @@ async function main() {
 
 async function foo() {
   let a = system.dictionary([["a", 2], ["b", 2]]);
-  system.safeSet(a, 1, "a");
+  system.safeSet(a, 1, ["a"]);
   await _stdlib.print(system.safeIndex(a, "a"));
 }
 global["foo"] = foo;

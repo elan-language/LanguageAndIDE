@@ -15,6 +15,7 @@ import {
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
@@ -25,7 +26,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     public readonly id: string,
     public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
-    public readonly index: IndexAsn | EmptyAsn,
+    public readonly indices: AstCollectionNode,
     public readonly fieldId: string,
     private scope: Scope,
   ) {
@@ -39,11 +40,19 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   isSimpleSubscript() {
-    return this.index instanceof IndexAsn && this.index.isSimpleSubscript();
+    const index =
+      this.indices.items.length > 0
+        ? this.indices.items[this.indices.items.length - 1]
+        : EmptyAsn.Instance;
+    return index instanceof IndexAsn && index.isSimpleSubscript();
   }
 
   isRangeSubscript() {
-    return this.index instanceof IndexAsn && this.index.isRangeSubscript();
+    const index =
+      this.indices.items.length > 0
+        ? this.indices.items[this.indices.items.length - 1]
+        : EmptyAsn.Instance;
+    return index instanceof IndexAsn && index.isRangeSubscript();
   }
 
   getSymbol() {
@@ -55,7 +64,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return compileSimpleSubscript(
       id,
       this.rootSymbolType(),
-      this.index as IndexAsn,
+      this.indices,
       prefix,
       this.id,
       postfix,
@@ -93,11 +102,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       this.scope,
       this.fieldId,
     );
-    const postfix = !isEmptyNode(this.index) ? this.index.compile() : "";
+    const postfix = !isEmptyNode(this.indices) ? `${this.indices.compile()}` : "";
 
     // handles indexing within call statement
     const code = this.rhs
-      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, ${postfix})`
+      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, [${postfix}])`
       : this.isSimpleSubscript()
         ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
         : `${prefix}${this.id}${postfix}`;
@@ -114,7 +123,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   symbolType() {
     const rootType = this.rootSymbolType();
 
-    return this.isSimpleSubscript() ? getIndexAndOfType(rootType)[1] : rootType;
+    return this.isSimpleSubscript()
+      ? getIndexAndOfType(rootType, this.indices.items.length - 1)[1]
+      : rootType;
   }
 
   get symbolScope() {
@@ -122,6 +133,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   toString() {
-    return `${this.qualifier}${this.id}${this.index}`;
+    return `${this.qualifier}${this.id}${this.indices}`;
   }
 }

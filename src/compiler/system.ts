@@ -66,9 +66,14 @@ export class System {
     return t;
   }
 
-  safeSet(indexable: any, v: any, index1: any, index2: any | undefined) {
-    if (typeof indexable !== "string" && "safeSet" in indexable) {
-      indexable.safeSet(v, index1, index2);
+  safeSet(indexable: any, v: any, index: any[]) {
+    if (typeof indexable !== "string" && "safeSet" in indexable && index.length > 0) {
+      if (index.length === 1) {
+        indexable.safeSet(v, index[0]);
+      } else {
+        this.safeSet(this.safeIndex(indexable, index[0]), v, index.slice(1));
+      }
+
       return;
     }
 
@@ -76,13 +81,17 @@ export class System {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const r = indexable[index1];
-
-    if (r === undefined) {
-      this.throwRangeError(indexable, index1);
+    if (index.length > 1) {
+      throw new ElanRuntimeError(`Out of range index`);
     }
 
-    indexable[index1] = v;
+    const r = indexable[index[0]];
+
+    if (r === undefined) {
+      this.throwRangeError(indexable, index[0]);
+    }
+
+    indexable[index[0]] = v;
   }
 
   safeIndex(indexable: any, index1: any, index2?: any | undefined) {
