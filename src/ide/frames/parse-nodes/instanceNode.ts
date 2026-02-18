@@ -2,12 +2,12 @@ import { Index } from ".";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
-import { OptionalNode } from "./optional-node";
+import { Multiple } from "./multiple";
 import { allIds } from "./parse-node-helpers";
 
 export class InstanceNode extends AbstractSequence {
   variable: IdentifierNode | undefined;
-  index: OptionalNode | undefined;
+  index: Multiple | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_regular,
@@ -18,7 +18,7 @@ export class InstanceNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.variable = new IdentifierNode(this.file, this.tokenTypes);
-      this.index = new OptionalNode(this.file, new Index(this.file));
+      this.index = new Multiple(this.file, () => new Index(this.file), 0);
       this.addElement(this.variable);
       this.addElement(this.index);
       super.parseText(text);

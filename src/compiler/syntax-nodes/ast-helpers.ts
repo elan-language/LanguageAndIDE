@@ -379,13 +379,15 @@ export function wrapSimpleSubscript(code: string): string {
 export function compileSimpleSubscript(
   id: string,
   rootType: SymbolType,
-  index: IndexAsn,
+  indices: AstCollectionNode,
   prefix: string,
   code: string,
   postfix: string,
   compileErrors: CompileError[],
   fieldId: string,
 ) {
+  const index = indices.items[0] as IndexAsn;
+
   const [indexType] = getIndexAndOfType(rootType);
   if (index.index instanceof IndexDoubleAsn) {
     mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
