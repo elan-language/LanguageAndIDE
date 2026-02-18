@@ -102,11 +102,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       this.scope,
       this.fieldId,
     );
-    const postfix = !isEmptyNode(this.indices) ? this.indices.compile() : "";
+    const postfix = !isEmptyNode(this.indices) ? `${this.indices.compile()}` : "";
 
     // handles indexing within call statement
     const code = this.rhs
-      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, ${postfix})`
+      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, [${postfix}])`
       : this.isSimpleSubscript()
         ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
         : `${prefix}${this.id}${postfix}`;
