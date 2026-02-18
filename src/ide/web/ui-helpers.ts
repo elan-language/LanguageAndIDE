@@ -7,6 +7,7 @@ import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { FileManager } from "./file-manager";
@@ -144,6 +145,8 @@ export interface ICodeEditorViewModel {
 
   renderAsSource(): Promise<string>;
 
+  renderAsExport(): Promise<string>;
+
   parseFrom(source: CodeSource): Promise<void>;
 
   parseError: string | undefined;
@@ -193,7 +196,7 @@ export interface ICodeEditorViewModel {
   isPausedState(): boolean;
   isTestRunningState(): boolean;
   collapseContextMenu(vm: IIDEViewModel, tr: TestRunner): Promise<void>;
-  updateFileName(): void;
+  updateFileName(ext: string): void;
 
   readAndParse(
     vm: IIDEViewModel,
@@ -220,6 +223,10 @@ export interface ICodeEditorViewModel {
   ): Promise<void>;
 
   showCode(): void;
+
+  getLanguage(): Language;
+
+  isExporting(): boolean;
 }
 
 export interface ITabViewModel {
@@ -255,7 +262,7 @@ export interface IIDEViewModel {
   postCodeResetToWorksheet(code: string): void;
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
   handleEscape(e: editorEvent, cvm: ICodeEditorViewModel, tr: TestRunner): Promise<boolean>;
-  setDisplayLanguage(n: string): void;
+  setDisplayLanguage(l: Language): void;
 }
 
 export const delayMessage =

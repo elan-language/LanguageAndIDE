@@ -8,6 +8,7 @@ import { DefaultProfile } from "../frames/default-profile";
 import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
+import { Language } from "../frames/frame-interfaces/language";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { LanguageCS } from "../frames/language-cs";
 import { LanguageElan } from "../frames/language-elan";
@@ -69,6 +70,7 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
 const appendButton = document.getElementById("append") as HTMLDivElement;
 const saveButton = document.getElementById("save") as HTMLDivElement;
+const exportButton = document.getElementById("export") as HTMLDivElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
@@ -222,6 +224,7 @@ class IDEViewModel implements IIDEViewModel {
           loadButton,
           appendButton,
           saveButton,
+          exportButton,
           autoSaveButton,
           newButton,
           demosButton,
@@ -265,13 +268,15 @@ class IDEViewModel implements IIDEViewModel {
       }
 
       if (isEmpty) {
-        this.disable([saveButton], "Some code must be added in order to save");
+        this.disable([saveButton, exportButton], "Some code must be added in order to save");
       } else if (!(isParsing || isIncomplete)) {
-        this.disable([saveButton], "Invalid code cannot be saved");
+        this.disable([saveButton, exportButton], "Invalid code cannot be saved");
       } else if (fileManager.isAutosaving()) {
         this.disable([saveButton], "Autosave is enabled- cancel to manual save");
+        this.enable(exportButton, "Export the code into a file");
       } else {
         this.enable(saveButton, "Save the code into a file");
+        this.enable(exportButton, "Export the code into a file");
       }
 
       if (!cvm.containsMain()) {
@@ -690,8 +695,9 @@ class IDEViewModel implements IIDEViewModel {
     }
   }
 
-  setDisplayLanguage(name: string) {
-    languageButton.textContent = name;
+  setDisplayLanguage(l: Language) {
+    languageButton.textContent = l.languageFullName;
+    exportButton.textContent = `export as ${l.defaultFileExtension} file`;
   }
 }
 
@@ -804,7 +810,15 @@ loadButton.addEventListener("click", chooser(getUploader(), false));
 
 appendButton.addEventListener("click", chooser(getAppender(), true));
 
-saveButton.addEventListener("click", getDownloader());
+saveButton.addEventListener("click", async (e: Event) => {
+  codeViewModel.setExporting(false);
+  await getDownloader()(e);
+});
+
+exportButton.addEventListener("click", async (e: Event) => {
+  codeViewModel.setExporting(true);
+  await getDownloader()(e);
+});
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
