@@ -40,12 +40,18 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   isSimpleSubscript() {
-    const index = this.indices.items.length > 0 ? this.indices.items[0] : EmptyAsn.Instance;
+    const index =
+      this.indices.items.length > 0
+        ? this.indices.items[this.indices.items.length - 1]
+        : EmptyAsn.Instance;
     return index instanceof IndexAsn && index.isSimpleSubscript();
   }
 
   isRangeSubscript() {
-    const index = this.indices.items.length > 0 ? this.indices.items[0] : EmptyAsn.Instance;
+    const index =
+      this.indices.items.length > 0
+        ? this.indices.items[this.indices.items.length - 1]
+        : EmptyAsn.Instance;
     return index instanceof IndexAsn && index.isRangeSubscript();
   }
 
@@ -117,7 +123,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   symbolType() {
     const rootType = this.rootSymbolType();
 
-    return this.isSimpleSubscript() ? getIndexAndOfType(rootType)[1] : rootType;
+    return this.isSimpleSubscript()
+      ? getIndexAndOfType(rootType, this.indices.items.length - 1)[1]
+      : rootType;
   }
 
   get symbolScope() {

@@ -74,7 +74,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   compileRange(indexedType: SymbolType, indexed: string, subscript: string) {
     mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
-    const [indexType] = getIndexAndOfType(indexedType);
+    const [indexType] = getIndexAndOfType(indexedType, 0);
     mustBeAssignableType(
       indexType,
       (this.index as RangeAsn).from.symbolType(),
@@ -118,7 +118,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     const indexedType = this.precedingNode.symbolType();
 
     if (this.isSimpleSubscript()) {
-      const [, ofType] = getIndexAndOfType(indexedType);
+      const [, ofType] = getIndexAndOfType(indexedType, 0);
       return ofType;
     }
 

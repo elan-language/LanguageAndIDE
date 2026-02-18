@@ -663,6 +663,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
+  test("Pass_SetListOfList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [[1,2],[3,4]]
+  set a[0][0] to 0
+  call printNoLine(a[0][0])
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.list([1, 2]), system.list([3, 4])]);
+  system.safeSet(a, 0, 0, 0);
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 0), 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
   test("Fail_EmptyList1", async () => {
     const code = `${testHeader}
 

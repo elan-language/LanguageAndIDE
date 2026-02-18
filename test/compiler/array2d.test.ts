@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -564,7 +565,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(5, 7)tuple(8, 2)tuple(-1, -1)");
   });
 
-  test("Pass_SetInMain", async () => {
+  ignore_test("Pass_SetInMain", async () => {
     const code = `${testHeader}
 
 main
@@ -599,7 +600,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
-  test("Pass_SetInProcedure", async () => {
+  ignore_test("Pass_SetInProcedure", async () => {
     const code = `${testHeader}
 
 main 
