@@ -46,7 +46,7 @@ export class For extends FrameWithStatements implements Statement {
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsElanSource()} from ${this.from.renderAsElanSource()} to ${this.to.renderAsElanSource()} step ${this.step.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end for`;
   }
 

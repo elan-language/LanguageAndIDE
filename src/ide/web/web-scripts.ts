@@ -697,7 +697,7 @@ class IDEViewModel implements IIDEViewModel {
 
   setDisplayLanguage(l: Language) {
     languageButton.textContent = l.languageFullName;
-    exportButton.textContent = `export as ${l.defaultFileExtension} file`;
+    exportButton.textContent = `export as .${l.defaultFileExtension} file`;
   }
 }
 

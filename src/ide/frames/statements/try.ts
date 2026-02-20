@@ -38,7 +38,7 @@ export class TryStatement extends FrameWithStatements {
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}try\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${tryKeyword}`;
   }
   parseTop(source: CodeSource): void {

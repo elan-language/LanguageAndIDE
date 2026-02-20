@@ -145,10 +145,6 @@ export class LanguageElan extends LanguageAbstract {
     return `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
   }
 
-  renderBottomAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
-  }
-
   private ABSTRACT = "abstract";
   private AS = "as";
   private ASSERT = "assert";

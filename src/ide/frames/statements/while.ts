@@ -32,7 +32,7 @@ export class While extends FrameWithStatements {
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end while`;
   }
 

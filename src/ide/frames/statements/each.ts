@@ -40,7 +40,7 @@ export class Each extends FrameWithStatements implements Statement {
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end each`;
   }
 

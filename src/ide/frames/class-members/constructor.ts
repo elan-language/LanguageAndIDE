@@ -36,7 +36,7 @@ export class Constructor extends FrameWithStatements {
 
   public renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end constructor\r
 `;
   }

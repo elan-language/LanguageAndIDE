@@ -318,7 +318,7 @@ ${this.language().renderBottomAsHtml(this)}
     const bottomAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
-${bottomAsExport}\r\n\r\n`;
+${bottomAsExport}`;
   }
 
   resetFieldText(): void {

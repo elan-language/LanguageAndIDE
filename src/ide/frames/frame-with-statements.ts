@@ -152,7 +152,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   protected renderChildrenAsHtml(): string {
     return parentHelper_renderChildrenAsHtml(this);
   }
-  protected renderChildrenAsSource(): string {
+  protected renderChildrenAsElanSource(): string {
     return parentHelper_renderChildrenAsElanSource(this);
   }
   protected renderChildrenAsExport(): string {
@@ -267,10 +267,10 @@ ${this.language().renderBottomAsHtml(this)}
 
   renderAsExport(): string {
     const topAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
-    ${this.renderChildrenAsExport()}
-    ${bottomAsExport}\r\n`;
+    const bottom = removeHtmlTags(this.language().renderBottomAsHtml(this));
+    const bottomAsExport = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
+    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}
+${this.renderChildrenAsExport()}${bottomAsExport}`;
   }
 
   resetFieldText(): void {

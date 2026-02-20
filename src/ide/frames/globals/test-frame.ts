@@ -84,7 +84,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}test ${this.testName.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 end test\r
 `;
   }

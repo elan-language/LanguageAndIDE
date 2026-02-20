@@ -15,7 +15,7 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
 
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;
   }

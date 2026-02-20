@@ -9,7 +9,6 @@ export abstract class SingleLineFrame extends AbstractFrame {
   }
 
   renderAsExport(): string {
-    const strippedHtml = removeHtmlTags(this.renderAsHtml());
-    return `${this.indent()}${this.sourceAnnotations()}${strippedHtml}${this.annotationAsSource()}\r\n`;
+    return `${this.indent()}${removeHtmlTags(this.renderAsHtml())}`;
   }
 }

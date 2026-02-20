@@ -35,7 +35,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
 
   public override renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
