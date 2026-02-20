@@ -15,7 +15,7 @@ import { Property } from "../class-members/property";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor, removeHtmlTags } from "../frame-helpers";
+import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -314,8 +314,8 @@ ${this.language().renderBottomAsHtml(this)}
   }
 
   public renderAsExport(): string {
-    const topAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
+    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
+    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}`;

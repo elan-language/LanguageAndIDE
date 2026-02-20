@@ -153,37 +153,37 @@ export class LanguageVB extends LanguageAbstract {
   renderBottomAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof Each) {
-      html = `<el-kw>${this.EMPTY} ${this.NEXT}</el-kw>`;
+      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.EMPTY} ${this.NEXT}</el-kw>`;
+      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.EMPTY} ${this.FUNCTION}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.EMPTY} ${this.FUNCTION}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.EMPTY} ${this.IF}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.IF}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.INTERFACE}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.INTERFACE}</el-kw>`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.EMPTY} ${this.TRY}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.TRY}</el-kw>`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.EMPTY} ${this.WHILE}</el-kw>`;
+      html = `<el-kw>${this.END} ${this.WHILE}</el-kw>`;
     }
     return html;
   }
@@ -201,7 +201,7 @@ export class LanguageVB extends LanguageAbstract {
   private EACH = "Each";
   private ELSEIF = "ElseIf";
   private ELSE = "Else";
-  private EMPTY = "End";
+  private END = "End";
   private ENUM = "Enum";
   private FOR = "For";
   private FUNCTION = "Function";

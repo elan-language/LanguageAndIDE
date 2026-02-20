@@ -5,12 +5,20 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  testCSHeader,
   testHash,
   testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -52,6 +60,52 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "55");
+    const pythonCode = `${testPythonHeader}
+
+def main(): None:
+  tot = 0 # variable
+  for i in sequence(1, 10, 1):
+    tot = tot + i # set
+  printNoLine(tot) # call
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  var tot = 0;
+  for (int i = 1; i <= 10; i = i + 1) {
+    tot = tot + i; // set
+  }
+  printNoLine(tot); // call
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  var tot = 0;
+  for (int i = 1; i <= 10; i = i + 1) {
+    tot = tot + i; // set
+  }
+  printNoLine(tot); // call
+}
+`;
+
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim tot = 0 ' variable
+  For i = 1 To 10 Step 1
+    tot = tot + i ' set
+  Next i
+  printNoLine(tot) ' call
+End Sub
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
+    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_reuseVariable", async () => {
