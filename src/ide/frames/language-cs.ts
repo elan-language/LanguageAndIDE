@@ -59,7 +59,6 @@ export class LanguageCS extends LanguageAbstract {
   annotation(frame: Frame): string {
     let annotation = "";
     if (
-      frame instanceof VariableStatement ||
       frame instanceof ProcedureFrame ||
       frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
@@ -96,7 +95,7 @@ export class LanguageCS extends LanguageAbstract {
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
@@ -130,9 +129,9 @@ export class LanguageCS extends LanguageAbstract {
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw> ${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw> ${this.STATIC} ${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {

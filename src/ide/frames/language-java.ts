@@ -97,7 +97,7 @@ export class LanguageJava extends LanguageAbstract {
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {

@@ -5,14 +5,22 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   ignore_test,
+  testCSHeader,
   testHash,
   testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -58,6 +66,60 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "123");
+    const pythonCode = `${testPythonHeader}
+
+def main(): None:
+  printNoLine(1) # call
+  foo() # call
+  printNoLine(3) # call
+
+def foo() -> None: # procedure
+  printNoLine(2) # call
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  printNoLine(1); // call
+  foo(); // call
+  printNoLine(3); // call
+}
+
+static void foo() { // procedure
+  printNoLine(2); // call
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  printNoLine(1); // call
+  foo(); // call
+  printNoLine(3); // call
+}
+
+static void foo() { // procedure
+  printNoLine(2); // call
+}
+`;
+
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  printNoLine(1) ' call
+  foo() ' call
+  printNoLine(3) ' call
+End Sub
+
+Sub foo() ' procedure
+  printNoLine(2) ' call
+End Sub
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
+    await assertExportedVBis(fileImpl, vbCode);
   });
   test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
     const code = `${testHeader}

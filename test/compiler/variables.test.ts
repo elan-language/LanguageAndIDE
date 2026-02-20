@@ -5,12 +5,20 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  testCSHeader,
   testHash,
   testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -45,6 +53,41 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3");
+    const pythonCode = `${testPythonHeader}
+
+def main(): None:
+  a = 3 # variable
+  printNoLine(a) # call
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  var a = 3;
+  printNoLine(a); // call
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  var a = 3;
+  printNoLine(a); // call
+}
+`;
+
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim a = 3 ' variable
+  printNoLine(a) ' call
+End Sub
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
+    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_IntVariable", async () => {
