@@ -13,11 +13,11 @@ import {
   assertParses,
   assertStatusIsValid,
   testCSHeader,
-  testElanHeader,
   testHash,
   testHeader,
   testJavaHeader,
   testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -53,7 +53,7 @@ return [main, _tests];}`;
 
     const pythonCode = `${testPythonHeader}
 
-def main():
+def main(): None:
 
 `;
 
@@ -71,7 +71,7 @@ static void main() {
 }
 `;
 
-    const vbCode = `${testElanHeader}
+    const vbCode = `${testVBHeader}
 
 Sub main()
 

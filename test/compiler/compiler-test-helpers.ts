@@ -257,10 +257,10 @@ export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
 
-export const testPythonHeader = `#  Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testJavaHeader = `//  Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testCSHeader = `//  C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testElanHeader = `#  Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+export const testPythonHeader = `# Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testJavaHeader = `// Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testCSHeader = `// C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testVBHeader = `' VB.NET with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
 export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
   let actual;

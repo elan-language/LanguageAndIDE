@@ -239,7 +239,8 @@ export class FileImpl implements File {
   async renderAsExport(): Promise<string> {
     const globals = parentHelper_renderChildrenAsExport(this);
     const lang = this.language().languageFullName;
-    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${globals}`;
+    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${globals}
+`;
   }
 
   public indent(): string {
