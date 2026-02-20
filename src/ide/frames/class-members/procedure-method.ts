@@ -30,7 +30,7 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
 
   public override renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end procedure\r
 `;
   }

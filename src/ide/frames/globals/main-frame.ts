@@ -42,7 +42,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
 
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}main\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 end main\r
 `;
   }

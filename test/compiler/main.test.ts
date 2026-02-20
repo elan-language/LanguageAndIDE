@@ -5,19 +5,19 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertExportedCSIs,
-  assertExportedElanIs,
   assertExportedJavaIs,
   assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   testCSHeader,
-  testElanHeader,
   testHash,
   testHeader,
   testJavaHeader,
   testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -53,36 +53,35 @@ return [main, _tests];}`;
 
     const pythonCode = `${testPythonHeader}
 
-main
+def main(): None:
 
-end main
 `;
 
     const csCode = `${testCSHeader}
 
-main
+static void main() {
 
-end main
+}
 `;
 
     const javaCode = `${testJavaHeader}
 
-main
+static void main() {
 
-end main
+}
 `;
 
-    const elanCode = `${testElanHeader}
+    const vbCode = `${testVBHeader}
 
-main
+Sub main()
 
-end main
+End Sub
 `;
 
     await assertExportedPythonIs(fileImpl, pythonCode);
     await assertExportedCSIs(fileImpl, csCode);
     await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedElanIs(fileImpl, elanCode);
+    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Fail_TwoMain", async () => {

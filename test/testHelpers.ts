@@ -63,14 +63,12 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSourceAndExport(sourceFile: string, htmlFile: string) {
+export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
-  const renderedExport = await fl.renderAsExport();
-  const actualExport = renderedExport.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
   const renderedHtml = await fl.renderAsHtml();
   const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
@@ -78,8 +76,7 @@ export async function assertGeneratesHtmlandSameSourceAndExport(sourceFile: stri
   try {
     assert.strictEqual(actualSource, expectedSource);
     assert.strictEqual(actualHtml, expectedHtml);
-    assert.strictEqual(actualExport, expectedSource);
-  } catch (e) {
+   } catch (e) {
     if (updateTestFiles) {
       // update original not copied 
       sourceFile = sourceFile.replace("out\\", "");
@@ -92,6 +89,10 @@ export async function assertGeneratesHtmlandSameSourceAndExport(sourceFile: stri
       throw e;
     }
   }
+}
+
+function removeHeader(input: string): string {
+  return input.replace(/^#.*Elan.*\n/, "");
 }
 
 export function updateTestFileNew(testDoc: string, newContent: string) {

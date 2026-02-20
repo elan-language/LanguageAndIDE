@@ -1,25 +1,26 @@
 import assert from "assert";
 import { Done } from "mocha";
 import { AssertOutcome } from "../../src/compiler/assert-outcome";
+import { Severity } from "../../src/compiler/compile-error";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
+import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
+import { Transforms } from "../../src/ide/compile-api/transforms";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
+import { LanguageCS } from "../../src/ide/frames/language-cs";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { LanguageJava } from "../../src/ide/frames/language-java";
+import { LanguagePython } from "../../src/ide/frames/language-python";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { encodeCode } from "../../src/ide/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
-import { Transforms } from "../../src/ide/compile-api/transforms";
-import { Severity } from "../../src/compiler/compile-error";
-import { LanguagePython } from "../../src/ide/frames/language-python";
-import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { LanguageJava } from "../../src/ide/frames/language-java";
-import { LanguageCS } from "../../src/ide/frames/language-cs";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { LanguageVB } from "../../src/ide/frames/language-vb";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -256,10 +257,10 @@ export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
 
-export const testPythonHeader = `#  Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testJavaHeader = `//  Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testCSHeader = `//  C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
-export const testElanHeader = `#  Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre} guest default_profile valid`;
+export const testPythonHeader = `# Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testJavaHeader = `// Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testCSHeader = `// C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testVBHeader = `' VB.NET with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
 export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
   let actual;
@@ -286,6 +287,6 @@ export async function assertExportedCSIs(file: FileImpl, code : string) {
   await assertExportedFileIs(file, new LanguageCS(), code);
 }
 
-export async function assertExportedElanIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, new LanguageElan(), code);
+export async function assertExportedVBis(file: FileImpl, code : string) {
+  await assertExportedFileIs(file, new LanguageVB(), code);
 }

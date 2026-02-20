@@ -35,7 +35,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${ifKeyword}`;
   }
 

@@ -14,7 +14,7 @@ export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
 
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsSource()}\r
+${this.renderChildrenAsElanSource()}\r
 end procedure\r
 `;
   }

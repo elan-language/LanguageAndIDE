@@ -1,4 +1,4 @@
-# ac5bba050a159c03ded44b38706d4927235ead67748eef926b5ec22c97adc75d Elan 2.0.0-alpha guest default_profile valid
+# c0efef073be38f4aba118d5b349dc8a952aa71c06ae7c46294fcd06cf2a74ea9 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable game set to new Game(1000)
@@ -22,18 +22,19 @@ procedure playOneRound(game as Game)
   call game.newRound()
   call display(game)
   variable dealer set to game.dealer
+  variable faceCard set to dealer.faceCard.getValue()
   each player in game.players
     call player.startTurn()
     call display(game)
     while player.status is Status.active
-      call player.nextAction(dealer.faceCard)
+      call player.nextAction(faceCard)
       call display(game)
     end while
   end each
   call dealer.play()
   call display(game)
   while dealer.status is Status.active
-    call dealer.nextAction(dealer.faceCard)
+    call dealer.nextAction(faceCard)
     call display(game)
   end while
   call game.updatePoints()
@@ -238,6 +239,8 @@ end test
 class Game
   constructor(dealerStartPoints as Int)
     set property.dealer to new Dealer(dealerStartPoints)
+    set property.players to new List<of Player>()
+    set property.message to ""
   end constructor
 
   property dealer as Dealer
@@ -394,9 +397,10 @@ class Dealer inherits Player
   constructor(startingPoints as Int)
     set property.name to "Dealer"
     set property.points to startingPoints
+    set property.faceCard to new Optional<of Card>()
   end constructor
 
-  property faceCard as Card
+  property faceCard as Optional<of Card>
 
   property hasPlayed as Boolean
 
@@ -410,7 +414,7 @@ class Dealer inherits Player
   procedure newHand()
     set property.hasPlayed to false
     call newHandHelper()
-    set property.faceCard to property.cards[0]
+    call property.faceCard.set(property.cards[0])
     variable hiddenCard set to property.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure

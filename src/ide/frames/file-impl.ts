@@ -63,6 +63,7 @@ import {
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsElanSource,
+  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
@@ -221,25 +222,25 @@ export class FileImpl implements File {
   }
 
   async renderAsSource(): Promise<string> {
-    const content = this.renderHashableContent(this.language().languageFullName);
+    const content = this.renderHashableContentAsElanSource(this.language().languageFullName);
     this.currentHash = await this.getHash(content);
     return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsElanSource(): Promise<string> {
-    const lang = this.language();
+    const langToRestore = this.language();
     this.setLanguage(new LanguageElan());
-
-    const content = this.renderHashableContent(lang.languageFullName);
+    const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
     this.currentHash = await this.getHash(content);
-    this.setLanguage(lang);
+    this.setLanguage(langToRestore);
     return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsExport(): Promise<string> {
-    const content = this.renderHashableContent(this.language().languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${this.language().COMMENT_MARKER} ${this.currentHash} ${content}`;
+    const globals = parentHelper_renderChildrenAsExport(this);
+    const lang = this.language().languageFullName;
+    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${globals}
+`;
   }
 
   public indent(): string {
@@ -247,7 +248,7 @@ export class FileImpl implements File {
   }
 
   private async getHash(body?: string): Promise<string> {
-    body = (body || this.renderHashableContent(this.language().languageFullName))
+    body = (body || this.renderHashableContentAsElanSource(this.language().languageFullName))
       .trim()
       .replaceAll("\r", "");
     return await this.hash(body);
@@ -339,8 +340,12 @@ export class FileImpl implements File {
     return ast?.compile() ?? "";
   }
 
-  renderHashableContent(lang: string): string {
+  renderHashableContentAsElanSource(elanVersion: string): string {
     const globals = parentHelper_renderChildrenAsElanSource(this);
+    return this.renderHashableContent(globals, elanVersion);
+  }
+
+  private renderHashableContent(globals: string, lang: string): string {
     const code = `${this.getVersionString(lang)} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }

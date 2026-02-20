@@ -122,7 +122,8 @@ export function parentHelper_renderChildrenAsExport(parent: Parent): string {
     for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
       ss.push(frame.renderAsExport());
     }
-    result = ss.join("");
+    const joiner = parent.hasParent() ? "\r\n" : "\r\n\r\n";
+    result = ss.join(joiner);
   }
   return result;
 }
