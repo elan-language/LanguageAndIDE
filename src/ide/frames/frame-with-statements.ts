@@ -2,7 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
-import { isSelector, removeHtmlTags } from "./frame-helpers";
+import { isSelector, removeHtmlTagsAndEscChars } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
@@ -266,8 +266,8 @@ ${this.language().renderBottomAsHtml(this)}
   }
 
   renderAsExport(): string {
-    const topAsExport = removeHtmlTags(this.language().renderTopAsHtml(this));
-    const bottom = removeHtmlTags(this.language().renderBottomAsHtml(this));
+    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
+    const bottom = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
     const bottomAsExport = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}
 ${this.renderChildrenAsExport()}${bottomAsExport}`;

@@ -6,7 +6,7 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
-  removeHtmlTags,
+  removeHtmlTagsAndEscChars,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
@@ -725,7 +725,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsExport(): string {
-    return removeHtmlTags(this.textAsHtml());
+    return removeHtmlTagsAndEscChars(this.textAsHtml());
   }
 
   indent(): string {
@@ -878,7 +878,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   resetText() {
     if (!!this.rootNode) {
-      const text = removeHtmlTags(this.rootNode!.renderAsHtml());
+      const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
       if (text !== this.text) {
         this.setFieldToKnownValidText(text);
       }

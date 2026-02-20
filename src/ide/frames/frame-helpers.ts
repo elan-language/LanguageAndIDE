@@ -331,7 +331,7 @@ export function modifierAsSource(member: MemberFrame): string {
   return member.private ? `${privateKeyword} ` : "";
 }
 
-export function removeHtmlTags(html: string): string {
+export function removeHtmlTagsAndEscChars(html: string): string {
   //First remove tag-pairs *and contents* for things that aren't source
   let result = html;
   result = result.replace(/<script.*?<\/el-place>/gm, ""); //Added to avoid
@@ -343,5 +343,7 @@ export function removeHtmlTags(html: string): string {
   while (result.match(/<[^>]*>/gm)) {
     result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
   }
+  result = result.replace(/&gt;/gm, ">");
+  result = result.replace(/&lt;/gm, "<");
   return result;
 }
