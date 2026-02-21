@@ -60,7 +60,6 @@ export abstract class LanguageAbstract implements Language {
 
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
-  abstract binaryOperationAsHtml(node: BinaryOperation): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
 
   parseText(node: ParseNode, text: string): boolean {
@@ -81,7 +80,6 @@ export abstract class LanguageAbstract implements Language {
     return node ? [] : [];
   }
 
-  abstract POWER: string;
   abstract MOD: string;
   abstract EQUAL: string;
   abstract NOT_EQUAL: string;
@@ -99,5 +97,12 @@ export abstract class LanguageAbstract implements Language {
 
   protected spaced(text: string): string {
     return ` ${text} `;
+  }
+
+  binaryOperationAsHtml(node: BinaryOperation): string {
+    //test for keyword -to add tags
+    //test for * or / & otherwise add spaces.
+    //return `${open}${text}${close}`;
+    return node ? "" : "";
   }
 }

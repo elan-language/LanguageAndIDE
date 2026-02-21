@@ -22,7 +22,6 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -289,28 +288,6 @@ export class LanguageVB extends LanguageAbstract {
   // IMPORTANT: 'of' should be 'Of' (defined below) - but, strangely, making that change causes it to fail.
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${ofKeyword}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
-  }
-
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    let text = node.matchedText.trim();
-    if (text === "is") {
-      text = this.spaced(this.EQUALS);
-    } else if (text === "isnt") {
-      text = this.spaced(this.NOT_EQUALS);
-    } else if (text === "and") {
-      text = this.spaced(this.AND);
-    } else if (text === "or") {
-      text = this.spaced(this.OR);
-    } else if (text === "not") {
-      text = this.spaced(this.NOT);
-    } else if (text === "mod") {
-      text = this.spaced(this.MOD);
-    } else {
-      text = node.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {

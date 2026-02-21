@@ -1,149 +1,81 @@
-import {
-  andKeyword,
-  divKeyword,
-  isKeyword,
-  isntKeyword,
-  modKeyword,
-  orKeyword,
-} from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
-import { DIVIDE, GT, LT, MINUS, MULT, PLUS } from "../symbols";
-import { AbstractParseNode } from "./abstract-parse-node";
-import { File } from "../frame-interfaces/file";
+import { DIVIDE, GE, GT, LE, LT, MINUS, MULT, PLUS } from "../symbols";
+import { AbstractAlternatives } from "./abstract-alternatives";
+import { Operator } from "./operator";
 
-export class BinaryOperation extends AbstractParseNode {
+export class BinaryOperation extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
     this.completionWhenEmpty = "<i>operator </i>";
   }
 
-  keyword: boolean = false;
-  closePacked: boolean = false;
-  completion: string = "";
+  keywords: string[] = [];
+
+  alpha = /^[a-zA-Z]/;
+
+  private elanEQUAL = "is";
+  private elanNOT_EQUAL = "isnt";
+  private elanAND = "and";
+  private elanOR = "or";
+  private elanMOD = "mod";
+
+  elanToLang(op: string): string {
+    const lang = this.file.language();
+    let result = op;
+    if (op === this.elanEQUAL) {
+      result = lang.EQUAL;
+    } else if (op === this.elanNOT_EQUAL) {
+      result = lang.NOT_EQUAL;
+    } else if (op === this.elanAND) {
+      result = lang.AND;
+    } else if (op === this.elanOR) {
+      result = lang.OR;
+    } else if (op === this.elanMOD) {
+      result = lang.MOD;
+    }
+    return result;
+  }
+
+  langToElan(op: string): string {
+    const lang = this.file.language();
+    let result = op;
+    if (op === lang.EQUAL) {
+      result = this.elanEQUAL;
+    } else if (op === lang.NOT_EQUAL) {
+      result = this.elanNOT_EQUAL;
+    } else if (op === lang.AND) {
+      result = this.elanAND;
+    } else if (op === lang.OR) {
+      result = this.elanOR;
+    } else if (op === lang.MOD) {
+      result = this.elanMOD;
+    }
+    return result;
+  }
 
   parseText(text: string): void {
-    this.remainingText = text;
-    if (this.remainingText.length > 0) {
-      while (this.nextChar() === " ") {
-        this.moveCharsToMatched(1, ParseStatus.incomplete);
-      }
-      if (this.nextChar() === GT || this.nextChar() === LT) {
-        this.processComparison();
-      } else if (this.nextChar() === "i") {
-        this.processEquality();
-      } else if (this.nextChar() === MULT || this.nextChar() === DIVIDE) {
-        this.moveCharsToMatched(1, ParseStatus.valid);
-        this.closePacked = true;
-      } else if (this.nextChar() === PLUS || this.nextChar() === MINUS) {
-        this.moveCharsToMatched(1, ParseStatus.valid);
-        this._done = true;
-      } else {
-        this.processKeywords();
-      }
-      while (this.status === ParseStatus.valid && this.nextChar() === " ") {
-        this.moveCharsToMatched(1, ParseStatus.valid);
-      }
-      if (
-        this.remainingText.length > 0 &&
-        (this.status === ParseStatus.empty || this.status === ParseStatus.incomplete)
-      ) {
-        this.status = ParseStatus.invalid;
-      }
+    if (text.length > 0) {
+      const lang = this.file.language();
+      this.alternatives.push(new Operator(this.file, this.elanEQUAL, lang.EQUAL));
+      this.alternatives.push(new Operator(this.file, this.elanNOT_EQUAL, lang.NOT_EQUAL));
+      this.alternatives.push(new Operator(this.file, GT, GT));
+      this.alternatives.push(new Operator(this.file, LT, LT));
+      this.alternatives.push(new Operator(this.file, GE, GE));
+      this.alternatives.push(new Operator(this.file, LE, LE));
+      this.alternatives.push(new Operator(this.file, MULT, MULT));
+      this.alternatives.push(new Operator(this.file, DIVIDE, DIVIDE));
+      this.alternatives.push(new Operator(this.file, PLUS, PLUS));
+      this.alternatives.push(new Operator(this.file, MINUS, MINUS));
+      this.alternatives.push(new Operator(this.file, this.elanAND, lang.AND));
+      this.alternatives.push(new Operator(this.file, this.elanOR, lang.OR));
+      this.alternatives.push(new Operator(this.file, this.elanMOD, lang.MOD));
+      super.parseText(text);
     }
   }
-
-  private nextChar(): string {
-    return this.remainingText.length > 0 ? this.remainingText[0] : "";
-  }
-
-  private moveCharsToMatched(n: number, st: ParseStatus): void {
-    this.matchedText = this.matchedText + this.remainingText.slice(0, n);
-    this.remainingText = this.remainingText.slice(n);
-    this.status = st;
-  }
-
-  private processComparison(): void {
-    this.moveCharsToMatched(1, ParseStatus.incomplete);
-    if (this.nextChar() === "=") {
-      this.moveCharsToMatched(1, ParseStatus.valid);
-      this._done = true;
-    } else if (this.remainingText.length === 0) {
-      this.status = ParseStatus.incomplete;
-    } else {
-      this.status = ParseStatus.valid; //but leave all remaining characters
-      this._done = true;
-    }
-  }
-
-  private processEquality(): void {
-    if (this.remainingText.length === 1) {
-      this.moveCharsToMatched(1, ParseStatus.incomplete);
-      this.completion = "s";
-    } else if (this.remainingText.startsWith("isnt")) {
-      this.moveCharsToMatched(4, ParseStatus.valid);
-      this.keyword = true;
-      this._done = true;
-    } else if (this.remainingText.startsWith("isn")) {
-      this.moveCharsToMatched(3, ParseStatus.incomplete);
-      this.completion = "t";
-    } else if (this.remainingText.length > 2 && this.remainingText.startsWith("is")) {
-      this.moveCharsToMatched(2, ParseStatus.valid);
-      this.keyword = true;
-      this._done = true;
-    } else if (this.remainingText.startsWith("is")) {
-      this.moveCharsToMatched(2, ParseStatus.incomplete);
-    }
-  }
-
-  private attemptToMatchKw(kw: string): boolean {
-    if (this.remainingText.startsWith(kw)) {
-      this.moveCharsToMatched(kw.length, ParseStatus.valid);
-      this.keyword = true;
-      this._done = true;
-      return true;
-    } else if (kw.startsWith(this.remainingText)) {
-      this.completion = kw.slice(this.remainingText.length);
-      this.moveCharsToMatched(this.remainingText.length, ParseStatus.incomplete);
-      return true;
-    }
-    return false;
-  }
-
-  private processKeywords() {
-    const keywords = [andKeyword, orKeyword, divKeyword, modKeyword];
-    let match = false;
-    let i = 0;
-    while (!match && i < keywords.length) {
-      match = this.attemptToMatchKw(keywords[i]);
-      i++;
-    }
-  }
-
-  defaultHtml(): string {
-    const open = this.keyword ? "<el-kw>" : "";
-    const close = this.keyword ? "</el-kw>" : "";
-
-    return `${open}${this.renderAsElanSource()}${close}`;
-  }
-
-  renderAsElanSource(): string {
-    let source = "";
-    if (this.status === ParseStatus.valid) {
-      const space = this.closePacked ? "" : " ";
-      source = `${space}${this.matchedText.trim()}${space}`;
-    } else {
-      source = this.matchedText;
-    }
-    return source;
-  }
-
-  renderAsHtml() {
-    return this.file.language().renderNodeAsHtml(this);
-  }
-
   getSyntaxCompletionAsHtml(): string {
-    let completion = this.completion;
+    let completion = "";
     if (this.matchedText === "" || this.matchedText === " ") {
       completion = "<i>operator </i>";
     }
@@ -151,13 +83,38 @@ export class BinaryOperation extends AbstractParseNode {
   }
 
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
-    let kws = [andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword].map((kw) =>
-      KeywordCompletion.create(kw),
-    );
+    let kws = this.keywords.map((kw) => KeywordCompletion.create(kw));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
       kws = kws.filter((kw) => kw.keyword.startsWith(trim));
     }
     return new Set(kws);
+  }
+
+  renderAsElanSource(): string {
+    let elan: string = "";
+    if (this.status === ParseStatus.valid) {
+      const op = this.bestMatch! as Operator;
+      const text = op.elanOp;
+      const closePacked = text === MULT || text === DIVIDE;
+      const space = closePacked ? "" : " ";
+      elan = `${space}${text}${space}`;
+    }
+    return elan;
+  }
+
+  renderAsHtml() {
+    let html: string = "";
+    if (this.status === ParseStatus.valid) {
+      const op = this.bestMatch! as Operator;
+      const text = op.langOp;
+      const kw = this.alpha.test(text);
+      const closePacked = text === MULT || text === DIVIDE;
+      const open = kw ? "<el-kw>" : "";
+      const close = kw ? "</el-kw>" : "";
+      const space = closePacked ? "" : " ";
+      html = `${open}${space}${text}${space}${close}`;
+    }
+    return html;
   }
 }

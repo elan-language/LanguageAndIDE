@@ -21,7 +21,6 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -230,22 +229,6 @@ export class LanguagePython extends LanguageAbstract {
   }
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
-  }
-
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    let text = node.matchedText.trim();
-    if (text === "is") {
-      text = " == ";
-    } else if (text === "isnt") {
-      text = " != ";
-    } else if (text === "mod") {
-      text = " % ";
-    } else {
-      text = node.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {
