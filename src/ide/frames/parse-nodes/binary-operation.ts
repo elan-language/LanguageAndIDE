@@ -58,6 +58,7 @@ export class BinaryOperation extends AbstractAlternatives {
   parseText(text: string): void {
     if (text.length > 0) {
       const lang = this.file.language();
+      this.remainingText = text;
       this.alternatives.push(new Operator(this.file, this.elanEQUAL, lang.EQUAL));
       this.alternatives.push(new Operator(this.file, this.elanNOT_EQUAL, lang.NOT_EQUAL));
       this.alternatives.push(new Operator(this.file, GT, GT));
@@ -71,9 +72,26 @@ export class BinaryOperation extends AbstractAlternatives {
       this.alternatives.push(new Operator(this.file, this.elanAND, lang.AND));
       this.alternatives.push(new Operator(this.file, this.elanOR, lang.OR));
       this.alternatives.push(new Operator(this.file, this.elanMOD, lang.MOD));
+      while (this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.incomplete);
+      }
       super.parseText(text);
+      while (this.status === ParseStatus.valid && this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.valid);
+      }
     }
   }
+
+  private nextChar(): string {
+    return this.remainingText.length > 0 ? this.remainingText[0] : "";
+  }
+
+  private moveCharsToMatched(n: number, st: ParseStatus): void {
+    this.matchedText = this.matchedText + this.remainingText.slice(0, n);
+    this.remainingText = this.remainingText.slice(n);
+    this.status = st;
+  }
+
   getSyntaxCompletionAsHtml(): string {
     let completion = "";
     if (this.matchedText === "" || this.matchedText === " ") {
