@@ -216,16 +216,20 @@ export class LanguageElan extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
-  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+  parseParamDef(node: ParamDefNode, text: string): boolean {
     return node || text ? false : false; // so will use the default on the node
   }
-
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
-  }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
+  paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
   }
+
+  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+    return node && text ? false : false;
+  }
+  typeGenericAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
+  }
+
   binaryOperationAsHtml(node: BinaryOperation): string {
     const open = node.keyword ? "<el-kw>" : "";
     const close = node.keyword ? "</el-kw>" : "";

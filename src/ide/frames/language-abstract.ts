@@ -47,31 +47,35 @@ export abstract class LanguageAbstract implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof ParamDefNode) {
-      html = this.paramDefNodeAsHtml(node);
+      html = this.paramDefAsHtml(node);
     } else if (node instanceof BinaryOperation) {
       html = this.binaryOperationAsHtml(node);
     } else if (node instanceof TypeGenericNode) {
-      html = this.typeGenericNodeAsHtml(node);
+      html = this.typeGenericAsHtml(node);
     } else if (node instanceof PropertyRef) {
       html = this.propertyRefAsHtml(node);
     }
     return html;
   }
 
-  abstract paramDefNodeAsHtml(node: ParamDefNode): string;
+  abstract paramDefAsHtml(node: ParamDefNode): string;
+  abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract binaryOperationAsHtml(node: BinaryOperation): string;
-  abstract typeGenericNodeAsHtml(node: TypeGenericNode): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
 
   parseText(node: ParseNode, text: string): boolean {
     let result = false;
     if (node instanceof ParamDefNode) {
-      result = this.parseParamDefNode(node, text);
+      result = this.parseParamDef(node, text);
+    }
+    if (node instanceof TypeGenericNode) {
+      result = this.parseTypeGeneric(node, text);
     }
     return result;
   }
 
-  abstract parseParamDefNode(node: ParamDefNode, text: string): boolean;
+  abstract parseParamDef(node: ParamDefNode, text: string): boolean;
+  abstract parseTypeGeneric(node: TypeGenericNode, text: string): boolean;
 
   getFields(node: Frame): Field[] {
     return node ? [] : [];

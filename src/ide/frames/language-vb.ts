@@ -1,3 +1,4 @@
+import { ofKeyword } from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -22,13 +23,16 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
+import { KeywordNode } from "./parse-nodes/keyword-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -47,6 +51,7 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageVB extends LanguageAbstract {
   commentRegex(): RegExp {
@@ -246,7 +251,7 @@ export class LanguageVB extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
-  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+  parseParamDef(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
@@ -264,12 +269,26 @@ export class LanguageVB extends LanguageAbstract {
     return text ? true : true;
   }
 
-  paramDefNodeAsHtml(node: ParamDefNode): string {
+  paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+    node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
+    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
+    node.genericTypes = new CSV(node.file, typeConstr, 1);
+
+    node.addElement(node.qualifiedName!);
+    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
+    node.addElement(new KeywordNode(node.file, ofKeyword));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(node.genericTypes);
+    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
+    return text ? true : true;
+  }
+  // IMPORTANT: 'of' should be 'Of' (defined below) - but, strangely, making that change causes it to fail.
+  typeGenericAsHtml(node: TypeGenericNode): string {
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${ofKeyword}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
 
   binaryOperationAsHtml(node: BinaryOperation): string {

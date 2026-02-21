@@ -25,16 +25,18 @@ export class TypeGenericNode extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.qualifiedName = new TypeNameQualifiedNode(this.file, this.tokenTypes);
-      const typeConstr = () => new TypeNode(this.file, this.concreteAndAbstract);
-      this.genericTypes = new CSV(this.file, typeConstr, 1);
+      if (!this.file.language().parseText(this, text)) {
+        this.qualifiedName = new TypeNameQualifiedNode(this.file, this.tokenTypes);
+        const typeConstr = () => new TypeNode(this.file, this.concreteAndAbstract);
+        this.genericTypes = new CSV(this.file, typeConstr, 1);
 
-      this.addElement(this.qualifiedName!);
-      this.addElement(new PunctuationNode(this.file, LT));
-      this.addElement(new KeywordNode(this.file, ofKeyword));
-      this.addElement(new SpaceNode(this.file, Space.required));
-      this.addElement(this.genericTypes);
-      this.addElement(new PunctuationNode(this.file, GT));
+        this.addElement(this.qualifiedName!);
+        this.addElement(new PunctuationNode(this.file, LT));
+        this.addElement(new KeywordNode(this.file, ofKeyword));
+        this.addElement(new SpaceNode(this.file, Space.required));
+        this.addElement(this.genericTypes);
+        this.addElement(new PunctuationNode(this.file, GT));
+      }
       super.parseText(text);
     }
   }
@@ -45,5 +47,9 @@ export class TypeGenericNode extends AbstractSequence {
     } else {
       return super.symbolCompletion_tokenTypes();
     }
+  }
+
+  renderAsHtml() {
+    return this.file.language().renderNodeAsHtml(this);
   }
 }
