@@ -23,12 +23,15 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -47,6 +50,7 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
+import { GT, LT } from "./symbols";
 
 export class LanguageJava extends LanguageAbstract {
   commentRegex(): RegExp {
@@ -206,7 +210,7 @@ export class LanguageJava extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
-  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+  parseParamDef(node: ParamDefNode, text: string): boolean {
     node.type = new TypeNode(
       node.file,
       new Set<TokenType>([
@@ -221,11 +225,22 @@ export class LanguageJava extends LanguageAbstract {
     node.addElement(node.name);
     return text ? true : true;
   }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
+  paramDefAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+    node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
+    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
+    node.genericTypes = new CSV(node.file, typeConstr, 1);
+
+    node.addElement(node.qualifiedName!);
+    node.addElement(new PunctuationNode(node.file, LT));
+    node.addElement(node.genericTypes);
+    node.addElement(new PunctuationNode(node.file, GT));
+    return text ? true : true;
+  }
+  typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 

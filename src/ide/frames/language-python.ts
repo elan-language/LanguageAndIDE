@@ -22,6 +22,7 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -29,6 +30,7 @@ import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -195,7 +197,7 @@ export class LanguagePython extends LanguageAbstract {
   STRING_NAME: string = "str";
   LIST_NAME: string = "list";
 
-  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+  parseParamDef(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
@@ -211,11 +213,22 @@ export class LanguagePython extends LanguageAbstract {
     node.addElement(node.type);
     return text ? true : true;
   }
-  paramDefNodeAsHtml(node: ParamDefNode): string {
+  paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
 
-  typeGenericNodeAsHtml(node: TypeGenericNode): string {
+  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+    node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
+    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
+    node.genericTypes = new CSV(node.file, typeConstr, 1);
+
+    node.addElement(node.qualifiedName!);
+    node.addElement(new PunctuationNode(node.file, this.OPEN_SQUARE_BRACKET));
+    node.addElement(node.genericTypes);
+    node.addElement(new PunctuationNode(node.file, this.CLOSE_SQUARE_BRACKET));
+    return text ? true : true;
+  }
+  typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
   }
 
