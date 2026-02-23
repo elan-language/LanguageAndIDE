@@ -1,0 +1,29 @@
+# 15af44cdb0cd11c0a62a0c148e829345ed016138d028e69da786aa6d5bc70c18 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable bubbles set to new List<of CircleVG>()
+  # create 20 small bubbles at the bottom
+  for i from 1 to 20 step 1
+    variable b set to new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 0, fillColour set to transparent, strokeColour set to randomInt(0, white)
+    call bubbles.append(b)
+  end for
+  while true
+    call moveGrowBurst(bubbles)
+  end while
+end main
+
+procedure moveGrowBurst(bubbles as List<of CircleVG>)
+  each b in bubbles
+    if random() < 0.05 then
+      # 5% chance bubble 'bursts' and starts again tiny at bottom
+      call b.setRadius(0)
+      call b.setCentreY(75)
+    else
+      # bubble rises and grows slightly
+      call b.setCentreY(b.centreY - 1)
+      call b.setRadius(b.radius + 0.2)
+    end if
+  end each
+  call displayVectorGraphics(bubbles)
+  call pause(50)
+end procedure
