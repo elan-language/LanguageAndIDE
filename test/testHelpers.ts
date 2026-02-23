@@ -35,6 +35,7 @@ import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageVB } from "../src/ide/frames/language-vb";
 import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageJava } from "../src/ide/frames/language-java";
+import { Language } from "../src/ide/frames/frame-interfaces/language";
 
 
 // flag to update test file
@@ -545,71 +546,34 @@ export function testNodeParse(
   }
 }
 
-export function testNodeParseElan(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-) {
-  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html)
+export function fileWithPython(): FileImpl {
+  return fileWithLanguage(new LanguagePython());
 }
 
-export function testNodeParsePython(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-  exprt = "",
-) {
-  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+export function fileWithVB(): FileImpl {
+  return fileWithLanguage(new LanguageVB());
 }
 
-export function testNodeParseJava(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-  exprt = "",
-) {
-  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+export function fileWithCS(): FileImpl {
+  return fileWithLanguage(new LanguageCS());
 }
 
-export function testNodeParseCS(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-  exprt = "",
-) {
-  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+export function fileWithJava(): FileImpl {
+  return fileWithLanguage(new LanguageJava());
 }
 
-export function testNodeParseVB(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-  exprt = "",
-) {
-  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+function fileWithLanguage(language: Language): FileImpl {
+  const f = new FileImpl(
+    hash,
+    new DefaultProfile(),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    true,
+  );
+  f.setLanguage(language);
+  return f;
 }
-
-
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())));
