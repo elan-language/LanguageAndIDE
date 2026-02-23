@@ -1,4 +1,3 @@
-import { escapeHtmlChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
@@ -13,8 +12,6 @@ export class BinaryOperation extends AbstractAlternatives {
   }
 
   keywords: string[] = [];
-
-  alpha = /^[a-zA-Z]/;
 
   private elanEQUAL = "is";
   private elanNOT_EQUAL = "isnt";
@@ -114,10 +111,7 @@ export class BinaryOperation extends AbstractAlternatives {
     let elan: string = "";
     if (this.status === ParseStatus.valid) {
       const op = this.bestMatch! as Operator;
-      const text = op.elanOp;
-      const closePacked = text === MULT || text === DIVIDE;
-      const space = closePacked ? "" : " ";
-      elan = `${space}${text}${space}`;
+      elan = op.renderAsElanSource();
     } else if (this.status === ParseStatus.incomplete) {
       elan = this.matchedText;
     }
@@ -128,13 +122,7 @@ export class BinaryOperation extends AbstractAlternatives {
     let html: string = "";
     if (this.status === ParseStatus.valid) {
       const op = this.bestMatch! as Operator;
-      const text = escapeHtmlChars(op.langOp);
-      const kw = this.alpha.test(text);
-      const closePacked = text === MULT || text === DIVIDE;
-      const open = kw ? "<el-kw>" : "";
-      const close = kw ? "</el-kw>" : "";
-      const space = closePacked ? "" : " ";
-      html = `${open}${space}${text}${space}${close}`;
+      html = op.renderAsHtml();
     } else if (this.status === ParseStatus.incomplete) {
       html = this.matchedText;
     }

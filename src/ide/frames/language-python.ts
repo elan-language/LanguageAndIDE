@@ -180,7 +180,6 @@ export class LanguagePython extends LanguageAbstract {
   private OPEN_SQUARE_BRACKET = "[";
   private CLOSE_SQUARE_BRACKET = "]";
 
-  POWER: string = "^";
   MOD: string = "%";
   EQUAL: string = "==";
   NOT_EQUAL: string = "!=";
