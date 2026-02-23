@@ -827,7 +827,10 @@ export abstract class AbstractFrame implements Frame {
       "copy for internal use <span class='kb'>Ctrl+c</span>",
       this.copySelected,
     ]);
-    map.set("copyExport", ["copy for export", this.copySelected]);
+
+    if (!(this.language().languageFullName === "Elan")) {
+      map.set("copyExport", ["copy for export", this.copySelected]);
+    }
     if (!this.isGhosted() && this.isGhostable()) {
       map.set("ghost", ["ghost", this.ghost]);
     }
