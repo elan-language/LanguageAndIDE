@@ -23,7 +23,6 @@ export interface Language {
 
   getFields(node: Frame): Field[];
 
-  POWER: string;
   MOD: string;
   EQUAL: string;
   NOT_EQUAL: string;
