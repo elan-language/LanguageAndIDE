@@ -779,6 +779,55 @@ suite("Parsing Nodes", () => {
       "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
     );
   });
+  test("TypeSimpleOrGeneric_Languages", () => {
+    testNodeParse(
+      new TypeSimpleOrGeneric(fileWithPython()),
+      `Foo[Bar]`,
+      ParseStatus.valid,
+      "Foo[Bar]",
+      "",
+      "",
+      "<el-type>Foo</el-type>[<el-type>Bar</el-type>]",
+      "Foo[Bar]",
+    );
+    testNodeParse(
+      new TypeSimpleOrGeneric(fileWithPython()),
+      `list[int]`,
+      ParseStatus.valid,
+      "list[int]",
+      "",
+      "",
+      "<el-type>list</el-type>[<el-type>int</el-type>]",
+      "list[int]",
+    );
+    testNodeParse(
+      new TypeSimpleOrGeneric(fileWithVB()),
+      `Foo(of Bar)`, //This should properly be 'Of'
+      ParseStatus.valid,
+      "Foo(of Bar)",
+      "",
+      "",
+      "<el-type>Foo</el-type>(<el-kw>of</el-kw> <el-type>Bar</el-type>)",
+    );
+    testNodeParse(
+      new TypeSimpleOrGeneric(fileWithCS()),
+      `Foo<Bar>`,
+      ParseStatus.valid,
+      "Foo<Bar>",
+      "",
+      "",
+      "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
+    );
+    testNodeParse(
+      new TypeSimpleOrGeneric(fileWithJava()),
+      `Foo<Bar>`,
+      ParseStatus.valid,
+      "Foo<Bar>",
+      "",
+      "",
+      "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
+    );
+  });
   test("TypeNode", () => {
     //Single
     testNodeParse(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
