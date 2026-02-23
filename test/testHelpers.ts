@@ -31,6 +31,10 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { LanguagePython } from "../src/ide/frames/language-python";
+import { LanguageVB } from "../src/ide/frames/language-vb";
+import { LanguageCS } from "../src/ide/frames/language-cs";
+import { LanguageJava } from "../src/ide/frames/language-java";
 
 
 // flag to update test file
@@ -63,7 +67,7 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
+export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
@@ -73,9 +77,55 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   const renderedHtml = await fl.renderAsHtml();
   const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
   const expectedHtml = htm.replaceAll("\r", "");
+  let actualPython = "";
+  let actualVB = "";
+  let actualCS = "";
+  let actualJava = ""; 
+  let expectedPython = "";
+  let expectedVB = "";
+  let expectedCS = "";
+  let expectedJava = ""; 
+
+  if (pythonFile !== "") {
+    fl.setLanguage(new LanguagePython());
+    actualPython = (await fl.renderAsExport()).replaceAll("\r", "");;
+    expectedPython = loadFileAsSourceNew(pythonFile + ".py").replaceAll("\r", "");
+  }
+
+  if (vbFile !== "") {
+    fl.setLanguage(new LanguageVB());
+    actualVB = (await fl.renderAsExport()).replaceAll("\r", "");;
+    expectedVB = loadFileAsSourceNew(vbFile + ".vb").replaceAll("\r", "");
+  }
+
+   if (csFile !== "") {
+    fl.setLanguage(new LanguageCS());
+    actualCS = (await fl.renderAsExport()).replaceAll("\r", "");;
+    expectedCS = loadFileAsSourceNew(csFile + ".cs").replaceAll("\r", "");
+  }
+
+   if (javaFile !== "") {
+    fl.setLanguage(new LanguageJava());
+    actualJava = (await fl.renderAsExport()).replaceAll("\r", "");;
+    expectedJava = loadFileAsSourceNew(javaFile + ".java").replaceAll("\r", "");
+  }
+
   try {
     assert.strictEqual(actualSource, expectedSource);
     assert.strictEqual(actualHtml, expectedHtml);
+    if (pythonFile !== "") {
+      assert.strictEqual(actualPython, expectedPython);
+    }
+    if (vbFile !== "") {
+      assert.strictEqual(actualVB, expectedVB);
+    }
+    if (csFile !== "") {
+      assert.strictEqual(actualCS, expectedCS);
+    }
+    if (javaFile !== "") {
+      assert.strictEqual(actualJava, expectedJava);
+    }
+
    } catch (e) {
     if (updateTestFiles) {
       // update original not copied 
@@ -84,6 +134,19 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
 
       updateTestFileNew(sourceFile, actualSource);
       updateTestFileNew(htmlFile, actualHtml);
+
+      if (pythonFile !== "") {
+        updateTestFileNew(pythonFile + ".py", actualPython);
+      }
+      if (vbFile !== "") {
+        updateTestFileNew(vbFile + ".vb", actualVB);
+      }
+      if (csFile !== "") {
+        updateTestFileNew(csFile + ".cs", actualCS);
+      }
+      if (javaFile !== "") {
+        updateTestFileNew(javaFile + ".java", actualJava);
+      }
       throw new Error("Files updated");
     } else {
       throw e;
@@ -455,7 +518,7 @@ export function ctrl_v() {
   return key("v", false, true);
 }
 
-export function testNodeParseElan(
+export function testNodeParse(
   node: ParseNode,
   text: string,
   status: ParseStatus,
@@ -463,7 +526,7 @@ export function testNodeParseElan(
   remainingText: string,
   elanSource = "",
   html = "",
-  exportTest = "",
+  exprt = "",
 ) {
   node.parseText(text);
   assert.equal(node.status, status);
@@ -477,10 +540,76 @@ export function testNodeParseElan(
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);
   }
-  if (exportTest && exportTest !== "") {
-    assert.equal(node.renderAsExport(), exportTest);
+  if (exprt && exprt !== "") {
+    assert.equal(node.renderAsExport(), exprt);
   }
 }
+
+export function testNodeParseElan(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+) {
+  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html)
+}
+
+export function testNodeParsePython(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) {
+  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+}
+
+export function testNodeParseJava(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) {
+  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+}
+
+export function testNodeParseCS(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) {
+  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+}
+
+export function testNodeParseVB(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) {
+  testNodeParse(node, text, status, matchedText, remainingText, elanSource, html, exprt)
+}
+
+
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())));
