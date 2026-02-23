@@ -354,12 +354,12 @@ export function mapOperation(op: string): OperationSymbol {
   return OperationSymbol.Unknown;
 }
 
-function getOfType(type: SymbolType, depth: number) {
+function getOfType(type: SymbolType, index: number, depth: number) {
   if (isClassType(type) && isClass(type.scope)) {
     if (depth === 0) {
-      return type.scope.ofTypes[0];
+      return type.scope.ofTypes[index];
     }
-    return getOfType(type.scope.ofTypes[0], depth - 1);
+    return getOfType(type.scope.ofTypes[index], index, depth - 1);
   }
 
   return UnknownType.Instance;
@@ -368,11 +368,11 @@ function getOfType(type: SymbolType, depth: number) {
 export function getIndexAndOfType(rootType: SymbolType, depth: number): [SymbolType, SymbolType] {
   if (isClassType(rootType) && isClass(rootType.scope)) {
     if (rootType.scope.ofTypes.length === 1) {
-      return [IntType.Instance, getOfType(rootType, depth)];
+      return [IntType.Instance, getOfType(rootType, 0, depth)];
     }
 
     if (rootType.scope.ofTypes.length === 2) {
-      return [rootType.scope.ofTypes[0], rootType.scope.ofTypes[1]];
+      return [getOfType(rootType, 0, depth), getOfType(rootType, 1, depth)];
     }
   }
 
