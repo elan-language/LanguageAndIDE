@@ -102,4 +102,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\ghosted.html`,
     );
   });
+  test("Burrow", async () => {
+    await assertGeneratesHtmlandSameSource(
+      `${__dirname}\\files\\burrow.elan`,
+      ``,
+      `${__dirname}\\files\\burrow.py`,
+      `${__dirname}\\files\\burrow.vb`,
+      `${__dirname}\\files\\burrow.cs`,
+      `${__dirname}\\files\\burrow.java`,
+    );
+  });
 });

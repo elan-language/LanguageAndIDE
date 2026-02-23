@@ -1,0 +1,22 @@
+# 120bf0f0984c2ea2f59dcb8fc1a1c457e433f42b42a3e275ce2cddfec798c851 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable blocks set to createBlockGraphics(white)
+  variable x set to 20
+  variable y set to 15
+  while true
+    call blocks.put(x, y, red)
+    call displayBlocks(blocks)
+    call blocks.put(x, y, black)
+    variable direction set to randomInt(0, 3)
+    if direction is 0 then
+      set x to minInt([x + 1, 39])
+    elif direction is 1 then
+      set x to maxInt([x - 1, 0])
+    elif direction is 2 then
+      set y to minInt([y + 1, 29])
+    elif direction is 3 then
+      set y to maxInt([y - 1, 0])
+    end if
+  end while
+end main
