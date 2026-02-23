@@ -137,9 +137,9 @@ export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string
       sourceFile = sourceFile.replace("out\\", "");
 
       updateTestFileNew(sourceFile, actualSource);
-      updateTestFileNew(htmlFile, actualHtml);
       if (htmlFile !== "") {
         htmlFile = htmlFile.replace("out\\", "");
+        updateTestFileNew(htmlFile, actualHtml);
       }
       if (pythonFile !== "") {
         updateTestFileNew(pythonFile, actualPython);
