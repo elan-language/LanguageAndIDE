@@ -112,4 +112,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\burrow.java`,
     );
   });
+  test("Bubbles", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\bubbles.elan`,
+      ``,
+      `${__dirname}\\files\\bubbles.py`,
+      `${__dirname}\\files\\bubbles.vb`,
+      `${__dirname}\\files\\bubbles.cs`,
+      `${__dirname}\\files\\bubbles.java`,
+    );
+  });
 });
