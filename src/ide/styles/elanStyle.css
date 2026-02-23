@@ -1,16 +1,16 @@
-.elan-code * {
+.code * {
     font-family: consolas, monospace;
     font-size: 11pt;
     user-select: none; /* Selection of instructions is via specific commands. Overridden in fields for conventional selection */
 }
-.elan-code {
+.code {
     color: var(--defaultText);
     background-color: var(--panelBackground);
     border-color: var(--panelBackground);
     font-style: normal;
 }
 
-.elan-code.running {
+.code.running {
    cursor: progress;
 }
 
@@ -496,7 +496,7 @@ el-statement.paused-at > el-fr
     text-indent: 0;
 }
 
-.elan-code img, el-code img {
+.code img, el-code img {
     height: 0.9em;
     margin: 0;
 }

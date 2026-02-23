@@ -39,7 +39,7 @@ export class Operator extends AbstractParseNode {
   renderAsHtml(): string {
     let text = this.langOp;
     if (text.includes(`<`) || text.includes(`>`)) {
-     text = escapeHtmlChars(this.langOp);
+      text = escapeHtmlChars(this.langOp);
     }
     const alpha = /^[a-zA-Z]/;
     const kw = alpha.test(text);

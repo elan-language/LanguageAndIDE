@@ -74,7 +74,7 @@ body {
   display: inline;
 }
 
-.elan-code {
+.code {
   flex-basis: auto;
   flex-grow: 1;
   padding: 5px;
@@ -601,7 +601,7 @@ iframe a:focus {
   text-decoration: underline;
 }
 
-.elan-code:not( :focus-within)
+.code:not( :focus-within)
 {
   opacity: 0.75;
 }

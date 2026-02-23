@@ -720,11 +720,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   ) {
     this.setRunStatus(RunStatus.default);
     collapseAllMenus();
-    const codeContainer = (document.querySelector(".elan-code") as HTMLDivElement)!;
+    const codeContainer = (document.querySelector(".code") as HTMLDivElement)!;
 
     codeContainer.innerHTML = text;
 
-    const frames = document.querySelectorAll(".elan-code [id]");
+    const frames = document.querySelectorAll(".code [id]");
 
     for (const frame of frames) {
       const id = frame.id;

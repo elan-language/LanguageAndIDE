@@ -8,6 +8,7 @@ import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageCS extends LanguageCfamily {
+  languageClass = "cs";
   languageFullName: string = "C#";
   defaultFileExtension: string = "cs";
   defaultMimeType: string = "text/plain";
