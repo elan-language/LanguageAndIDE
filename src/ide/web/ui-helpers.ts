@@ -159,7 +159,7 @@ export interface ICodeEditorViewModel {
 
   getFirstChild(): Frame;
 
-  recreateFile(vm: IIDEViewModel): void;
+  recreateFile(vm: IIDEViewModel, language?: Language | undefined): void;
 
   currentHash: string;
 

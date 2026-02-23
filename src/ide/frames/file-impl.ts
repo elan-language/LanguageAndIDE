@@ -228,12 +228,13 @@ export class FileImpl implements File {
   }
 
   async renderAsElanSource(): Promise<string> {
+    const languageElan = new LanguageElan();
     const langToRestore = this.language();
-    this.setLanguage(new LanguageElan());
+    this.setLanguage(languageElan);
     const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
     this.currentHash = await this.getHash(content);
     this.setLanguage(langToRestore);
-    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
+    return `${languageElan.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsExport(): Promise<string> {
@@ -340,9 +341,9 @@ export class FileImpl implements File {
     return ast?.compile() ?? "";
   }
 
-  renderHashableContentAsElanSource(elanVersion: string): string {
+  renderHashableContentAsElanSource(lang: string): string {
     const globals = parentHelper_renderChildrenAsElanSource(this);
-    return this.renderHashableContent(globals, elanVersion);
+    return this.renderHashableContent(globals, lang);
   }
 
   private renderHashableContent(globals: string, lang: string): string {
@@ -654,7 +655,7 @@ export class FileImpl implements File {
         this._language = new LanguageCS();
         break;
       }
-      case "VB": {
+      case "VB.NET": {
         this._language = new LanguageVB();
         break;
       }
@@ -678,7 +679,7 @@ export class FileImpl implements File {
         throw new ElanFileError(cannotLoadEmptyFile);
       }
 
-      await this.validateHeader(source.getRemainingCode());
+      const language = await this.validateHeader(source.getRemainingCode());
 
       if (source.isMatch(this._language.COMMENT_MARKER)) {
         source.removeRegEx(this._language.commentRegex(), false);
@@ -686,6 +687,7 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
       }
       this.parseBodyFrom(source);
+      this.setLanguageFromHeader(language);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
@@ -770,8 +772,8 @@ export class FileImpl implements File {
     }
   }
 
-  async validateHeader(code: string) {
-    let language = "elan";
+  async validateHeader(code: string): Promise<string> {
+    let language = "Elan";
     if (!this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
@@ -786,9 +788,9 @@ export class FileImpl implements File {
       } else {
         throw new ElanFileError(cannotLoadInvalidFile);
       }
-      this.setLanguageFromHeader(language);
       this.validateHeaderComment(tokens);
     }
+    return language;
   }
 
   private isEmpty(code: string): boolean {

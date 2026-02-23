@@ -177,8 +177,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.getFirstChild();
   }
 
-  recreateFile(vm: IIDEViewModel) {
-    const existingLanguage = this.file?.language() ?? new LanguageElan();
+  recreateFile(vm: IIDEViewModel, language?: Language | undefined) {
+    const existingLanguage = language ?? this.file?.language() ?? new LanguageElan();
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
