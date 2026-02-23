@@ -31,7 +31,7 @@
   <td><el-kw>empty</el-kw> <el-type>Int</el-type></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code><el-statement class="ok" id="let13" tabindex="-1"><el-kw>let </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>maxNumber</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement></el-code></td>
+  <td><el-code><el-statement class="ok" id="let28" tabindex="-1"><el-kw>constant </el-kw><el-field id="var29" class="ok" tabindex="-1"><el-txt><el-id>maxNumber</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement></el-code></td>
   <td><el-code>0</el-code></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
@@ -114,7 +114,7 @@ in the range:</li>
   <td><el-kw>empty</el-kw> <el-type>Float</el-type></td>
 </tr><tr>
   <td><el-type>Float</el-type></td>
-  <td><el-code><el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>phi</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.618033988749895</el-lit></el-txt></el-field></el-statement></el-code></td>
+  <td><el-code><el-statement class="ok" id="let32" tabindex="-1"><el-kw>constant </el-kw><el-field id="var33" class="ok" tabindex="-1"><el-txt><el-id>phi</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr34" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.618033988749895</el-lit></el-txt></el-field></el-statement></el-code></td>
   <td><el-code>0.0</el-code></td>
 </tr><tr>
   <td><el-type>Float</el-type></td>
@@ -487,36 +487,57 @@ for example:</p>
 </ul>
 
 <h1 id="StandardDataStructures">Standard data structures</h1>
-<p>Elan's three standard data structures have the Types <el-type>List</el-type>, <el-type>Array2D</el-type> and <el-type>Dictionary</el-type>.
-They are all <i>mutable</i>, meaning that their contents, referred to as items (or sometimes elements) may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
-<p>However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
+<p>Elan has three mutable data structure Types <el-type>List</el-type>, <el-type>Array2D</el-type> and <el-type>Dictionary</el-type>, and
+three immutable data structure Types <el-type>Set</el-type>, <el-type>Stack</el-type> and <el-type>Queue</el-type>.</p>
+<p>The contents of these structures are referred to as items (or sometimes elements).</p> 
+<p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
+<p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no <i>procedure</i> dot methods defined for them:
+ rather, the methods called on them create new copies of the structures containing specified changes.</p>
+<p>Since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
 it is also possible to make changes via <el-kw>function</el-kw> dot methods,  which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-code>with</el-code>'.</p>
-<p id="of">All four contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
+<p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
+ but some are also useful within other programming paradigms.</p>
+<p id="of">All six  contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
 <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
+
 <table class="tableStructure">
  <tr>
-  <th></th>
-  <th colspan="3">Standard data structures</th>
- </tr><tr>
   <th></th>
   <th>List</th>
   <th>Array2D</th>
   <th>Dictionary</th>
+  <th>Set</th>
+  <th>Stack</th>
+  <th>Queue</th>
+ </tr><tr
+ ><td>Mutability</td>
+  <td>Mutable</td>
+  <td>Mutable</td>
+  <td>Mutable</td>
+  <td>Immutable</td>
+  <td>Immutable</td>
+  <td>Immutable</td>
  </tr><tr>
-  <tr><td>Type form</td>
+  <td>Type form</td>
   <td><el-type>List</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item can be any, including <el-type>Array2D</el-type> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
   <td><el-type>Array2D</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
   <td><el-type>Dictionary&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;<br>
   <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, or a <el-code>record</el-code>, and<br>
   <el-id>valueType</el-id> may be any Type</td>
+  <td><el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
  </tr><tr>
-  <td>size</td><td>Dynamic</td><td>Static</td><td>Dynamic</td></tr>
+  <td>size</td><td>Dynamic</td><td>Static</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td></tr>
   <td>literal definition</td>
   <td><el-code>["a","b","c"]</el-code></td>
   <td>not available</td>
   <td><el-code>["a":3, "b":5]</el-code></td>
+  <td>Only as converted from a literal <el-type>List</el-type> e.g.:<br><el-code>["a","b","c"].<el-method>asSet</el-method>()</el-code></td>
+  <td>Not available</td>
+  <td>Not available</td>
  </tr><tr>
   <td>create empty</td>
   <td><el-code>empty</el-code> <el-type>List&lt;of <el-id>Type</el-id>&gt;</el-type> or<br>
@@ -524,6 +545,12 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-code>empty</el-code> <el-type>Array2D&lt;of <el-id>Type</el-id>&gt;</el-type></td>
   <td><el-code>empty</el-code> <el-type>Dictionary&lt;of <el-id>keyType</el-id>&gt;, <el-id>valueType</el-id>&gt;</el-type> or<br>
   <el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
  </tr><tr>
   <td>create initialised</td>
   <td>not available</td>
@@ -532,26 +559,41 @@ with specified changes: that is why all such methods have names starting '<el-co
   <el-id>cols</el-id> is the number of columns,<el-id><br>rows</el-id> is the number of rows</el-code>, and<br>
   <el-id>value</el-id> is the initial value of every item<br>(all are named values or literals)</td>
   <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>read by index</td>
   <td><el-code>li[2]</el-code></td>
   <td><el-code>a2[3, 4]</el-code></td>
   <td><el-code>d["b"]</el-code></td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>read by index range</td>
   <td><el-code>li[2..5]</el-code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
-  <td> not available</td>
-  <td> not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
   <td>see <a href="#List_procedures">Procedure methods on a List</a></td>
   <td>see <a href="#Array2D_procedures">Procedure methods on an Array2D</a></td>
   <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
   <td>see <a href="#List_functions">Function dot methods on a List</a></td>
   <td>see <a href="#Array2D_functions">Function dot methods on an Array2D</a></td>
   <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
+  <td>see <a href="#Set_functions">Function dot methods on a Set</a></td>
+  <td>see <a href="#Stack_functions">Function dot methods on a Stack</a></td>
+  <td>see <a href="#Queue_functions">Function dot methods on a Queue</a></td>
  </tr>
 </table>
 
@@ -559,7 +601,7 @@ with specified changes: that is why all such methods have names starting '<el-co
 <p>The <el-type>List</el-type> Type defines a data structure containing <i>n</i> items of any single Type,
  including fundamental value Types, structure Types such we <el-type>List</el-type> or <el-type>Array2D</el-type>,
  and also user-defined Types such as a class.</p>
-<p>Items in a List are indexed from <i>0</i> to <i>n-1</i>,</p>
+<p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>,</p>
 <p>A List is created either empty or initialised from a literal definition.</p>
 <p>A List's size can be dynamically changed.</p>
 
@@ -579,6 +621,24 @@ with specified changes: that is why all such methods have names starting '<el-co
 <p>Discarding either the head or tail:</p>
 <p><el-code>variable _:tail set to myList</el-code><br>
 <el-code>variable head:_ set to myList</el-code></p>
+
+<h3 class="no-TOC" id="ListsOfLists">Lists of lists</h3>
+<h4 class="no-TOC">Two dimensional arrays</h4>
+<p>To create a 2D array that holds a value in every cell, you can define a list of lists like this:</p>
+<el-code>variable a2d set to new List&lt;of List&lt;of Int&gt;&gt;()</el-code>
+<p>You then refer to an individual cell (x,y) by its two coorinates in square brackets: a2d[x][y]</p>
+<p>.. to set the value of the item at (x,y)</p>
+<p>.. to retrieve the value of the item at (x,y)</p>
+
+<p>This approach is used for the fixed 2D array used in <a href="#BlockGraphics">Block graphics</a> described below.
+In this case, x refers to the columns in the display, and y to the rows.</p>
+
+<h4 class="no-TOC">Higher dimensional arrays</h4>
+<p>For a 3D array, you can define, for example:</p>
+<el-code>variable a3d set to new List&lt;of List&lt;of List&lt;of Float&gt;&gt;&gt;()</el-code>
+<p>and refer to a cell using three indexes.</p>
+<p>In principle arrays of higher dimension can be defined.</p>
+
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a List</h3>
 <p>Where an argument provides a new value for an item in a List, that value must be of the same Type as defined for the List's items.</p>
 <table class="tableMethod">
@@ -999,66 +1059,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td>item of <el-type>Dictionary key's Type</el-type></td>
   <td><el-type>Dictionary</el-type></td>
   <td>a new Dictionary with the <i>key:value</i> pair removed from the specified key</td>
- </tr>
-</table>
-
-<h1 id="ImmutableDataStructures">Immutable data structures</h1>
-<p>In contrast to the <a href="#StandardDataStructures">standard data structures</a>, the contents (referred to as items (or sometimes elements)
- of the three <i>immutable</i> data structures cannot be modified directly, and hence the structure Types have no <i>procedure</i> dot methods defined.
-  Instead, changes are made by using <i>function</i> dot methods that copy the existing data structure with specified changes.</p>
-<p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
- but some are also useful within other programming paradigms.</p>
-<p>This table summarises the creation and reference to these immutable structures. Details of their methods follow.</p>
-
-<table class="tableStructure">
- <tr>
-  <th></th>
-  <th colspan="3">Immutable data structures</th>
- </tr><tr>
-  <th></th>
-  <th>Set</th>
-  <th>Stack</th>
-  <th>Queue</th>
- </tr><tr>
-  <td>Type form</td>
-  <td><el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
-  <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
-  <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
- </tr><tr>
-  <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
- </tr><tr>
-  <td>literal definition</td>
-  <td>Only as converted from a literal <el-type>List</el-type> e.g.:<br><el-code>["a","b","c"].<el-method>asSet</el-method>()</el-code></td>
-  <td>Not available</td>
-  <td>Not available</td>
- </tr><tr>
-  <td>create empty</td>
-  <td><el-code>empty</el-code> <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
-  <el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
-  <el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
-  <el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
- </tr><tr>
-  <td>create initialised</td>
-  <td>not available</td>
-  <td>not available</td>
-  <td>not available</td>
- </tr><tr>
-  <td>read by key</td>
-  <td>not available</td>
-  <td>not available</td>
-  <td>not available</td>
- </tr><tr>
-  <td>read by range</td>
-  <td>not available</td>
-  <td>not available</td>
-  <td>not available</td>
- </tr><tr>
-  <td>function dot methods</td>
-  <td>see <a href="#Set_functions">Function dot methods on a Set</a></td>
-  <td>see <a href="#Stack_functions">Function dot methods on a Stack</a></td>
-  <td>see <a href="#Queue_functions">Function dot methods on a Queue</a></td>
  </tr>
 </table>
 

@@ -16,46 +16,45 @@
 
 <h1 id="namedValue">Named values</h1>
 
-<p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value, i.e. its value can be varied. In an Elan program, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
+<p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
+ i.e. its value can be varied. In Elan, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
 <ul>
  <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-kw>variable</el-kw> instruction and re-assigned with a <el-kw>set</el-kw> instruction or,
  for <a href="LibRef.html#StandardDataStructures">mutable data structures</a>, there are methods for their update.</li>
- <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>let</el-kw> instruction, and then cannot be re-assigned.</li>
-</ul>
-<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
+ <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>constant</el-kw> instruction, and then cannot be re-assigned.
+ There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
+</ul>                                                                                                             
+<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
+it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
 <p>Both kinds of named value must be initialised with either literals or expressions.</p>
 <p>Loop counter variables, however, may be defined implicitly in <a href="#each"><el-kw>each</el-kw></a> and <a href="#for"><el-kw>for</el-kw></a> instructions.</p>
 
 <h2 id="Type">Named value Types</h2>
-<p>This table lists every <el-type>Type</el-type> used in the language, each linking to its definition and further details:</p>
+<p>This table lists the fundamental and standard data structure Types in Elan, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="5">Types</th>
  </tr><tr>
-  <td>Fundamental</td>
+  <td>Fundamental<br>data Types</td>
   <td><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><el-type>Int</el-type></a></td>
   <td><a href="LibRef.html#Float"><el-topic>Floating point</el-type><br><el-type>Float</el-topic></a></td>
   <td><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><el-type>Boolean</el-type></a></td>
   <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><el-type>String</el-type></a></td>
-  <td></td>
  </tr><tr>
-  <td>Mutable<br> data structures</td>
+  <td>Standard (mutable)<br>data structures</td>
   <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><el-type>List</el-type></a></td>
   <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><el-type>Dictionary</el-type></a></td>
-  <td><a href="LibRef.html#Array"><el-topic>Simple array</el-topic><br><el-type>Array</el-type></a></td>
   <td><a href="LibRef.html#Array2D"><el-topic>2-dimensional array</el-topic><br><el-type>Array2D</el-type></a></td>
   <td></td>
  </tr><tr>
-  <td>Immutable<br> data structures</td>
-  <td><a href="LibRef.html#ListImmutable"><el-topic>Immutable list</el-topic><br><el-type>ListImmutable</el-type></a></td>
-  <td><a href="LibRef.html#DictionaryImmutable"><el-topic>Immutable look-up dictionary</el-topic><br><el-type>DictionaryImmutable</el-type></a></td>
+  <td>Standard (immutable)<br>data structures</td>
   <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
+  <td></td>
  </tr><tr>
   <td>Data I/O</td>
   <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><el-type>TextFileReader</el-type></a></td>
   <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><el-type>TextFileWriter</el-type></a></td>
-  <td></td>
   <td></td>
   <td></td>
  </tr><tr>
@@ -65,11 +64,9 @@
   <el-type>ImageVG</el-type><br><el-type>LineVG</el-type><br><el-type>RawVG</el-type><br><el-type>RectangleVG</el-type></a></td>
   <td></td>
   <td></td>
-  <td></td>
  </tr><tr>
   <td>User-defined</td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="#record"><el-topic>Record</el-topic><br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#class"><el-topic>Class</el-topic><br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
@@ -79,9 +76,9 @@
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
   <td></td>
   <td></td>
-  <td></td>
   </tr>
 </table>
+
 <p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
 <ul>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
@@ -1110,21 +1107,21 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <div id="if"></div>
 <div id="then"></div>
 <div id="else"></div>
-<div id="elseif"></div>
+<div id="elif"></div>
 <h2 id="if_statement"><el-kw>if</el-kw></h2>
 <p>The <el-kw>if</el-kw> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
- <li> It is structured like this:<br>
+ <li> It is structured like this (<el-kw>elif</el-kw> is the Elan keyword for 'else if'):<br>
  <el-kw>if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
  &nbsp;&nbsp;<el-code>instructions</el-code><br>
- <el-kw>else if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
+ <el-kw>elif</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
  &nbsp;&nbsp;<el-code>instructions</el-code><br>
  <el-kw>else</el-kw><br>
  &nbsp;&nbsp;<el-code>instructions</el-code><br>
  <el-kw>end if</el-kw></li>
  <li>The conditions are Boolean values or expressions.</li>
- <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
- <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+ <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+ <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
 </ul>
 <p>See also <a href="#if_expression"><el-kw>if</el-kw> expression</a> for using the related <el-kw>if</el-kw>  to return a value.</p>
 
@@ -1132,7 +1129,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> instruction</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Simple choice between equality and inequality:</p>
-<el-code-block source="if_else">
+<el-code-block source="if_else.elan">
 <el-statement class="ok multiline" id="if71" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr73" class="ok" tabindex="0"><el-txt><el-id>head</el-id><el-kw> is </el-kw><el-id>apple</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
 <el-statement class="ok" id="call80" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident81" class="ok" tabindex="0"><el-txt><el-method>setAppleToRandomPosition</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args82" class="optional ok" tabindex="0"><el-txt><el-id>apple</el-id>, <el-id>body</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
@@ -1144,7 +1141,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 </el-code-block>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
-<el-codeblock source="if_else">
+<el-code-block source="if_elif_else.elan">
 <el-statement class="ok multiline" id="if135" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr137" class="ok" tabindex="0"><el-txt><el-id>item</el-id><el-kw> is </el-kw><el-id>value</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
 <el-statement class="ok" id="set157" tabindex="0"><el-kw>set </el-kw><el-field id="ident158" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr159" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1505,8 +1502,8 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an 
 <ul>
  <li>The conditions are Boolean values or expressions.</li>
  <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
- <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
- <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+ <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+ <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
  <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate fields.
  On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> instruction,
  though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
@@ -1528,7 +1525,7 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an 
 <el-statement class="ok" id="return16" tabindex="-1"><el-kw>return </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>isGreen</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>*</el-lit>")<el-kw><br>else </el-kw><el-id>attempt</el-id></el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-kw>else if</el-kw> clause:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-kw>elif</el-kw> clause:</p>
 <el-code-block source="wordle.solver.elan">
 <el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
