@@ -1,12 +1,12 @@
-# 028cc35a6f8fb655b6a87c8d62a0e4fdff96b5b17a9eb2027a5bd8c0f53a549e Elan 2.0.0-alpha guest default_profile valid
+# 221687b464f15c5374c35fb0b3a275461b0701fe8c48983bf17f03e5d5ad90e3 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable maxNumber set to 10
+  constant maxNumber set to 10
   variable flags set to 0b1100100
-  variable phi set to 1.618033988749895
+  constant phi set to 1.618033988749895
   variable reading set to 1.1e-10
   variable done set to true
-  variable title set to "Ulysses"
-  variable title_ set to 'Iliad'
+  constant titleU set to "Ulysses"
+  constant titleI set to 'Iliad'
   variable quote set to '"Hello", she said'
 end main

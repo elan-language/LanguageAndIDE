@@ -1,14 +1,16 @@
-# 01cfa548e6e22157d244ac0e68967535ed0f227b49df53b72197f4390e64959e Elan 2.0.0-alpha guest default_profile valid
+# 4c58c3ead2432e09d6b98e1ead1b8c0ded10a41d2cc6af999bd123da5b5bcafe Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable head set to 0
   variable apple set to 0
   variable body set to new List<of Int>()
+  # snipFrom
   if head is apple then
     call setAppleToRandomPosition(apple, body)
   else
     call body.removeAt(0)
   end if
+  # snipTo
 end main
 
 procedure setAppleToRandomPosition(x as Int, y as List<of Int>)
