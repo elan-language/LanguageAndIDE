@@ -336,7 +336,7 @@ export class FileManager {
       const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
       const rawCode = await codeFile.text();
       if (mode === ParseMode.loadNew) {
-        cvm.recreateFile(vm);
+        cvm.recreateFile(vm, new LanguageElan());
         this.reset();
       }
       await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);
