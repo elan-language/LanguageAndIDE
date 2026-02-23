@@ -507,7 +507,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(vm);
+    this.recreateFile(vm, new LanguageElan());
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
