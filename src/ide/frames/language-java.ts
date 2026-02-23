@@ -50,7 +50,7 @@ export class LanguageJava extends LanguageCfamily {
   public FINAL = "final";
 
   public STRING_NAME: string = "String";
- 
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     return this.common_parseParamDef(node, text);
   }

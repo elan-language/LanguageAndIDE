@@ -1,3 +1,4 @@
+import { escapeHtmlChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
@@ -117,6 +118,8 @@ export class BinaryOperation extends AbstractAlternatives {
       const closePacked = text === MULT || text === DIVIDE;
       const space = closePacked ? "" : " ";
       elan = `${space}${text}${space}`;
+    } else if (this.status === ParseStatus.incomplete) {
+      elan = this.matchedText;
     }
     return elan;
   }
@@ -125,13 +128,15 @@ export class BinaryOperation extends AbstractAlternatives {
     let html: string = "";
     if (this.status === ParseStatus.valid) {
       const op = this.bestMatch! as Operator;
-      const text = op.langOp;
+      const text = escapeHtmlChars(op.langOp);
       const kw = this.alpha.test(text);
       const closePacked = text === MULT || text === DIVIDE;
       const open = kw ? "<el-kw>" : "";
       const close = kw ? "</el-kw>" : "";
       const space = closePacked ? "" : " ";
       html = `${open}${space}${text}${space}${close}`;
+    } else if (this.status === ParseStatus.incomplete) {
+      html = this.matchedText;
     }
     return html;
   }

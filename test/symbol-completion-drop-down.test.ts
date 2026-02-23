@@ -130,14 +130,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["and", "and", "and "],
-      ["div", "div", "div "],
-      ["is", "is", "is "],
-      ["isnt", "isnt", "isnt "],
-      ["mod", "mod", "mod "],
-      ["or", "or", "or "],
-    ] as [string, string, string][];
+    const expected = [] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
   });

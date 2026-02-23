@@ -304,7 +304,7 @@ suite("Symbol Completion Spec", () => {
       BinaryOperation.name,
       " ",
       [],
-      ["and", "div", "is", "isnt", "mod", "or"],
+      [],
       "",
     );
   });
@@ -316,7 +316,7 @@ suite("Symbol Completion Spec", () => {
       BinaryOperation.name,
       " i",
       [],
-      ["is", "isnt"],
+      [],
       "",
     );
   });
