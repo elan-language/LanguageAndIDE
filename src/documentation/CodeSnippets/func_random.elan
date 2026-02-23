@@ -1,11 +1,11 @@
-# 4ac69ab0018ab8069d5cf8c8b72945081a6756572d8ddf94a40fdfb3d633da23 Elan 2.0.0-alpha guest default_profile valid
+# 2c49e2769249e4c945a433c2cb39d3174567b550c7572e4b22b32afb51554e7f Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   variable dice set to 0
   for i from 1 to 10 step 1
-    set dice, rnd to rollDice(rnd)
+    # set dice,rnd to rollDice(rnd) Invalid.?? 
     call print(dice)
   end for
 end main

@@ -1,7 +1,7 @@
-# e8ced0d5bfb05e17547296a714e29b26e691b2ac0610bfc50eab5a2ab695bd16 Elan 2.0.0-alpha guest default_profile valid
+# 7ad435e36bc55d46e9b13fde7826114edad13bbb75b89e11ea2e9a47973d37dd Elan 2.0.0-alpha guest default_profile valid
 
 function matchAt(a as String, b as String, p as Int) returns Boolean
-  return if a[p] is b[p] then true else false
+  return if a[p].isSameValueAs(b[p]) then true else false
 end function
 
 class Sequence
