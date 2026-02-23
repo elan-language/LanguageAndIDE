@@ -161,6 +161,10 @@ class TabViewModel implements ITabViewModel {
     cvm.setRunStatus(RunStatus.paused);
     systemInfoDiv.innerHTML = "";
   }
+
+  setWorksheetLanguage(l: string) {
+    worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
+  }
 }
 
 class IDEViewModel implements IIDEViewModel {
