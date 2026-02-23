@@ -19,7 +19,6 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -230,11 +229,6 @@ export class LanguageElan extends LanguageAbstract {
     return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    const open = node.keyword ? "<el-kw>" : "";
-    const close = node.keyword ? "</el-kw>" : "";
-    return `${open}${node.renderAsElanSource()}${close}`;
-  }
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
   }

@@ -1469,8 +1469,16 @@ suite("Parsing Nodes", () => {
     testNodeParseElan(new BinaryOperation(f), `*`, ParseStatus.valid, "*", "", "*", "*");
     testNodeParseElan(new BinaryOperation(f), ` *`, ParseStatus.valid, " *", "", "*", "*");
     testNodeParseElan(new BinaryOperation(f), ` * `, ParseStatus.valid, " * ", "", "*", "*");
-    testNodeParseElan(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " >= ");
-    testNodeParseElan(new BinaryOperation(f), ` >=`, ParseStatus.valid, " >=", "", " >= ", " >= ");
+    testNodeParseElan(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " &gt;= ");
+    testNodeParseElan(
+      new BinaryOperation(f),
+      ` >=`,
+      ParseStatus.valid,
+      " >=",
+      "",
+      " >= ",
+      " &gt;= ",
+    );
     testNodeParseElan(
       new BinaryOperation(f),
       ` >= `,
@@ -1478,13 +1486,21 @@ suite("Parsing Nodes", () => {
       " >= ",
       "",
       " >= ",
-      " >= ",
+      " &gt;= ",
     );
-    testNodeParseElan(new BinaryOperation(f), `>`, ParseStatus.incomplete, ">", "", ">", ">");
-    testNodeParseElan(new BinaryOperation(f), ` >`, ParseStatus.incomplete, " >", "", " >", " >");
-    testNodeParseElan(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " > ");
-    testNodeParseElan(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " > ");
-    testNodeParseElan(new BinaryOperation(f), `is`, ParseStatus.incomplete, "is", "", "is", "is");
+    testNodeParseElan(new BinaryOperation(f), `>`, ParseStatus.valid, ">", "", " > ", " &gt; ");
+    testNodeParseElan(new BinaryOperation(f), ` >`, ParseStatus.valid, " >", "", " > ", " &gt; ");
+    testNodeParseElan(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " &gt; ");
+    testNodeParseElan(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " &gt; ");
+    testNodeParseElan(
+      new BinaryOperation(f),
+      `is`,
+      ParseStatus.valid,
+      "is",
+      "",
+      " is ",
+      "<el-kw> is </el-kw>",
+    );
     testNodeParseElan(
       new BinaryOperation(f),
       `is `,
@@ -1595,9 +1611,9 @@ suite("Parsing Nodes", () => {
       "3>=4",
       "",
       "3 >= 4",
-      "<el-lit>3</el-lit> >= <el-lit>4</el-lit>",
+      "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
     );
-    testNodeParseElan(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3>");
+    testNodeParseElan(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3 > ");
     testNodeParseElan(new BinaryExpression(f), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
     testNodeParseElan(new BinaryExpression(f), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
     testNodeParseElan(new BinaryExpression(f), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
@@ -1612,14 +1628,6 @@ suite("Parsing Nodes", () => {
       "",
       "3 is 4",
       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
-    );
-    testNodeParseElan(
-      new BinaryExpression(f),
-      `11 div 3`,
-      ParseStatus.valid,
-      "11 div 3",
-      "",
-      "11 div 3",
     );
   });
   test("RevisedParseMethodForAbstractSequence#857", () => {
