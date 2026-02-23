@@ -55,7 +55,14 @@ import { DOT } from "../src/ide/frames/symbols";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
-import { testActiveNodeAndDone, testNodeParseElan } from "./testHelpers";
+import {
+  testActiveNodeAndDone,
+  testNodeParse,
+  fileWithPython,
+  fileWithVB,
+  fileWithCS,
+  fileWithJava,
+} from "./testHelpers";
 
 suite("Parsing Nodes", () => {
   const f = new FileImpl(
@@ -68,9 +75,9 @@ suite("Parsing Nodes", () => {
   );
 
   test("UnaryExpression", () => {
-    testNodeParseElan(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
-    testNodeParseElan(
+    testNodeParse(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
+    testNodeParse(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
+    testNodeParse(
       new UnaryExpression(f),
       " not foo",
       ParseStatus.valid,
@@ -79,46 +86,38 @@ suite("Parsing Nodes", () => {
       "not foo",
       "",
     );
-    testNodeParseElan(new UnaryExpression(f), "-", ParseStatus.incomplete, "-", "", "-", "");
-    testNodeParseElan(new UnaryExpression(f), "+4", ParseStatus.invalid, "", "+4", "", "");
+    testNodeParse(new UnaryExpression(f), "-", ParseStatus.incomplete, "-", "", "-", "");
+    testNodeParse(new UnaryExpression(f), "+4", ParseStatus.invalid, "", "+4", "", "");
   });
   test("IndexableTerm", () => {
-    testNodeParseElan(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Term2", () => {
-    testNodeParseElan(new Term(f), "empty ", ParseStatus.invalid, "", "empty ", "");
-    testNodeParseElan(new Term(f), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new Term(f), "empty ", ParseStatus.invalid, "", "empty ", "");
+    testNodeParse(new Term(f), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Expression", () => {
-    testNodeParseElan(new ExprNode(f), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(new ExprNode(f), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(new ExprNode(f), "a", ParseStatus.valid, "a", "", "a", "");
-    testNodeParseElan(new ExprNode(f), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
-    testNodeParseElan(new ExprNode(f), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
-    testNodeParseElan(new ExprNode(f), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
-    testNodeParseElan(new ExprNode(f), "+", ParseStatus.invalid, "", "+", "");
-    testNodeParseElan(new ExprNode(f), "+b", ParseStatus.invalid, "", "+b", "");
-    testNodeParseElan(new ExprNode(f), "a +", ParseStatus.incomplete, "a +", "", "a + ");
-    testNodeParseElan(new ExprNode(f), "a %", ParseStatus.valid, "a", " %", "a");
-    testNodeParseElan(
-      new ExprNode(f),
-      "3 * 4 + x",
-      ParseStatus.valid,
-      "3 * 4 + x",
-      "",
-      "3*4 + x",
-      "",
-    );
-    testNodeParseElan(new ExprNode(f), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
-    testNodeParseElan(
+    testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode(f), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new ExprNode(f), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
+    testNodeParse(new ExprNode(f), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
+    testNodeParse(new ExprNode(f), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
+    testNodeParse(new ExprNode(f), "+", ParseStatus.invalid, "", "+", "");
+    testNodeParse(new ExprNode(f), "+b", ParseStatus.invalid, "", "+b", "");
+    testNodeParse(new ExprNode(f), "a +", ParseStatus.incomplete, "a +", "", "a + ");
+    testNodeParse(new ExprNode(f), "a %", ParseStatus.valid, "a", " %", "a");
+    testNodeParse(new ExprNode(f), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
+    testNodeParse(new ExprNode(f), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
+    testNodeParse(
       new ExprNode(f),
       "new List<of String>()",
       ParseStatus.valid,
       "new List<of String>()",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "points.foo(0.0)",
       ParseStatus.valid,
@@ -127,7 +126,7 @@ suite("Parsing Nodes", () => {
       "points.foo(0.0)",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "this",
       ParseStatus.valid,
@@ -136,7 +135,7 @@ suite("Parsing Nodes", () => {
       "this",
       "<el-kw>this</el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "thisWidget",
       ParseStatus.valid,
@@ -146,7 +145,7 @@ suite("Parsing Nodes", () => {
       "<el-id>thisWidget</el-id>",
     );
     // empty data structures
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "new List<of Int>()",
       ParseStatus.valid,
@@ -155,9 +154,9 @@ suite("Parsing Nodes", () => {
       "",
       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
     );
-    testNodeParseElan(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-    testNodeParseElan(new ExprNode(f), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
-    testNodeParseElan(
+    testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
+    testNodeParse(new ExprNode(f), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
+    testNodeParse(
       new ExprNode(f),
       "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.valid,
@@ -168,7 +167,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Set To Clause", () => {
-    testNodeParseElan(
+    testNodeParse(
       new SetToClause(f, () => ""),
       "x set to p.x + 3",
       ParseStatus.valid,
@@ -179,7 +178,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("CSV of set clauses", () => {
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new SetToClause(f, () => ""), 1),
       "x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
@@ -191,7 +190,7 @@ suite("Parsing Nodes", () => {
   });
 
   test("Expression + with clause", () => {
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "copy p with x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
@@ -202,7 +201,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("new record + with clause", () => {
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       "new Foo() with x set to 3, y set to 1",
       ParseStatus.valid,
@@ -213,44 +212,44 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Identifier", () => {
-    testNodeParseElan(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
-    testNodeParseElan(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
-    testNodeParseElan(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
-    testNodeParseElan(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
-    testNodeParseElan(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
-    testNodeParseElan(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+    testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
+    testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
+    testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
+    testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
+    testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
+    testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
     // Can be a keyword - because that will be rejected at compile stage, not parse stage
-    testNodeParseElan(new IdentifierNode(f), `new`, ParseStatus.valid, `new`, "", "");
-    testNodeParseElan(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
-    testNodeParseElan(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
-    testNodeParseElan(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
-    testNodeParseElan(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
+    testNodeParse(new IdentifierNode(f), `new`, ParseStatus.valid, `new`, "", "");
+    testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
+    testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
+    testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
+    testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
   });
   test("LitString - single chars", () => {
-    testNodeParseElan(new LitString(f), "", ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new LitString(f), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
-    testNodeParseElan(new LitString(f), `"a`, ParseStatus.incomplete, `"a`, "", `"a`, "");
-    testNodeParseElan(new LitString(f), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
-    testNodeParseElan(new LitString(f), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
+    testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
+    testNodeParse(new LitString(f), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
+    testNodeParse(new LitString(f), `"a`, ParseStatus.incomplete, `"a`, "", `"a`, "");
+    testNodeParse(new LitString(f), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
+    testNodeParse(new LitString(f), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
   });
   test("LitString - bug #328", () => {
-    testNodeParseElan(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
-    testNodeParseElan(new LitString(f), `"{a} `, ParseStatus.incomplete, `"{a} `, "", `"{a} `, "");
+    testNodeParse(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
+    testNodeParse(new LitString(f), `"{a} `, ParseStatus.incomplete, `"{a} `, "", `"{a} `, "");
   });
   test("LitInt", () => {
-    testNodeParseElan(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new LitInt(f), "   ", ParseStatus.invalid, "", "   ", "", "");
-    testNodeParseElan(new LitInt(f), "123", ParseStatus.valid, "123", "", "123", "");
-    testNodeParseElan(new LitInt(f), "-123", ParseStatus.valid, "-123", "", "-123", "");
-    testNodeParseElan(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
-    testNodeParseElan(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
-    testNodeParseElan(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
-    testNodeParseElan(new LitInt(f), " 123a", ParseStatus.valid, " 123", "a", "123", "");
-    testNodeParseElan(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
-    testNodeParseElan(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
+    testNodeParse(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
+    testNodeParse(new LitInt(f), "   ", ParseStatus.invalid, "", "   ", "", "");
+    testNodeParse(new LitInt(f), "123", ParseStatus.valid, "123", "", "123", "");
+    testNodeParse(new LitInt(f), "-123", ParseStatus.valid, "-123", "", "-123", "");
+    testNodeParse(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
+    testNodeParse(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
+    testNodeParse(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
+    testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, " 123", "a", "123", "");
+    testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
+    testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
     //Hex & binary
-    testNodeParseElan(
+    testNodeParse(
       new LitInt(f),
       "0xfa3c",
       ParseStatus.valid,
@@ -259,8 +258,8 @@ suite("Parsing Nodes", () => {
       "",
       "<el-lit>0xfa3c</el-lit>",
     );
-    testNodeParseElan(new LitInt(f), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
-    testNodeParseElan(
+    testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
+    testNodeParse(
       new LitInt(f),
       "0b01101",
       ParseStatus.valid,
@@ -269,25 +268,25 @@ suite("Parsing Nodes", () => {
       "",
       "<el-lit>0b01101</el-lit>",
     );
-    testNodeParseElan(new LitInt(f), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
+    testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
   });
   test("LitFloat", () => {
-    testNodeParseElan(new LitFloat(f), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(new LitFloat(f), "1.0", ParseStatus.valid, "1.0", "", "1.0");
-    testNodeParseElan(new LitFloat(f), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
-    testNodeParseElan(new LitFloat(f), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
-    testNodeParseElan(new LitFloat(f), "1.-0", ParseStatus.invalid, "", "1.-0", "");
-    testNodeParseElan(new LitFloat(f), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
-    testNodeParseElan(new LitFloat(f), "1", ParseStatus.incomplete, "1", "", "1");
-    testNodeParseElan(new LitFloat(f), "1.", ParseStatus.incomplete, "1.", "", "1.");
-    testNodeParseElan(new LitFloat(f), "1. ", ParseStatus.invalid, "", "1. ", "");
-    testNodeParseElan(new LitFloat(f), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
-    testNodeParseElan(new LitFloat(f), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
-    testNodeParseElan(new LitFloat(f), "1.1E-5", ParseStatus.valid, "1.1E-5", "", "1.1E-5");
+    testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new LitFloat(f), "1.0", ParseStatus.valid, "1.0", "", "1.0");
+    testNodeParse(new LitFloat(f), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
+    testNodeParse(new LitFloat(f), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
+    testNodeParse(new LitFloat(f), "1.-0", ParseStatus.invalid, "", "1.-0", "");
+    testNodeParse(new LitFloat(f), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
+    testNodeParse(new LitFloat(f), "1", ParseStatus.incomplete, "1", "", "1");
+    testNodeParse(new LitFloat(f), "1.", ParseStatus.incomplete, "1.", "", "1.");
+    testNodeParse(new LitFloat(f), "1. ", ParseStatus.invalid, "", "1. ", "");
+    testNodeParse(new LitFloat(f), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
+    testNodeParse(new LitFloat(f), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
+    testNodeParse(new LitFloat(f), "1.1E-5", ParseStatus.valid, "1.1E-5", "", "1.1E-5");
   });
   test("Keyword", () => {
-    testNodeParseElan(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(
+    testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       "abstract ",
       ParseStatus.valid,
@@ -295,7 +294,7 @@ suite("Parsing Nodes", () => {
       " ",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       "abstract(x",
       ParseStatus.valid,
@@ -303,7 +302,7 @@ suite("Parsing Nodes", () => {
       "(x",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       "abstractx",
       ParseStatus.invalid,
@@ -311,7 +310,7 @@ suite("Parsing Nodes", () => {
       "abstractx",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       "abstract immutable",
       ParseStatus.valid,
@@ -319,7 +318,7 @@ suite("Parsing Nodes", () => {
       " immutable",
       "abstract",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       " abs",
       ParseStatus.incomplete,
@@ -327,7 +326,7 @@ suite("Parsing Nodes", () => {
       "",
       "abs",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KeywordNode(f, abstractKeyword),
       " abscract",
       ParseStatus.invalid,
@@ -337,7 +336,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("BracketedExpression", () => {
-    testNodeParseElan(
+    testNodeParse(
       new BracketedExpression(f),
       "(3 + 4)",
       ParseStatus.valid,
@@ -347,10 +346,10 @@ suite("Parsing Nodes", () => {
       "",
     );
 
-    testNodeParseElan(new BracketedExpression(f), "", ParseStatus.empty, "", "", "");
-    testNodeParseElan(new BracketedExpression(f), "(3)", ParseStatus.valid, "(3)", "", "(3)", "");
+    testNodeParse(new BracketedExpression(f), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new BracketedExpression(f), "(3)", ParseStatus.valid, "(3)", "", "(3)", "");
 
-    testNodeParseElan(
+    testNodeParse(
       new BracketedExpression(f),
       "(a and not b)",
       ParseStatus.valid,
@@ -359,7 +358,7 @@ suite("Parsing Nodes", () => {
       "(a and not b)",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BracketedExpression(f),
       "(3 * 4 + x)",
       ParseStatus.valid,
@@ -368,7 +367,7 @@ suite("Parsing Nodes", () => {
       "(3*4 + x)",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BracketedExpression(f),
       "(3 * (4 + x))",
       ParseStatus.valid,
@@ -377,7 +376,7 @@ suite("Parsing Nodes", () => {
       "(3*(4 + x))",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BracketedExpression(f),
       "(a and not b",
       ParseStatus.incomplete,
@@ -386,11 +385,11 @@ suite("Parsing Nodes", () => {
       "(a and not b",
     );
     //testNodeParse(new BracketedExpression(), "(a and not b  ", ParseStatus.incomplete, "(a and not b  ", "", "(a and not b"); TODO
-    testNodeParseElan(new BracketedExpression(f), "(", ParseStatus.incomplete, "(", "", "(");
-    testNodeParseElan(new BracketedExpression(f), "()", ParseStatus.invalid, "", "()", "");
+    testNodeParse(new BracketedExpression(f), "(", ParseStatus.incomplete, "(", "", "(");
+    testNodeParse(new BracketedExpression(f), "()", ParseStatus.invalid, "", "()", "");
   });
   test("Optional", () => {
-    testNodeParseElan(
+    testNodeParse(
       new OptionalNode(f, new LitInt(f)),
       "123 a",
       ParseStatus.valid,
@@ -398,8 +397,8 @@ suite("Parsing Nodes", () => {
       " a",
       "123",
     );
-    testNodeParseElan(new OptionalNode(f, new LitInt(f)), "abc", ParseStatus.valid, "", "abc", "");
-    testNodeParseElan(
+    testNodeParse(new OptionalNode(f, new LitInt(f)), "abc", ParseStatus.valid, "", "abc", "");
+    testNodeParse(
       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
       " abstract",
       ParseStatus.valid,
@@ -408,7 +407,7 @@ suite("Parsing Nodes", () => {
       "abstract",
       "<el-kw>abstract</el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
       "abs",
       ParseStatus.incomplete,
@@ -416,7 +415,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
       "abscract",
       ParseStatus.valid,
@@ -424,7 +423,7 @@ suite("Parsing Nodes", () => {
       "abscract",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
       "",
       ParseStatus.valid,
@@ -432,7 +431,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
       "  ",
       ParseStatus.incomplete,
@@ -443,10 +442,10 @@ suite("Parsing Nodes", () => {
   });
 
   test("Multiple", () => {
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 0), `)`, ParseStatus.valid, ``, ")", "");
-    testNodeParseElan(
+    testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+    testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new Multiple(f, () => new LitInt(f), 0), `)`, ParseStatus.valid, ``, ")", "");
+    testNodeParse(
       new Multiple(f, () => new LitInt(f), 1),
       `1 0 33`,
       ParseStatus.valid,
@@ -454,10 +453,10 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 1), `1`, ParseStatus.valid, `1`, "", "");
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-    testNodeParseElan(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(
+    testNodeParse(new Multiple(f, () => new LitInt(f), 1), `1`, ParseStatus.valid, `1`, "", "");
+    testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+    testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(
       new Multiple(f, () => new LitInt(f), 1),
       `5 6 a`,
       ParseStatus.valid,
@@ -465,7 +464,7 @@ suite("Parsing Nodes", () => {
       " a",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new LitInt(f), 1),
       `7   `,
       ParseStatus.valid,
@@ -474,7 +473,7 @@ suite("Parsing Nodes", () => {
       "",
     );
 
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
       `foo foo`,
       ParseStatus.valid,
@@ -482,7 +481,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "bar"), 1),
       `bar ba`,
       ParseStatus.incomplete,
@@ -490,7 +489,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
       `foo`,
       ParseStatus.valid,
@@ -498,7 +497,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
       `fo`,
       ParseStatus.incomplete,
@@ -506,7 +505,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
       `foo,foo`,
       ParseStatus.valid,
@@ -514,7 +513,7 @@ suite("Parsing Nodes", () => {
       ",foo",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
       `foofoo`,
       ParseStatus.invalid,
@@ -524,15 +523,15 @@ suite("Parsing Nodes", () => {
     );
   });
   test("CommaNode", () => {
-    testNodeParseElan(new CommaNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new CommaNode(f), `,`, ParseStatus.valid, ``, "", ", ");
-    testNodeParseElan(new CommaNode(f), ` ,`, ParseStatus.valid, `,`, "", ", ");
-    testNodeParseElan(new CommaNode(f), `,    `, ParseStatus.valid, ``, "", ", ");
-    testNodeParseElan(new CommaNode(f), `.`, ParseStatus.invalid, ``, ".", "");
-    testNodeParseElan(new CommaNode(f), `,,`, ParseStatus.valid, `,`, ",", "");
+    testNodeParse(new CommaNode(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new CommaNode(f), `,`, ParseStatus.valid, ``, "", ", ");
+    testNodeParse(new CommaNode(f), ` ,`, ParseStatus.valid, `,`, "", ", ");
+    testNodeParse(new CommaNode(f), `,    `, ParseStatus.valid, ``, "", ", ");
+    testNodeParse(new CommaNode(f), `.`, ParseStatus.invalid, ``, ".", "");
+    testNodeParse(new CommaNode(f), `,,`, ParseStatus.valid, `,`, ",", "");
   });
   test("CSV", () => {
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new PunctuationNode(f, "a"), 0),
       `a,a,a`,
       ParseStatus.valid,
@@ -540,7 +539,7 @@ suite("Parsing Nodes", () => {
       "",
       "a, a, a",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new PunctuationNode(f, "a"), 0),
       `a,`,
       ParseStatus.incomplete,
@@ -548,7 +547,7 @@ suite("Parsing Nodes", () => {
       "",
       "a, ",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new PunctuationNode(f, "a"), 0),
       `x`,
       ParseStatus.valid,
@@ -556,7 +555,7 @@ suite("Parsing Nodes", () => {
       "x",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new PunctuationNode(f, "a"), 1),
       `x`,
       ParseStatus.invalid,
@@ -564,7 +563,7 @@ suite("Parsing Nodes", () => {
       "x",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new PunctuationNode(f, "a"), 0),
       `a,a,x`,
       ParseStatus.valid,
@@ -572,11 +571,11 @@ suite("Parsing Nodes", () => {
       ",x",
       "a, a",
     );
-    testNodeParseElan(new CSV(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-    testNodeParseElan(new CSV(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new CSV(f, () => new LitInt(f), 0), `2`, ParseStatus.valid, `2`, "", "");
-    testNodeParseElan(new CSV(f, () => new LitInt(f), 1), `2`, ParseStatus.valid, `2`, "", "");
-    testNodeParseElan(
+    testNodeParse(new CSV(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+    testNodeParse(new CSV(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new CSV(f, () => new LitInt(f), 0), `2`, ParseStatus.valid, `2`, "", "");
+    testNodeParse(new CSV(f, () => new LitInt(f), 1), `2`, ParseStatus.valid, `2`, "", "");
+    testNodeParse(
       new CSV(f, () => new LitString(f), 0),
       `"apple","orange", "pear"`,
       ParseStatus.valid,
@@ -584,7 +583,7 @@ suite("Parsing Nodes", () => {
       "",
       `"apple", "orange", "pear"`,
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new IdentifierNode(f), 0),
       `a,b,c`,
       ParseStatus.valid,
@@ -592,15 +591,8 @@ suite("Parsing Nodes", () => {
       "",
       "a, b, c",
     );
-    testNodeParseElan(
-      new CSV(f, () => new IdentifierNode(f), 0),
-      `1`,
-      ParseStatus.valid,
-      ``,
-      "1",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, ParseStatus.valid, ``, "1", "");
+    testNodeParse(
       new CSV(f, () => new IdentifierNode(f), 1),
       `1`,
       ParseStatus.invalid,
@@ -608,7 +600,7 @@ suite("Parsing Nodes", () => {
       "1",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new IdentifierNode(f), 0),
       `a,1`,
       ParseStatus.valid,
@@ -616,7 +608,7 @@ suite("Parsing Nodes", () => {
       ",1",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new IdentifierNode(f), 0),
       `a,b,1`,
       ParseStatus.valid,
@@ -624,7 +616,7 @@ suite("Parsing Nodes", () => {
       ",1",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ExprNode(f), 0),
       `a + b, c, 1`,
       ParseStatus.valid,
@@ -632,72 +624,60 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new CSV(f, () => new ExprNode(f), 0), `)`, ParseStatus.valid, ``, ")", "");
+    testNodeParse(new CSV(f, () => new ExprNode(f), 0), `)`, ParseStatus.valid, ``, ")", "");
 
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 0),
       `foo, foo`,
       ParseStatus.valid,
       "",
       "",
     );
-    testNodeParseElan(
-      new CSV(f, () => new KeywordNode(f, "foo"), 0),
-      `foo`,
-      ParseStatus.valid,
-      "",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), `foo`, ParseStatus.valid, "", "");
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 1),
       `fook`,
       ParseStatus.invalid,
       "",
       "fook",
     );
-    testNodeParseElan(
-      new CSV(f, () => new KeywordNode(f, "foo"), 0),
-      ``,
-      ParseStatus.valid,
-      "",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), ``, ParseStatus.valid, "", "");
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 1),
       `fo`,
       ParseStatus.incomplete,
       "fo",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 0),
       `fo`,
       ParseStatus.incomplete,
       "fo",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 2),
       `foo, fo`,
       ParseStatus.incomplete,
       "foo, fo",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 2),
       `foo,`,
       ParseStatus.incomplete,
       "foo,",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 2),
       `foo, `,
       ParseStatus.incomplete,
       "foo, ",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new KeywordNode(f, "foo"), 2),
       `foo,fo`,
       ParseStatus.incomplete,
@@ -706,19 +686,19 @@ suite("Parsing Nodes", () => {
       "foo, fo",
     );
 
-    testNodeParseElan(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
+    testNodeParse(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
   });
   test("Instance", () => {
-    testNodeParseElan(new InstanceNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new InstanceNode(f), `bar`, ParseStatus.valid, `bar`, "", "");
-    testNodeParseElan(new InstanceNode(f), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
+    testNodeParse(new InstanceNode(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new InstanceNode(f), `bar`, ParseStatus.valid, `bar`, "", "");
+    testNodeParse(new InstanceNode(f), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
   test("Function Call", () => {
-    testNodeParseElan(new MethodCallNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(new MethodCallNode(f), `  `, ParseStatus.empty, ``, "", "");
-    testNodeParseElan(
+    testNodeParse(new MethodCallNode(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new MethodCallNode(f), `  `, ParseStatus.empty, ``, "", "");
+    testNodeParse(
       new MethodCallNode(f),
       `foo()`,
       ParseStatus.valid,
@@ -727,7 +707,7 @@ suite("Parsing Nodes", () => {
       "foo()",
       "<el-method>foo</el-method>()",
     );
-    testNodeParseElan(
+    testNodeParse(
       new MethodCallNode(f),
       `bar(x, 1, "hello")`,
       ParseStatus.valid,
@@ -736,14 +716,14 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new MethodCallNode(f), `yon`, ParseStatus.incomplete, `yon`, "", "");
-    testNodeParseElan(new MethodCallNode(f), `yon `, ParseStatus.invalid, ``, "yon ", "");
-    testNodeParseElan(new MethodCallNode(f), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
-    testNodeParseElan(new MethodCallNode(f), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
-    testNodeParseElan(new MethodCallNode(f), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
-    testNodeParseElan(new MethodCallNode(f), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
-    testNodeParseElan(new MethodCallNode(f), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-    testNodeParseElan(
+    testNodeParse(new MethodCallNode(f), `yon`, ParseStatus.incomplete, `yon`, "", "");
+    testNodeParse(new MethodCallNode(f), `yon `, ParseStatus.invalid, ``, "yon ", "");
+    testNodeParse(new MethodCallNode(f), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
+    testNodeParse(new MethodCallNode(f), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
+    testNodeParse(new MethodCallNode(f), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
+    testNodeParse(new MethodCallNode(f), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
+    testNodeParse(new MethodCallNode(f), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
+    testNodeParse(
       new MethodCallNode(f),
       `foo(a)`,
       ParseStatus.valid,
@@ -752,10 +732,10 @@ suite("Parsing Nodes", () => {
       "foo(a)",
       "<el-method>foo</el-method>(<el-id>a</el-id>)",
     );
-    testNodeParseElan(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+    testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   });
   test("TypeSimpleNode", () => {
-    testNodeParseElan(
+    testNodeParse(
       new TypeNameQualifiedNode(f),
       `Foo`,
       ParseStatus.valid,
@@ -764,21 +744,14 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Foo</el-type>",
     );
-    testNodeParseElan(new TypeNameQualifiedNode(f), `foo`, ParseStatus.invalid, "", "foo", "");
+    testNodeParse(new TypeNameQualifiedNode(f), `foo`, ParseStatus.invalid, "", "foo", "");
   });
   test("TypeSimpleOrGeneric", () => {
-    testNodeParseElan(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
-    testNodeParseElan(new TypeSimpleOrGeneric(f), `foo`, ParseStatus.invalid, "", "foo", "");
-    testNodeParseElan(new TypeSimpleOrGeneric(f), `Foo<`, ParseStatus.incomplete, "Foo<", "", "");
-    testNodeParseElan(
-      new TypeSimpleOrGeneric(f),
-      `Foo<of`,
-      ParseStatus.incomplete,
-      "Foo<of",
-      "",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
+    testNodeParse(new TypeSimpleOrGeneric(f), `foo`, ParseStatus.invalid, "", "foo", "");
+    testNodeParse(new TypeSimpleOrGeneric(f), `Foo<`, ParseStatus.incomplete, "Foo<", "", "");
+    testNodeParse(new TypeSimpleOrGeneric(f), `Foo<of`, ParseStatus.incomplete, "Foo<of", "", "");
+    testNodeParse(
       new TypeSimpleOrGeneric(f),
       `Foo<of Bar`,
       ParseStatus.incomplete,
@@ -786,8 +759,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new TypeSimpleOrGeneric(f), `Foo<ofBar`, ParseStatus.valid, "", "<ofBar", "");
-    testNodeParseElan(
+    testNodeParse(new TypeSimpleOrGeneric(f), `Foo<ofBar`, ParseStatus.valid, "", "<ofBar", "");
+    testNodeParse(
       new TypeSimpleOrGeneric(f),
       `Foo<of Bar>`,
       ParseStatus.valid,
@@ -796,7 +769,7 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TypeSimpleOrGeneric(f),
       `Dictionary<of Bar, Yon>`,
       ParseStatus.valid,
@@ -808,9 +781,9 @@ suite("Parsing Nodes", () => {
   });
   test("TypeNode", () => {
     //Single
-    testNodeParseElan(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
-    testNodeParseElan(new TypeNode(f), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
-    testNodeParseElan(
+    testNodeParse(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
+    testNodeParse(new TypeNode(f), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
+    testNodeParse(
       new TypeNode(f),
       `(Foo, Bar, Yon`,
       ParseStatus.incomplete,
@@ -818,7 +791,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TypeNode(f),
       `(Foo, (Bar, Yon, Qux))`,
       ParseStatus.valid,
@@ -826,7 +799,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TypeNode(f),
       `(Foo, Bar< of Yon>)`,
       ParseStatus.valid,
@@ -836,7 +809,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("TypeNode - Func", () => {
-    testNodeParseElan(
+    testNodeParse(
       new TypeNode(f),
       `Func<of Foo, Bar => Yon>`,
       ParseStatus.valid,
@@ -846,28 +819,14 @@ suite("Parsing Nodes", () => {
     ); //Single
   });
   test("TypeNode - library qualifier", () => {
-    testNodeParseElan(
-      new TypeNode(f),
-      `library.Random`,
-      ParseStatus.valid,
-      "library.Random",
-      "",
-      "",
-    ); //Single
+    testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.valid, "library.Random", "", ""); //Single
   });
   test("TypeNode - other qualifier", () => {
-    testNodeParseElan(
-      new TypeNode(f),
-      `global.Random`,
-      ParseStatus.invalid,
-      "",
-      "global.Random",
-      "",
-    ); //Single
+    testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
   });
   test("TupleNode", () => {
-    testNodeParseElan(new TupleNode(f), `tuple(3,4)`, ParseStatus.valid, "", "", "");
-    testNodeParseElan(
+    testNodeParse(new TupleNode(f), `tuple(3,4)`, ParseStatus.valid, "", "", "");
+    testNodeParse(
       new TupleNode(f),
       `tuple(3,"a", "hello", 4.1, true)`,
       ParseStatus.valid,
@@ -875,7 +834,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TupleNode(f),
       `tuple(tuple(3,4), tuple("a", true))`,
       ParseStatus.valid,
@@ -883,7 +842,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TupleNode(f),
       `tuple(3,"a", "hello", 4.1, true`,
       ParseStatus.incomplete,
@@ -891,7 +850,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TupleNode(f),
       `tuple(3,"a", "hello", 4.1,`,
       ParseStatus.incomplete,
@@ -899,13 +858,13 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new TupleNode(f), `tuple[3,4]`, ParseStatus.invalid, "", "tuple[3,4]", "");
-    testNodeParseElan(new TupleNode(f), `tuple(a,b)`, ParseStatus.valid, "tuple(a,b)", "", "");
-    testNodeParseElan(new TupleNode(f), `tuple(`, ParseStatus.incomplete, "tuple(", "", "");
-    testNodeParseElan(new TupleNode(f), `tuple(3`, ParseStatus.incomplete, "tuple(3", "", "");
-    testNodeParseElan(new TupleNode(f), `tuple(3)`, ParseStatus.invalid, "", "tuple(3)", "");
-    testNodeParseElan(new TupleNode(f), `tuple()`, ParseStatus.invalid, "", "tuple()", "");
-    testNodeParseElan(
+    testNodeParse(new TupleNode(f), `tuple[3,4]`, ParseStatus.invalid, "", "tuple[3,4]", "");
+    testNodeParse(new TupleNode(f), `tuple(a,b)`, ParseStatus.valid, "tuple(a,b)", "", "");
+    testNodeParse(new TupleNode(f), `tuple(`, ParseStatus.incomplete, "tuple(", "", "");
+    testNodeParse(new TupleNode(f), `tuple(3`, ParseStatus.incomplete, "tuple(3", "", "");
+    testNodeParse(new TupleNode(f), `tuple(3)`, ParseStatus.invalid, "", "tuple(3)", "");
+    testNodeParse(new TupleNode(f), `tuple()`, ParseStatus.invalid, "", "tuple()", "");
+    testNodeParse(
       new TupleNode(f),
       `tuple("foo", 3)`,
       ParseStatus.valid,
@@ -914,7 +873,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TupleNode(f),
       `tuple(foo, 3, bar(a), x)`,
       ParseStatus.valid,
@@ -922,8 +881,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new TupleNode(f), `tuple(foo)`, ParseStatus.invalid, "", "tuple(foo)", "");
-    testNodeParseElan(
+    testNodeParse(new TupleNode(f), `tuple(foo)`, ParseStatus.invalid, "", "tuple(foo)", "");
+    testNodeParse(
       new TupleNode(f),
       `tuple(foo, 3, bar(a), x`,
       ParseStatus.incomplete,
@@ -931,7 +890,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TupleNode(f),
       `tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
       ParseStatus.valid,
@@ -941,7 +900,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Lambda", () => {
-    testNodeParseElan(
+    testNodeParse(
       new Lambda(f),
       `lambda x as Int => x * x`,
       ParseStatus.valid,
@@ -949,8 +908,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(new Lambda(f), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
-    testNodeParseElan(
+    testNodeParse(new Lambda(f), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
+    testNodeParse(
       new Lambda(f),
       `lambda x => x * x`,
       ParseStatus.invalid,
@@ -958,7 +917,7 @@ suite("Parsing Nodes", () => {
       "lambda x => x * x",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Lambda(f),
       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
       ParseStatus.valid,
@@ -966,7 +925,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new Lambda(f),
       `lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
       ParseStatus.valid,
@@ -976,7 +935,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("IfExpr", () => {
-    testNodeParseElan(
+    testNodeParse(
       new IfExpr(f),
       `if cell then Colour.green else Colour.black)`,
       ParseStatus.valid,
@@ -985,15 +944,8 @@ suite("Parsing Nodes", () => {
       "",
       "<el-kw>if </el-kw><el-id>cell</el-id><el-kw> then </el-kw><el-type>Colour</el-type>.<el-id>green</el-id><el-kw> else </el-kw><el-type>Colour</el-type>.<el-id>black</el-id>",
     );
-    testNodeParseElan(
-      new IfExpr(f),
-      `if cell then Colour.amber`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new IfExpr(f), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(
       new IfExpr(f),
       `if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")`,
       ParseStatus.valid,
@@ -1001,7 +953,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new IfExpr(f),
       `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target`,
       ParseStatus.valid,
@@ -1009,7 +961,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new IfExpr(f),
       `if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"`,
       ParseStatus.valid,
@@ -1019,7 +971,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("ParamDefNode", () => {
-    testNodeParseElan(
+    testNodeParse(
       new ParamDefNode(f),
       `x as String`,
       ParseStatus.valid,
@@ -1028,13 +980,61 @@ suite("Parsing Nodes", () => {
       "x as String",
       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
     );
-    testNodeParseElan(new ParamDefNode(f), `z`, ParseStatus.incomplete, "z", "", "");
-    testNodeParseElan(new ParamDefNode(f), `w as`, ParseStatus.incomplete, "w as", "", "");
-    testNodeParseElan(new ParamDefNode(f), `A`, ParseStatus.invalid, "", "A", "");
-    testNodeParseElan(new ParamDefNode(f), `v String`, ParseStatus.invalid, "", "v String", "");
+    testNodeParse(new ParamDefNode(f), `z`, ParseStatus.incomplete, "z", "", "");
+    testNodeParse(new ParamDefNode(f), `w as`, ParseStatus.incomplete, "w as", "", "");
+    testNodeParse(new ParamDefNode(f), `A`, ParseStatus.invalid, "", "A", "");
+    testNodeParse(new ParamDefNode(f), `v String`, ParseStatus.invalid, "", "v String", "");
+  });
+  test("ParamDefNode_Python", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithPython()),
+      `x: str`,
+      ParseStatus.valid,
+      "x: str",
+      "",
+      "",
+      "<el-id>x</el-id>: <el-type>str</el-type>",
+      "x: str",
+    );
+  });
+  test("ParamDefNode_VB", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithVB()),
+      `x As String`,
+      ParseStatus.valid,
+      "x As String",
+      "",
+      "",
+      "<el-id>x</el-id><el-kw> As </el-kw><el-type>String</el-type>",
+      "x As String",
+    );
+  });
+  test("ParamDefNode_CS", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithCS()),
+      `string x`,
+      ParseStatus.valid,
+      `string x`,
+      "",
+      "",
+      `<el-type>string</el-type> <el-id>x</el-id>`,
+      `string x`,
+    );
+  });
+  test("ParamDefNode_Java", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithJava()),
+      `String x`,
+      ParseStatus.valid,
+      `String x`,
+      "",
+      "",
+      `<el-type>String</el-type> <el-id>x</el-id>`,
+      `String x`,
+    );
   });
   test("Param List", () => {
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `A as string`,
       ParseStatus.valid,
@@ -1042,8 +1042,8 @@ suite("Parsing Nodes", () => {
       "A as string",
       "",
     ); //i.e. all leftover
-    testNodeParseElan(new CSV(f, () => new ParamDefNode(f), 0), ``, ParseStatus.valid, "", "", "");
-    testNodeParseElan(
+    testNodeParse(new CSV(f, () => new ParamDefNode(f), 0), ``, ParseStatus.valid, "", "", "");
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `a as String`,
       ParseStatus.valid,
@@ -1051,7 +1051,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `a as String, bb as Int, foo as Bar`,
       ParseStatus.valid,
@@ -1059,7 +1059,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `a`,
       ParseStatus.incomplete,
@@ -1067,7 +1067,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `a as String,`,
       ParseStatus.incomplete,
@@ -1075,7 +1075,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new CSV(f, () => new ParamDefNode(f), 0),
       `a as String, bb as`,
       ParseStatus.incomplete,
@@ -1085,7 +1085,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("KVP", () => {
-    testNodeParseElan(
+    testNodeParse(
       new KVPnode(
         f,
         () => new LitString(f),
@@ -1097,7 +1097,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KVPnode(
         f,
         () => new LitString(f),
@@ -1109,7 +1109,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KVPnode(
         f,
         () => new LitString(f),
@@ -1121,7 +1121,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new KVPnode(
         f,
         () => new LitString(f),
@@ -1135,7 +1135,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Dictionary", () => {
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1147,7 +1147,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1159,7 +1159,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1171,7 +1171,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1183,7 +1183,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1195,7 +1195,7 @@ suite("Parsing Nodes", () => {
       `["a":37, 42:"b"]`,
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitString(f),
@@ -1208,7 +1208,7 @@ suite("Parsing Nodes", () => {
       "",
     );
 
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitValueNode(f),
@@ -1220,7 +1220,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new DictionaryNode(
         f,
         () => new LitValueNode(f),
@@ -1232,29 +1232,29 @@ suite("Parsing Nodes", () => {
       "",
       "",
     ); //But should fail type tests
-    testNodeParseElan(new LitValueNode(f), `''`, ParseStatus.valid, "", "", "");
-    testNodeParseElan(new LitValueNode(f), `'`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new LitValueNode(f), `''`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(f), `'`, ParseStatus.incomplete, "", "", "");
   });
   test("Literal", () => {
-    testNodeParseElan(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
-    testNodeParseElan(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
   });
   test("SpaceNode", () => {
-    testNodeParseElan(new SpaceNode(f, Space.ignored), ``, ParseStatus.valid, "", "", "", "");
-    testNodeParseElan(new SpaceNode(f, Space.ignored), ` `, ParseStatus.valid, "", "", "", "");
-    testNodeParseElan(new SpaceNode(f, Space.ignored), `  `, ParseStatus.valid, "", "", "", "");
-    testNodeParseElan(new SpaceNode(f, Space.added), ``, ParseStatus.valid, "", "", " ", " ");
-    testNodeParseElan(new SpaceNode(f, Space.added), ` `, ParseStatus.valid, "", "", " ", " ");
-    testNodeParseElan(new SpaceNode(f, Space.added), `  `, ParseStatus.valid, "", "", " ", " ");
-    testNodeParseElan(new SpaceNode(f, Space.required), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new SpaceNode(f, Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
-    testNodeParseElan(new SpaceNode(f, Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
+    testNodeParse(new SpaceNode(f, Space.ignored), ``, ParseStatus.valid, "", "", "", "");
+    testNodeParse(new SpaceNode(f, Space.ignored), ` `, ParseStatus.valid, "", "", "", "");
+    testNodeParse(new SpaceNode(f, Space.ignored), `  `, ParseStatus.valid, "", "", "", "");
+    testNodeParse(new SpaceNode(f, Space.added), ``, ParseStatus.valid, "", "", " ", " ");
+    testNodeParse(new SpaceNode(f, Space.added), ` `, ParseStatus.valid, "", "", " ", " ");
+    testNodeParse(new SpaceNode(f, Space.added), `  `, ParseStatus.valid, "", "", " ", " ");
+    testNodeParse(new SpaceNode(f, Space.required), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(new SpaceNode(f, Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
+    testNodeParse(new SpaceNode(f, Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
   });
   test("New Instance", () => {
-    testNodeParseElan(new NewInstance(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new NewInstance(f), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
-    testNodeParseElan(new NewInstance(f), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
-    testNodeParseElan(
+    testNodeParse(new NewInstance(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(new NewInstance(f), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
+    testNodeParse(new NewInstance(f), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+    testNodeParse(
       new NewInstance(f),
       "new List<of String>()",
       ParseStatus.valid,
@@ -1263,8 +1263,8 @@ suite("Parsing Nodes", () => {
     );
   });
   test("String Interpolation", () => {
-    testNodeParseElan(new LitStringInterpolation(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(
+    testNodeParse(new LitStringInterpolation(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(
       new LitStringInterpolation(f),
       "{x + 1}",
       ParseStatus.valid,
@@ -1273,20 +1273,12 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
-      new LitStringInterpolation(f),
-      "{x",
-      ParseStatus.incomplete,
-      "{x",
-      "",
-      "",
-      "",
-    );
-    testNodeParseElan(new LitStringInterpolation(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+    testNodeParse(new LitStringInterpolation(f), "{x", ParseStatus.incomplete, "{x", "", "", "");
+    testNodeParse(new LitStringInterpolation(f), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
-    testNodeParseElan(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-    testNodeParseElan(
+    testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
+    testNodeParse(
       new LitString(f),
       `"abc"`,
       ParseStatus.valid,
@@ -1295,7 +1287,7 @@ suite("Parsing Nodes", () => {
       "",
       `"<el-lit>abc</el-lit>"`,
     );
-    testNodeParseElan(
+    testNodeParse(
       new LitString(f),
       `"abc def"`,
       ParseStatus.valid,
@@ -1304,14 +1296,14 @@ suite("Parsing Nodes", () => {
       "",
       `"<el-lit>abc def</el-lit>"`,
     );
-    testNodeParseElan(new LitString(f), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
-    testNodeParseElan(new LitString(f), `"`, ParseStatus.incomplete, `"`, "", "", "");
-    testNodeParseElan(new LitString(f), `abc`, ParseStatus.invalid, "", "abc", "", "");
-    testNodeParseElan(new LitString(f), `'abc'`, ParseStatus.valid, "'abc'", "", "", "");
-    testNodeParseElan(new LitString(f), `'abc"`, ParseStatus.incomplete, `'abc"`, "", "", "");
-    testNodeParseElan(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
+    testNodeParse(new LitString(f), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
+    testNodeParse(new LitString(f), `"`, ParseStatus.incomplete, `"`, "", "", "");
+    testNodeParse(new LitString(f), `abc`, ParseStatus.invalid, "", "abc", "", "");
+    testNodeParse(new LitString(f), `'abc'`, ParseStatus.valid, "'abc'", "", "", "");
+    testNodeParse(new LitString(f), `'abc"`, ParseStatus.incomplete, `'abc"`, "", "", "");
+    testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
     //Test embedded html
-    testNodeParseElan(
+    testNodeParse(
       new LitStringDoubleQuotesNonEmpty(f),
       `"<p>abc</p>"`,
       ParseStatus.valid,
@@ -1320,7 +1312,7 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
-    testNodeParseElan(
+    testNodeParse(
       new LitStringDoubleQuotesNonEmpty(f),
       `"&#123;curly braces&#125;"`,
       ParseStatus.valid,
@@ -1334,32 +1326,32 @@ suite("Parsing Nodes", () => {
     const field = () => new LitStringInterpolation(f);
     const plainText = () => new RegExMatchNode(f, Regexes.nonEmptyStringContent);
     const segment = () => new Alternatives(f, [field, plainText]);
-    testNodeParseElan(segment(), `abc`, ParseStatus.valid, "abc", "");
-    testNodeParseElan(segment(), `{x}`, ParseStatus.valid, "{x}", "");
-    testNodeParseElan(segment(), `"`, ParseStatus.invalid, "", `"`);
+    testNodeParse(segment(), `abc`, ParseStatus.valid, "abc", "");
+    testNodeParse(segment(), `{x}`, ParseStatus.valid, "{x}", "");
+    testNodeParse(segment(), `"`, ParseStatus.invalid, "", `"`);
 
-    testNodeParseElan(new LitString(f), `"{x}{y}"`, ParseStatus.valid, "", "");
-    testNodeParseElan(new LitString(f), `"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `"{x}{y}"`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
   });
   test("Bug #290", () => {
-    testNodeParseElan(new LitInt(f), `3`, ParseStatus.valid, "3", "");
-    testNodeParseElan(new LitInt(f), `3 `, ParseStatus.valid, "3", " ");
+    testNodeParse(new LitInt(f), `3`, ParseStatus.valid, "3", "");
+    testNodeParse(new LitInt(f), `3 `, ParseStatus.valid, "3", " ");
 
-    testNodeParseElan(new LitValueNode(f), `3 `, ParseStatus.valid, "3", " ");
-    testNodeParseElan(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+    testNodeParse(new LitValueNode(f), `3 `, ParseStatus.valid, "3", " ");
+    testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
 
-    testNodeParseElan(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+    testNodeParse(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
   test("ProcRefCompound", () => {
-    testNodeParseElan(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
-    testNodeParseElan(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
-    testNodeParseElan(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
-    testNodeParseElan(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
-    testNodeParseElan(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
-    testNodeParseElan(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
-    testNodeParseElan(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
-    testNodeParseElan(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
+    testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
+    testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
+    testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
+    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
   });
   // test("#339 call dot function on a literal", () => {
   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
@@ -1374,66 +1366,48 @@ suite("Parsing Nodes", () => {
   // });
 
   test("#670 new parse node structure for terms & expressions", () => {
-    testNodeParseElan(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
-    testNodeParseElan(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
-    testNodeParseElan(new TermSimple(f), `this`, ParseStatus.valid, "this", "");
-    testNodeParseElan(new TermSimple(f), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
-    testNodeParseElan(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-    testNodeParseElan(
-      new TermSimpleWithOptIndex(f),
-      `abc[1][2]`,
-      ParseStatus.valid,
-      "abc[1]",
-      "[2]",
-    );
-    testNodeParseElan(
-      new TermSimpleWithOptIndex(f),
-      `abc[1..2]`,
-      ParseStatus.valid,
-      "abc[1..2]",
-      "",
-    );
-    testNodeParseElan(
-      new TermSimpleWithOptIndex(f),
-      `abc[1, 2]`,
-      ParseStatus.valid,
-      "abc[1, 2]",
-      "",
-    );
-    testNodeParseElan(
+    testNodeParse(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
+    testNodeParse(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
+    testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, "this", "");
+    testNodeParse(new TermSimple(f), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
+    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
+    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
+    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc[1, 2]", "");
+    testNodeParse(
       new TermSimpleWithOptIndex(f),
       `abc(def, ghi)[0]`,
       ParseStatus.valid,
       "abc(def, ghi)[0]",
       "",
     );
-    testNodeParseElan(new ExprNode(f), `tuple(def, ghi)`, ParseStatus.valid, "tuple(def, ghi)", ""); // tuple
-    testNodeParseElan(new TermSimple(f), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
-    testNodeParseElan(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
-    testNodeParseElan(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
-    testNodeParseElan(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
-    testNodeParseElan(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-    testNodeParseElan(new Qualifier(f), `property`, ParseStatus.valid, `property`, "");
-    testNodeParseElan(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
-    testNodeParseElan(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
-    testNodeParseElan(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
-    testNodeParseElan(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
-    testNodeParseElan(new TermChained(f), `property.a`, ParseStatus.valid, `property.a`, "");
-    testNodeParseElan(
+    testNodeParse(new ExprNode(f), `tuple(def, ghi)`, ParseStatus.valid, "tuple(def, ghi)", ""); // tuple
+    testNodeParse(new TermSimple(f), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
+    testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
+    testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
+    testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
+    testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+    testNodeParse(new Qualifier(f), `property`, ParseStatus.valid, `property`, "");
+    testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
+    testNodeParse(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
+    testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
+    testNodeParse(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
+    testNodeParse(new TermChained(f), `property.a`, ParseStatus.valid, `property.a`, "");
+    testNodeParse(
       new TermChained(f),
       `a[1].b()[1..2].c(d)[e][f]`,
       ParseStatus.valid,
       `a[1].b()[1..2].c(d)[e][f]`,
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TermChained(f),
       `property.a[1].b().c(d)[e]`,
       ParseStatus.valid,
       `property.a[1].b().c(d)[e]`,
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new TermChained(f),
       `this.a.b()`,
       ParseStatus.valid,
@@ -1442,57 +1416,41 @@ suite("Parsing Nodes", () => {
       "this.a.b()",
       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       `a[1].b()[1..2].c(d).e.f[g]`,
       ParseStatus.valid,
       `a[1].b()[1..2].c(d).e.f[g]`,
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       `property.a[1].b().c(d)[e]`,
       ParseStatus.valid,
       `property.a[1].b().c(d)[e]`,
       "",
     );
-    testNodeParseElan(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref foo`, "");
-    testNodeParseElan(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
+    testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref foo`, "");
+    testNodeParse(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
   });
   test("OperatorAmbiguity#728", () => {
     //Test operations
-    testNodeParseElan(new BinaryOperation(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParseElan(new BinaryOperation(f), ` `, ParseStatus.incomplete, " ", "", " ", " ");
-    testNodeParseElan(new BinaryOperation(f), `+`, ParseStatus.valid, "+", "", " + ", " + ");
-    testNodeParseElan(new BinaryOperation(f), ` +`, ParseStatus.valid, " +", "", " + ", " + ");
-    testNodeParseElan(new BinaryOperation(f), ` + `, ParseStatus.valid, " + ", "", " + ", " + ");
-    testNodeParseElan(new BinaryOperation(f), `*`, ParseStatus.valid, "*", "", "*", "*");
-    testNodeParseElan(new BinaryOperation(f), ` *`, ParseStatus.valid, " *", "", "*", "*");
-    testNodeParseElan(new BinaryOperation(f), ` * `, ParseStatus.valid, " * ", "", "*", "*");
-    testNodeParseElan(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " &gt;= ");
-    testNodeParseElan(
-      new BinaryOperation(f),
-      ` >=`,
-      ParseStatus.valid,
-      " >=",
-      "",
-      " >= ",
-      " &gt;= ",
-    );
-    testNodeParseElan(
-      new BinaryOperation(f),
-      ` >= `,
-      ParseStatus.valid,
-      " >= ",
-      "",
-      " >= ",
-      " &gt;= ",
-    );
-    testNodeParseElan(new BinaryOperation(f), `>`, ParseStatus.valid, ">", "", " > ", " &gt; ");
-    testNodeParseElan(new BinaryOperation(f), ` >`, ParseStatus.valid, " >", "", " > ", " &gt; ");
-    testNodeParseElan(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " &gt; ");
-    testNodeParseElan(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " &gt; ");
-    testNodeParseElan(
+    testNodeParse(new BinaryOperation(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(new BinaryOperation(f), ` `, ParseStatus.incomplete, " ", "", " ", " ");
+    testNodeParse(new BinaryOperation(f), `+`, ParseStatus.valid, "+", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(f), ` +`, ParseStatus.valid, " +", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(f), ` + `, ParseStatus.valid, " + ", "", " + ", " + ");
+    testNodeParse(new BinaryOperation(f), `*`, ParseStatus.valid, "*", "", "*", "*");
+    testNodeParse(new BinaryOperation(f), ` *`, ParseStatus.valid, " *", "", "*", "*");
+    testNodeParse(new BinaryOperation(f), ` * `, ParseStatus.valid, " * ", "", "*", "*");
+    testNodeParse(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " &gt;= ");
+    testNodeParse(new BinaryOperation(f), ` >=`, ParseStatus.valid, " >=", "", " >= ", " &gt;= ");
+    testNodeParse(new BinaryOperation(f), ` >= `, ParseStatus.valid, " >= ", "", " >= ", " &gt;= ");
+    testNodeParse(new BinaryOperation(f), `>`, ParseStatus.valid, ">", "", " > ", " &gt; ");
+    testNodeParse(new BinaryOperation(f), ` >`, ParseStatus.valid, " >", "", " > ", " &gt; ");
+    testNodeParse(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " &gt; ");
+    testNodeParse(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " &gt; ");
+    testNodeParse(
       new BinaryOperation(f),
       `is`,
       ParseStatus.valid,
@@ -1501,7 +1459,7 @@ suite("Parsing Nodes", () => {
       " is ",
       "<el-kw> is </el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryOperation(f),
       `is `,
       ParseStatus.valid,
@@ -1510,16 +1468,8 @@ suite("Parsing Nodes", () => {
       " is ",
       "<el-kw> is </el-kw>",
     );
-    testNodeParseElan(
-      new BinaryOperation(f),
-      `isn`,
-      ParseStatus.incomplete,
-      "isn",
-      "",
-      "isn",
-      "isn",
-    );
-    testNodeParseElan(
+    testNodeParse(new BinaryOperation(f), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
+    testNodeParse(
       new BinaryOperation(f),
       `isnt`,
       ParseStatus.valid,
@@ -1528,7 +1478,7 @@ suite("Parsing Nodes", () => {
       " isnt ",
       "<el-kw> isnt </el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryOperation(f),
       ` and `,
       ParseStatus.valid,
@@ -1537,7 +1487,7 @@ suite("Parsing Nodes", () => {
       " and ",
       "<el-kw> and </el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryOperation(f),
       `and`,
       ParseStatus.valid,
@@ -1546,7 +1496,7 @@ suite("Parsing Nodes", () => {
       " and ",
       "<el-kw> and </el-kw>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryOperation(f),
       `anda`,
       ParseStatus.valid,
@@ -1556,11 +1506,11 @@ suite("Parsing Nodes", () => {
       "<el-kw> and </el-kw>",
     );
 
-    testNodeParseElan(new BinaryOperation(f), `an`, ParseStatus.incomplete, "an", "", "an", "an");
-    testNodeParseElan(new BinaryOperation(f), `not`, ParseStatus.invalid, "", "not", "", "");
+    testNodeParse(new BinaryOperation(f), `an`, ParseStatus.incomplete, "an", "", "an", "an");
+    testNodeParse(new BinaryOperation(f), `not`, ParseStatus.invalid, "", "not", "", "");
 
     //test expressions
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `"a"+  "b"`,
       ParseStatus.valid,
@@ -1568,7 +1518,7 @@ suite("Parsing Nodes", () => {
       "",
       `"a" + "b"`,
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `3+`,
       ParseStatus.incomplete,
@@ -1577,7 +1527,7 @@ suite("Parsing Nodes", () => {
       "3 + ",
       "<el-lit>3</el-lit> + ",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `3 +`,
       ParseStatus.incomplete,
@@ -1586,7 +1536,7 @@ suite("Parsing Nodes", () => {
       "3 + ",
       "<el-lit>3</el-lit> + ",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `3 `,
       ParseStatus.incomplete,
@@ -1595,7 +1545,7 @@ suite("Parsing Nodes", () => {
       "3 ",
       "<el-lit>3</el-lit> ",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `3+4`,
       ParseStatus.valid,
@@ -1604,7 +1554,7 @@ suite("Parsing Nodes", () => {
       "3 + 4",
       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
     );
-    testNodeParseElan(
+    testNodeParse(
       new BinaryExpression(f),
       `3>=4`,
       ParseStatus.valid,
@@ -1613,14 +1563,14 @@ suite("Parsing Nodes", () => {
       "3 >= 4",
       "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
     );
-    testNodeParseElan(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3 > ");
-    testNodeParseElan(new BinaryExpression(f), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
-    testNodeParseElan(new BinaryExpression(f), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
-    testNodeParseElan(new BinaryExpression(f), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
-    testNodeParseElan(new BinaryExpression(f), `3 > 4`, ParseStatus.valid, "3 > 4", "", "3 > 4");
-    testNodeParseElan(new BinaryExpression(f), `3>=`, ParseStatus.incomplete, "3>=", "", "3 >= ");
-    testNodeParseElan(new BinaryExpression(f), `3>=4`, ParseStatus.valid, "3>=4", "", "3 >= 4");
-    testNodeParseElan(
+    testNodeParse(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3 > ");
+    testNodeParse(new BinaryExpression(f), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
+    testNodeParse(new BinaryExpression(f), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(f), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(f), `3 > 4`, ParseStatus.valid, "3 > 4", "", "3 > 4");
+    testNodeParse(new BinaryExpression(f), `3>=`, ParseStatus.incomplete, "3>=", "", "3 >= ");
+    testNodeParse(new BinaryExpression(f), `3>=4`, ParseStatus.valid, "3>=4", "", "3 >= 4");
+    testNodeParse(
       new BinaryExpression(f),
       `3 is 4`,
       ParseStatus.valid,
@@ -1681,7 +1631,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("LitRegExp", () => {
-    testNodeParseElan(
+    testNodeParse(
       new LitRegExp(f),
       `/abc+.*/`,
       ParseStatus.valid,
@@ -1692,7 +1642,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("LitRegExp with flags", () => {
-    testNodeParseElan(
+    testNodeParse(
       new LitRegExp(f),
       `/abc+.*/gm`,
       ParseStatus.valid,
@@ -1703,7 +1653,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("LitRegExp with invalid flags", () => {
-    testNodeParseElan(
+    testNodeParse(
       new LitRegExp(f),
       `/abc+.*/x`,
       ParseStatus.valid,
@@ -1714,7 +1664,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("not(a+b)", () => {
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       `not(a+b)`,
       ParseStatus.valid,
@@ -1725,7 +1675,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Parse list of list of floats", () => {
-    testNodeParseElan(
+    testNodeParse(
       new ExprNode(f),
       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
       ParseStatus.valid,
@@ -1734,13 +1684,13 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Parse list of floats 2", () => {
-    testNodeParseElan(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
+    testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
   });
   test("Six open brackets", () => {
-    testNodeParseElan(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
+    testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
   });
   test("Image", () => {
-    testNodeParseElan(
+    testNodeParse(
       new RegExMatchNode(f, Regexes.url),
       "http://website.com/images/image1.png",
       ParseStatus.valid,
@@ -1749,7 +1699,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParseElan(
+    testNodeParse(
       new ImageNode(f),
       "image http://website.com/images/image1.png",
       ParseStatus.valid,
@@ -1758,7 +1708,7 @@ suite("Parsing Nodes", () => {
       "image http://website.com/images/image1.png",
       `<img src="http://website.com/images/image1.png">`,
     );
-    testNodeParseElan(
+    testNodeParse(
       new ImageNode(f),
       "image http://website.com/images/image1.png with height set to 10, width set to 20",
       ParseStatus.valid,
