@@ -14,7 +14,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="ValueTypes">Value Types, with their methods</h1>
+<h1 id="ValueTypes">Value data Types</h1>
 
 <h2 id="Int">Integer</h2>
 <p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
@@ -168,10 +168,10 @@ in the range:</li>
   </ul></li>
  <li>A variable that has been defined as being of Type <el-type>Float</el-type> may not be passed as an argument into a method that requires an <el-type>Int</el-type>,
     nor as an index into a <el-type>List</el-type> or an <el-type>Array2D</el-type> even if the variable contains no fractional part.
-    It may, however, be converted into an <el-type>Int</el-type> before passing, using the function <el-code>floor</el-code> or <el-code>ceiling</el-code>.</li>
+    It may, however, be converted into an <el-type>Int</el-type> before passing, using the function <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of Type <el-type>Float</el-type>, but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
  <el-code>variable hour set to 3.0</el-code></li>
- <li>Any variable or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</li>
+ <li>Any variable or expression that evaluates to an <el-type>Int</el-type> may always be used where a <el-type>Float</el-type> is expected.</li>
 </ul>
 
 <h2 id="Boolean">Boolean</h2>
@@ -276,7 +276,7 @@ in the range:</li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never changed. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
 <li id="IndexRange">There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth  to the seventh characters inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
- <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
+ <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-kw>each</el-kw></a> loop.
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
 </ul>
 
@@ -393,7 +393,7 @@ in the range:</li>
   <td><el-method>split</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code></td>
+  <td><<el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</td>
   <td>a <el-type>List</el-type> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="trim">
@@ -2722,8 +2722,8 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 
 <h2 id="RegExp">Regular expressions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
-    <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
+    <p>More functions for using regular expressions will be added in a future release of Elan. For now:</p>
+    <p>The method <el-method>matchesRegExp</el-method> is applied to a <el-type>String</el-type> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <el-type>RegExp</el-type> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
 
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
@@ -2736,7 +2736,7 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<p>You can convert a valid <el-code>string</el-code> without <el-code>/../</el-code> delimiters to a <el-code>RegExp</el-code> using function <el-code>asRegExp</el-code>:</p>
+<p>You can convert a valid string without <el-code>/../</el-code> delimiters to a <el-type>RegExp</el-type> using function <el-method>asRegExp</el-method>:</p>
 <el-code-block source="test_regexp_2.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -3076,28 +3076,28 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To cube each integer value in a list:</p>
 <el-code-block source="map.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>^<el-lit>3</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>power</el-method>(<el-id>n</el-id>, <el-lit>3</el-lit>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
 &nbsp;&nbsp;&#x27f6; [1, 8, 27, 64, 125]
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To change each string in a list to upper case:</p>
 <el-code-block source="map.elan">
-<el-statement class="ok" id="let8" tabindex="-1"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print11" tabindex="-1"><el-kw>print </el-kw><el-field id="expr12" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>s</el-id>.<el-method>upperCase</el-method>())</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>s</el-id>.<el-method>upperCase</el-method>())</el-txt></el-field><el-punc>)</el-punc></el-statement>
 &nbsp;&nbsp;&#x27f6; ["TOM", "DICK", "HARRIET"]
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse each string in the list of names using the function <el-method>reverse</el-method>
  (from the example of the <a href="LangRef.html#each">each</a> loop):</p>
 <el-code-block source="map.elan">
-<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverse</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverseString</el-method>(<el-id>s</el-id>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
 &nbsp;&nbsp;&#x27f6; ["moT", "kciD", "teirraH"]
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example from demo program <el-code>maze-generator.elan</el-code>:</p>
 <el-code-block source="maze-generator.elan">
-<el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var156" tabindex="-1"><el-kw>variable </el-kw><el-field id="var157" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr158" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
 </div></div>
@@ -3215,17 +3215,17 @@ They take a function as an argument, and return the list item corresponding to t
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To  reorder integers in a <el-type>List</el-type>, using > for ascending (you would use < for descending):</p>
 <el-code-block source="orderBy_Int.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>23</el-lit>, <el-lit>13</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let29" tabindex="-1"><el-kw>let </el-kw><el-field id="var30" class="ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id> &gt; <el-id>y</el-id>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print32" tabindex="-1"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>23</el-lit>, <el-lit>13</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id> &gt; <el-id>y</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call9" tabindex="-1"><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args11" class="optional ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 &nbsp;&nbsp;&#x27f6; [2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]
 </el-code-block>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reorder strings in a <el-type>ListImmutable</el-type>, using methods <el-method>isAfter</el-method> for ascending or <el-method>isBefore</el-method> for descending:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reorder strings in a <el-type>List</el-type>, using methods <el-method>isAfter</el-method> for ascending or <el-method>isBefore</el-method> for descending:</p>
 <el-code-block source="orderBy_String.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>{"<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"}</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>))</el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; {Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice}
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
+&nbsp;&nbsp;&#x27f6; [Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice]
 </el-code-block>
 <hr>
 </div></div>

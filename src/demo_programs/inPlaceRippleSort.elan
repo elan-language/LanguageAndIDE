@@ -1,0 +1,28 @@
+# 4a5069a8821dff7bad4188a1cf08d13e1a49a4a5a0c65d25ff564b40d3f0cbef Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable li set to [7, 1, 0, 4, 8, 3, 6]
+  call print(li)
+  call inPlaceRippleSort(li)
+  call print(li)
+end main
+
+# snipFrom
+procedure inPlaceRippleSort(li as List<of Int>)
+  variable hasChanged set to true
+  variable lastComp set to li.length() - 2
+  while hasChanged is true
+    set hasChanged to false
+    for i from 0 to lastComp step 1
+      if li[i] > li[i + 1] then
+        variable temp set to li[i]
+        call li.put(i, li[i + 1])
+        call li.put(i + 1, temp)
+        set hasChanged to true
+      end if
+    end for
+    set lastComp to lastComp - 1
+  end while
+end procedure
+
+# snipTo

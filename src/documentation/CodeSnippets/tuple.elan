@@ -1,0 +1,8 @@
+# 29c281e0f7644a7be287fba0453f9396b00174fb800beb186a3ba9c9ad02153c Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable x set to empty List<of Boolean>
+  call x.initialise(2, false)
+  variable t set to tuple("a", 1, x)
+  call print(t)
+end main
