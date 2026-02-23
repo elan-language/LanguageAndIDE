@@ -231,12 +231,9 @@ export class LanguageVB extends LanguageAbstract {
   private WHILE = "While";
 
   private SINGLE_QUOTE = "'";
-  private EQUALS = "=";
-  private NOT_EQUALS = "<>";
 
-  POWER: string = "^";
-  EQUAL: string = "==";
-  NOT_EQUAL: string = "!=";
+  EQUAL: string = "=";
+  NOT_EQUAL: string = "<>";
   MOD = "Mod";
   AND = "And";
   OR = "Or";

@@ -1,5 +1,7 @@
+import { escapeHtmlChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
+import { MULT, DIVIDE } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 
 export class Operator extends AbstractParseNode {
@@ -29,10 +31,22 @@ export class Operator extends AbstractParseNode {
   }
 
   renderAsElanSource(): string {
-    return this.elanOp + " ";
+    const closePacked = this.elanOp === MULT || this.elanOp === DIVIDE;
+    const space = closePacked ? "" : " ";
+    return `${space}${this.elanOp}${space}`;
   }
 
   renderAsHtml(): string {
-    return this.langOp + " ";
+    let text = this.langOp;
+    if (text.includes(`<`) || text.includes(`>`)) {
+     text = escapeHtmlChars(this.langOp);
+    }
+    const alpha = /^[a-zA-Z]/;
+    const kw = alpha.test(text);
+    const closePacked = this.langOp === MULT || this.langOp === DIVIDE;
+    const open = kw ? "<el-kw>" : "";
+    const close = kw ? "</el-kw>" : "";
+    const space = closePacked ? "" : " ";
+    return `${open}${space}${text}${space}${close}`;
   }
 }

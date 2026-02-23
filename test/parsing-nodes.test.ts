@@ -56,12 +56,12 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import {
-  testActiveNodeAndDone,
-  testNodeParse,
-  fileWithPython,
-  fileWithVB,
   fileWithCS,
   fileWithJava,
+  fileWithPython,
+  fileWithVB,
+  testActiveNodeAndDone,
+  testNodeParse,
 } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
@@ -1627,6 +1627,219 @@ suite("Parsing Nodes", () => {
       "",
       "3 is 4",
       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
+    );
+  });
+  test("BinaryExpression_Python", () => {
+    /* MOD: string = "%";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  AND: string = "and";
+  OR: string = "or"; */
+    testNodeParse(
+      new BinaryExpression(fileWithPython()),
+      `10 % 3`,
+      ParseStatus.valid,
+      `10 % 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+      `10 % 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithPython()),
+      `10 == 3`,
+      ParseStatus.valid,
+      `10 == 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> == <el-lit>3</el-lit>",
+      `10 == 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithPython()),
+      `10 != 3`,
+      ParseStatus.valid,
+      `10 != 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+      `10 != 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithPython()),
+      `a and b`,
+      ParseStatus.valid,
+      `a and b`,
+      "",
+      "",
+      "<el-id>a</el-id><el-kw> and </el-kw><el-id>b</el-id>",
+      `a and b`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithPython()),
+      `a or b`,
+      ParseStatus.valid,
+      `a or b`,
+      "",
+      "",
+      "<el-id>a</el-id><el-kw> or </el-kw><el-id>b</el-id>",
+      `a or b`,
+    );
+  });
+  test("BinaryExpression_VB", () => {
+    testNodeParse(
+      new BinaryExpression(fileWithVB()),
+      `10 Mod 3`,
+      ParseStatus.valid,
+      `10 Mod 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit><el-kw> Mod </el-kw><el-lit>3</el-lit>",
+      `10 Mod 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithVB()),
+      `10 = 3`,
+      ParseStatus.valid,
+      `10 = 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> = <el-lit>3</el-lit>",
+      `10 = 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithVB()),
+      `10 <> 3`,
+      ParseStatus.valid,
+      `10 <> 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> &lt;&gt; <el-lit>3</el-lit>",
+      `10 <> 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithVB()),
+      `a And b`,
+      ParseStatus.valid,
+      `a And b`,
+      "",
+      "",
+      "<el-id>a</el-id><el-kw> And </el-kw><el-id>b</el-id>",
+      `a And b`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithVB()),
+      `a Or b`,
+      ParseStatus.valid,
+      `a Or b`,
+      "",
+      "",
+      "<el-id>a</el-id><el-kw> Or </el-kw><el-id>b</el-id>",
+      `a Or b`,
+    );
+  });
+  test("BinaryExpression_C#", () => {
+    testNodeParse(
+      new BinaryExpression(fileWithCS()),
+      `10 % 3`,
+      ParseStatus.valid,
+      `10 % 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+      `10 % 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithCS()),
+      `10 % 3`,
+      ParseStatus.valid,
+      `10 % 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+      `10 % 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithCS()),
+      `10 != 3`,
+      ParseStatus.valid,
+      `10 != 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+      `10 != 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithCS()),
+      `10 && 3`,
+      ParseStatus.valid,
+      `10 && 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
+      `10 && 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithCS()),
+      `10 || 3`,
+      ParseStatus.valid,
+      `10 || 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> || <el-lit>3</el-lit>",
+      `10 || 3`,
+    );
+  });
+  test("BinaryExpression_Java", () => {
+    testNodeParse(
+      new BinaryExpression(fileWithJava()),
+      `10 % 3`,
+      ParseStatus.valid,
+      `10 % 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+      `10 % 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithJava()),
+      `10 % 3`,
+      ParseStatus.valid,
+      `10 % 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+      `10 % 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithJava()),
+      `10 != 3`,
+      ParseStatus.valid,
+      `10 != 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+      `10 != 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithJava()),
+      `10 && 3`,
+      ParseStatus.valid,
+      `10 && 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
+      `10 && 3`,
+    );
+    testNodeParse(
+      new BinaryExpression(fileWithJava()),
+      `10 || 3`,
+      ParseStatus.valid,
+      `10 || 3`,
+      "",
+      "",
+      "<el-lit>10</el-lit> || <el-lit>3</el-lit>",
+      `10 || 3`,
     );
   });
   test("RevisedParseMethodForAbstractSequence#857", () => {
