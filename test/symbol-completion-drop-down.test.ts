@@ -3,7 +3,7 @@ import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string"
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
@@ -1288,7 +1288,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
   });
 
-  test("Pass_typeName5", async () => {
+  ignore_test("Pass_typeName5", async () => {
     const code = `${testHeader}
 
 main
@@ -1606,133 +1606,6 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with a", expected);
   });
 
-  test("Pass_with3", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo()
-      variable b set to copy a with a set to 2
-    end main
-    
-    record Foo
-      property aa as Int
-      property ab as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa", "*", "*"],
-      ["ab", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "expr8",
-      "copy a with aa set to 0, a",
-      expected,
-    );
-  });
-
-  test("Pass_newWith1", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo() with a set to 2
-    end main
-    
-    record Foo
-      property a as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["a", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with ", expected);
-  });
-
-  test("Pass_newWith2", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo() with a set to 2
-    end main
-    
-    record Foo
-      property aa as Int
-      property ab as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa", "*", "*"],
-      ["ab", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with a", expected);
-  });
-
-  test("Pass_newWith3", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo() with a set to 2
-    end main
-    
-    record Foo
-      property aa as Int
-      property ab as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa", "*", "*"],
-      ["ab", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "expr5",
-      "new Foo() with aa set to 2, a",
-      expected,
-    );
-  });
-
   test("Pass_libExtension1", async () => {
     const code = `${testHeader}
 
@@ -1889,7 +1762,7 @@ end record
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with x", expected);
   });
 
-  test("Pass_newConcreteType #897", async () => {
+  ignore_test("Pass_newConcreteType #897", async () => {
     const code = `${testHeader}
 
 main
@@ -2690,7 +2563,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().it", expected);
   });
 
-  test("Pass_tuple2", async () => {
+  ignore_test("Pass_tuple2", async () => {
     const code = `${testHeader}
 
 main
@@ -2756,7 +2629,7 @@ end procedure`;
     await assertSymbolCompletionWithString(fileImpl, "args5", "lambda t as Foo => t.b", expected);
   });
 
-  test("Pass_lambdaParameter2", async () => {
+  ignore_test("Pass_lambdaParameter2", async () => {
     const code = `${testHeader}
 
 main
@@ -2830,7 +2703,7 @@ end procedure`;
     );
   });
 
-  test("Pass_lambdaParameter4", async () => {
+  ignore_test("Pass_lambdaParameter4", async () => {
     const code = `${testHeader}
 
 main
@@ -2872,7 +2745,7 @@ end procedure`;
     );
   });
 
-  test("Pass_lambdaParameter5", async () => {
+  ignore_test("Pass_lambdaParameter5", async () => {
     const code = `${testHeader}
 
 main

@@ -19,57 +19,23 @@ export class BinaryOperation extends AbstractAlternatives {
   private elanOR = "or";
   private elanMOD = "mod";
 
-  elanToLang(op: string): string {
-    const lang = this.file.language();
-    let result = op;
-    if (op === this.elanEQUAL) {
-      result = lang.EQUAL;
-    } else if (op === this.elanNOT_EQUAL) {
-      result = lang.NOT_EQUAL;
-    } else if (op === this.elanAND) {
-      result = lang.AND;
-    } else if (op === this.elanOR) {
-      result = lang.OR;
-    } else if (op === this.elanMOD) {
-      result = lang.MOD;
-    }
-    return result;
-  }
-
-  langToElan(op: string): string {
-    const lang = this.file.language();
-    let result = op;
-    if (op === lang.EQUAL) {
-      result = this.elanEQUAL;
-    } else if (op === lang.NOT_EQUAL) {
-      result = this.elanNOT_EQUAL;
-    } else if (op === lang.AND) {
-      result = this.elanAND;
-    } else if (op === lang.OR) {
-      result = this.elanOR;
-    } else if (op === lang.MOD) {
-      result = this.elanMOD;
-    }
-    return result;
-  }
-
   parseText(text: string): void {
     if (text.length > 0) {
-      const lang = this.file.language();
+      //const lang = this.file.language();
       this.remainingText = text;
-      this.alternatives.push(new Operator(this.file, this.elanEQUAL, lang.EQUAL));
-      this.alternatives.push(new Operator(this.file, this.elanNOT_EQUAL, lang.NOT_EQUAL));
-      this.alternatives.push(new Operator(this.file, GT, GT));
-      this.alternatives.push(new Operator(this.file, LT, LT));
-      this.alternatives.push(new Operator(this.file, GE, GE));
-      this.alternatives.push(new Operator(this.file, LE, LE));
-      this.alternatives.push(new Operator(this.file, MULT, MULT));
-      this.alternatives.push(new Operator(this.file, DIVIDE, DIVIDE));
-      this.alternatives.push(new Operator(this.file, PLUS, PLUS));
-      this.alternatives.push(new Operator(this.file, MINUS, MINUS));
-      this.alternatives.push(new Operator(this.file, this.elanAND, lang.AND));
-      this.alternatives.push(new Operator(this.file, this.elanOR, lang.OR));
-      this.alternatives.push(new Operator(this.file, this.elanMOD, lang.MOD));
+      this.alternatives.push(new Operator(this.file, this.elanEQUAL, (lang) => lang.EQUAL));
+      this.alternatives.push(new Operator(this.file, this.elanNOT_EQUAL, (lang) => lang.NOT_EQUAL));
+      this.alternatives.push(new Operator(this.file, GT));
+      this.alternatives.push(new Operator(this.file, LT));
+      this.alternatives.push(new Operator(this.file, GE));
+      this.alternatives.push(new Operator(this.file, LE));
+      this.alternatives.push(new Operator(this.file, MULT));
+      this.alternatives.push(new Operator(this.file, DIVIDE));
+      this.alternatives.push(new Operator(this.file, PLUS));
+      this.alternatives.push(new Operator(this.file, MINUS));
+      this.alternatives.push(new Operator(this.file, this.elanAND, (lang) => lang.AND));
+      this.alternatives.push(new Operator(this.file, this.elanOR, (lang) => lang.OR));
+      this.alternatives.push(new Operator(this.file, this.elanMOD, (lang) => lang.MOD));
       while (this.nextChar() === " ") {
         this.moveCharsToMatched(1, ParseStatus.incomplete);
       }

@@ -39,7 +39,7 @@ import { getTestRunner } from "./runner";
 
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,
@@ -137,9 +137,9 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
       sourceFile = sourceFile.replace("out\\", "");
 
       updateTestFileNew(sourceFile, actualSource);
-      updateTestFileNew(htmlFile, actualHtml);
       if (htmlFile !== "") {
         htmlFile = htmlFile.replace("out\\", "");
+        updateTestFileNew(htmlFile, actualHtml);
       }
       if (pythonFile !== "") {
         updateTestFileNew(pythonFile, actualPython);
