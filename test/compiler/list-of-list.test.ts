@@ -731,7 +731,41 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_FailListOfListWrongType", async () => {
+  test("Pass_SetListOfListOfList1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [[[1,2],[3,4]],[[5,6],[7,8]]]
+  set a[0][0] to [9,10]
+  call printNoLine(a[0][0][0])
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.list([system.list([1, 2]), system.list([3, 4])]), system.list([system.list([5, 6]), system.list([7, 8])])]);
+  system.safeSet(a, system.list([9, 10]), [0, 0]);
+  await _stdlib.printNoLine(system.safeIndex(system.safeIndex(system.safeIndex(a, 0), 0), 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "9");
+  });
+
+  test("Fail_ListOfListWrongType", async () => {
     const code = `${testHeader}
 
 main
