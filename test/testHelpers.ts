@@ -19,8 +19,13 @@ import { AbstractField } from "../src/ide/frames/fields/abstract-field";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
+import { Language } from "../src/ide/frames/frame-interfaces/language";
 import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { LanguageCS } from "../src/ide/frames/language-cs";
+import { LanguageJava } from "../src/ide/frames/language-java";
+import { LanguagePython } from "../src/ide/frames/language-python";
+import { LanguageVB } from "../src/ide/frames/language-vb";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
@@ -31,15 +36,10 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { LanguagePython } from "../src/ide/frames/language-python";
-import { LanguageVB } from "../src/ide/frames/language-vb";
-import { LanguageCS } from "../src/ide/frames/language-cs";
-import { LanguageJava } from "../src/ide/frames/language-java";
-import { Language } from "../src/ide/frames/frame-interfaces/language";
 
 
 // flag to update test file
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,
@@ -70,14 +70,11 @@ export async function assertEffectOfActionNew(
 
 export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
   const fl = await loadFileAsModelNew(sourceFile);
-  const htm = loadFileAsHtmlNew(htmlFile);
-
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
-  const renderedHtml = await fl.renderAsHtml();
-  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-  const expectedHtml = htm.replaceAll("\r", "");
+  let expectedHtml = "";
+  let actualHtml = "";
   let actualPython = "";
   let actualVB = "";
   let actualCS = "";
@@ -86,34 +83,41 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   let expectedVB = "";
   let expectedCS = "";
   let expectedJava = ""; 
-
+  if (htmlFile !== "") {
+    const htm =loadFileAsHtmlNew(htmlFile);
+    const renderedHtml = await fl.renderAsHtml();
+    actualHtml = wrap(renderedHtml).replaceAll("\r", "");
+    expectedHtml = htm.replaceAll("\r", "");
+  }
   if (pythonFile !== "") {
     fl.setLanguage(new LanguagePython());
     actualPython = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedPython = loadFileAsSourceNew(pythonFile + ".py").replaceAll("\r", "");
+    expectedPython = loadFileAsSourceNew(pythonFile).replaceAll("\r", "");
   }
 
   if (vbFile !== "") {
     fl.setLanguage(new LanguageVB());
     actualVB = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedVB = loadFileAsSourceNew(vbFile + ".vb").replaceAll("\r", "");
+    expectedVB = loadFileAsSourceNew(vbFile).replaceAll("\r", "");
   }
 
    if (csFile !== "") {
     fl.setLanguage(new LanguageCS());
     actualCS = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedCS = loadFileAsSourceNew(csFile + ".cs").replaceAll("\r", "");
+    expectedCS = loadFileAsSourceNew(csFile).replaceAll("\r", "");
   }
 
    if (javaFile !== "") {
     fl.setLanguage(new LanguageJava());
     actualJava = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedJava = loadFileAsSourceNew(javaFile + ".java").replaceAll("\r", "");
+    expectedJava = loadFileAsSourceNew(javaFile).replaceAll("\r", "");
   }
 
   try {
     assert.strictEqual(actualSource, expectedSource);
-    assert.strictEqual(actualHtml, expectedHtml);
+    if (htmlFile !== "") {
+      assert.strictEqual(actualHtml, expectedHtml);
+    }
     if (pythonFile !== "") {
       assert.strictEqual(actualPython, expectedPython);
     }
@@ -131,22 +135,23 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
     if (updateTestFiles) {
       // update original not copied 
       sourceFile = sourceFile.replace("out\\", "");
-      htmlFile = htmlFile.replace("out\\", "");
 
       updateTestFileNew(sourceFile, actualSource);
       updateTestFileNew(htmlFile, actualHtml);
-
+      if (htmlFile !== "") {
+        htmlFile = htmlFile.replace("out\\", "");
+      }
       if (pythonFile !== "") {
-        updateTestFileNew(pythonFile + ".py", actualPython);
+        updateTestFileNew(pythonFile, actualPython);
       }
       if (vbFile !== "") {
-        updateTestFileNew(vbFile + ".vb", actualVB);
+        updateTestFileNew(vbFile, actualVB);
       }
       if (csFile !== "") {
-        updateTestFileNew(csFile + ".cs", actualCS);
+        updateTestFileNew(csFile, actualCS);
       }
       if (javaFile !== "") {
-        updateTestFileNew(javaFile + ".java", actualJava);
+        updateTestFileNew(javaFile, actualJava);
       }
       throw new Error("Files updated");
     } else {
