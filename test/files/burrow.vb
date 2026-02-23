@@ -9,13 +9,13 @@ Sub main()
     displayBlocks(blocks) ' call
     blocks.put(x, y, black) ' call
     Dim direction = randomInt(0, 3) ' variable
-    If direction is 0 Then
+    If direction = 0 Then
       x = minInt([x + 1, 39]) ' set
-    ElseIf direction is 1 Then
+    ElseIf direction = 1 Then
       x = maxInt([x - 1, 0]) ' set
-    ElseIf direction is 2 Then
+    ElseIf direction = 2 Then
       y = minInt([y + 1, 29]) ' set
-    ElseIf direction is 3 Then
+    ElseIf direction = 3 Then
       y = maxInt([y - 1, 0]) ' set
     End If
   End While

@@ -111,7 +111,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.text = text.trimStart();
       } else {
         this.setParseStatus(root.status);
-        this.text = root.renderAsElanSource();
+        this.text = root.renderAsExport();
       }
     }
   }
