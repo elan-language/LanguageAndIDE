@@ -1,6 +1,8 @@
-# 3fa787aa76be09f0c3d9cb817443c07d3af9fc3bd4f648702c8022b620b625b2 Elan 2.0.0-alpha guest default_profile valid
+# 156fb1989cea9e77904d2483f1e01b5e3e7eed7dc49072dee71503deb966934b Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable names set to {"Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"}
+  # snipFrom
+  variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
   call print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
+  # snipTo
 end main

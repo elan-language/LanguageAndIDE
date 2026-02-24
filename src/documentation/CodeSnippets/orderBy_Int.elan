@@ -1,7 +1,9 @@
-# ee9f93f0362dd2c8e685d02d59b9e7e029dfe8f2814c8e1f9b08c8d6da75ea74 Elan 2.0.0-alpha guest default_profile valid
+# df6781895667685dfd0e61db1f37338b4ed583e6a4481224bc43fa226fa59818 Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
   variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
   call print(ordered)
+  # snipTo
 end main

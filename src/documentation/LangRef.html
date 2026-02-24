@@ -29,32 +29,36 @@ it provides a useful discipline in any code. Preferring immutable named values c
 <p>Both kinds of named value must be initialised with either literals or expressions.</p>
 <p>Loop counter variables, however, may be defined implicitly in <a href="#each"><el-kw>each</el-kw></a> and <a href="#for"><el-kw>for</el-kw></a> instructions.</p>
 
-<h2 id="Type">Named value Types</h2>
-<p>This table lists the fundamental and standard data structure Types in Elan, each linking to its definition and further details:</p>
+<h2 id="Type">Types</h2>
+<p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="5">Types</th>
  </tr><tr>
-  <td>Fundamental<br>data Types</td>
+  <td>Value data</td>
   <td><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><el-type>Int</el-type></a></td>
   <td><a href="LibRef.html#Float"><el-topic>Floating point</el-type><br><el-type>Float</el-topic></a></td>
   <td><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><el-type>Boolean</el-type></a></td>
   <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><el-type>String</el-type></a></td>
+  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><el-type>RegExp</el-type></a></td>
  </tr><tr>
-  <td>Standard (mutable)<br>data structures</td>
+  <td>Standard mutable<br>data structures</td>
   <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><el-type>List</el-type></a></td>
   <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><el-type>Dictionary</el-type></a></td>
   <td><a href="LibRef.html#Array2D"><el-topic>2-dimensional array</el-topic><br><el-type>Array2D</el-type></a></td>
   <td></td>
+  <td></td>
  </tr><tr>
-  <td>Standard (immutable)<br>data structures</td>
+  <td>Standard immutable<br>data structures</td>
   <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
- <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
- <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
+  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
+  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
   <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><el-type>TextFileReader</el-type></a></td>
   <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><el-type>TextFileWriter</el-type></a></td>
+  <td></td>
   <td></td>
   <td></td>
  </tr><tr>
@@ -64,16 +68,19 @@ it provides a useful discipline in any code. Preferring immutable named values c
   <el-type>ImageVG</el-type><br><el-type>LineVG</el-type><br><el-type>RawVG</el-type><br><el-type>RectangleVG</el-type></a></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td>User-defined</td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#class"><el-topic>Class</el-topic><br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
+  <td></td>
  </tr><tr>
   <td>Other</td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><el-type>Random</el-type></a></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
+  <td></td>
   <td></td>
   <td></td>
   </tr>
@@ -1142,15 +1149,14 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
 <el-code-block source="if_elif_else.elan">
-<el-statement class="ok multiline" id="if135" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr137" class="ok" tabindex="0"><el-txt><el-id>item</el-id><el-kw> is </el-kw><el-id>value</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
-<el-statement class="ok" id="set157" tabindex="0"><el-kw>set </el-kw><el-field id="ident158" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr159" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok outdent" id="else174" tabindex="0"><el-top>
-<el-kw>else </el-kw><el-kw>if </el-kw><el-field id="expr175" class="ok" tabindex="0"><el-txt><el-id>item</el-id>.<el-method>isBefore</el-method>(<el-id>value</el-id>)</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top></el-statement>
-<el-statement class="ok" id="set195" tabindex="0"><el-kw>set </el-kw><el-field id="ident196" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr197" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>lst</el-id>[..<el-id>mid</el-id>], <el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok outdent" id="else198" tabindex="0"><el-top>
-    <el-kw>else </el-kw><el-field id="elif200" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place></el-field></el-top></el-statement>
-<el-statement class="ok" id="set201" tabindex="0"><el-kw>set </el-kw><el-field id="ident202" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr203" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>lst</el-id>[<el-id>mid</el-id> + <el-lit>1</el-lit>..], <el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok multiline" id="if22" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>item</el-id>.<el-method>isSameValueAs</el-method>(<el-id>value</el-id>)</el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="set25" tabindex="-1"><el-kw>set </el-kw><el-field id="ident26" class="ok" tabindex="-1"><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok outdent" id="else28" tabindex="-1"><el-kw>elif </el-kw><el-field id="expr29" class="ok" tabindex="-1"><el-txt><el-id>item</el-id>.<el-method>isBefore</el-method>(<el-id>value</el-id>)</el-txt></el-field><el-kw> then</el-kw></el-statement>
+<el-statement class="ok" id="set30" tabindex="-1"><el-kw>set </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li</el-id>[:<el-id>mid</el-id>], <el-id>item</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok outdent" id="else33" tabindex="-1"><el-kw>else </el-kw></el-statement>
+<el-statement class="ok" id="set34" tabindex="-1"><el-kw>set </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li</el-id>[<el-id>mid</el-id> + <el-lit>1</el-lit>:], <el-id>item</el-id>)</el-txt></el-field></el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
 </el-code-block>
@@ -1513,11 +1519,11 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> expression:</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in <el-kw>set</el-kw> and <el-kw>let</el-kw> assignments (the brackets around the first <el-kw>if</el-kw> expression are optional):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice of <el-kw>variable</el-kw> assignments (the brackets around the first <el-kw>if</el-kw> expression are optional):</p>
 <el-code-block source="if_exp_assign.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>c</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-lit>1160</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="set6" tabindex="-1"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>c</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>d</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>580</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> - <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> + <el-lit>60</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="set6" tabindex="-1"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>c</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw> then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw> else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>d</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>580</el-lit><el-kw> then </el-kw><el-id>c</el-id> - <el-lit>40</el-lit><el-kw> else </el-kw><el-id>c</el-id> + <el-lit>60</el-lit></el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-kw>return</el-kw> instruction:</p>
@@ -1527,7 +1533,7 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an 
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-kw>elif</el-kw> clause:</p>
 <el-code-block source="wordle.solver.elan">
-<el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>elif </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
 </div></div>
