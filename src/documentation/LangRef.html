@@ -79,8 +79,8 @@ it provides a useful discipline in any code. Preferring immutable named values c
  </tr><tr>
   <td>Other</td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><el-type>Random</el-type></a></td>
+  <td><a href="LibRef.html#Ref"><el-topic>Argument reference</el-topic><br><el-type>Ref</el-type></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
-  <td></td>
   <td></td>
   <td></td>
   </tr>
@@ -110,23 +110,16 @@ with all the same property values except for specific changes that you want to m
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
  <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><el-kw>constant</el-kw></a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
-  <td>constant values are set only at compile time</td></tr>
- <tr><td><a href="#let"><el-kw>let</el-kw></a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
-  <td></td></tr>
- <tr><td><a href="#let"><el-kw>let</el-kw></a></td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td></td></tr>
+ <tr><td><a href="#constant"><el-kw>constant</el-kw> (global)</a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+  <td>values are set only at compile time</td></tr>
+ <tr><td><a href="#constant_let"><el-kw>constant</el-kw> (local)</a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td>values are set at execution</td></tr>
  <tr><td><a href="#variable"><el-kw>variable</el-kw></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
-  <td></td></tr>
- <tr><td><a href="#Parameter">parameter</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
-  <td>formal input argument of function, procedure or lambda</td></tr>
- <tr><td><a href="#Parameter">parameter</a></td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td>formal input argument of function, procedure or lambda</td></tr>
- <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
-  <td>formal output argument of procedure</td></tr>
- <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td></td><td>&#x2714;</td><td>&#x2714; (see note)</td><td>&#x2714;</td><td>local</td>
-  <td>formal output argument of procedure<br>
-  an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
+  <td>values are set at execution</td></tr>
+ <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td>formal input argument<br> of function, procedure or lambda</td></tr>
+ <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td>formal input and output argument<br> of function, procedure or lambda</td></tr>
 </table>
 
 <h2 id="Identifier">Identifiers and Type names</h2>
@@ -204,57 +197,57 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </div></div>
 
 <h2 id="procedure"><el-kw>procedure</el-kw></h2>
-<p id="Argument">A procedure is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> in a <el-kw>call</el-kw> instruction.
- Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
+<p id="Argument">A <el-kw>procedure</el-kw> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><el-kw>call</el-kw></a> instruction.</p>
+<p>Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p> Unlike a function:</p>
 <ul>
- <li>a procedure does not return a value (unless its parameters include an <el-kw>out</el-kw> value).</li>
- <li>a procedure can have side effects: indeed it <em>should</em> have side effects, otherwise there would be no point in calling it!</li>
+ <li>a procedure can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
+ <li>a procedure does not return a value.</li>
+ <li>a procedure's parameter named values (that are mutable) may be changed <i>inside</i> the procedure, but they do not affect the value of arguments in the <el-kw>call</el-kw> instruction.</li> 
+ <li>to pass a changed parameter back to its calling argument, it must have been called <a href="CallByRef"><i>by reference</i></a>.</li>
 </ul>
-<p>Therefore the instructions within a procedure can:</p>
+<p>The instructions within a procedure can therefore:</p>
 <ul>
-<li>include <el-kw>print</el-kw> instructions and methods.</li>
-<li>include data input methods and other system methods (such as for random number generation).</li>
-<li><el-kw>call</el-kw> other procedures (or itself if <a href="#recursion">recursion</a> is required).</li>
-<li id="out">assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-kw>out</el-kw>.</li>
+ <li>include calls to other procedures, or to itself if <a href="#recursion">recursion</a> is required.</li>
+ <li>include data input methods and other system methods, such as for random number generation.</li>
 </ul>
 
+<h3 class="no-TOC" id="CallByRef">Call by reference</h3>
+
+
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of procedures</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example of procedure</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Calling a procedure:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Procedure to order a list of integers:</p>
 <el-code-block source="inPlaceRippleSort.elan">
-  <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using keyword <el-kw>out</el-kw></p>
-<el-code-block source="inPlaceRippleSort.elan">
-  <el-proc class="ok multiline" id="proc11" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident13" class="ok" tabindex="0"><el-txt>inPlaceRippleSort</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params14" class="optional ok" tabindex="0"><el-txt><el-kw>out</el-kw> <el-id>arr</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place></el-field>)</el-top>
-  <el-statement class="ok" id="var15" tabindex="0"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok multiline" id="repeat21" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>
-  <el-statement class="ok" id="set24" tabindex="0"><el-kw>set </el-kw><el-field id="ident25" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr26" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok multiline" id="for27" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-  <el-statement class="ok multiline" id="if33" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>] &gt; <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
-  <el-statement class="ok" id="let36" tabindex="0"><el-kw>let </el-kw><el-field id="var37" class="ok" tabindex="0"><el-txt><el-id>temp</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call39" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident40" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args41" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id>, <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-statement class="ok" id="call42" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident43" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args44" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-statement class="ok" id="set45" tabindex="0"><el-kw>set </el-kw><el-field id="ident46" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr47" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-kw>end if</el-kw>
-  </el-statement>
-  <el-kw>end for</el-kw>
-  </el-statement>
-  <el-statement class="ok" id="set48" tabindex="0"><el-kw>set </el-kw><el-field id="ident49" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr50" class="ok" tabindex="0"><el-txt><el-id>lastComp</el-id> - <el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-kw>end repeat when </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>changes</el-id></el-txt><el-place><i>condition</i></el-place></el-field>
-  </el-statement>
-  <el-kw>end procedure</el-kw>
-  </el-proc>
+<el-proc class="ok multiline" id="proc15" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field><el-punc>)</el-punc>
+</el-top>
+<el-statement class="ok" id="var19" tabindex="-1"><el-kw>variable </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var22" tabindex="-1"><el-kw>variable </el-kw><el-field id="var23" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="while25" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id><el-kw> is </el-kw><el-id>true</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="set28" tabindex="-1"><el-kw>set </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for31" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident33" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr34" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr35" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field>
+</el-top>
+<el-statement class="ok multiline" id="if37" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>] &gt; <el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="var40" tabindex="-1"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="-1"><el-txt><el-id>temp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call43" tabindex="-1"><el-kw>call </el-kw><el-field id="ident44" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args45" class="optional ok" tabindex="-1"><el-txt><el-id>i</el-id>, <el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call46" tabindex="-1"><el-kw>call </el-kw><el-field id="ident47" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args48" class="optional ok" tabindex="-1"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="set49" tabindex="-1"><el-kw>set </el-kw><el-field id="ident50" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr51" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok" id="set52" tabindex="-1"><el-kw>set </el-kw><el-field id="ident53" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr54" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id> - <el-lit>1</el-lit></el-txt></el-field></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
 </el-code-block>
 <hr>
 </div></div>
@@ -568,35 +561,45 @@ When deconstructing, the names of the values must match the names of the <el-cod
 
 <h2 id="class"><el-kw>class</el-kw></h2>
 
-<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>
- or a <a href="#record"><el-kw>record</el-kw></a>.</p>
-<p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
+<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>.</p>
+<p>A class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
 <h3 class="no-TOC">Definition</h3>
 <p>Here is an example of <el-code>class</el-code> definition, taken from demo program <el-code>snake_OOP.elan</el-code>:</p>
 <el-code-block source="snake_OOP.elan">
-<el-class id="class174" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type175" class="ok" tabindex="-1"><el-txt><el-type>Apple</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text176" class="empty optional ok" tabindex="-1"></el-field></el-top>
-<el-prop class="ok" id="prop178" tabindex="-1"><el-kw>property </el-kw><el-field id="ident179" class="ok" tabindex="-1"><el-txt><el-id>location</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type180" class="ok" tabindex="-1"><el-txt><el-type>Square</el-type></el-txt></el-field></el-prop>
-<el-proc class="ok multiline" id="proc181" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident183" class="ok" tabindex="-1"><el-txt><el-method>newRandomPosition</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params184" class="optional ok" tabindex="-1"><el-txt><el-id>snake</el-id> <el-kw>as</el-kw> <el-type>Snake</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
-<el-statement class="ok multiline" id="repeat185" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>
-<el-statement class="ok" id="let188" tabindex="-1"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let191" tabindex="-1"><el-kw>let </el-kw><el-field id="var192" class="ok" tabindex="-1"><el-txt><el-id>ranY</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr193" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="set194" tabindex="-1"><el-kw>set </el-kw><el-field id="ident195" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr196" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-id>ranX</el-id>, <el-id>ranY</el-id>)</el-txt></el-field></el-statement>
-<el-kw>end repeat when </el-kw><el-field id="expr187" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>snake</el-id>.<el-method>bodyCovers</el-method>(<el-kw>property</el-kw>.<el-id>location</el-id>)</el-txt></el-field>
+<el-class class="ok multiline" id="class170" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type171" class="ok" tabindex="-1"><el-txt><el-type>Apple</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text172" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field></el-top>
+<el-prop class="ok" id="prop174" tabindex="-1"><el-kw>property </el-kw><el-field id="ident175" class="ok" tabindex="-1"><el-txt><el-id>location</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type176" class="ok" tabindex="-1"><el-txt><el-type>Square</el-type></el-txt></el-field></el-prop>
+<el-proc class="ok multiline" id="proc177" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident179" class="ok" tabindex="-1"><el-txt><el-method>newRandomPosition</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params180" class="optional ok" tabindex="-1"><el-txt><el-id>snake</el-id> <el-kw>as</el-kw> <el-type>Snake</el-type></el-txt></el-field><el-punc>)</el-punc>
+</el-top>
+<el-statement class="ok" id="var181" tabindex="-1"><el-kw>variable </el-kw><el-field id="var182" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr183" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="while184" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr186" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="let187" tabindex="-1"><el-kw>constant </el-kw><el-field id="var188" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr189" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let190" tabindex="-1"><el-kw>constant </el-kw><el-field id="var191" class="ok" tabindex="-1"><el-txt><el-id>ranY</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr192" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="set193" tabindex="-1"><el-kw>set </el-kw><el-field id="ident194" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr195" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-id>ranX</el-id>, <el-id>ranY</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="if196" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr198" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>snake</el-id>.<el-method>bodyCovers</el-method>(<el-kw>property</el-kw>.<el-id>location</el-id>)</el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="set199" tabindex="-1"><el-kw>set </el-kw><el-field id="ident200" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr201" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<el-kw>end while</el-kw>
 </el-statement>
 <el-kw>end procedure</el-kw>
 </el-proc>
-<el-proc class="ok multiline" id="proc197" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident199" class="ok" tabindex="-1"><el-txt><el-method>updateBlocks</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params200" class="optional ok" tabindex="-1"><el-txt><el-id>blocks</el-id> <el-kw>as</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field><el-punc>)</el-punc></el-top>
-<el-statement class="ok" id="call201" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident202" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args203" class="optional ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>x</el-id>, <el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>y</el-id>, <el-id>red</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-proc class="ok multiline" id="proc202" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident204" class="ok" tabindex="-1"><el-txt><el-method>updateBlocks</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params205" class="optional ok" tabindex="-1"><el-txt><el-id>blocks</el-id> <el-kw>as</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field><el-punc>)</el-punc>
+</el-top>
+<el-statement class="ok" id="call206" tabindex="-1"><el-kw>call </el-kw><el-field id="ident207" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args208" class="optional ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>x</el-id>, <el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>y</el-id>, <el-id>red</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end procedure</el-kw>
 </el-proc>
 <el-kw>end class</el-kw>
-</el-class></el-code-block>
+</el-class>
+</el-code-block>
 
 <p>A class may define:</p>
 <ul>
@@ -1004,11 +1007,10 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
 <p>
  <a href="#assert"><el-kw>assert</el-kw></a>,
  <a href="#call"><el-kw>call</el-kw></a>,
+ <a href="#call"><el-kw>constant</el-kw></a>,
  <a href="#each"><el-kw>each</el-kw></a>,
  <a href="#for"><el-kw>for</el-kw></a>,
  <a href="#if"><el-kw>if</el-kw></a>,
- <a href="#let"><el-kw>let</el-kw></a>,
- <a href="#repeat"><el-kw>repeat</el-kw></a>,
  <a href="#set"><el-kw>set</el-kw></a>,
  <a href="#throw"><el-kw>throw</el-kw></a>,
  <a href="#try"><el-kw>try</el-kw></a>,
@@ -1016,14 +1018,14 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
  <a href="#while"><el-kw>while</el-kw></a>.
 </p>
 
-<h2 id="assert"><el-kw>assert</el-kw> (test)</h2>
+<h2 id="assert"><el-kw>assert</el-kw></h2>
 <p>The <el-kw>assert</el-kw> instruction is used only within a <a href="#test"><el-kw>test</el-kw></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
  In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> instruction.</p>
 
-<h2 id="call"><el-kw>call</el-kw> procedure</h2>
-<p>A <el-kw>call</el-kw> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
+<h2 id="call"><el-kw>call</el-kw></h2>
+<p>The <el-kw>call</el-kw> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
@@ -1040,13 +1042,40 @@ which is the mechanism for running unit tests during program development, not du
   <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a mutable named value that gets updated by the procedure.</p>
-<p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> instructions are simply not allowed in functions, to enforce this.</p>
-<p>There is a limit to the complexity of a <el-kw>call</el-kw> instruction.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> instruction on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
+<p>An argument whose value is changed by the procedure must be:</p>
+<ul>
+ <li>either a mutable data structure (List or Dictionary)</li>
+ <li>or a <el-kw>Ref</el-kw> reference to a named value Type</li>
+ <li>or a <el-kw>Ref</el-kw> reference to an immutable data structure (Set, Stack or Queue)</li>
+</ul>  
+<p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
+<p>An expression of the correct Type can be used as an argument, but its value cannot be changed in the procedure.</p>
+<p>Procedures may have side effects, for example input/output or changing a data value in an object.
+ They can change the contents of any mutable object passed in as an argument.
+  For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
+  To enforce this, <el-kw>call</el-kw> instructions are not allowed in functions.</p>
+<p>There is a limit to the complexity of a <el-kw>call</el-kw> instruction.
+ Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.
+ If you need anything more complicated, use a <el-kw>set</el-kw> instruction on the line above.
+  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
-<h2 id="each"><el-kw>each</el-kw> (loop)</h2>
-<p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
+<h2 id="assert"><el-kw>constant</el-kw></h2>
+
+<p>The <el-kw>constant</el-kw> kveyword specifies a named value of an immutable Type and initalises it with a value.
+ The name must be a valid <a href="#Identifier">identifier</a>.</p>
+<p>The initial value is given by a following expression. For example:</p>
+
+<el-code-block>
+<el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>Like a <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, a <el-kw>constant</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.</p>
+<p>It is recommended that you always use constants in preference to variable, unless you need to be able to re-assign its value.</p>
+<p>You can put a <el-kw>constant</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
+
+
+<h2 id="each"><el-kw>each</el-kw></h2>
+<p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
 <p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
 <p>The loop counter variable does not have to have been previously declared or initialised.</p>
 
@@ -1090,7 +1119,7 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 </div></div>
 <hr>
 
-<h2 id="for"><el-kw>for</el-kw> (loop)</h2>
+<h2 id="for"><el-kw>for</el-kw></h2>
 <div id="to"></div>
 <div id="step"></div>
 <p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
@@ -1163,19 +1192,6 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <hr>
 </div></div>
 
-<h2 id="let"><el-kw>let</el-kw></h2>
-<p>The <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> instruction declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
-<p>The initial value is given by a following expression. For example:</p>
-
-<el-code-block>
-<el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>It may be thought of as defining a name between a <el-kw>constant</el-kw> definition and a variable's <el-kw>set</el-kw> instruction.</p>
-<p>Like a <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.</p>
-<p>It is recommended that you always use <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> in preference to <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, unless you need to be able to re-assign its value.
-</p>
-<p>You can put a <el-kw>let</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
 <h2 id="print"><el-kw>print</el-kw></h2>
 <p>The <el-kw>print</el-kw> instruction sends text strings to the display pane. For example:</p>
@@ -1195,21 +1211,6 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 
 <p>The last example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#print">print procedures</a>.</p>
 <p>If the <el-kw>print</el-kw> instruction is used without any following expression, then it prints a newline, i.e. its effect is the same as <el-code>print "\n"</el-code>.</p>
-
-<div id="when">
-<h2 id="repeat"><el-kw>repeat</el-kw> (loop)</h2>
-<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> construct provides a <i>conditional</i> loop, used when you want at least one execution of the enclosed instructions followed by a test that chooses either to execute them again or to exit from the loop.</p>
-<p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
-<p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
-
-<el-code-block source="repeat.elan">
-<el-statement class="ok multiline" id="repeat12" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>
-<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-id>i</el-id>]</el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="set18" tabindex="0"><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit></el-txt></el-field></el-statement>
-<el-kw>end repeat when </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>i</el-id><el-kw> is </el-kw><el-id>names</el-id>.<el-method>length</el-method>()</el-txt></el-field>
-</el-statement>
-</el-code-block>
 
 <h2 id="set"><el-kw>set</el-kw></h2>
 <p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
@@ -1613,11 +1614,12 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
 <h2># comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-<p>Every comment starts with the hash symbol <el-code>#</el-code> followed by some text or a blank line. The text field in
-a comment may contain any text, except that it must not start with the open square bracket symbol <el-code>[</el-code>.</p>
+<p>A comment is entered at any editor prompt by typing the letters <el-code>com</el-code>, which is immediately recognised
+ and replaced by a hash symbol <el-code>#</el-code> followed by a field in which you may enter text, or leave blank.
+ Your text may contain any characters, except that it must not start with an open square bracket <el-code>[</el-code>.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well as from the <el-code>new code</el-code> prompt &ndash; every prompt provides a <el-code>#</el-code> for entering a comment.</p>
+as well as from the <el-code>new code</el-code> prompt. Every prompt provides a <el-code>comment</el-code> option.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1742,7 +1744,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
 
 <h3 id="ReassignInFunctionCompileError" class="no-TOC">May not set ... in a function</h3>
- <p>A property can be re-assigned only within a procedure method, not within a function, because re-assigning a property is a 'side effect'.</p>
+ <p>A property can be re-assigned only within a procedure method, not within a function, because re-assigning a property is a side effect.</p>
 
 <h3 id="RedefinedCompileError" class="no-TOC">The identifier ... is already used for a ... and cannot be re-defined here.</h3>
  <p>An existing named value may not be defined again within the same scope.</p>
