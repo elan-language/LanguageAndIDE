@@ -56,6 +56,7 @@ export class LanguageVB extends LanguageAbstract {
   commentRegex(): RegExp {
     return /' [^\r\n]*/;
   }
+  languageClass = "vb";
   languageFullName: string = "VB.NET";
   defaultFileExtension: string = "vb";
   defaultMimeType: string = "text/plain";

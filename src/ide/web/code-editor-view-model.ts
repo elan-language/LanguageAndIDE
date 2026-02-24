@@ -182,6 +182,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
+    vm.tvm.setWorksheetLanguage(this.file!.language().languageClass);
   }
 
   get currentHash() {
@@ -720,11 +721,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   ) {
     this.setRunStatus(RunStatus.default);
     collapseAllMenus();
-    const codeContainer = (document.querySelector(".elan-code") as HTMLDivElement)!;
+    const codeContainer = (document.querySelector(".code") as HTMLDivElement)!;
 
     codeContainer.innerHTML = text;
 
-    const frames = document.querySelectorAll(".elan-code [id]");
+    const frames = document.querySelectorAll(".code [id]");
 
     for (const frame of frames) {
       const id = frame.id;
