@@ -92,7 +92,7 @@ suite("Parse source and generate Html", () => {
   });
 
   ignore_test("Test Newline in literal string", async () => {
-    await assertGeneratesHtmlandSameSource(
+    await assertGeneratesHtmlSourceAndExportFiles(
       `${__dirname}\\files\\test1762newlineInString.elan`,
       `${__dirname}\\files\\test1762newlineInString.html`,
     );
