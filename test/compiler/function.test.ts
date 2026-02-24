@@ -157,7 +157,7 @@ test("Pass_RangeResult", async () => {
   const code = `${testHeader}
 
 main
-  variable a set to foo(1,2)[0..1]
+  variable a set to foo(1,2).subList(0, 1)
   call printNoLine(a)
 end main
 
@@ -168,7 +168,7 @@ end function`;
   const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.safeSlice((await global.foo(1, 2)), 0, 1);
+  let a = (await global.foo(1, 2)).subList(0, 1);
   await _stdlib.printNoLine(a);
 }
 

@@ -224,6 +224,11 @@ export class List<T1> {
     return this.system!.initialise(new List(tl));
   }
 
+  @elanFunction(["index1", "index2"], FunctionOptions.pure, ElanClass(List))
+  subList(@elanIntType() index1: number, @elanIntType() index2: number): List<T1> {
+    return this.safeSlice(index1, index2);
+  }
+
   async asString() {
     const items: string[] = [];
     for (const i of this.contents) {
