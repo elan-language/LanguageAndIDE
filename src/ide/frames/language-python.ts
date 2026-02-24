@@ -7,6 +7,7 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -52,6 +53,12 @@ import { TokenType } from "./symbol-completion-helpers";
 import { COLON } from "./symbols";
 
 export class LanguagePython extends LanguageAbstract {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguagePython();
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }

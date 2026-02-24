@@ -804,23 +804,23 @@ newButton?.addEventListener("click", async (event: Event) => {
 });
 
 pythonButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguagePython(), ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner);
 });
 
 vbButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguageVB(), ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageVB.Instance, ideViewModel, testRunner);
 });
 
 csButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguageCS(), ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageCS.Instance, ideViewModel, testRunner);
 });
 
 javaButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguageJava(), ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageJava.Instance, ideViewModel, testRunner);
 });
 
 elanButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguageElan(), ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner);
 });
 
 loadButton.addEventListener("click", chooser(getUploader(), false));

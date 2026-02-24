@@ -50,6 +50,10 @@ import { TokenType } from "./symbol-completion-helpers";
 import { GT, LT } from "./symbols";
 
 export abstract class LanguageCfamily extends LanguageAbstract {
+  protected constructor() {
+    super();
+  }
+
   common_commentRegex(): RegExp {
     return /\/\/ [^\r\n]*/;
   }

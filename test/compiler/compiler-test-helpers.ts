@@ -276,17 +276,17 @@ export async function assertExportedFileIs(file: FileImpl, language : Language, 
 }
 
 export async function assertExportedPythonIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, new LanguagePython(), code);
+  await assertExportedFileIs(file, LanguagePython.Instance, code);
 }
 
 export async function assertExportedJavaIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, new LanguageJava(), code);
+  await assertExportedFileIs(file, LanguageJava.Instance, code);
 }
 
 export async function assertExportedCSIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, new LanguageCS(), code);
+  await assertExportedFileIs(file, LanguageCS.Instance, code);
 }
 
 export async function assertExportedVBis(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, new LanguageVB(), code);
+  await assertExportedFileIs(file, LanguageVB.Instance, code);
 }

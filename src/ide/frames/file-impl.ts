@@ -108,7 +108,7 @@ export class FileImpl implements File {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
-  private _language: Language = new LanguageElan();
+  private _language: Language = LanguageElan.Instance;
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -239,7 +239,7 @@ export class FileImpl implements File {
   }
 
   async renderAsElanSource(): Promise<string> {
-    const languageElan = new LanguageElan();
+    const languageElan = LanguageElan.Instance;
     const langToRestore = this.language();
     this.setLanguage(languageElan);
     const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
@@ -655,23 +655,23 @@ export class FileImpl implements File {
   setLanguageFromHeader(l: string) {
     switch (l) {
       case "Elan": {
-        this._language = new LanguageElan();
+        this._language = LanguageElan.Instance;
         break;
       }
       case "Python": {
-        this._language = new LanguagePython();
+        this._language = LanguagePython.Instance;
         break;
       }
       case "C#": {
-        this._language = new LanguageCS();
+        this._language = LanguageCS.Instance;
         break;
       }
       case "VB.NET": {
-        this._language = new LanguageVB();
+        this._language = LanguageVB.Instance;
         break;
       }
       case "Java": {
-        this._language = new LanguageJava();
+        this._language = LanguageJava.Instance;
         break;
       }
     }
