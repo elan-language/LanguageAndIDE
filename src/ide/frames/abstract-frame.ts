@@ -381,6 +381,14 @@ export abstract class AbstractFrame implements Frame {
     return false;
   };
 
+  exportSelected = () => {
+    if (!this.getParent().exportSelectedChildren()) {
+      this.pasteError = "Copy Failed: At least one selected frame does not parse";
+      return true;
+    }
+    return false;
+  };
+
   cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
@@ -689,6 +697,12 @@ export abstract class AbstractFrame implements Frame {
     return false;
   };
 
+  export = () => {
+    const source = this.renderAsExport();
+    this.getFile().addCopiedSource(source);
+    return false;
+  };
+
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
     switch (currentState) {
       case BreakpointStatus.none:
@@ -827,9 +841,8 @@ export abstract class AbstractFrame implements Frame {
       "copy for internal use <span class='kb'>Ctrl+c</span>",
       this.copySelected,
     ]);
-
     if (!(this.language().languageFullName === "Elan")) {
-      map.set("copyExport", ["copy for export", this.copySelected]);
+      map.set("copyExport", ["copy for export", this.exportSelected]);
     }
     if (!this.isGhosted() && this.isGhostable()) {
       map.set("ghost", ["ghost", this.ghost]);

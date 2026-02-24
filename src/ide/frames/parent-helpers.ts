@@ -200,6 +200,20 @@ export function parentHelper_copySelectedChildren(parent: Parent): boolean {
   return true;
 }
 
+export function parentHelper_exportSelectedChildren(parent: Parent): boolean {
+  const toExport = parentHelper_getAllSelectedChildren(parent);
+
+  if (toExport.some((tc) => !isValidOrIncomplete(tc))) {
+    return false;
+  }
+
+  for (const tc of toExport) {
+    tc.export();
+  }
+
+  return true;
+}
+
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
   const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;
