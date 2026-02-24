@@ -191,6 +191,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   NOT = "!";
 
   COMMENT_MARKER = "//";
+  LIST_START: string = "[";
+  LIST_END: string = "]";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";

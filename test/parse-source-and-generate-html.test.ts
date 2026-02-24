@@ -123,4 +123,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\bubbles.java`,
     );
   });
+  test("Ripple Sort", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\in-place-ripple-sort.elan`,
+      ``,
+      `${__dirname}\\files\\in-place-ripple-sort.py`,
+      `${__dirname}\\files\\in-place-ripple-sort.vb`,
+      `${__dirname}\\files\\in-place-ripple-sort.cs`,
+      `${__dirname}\\files\\in-place-ripple-sort.java`,
+    );
+  });
 });
