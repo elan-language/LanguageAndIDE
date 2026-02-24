@@ -32,6 +32,8 @@ export interface Language {
   NOT: string;
 
   COMMENT_MARKER: string; //e.g. `#`
+  LIST_START: string;
+  LIST_END: string;
 
   INT_NAME: string;
   FLOAT_NAME: string;

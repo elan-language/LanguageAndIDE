@@ -1,4 +1,4 @@
-# 4a5069a8821dff7bad4188a1cf08d13e1a49a4a5a0c65d25ff564b40d3f0cbef Elan 2.0.0-alpha guest default_profile valid
+# dfea31d7ad71c6f10842d7bd3a9e0d4705d6be98767fdd16ae15601f2ad3a8d3 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
@@ -7,7 +7,6 @@ main
   call print(li)
 end main
 
-# snipFrom
 procedure inPlaceRippleSort(li as List<of Int>)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
@@ -24,5 +23,3 @@ procedure inPlaceRippleSort(li as List<of Int>)
     set lastComp to lastComp - 1
   end while
 end procedure
-
-# snipTo

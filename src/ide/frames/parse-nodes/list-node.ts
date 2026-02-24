@@ -1,11 +1,12 @@
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
+import { ParseStatus } from "../status-enums";
 import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
-import { File } from "../frame-interfaces/file";
 
 export class ListNode extends AbstractSequence {
   csv: CSV | undefined;
@@ -18,17 +19,24 @@ export class ListNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new PunctuationNode(this.file, OPEN_SQ_BRACKET));
+      const lang = this.file.language();
+      this.addElement(new PunctuationNode(this.file, lang.LIST_START));
       this.csv = new CSV(this.file, this.elementConstructor, 1);
       this.addElement(this.csv);
       this.addElement(new SpaceNode(this.file, Space.ignored));
-      this.addElement(new PunctuationNode(this.file, CLOSE_SQ_BRACKET));
+      this.addElement(new PunctuationNode(this.file, lang.LIST_END));
       super.parseText(text);
     }
   }
 
+  override renderAsElanSource() {
+    return this.status === ParseStatus.valid
+      ? `${OPEN_SQ_BRACKET}${this.csv!.renderAsElanSource()}${CLOSE_SQ_BRACKET}`
+      : this.matchedText;
+  }
+
   override renderAsHtml(): string {
-    const fromLanguage = this.file.language().renderNodeAsHtml(this);
-    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
+    const lang = this.file.language();
+    return `${lang.LIST_START}${this.csv?.renderAsHtml()}${lang.LIST_END}`;
   }
 }
