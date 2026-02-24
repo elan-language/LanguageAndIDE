@@ -692,7 +692,7 @@ export function transform(
   }
 
   if (node instanceof UnaryExpression) {
-    const op = node.unaryOp!.matchedText.trim();
+    const op = node.unaryOp!.renderAsElanSource().trim();
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
     return new UnaryExprAsn(op, operand, fieldId, scope);
@@ -701,7 +701,7 @@ export function transform(
   if (node instanceof BinaryExpression) {
     const lhs = transform(node.lhs, fieldId, scope) as AstNode;
     const rhs = transform(node.rhs, fieldId, scope) as AstNode;
-    const op = node.op!.matchedText.trim();
+    const op = node.op!.renderAsElanSource().trim();
 
     return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
   }
