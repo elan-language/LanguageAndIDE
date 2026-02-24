@@ -1,4 +1,4 @@
-# 4cf31a4967c4dda0bc025bf1c63e44e5d6fc552a2584703b0d8a4b91b1e885ef Elan 2.0.0-alpha guest default_profile valid
+# 2b65e3e544aed76647cbe3245e3489b92e66b54ae3e0adc2ae7f4a4cb5b3f2ba Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
@@ -6,6 +6,6 @@ main
   call print(li)
 end main
 
-procedure inPlaceRippleSort(list as List<of Int>)
+procedure inPlaceRippleSort(lst as List<of Int>)
 
 end procedure
