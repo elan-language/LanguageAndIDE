@@ -1,13 +1,13 @@
+import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { LitStringDoubleQuotesEmpty } from "./lit-string-double-quotes-empty";
 import { LitStringDoubleQuotesNonEmpty } from "./lit-string-double-quotes-non-empty";
 import { LitStringSingleQuotes } from "./lit-string-single-quotes";
-import { File } from "../frame-interfaces/file";
 
 export class LitString extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = `"string"`;
+    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
   }
 
   parseText(text: string): void {

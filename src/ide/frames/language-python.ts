@@ -226,6 +226,10 @@ export class LanguagePython extends LanguageAbstract {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
 
+  paramDefCompletion(_node: ParamDefNode): string {
+    return `<i>name</i>: <i>Type</i>`;
+  }
+
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);

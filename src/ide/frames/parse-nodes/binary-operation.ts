@@ -8,7 +8,7 @@ import { Operator } from "./operator";
 export class BinaryOperation extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>operator </i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>operator </i>");
   }
 
   keywords: string[] = [];

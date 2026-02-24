@@ -1,10 +1,10 @@
 import { allKeywords } from "../../../compiler/keywords";
 import { Regexes } from "../fields/regexes";
+import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
-import { File } from "../frame-interfaces/file";
 
 export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
@@ -18,7 +18,7 @@ export class IdentifierNode extends AbstractParseNode {
     super(file);
     this.tokenTypes = tokenTypes;
     this.contextGenerator = contextGenerator;
-    this.completionWhenEmpty = "<i>name</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i>");
   }
 
   parseText(text: string): void {

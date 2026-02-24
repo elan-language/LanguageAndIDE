@@ -1,9 +1,9 @@
 import { Index } from ".";
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { OptionalNode } from "./optional-node";
 import { TermSimple } from "./term-simple";
-import { File } from "../frame-interfaces/file";
 
 export class TermSimpleWithOptIndex extends AbstractSequence {
   termSimple: TermSimple | undefined;
@@ -21,7 +21,7 @@ export class TermSimpleWithOptIndex extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
   }
 
   parseText(text: string): void {

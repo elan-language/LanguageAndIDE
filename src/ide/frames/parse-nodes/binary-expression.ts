@@ -1,10 +1,10 @@
+import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
 import { ExprNode } from "./expr-node";
 import { allIdsAndMethods, allKeywordsThatCanStartAnExpression } from "./parse-node-helpers";
 import { Term } from "./term";
-import { File } from "../frame-interfaces/file";
 
 export class BinaryExpression extends AbstractSequence {
   lhs: Term | undefined;
@@ -13,7 +13,7 @@ export class BinaryExpression extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
   }
 
   parseText(text: string): void {

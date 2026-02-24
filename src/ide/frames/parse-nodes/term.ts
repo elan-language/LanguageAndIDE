@@ -1,16 +1,16 @@
 import { refKeyword, thisKeyword } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
 import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";
-import { File } from "../frame-interfaces/file";
 
 export class Term extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
   }
 
   parseText(text: string): void {

@@ -1,12 +1,12 @@
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
-import { File } from "../frame-interfaces/file";
 
 export class Qualifier extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("");
   }
 
   parseText(text: string): void {

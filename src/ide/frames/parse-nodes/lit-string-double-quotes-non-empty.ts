@@ -1,18 +1,18 @@
+import { File } from "../frame-interfaces/file";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { LitStringInterpolation } from "./lit-string-interpolation";
 import { LitStringDoubleQuotesContents } from "./lit-string-double-quotes-contents";
+import { LitStringInterpolation } from "./lit-string-interpolation";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
-import { File } from "../frame-interfaces/file";
 
 export class LitStringDoubleQuotesNonEmpty extends AbstractSequence {
   segments: Multiple | undefined;
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = `"string"`;
+    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
   }
 
   parseText(text: string): void {

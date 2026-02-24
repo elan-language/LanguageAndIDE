@@ -1,17 +1,17 @@
+import { File } from "../frame-interfaces/file";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
-import { File } from "../frame-interfaces/file";
 
 export class BracketedExpression extends AbstractSequence {
   expr: ExprNode | undefined;
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("");
   }
 
   parseText(text: string): void {

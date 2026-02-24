@@ -20,6 +20,8 @@ export interface Language {
 
   renderNodeAsHtml(node: ParseNode): string;
 
+  completionWhenEmpty(node: ParseNode): string;
+
   parseText(node: ParseNode, text: string): boolean;
 
   getFields(node: Frame): Field[];

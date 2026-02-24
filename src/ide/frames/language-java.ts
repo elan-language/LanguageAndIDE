@@ -66,6 +66,10 @@ export class LanguageJava extends LanguageCfamily {
     return this.common_paramDefAsHtml(node);
   }
 
+  paramDefCompletion(node: ParamDefNode): string {
+    return this.common_paramDefCompletion(node);
+  }
+
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
     return this.common_parseTypeGeneric(node, text);
   }

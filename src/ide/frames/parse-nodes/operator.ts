@@ -13,7 +13,7 @@ export class Operator extends AbstractParseNode {
     super(file);
     this.elanOp = elanOp;
     this.langOp = langOp ? langOp : (lang) => (lang ? elanOp : elanOp);
-    this.completionWhenEmpty = "";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("");
   }
 
   parseText(text: string): void {
