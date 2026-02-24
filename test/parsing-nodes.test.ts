@@ -71,6 +71,7 @@ suite("Parsing Nodes", () => {
     "",
     transforms(),
     new StdLib(new StubInputOutput()),
+    false,
     true,
   );
 

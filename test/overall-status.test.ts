@@ -24,6 +24,7 @@ suite("Overall Status Tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -37,6 +38,7 @@ suite("Overall Status Tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     assert.equal(f.readParseStatus(), ParseStatus.valid);

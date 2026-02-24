@@ -6,7 +6,6 @@ import { Regexes } from "../src/ide/frames/fields/regexes";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { removeHtmlTagsAndEscChars } from "../src/ide/frames/frame-helpers";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -45,6 +44,7 @@ suite("Misc Tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);

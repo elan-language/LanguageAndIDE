@@ -204,7 +204,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()), true);
+  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -573,7 +573,7 @@ function fileWithLanguage(language: Language): FileImpl {
     new DefaultProfile(),
     "",
     transforms(),
-    new StdLib(new StubInputOutput()),
+    new StdLib(new StubInputOutput()),false,
     true,
   );
   f.setLanguage(language);
@@ -581,7 +581,7 @@ function fileWithLanguage(language: Language): FileImpl {
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())));
+  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, false));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);

@@ -13,9 +13,9 @@ import { SpaceNode } from "../src/ide/frames/parse-nodes/space-node";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testCompletion } from "./testHelpers";
-import { hash } from "../src/ide/util";
 
 suite("Parsing - Completions", () => {
   //TODO - merge the completions tests into the parse node tests
@@ -26,6 +26,7 @@ suite("Parsing - Completions", () => {
     "",
     transforms(),
     new StdLib(new StubInputOutput()),
+    false,
     true,
   );
 

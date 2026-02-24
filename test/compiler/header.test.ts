@@ -35,6 +35,7 @@ return [main, _tests];}`;
       "guest",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
@@ -68,6 +69,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
@@ -101,6 +103,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
@@ -134,6 +137,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 100, "");
@@ -167,6 +171,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 1, 0, "");
@@ -200,6 +205,7 @@ return [main, _tests];}`;
       "aUser",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
@@ -225,6 +231,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(2, 0, 0, "");
@@ -250,6 +257,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(0, 0, 0, "");
@@ -275,6 +283,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");
@@ -308,6 +317,7 @@ return [main, _tests];}`;
       "aUser",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 1, 0, "");
@@ -333,6 +343,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     fileImpl.setIsProduction(true);
     fileImpl.setVersion(1, 0, 0, "");

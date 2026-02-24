@@ -45,6 +45,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -114,6 +115,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -146,6 +148,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -180,6 +183,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -214,6 +218,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -278,6 +283,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -314,6 +320,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -350,6 +357,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -376,7 +384,7 @@ return [main, _tests];}`;
   // }
   // return [main, _tests];}";
 
-  //     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()), true);
+  //     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   //     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
   //     assertParses(fileImpl);
@@ -398,6 +406,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -419,6 +428,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -440,6 +450,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -464,6 +475,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -484,6 +496,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -504,6 +517,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -524,6 +538,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -547,6 +562,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -580,6 +596,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -612,6 +629,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -637,6 +655,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -659,6 +678,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -685,6 +705,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -709,6 +730,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -750,6 +772,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -783,6 +806,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
