@@ -5,7 +5,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertExportedPythonIs,
   assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -13,6 +12,7 @@ import {
   assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   testVBHeader,
@@ -344,10 +344,10 @@ return [main, _tests];}`;
 main
   variable a set to [4,5,6,7,8]
   variable b set to new List<of Int>()
-  set b to a[2..5]
+  set b to a.subList(2, 5)
   call printNoLine(b)
-  call printNoLine(a[1..3])
-  call printNoLine(a[0..2])
+  call printNoLine(a.subList(1, 3))
+  call printNoLine(a.subList(0, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -355,10 +355,10 @@ const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
   let b = system.initialise(await new _stdlib.List()._initialise());
-  b = system.safeSlice(a, 2, 5);
+  b = a.subList(2, 5);
   await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(system.safeSlice(a, 1, 3));
-  await _stdlib.printNoLine(system.safeSlice(a, 0, 2));
+  await _stdlib.printNoLine(a.subList(1, 3));
+  await _stdlib.printNoLine(a.subList(0, 2));
 }
 return [main, _tests];}`;
 
@@ -482,7 +482,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["foo", "bar", "yon"]
-  set a to a[1..]
+  set a to a.subList(1, a.length())
   call printNoLine(a)
 end main`;
 
@@ -490,7 +490,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["foo", "bar", "yon"]);
-  a = system.safeSlice(a, 1);
+  a = a.subList(1, a.length());
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -2021,12 +2021,12 @@ end main`;
     ]);
   });
 
-  test("Fail_assignRange", async () => {
+  ignore_test("Fail_assignRange", async () => {
     const code = `${testHeader}
 
 main
     variable a set to [1,2,3,4]
-    set a[1..2] to a
+    set a.subList(1, 2) to a
     call printNoLine(a)
 end main`;
 

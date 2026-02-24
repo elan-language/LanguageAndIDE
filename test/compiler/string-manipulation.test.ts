@@ -278,18 +278,18 @@ return [main, _tests];}`;
 
 main
   variable a set to "abcde"
-  call printNoLine(a[1..3])
-  call printNoLine(a[2..])
-  call printNoLine(a[..2])
+  call printNoLine(a.subString(1, 3))
+  call printNoLine(a.subString(2, a.length()))
+  call printNoLine(a.subString(0, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = "abcde";
-  await _stdlib.printNoLine(system.safeSlice(a, 1, 3));
-  await _stdlib.printNoLine(system.safeSlice(a, 2));
-  await _stdlib.printNoLine(system.safeSlice(a, 0, 2));
+  await _stdlib.printNoLine(_stdlib.subString(a, 1, 3));
+  await _stdlib.printNoLine(_stdlib.subString(a, 2, _stdlib.length(a)));
+  await _stdlib.printNoLine(_stdlib.subString(a, 0, 2));
 }
 return [main, _tests];}`;
 

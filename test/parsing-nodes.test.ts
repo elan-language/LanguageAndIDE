@@ -1422,7 +1422,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
-    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    // testNodeParse(
+    //   new TermSimpleWithOptIndex(f),
+    //   `abc.subList(1, 2)`,
+    //   ParseStatus.valid,
+    //   "abc.subList(1, 2)",
+    //   "",
+    // );
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc[1, 2]", "");
     testNodeParse(
       new TermSimpleWithOptIndex(f),
@@ -1445,9 +1451,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermChained(f), `property.a`, ParseStatus.valid, `property.a`, "");
     testNodeParse(
       new TermChained(f),
-      `a[1].b()[1..2].c(d)[e][f]`,
+      `a[1].b().subList(1, 2).c(d)[e][f]`,
       ParseStatus.valid,
-      `a[1].b()[1..2].c(d)[e][f]`,
+      `a[1].b().subList(1, 2).c(d)[e][f]`,
       "",
     );
     testNodeParse(
@@ -1468,9 +1474,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(f),
-      `a[1].b()[1..2].c(d).e.f[g]`,
+      `a[1].b().subList(1, 2).c(d).e.f[g]`,
       ParseStatus.valid,
-      `a[1].b()[1..2].c(d).e.f[g]`,
+      `a[1].b().subList(1, 2).c(d).e.f[g]`,
       "",
     );
     testNodeParse(

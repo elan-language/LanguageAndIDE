@@ -714,6 +714,15 @@ export class StdLib {
     return r.test(a);
   }
 
+  @elanFunction(["", "index1", "index2"], FunctionOptions.pureExtension)
+  subString(
+    @elanStringType() s: string,
+    @elanIntType() index1: number,
+    @elanIntType() index2: number,
+  ): string {
+    return this.system.safeSlice(s, index1, index2);
+  }
+
   @elanFunction([], FunctionOptions.pureExtension)
   asRegExp(pattern: string): RegExp {
     return new RegExp(pattern, "");

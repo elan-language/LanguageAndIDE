@@ -425,7 +425,7 @@ return [main, _tests];}`;
 
 main 
   variable s set to ""
-  set s to "Hello World!".lowerCase()[0..1].upperCase()
+  set s to "Hello World!".lowerCase().subString(0, 1).upperCase()
   call printNoLine(s)
 end main`;
 
@@ -433,7 +433,7 @@ end main`;
 const global = new class {};
 async function main() {
   let s = "";
-  s = _stdlib.upperCase(system.safeSlice(_stdlib.lowerCase("Hello World!"), 0, 1));
+  s = _stdlib.upperCase(_stdlib.subString(_stdlib.lowerCase("Hello World!"), 0, 1));
   await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
@@ -461,7 +461,7 @@ return [main, _tests];}`;
 main 
   variable aStringVar set to "abcdexefg"
   variable s set to ""
-  set s to aStringVar.upperCase()[1..7][2..6].indexOf("X").asString()
+  set s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").asString()
   call printNoLine(s)
 end main`;
 
@@ -470,7 +470,7 @@ const global = new class {};
 async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
-  s = (await _stdlib.asString(_stdlib.indexOf(system.safeSlice(system.safeSlice(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
+  s = (await _stdlib.asString(_stdlib.indexOf(_stdlib.subString(_stdlib.subString(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
   await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
@@ -552,7 +552,7 @@ return [main, _tests];}`;
 main 
   variable aFoo set to new Foo()
   variable b set to 0
-  set b to aFoo.createLst(10)[1..5].length() + 3
+  set b to aFoo.createLst(10).subList(1, 5).length() + 3
   call printNoLine(b)
 end main
 
@@ -571,7 +571,7 @@ const global = new class {};
 async function main() {
   let aFoo = system.initialise(await new Foo()._initialise());
   let b = 0;
-  b = system.safeSlice((await aFoo.createLst(10)), 1, 5).length() + 3;
+  b = (await aFoo.createLst(10)).subList(1, 5).length() + 3;
   await _stdlib.printNoLine(b);
 }
 
@@ -733,14 +733,16 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  call printNoLine(a[..5].map(lambda x as Int => x * x)[2..].reduce(0, lambda s as Int, x as Int => s + x))
+  variable c set to a.subList(0, 5).map(lambda x as Int => x * x)
+  call printNoLine(c.subList(2, c.length()).reduce(0, lambda s as Int, x as Int => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await _stdlib.printNoLine((await system.safeSlice((await system.safeSlice(a, 0, 5).map(async (x) => x * x)), 2).reduce(0, async (s, x) => s + x)));
+  let c = (await a.subList(0, 5).map(async (x) => x * x));
+  await _stdlib.printNoLine((await c.subList(2, c.length()).reduce(0, async (s, x) => s + x)));
 }
 return [main, _tests];}`;
 
