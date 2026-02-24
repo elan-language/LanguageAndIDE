@@ -14,6 +14,8 @@ import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 
 export abstract class LanguageAbstract implements Language {
+  protected constructor() {}
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }

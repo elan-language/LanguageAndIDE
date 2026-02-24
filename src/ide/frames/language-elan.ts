@@ -7,6 +7,7 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -40,6 +41,12 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageElan extends LanguageAbstract {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguageElan();
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
