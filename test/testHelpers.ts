@@ -68,7 +68,7 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
+export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
   const fl = await loadFileAsModelNew(sourceFile);
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
