@@ -90,25 +90,25 @@ export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string
     expectedHtml = htm.replaceAll("\r", "");
   }
   if (pythonFile !== "") {
-    fl.setLanguage(new LanguagePython());
+    fl.setLanguage(LanguagePython.Instance);
     actualPython = (await fl.renderAsExport()).replaceAll("\r", "");;
     expectedPython = loadFileAsSourceNew(pythonFile).replaceAll("\r", "");
   }
 
   if (vbFile !== "") {
-    fl.setLanguage(new LanguageVB());
+    fl.setLanguage(LanguageVB.Instance);
     actualVB = (await fl.renderAsExport()).replaceAll("\r", "");;
     expectedVB = loadFileAsSourceNew(vbFile).replaceAll("\r", "");
   }
 
    if (csFile !== "") {
-    fl.setLanguage(new LanguageCS());
+    fl.setLanguage(LanguageCS.Instance);
     actualCS = (await fl.renderAsExport()).replaceAll("\r", "");;
     expectedCS = loadFileAsSourceNew(csFile).replaceAll("\r", "");
   }
 
    if (javaFile !== "") {
-    fl.setLanguage(new LanguageJava());
+    fl.setLanguage(LanguageJava.Instance);
     actualJava = (await fl.renderAsExport()).replaceAll("\r", "");;
     expectedJava = loadFileAsSourceNew(javaFile).replaceAll("\r", "");
   }
@@ -552,19 +552,19 @@ export function testNodeParse(
 }
 
 export function fileWithPython(): FileImpl {
-  return fileWithLanguage(new LanguagePython());
+  return fileWithLanguage(LanguagePython.Instance);
 }
 
 export function fileWithVB(): FileImpl {
-  return fileWithLanguage(new LanguageVB());
+  return fileWithLanguage(LanguageVB.Instance);
 }
 
 export function fileWithCS(): FileImpl {
-  return fileWithLanguage(new LanguageCS());
+  return fileWithLanguage(LanguageCS.Instance);
 }
 
 export function fileWithJava(): FileImpl {
-  return fileWithLanguage(new LanguageJava());
+  return fileWithLanguage(LanguageJava.Instance);
 }
 
 function fileWithLanguage(language: Language): FileImpl {

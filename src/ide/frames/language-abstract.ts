@@ -5,7 +5,6 @@ import { ParseNode } from "./frame-interfaces/parse-node";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -15,6 +14,8 @@ import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 
 export abstract class LanguageAbstract implements Language {
+  protected constructor() {}
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
@@ -49,8 +50,6 @@ export abstract class LanguageAbstract implements Language {
     let html = "";
     if (node instanceof ParamDefNode) {
       html = this.paramDefAsHtml(node);
-    } else if (node instanceof BinaryOperation) {
-      html = this.binaryOperationAsHtml(node);
     } else if (node instanceof TypeGenericNode) {
       html = this.typeGenericAsHtml(node);
     } else if (node instanceof PropertyRef) {
@@ -99,6 +98,8 @@ export abstract class LanguageAbstract implements Language {
   abstract NOT: string;
 
   abstract COMMENT_MARKER: string;
+  abstract LIST_START: string;
+  abstract LIST_END: string;
 
   abstract INT_NAME: string;
   abstract FLOAT_NAME: string;
@@ -108,12 +109,5 @@ export abstract class LanguageAbstract implements Language {
 
   protected spaced(text: string): string {
     return ` ${text} `;
-  }
-
-  binaryOperationAsHtml(node: BinaryOperation): string {
-    //test for keyword -to add tags
-    //test for * or / & otherwise add spaces.
-    //return `${open}${text}${close}`;
-    return node ? "" : "";
   }
 }

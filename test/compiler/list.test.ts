@@ -5,6 +5,8 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -13,6 +15,7 @@ import {
   assertStatusIsValid,
   testHash,
   testHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -48,6 +51,14 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8]");
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim a = {4, 5, 6, 7, 8} ' variable
+  printNoLine(a) ' call
+End Sub
+`;
+    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_appendList", async () => {

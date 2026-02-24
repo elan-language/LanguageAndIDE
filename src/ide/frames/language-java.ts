@@ -1,5 +1,6 @@
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -8,6 +9,12 @@ import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageJava extends LanguageCfamily {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguageJava();
+
   languageClass = "java";
   languageFullName: string = "Java";
   defaultFileExtension: string = "java";

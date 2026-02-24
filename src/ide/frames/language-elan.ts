@@ -7,6 +7,7 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -40,6 +41,12 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageElan extends LanguageAbstract {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguageElan();
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
@@ -48,8 +55,8 @@ export class LanguageElan extends LanguageAbstract {
   defaultFileExtension: string = "elan";
   defaultMimeType: string = "text/plain";
 
-  annotation(frame: Frame): string {
-    return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
+  annotation(_frame: Frame): string {
+    return "";
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -95,8 +102,8 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  renderSingleLineAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  renderSingleLineAsExport(_frame: Frame): string {
+    return ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderTopAsHtml(frame: Frame): string {
@@ -137,8 +144,8 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  renderTopAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  renderTopAsExport(_frame: Frame): string {
+    return ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderBottomAsHtml(frame: Frame): string {
@@ -209,6 +216,8 @@ export class LanguageElan extends LanguageAbstract {
   NOT = "not";
 
   COMMENT_MARKER = "#";
+  LIST_START: string = "[";
+  LIST_END: string = "]";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";

@@ -124,7 +124,7 @@ export class FileManager {
     const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
     const nameWithoutExt = name.slice(0, name.lastIndexOf("."));
-    const language = cvm.isExporting() ? cvm.getLanguage() : new LanguageElan();
+    const language = cvm.isExporting() ? cvm.getLanguage() : LanguageElan.Instance;
     const ext = html ? "html" : language.defaultFileExtension;
     const mime = html ? "text/html" : language.defaultMimeType;
 
@@ -304,7 +304,7 @@ export class FileManager {
 
   async doGenericDownload(cvm: ICodeEditorViewModel, vm: IIDEViewModel, fm: FileManager) {
     const isSaving = !cvm.isExporting();
-    const language = isSaving ? new LanguageElan() : cvm.getLanguage();
+    const language = isSaving ? LanguageElan.Instance : cvm.getLanguage();
     cvm.updateFileName(`.${language.defaultFileExtension}`);
     const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
     const blob = new Blob([code], { type: "plain/text" });
@@ -336,7 +336,7 @@ export class FileManager {
       const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
       const rawCode = await codeFile.text();
       if (mode === ParseMode.loadNew) {
-        cvm.recreateFile(vm, false, new LanguageElan());
+        cvm.recreateFile(vm, false, LanguageElan.Instance);
         this.reset();
       }
       await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);

@@ -9,6 +9,7 @@ import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -53,6 +54,12 @@ import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageVB extends LanguageAbstract {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguageVB();
+
   commentRegex(): RegExp {
     return /' [^\r\n]*/;
   }
@@ -241,6 +248,8 @@ export class LanguageVB extends LanguageAbstract {
   NOT = "Not";
 
   COMMENT_MARKER: string = this.SINGLE_QUOTE;
+  LIST_START: string = "{";
+  LIST_END: string = "}";
 
   INT_NAME: string = "Integer";
   FLOAT_NAME: string = "Double";

@@ -7,6 +7,7 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -23,6 +24,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierNode } from "./parse-nodes/identifier-node";
+import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -51,6 +53,12 @@ import { TokenType } from "./symbol-completion-helpers";
 import { COLON } from "./symbols";
 
 export class LanguagePython extends LanguageAbstract {
+  private constructor() {
+    super();
+  }
+
+  static Instance: Language = new LanguagePython();
+
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
@@ -159,8 +167,8 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  renderBottomAsHtml(frame: Frame): string {
-    return frame ? "" : ""; // Python blocks have no textual ending;
+  renderBottomAsHtml(_frame: Frame): string {
+    return ""; // Python blocks have no textual ending;
   }
 
   private DEF = "def";
@@ -189,6 +197,8 @@ export class LanguagePython extends LanguageAbstract {
   NOT: string = "not";
 
   COMMENT_MARKER = "#";
+  LIST_START: string = "[";
+  LIST_END: string = "]";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
@@ -233,6 +243,10 @@ export class LanguagePython extends LanguageAbstract {
   }
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
+  }
+
+  listNodeAsHtml(node: ListNode): string {
+    return `[${node.csv?.renderAsHtml()}]`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {

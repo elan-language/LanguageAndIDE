@@ -178,7 +178,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
-    const existingLanguage = language ?? this.file?.language() ?? new LanguageElan();
+    const existingLanguage = language ?? this.file?.language() ?? LanguageElan.Instance;
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
@@ -436,7 +436,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean) {
     await vm.clearDisplays();
-    vm.setDisplayLanguage(this.file?.language() ?? new LanguageElan());
+    vm.setDisplayLanguage(this.file?.language() ?? LanguageElan.Instance);
     const ps = this.readParseStatus();
     if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
       await this.refreshAndDisplay(vm, tr, false, false);
@@ -507,7 +507,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(vm, false, new LanguageElan());
+    this.recreateFile(vm, false, LanguageElan.Instance);
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);

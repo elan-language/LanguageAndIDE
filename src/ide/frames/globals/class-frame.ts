@@ -29,6 +29,7 @@ import {
   parentHelper_addChildBefore,
   parentHelper_copySelectedChildren,
   parentHelper_deleteSelectedChildren,
+  parentHelper_exportSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -160,6 +161,10 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   copySelectedChildren(): boolean {
     return parentHelper_copySelectedChildren(this);
+  }
+
+  exportSelectedChildren(): boolean {
+    return parentHelper_exportSelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {

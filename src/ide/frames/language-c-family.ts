@@ -50,6 +50,10 @@ import { TokenType } from "./symbol-completion-helpers";
 import { GT, LT } from "./symbols";
 
 export abstract class LanguageCfamily extends LanguageAbstract {
+  protected constructor() {
+    super();
+  }
+
   common_commentRegex(): RegExp {
     return /\/\/ [^\r\n]*/;
   }
@@ -191,6 +195,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   NOT = "!";
 
   COMMENT_MARKER = "//";
+  LIST_START: string = "[";
+  LIST_END: string = "]";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";
