@@ -309,14 +309,14 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
     scrollToActiveElement();
   }
 
-  if (m.data === "language:") {
-    const language = m.data.slice(9);
-    const ws = document.querySelector("#worksheet");
-    ws!.classList.remove(...ws!.classList);
-    ws?.classList.add(language);
+  if (typeof m.data === "string" && m.data.startsWith("language:")) {
+    const l = m.data.slice(9);
+    const ws = document.querySelector("#worksheet")!;
+    ws.classList.remove(...ws.classList);
+    ws.classList.add(l);
   }
 
-  if (m.data.startsWith("code:")) {
+  if (typeof m.data === "string" && m.data.startsWith("code:")) {
     const idPrefixed = m.data.slice(5);
     const indexOfColon = idPrefixed.indexOf(":");
     const id = idPrefixed.slice(0, indexOfColon);

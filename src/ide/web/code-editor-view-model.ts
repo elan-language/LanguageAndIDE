@@ -182,7 +182,6 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
-    vm.tvm.setWorksheetLanguage(this.file!.language().languageClass);
   }
 
   get currentHash() {

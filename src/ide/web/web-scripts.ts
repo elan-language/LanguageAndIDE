@@ -713,6 +713,8 @@ class IDEViewModel implements IIDEViewModel {
     codeContainer.classList.remove("vb");
     codeContainer.classList.remove("java");
     codeContainer.classList.add(l.languageClass);
+
+    this.tvm.setWorksheetLanguage(l.languageClass);
   }
 }
 
