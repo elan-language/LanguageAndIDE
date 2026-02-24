@@ -370,6 +370,13 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
     scrollToActiveElement();
   }
 
+  if (m.data.startsWith("language:")) {
+    const l = m.data.slice(9);
+    const ws = document.querySelector("#worksheet")!;
+    ws.classList.remove(...ws.classList);
+    ws.classList.add(l);
+  }
+
   if (m.data.startsWith("code:")) {
     const idPrefixed = m.data.slice(5);
     const indexOfColon = idPrefixed.indexOf(":");
