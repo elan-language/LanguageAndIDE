@@ -14,7 +14,7 @@ suite("Parsing Nodes", () => {
       new DefaultProfile(),
       "",
       transforms(),
-      new StdLib(new StubInputOutput()),
+      new StdLib(new StubInputOutput()),false,
       true,
     );
 

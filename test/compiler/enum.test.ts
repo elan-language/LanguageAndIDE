@@ -45,6 +45,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -83,6 +84,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -140,6 +142,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -197,6 +200,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -237,6 +241,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -277,6 +282,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -325,6 +331,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -371,6 +378,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -411,6 +419,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -449,6 +458,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -475,6 +485,7 @@ enum Fruit apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -501,6 +512,7 @@ enum fruit apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -522,6 +534,7 @@ enum Fruit apple, Orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -543,6 +556,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -566,6 +580,7 @@ enum Fruit apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -589,6 +604,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -612,6 +628,7 @@ enum Fruit apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -635,6 +652,7 @@ enum if apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -657,6 +675,7 @@ enum Fruit apple, orange, if`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -682,6 +701,7 @@ enum Fruit apple, orange, break`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -709,6 +729,7 @@ enum Fruit apple, orange, pear`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -732,6 +753,7 @@ enum Fruit apple, orange, pear, orange`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));

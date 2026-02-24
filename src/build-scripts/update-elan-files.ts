@@ -39,7 +39,7 @@
 //     new DefaultProfile(),
 //     "guest",
 //     transforms(),
-//     new StdLib(new StubInputOutput()),
+//     new StdLib(new StubInputOutput()),false,
 //     true,
 //   );
 //   codeSource.mode = ParseMode.loadNew;

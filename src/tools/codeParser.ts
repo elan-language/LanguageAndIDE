@@ -31,6 +31,7 @@ async function newFileImpl(): Promise<FileImpl> {
     "guest",
     transforms(),
     new StdLib(new StubInputOutput()),
+    false,
     true,
   );
 }

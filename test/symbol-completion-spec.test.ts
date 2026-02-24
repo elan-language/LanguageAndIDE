@@ -1,5 +1,8 @@
 import assert from "assert";
 
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
 import { Alternatives } from "../src/ide/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../src/ide/frames/parse-nodes/arg-list-node";
 import { AssertActualNode } from "../src/ide/frames/parse-nodes/assert-actual-node";
@@ -20,16 +23,12 @@ import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleName } from "../src/ide/frames/parse-nodes/type-simple-name";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
-import { ValueDefNode } from "../src/ide/frames/parse-nodes/value-def-node";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
-import { testSymbolCompletionSpec } from "./testHelpers";
-import { hash } from "../src/ide/util";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
-import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
+import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion Spec", () => {
   const f = new FileImpl(
@@ -38,6 +37,7 @@ suite("Symbol Completion Spec", () => {
     "",
     transforms(),
     new StdLib(new StubInputOutput()),
+    false,
     true,
   );
 

@@ -15,7 +15,7 @@ import { StatementSelector } from "../src/ide/frames/statements/statement-select
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -31,6 +31,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -49,6 +50,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -66,6 +68,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -84,6 +87,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new GlobalFunction(fl);
@@ -102,6 +106,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const t = new TestFrame(fl);
@@ -120,6 +125,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -138,6 +144,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -155,6 +162,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -172,6 +180,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -189,6 +198,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -206,6 +216,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     const m = new MainFrame(fl);
@@ -225,6 +236,7 @@ suite("Parsing Frame Tests", async () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -244,6 +256,7 @@ constant pi set to 3.142
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -265,6 +278,7 @@ constant e set to 2.718
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -286,6 +300,7 @@ end main
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -309,6 +324,7 @@ end main
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -337,6 +353,7 @@ end main
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -370,6 +387,7 @@ enum Fruit apple, orange, pear
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -404,6 +422,7 @@ end class
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -426,6 +445,7 @@ end record
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -454,6 +474,7 @@ end class
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -478,6 +499,7 @@ end main
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -500,6 +522,7 @@ end class
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -523,6 +546,7 @@ end class
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -545,6 +569,7 @@ end record
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -570,6 +595,7 @@ end record
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -593,6 +619,7 @@ end record
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -616,6 +643,7 @@ abstract class Card
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
@@ -640,6 +668,7 @@ end class
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fl.parseFrom(source);
