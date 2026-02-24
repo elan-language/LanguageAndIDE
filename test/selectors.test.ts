@@ -83,6 +83,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const g = new GlobalSelector(f);
     let help = g.getCompletion();
@@ -106,6 +107,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
@@ -140,6 +142,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const c = new AbstractClass(f);
     const s = new MemberSelector(c);
@@ -168,6 +171,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const c = new InterfaceFrame(f);
     const s = new MemberSelector(c);
@@ -184,6 +188,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
@@ -205,6 +210,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
@@ -219,6 +225,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
@@ -233,6 +240,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
@@ -247,6 +255,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const func = new GlobalFunction(fl);
     const if1 = new IfStatement(func);
@@ -263,6 +272,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const c = new ConcreteClass(fl);
     const fm = new FunctionMethod(c);
@@ -278,6 +288,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const m = new MainFrame(fl);
     const ifThen = new IfStatement(m);
@@ -292,6 +303,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     let gs = new GlobalSelector(fl);
     let help = gs.getCompletion();
@@ -313,6 +325,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const gs = f.getFirstSelectorAsDirectChild();
     const help = gs.getCompletion();
@@ -327,6 +340,7 @@ suite("Selector tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const gs = new GlobalSelector(fl);
     gs.select(true, false);

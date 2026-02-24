@@ -19,7 +19,14 @@ import { testExtractContextForExpression } from "./testHelpers";
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const commentStatement = new CommentStatement(main);
     const text = commentStatement.text;
@@ -35,7 +42,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse CommentFieldWithSpaces", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const commentStatement = new CommentStatement(main);
     const text = commentStatement.text;
@@ -51,7 +65,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse varDefField", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const variable = new VariableStatement(main);
     const id = variable.name;
@@ -74,7 +95,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse VarDefField 2", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const id = v.name;
@@ -96,7 +124,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse  ArgListField", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const call = new CallStatement(main);
     const argList = call.args;
@@ -116,7 +151,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse ArgListField 2", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const call = new CallStatement(main);
     const argList = call.args;
@@ -127,7 +169,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse TypeField invalid", () => {
     const func = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const type = func.returnType;
     type.setFieldToKnownValidText("Foo<of bar");
@@ -142,7 +191,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse ExpressionField - literal string with interpolations", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const expr = v.expr;
@@ -158,7 +214,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse ExpressionField - non-interpolated string", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const expr = v.expr;
@@ -170,7 +233,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse ExpressionField - mixed strings", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const expr = v.expr;
@@ -186,7 +256,14 @@ suite("Field Parsing Tests", () => {
 
   test("parse ValueRefField", () => {
     const test = new TestFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const a = new AssertStatement(test);
     const expected = a.expected;
@@ -201,7 +278,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse instance dot method", () => {
     const test = new TestFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const a = new VariableStatement(test);
     const expr = a.expr;
@@ -213,7 +297,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse paramDefs with closing bracket #855", () => {
     const test = new TestFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const fn = new GlobalFunction(test);
     const params = fn.params;
@@ -224,7 +315,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse proc call args list with closing bracket #685", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const call = new CallStatement(main);
     const args = call.args;
@@ -235,7 +333,14 @@ suite("Field Parsing Tests", () => {
   });
   test("#950 space at start of var-def-field is ignored", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const name = v.name;
@@ -246,7 +351,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse list of listof floats", () => {
     const c = new ConstantGlobal(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = c.value;
     v.setFieldToKnownValidText(
@@ -272,7 +384,14 @@ suite("Field Parsing Tests", () => {
   });
   test("parse Actual field cannot contain ' is '", () => {
     const test = new TestFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const assertStatement = new AssertStatement(test);
     const actual = assertStatement.actual!;

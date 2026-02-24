@@ -1,7 +1,5 @@
 import assert from "assert";
-import { hash } from "../src/ide/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
-import { key, tab } from "./testHelpers";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
@@ -12,13 +10,22 @@ import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
+import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { key, tab } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const set = new SetStatement(main);
     const expr = set.expr;
@@ -59,7 +66,14 @@ suite("Editing Fields Tests", () => {
 
   test("Entry of text with formatting 2", () => {
     const f = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const t = f.returnType;
     t.processKey(key("F"));
@@ -118,7 +132,14 @@ suite("Editing Fields Tests", () => {
 
   test("Entry of text with formatting 3", () => {
     const f = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const t = f.returnType;
     t.processKey(key("("));
@@ -165,7 +186,14 @@ suite("Editing Fields Tests", () => {
   //Temp ignored pending #2378
   ignore_test("Entry of expression using 'is' - #464", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const if1 = new IfStatement(main);
     const expr = if1.condition;
@@ -189,7 +217,14 @@ suite("Editing Fields Tests", () => {
 
   test("Ensure Html tag in a comment is not recognised - #840", () => {
     const comment = new GlobalComment(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const field = comment.text;
     field.select();
@@ -210,7 +245,14 @@ suite("Editing Fields Tests", () => {
 
   test("Ensure - leading spaces in a comment OK", () => {
     const comment = new GlobalComment(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const field = comment.text;
     field.select();
@@ -233,7 +275,14 @@ suite("Editing Fields Tests", () => {
 
   test("Tabbing to use plain text completions #485", () => {
     const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+      new FileImpl(
+        hash,
+        new DefaultProfile(),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
     );
     const v = new VariableStatement(main);
     const expr = v.expr;
@@ -266,6 +315,7 @@ suite("Editing Fields Tests", () => {
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
     );
     const main = new MainFrame(file);
     const c = new CallStatement(main);

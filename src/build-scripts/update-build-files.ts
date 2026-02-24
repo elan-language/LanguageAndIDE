@@ -24,6 +24,7 @@ function updateVersion() {
     "guest",
     transforms(),
     new StdLib(new StubInputOutput()),
+    false,
     true,
   );
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);

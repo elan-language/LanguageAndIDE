@@ -38,6 +38,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -73,6 +74,7 @@ return [main, _tests];}`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -100,6 +102,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -121,6 +124,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));

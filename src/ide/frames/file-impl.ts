@@ -118,11 +118,17 @@ export class FileImpl implements File {
     private userName: string | undefined,
     private readonly transform: Transforms,
     stdLib: StdLib,
+    withMain: boolean,
     allowAnyHeader?: boolean,
   ) {
     this._stdLibSymbols = new StdLibSymbols(stdLib);
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
+    if (withMain) {
+      const main = new MainFrame(this);
+      this.getChildren().push(main);
+    }
+
     const selector = new GlobalSelector(this);
     this.getChildren().push(selector);
     selector.select(true, false);

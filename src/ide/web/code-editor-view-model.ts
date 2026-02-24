@@ -177,9 +177,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.getFirstChild();
   }
 
-  recreateFile(vm: IIDEViewModel, language?: Language | undefined) {
+  recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
     const existingLanguage = language ?? this.file?.language() ?? new LanguageElan();
-    this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
+    this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
   }
@@ -453,7 +453,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async resetFile(fm: FileManager, vm: IIDEViewModel, tr: TestRunner) {
-    this.recreateFile(vm);
+    this.recreateFile(vm, true);
     await this.initialDisplay(fm, vm, tr, false);
   }
 
@@ -507,7 +507,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(vm, new LanguageElan());
+    this.recreateFile(vm, false, new LanguageElan());
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);

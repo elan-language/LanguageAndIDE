@@ -127,6 +127,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -151,6 +152,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -175,6 +177,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -199,6 +202,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -223,6 +227,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -247,6 +252,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -271,6 +277,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -295,6 +302,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -319,6 +327,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -345,6 +354,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -371,6 +381,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -397,6 +408,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -423,6 +435,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -449,6 +462,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -475,6 +489,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -502,6 +517,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -529,6 +545,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -556,6 +573,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
@@ -583,6 +601,7 @@ end main`;
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
+      false,
       true,
     );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
