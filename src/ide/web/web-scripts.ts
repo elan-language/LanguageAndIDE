@@ -50,7 +50,7 @@ import { fetchDefaultProfile, sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
-const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
+const codeContainer = document.querySelector(".code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -160,6 +160,10 @@ class TabViewModel implements ITabViewModel {
     systemInfoDiv.classList.add("focussed");
     cvm.setRunStatus(RunStatus.paused);
     systemInfoDiv.innerHTML = "";
+  }
+
+  setWorksheetLanguage(l: string) {
+    worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
   }
 }
 
@@ -703,6 +707,12 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
+    codeContainer.classList.remove("elan");
+    codeContainer.classList.remove("python");
+    codeContainer.classList.remove("cs");
+    codeContainer.classList.remove("vb");
+    codeContainer.classList.remove("java");
+    codeContainer.classList.add(l.languageClass);
   }
 }
 

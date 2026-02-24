@@ -8,6 +8,7 @@ import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageJava extends LanguageCfamily {
+  languageClass = "java";
   languageFullName: string = "Java";
   defaultFileExtension: string = "java";
   defaultMimeType: string = "text/plain";

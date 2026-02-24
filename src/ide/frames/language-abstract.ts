@@ -18,6 +18,7 @@ export abstract class LanguageAbstract implements Language {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
+  languageClass = "python";
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";

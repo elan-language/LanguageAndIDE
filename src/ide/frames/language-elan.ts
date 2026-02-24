@@ -43,6 +43,7 @@ export class LanguageElan extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
+  languageClass = "elan";
   languageFullName: string = "Elan";
   defaultFileExtension: string = "elan";
   defaultMimeType: string = "text/plain";
