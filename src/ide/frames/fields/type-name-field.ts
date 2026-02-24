@@ -10,7 +10,7 @@ export class TypeNameField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.useHtmlTags = true;
-    this.placeholder = "Name";
+    this.setPlaceholder("Name");
   }
 
   helpId(): string {

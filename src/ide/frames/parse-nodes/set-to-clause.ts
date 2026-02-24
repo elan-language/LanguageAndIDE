@@ -1,4 +1,5 @@
 import { setKeyword, toKeyword } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
@@ -6,7 +7,6 @@ import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
-import { File } from "../frame-interfaces/file";
 
 export class SetToClause extends AbstractSequence {
   property: IdentifierNode | undefined;
@@ -16,7 +16,7 @@ export class SetToClause extends AbstractSequence {
   constructor(file: File, context: () => string) {
     super(file);
     this.context = context;
-    this.completionWhenEmpty = "<i>name</i> set to <i>expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i> set to <i>expression</i>");
   }
 
   parseText(text: string): void {

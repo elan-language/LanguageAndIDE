@@ -10,6 +10,7 @@ import {
   thisKeyword,
   tupleKeyword,
 } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
@@ -22,12 +23,11 @@ import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { Term } from "./term";
 import { TupleNode } from "./tuple-node";
-import { File } from "../frame-interfaces/file";
 
 export class ExprNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>value or expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>value or expression</i>");
   }
 
   parseText(text: string): void {

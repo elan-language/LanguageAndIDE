@@ -63,6 +63,16 @@ export abstract class LanguageAbstract implements Language {
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
 
+  completionWhenEmpty(node: ParseNode): string {
+    let result = "";
+    if (node instanceof ParamDefNode) {
+      result = this.paramDefCompletion(node);
+    }
+    return result; //TODO
+  }
+
+  abstract paramDefCompletion(node: ParamDefNode): string;
+
   parseText(node: ParseNode, text: string): boolean {
     let result = false;
     if (node instanceof ParamDefNode) {

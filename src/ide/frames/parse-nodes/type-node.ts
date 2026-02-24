@@ -12,7 +12,7 @@ export class TypeNode extends AbstractAlternatives {
 
   constructor(file: File, tokenTypes: Set<TokenType> = new Set<TokenType>()) {
     super(file);
-    this.completionWhenEmpty = "<i>Type</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>Type</i>");
     this.tokenTypes = tokenTypes;
   }
 

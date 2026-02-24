@@ -1,15 +1,15 @@
+import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { DictionaryNode } from "./dictionary-node";
 import { IdentifierNode } from "./identifier-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { TupleNode } from "./tuple-node";
-import { File } from "../frame-interfaces/file";
 
 export class ConstantValueNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("");
   }
 
   parseText(text: string): void {

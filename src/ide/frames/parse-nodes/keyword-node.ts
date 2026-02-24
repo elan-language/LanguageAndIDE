@@ -1,8 +1,8 @@
 import { andKeyword, isKeyword, notKeyword, orKeyword } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
-import { File } from "../frame-interfaces/file";
 
 export class KeywordNode extends FixedTextNode {
   spaceAfter: boolean;
@@ -12,7 +12,7 @@ export class KeywordNode extends FixedTextNode {
     super(file, keyword);
     this.spaceAfter = spaceAfter;
     this.dotAfter = dotAfter;
-    this.completionWhenEmpty = keyword;
+    this.completionWhenEmpty = this.getCompletionFromLangOr(keyword);
   }
 
   parseText(text: string): void {

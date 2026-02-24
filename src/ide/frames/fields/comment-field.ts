@@ -32,7 +32,7 @@ export class CommentField extends AbstractField {
     const txt = this.isSelected()
       ? this.textAsHtml()
       : this.handleLeadingAndMultipleSpaces(escapeHtmlChars(this.textAsHtml()));
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${txt}</el-txt><el-place>${this._placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   // Converts leading spaces to &nbsp; and multi-spaces to a space + &nbsp;s

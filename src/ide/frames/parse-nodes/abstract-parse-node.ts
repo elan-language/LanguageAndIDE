@@ -18,6 +18,11 @@ export abstract class AbstractParseNode implements ParseNode {
 
   constructor(public readonly file: File) {}
 
+  getCompletionFromLangOr(generic: string): string {
+    const langSpecific = this.file.language().completionWhenEmpty(this);
+    return langSpecific === "" ? generic : langSpecific;
+  }
+
   setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
   }

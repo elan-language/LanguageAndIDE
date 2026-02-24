@@ -1,6 +1,6 @@
+import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
-import { File } from "../frame-interfaces/file";
 
 export abstract class FixedTextNode extends AbstractParseNode {
   fixedText: string;
@@ -8,7 +8,7 @@ export abstract class FixedTextNode extends AbstractParseNode {
   constructor(file: File, fixedText: string) {
     super(file);
     this.fixedText = fixedText;
-    this.completionWhenEmpty = fixedText;
+    this.completionWhenEmpty = this.getCompletionFromLangOr(fixedText);
   }
 
   protected getErrorMessage(): string {

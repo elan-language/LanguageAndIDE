@@ -1,3 +1,4 @@
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BracketedExpression } from "./bracketed-expression";
@@ -7,7 +8,6 @@ import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { ReferenceNode } from "./reference-node";
 import { UnaryExpression } from "./unary-expression";
-import { File } from "../frame-interfaces/file";
 
 export class TermSimple extends AbstractAlternatives {
   defaultTokenTypes = new Set([
@@ -23,7 +23,7 @@ export class TermSimple extends AbstractAlternatives {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "<i>expression</i>";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
   }
 
   parseText(text: string): void {

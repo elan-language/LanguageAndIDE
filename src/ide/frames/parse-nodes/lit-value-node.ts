@@ -1,15 +1,15 @@
+import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { EnumVal } from "./enum-val";
 import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
 import { LitRegExp } from "./lit-regExp";
 import { LitString } from "./lit-string";
-import { File } from "../frame-interfaces/file";
 
 export class LitValueNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = "";
+    this.completionWhenEmpty = this.getCompletionFromLangOr("");
   }
 
   parseText(text: string): void {

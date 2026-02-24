@@ -9,7 +9,7 @@ export class InheritsFromField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);
-    this.setPlaceholder("<i>inherits ClassName(s)</i>");
+    this.setPlaceholder("<i>inheritance</i>");
   }
 
   helpId(): string {

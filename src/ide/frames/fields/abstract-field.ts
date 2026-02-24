@@ -28,7 +28,7 @@ import { SymbolWrapper } from "../symbol-wrapper";
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
   text: string = "";
-  protected placeholder: string = "";
+  protected _placeholder: string = "";
   protected placeholderIsCode: boolean = false;
   protected useHtmlTags: boolean = false;
   protected htmlId: string = "";
@@ -639,7 +639,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   setPlaceholder(placeholder: string): void {
-    this.placeholder = placeholder;
+    this._placeholder = placeholder;
   }
 
   public textAsHtml(): string {
@@ -721,7 +721,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   renderAsExport(): string {
