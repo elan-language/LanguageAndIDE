@@ -580,11 +580,7 @@ end main
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfReservedAsName", async () => {
@@ -607,11 +603,7 @@ end main
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

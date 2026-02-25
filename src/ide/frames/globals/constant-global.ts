@@ -1,6 +1,6 @@
 import { constantKeyword } from "../../../compiler/elan-keywords";
 import { ConstantValueField } from "../fields/constant-value-field";
-import { IdentifierField } from "../fields/identifier-field";
+import { IdentifierDefField } from "../fields/identifier-def-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -11,14 +11,14 @@ import { SingleLineFrame } from "../single-line-frame";
 export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
   isGlobal = true;
-  name: IdentifierField;
+  name: IdentifierDefField;
   value: ConstantValueField;
   file: File;
   isConstant = true;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.name = new IdentifierField(this);
+    this.name = new IdentifierDefField(this);
     this.value = new ConstantValueField(this);
     this.value.setPlaceholder("<i>literal value or data structure</i>");
     this.canHaveBreakPoint = false;
