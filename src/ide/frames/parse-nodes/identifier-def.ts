@@ -1,4 +1,4 @@
-import { matchesKeyword } from "../../../compiler/keywords";
+import { matchesAnyKeyword_caseIgnored } from "../../../compiler/keywords";
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
@@ -30,7 +30,7 @@ export class IdentifierDef extends AbstractParseNode {
       );
     }
     if (this.isValid() && this.remainingText.length > 0) {
-      if (matchesKeyword(this.matchedText)) {
+      if (matchesAnyKeyword_caseIgnored(this.matchedText)) {
         this.status = ParseStatus.invalid;
       } else {
         this._done = true;
