@@ -29,6 +29,7 @@ import {
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
   MutateCompileError,
+  MutateParameterCompileError,
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotNewableCompileError,
@@ -966,7 +967,7 @@ export function mustNotSetIndexInFunctionMethod(
   if (isInsideFunction(scope)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Cannot mutate set an indexed value within a function. Use .withPut... function`,
+        `Cannot set an indexed value within a function. Use .withPut... function`,
         location,
       ),
     );
@@ -1000,7 +1001,7 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
+      compileErrors.push(new MutateParameterCompileError(location));
     } else {
       // only mutate indexed List
       if (!isIndexed(assignable)) {
