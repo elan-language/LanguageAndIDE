@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -414,11 +415,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -447,11 +444,36 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
+  });
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-    ]);
+  test("Fail_UseOfLangTypeAsName", async () => {
+    const code = `${testHeader}
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure short(a as Int)
+
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

@@ -9,7 +9,7 @@ import {
   refKeyword,
   thisKeyword,
   tupleKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";

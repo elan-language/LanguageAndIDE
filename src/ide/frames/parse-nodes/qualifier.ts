@@ -1,4 +1,4 @@
-import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";

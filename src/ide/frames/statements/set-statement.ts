@@ -1,4 +1,4 @@
-import { setKeyword, toKeyword } from "../../../compiler/keywords";
+import { setKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";

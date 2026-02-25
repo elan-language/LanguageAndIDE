@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -14,39 +15,6 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Unique Identifiers", () => {
-  test("Pass_CanUseKeywordWithDifferentCase", async () => {
-    const code = `${testHeader}
-
-main
-  variable bReak set to 2
-  call printNoLine(bReak)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let bReak = 2;
-  await _stdlib.printNoLine(bReak);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2");
-  });
-
   test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
     const code = `${testHeader}
 
@@ -102,12 +70,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
   });
 
-  test("Fail_KeywordWithCorrectCaseIfAlteredCaseAlreadyUsed", async () => {
+  test("Fail_KeywordWithDifferentCaseAsIdentifier", async () => {
     const code = `${testHeader}
 
 main
   variable bReak set to 1
-  variable break set to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -121,10 +88,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_SameVariableNameInScope", async () => {

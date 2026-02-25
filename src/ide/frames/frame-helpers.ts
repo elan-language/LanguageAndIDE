@@ -1,5 +1,5 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
-import { privateKeyword } from "../../compiler/keywords";
+import { privateKeyword } from "../../compiler/elan-keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";

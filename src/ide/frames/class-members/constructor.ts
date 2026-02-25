@@ -1,4 +1,4 @@
-import { constructorKeyword } from "../../../compiler/keywords";
+import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

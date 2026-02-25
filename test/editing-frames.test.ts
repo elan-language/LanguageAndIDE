@@ -63,7 +63,7 @@ suite("Editing Frames", () => {
   test("Enter on a field goes to next field owned by same frame (except the last/field field).", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const ident2 = file.getById("ident2") as IdentifierField;
+    const ident2 = file.getById("var2") as IdentifierField;
     ident2.select();
     assert.equal(ident2.isSelected(), true);
     ident2.processKey(enter());
@@ -94,7 +94,7 @@ suite("Editing Frames", () => {
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
     const c = file.getById("const1") as ConstantGlobal;
-    const ident2 = file.getById("ident2") as IdentifierField;
+    const ident2 = file.getById("var2") as IdentifierField;
     const text3 = file.getById("text3") as ConstantValueField;
     c.select(true, false);
     assert.equal(c.isSelected(), true);

@@ -1,4 +1,4 @@
-import { elifKeyword, elseKeyword, thenKeyword } from "../../../compiler/keywords";
+import { elifKeyword, elseKeyword, thenKeyword } from "../../../compiler/elan-keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";

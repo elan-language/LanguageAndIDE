@@ -1,6 +1,6 @@
-import { IdentifierNode } from "./identifier-node";
+import { IdentifierDef } from "./identifier-def";
 
-export class MethodNameNode extends IdentifierNode {
+export class MethodNameDef extends IdentifierDef {
   override renderAsHtml(): string {
     return `<el-method>${this.renderAsElanSource()}</el-method>`;
   }

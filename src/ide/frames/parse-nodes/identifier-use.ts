@@ -1,4 +1,4 @@
-import { allKeywords } from "../../../compiler/keywords";
+import { ReservedWords } from "../../../compiler/reserved-words";
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
@@ -6,7 +6,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierNode extends AbstractParseNode {
+export class IdentifierUse extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
@@ -30,18 +30,13 @@ export class IdentifierNode extends AbstractParseNode {
       );
     }
     if (this.isValid() && this.remainingText.length > 0) {
-      if (this.matchesKeyword()) {
+      if (ReservedWords.Instance.matchesReservedWord_caseIgnored(this.matchedText)) {
         this.status = ParseStatus.invalid;
       } else {
         this._done = true;
       }
     }
   }
-
-  matchesKeyword(): boolean {
-    return allKeywords.filter((k) => this.matchedText === k).length > 0;
-  }
-
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }

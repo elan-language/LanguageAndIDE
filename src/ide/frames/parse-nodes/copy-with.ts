@@ -1,4 +1,5 @@
-import { copyKeyword } from "../../../compiler/keywords";
+import { copyKeyword } from "../../../compiler/elan-keywords";
+import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierOrThis } from "./identiferOrThis";
@@ -6,7 +7,6 @@ import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 import { WithClause } from "./with-clause";
-import { File } from "../frame-interfaces/file";
 
 export class CopyWith extends AbstractSequence {
   original: IdentifierOrThis;

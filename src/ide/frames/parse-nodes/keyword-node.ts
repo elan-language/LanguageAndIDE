@@ -1,4 +1,4 @@
-import { andKeyword, isKeyword, notKeyword, orKeyword } from "../../../compiler/keywords";
+import { andKeyword, isKeyword, notKeyword, orKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";

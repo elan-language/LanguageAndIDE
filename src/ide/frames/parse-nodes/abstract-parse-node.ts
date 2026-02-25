@@ -9,6 +9,7 @@ export abstract class AbstractParseNode implements ParseNode {
   matchedText: string = "";
   completionWhenEmpty: string = "";
   remainingText: string = "";
+  message: string = "";
 
   activeNodeForSymbolCompl: ParseNode = this;
   //'done' means that parseNode is valid and that no more text may be taken

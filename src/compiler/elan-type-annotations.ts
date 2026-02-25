@@ -20,7 +20,7 @@ import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { constructorKeyword } from "./keywords";
+import { constructorKeyword } from "./elan-keywords";
 import { AnyType } from "./symbols/any-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";

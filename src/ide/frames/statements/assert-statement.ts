@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertKeyword } from "../../../compiler/keywords";
+import { assertKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
