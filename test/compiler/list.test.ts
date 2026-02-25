@@ -940,7 +940,7 @@ end function
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+      "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
     ]);
   });
 
@@ -2431,5 +2431,31 @@ end main`;
       "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
+  });
+
+  test("Fail_NegativeIndex", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2,3,4]
+  variable b set to -1
+  set a[b] to 3
+  call printNoLine(a)
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Negative indexes are not supported.");
   });
 });

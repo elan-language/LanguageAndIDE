@@ -978,7 +978,7 @@ end function
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+      "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
     ]);
   });
 

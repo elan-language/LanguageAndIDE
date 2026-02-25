@@ -902,7 +902,7 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+    "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
   ]);
 });
 
@@ -932,7 +932,7 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+    "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
   ]);
 });
 
@@ -1707,7 +1707,7 @@ end function`;
 
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+    "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
   ]);
 });
 

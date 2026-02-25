@@ -449,6 +449,18 @@ export class MutateCompileError extends CompileError {
   }
 }
 
+export class MutateParameterCompileError extends CompileError {
+  constructor(location: string) {
+    super(
+      DisplayPriority.second,
+      Severity.error,
+      `May not mutate a parameter within a function or constructor.`,
+      location,
+      "LangRef.html#compile_error",
+    );
+  }
+}
+
 export class NotUniqueNameCompileError extends CompileError {
   constructor(name: string, postFix: string, location: string) {
     super(
