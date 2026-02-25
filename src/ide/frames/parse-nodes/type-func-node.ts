@@ -1,4 +1,5 @@
-import { ofKeyword } from "../../../compiler/keywords";
+import { ofKeyword } from "../../../compiler/elan-keywords";
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { ARROW, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -11,7 +12,6 @@ import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 import { TypeSpecificFuncNode } from "./type-specific-func-node";
-import { File } from "../frame-interfaces/file";
 
 export class TypeFuncNode extends AbstractSequence {
   inputTypes: OptionalNode | undefined;

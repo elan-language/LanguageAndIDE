@@ -24,7 +24,7 @@ import {
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { BreakpointEvent } from "../../debugging/breakpoint-event";
-import { thisKeyword } from "../../keywords";
+import { thisKeyword } from "../../elan-keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";

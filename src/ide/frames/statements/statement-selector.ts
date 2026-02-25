@@ -13,7 +13,7 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";

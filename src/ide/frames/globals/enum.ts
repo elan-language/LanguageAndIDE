@@ -1,4 +1,4 @@
-import { enumKeyword } from "../../../compiler/keywords";
+import { enumKeyword } from "../../../compiler/elan-keywords";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { CodeSource } from "../frame-interfaces/code-source";

@@ -1,5 +1,5 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/keywords";
+import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";

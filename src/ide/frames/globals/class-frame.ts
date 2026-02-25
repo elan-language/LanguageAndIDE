@@ -1,6 +1,6 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
-import { classKeyword } from "../../../compiler/keywords";
+import { classKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";

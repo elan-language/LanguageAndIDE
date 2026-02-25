@@ -1,10 +1,10 @@
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { ValueDefNode } from "../parse-nodes/value-def-node";
+import { IdentifierDef } from "../parse-nodes/identifier-def";
 import { AbstractField } from "./abstract-field";
 
-export class ValueDefField extends AbstractField {
+export class IdentifierDefField extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
@@ -19,7 +19,7 @@ export class ValueDefField extends AbstractField {
     return "var";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ValueDefNode(this.getFile());
+    this.rootNode = new IdentifierDef(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

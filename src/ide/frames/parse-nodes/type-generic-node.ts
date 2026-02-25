@@ -1,4 +1,4 @@
-import { ofKeyword } from "../../../compiler/keywords";
+import { ofKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { GT, LT } from "../symbols";

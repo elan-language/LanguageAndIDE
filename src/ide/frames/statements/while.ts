@@ -1,4 +1,4 @@
-import { endKeyword, whileKeyword } from "../../../compiler/keywords";
+import { endKeyword, whileKeyword } from "../../../compiler/elan-keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

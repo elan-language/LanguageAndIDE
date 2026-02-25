@@ -3,7 +3,7 @@ import {
   abstractPropertyKeywords,
   asKeyword,
   propertyKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { CodeSource } from "../frame-interfaces/code-source";

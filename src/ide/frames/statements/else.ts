@@ -1,4 +1,4 @@
-import { elseKeyword } from "../../../compiler/keywords";
+import { elseKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Statement } from "../frame-interfaces/statement";

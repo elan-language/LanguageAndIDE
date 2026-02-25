@@ -5,7 +5,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class TypeSimpleName extends AbstractParseNode {
+export class TypeNameDef extends AbstractParseNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   elanTypeName: string = "";
 
@@ -50,6 +50,7 @@ export class TypeSimpleName extends AbstractParseNode {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
         this.elanTypeName = "List";
       }
+
       if (this.status !== ParseStatus.valid) {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(
           text,

@@ -1,7 +1,7 @@
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { IdentifierNode } from "../parse-nodes/identifier-node";
+import { IdentifierUse } from "../parse-nodes/identifier-use";
 import { AbstractField } from "./abstract-field";
 
 export class IdentifierField extends AbstractField {
@@ -17,7 +17,7 @@ export class IdentifierField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new IdentifierNode(this.getFile());
+    this.rootNode = new IdentifierUse(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

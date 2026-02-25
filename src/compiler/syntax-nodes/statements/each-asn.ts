@@ -33,8 +33,8 @@ export class EachAsn extends CompoundAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}const _iter${this.fieldId} = [...${this.iter.compile()}];\r
-${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile()} of _iter${this.fieldId}) {\r
+    return `${this.indent()}const elan_iter${this.fieldId} = [...${this.iter.compile()}];\r
+${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile()} of elan_iter${this.fieldId}) {\r
 ${this.compileChildren()}\r
 ${this.indent()}}`;
   }

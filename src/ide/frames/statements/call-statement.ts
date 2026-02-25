@@ -1,4 +1,4 @@
-import { callKeyword } from "../../../compiler/keywords";
+import { callKeyword } from "../../../compiler/elan-keywords";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { CodeSource } from "../frame-interfaces/code-source";

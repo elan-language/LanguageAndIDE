@@ -1,4 +1,4 @@
-import { endKeyword, tryKeyword } from "../../../compiler/keywords";
+import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";

@@ -3,7 +3,7 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { allKeywords, propertyKeyword, reservedWords } from "./keywords";
+import { propertyKeyword } from "./elan-keywords";
 
 import {
   CannotCallAFunction,
@@ -29,6 +29,7 @@ import {
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
   MutateCompileError,
+  MutateParameterCompileError,
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotNewableCompileError,
@@ -95,6 +96,7 @@ import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { ReservedWords } from "./reserved-words";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -197,18 +199,10 @@ export function mustBeKnownSymbolType(
 }
 
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (allKeywords.includes(id)) {
+  if (ReservedWords.Instance.matchesReservedWord_caseIgnored(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a keyword, and may not be used as an identifier.`,
-        location,
-      ),
-    );
-  }
-  if (reservedWords.includes(id)) {
-    compileErrors.push(
-      new SyntaxCompileError(
-        `'${id}' is a reserved word, and may not be used as an identifier.`,
+        `'${id}' matches a reserved word (even if different case), so may not be defined as an identifier.`,
         location,
       ),
     );
@@ -966,7 +960,7 @@ export function mustNotSetIndexInFunctionMethod(
   if (isInsideFunction(scope)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Cannot mutate set an indexed value within a function. Use .withPut... function`,
+        `Cannot set an indexed value within a function. Use .withPut... function`,
         location,
       ),
     );
@@ -1000,7 +994,7 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new MutateCompileError(getId(assignable), "parameter", location));
+      compileErrors.push(new MutateParameterCompileError(location));
     } else {
       // only mutate indexed List
       if (!isIndexed(assignable)) {

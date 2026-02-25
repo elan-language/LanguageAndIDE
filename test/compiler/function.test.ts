@@ -902,7 +902,7 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+    "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
   ]);
 });
 
@@ -932,7 +932,7 @@ end function`;
 
   assertParses(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+    "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
   ]);
 });
 
@@ -1207,11 +1207,7 @@ end function`;
     true,
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_UseOfReservedwordAsName", async () => {
@@ -1235,11 +1231,7 @@ end function`;
     true,
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1289,10 +1281,7 @@ end function`;
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_NotUniqueName", async () => {
@@ -1718,7 +1707,7 @@ end function`;
 
   assertStatusIsValid(fileImpl);
   assertDoesNotCompile(fileImpl, [
-    "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+    "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
   ]);
 });
 

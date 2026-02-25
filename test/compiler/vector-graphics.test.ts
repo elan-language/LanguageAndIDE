@@ -54,7 +54,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.red; elan_a.strokeColour = _stdlib.black; elan_a.strokeWidth = 1; return elan_a;})();
   let vg2 = vg.withAppend(circ);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
@@ -97,7 +97,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.red; elan_a.strokeColour = _stdlib.black; elan_a.strokeWidth = 1; return elan_a;})();
   vg.append(circ);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -319,7 +319,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.red; elan_a.strokeColour = _stdlib.black; elan_a.strokeWidth = 1; return elan_a;})();
   await _stdlib.printNoLine(circ.centreX);
 }
 return [main, _tests];}`;
@@ -355,7 +355,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.transparent; elan_a.strokeColour = _stdlib.black; elan_a.strokeWidth = 1; return elan_a;})();
   let vg2 = vg.withAppend(circ);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg2));
 }
@@ -398,7 +398,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.transparent; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.transparent; elan_a.strokeColour = _stdlib.transparent; elan_a.strokeWidth = 1; return elan_a;})();
   vg.append(circ);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -438,7 +438,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.white + 1; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const elan_a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); elan_a.centreX = 50; elan_a.centreY = 50; elan_a.radius = 10; elan_a.fillColour = _stdlib.white + 1; elan_a.strokeColour = _stdlib.black; elan_a.strokeWidth = 1; return elan_a;})();
   vg.append(circ);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -477,7 +477,7 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
+  let i = await (async () => {const elan_a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); elan_a.x = 50; elan_a.y = 50; elan_a.width = 50; elan_a.height = 50; return elan_a;})();
   vg.append(i);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }

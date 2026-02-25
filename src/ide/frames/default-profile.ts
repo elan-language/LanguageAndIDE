@@ -32,7 +32,7 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
-} from "../../compiler/keywords";
+} from "../../compiler/elan-keywords";
 import { Profile } from "./frame-interfaces/profile";
 
 export class DefaultProfile implements Profile {

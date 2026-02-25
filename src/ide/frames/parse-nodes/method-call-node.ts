@@ -1,15 +1,15 @@
+import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ArgListNode } from "./arg-list-node";
-import { MethodNameNode } from "./method-name-node";
+import { MethodNameUse } from "./method-name-use";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
-import { File } from "../frame-interfaces/file";
 
 export class MethodCallNode extends AbstractSequence {
-  name: MethodNameNode | undefined;
+  name: MethodNameUse | undefined;
   args: ArgListNode | undefined;
   tokenTypes: Set<TokenType>;
 
@@ -26,7 +26,7 @@ export class MethodCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new MethodNameNode(this.file, this.tokenTypes);
+      this.name = new MethodNameUse(this.file, this.tokenTypes);
       this.addElement(this.name);
       this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
       this.addElement(new SpaceNode(this.file, Space.ignored));

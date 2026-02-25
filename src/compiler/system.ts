@@ -69,6 +69,9 @@ export class System {
   safeSet(indexable: any, v: any, index: any[]) {
     if (typeof indexable !== "string" && "safeSet" in indexable && index.length > 0) {
       if (index.length === 1) {
+        if (index[0] < 0) {
+          throw new ElanRuntimeError(`Negative indexes are not supported.`);
+        }
         indexable.safeSet(v, index[0]);
       } else {
         this.safeSet(this.safeIndex(indexable, index[0]), v, index.slice(1));

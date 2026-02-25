@@ -4,7 +4,7 @@ import { FileImpl } from "../src/ide/frames/file-impl";
 import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";
 import { CSV } from "../src/ide/frames/parse-nodes/csv";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
-import { IdentifierNode } from "../src/ide/frames/parse-nodes/identifier-node";
+import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
 import { NewInstance } from "../src/ide/frames/parse-nodes/new-instance";
 import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
@@ -68,13 +68,13 @@ suite("Parsing - Completions", () => {
 
   test("CSV of Identifier", () => {
     testCompletion(
-      new CSV(f, () => new IdentifierNode(f), 0),
+      new CSV(f, () => new IdentifierUse(f), 0),
       "foo,",
       ParseStatus.incomplete,
       "<i>name</i>",
     );
     testCompletion(
-      new CSV(f, () => new IdentifierNode(f), 0),
+      new CSV(f, () => new IdentifierUse(f), 0),
       "foo, bar, yon",
       ParseStatus.valid,
       "",

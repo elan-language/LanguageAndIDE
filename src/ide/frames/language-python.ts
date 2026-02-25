@@ -23,7 +23,7 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -207,7 +207,7 @@ export class LanguagePython extends LanguageAbstract {
   LIST_NAME: string = "list";
 
   parseParamDef(node: ParamDefNode, text: string): boolean {
-    node.name = new IdentifierNode(node.file);
+    node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
     node.addElement(new SpaceNode(node.file, Space.required));

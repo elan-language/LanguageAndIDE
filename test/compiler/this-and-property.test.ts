@@ -372,7 +372,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'p1'.LangRef.html#compile_error",
+      "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
     ]);
   });
 

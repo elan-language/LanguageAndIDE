@@ -1,4 +1,4 @@
-import { eachKeyword } from "../../../compiler/keywords";
+import { eachKeyword } from "../../../compiler/elan-keywords";
 
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";

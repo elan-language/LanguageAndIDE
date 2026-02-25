@@ -1,4 +1,4 @@
-import { tupleKeyword } from "../../../compiler/keywords";
+import { tupleKeyword } from "../../../compiler/elan-keywords";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";

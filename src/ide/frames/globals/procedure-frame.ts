@@ -1,4 +1,4 @@
-import { procedureKeyword } from "../../../compiler/keywords";
+import { procedureKeyword } from "../../../compiler/elan-keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";

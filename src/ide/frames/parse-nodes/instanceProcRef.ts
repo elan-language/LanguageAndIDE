@@ -1,17 +1,17 @@
-import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
-import { IdentifierNode } from "./identifier-node";
+import { IdentifierUse } from "./identifier-use";
 import { InstanceNode } from "./instanceNode";
-import { MethodNameNode } from "./method-name-node";
+import { MethodNameUse } from "./method-name-use";
 import { PropertyRef } from "./property-ref";
 import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: Alternatives | undefined;
-  procName: IdentifierNode | undefined;
+  procName: IdentifierUse | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_regular,
@@ -27,7 +27,7 @@ export class InstanceProcRef extends AbstractSequence {
       const instanceDot = () => new DotAfter(this.file, instance);
       const propertyRef = () => new DotAfter(this.file, new PropertyRef(this.file));
       this.prefix = new Alternatives(this.file, [propertyRef, qualifierDot, instanceDot]);
-      this.procName = new MethodNameNode(
+      this.procName = new MethodNameUse(
         this.file,
         new Set([TokenType.method_procedure]),
         () => instance.matchedText,

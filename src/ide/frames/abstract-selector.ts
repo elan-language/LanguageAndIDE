@@ -1,4 +1,4 @@
-import { ghostedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";

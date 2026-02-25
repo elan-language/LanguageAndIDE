@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import {
   addDeleteToContextMenu,
   expandCollapseAll,

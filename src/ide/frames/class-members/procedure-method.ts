@@ -1,4 +1,4 @@
-import { privateKeyword } from "../../../compiler/keywords";
+import { privateKeyword } from "../../../compiler/elan-keywords";
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,

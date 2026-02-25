@@ -1,4 +1,4 @@
-import { endKeyword, functionKeyword, returnsKeyword } from "../../../compiler/keywords";
+import { endKeyword, functionKeyword, returnsKeyword } from "../../../compiler/elan-keywords";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FunctionFrame } from "./function-frame";

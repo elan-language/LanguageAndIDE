@@ -70,7 +70,18 @@ export const abstractClassKeywords = abstractKeyword + " " + classKeyword;
 
 export const commentMarker = "#";
 
-export const allKeywords = [
+export function matchesElanKeyword(target: string): boolean {
+  return elanKeywords.includes(target);
+}
+
+export function allElanKeywordsUC(): Set<string> {
+  const kws = new Set<string>();
+  elanKeywords.forEach((item) => kws.add(item.toUpperCase()));
+  elanReservedWords.forEach((item) => kws.add(item.toUpperCase()));
+  return kws;
+}
+
+const elanKeywords: string[] = [
   abstractKeyword,
   andKeyword,
   asKeyword,
@@ -132,7 +143,7 @@ export const allKeywords = [
   withKeyword,
 ];
 
-export const reservedWords = [
+const elanReservedWords = [
   "action",
   "arguments",
   "array",

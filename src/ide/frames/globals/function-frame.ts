@@ -3,7 +3,7 @@ import {
   functionKeyword,
   returnKeyword,
   returnsKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";

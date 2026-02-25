@@ -633,9 +633,9 @@ end record`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
-  let r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
-  let r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r1 = await (async () => {const elan_a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); elan_a.x = 1; elan_a.y = 2; return elan_a;})();
+  let r2 = await (async () => {const elan_a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); elan_a.x = 2; elan_a.y = 1; return elan_a;})();
+  let r3 = await (async () => {const elan_a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); elan_a.x = 1; elan_a.y = 2; return elan_a;})();
   a.put(r1, 1);
   a.put(r2, 2);
   await _stdlib.printNoLine(system.safeIndex(a, r1));
@@ -698,8 +698,8 @@ end record`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Dictionary()._initialise());
-  let r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r1 = await (async () => {const elan_a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); elan_a.x = 1; elan_a.y = 2; return elan_a;})();
+  let r2 = await (async () => {const elan_a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); elan_a.x = 1; elan_a.y = 2; return elan_a;})();
   a.put(r1, 1);
   a.put(r2, 2);
   await _stdlib.printNoLine(system.safeIndex(a, r1));
@@ -978,7 +978,7 @@ end function
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+      "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
     ]);
   });
 

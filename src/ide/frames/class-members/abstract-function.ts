@@ -3,8 +3,8 @@ import {
   abstractKeyword,
   functionKeyword,
   returnsKeyword,
-} from "../../../compiler/keywords";
-import { IdentifierField } from "../fields/identifier-field";
+} from "../../../compiler/elan-keywords";
+import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
@@ -17,14 +17,14 @@ export class AbstractFunction extends SingleLineFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
-  public name: IdentifierField;
+  public name: MethodNameField;
   public params: ParamListField;
   public returnType: TypeField;
   hrefForFrameHelp: string = "LangRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new IdentifierField(this);
+    this.name = new MethodNameField(this);
     this.params = new ParamListField(this);
     this.returnType = new TypeField(this);
     this.canHaveBreakPoint = false;
