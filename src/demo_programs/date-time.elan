@@ -1,9 +1,9 @@
-# 180be3413b7c4328a041bf53204c5bfd330ff59bc0d00eda012c653fd813395d Elan 2.0.0-alpha guest default_profile valid
+# 068b87cf060486140a380f10731f7b305330db4c38da844a2eb2e396bceac618 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
   while not reply.upperCase().isSameValueAs("Q")
-    set reply to inputString('RETURN for time now or\nUnix time (positive integer) or\nQ to quit')
+    set reply to inputString('RETURN for time now orUnix time (positive integer) orQ to quit')
     if reply.isSameValueAs("") then
       call printDate(divAsInt(clock(), 1000))
     else
@@ -31,7 +31,7 @@ procedure printDate(unixSecs as Int)
   variable month_day set to monthDay(startDaysL, (days mod startDays[12]))
   constant month set to month_day.item0
   constant day set to month_day.item1
-  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
+  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
@@ -142,9 +142,10 @@ function pad(d as String, p as String, s as String) returns String
   variable sR set to s
   if p.length() > s.length() then
     if d.upperCase().isSameValueAs("L") then
-      set sR to (p + s)[(p + s).length() - p.length()..]
+      constant ps set to p + s
+      set sR to ps.subString(ps.length() - p.length(), ps.length())
     elif d.upperCase().isSameValueAs("R") then
-      set sR to (s + p)[..p.length()]
+      set sR to (s + p).subString(0, p.length())
     end if
   end if
   return sR
