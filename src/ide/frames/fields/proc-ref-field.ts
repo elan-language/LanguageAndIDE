@@ -2,8 +2,8 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { Alternatives } from "../parse-nodes/alternatives";
-import { IdentifierUse } from "../parse-nodes/identifier-use";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
+import { MethodNameUse } from "../parse-nodes/method-name-use";
 import { ProcRefNode } from "../parse-nodes/proc-ref-node";
 import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
@@ -36,7 +36,7 @@ export class ProcRefField extends AbstractField {
       text = this.fieldAsInput() + this.symbolCompletion();
     } else if (this.readParseStatus() === ParseStatus.valid) {
       const bestMatch = (this.rootNode! as Alternatives).bestMatch;
-      if (bestMatch instanceof IdentifierUse) {
+      if (bestMatch instanceof MethodNameUse) {
         text = `<el-method>${this.text}</el-method>`;
       } else {
         text = (bestMatch as InstanceProcRef).renderAsHtml();

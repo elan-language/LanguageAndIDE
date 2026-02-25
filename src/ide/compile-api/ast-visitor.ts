@@ -173,6 +173,7 @@ import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-o
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
+import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
 import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
@@ -822,6 +823,11 @@ export function transform(
 
   if (node instanceof TypeNameQualifiedNode) {
     const type = node.libraryQualifier?.matchedText + node.unqualifiedName!.elanTypeName;
+    return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
+  }
+
+  if (node instanceof TypeNameDef) {
+    const type = node.elanTypeName;
     return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
   }
 
