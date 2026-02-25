@@ -50,7 +50,7 @@ export class TypeNameDef extends AbstractParseNode {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
         this.elanTypeName = "List";
       }
-  
+
       if (this.status !== ParseStatus.valid) {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(
           text,

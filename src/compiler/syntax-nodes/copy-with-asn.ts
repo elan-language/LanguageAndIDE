@@ -19,7 +19,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     const from = this.obj.compile();
-    const tempTo = `_a`; // only scoped to lambda so safe
+    const tempTo = `elan_a`; // only scoped to lambda so safe
     const withClause: string[] = [];
     const fromType = this.obj.symbolType();
     let withClauseStr = "";

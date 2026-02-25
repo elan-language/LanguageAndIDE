@@ -32,8 +32,8 @@ const global = new class {};
 async function main() {
   let a = system.list([7, 8, 9]);
   let n = 0;
-  const _itereach9 = [...a];
-  for (const x of _itereach9) {
+  const elan_itereach9 = [...a];
+  for (const x of elan_itereach9) {
     n = n + x;
   }
   await _stdlib.printNoLine(n);
@@ -74,8 +74,8 @@ const global = new class {};
 async function main() {
   let a = system.list([7, 8, 9]);
   let n = 0;
-  const _itereach9 = [...a];
-  for (const x of _itereach9) {
+  const elan_itereach9 = [...a];
+  for (const x of elan_itereach9) {
     n = n + x;
   }
   await _stdlib.printNoLine(n);
@@ -113,8 +113,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "hello";
-  const _itereach6 = [...a];
-  for (const x of _itereach6) {
+  const elan_itereach6 = [...a];
+  for (const x of elan_itereach6) {
     await _stdlib.printNoLine(x);
   }
 }
@@ -151,10 +151,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const _itereach3 = [..."12"];
-  for (const x of _itereach3) {
-    const _itereach7 = [..."34"];
-    for (const y of _itereach7) {
+  const elan_itereach3 = [..."12"];
+  for (const x of elan_itereach3) {
+    const elan_itereach7 = [..."34"];
+    for (const y of elan_itereach7) {
       await _stdlib.printNoLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
@@ -194,8 +194,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const _itereach3 = [...(await global.fruit())];
-  for (const x of _itereach3) {
+  const elan_itereach3 = [...(await global.fruit())];
+  for (const x of elan_itereach3) {
     await _stdlib.printNoLine(x);
   }
 }
@@ -237,8 +237,8 @@ end main`;
 const global = new class {};
 async function main() {
   let ints = system.list([1, 2, 3]);
-  const _itereach6 = [...ints];
-  for (const i1 of _itereach6) {
+  const elan_itereach6 = [...ints];
+  for (const i1 of elan_itereach6) {
 
   }
 }
@@ -276,8 +276,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
-  const _itereach6 = [...a];
-  for (const item of _itereach6) {
+  const elan_itereach6 = [...a];
+  for (const item of elan_itereach6) {
     a.append(item);
     await _stdlib.printNoLine(item);
   }
@@ -516,8 +516,8 @@ end main
 const global = new class {};
 async function main() {
   let s = "hello";
-  const _itereach6 = [...s];
-  for (const ch of _itereach6) {
+  const elan_itereach6 = [...s];
+  for (const ch of elan_itereach6) {
     await _stdlib.printNoLine(ch);
     s = "fred";
   }
@@ -557,8 +557,8 @@ end main
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5]);
-  const _itereach6 = [...a];
-  for (const x of _itereach6) {
+  const elan_itereach6 = [...a];
+  for (const x of elan_itereach6) {
     a = a.withAppend(x);
     await _stdlib.printNoLine(x);
   }
