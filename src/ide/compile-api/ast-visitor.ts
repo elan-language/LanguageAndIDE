@@ -135,7 +135,7 @@ import { EnumVal } from "../frames/parse-nodes/enum-val";
 import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
-import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
+import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ImageNode } from "../frames/parse-nodes/image-node";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
@@ -736,7 +736,7 @@ export function transform(
     return new LiteralRegExAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof IdentifierNode) {
+  if (node instanceof IdentifierUse) {
     // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||

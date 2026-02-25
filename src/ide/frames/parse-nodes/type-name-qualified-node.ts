@@ -5,11 +5,11 @@ import { AbstractSequence } from "./abstract-sequence";
 import { DotAfter } from "./dot-after";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
-import { TypeSimpleName } from "./type-simple-name";
+import { TypeNameUse } from "./type-name-use";
 
 export class TypeNameQualifiedNode extends AbstractSequence {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
-  unqualifiedName: TypeSimpleName | undefined;
+  unqualifiedName: TypeNameUse | undefined;
   libraryQualifier: OptionalNode | undefined;
 
   constructor(
@@ -33,7 +33,7 @@ export class TypeNameQualifiedNode extends AbstractSequence {
         new DotAfter(this.file, new KeywordNode(this.file, libraryKeyword, false, true)),
       );
       this.addElement(this.libraryQualifier);
-      this.unqualifiedName = new TypeSimpleName(this.file);
+      this.unqualifiedName = new TypeNameUse(this.file);
       this.addElement(this.unqualifiedName);
       super.parseText(text);
     }

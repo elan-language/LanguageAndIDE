@@ -1,7 +1,7 @@
 import { thisKeyword } from "../../../compiler/keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { FunctionRefNode } from "./function-ref-node";
-import { IdentifierNode } from "./identifier-node";
+import { IdentifierUse } from "./identifier-use";
 import { KeywordNode } from "./keyword-node";
 import { MethodCallNode } from "./method-call-node";
 import { allIds } from "./parse-node-helpers";
@@ -13,7 +13,7 @@ export class ReferenceNode extends AbstractAlternatives {
   parseText(text: string): void {
     if (text.length > 0) {
       this.alternatives.push(new KeywordNode(this.file, thisKeyword));
-      this.alternatives.push(new IdentifierNode(this.file, this.tokenTypes));
+      this.alternatives.push(new IdentifierUse(this.file, this.tokenTypes));
       this.alternatives.push(new MethodCallNode(this.file));
       this.alternatives.push(new FunctionRefNode(this.file));
       super.parseText(text);

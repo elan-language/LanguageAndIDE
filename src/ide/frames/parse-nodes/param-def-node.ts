@@ -2,14 +2,14 @@ import { asKeyword } from "../../../compiler/keywords";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { IdentifierNode } from "./identifier-node";
+import { IdentifierUse } from "./identifier-use";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
-  name: IdentifierNode | undefined;
+  name: IdentifierUse | undefined;
   type: TypeNode | undefined;
 
   constructor(file: File) {
@@ -20,7 +20,7 @@ export class ParamDefNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.trim().length > 0) {
       if (!this.file.language().parseText(this, text)) {
-        this.name = new IdentifierNode(this.file);
+        this.name = new IdentifierUse(this.file);
         this.addElement(this.name);
         this.addElement(new SpaceNode(this.file, Space.required));
         this.addElement(new KeywordNode(this.file, asKeyword));

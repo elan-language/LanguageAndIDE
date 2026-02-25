@@ -1,7 +1,7 @@
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { MethodNameNode } from "../parse-nodes/method-name-node";
+import { MethodNameUse } from "../parse-nodes/method-name-use";
 import { AbstractField } from "./abstract-field";
 
 export class MethodNameField extends AbstractField {
@@ -16,7 +16,7 @@ export class MethodNameField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new MethodNameNode(this.getFile());
+    this.rootNode = new MethodNameUse(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

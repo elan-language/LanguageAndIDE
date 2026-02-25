@@ -24,7 +24,7 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
+import { IdentifierUse } from "./parse-nodes/identifier-use";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -258,7 +258,7 @@ export class LanguageVB extends LanguageAbstract {
   LIST_NAME: string = "List";
 
   parseParamDef(node: ParamDefNode, text: string): boolean {
-    node.name = new IdentifierNode(node.file);
+    node.name = new IdentifierUse(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(new PunctuationNode(node.file, this.AS));

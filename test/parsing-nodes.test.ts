@@ -14,7 +14,7 @@ import { DictionaryNode } from "../src/ide/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../src/ide/frames/parse-nodes/dot-after";
 import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
-import { IdentifierNode } from "../src/ide/frames/parse-nodes/identifier-node";
+import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { IfExpr } from "../src/ide/frames/parse-nodes/if-expr";
 import { ImageNode } from "../src/ide/frames/parse-nodes/image-node";
 import { InstanceNode } from "../src/ide/frames/parse-nodes/instanceNode";
@@ -213,19 +213,19 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Identifier", () => {
-    testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
-    testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
-    testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
-    testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
-    testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
-    testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+    testNodeParse(new IdentifierUse(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new IdentifierUse(f), `  `, ParseStatus.invalid, ``, "", "");
+    testNodeParse(new IdentifierUse(f), `a`, ParseStatus.valid, `a`, "", "a", "");
+    testNodeParse(new IdentifierUse(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
+    testNodeParse(new IdentifierUse(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
+    testNodeParse(new IdentifierUse(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
+    testNodeParse(new IdentifierUse(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
     // Can be a keyword - because that will be rejected at compile stage, not parse stage
-    testNodeParse(new IdentifierNode(f), `new`, ParseStatus.valid, `new`, "", "");
-    testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
-    testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
-    testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
-    testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
+    testNodeParse(new IdentifierUse(f), `new`, ParseStatus.valid, `new`, "", "");
+    testNodeParse(new IdentifierUse(f), `global`, ParseStatus.valid, `global`, "", "");
+    testNodeParse(new IdentifierUse(f), `x as`, ParseStatus.valid, `x`, " as", "x");
+    testNodeParse(new IdentifierUse(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
+    testNodeParse(new IdentifierUse(f), `_`, ParseStatus.invalid, ``, "_", "");
   });
   test("LitString - single chars", () => {
     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
@@ -585,24 +585,17 @@ suite("Parsing Nodes", () => {
       `"apple", "orange", "pear"`,
     );
     testNodeParse(
-      new CSV(f, () => new IdentifierNode(f), 0),
+      new CSV(f, () => new IdentifierUse(f), 0),
       `a,b,c`,
       ParseStatus.valid,
       `a,b,c`,
       "",
       "a, b, c",
     );
-    testNodeParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, ParseStatus.valid, ``, "1", "");
+    testNodeParse(new CSV(f, () => new IdentifierUse(f), 0), `1`, ParseStatus.valid, ``, "1", "");
+    testNodeParse(new CSV(f, () => new IdentifierUse(f), 1), `1`, ParseStatus.invalid, ``, "1", "");
     testNodeParse(
-      new CSV(f, () => new IdentifierNode(f), 1),
-      `1`,
-      ParseStatus.invalid,
-      ``,
-      "1",
-      "",
-    );
-    testNodeParse(
-      new CSV(f, () => new IdentifierNode(f), 0),
+      new CSV(f, () => new IdentifierUse(f), 0),
       `a,1`,
       ParseStatus.valid,
       `a`,
@@ -610,7 +603,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new IdentifierNode(f), 0),
+      new CSV(f, () => new IdentifierUse(f), 0),
       `a,b,1`,
       ParseStatus.valid,
       `a,b`,

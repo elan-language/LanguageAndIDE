@@ -5,7 +5,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class TypeSimpleName extends AbstractParseNode {
+export class TypeNameDef extends AbstractParseNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   elanTypeName: string = "";
 
