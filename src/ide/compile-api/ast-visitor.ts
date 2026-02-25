@@ -135,6 +135,7 @@ import { EnumVal } from "../frames/parse-nodes/enum-val";
 import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
+import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ImageNode } from "../frames/parse-nodes/image-node";
@@ -734,6 +735,20 @@ export function transform(
 
   if (node instanceof LitRegExp) {
     return new LiteralRegExAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof IdentifierDef) {
+    // todo kludge - fix
+    if (
+      (fieldId.startsWith("var") ||
+        fieldId.startsWith("ident") ||
+        fieldId.startsWith("enumVals")) &&
+      !(scope instanceof SetAsn) // to catch range value
+    ) {
+      return new IdDefAsn(node.matchedText, fieldId, scope);
+    }
+
+    return new IdAsn(node.matchedText, fieldId, false, scope);
   }
 
   if (node instanceof IdentifierUse) {
