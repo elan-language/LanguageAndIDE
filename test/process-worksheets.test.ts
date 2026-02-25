@@ -27,7 +27,7 @@ suite("process worksheets", () => {
   for col from 0 to 39 step 1
     for row from 0 to 29 step 1
       variable cell set to if random() > 0.5 then black else white
-      call grid.put(col, row, cell)
+      set grid[col][row] to cell
     end for
   end for
 end procedure`;
@@ -41,7 +41,7 @@ end procedure`;
     const code = `for col from 0 to 39 step 1
   for row from 0 to 29 step 1
     variable cell set to if random() > 0.5 then black else white
-    call grid.put(col, row, cell)
+    set grid[col][row] to cell
   end for
 end for`;
 

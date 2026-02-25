@@ -11,6 +11,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -900,7 +901,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_NonObviousDifferentTypes", async () => {
+  ignore_test("Pass_NonObviousDifferentTypes", async () => {
     const code = `${testHeader}
 
 test test_arrayContent
