@@ -1,4 +1,4 @@
-# 6e4b62cce8028b4ac0b6f823fe7889bf3648a13188508d79628d367c9bd4b70e Elan 2.0.0-alpha guest default_profile valid
+# 4217ec33a9cb53eca87812a9808068ea833600f647fb11448a469115c75c4840 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -45,10 +45,10 @@ class Snake
     end if
   end procedure
 
-  procedure updateBlocks(blocks as Array2D<of Int>)
-    call blocks.put(property.head.x, property.head.y, green)
+  procedure updateBlocks(blocks as List<of List<of Int>>)
+    set blocks[property.head.x][property.head.y] to green
     if not property.body[0].isSameValueAs(property.priorTail) then
-      call blocks.put(property.priorTail.x, property.priorTail.y, white)
+      set blocks[property.priorTail.x][property.priorTail.y] to white
     end if
   end procedure
 
@@ -99,8 +99,8 @@ class Apple
     end while
   end procedure
 
-  procedure updateBlocks(blocks as Array2D<of Int>)
-    call blocks.put(property.location.x, property.location.y, red)
+  procedure updateBlocks(blocks as List<of List<of Int>>)
+    set blocks[property.location.x][property.location.y] to red
   end procedure
 
 end class

@@ -1,4 +1,4 @@
-# e42e5f5116eef5ea7255ee81789ef6a52172510238cafd2f4b3598142455c7ca Elan 2.0.0-alpha guest default_profile valid
+# 43112fe07c33a132aed6721debd20dd4a29b35770576107efe5f6331ed712c21 Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -32,9 +32,9 @@ constant vN set to false
 
 main
   # colour grids: hodge for display, podge for working
-  variable podge set to new Array2D<of Int>(gW, gH, healthy)
-  variable hodge set to new Ref<of Array2D<of Int>>(new Array2D<of Int>(gW, gH, healthy))
-  variable blank set to new Array2D<of Int>(gW, gH, healthy)
+  variable podge set to createBlockGraphics(healthy)
+  variable hodge set to new Ref<of List<of List<of Int>>>(createBlockGraphics(healthy))
+  variable blank set to createBlockGraphics(healthy)
   # initial colours of grid
   call updateGrid(hodge, podge, true)
   while not uniform(hodge.value())
@@ -44,15 +44,15 @@ main
   end while
 end main
 
-procedure updateGrid(hodge as Ref<of Array2D<of Int>>, podge as Array2D<of Int>, initial as Boolean)
+procedure updateGrid(hodge as Ref<of List<of List<of Int>>>, podge as List<of List<of Int>>, initial as Boolean)
   variable colours set to getColours()
   for j from 0 to gH - 1 step 1
     for i from 0 to gW - 1 step 1
       if initial then
-        call podge.put(i, j, colours[randomInt(0, (colours.length() - 1))])
+        set podge[i][j] to colours[randomInt(0, (colours.length()) - 1)]
         [ghosted] call podge.put(1, 1, 0x1a001a)
       else
-        call podge.put(i, j, newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i, j]))
+        set podge[i][j] to newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j])
       end if
     end for
   end for
@@ -62,25 +62,25 @@ procedure updateGrid(hodge as Ref<of Array2D<of Int>>, podge as Array2D<of Int>,
   call pause(50)
 end procedure
 
-function uniform(grid as Array2D<of Int>) returns Boolean
-  variable uniformGrid set to new Array2D<of Int>(gW, gH, grid[0, 0])
+function uniform(grid as List<of List<of Int>>) returns Boolean
+  variable uniformGrid set to createBlockGraphics(grid[0][0])
   return if grid.isSameValueAs(uniformGrid) then true else false
 end function
 
-function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) returns List<of Int>
+function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) returns List<of Int>
   # grid wraps around: all cells have the same number of neighbours
   # H and V neighbours(von Neumann)
-  constant sL set to grid[(i - 1 + gW) mod gW, j]
-  constant sR set to grid[(i + 1 + gW) mod gW, j]
-  constant sA set to grid[i, (j - 1 + gH) mod gH]
-  constant sB set to grid[i, (j + 1 + gH) mod gH]
+  constant sL set to grid[(i - 1 + gW) mod gW][j]
+  constant sR set to grid[(i + 1 + gW) mod gW][j]
+  constant sA set to grid[i][(j - 1 + gH) mod gH]
+  constant sB set to grid[i][(j + 1 + gH) mod gH]
   variable neighbourColours set to [sL, sR, sA, sB]
   if vN is false then
     # add diagonal neighbours (Moore)
-    constant sLA set to grid[(i - 1 + gW) mod gW, (j - 1 + gH) mod gH]
-    constant sRA set to grid[(i + 1 + gW) mod gW, (j - 1 + gH) mod gH]
-    constant sLB set to grid[(i - 1 + gW) mod gW, (j + 1 + gH) mod gH]
-    constant sRB set to grid[(i + 1 + gW) mod gW, (j + 1 + gH) mod gH]
+    constant sLA set to grid[(i - 1 + gW) mod gW][(j - 1 + gH) mod gH]
+    constant sRA set to grid[(i + 1 + gW) mod gW][(j - 1 + gH) mod gH]
+    constant sLB set to grid[(i - 1 + gW) mod gW][(j + 1 + gH) mod gH]
+    constant sRB set to grid[(i + 1 + gW) mod gW][(j + 1 + gH) mod gH]
     set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours

@@ -901,56 +901,6 @@ return [main, _tests];}`;
     ]);
   });
 
-  ignore_test("Pass_NonObviousDifferentTypes", async () => {
-    const code = `${testHeader}
-
-test test_arrayContent
-  variable a set to new Array2D<of String>(2, 2, "*")
-  assert a is [["*", "*"], ["*", "*"]]
-end test
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-_tests.push(["test1", async (_outcomes) => {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, "*"));
-  _outcomes.push(await system.assert([async () => a, "Array2D<of String>"], [system.list([system.list(["*", "*"]), system.list(["*", "*"])]), "List<of List<of String>>"], "assert7", _stdlib, false));
-}]);
-
-async function main() {
-
-}
-return [main, _tests];}`;
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test1",
-        [
-          new AssertOutcome(
-            TestStatus.fail,
-            "Array2D<of String> expected: List<of List<of String>>",
-            "[[*, *], [*, *]]",
-            "assert7",
-          ),
-        ],
-      ],
-    ]);
-  });
-
   test("Fail_AssertOutsideAtest", async () => {
     const code = `${testHeader}
 

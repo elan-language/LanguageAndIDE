@@ -19,7 +19,7 @@ main
   end while
 end main
 
-procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point, rocks as List<of Point>, solver as Solver, alg as Algorithm)
+procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as Point, rocks as List<of Point>, solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
@@ -57,8 +57,8 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, node
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns Array2D<of Int>
-  variable gr set to new Array2D<of Int>(40, 30, white)
+function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
+  variable gr set to new List<of List<of Int>>(40, 30, white)
   each rock in rocks
     set gr to gr.withPut(rock.x, rock.y, black)
   end each
@@ -67,11 +67,11 @@ function initialiseGraphics(start as Point, dest as Point, rocks as List<of Poin
   return gr
 end function
 
-function addVisited(gr as Array2D<of Int>, visited as Point) returns Array2D<of Int>
+function addVisited(gr as List<of List<of Int>>, visited as Point) returns List<of List<of Int>>
   return gr.withPut(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as Array2D<of Int>, route as List<of Point>) returns Array2D<of Int>
+function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
   variable gr2 set to gr
   each p in route
     set gr2 to gr2.withPut(p.x, p.y, orange)
