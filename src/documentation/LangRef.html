@@ -743,13 +743,15 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <hr>
 </div></div>
 
-<h2 id="constant"><el-kw>constant</el-kw></h2>
-<p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level in a program, and is global in scope.
- Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
-<p>A constant is defined by a literal of an immutable Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
- <el-type>String</el-type>, <el-type>ListImmutable</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
-<p>Constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
-<p>A constant can be defined by a previously defined constant or a system constant, but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
+<h2 id="constant"><el-kw>constant</el-kw> (global)</h2>
+<p>There are two uses of the <el-kw>constant</el-kw> instruction: this one at global level, the other local to a routine and described under <a href="#constant_let">constant (local)</a>.</p>
+<p>A global <el-kw>constant</el-kw> instruction atdefines a named value that is defined at the global level in a program, is global in scope and cannot be changed.</p>
+<p>Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
+<p>A global constant is defined by a literal of an immutable Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
+ <el-type>String</el-type>.</p>
+<p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
+<p>A global constant can be defined by a previously defined global constant or a system constant,
+ but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
@@ -1073,6 +1075,21 @@ which is the mechanism for running unit tests during program development, not du
 <p>It is recommended that you always use constants in preference to variable, unless you need to be able to re-assign its value.</p>
 <p>You can put a <el-kw>constant</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
+<h2 id="constant_let"><el-kw>constant</el-kw> (local)</h2>
+<p>There are two uses of the <el-kw>constant</el-kw> instruction: this one local to a routine, the other global to the program and described under <a href="#constant">constant (global)</a>.</p>
+<p>The local <el-kw>constant</el-kw><el-code> instruction declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
+<p>The initial value is given by a following expression. For example:</p>
+
+<el-code-block>
+<el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>Like a <el-kw>variable</el-kw>, a <el-kw>constant</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw> instruction.</p>
+<p>It is recommended that you always use <el-kw>constant</el-kw> in preference to <el-kw>variable</el-kw>, unless you need to be able to re-assign its value.</p>
+<p>You can put a <el-kw>constant</el-kw> in a loop, so that the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
+
+<h2 id="each"><el-kw>each</el-kw> (loop)</h2>
+<p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
 
 <h2 id="each"><el-kw>each</el-kw></h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
@@ -1191,7 +1208,6 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 </el-code-block>
 <hr>
 </div></div>
-
 
 <h2 id="print"><el-kw>print</el-kw></h2>
 <p>The <el-kw>print</el-kw> instruction sends text strings to the display pane. For example:</p>

@@ -1,4 +1,4 @@
-# b275e6be99de45e1f7c1796f53eb74015d7dab27e1ab88099aea85117f933295 Elan 2.0.0-alpha guest default_profile valid
+# ff90b6a6d5b6c186d463f48e99160445b8adecc7aea0ea8732ef922a60935e54 Elan 2.0.0-alpha guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -17,11 +17,11 @@ main
     set steps to steps + 1
     call clearPrintedText()
     call print(tm.tape)
-    call printTab(tm.headPosition - 1, "^\n")
-    call print("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
+    call printTab(tm.headPosition - 1, "^")
+    call print("Step: {steps}State: {tm.currentState}Rule applied: {rule.asString()}")
     call pause(40)
   end while
-  call print("\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}")
+  call print("The roman numeral equivalent for {decimal} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"
@@ -77,7 +77,7 @@ class TuringMachine
 
   procedure write(newSymbol as String)
     constant hp set to property.headPosition
-    set property.tape to property.tape[..hp] + newSymbol + property.tape[hp + 1..]
+    set property.tape to property.tape.subString(0, hp) + newSymbol + property.tape.subString(hp + 1, property.tape.length())
   end procedure
 
   procedure execute(rule as Rule)

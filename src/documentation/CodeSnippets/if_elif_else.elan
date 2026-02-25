@@ -9,9 +9,9 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
     if item.isSameValueAs(value) then
       set result to true
     elif item.isBefore(value) then
-      set result to binarySearch(li[..mid], item)
+      set result to binarySearch(li.subList(0, mid), item)
     else
-      set result to binarySearch(li[mid + 1..], item)
+      set result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
     # snipTo
   end if
