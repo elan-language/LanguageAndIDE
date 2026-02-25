@@ -1,4 +1,4 @@
-# c9a679339cfbc944df517e1d73a583628c72a5a683cff8f74e26f10bd3a9414d Elan 2.0.0-alpha guest default_profile valid
+# 6e4b62cce8028b4ac0b6f823fe7889bf3648a13188508d79628d367c9bd4b70e Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -41,7 +41,7 @@ class Snake
     if property.head.isSameValueAs(apple.location) then
       call apple.newRandomPosition(this)
     else
-      set property.body to property.body[1..]
+      set property.body to property.body.subList(1, property.body.length())
     end if
   end procedure
 

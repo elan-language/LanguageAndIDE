@@ -32,9 +32,9 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   elif b.length() is 0 then
     set result to a
   elif a[0].isBefore(b[0]) then
-    set result to [a[0]].withAppendList(merge(a[1..], b))
+    set result to .subList(a[0]].withAppendList(merge(a[1, .length()), b))
   else
-    set result to [b[0]].withAppendList(merge(a, b[1..]))
+    set result to .subList(b[0]].withAppendList(merge(a, b[1, .length())))
   end if
   return result
 end function
