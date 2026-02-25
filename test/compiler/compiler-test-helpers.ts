@@ -11,7 +11,6 @@ import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageCS } from "../../src/ide/frames/language-cs";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { LanguageJava } from "../../src/ide/frames/language-java";
 import { LanguagePython } from "../../src/ide/frames/language-python";
 import { ParseStatus } from "../../src/ide/frames/status-enums";

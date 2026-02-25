@@ -1,4 +1,4 @@
-import { forKeyword } from "../../../compiler/keywords";
+import { forKeyword } from "../../../compiler/elan-keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";

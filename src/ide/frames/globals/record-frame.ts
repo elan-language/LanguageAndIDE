@@ -1,4 +1,4 @@
-import { endKeyword, recordKeyword } from "../../../compiler/keywords";
+import { endKeyword, recordKeyword } from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import {

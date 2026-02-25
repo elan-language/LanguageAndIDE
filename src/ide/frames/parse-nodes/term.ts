@@ -1,4 +1,4 @@
-import { refKeyword, thisKeyword } from "../../../compiler/keywords";
+import { refKeyword, thisKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";

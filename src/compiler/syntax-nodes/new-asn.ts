@@ -10,7 +10,7 @@ import {
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
-import { constructorKeyword } from "../keywords";
+import { constructorKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 

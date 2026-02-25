@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getGlobalScope, isInsideClass } from "../../compiler/symbols/symbol-helpers";
 import { mustBeInsideClass } from "../compile-rules";
-import { thisKeyword } from "../keywords";
+import { thisKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {

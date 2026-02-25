@@ -1,4 +1,4 @@
-import { inheritsKeyword } from "../../../compiler/keywords";
+import { inheritsKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";

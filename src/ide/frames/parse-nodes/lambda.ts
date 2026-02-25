@@ -1,4 +1,4 @@
-import { lambdaKeyword } from "../../../compiler/keywords";
+import { lambdaKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

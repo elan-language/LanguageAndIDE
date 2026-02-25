@@ -1,4 +1,4 @@
-import { emptyKeyword } from "../../../compiler/keywords";
+import { emptyKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";

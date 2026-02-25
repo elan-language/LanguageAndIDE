@@ -1,5 +1,5 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { propertyKeyword } from "../../../compiler/keywords";
+import { propertyKeyword } from "../../../compiler/elan-keywords";
 import {
   escapeHtmlChars,
   helper_compileMsgAsHtmlNew,
@@ -707,10 +707,18 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getMessage(): string {
-    const cls = DisplayColour[DisplayColour.error];
-    return this._parseStatus === ParseStatus.invalid
-      ? `<el-msg class="${cls}"> Invalid.${this.helpAsHtml()}</el-msg>`
-      : helper_compileMsgAsHtmlNew(this.getFile(), this);
+    let message = ``;
+    if (this._parseStatus === ParseStatus.invalid) {
+      const cls = this.isSelected()
+        ? DisplayColour[DisplayColour.warning]
+        : DisplayColour[DisplayColour.error];
+      const fromNode: string = this.rootNode!.message;
+      const msg = fromNode === "" ? " Invalid." : fromNode;
+      message = `<el-msg class="${cls}">${msg}${this.helpAsHtml()}</el-msg>`;
+    } else {
+      message = helper_compileMsgAsHtmlNew(this.getFile(), this);
+    }
+    return message;
   }
 
   helpAsHtml(): string {

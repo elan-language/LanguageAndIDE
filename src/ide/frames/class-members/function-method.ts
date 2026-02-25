@@ -3,7 +3,7 @@ import {
   functionKeyword,
   privateKeyword,
   returnsKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,

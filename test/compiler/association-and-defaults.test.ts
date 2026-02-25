@@ -1331,7 +1331,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
+      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1363,7 +1363,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
+      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
     ]);
   });
 

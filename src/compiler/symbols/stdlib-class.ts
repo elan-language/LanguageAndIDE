@@ -4,7 +4,7 @@ import { Deprecated } from "../compiler-interfaces/elan-type-interfaces";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { TypeOptions } from "../compiler-interfaces/type-options";
-import { thisKeyword } from "../keywords";
+import { thisKeyword } from "../elan-keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";

@@ -1,6 +1,6 @@
 import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { globalKeyword, libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class FixedIdAsn extends AbstractAstNode implements AstIdNode {

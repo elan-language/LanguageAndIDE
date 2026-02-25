@@ -22,7 +22,7 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -215,7 +215,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     );
     node.addElement(node.type);
     node.addElement(new SpaceNode(node.file, Space.required));
-    node.name = new IdentifierNode(node.file);
+    node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     return text ? true : true;
   }

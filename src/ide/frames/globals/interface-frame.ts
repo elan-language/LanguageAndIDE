@@ -1,4 +1,8 @@
-import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../../../compiler/keywords";
+import {
+  abstractClassKeywords,
+  endKeyword,
+  interfaceKeyword,
+} from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";

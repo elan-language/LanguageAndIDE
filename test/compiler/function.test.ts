@@ -1207,11 +1207,7 @@ end function`;
     true,
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_UseOfReservedwordAsName", async () => {
@@ -1235,11 +1231,7 @@ end function`;
     true,
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1289,10 +1281,7 @@ end function`;
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_NotUniqueName", async () => {

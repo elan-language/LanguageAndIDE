@@ -1,4 +1,4 @@
-import { setKeyword, toKeyword, variableKeyword } from "../../../compiler/keywords";
+import { setKeyword, toKeyword, variableKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";

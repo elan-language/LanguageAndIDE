@@ -9,7 +9,7 @@ import {
   libraryKeyword,
   propertyKeyword,
   thisKeyword,
-} from "../../compiler/keywords";
+} from "../../compiler/elan-keywords";
 import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
@@ -135,7 +135,8 @@ import { EnumVal } from "../frames/parse-nodes/enum-val";
 import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
-import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
+import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
+import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ImageNode } from "../frames/parse-nodes/image-node";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
@@ -172,6 +173,7 @@ import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-o
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
+import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
 import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
@@ -736,7 +738,21 @@ export function transform(
     return new LiteralRegExAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof IdentifierNode) {
+  if (node instanceof IdentifierDef) {
+    // todo kludge - fix
+    if (
+      (fieldId.startsWith("var") ||
+        fieldId.startsWith("ident") ||
+        fieldId.startsWith("enumVals")) &&
+      !(scope instanceof SetAsn) // to catch range value
+    ) {
+      return new IdDefAsn(node.matchedText, fieldId, scope);
+    }
+
+    return new IdAsn(node.matchedText, fieldId, false, scope);
+  }
+
+  if (node instanceof IdentifierUse) {
     // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||
@@ -807,6 +823,11 @@ export function transform(
 
   if (node instanceof TypeNameQualifiedNode) {
     const type = node.libraryQualifier?.matchedText + node.unqualifiedName!.elanTypeName;
+    return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
+  }
+
+  if (node instanceof TypeNameDef) {
+    const type = node.elanTypeName;
     return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
   }
 

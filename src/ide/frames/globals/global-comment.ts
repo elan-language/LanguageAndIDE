@@ -1,4 +1,4 @@
-import { commentMarker } from "../../../compiler/keywords";
+import { commentMarker } from "../../../compiler/elan-keywords";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

@@ -11,7 +11,7 @@ import {
   privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";

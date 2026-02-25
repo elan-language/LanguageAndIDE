@@ -5,7 +5,7 @@ import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { StringType } from "../../../compiler/symbols/string-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId } from "../../compile-rules";
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
+import { catchKeyword, exceptionKeyword, inKeyword } from "../../elan-keywords";
 import { symbolMatches } from "../../symbols/symbol-helpers";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
