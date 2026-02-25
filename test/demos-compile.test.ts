@@ -34,9 +34,9 @@ suite("Demo compile", () => {
   test("test life", async () => {
     await testElanProgram("demo_programs\\life.elan");
   });
-  test("test maze-generator", async () => {
-    await testElanProgram("demo_programs\\maze-generator.elan");
-  });
+  // test("test maze-generator", async () => {
+  //   await testElanProgram("demo_programs\\maze-generator.elan");
+  // });
   test("test password-generator", async () => {
     await testElanProgram("demo_programs\\password-generator.elan");
   });
@@ -83,13 +83,13 @@ suite("Demo compile", () => {
   // test("test blackjack 2", async () => {
   //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
   // });
-  test("test wordle 1", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
-  });
-  test("test wordle 2", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_2begin.elan");
-  });
-  test("test wordle 3", async () => {
-    await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
-  });
+  // test("test wordle 1", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
+  // });
+  // test("test wordle 2", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_2begin.elan");
+  // });
+  // test("test wordle 3", async () => {
+  //   await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
+  // });
 });

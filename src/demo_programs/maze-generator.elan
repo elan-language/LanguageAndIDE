@@ -1,4 +1,4 @@
-# 54cffc44c2257bf3f5b30825e8793e0c4ea7f2702ae97005cd2817812b4560a0 Elan 2.0.0-alpha guest default_profile valid
+# c28d27ec755906773b71648d4864167a63c0a5c5c81d7da1f057f57ae6dfdd9a Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -11,7 +11,7 @@ main
     constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
       constant colour set to if setTo is 1 then white else black
-      set blocks to blocks.withPut(p.x, p.y, colour)
+      set blocks[p.x][p.y] to colour
     end if
   end for
   call displayBlocks(blocks)
@@ -23,12 +23,12 @@ end main
 
 constant displayWidth set to 150
 
-procedure saveAsFile(name as String, b as Array2D<of Int>)
+procedure saveAsFile(name as String, b as List<of List<of Int>>)
   variable file set to createFileForWriting(name)
   for row from 0 to 29 step 1
     variable line set to ""
     for col from 0 to 39 step 1
-      constant colour set to b[col, row]
+      constant colour set to b[col][row]
       constant symbol set to if colour is white then " " else "X"
       set line to line + symbol
     end for
@@ -37,7 +37,7 @@ procedure saveAsFile(name as String, b as Array2D<of Int>)
   call file.saveAndClose()
 end procedure
 
-function createStart(b as Array2D<of Int>) returns Array2D<of Int>
+function createStart(b as List<of List<of Int>>) returns List<of List<of Int>>
   variable b2 set to b
   for i from 0 to 15 step 2
     set b2 to addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i)
@@ -45,7 +45,7 @@ function createStart(b as Array2D<of Int>) returns Array2D<of Int>
   return b2
 end function
 
-function addRectangle(b as Array2D<of Int>, startX as Int, startY as Int, width as Int, depth as Int) returns Array2D<of Int>
+function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, width as Int, depth as Int) returns List<of List<of Int>>
   constant paint set to white
   variable b2 set to b
   for x from startX to startX + width step 1
@@ -60,7 +60,7 @@ function addRectangle(b as Array2D<of Int>, startX as Int, startY as Int, width 
 end function
 
 # colour: 0 for black, 1 for white
-function okToSet(p as Point, colour as Int, g as Array2D<of Int>) returns Boolean
+function okToSet(p as Point, colour as Int, g as List<of List<of Int>>) returns Boolean
   variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
   constant q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
   constant q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
@@ -69,10 +69,10 @@ function okToSet(p as Point, colour as Int, g as Array2D<of Int>) returns Boolea
   return q1 and q2 and q3 and q4
 end function
 
-function getValue(p as Point, b as Array2D<of Int>) returns Int
+function getValue(p as Point, b as List<of List<of Int>>) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
-    constant colour set to b[p.x, p.y]
+    constant colour set to b[p.x][p.y]
     set result to if colour is black then 0 else 1
   end if
   return result

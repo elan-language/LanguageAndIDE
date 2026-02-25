@@ -26,7 +26,6 @@ import {
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
-import { ElanArray2D } from "./elan-array-2d";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { ElanSet } from "./elan-set";
 import { ImageVG } from "./image-vg";
@@ -96,9 +95,6 @@ export class StdLib {
 
   @elanClassExport(List)
   List = List;
-
-  @elanClassExport(ElanArray2D)
-  Array2D = ElanArray2D;
 
   @elanClassExport(Dictionary)
   Dictionary = Dictionary;
@@ -794,12 +790,15 @@ export class StdLib {
   }
   //Block graphics
   @elanFunction([""], FunctionOptions.pureExtension)
-  blocksAsHtml(@elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>): string {
+  blocksAsHtml(
+    @elanClassType(List, [ElanClass(List, [ElanInt])]) blocks: List<List<number>>,
+  ): string {
     let rendered = ``;
 
     for (let y = 0; y < 30; y++) {
       for (let x = 0; x < 40; x++) {
-        const colour = blocks.read(x, y);
+        //const colour = blocks.read(x, y);
+        const colour = blocks.safeIndex(x).safeIndex(y);
         rendered = `${rendered}<div style="background-color:${this.asHex(colour)};"></div>`;
       }
     }
@@ -814,11 +813,20 @@ export class StdLib {
 
   @elanProcedure(["blocks"], ProcedureOptions.async)
   async displayBlocks(
-    @elanClassType(ElanArray2D, [ElanInt]) blocks: ElanArray2D<number>,
+    @elanClassType(List, [ElanClass(List, [ElanInt])]) blocks: List<List<number>>,
   ): Promise<void> {
-    if (blocks.columns() !== 40 || blocks.rows() !== 30) {
-      throw new ElanRuntimeError(`argument must be Array2D<of Int> with dimensions 40 x 30`);
+    if (blocks.length() !== 40) {
+      throw new ElanRuntimeError(`argument must be List<of List<of Int>> with dimensions 40 x 30`);
     }
+
+    for (const subArr of blocks) {
+      if (subArr.length() !== 30) {
+        throw new ElanRuntimeError(
+          `argument must be  List<of List<of Int>> with dimensions 40 x 30`,
+        );
+      }
+    }
+
     const html = this.blocksAsHtml(blocks);
     return await this.system!.elanInputOutput.drawBlockGraphics(html);
   }
@@ -828,9 +836,24 @@ export class StdLib {
     await this.system!.elanInputOutput.clearBlockGraphics();
   }
 
-  @elanFunction(["colour"], FunctionOptions.pureAsync, ElanClass(ElanArray2D, [ElanInt]))
-  async createBlockGraphics(@elanIntType() colour: number): Promise<ElanArray2D<number>> {
-    return this.system.initialise(await new ElanArray2D<number>()._initialise(40, 30, colour));
+  @elanFunction(
+    ["colour"],
+    FunctionOptions.pureAsync,
+    ElanClass(List, [ElanClass(List, [ElanInt])]),
+  )
+  async createBlockGraphics(@elanIntType() colour: number): Promise<List<List<number>>> {
+    const listOfList = this.system.initialise(await new List<List<number>>()._initialise());
+    const x = 40;
+    const y = 30;
+
+    for (let i = 0; i < x; i++) {
+      const subArr = this.system.initialise(await new List<number>()._initialise());
+      for (let j = 0; j < y; j++) {
+        subArr.append(colour);
+      }
+      listOfList.append(subArr);
+    }
+    return listOfList;
   }
 
   @elanFunction([""], FunctionOptions.pureExtension)

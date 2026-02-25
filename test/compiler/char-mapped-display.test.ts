@@ -18,14 +18,14 @@ suite("Char Mapped Display", () => {
     const code = `${testHeader}
 
 main
-  variable g set to new Array2D<of Int>(40, 30, white)
+  variable g set to createBlockGraphics(white)
   call displayBlocks(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
   await _stdlib.displayBlocks(g);
 }
 return [main, _tests];}`;
@@ -51,16 +51,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable g set to new Array2D<of Int>(40, 30, white)
-  set g to g.withPut(1, 0, 4)
+  variable g set to createBlockGraphics(white)
+  set g[1][0] to 4
   call displayBlocks(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
-  g = g.withPut(1, 0, 4);
+  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
+  system.safeSet(g, 4, [1, 0]);
   await _stdlib.displayBlocks(g);
 }
 return [main, _tests];}`;
@@ -86,7 +86,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable g set to new Array2D<of Int>(40, 30, white)
+  variable g set to createBlockGraphics(white)
   call displayBlocks(g)
   call clearBlocks()
 end main`;
@@ -94,7 +94,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
   await _stdlib.displayBlocks(g);
   await _stdlib.clearBlocks();
 }
@@ -121,7 +121,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to new Array2D<of Int>(40, 30, white)
+  variable gr set to createBlockGraphics(white)
   variable a set to getKey()
   call printNoLine(a)
 end main`;
@@ -129,7 +129,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
   let a = (await _stdlib.getKey());
   await _stdlib.printNoLine(a);
 }
@@ -224,7 +224,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to new Array2D<of Int>(40, 30, white)
+  variable gr set to createBlockGraphics(white)
   variable a set to getKeyWithModifier()
   call printNoLine(a)
 end main`;
@@ -232,7 +232,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
   let a = (await _stdlib.getKeyWithModifier());
   await _stdlib.printNoLine(a);
 }
@@ -259,14 +259,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to new Array2D<of Int>(40, 30, white)
+  variable gr set to createBlockGraphics(white)
   call clearKeyBuffer()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
   await _stdlib.clearKeyBuffer();
 }
 return [main, _tests];}`;
@@ -292,13 +292,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Array2D<of Int>(40, 30, white)
+  variable a set to createBlockGraphics(white)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let a = (await _stdlib.createBlockGraphics(_stdlib.white));
 }
 return [main, _tests];}`;
 

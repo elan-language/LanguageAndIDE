@@ -22,7 +22,7 @@ function clockTick(g as Game, k as String) returns Game
   return if gameOver(g4) then copy g4 with isOn set to false else g4
 end function
 
-function updateGraphics(g as Game, b as Array2D<of Int>) returns Array2D<of Int>
+function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
   constant b2 set to b.withPut(g.apple.x, g.apple.y, red)
   constant b3 set to b2.withPut(g.head.x, g.head.y, green)
   constant tail set to g.body[0]
@@ -131,7 +131,7 @@ test test_clockTick
 end test
 
 test test_updateGraphics
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to new List<of List<of Int>>(40, 30, white)
   variable g1 set to newGame(new Random())
   set blocks to updateGraphics(g1, blocks)
   assert blocks[12, 15] is red

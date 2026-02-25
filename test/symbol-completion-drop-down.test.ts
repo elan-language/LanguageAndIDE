@@ -1732,7 +1732,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -1837,7 +1836,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
