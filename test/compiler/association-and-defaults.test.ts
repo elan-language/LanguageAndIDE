@@ -1331,7 +1331,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
+      "'if' is a reserved word, and may not be used as an identifier. Either extend name or choose another..LangRef.html#compile_error",
     ]);
   });
 
