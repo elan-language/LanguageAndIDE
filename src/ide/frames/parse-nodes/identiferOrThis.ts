@@ -1,4 +1,4 @@
-import { thisKeyword } from "../../../compiler/keywords";
+import { thisKeyword } from "../../../compiler/elan-keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierUse } from "./identifier-use";
 import { KeywordNode } from "./keyword-node";

@@ -1,4 +1,4 @@
-import { propertyKeyword } from "../../../compiler/keywords";
+import { propertyKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

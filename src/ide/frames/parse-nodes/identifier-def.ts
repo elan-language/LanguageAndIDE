@@ -1,27 +1,11 @@
-import { matchesAnyKeyword_caseIgnored } from "../../../compiler/keywords";
+import { ReservedWords } from "../../../compiler/reserved-words";
 import { Regexes } from "../fields/regexes";
-import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
-import { TokenType } from "../symbol-completion-helpers";
-import { AbstractParseNode } from "./abstract-parse-node";
+import { IdentifierUse } from "./identifier-use";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierDef extends AbstractParseNode {
-  private tokenTypes: Set<TokenType>;
-  private contextGenerator: () => string;
-
-  constructor(
-    file: File,
-    tokenTypes: Set<TokenType> = new Set<TokenType>(),
-    contextGenerator = () => "",
-  ) {
-    super(file);
-    this.tokenTypes = tokenTypes;
-    this.contextGenerator = contextGenerator;
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i>");
-  }
-
-  parseText(text: string): void {
+export class IdentifierDef extends IdentifierUse {
+  override parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
       [this.status, this.matchedText, this.remainingText] = matchRegEx(
@@ -29,24 +13,13 @@ export class IdentifierDef extends AbstractParseNode {
         Regexes.identifier,
       );
     }
-    if (this.isValid() && this.remainingText.length > 0) {
-      if (matchesAnyKeyword_caseIgnored(this.matchedText)) {
+    if (this.isValid()) {
+      if (ReservedWords.Instance.matchesReservedWord_caseIgnored(this.matchedText)) {
         this.status = ParseStatus.invalid;
+        this.message = `'${this.matchedText}' is reserved word.`;
       } else {
         this._done = true;
       }
     }
-  }
-
-  symbolCompletion_tokenTypes(): Set<TokenType> {
-    return this.tokenTypes;
-  }
-
-  symbolCompletion_context(): string {
-    return this.contextGenerator();
-  }
-
-  override renderAsHtml(): string {
-    return `<el-id>${this.renderAsElanSource()}</el-id>`;
   }
 }

@@ -70,30 +70,16 @@ export const abstractClassKeywords = abstractKeyword + " " + classKeyword;
 
 export const commentMarker = "#";
 
-export function matchesAnyKeyword_caseIgnored(target: string): boolean {
-  return allKeywordsUC().has(target.toUpperCase());
-}
-
 export function matchesElanKeyword(target: string): boolean {
   return elanKeywords.includes(target);
 }
 
-
-export function matchesLangType(target: string): boolean {
-  return allStandardTypes().has(target);  // so case sensitive
-}
-
-export function allStandardTypes(): Set<string> {
-  // TODO
-  return new Set<string>();
-}
-
-function allKeywordsUC(): Set<string> {
+export function allElanKeywordsUC(): Set<string> {
   const kws = new Set<string>();
-  elanKeywords.forEach(item => kws.add(item.toUpperCase()));
-  elanReservedWords.forEach(item => kws.add(item.toUpperCase()));
+  elanKeywords.forEach((item) => kws.add(item.toUpperCase()));
+  elanReservedWords.forEach((item) => kws.add(item.toUpperCase()));
   return kws;
-};
+}
 
 const elanKeywords: string[] = [
   abstractKeyword,

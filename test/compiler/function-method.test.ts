@@ -994,11 +994,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -1027,11 +1023,36 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
+  });
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+  test("Fail_UseOfLangTypeAsName", async () => {
+    const code = `${testHeader}
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function int(a as Int) returns Int
+    return 0
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

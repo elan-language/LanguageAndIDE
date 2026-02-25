@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -87,10 +88,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'bReak' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_SameVariableNameInScope", async () => {

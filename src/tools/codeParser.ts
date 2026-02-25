@@ -1,4 +1,4 @@
-import { matchesElanKeyword } from "../compiler/keywords";
+import { matchesElanKeyword } from "../compiler/elan-keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";

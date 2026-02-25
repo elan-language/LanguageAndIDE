@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { testKeyword } from "../../../compiler/keywords";
+import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { IdentifierField } from "../fields/identifier-field";
 import {

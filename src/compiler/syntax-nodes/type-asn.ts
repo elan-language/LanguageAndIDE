@@ -19,7 +19,7 @@ import {
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
-import { libraryKeyword } from "../keywords";
+import { libraryKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstQualifierNode } from "./ast-helpers";
 import { FixedIdAsn } from "./fixed-id-asn";

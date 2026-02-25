@@ -9,7 +9,7 @@ import {
   libraryKeyword,
   propertyKeyword,
   thisKeyword,
-} from "../../compiler/keywords";
+} from "../../compiler/elan-keywords";
 import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";

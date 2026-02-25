@@ -1,4 +1,4 @@
-import { abstractKeyword } from "../src/compiler/keywords";
+import { abstractKeyword } from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { Regexes } from "../src/ide/frames/fields/regexes";

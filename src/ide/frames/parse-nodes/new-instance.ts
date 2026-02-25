@@ -1,4 +1,4 @@
-import { newKeyword } from "../../../compiler/keywords";
+import { newKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

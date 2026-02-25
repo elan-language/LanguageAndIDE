@@ -1,4 +1,4 @@
-import { ofKeyword } from "../../compiler/keywords";
+import { ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";

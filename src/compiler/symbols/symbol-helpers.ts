@@ -13,7 +13,7 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "../elan-compiler-error";
-import { globalKeyword, libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword } from "../elan-keywords";
 import {
   isAstIdNode,
   isAstQualifiedNode,

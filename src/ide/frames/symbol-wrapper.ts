@@ -1,6 +1,6 @@
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { propertyKeyword } from "../../compiler/keywords";
+import { propertyKeyword } from "../../compiler/elan-keywords";
 import {
   isAbstractTypeName,
   isCall,

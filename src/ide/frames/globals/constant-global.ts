@@ -1,4 +1,4 @@
-import { constantKeyword } from "../../../compiler/keywords";
+import { constantKeyword } from "../../../compiler/elan-keywords";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";

@@ -1,4 +1,4 @@
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/keywords";
+import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/elan-keywords";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

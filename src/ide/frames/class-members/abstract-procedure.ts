@@ -1,4 +1,4 @@
-import { abstractProcedureKeywords } from "../../../compiler/keywords";
+import { abstractProcedureKeywords } from "../../../compiler/elan-keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { singleIndent } from "../frame-helpers";

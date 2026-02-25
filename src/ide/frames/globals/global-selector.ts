@@ -10,7 +10,7 @@ import {
   procedureKeyword,
   recordKeyword,
   testKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { isGlobal } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";

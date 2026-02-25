@@ -4,13 +4,13 @@ import {
   ifKeyword,
   lambdaKeyword,
   newKeyword,
-} from "../../../compiler/keywords";
+} from "../../../compiler/elan-keywords";
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 import { SpaceNode } from "./space-node";
-import { File } from "../frame-interfaces/file";
 
 export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, string] {
   let status = ParseStatus.invalid;

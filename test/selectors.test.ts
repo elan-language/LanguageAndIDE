@@ -1,6 +1,11 @@
 import assert from "assert";
 
-import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
+import {
+  assertKeyword,
+  functionKeyword,
+  letKeyword,
+  testKeyword,
+} from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";

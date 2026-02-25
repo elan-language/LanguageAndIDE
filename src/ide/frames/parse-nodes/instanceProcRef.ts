@@ -1,4 +1,4 @@
-import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";

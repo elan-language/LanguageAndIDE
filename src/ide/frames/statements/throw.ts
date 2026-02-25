@@ -1,4 +1,4 @@
-import { exceptionKeyword, throwKeyword } from "../../../compiler/keywords";
+import { exceptionKeyword, throwKeyword } from "../../../compiler/elan-keywords";
 import { ExceptionMessageField } from "../fields/exception-message-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

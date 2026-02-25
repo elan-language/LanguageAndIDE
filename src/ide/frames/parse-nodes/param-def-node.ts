@@ -1,4 +1,4 @@
-import { asKeyword } from "../../../compiler/keywords";
+import { asKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
