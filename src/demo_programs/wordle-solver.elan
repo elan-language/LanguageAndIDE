@@ -1,4 +1,4 @@
-# 0212d14a49728406f8db9264105758e08a7688ff8addd02b8486299107a039bf Elan 2.0.0-alpha guest default_profile valid
+# 322a05f3a86b260c4f045703a1a68fb4fc2653d02218c4685e784e71f06ca7c6 Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -13,7 +13,7 @@ main
   variable mark set to ""
   variable attempt set to "RAISE"
   while not mark.isSameValueAs("*****")
-    set mark to inputString("\n" + attempt)
+    set mark to inputString("" + attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     set attempt to bestAttempt(possible)
   end while
@@ -31,7 +31,7 @@ test test_isGreen
 end test
 
 function setChar(word as String, n as Int, newChar as String) returns String
-  return word[..n] + newChar + word[n + 1..]
+  return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 end function
 
 test test_setChar

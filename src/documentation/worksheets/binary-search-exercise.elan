@@ -13,7 +13,7 @@
 # - Find the mid-point of ths list using integer division ('div')
 # - To compare strings alphabetically use the .isBefore or .isAfter dot-methods 
 # - To extract the lists before and after the mid-point use the range indexes:
-#    'li[..mid]' and 'li[mid+1..]'
+#    'li.subList(0, mid)' and 'li.subList(mid+1, li.length())'
 # - You can implement the whole algorithm just by adding a new 'if' statement between the
 #   first and last lines, containing 'elif/else' clauses as needed. Each clause should
 #   set the result.
