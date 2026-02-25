@@ -70,7 +70,12 @@ export const abstractClassKeywords = abstractKeyword + " " + classKeyword;
 
 export const commentMarker = "#";
 
-export const allKeywords = [
+export function matchesKeyword(target: string): boolean {
+  return allKeywords().filter((kw) => target.toUpperCase() === kw.toUpperCase()).length > 0;
+}
+
+export function allKeywords(): string[] {
+  return [
   abstractKeyword,
   andKeyword,
   asKeyword,
@@ -131,6 +136,7 @@ export const allKeywords = [
   whileKeyword,
   withKeyword,
 ];
+};
 
 export const reservedWords = [
   "action",

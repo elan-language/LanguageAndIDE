@@ -1,4 +1,4 @@
-import { allKeywords } from "../compiler/keywords";
+import { matchesKeyword } from "../compiler/keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
@@ -154,10 +154,9 @@ async function parseAsType(code: string) {
 
 async function parseAsKeyword(code: string) {
   const trimmed = code.trim();
-  if (allKeywords.includes(trimmed)) {
+  if (matchesKeyword(trimmed)) {
     return `<el-kw>${trimmed}</el-kw>`;
   }
-
   return "";
 }
 

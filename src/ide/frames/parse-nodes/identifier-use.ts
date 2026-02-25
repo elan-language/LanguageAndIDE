@@ -1,4 +1,4 @@
-import { allKeywords } from "../../../compiler/keywords";
+import { matchesKeyword } from "../../../compiler/keywords";
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
@@ -30,18 +30,13 @@ export class IdentifierUse extends AbstractParseNode {
       );
     }
     if (this.isValid() && this.remainingText.length > 0) {
-      if (this.matchesKeyword()) {
+      if (matchesKeyword(this.matchedText)) {
         this.status = ParseStatus.invalid;
       } else {
         this._done = true;
       }
     }
   }
-
-  matchesKeyword(): boolean {
-    return allKeywords.filter((k) => this.matchedText === k).length > 0;
-  }
-
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }

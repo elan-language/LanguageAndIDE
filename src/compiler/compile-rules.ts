@@ -3,7 +3,7 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { allKeywords, propertyKeyword, reservedWords } from "./keywords";
+import { allKeywords, matchesKeyword, propertyKeyword, reservedWords } from "./keywords";
 
 import {
   CannotCallAFunction,
@@ -197,7 +197,7 @@ export function mustBeKnownSymbolType(
 }
 
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (allKeywords.includes(id)) {
+  if (matchesKeyword(id)) {
     compileErrors.push(
       new SyntaxCompileError(
         `'${id}' is a reserved word, and may not be used as an identifier. Either extend name or choose another..`,
