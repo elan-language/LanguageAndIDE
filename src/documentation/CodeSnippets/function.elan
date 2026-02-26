@@ -1,5 +1,6 @@
-# 37a6882f942fee478429d0df9168c2c662dd99add6b7097fa294ebd2a82e6e00 Elan 2.0.0-alpha guest default_profile valid
+# 0cb9cb3c77fec721bce397254e10b8e615ea0a3b0c96d88a12265905af9f8535 Elan 2.0.0-alpha guest default_profile valid
 
+# snipFrom
 function score(g as Game) returns Int
   return g.body.length() - 2
 end function
@@ -9,6 +10,7 @@ main
   call print(score(g))
 end main
 
+# snipTo
 class Game
   property body as String
 

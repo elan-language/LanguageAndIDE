@@ -44,7 +44,7 @@ it provides a useful discipline in any code. Preferring immutable named values c
   <td>Standard mutable<br>data structures</td>
   <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><el-type>List</el-type></a></td>
   <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><el-type>Dictionary</el-type></a></td>
-  <td><a href="LibRef.html#Array2D"><el-topic>2-dimensional array</el-topic><br><el-type>Array2D</el-type></a></td>
+  <td></td>
   <td></td>
   <td></td>
  </tr><tr>
@@ -91,10 +91,10 @@ it provides a useful discipline in any code. Preferring immutable named values c
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
  <li><i>or</i> specified in the definition of:</li>
  <ul>
-  <li>Data structures whose elements have a particular Type, e.g. <el-type>Array</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
+  <li>Data structures whose elements have a particular Type, e.g. <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
   <li><p><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
   <li><el-kw>return</el-kw> value of a function</li>
-  <li><el-kw>property</el-kw> of an interface, class or record</li>
+  <li><el-kw>property</el-kw> of an interface or class</li>
   <li>empty named value, e.g. <el-kw>empty</el-kw> <el-type>List</el-type></li>
  </ul>
 </ul>
@@ -154,7 +154,6 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#procedure"><el-kw>procedure</el-kw></a>,
  <a href="#function"><el-kw>function</el-kw></a>,
  <a href="#test"><el-kw>test</el-kw></a>,
- <a href="#record"><el-kw>record</el-kw></a>,
  <a href="#class"><el-kw>class</el-kw></a>,
  <a href="#abstract_class"><el-kw>abstract class</el-kw></a>,
  <a href="#interface"><el-kw>interface</el-kw></a>,
@@ -165,7 +164,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <ul>
  <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement insrtructions</a> within them.</li>
  <li><el-kw>test</el-kw> also contains instructions, in particular the <a href="#assert"><el-kw>assert</el-kw></a> instruction for testing functions during development of your program.</li>
- <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
+ <li><el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
@@ -275,26 +274,31 @@ and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
 </el-top>
 <el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>power</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) &lt; <el-method>power</el-method>(<el-id>b</el-id>, <el-id>a</el-id>)<el-kw> then </el-kw><el-id>true</el-id><el-kw> else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
-</el-func></el-code-block>
+</el-func>
+</el-code-block>
+
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; The function definition</p>
 <el-code-block source="function.elan">
-<el-func class="ok multiline" id="func5" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>score</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return10" tabindex="-1"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-id>g</el-id>.<el-id>body</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
+<el-func class="ok multiline" id="func1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>score</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-id>g</el-id>.<el-id>body</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Reference to the function</p>
-<main class="ok multiline" id="main1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-<el-statement class="ok" id="let17" tabindex="-1"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>g</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print3" tabindex="-1"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="-1"><el-txt><el-method>score</el-method>(<el-id>g</el-id>)</el-txt></el-field></el-statement>
+<el-code-block source="function.elan">
+<el-main class="ok multiline" id="main8" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="var10" tabindex="-1"><el-kw>variable </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>g</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call13" tabindex="-1"><el-kw>call </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args15" class="optional ok" tabindex="-1"><el-txt><el-method>score</el-method>(<el-id>g</el-id>)</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end main</el-kw>
-</main>
+</el-main>
 </el-code-block>
 <hr>
 </div></div>
@@ -312,8 +316,9 @@ and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
 <ul>
  <li>in a call to a procedure method referencing a variable, as in:
 <el-code-block source="put.elan">
-<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>4</el-lit>, <el-lit>0</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call8" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-lit>2</el-lit>, <el-lit>5</el-lit></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>initialise</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-lit>4</el-lit>, <el-lit>0</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call9" tabindex="-1"><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args11" class="optional ok" tabindex="-1"><el-txt><el-lit>2</el-lit>, <el-lit>5</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 <p>The procedure called may be defined in a class or provided by the system.</li>
  <li>to <a href="LibRef.html#deconstructTuple">deconstruct a <el-code>Tuple</el-code></a>.</li>
@@ -346,24 +351,25 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-kw>assert</el-kw> instructions that test a function</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <el-code>binarySearch</el-code> on three test lists</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <el-code>binarySearch</el-code> on four test lists</p>
 <el-code-block source="test_search.elan">
-<el-test class="ok multiline" id="test74" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment76" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let77" tabindex="0"><el-kw>let </el-kw><el-field id="var78" class="ok" tabindex="0"><el-txt><el-id>li1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr79" class="ok" tabindex="0"><el-txt>["<el-lit>lemon</el-lit>", "<el-lit>lime</el-lit>", "<el-lit>orange</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert80" tabindex="0"><el-kw>assert </el-kw><el-field id="text81" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>lemon</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr82" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert83" tabindex="0"><el-kw>assert </el-kw><el-field id="text84" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>lime</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr85" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert86" tabindex="0"><el-kw>assert </el-kw><el-field id="text87" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>orange</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert89" tabindex="0"><el-kw>assert </el-kw><el-field id="text90" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>pear</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr91" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="let92" tabindex="0"><el-kw>let </el-kw><el-field id="var93" class="ok" tabindex="0"><el-txt><el-id>li2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr94" class="ok" tabindex="0"><el-txt>["<el-lit>lemon</el-lit>", "<el-lit>orange</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert95" tabindex="0"><el-kw>assert </el-kw><el-field id="text96" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>lemon</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr97" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert98" tabindex="0"><el-kw>assert </el-kw><el-field id="text99" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>orange</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr100" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert101" tabindex="0"><el-kw>assert </el-kw><el-field id="text102" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>pear</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr103" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="let104" tabindex="0"><el-kw>let </el-kw><el-field id="var105" class="ok" tabindex="0"><el-txt><el-id>li3</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr106" class="ok" tabindex="0"><el-txt>["<el-lit>lemon</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert107" tabindex="0"><el-kw>assert </el-kw><el-field id="text108" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li3</el-id>, "<el-lit>lemon</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr109" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert110" tabindex="0"><el-kw>assert </el-kw><el-field id="text111" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li3</el-id>, "<el-lit>lime</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr112" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="let113" tabindex="0"><el-kw>let </el-kw><el-field id="var114" class="ok" tabindex="0"><el-txt><el-id>li4</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr115" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert116" tabindex="0"><el-kw>assert </el-kw><el-field id="text117" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>li4</el-id>, "<el-lit>pear</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr118" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-test class="ok multiline" id="test105" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident107" class="ok" tabindex="-1"><el-txt><el-id>test_binarySearch</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var108" tabindex="-1"><el-kw>variable </el-kw><el-field id="var109" class="ok" tabindex="-1"><el-txt><el-id>li1</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr110" class="ok" tabindex="-1"><el-txt>["<el-lit>lemon</el-lit>", "<el-lit>lime</el-lit>", "<el-lit>orange</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert111" tabindex="-1"><el-kw>assert </el-kw><el-field id="text112" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>lemon</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr113" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert114" tabindex="-1"><el-kw>assert </el-kw><el-field id="text115" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>lime</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr116" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert117" tabindex="-1"><el-kw>assert </el-kw><el-field id="text118" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>orange</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr119" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert120" tabindex="-1"><el-kw>assert </el-kw><el-field id="text121" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li1</el-id>, "<el-lit>pear</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr122" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="var123" tabindex="-1"><el-kw>variable </el-kw><el-field id="var124" class="ok" tabindex="-1"><el-txt><el-id>li2</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr125" class="ok" tabindex="-1"><el-txt>["<el-lit>lemon</el-lit>", "<el-lit>orange</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert126" tabindex="-1"><el-kw>assert </el-kw><el-field id="text127" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>lemon</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr128" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert129" tabindex="-1"><el-kw>assert </el-kw><el-field id="text130" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>orange</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr131" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert132" tabindex="-1"><el-kw>assert </el-kw><el-field id="text133" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li2</el-id>, "<el-lit>pear</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr134" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="var135" tabindex="-1"><el-kw>variable </el-kw><el-field id="var136" class="ok" tabindex="-1"><el-txt><el-id>li3</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr137" class="ok" tabindex="-1"><el-txt>["<el-lit>lemon</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert138" tabindex="-1"><el-kw>assert </el-kw><el-field id="text139" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li3</el-id>, "<el-lit>lemon</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr140" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert141" tabindex="-1"><el-kw>assert </el-kw><el-field id="text142" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li3</el-id>, "<el-lit>lime</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr143" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="var144" tabindex="-1"><el-kw>variable </el-kw><el-field id="var145" class="ok" tabindex="-1"><el-txt><el-id>li4</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr146" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert147" tabindex="-1"><el-kw>assert </el-kw><el-field id="text148" class="ok" tabindex="-1"><el-txt><el-method>binarySearch</el-method>(<el-id>li4</el-id>, "<el-lit>pear</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr149" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
@@ -386,28 +392,30 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <p>When testing <el-type>Float</el-type> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
 
 <el-code-block source="test_round.elan">
-<el-test class="ok multiline" id="test3" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment5" class="optional ok" tabindex="0"><el-txt>round()</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="assert14" tabindex="0"><el-kw>assert </el-kw><el-field id="text15" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.414</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-test class="ok multiline" id="test1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-id>test_round</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="assert4" tabindex="-1"><el-kw>assert </el-kw><el-field id="text5" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.414</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
 
 <h3 class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
+<p>In the last <el-kw>assert</el-kw> shown below, note how testing can also be done against an expected error message.</p>
+<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><el-code>ghosted</el-code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <el-code-block source="test_runtime.elan">
 <el-test class="error multiline" id="test1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
-<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt></el-field></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-id>test_list</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var4" tabindex="-1"><el-kw>variable </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>0</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>5</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>2</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>7</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field> <el-msg class="error">actual (computed): Out of range index: 4 size: 3</el-msg></el-statement>
-<el-statement class="ok" id="assert17" tabindex="-1"><el-kw>assert </el-kw><el-field id="text18" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>"<el-lit>Out of range index: 4 size: 3</el-lit>"</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt>"<el-lit>Out of range index: 4 size: 3</el-lit>"</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
-</el-test></el-code-block>
-
-<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><el-code>ghosted</el-code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
-<p>In the last <el-kw>assert</el-kw> above, note how testing can also be done against an expected error message.</p>
+</el-test>
+</el-code-block>
 
 <h3 class="no-TOC" >Testing long strings</h3>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
@@ -446,7 +454,7 @@ the overall test status will show the status of only the unghosted tests (green 
 
 <el-code-block source="snake_FP.elan">
 <el-test class="ghosted ok multiline" id="test210" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>clockTick</el-txt></el-field></el-top>
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>test_clockTick</el-txt></el-field></el-top>
 <el-statement class="ok" id="let213" tabindex="-1"><el-kw>let </el-kw><el-field id="var214" class="ok" tabindex="-1"><el-txt><el-id>g1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr215" class="ok" tabindex="-1"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt></el-field></el-statement>
 <el-statement class="ok" id="let216" tabindex="-1"><el-kw>let </el-kw><el-field id="var217" class="ok" tabindex="-1"><el-txt><el-id>g2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr218" class="ok" tabindex="-1"><el-txt><el-method>newApple</el-method>(<el-id>g1</el-id>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="let219" tabindex="-1"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="-1"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt></el-field></el-statement>
@@ -478,6 +486,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <el-code>test</el-code>.</p>
 
+<!--
 <h2 id="record"><el-kw>record</el-kw></h2>
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an uppercase letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lowercase letter) and a Type.
@@ -558,6 +567,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 <p>will read the <el-code>properties</el-code> into the four names defined.</p>
 When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code>record</el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-kw>record</el-kw>.
+-->
 
 <h2 id="class"><el-kw>class</el-kw></h2>
 
@@ -575,7 +585,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident179" class="ok" tabindex="-1"><el-txt><el-method>newRandomPosition</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params180" class="optional ok" tabindex="-1"><el-txt><el-id>snake</el-id> <el-kw>as</el-kw> <el-type>Snake</el-type></el-txt></el-field><el-punc>)</el-punc>
 </el-top>
 <el-statement class="ok" id="var181" tabindex="-1"><el-kw>variable </el-kw><el-field id="var182" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr183" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="while184" tabindex="-1">
+<el-statement class="ok multiline" id="whilndex="-1">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr186" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="let187" tabindex="-1"><el-kw>constant </el-kw><el-field id="var188" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr189" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
@@ -592,12 +602,12 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <el-kw>end procedure</el-kw>
 </el-proc>
 <el-proc class="ok multiline" id="proc202" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident204" class="ok" tabindex="-1"><el-txt><el-method>updateBlocks</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params205" class="optional ok" tabindex="-1"><el-txt><el-id>blocks</el-id> <el-kw>as</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field><el-punc>)</el-punc>
+<el-proc class="ok multiline" id="proc202" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident204" class="ok" tabindex="-1"><el-txt><el-method>updateBlocks</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params205" class="optional ok" tabindex="-1"><el-txt><el-id>blocks</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;&gt;</el-txt></el-field><el-punc>)</el-punc>
 </el-top>
-<el-statement class="ok" id="call206" tabindex="-1"><el-kw>call </el-kw><el-field id="ident207" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args208" class="optional ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>x</el-id>, <el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>y</el-id>, <el-id>red</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="set206" tabindex="-1"><el-kw>set </el-kw><el-field id="ident207" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id>[<el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>x</el-id>][<el-kw>property</el-kw>.<el-id>location</el-id>.<el-id>y</el-id>]</el-txt></el-field><el-kw> to </el-kw><el-field id="expr208" class="ok" tabindex="-1"><el-txt><el-id>red</el-id></el-txt></el-field></el-statement>
 <el-kw>end procedure</el-kw>
-</el-proc>
-<el-kw>end class</el-kw>
+</el-proc><el-kw>end class</el-kw>
 </el-class>
 </el-code-block>
 
@@ -744,13 +754,14 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 </div></div>
 
 <h2 id="constant"><el-kw>constant</el-kw> (global)</h2>
-<p>There are two uses of the <el-kw>constant</el-kw> instruction: this one at global level, the other local to a routine and described under <a href="#constant_let">constant (local)</a>.</p>
-<p>A global <el-kw>constant</el-kw> instruction atdefines a named value that is defined at the global level in a program, is global in scope and cannot be changed.</p>
-<p>Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
-<p>A global constant is defined by a literal of an immutable Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
+<p>There are two uses of the <el-kw>constant</el-kw> instruction: this one at global level, the other local in a routine and described under <a href="#constant_let">constant (local)</a>.</p>
+<p>A global <el-kw>constant</el-kw> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
+ Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
+<p>A global constant is defined by a literal of an immutable value Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type> or
  <el-type>String</el-type>.</p>
-<p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
-<p>A global constant can be defined by a previously defined global constant or a system constant,
+ <p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-kw>variable</el-kw>. See <a href="#constant_structure">Constant data structure</a>.</p>
+<p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
+<p>A global constant can be defined by reference to a previously defined global constant or to a system constant,
  but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
@@ -761,11 +772,6 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <el-const class="ok multiline" id="const1" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident2" class="ok" tabindex="-1"><el-txt><el-id>phi</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text3" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.618</el-lit></el-txt></el-field> &mdash;  a <el-type>Float</el-type> value</el-const>
 <el-const class="ok multiline" id="const13" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>gameOver</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> &mdash;  a <el-type>Boolean</el-type> value</el-const>
 <el-const class="ok multiline" id="const7" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>warningMsg</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text9" class="ok" tabindex="-1"><el-txt>"<el-lit>Limit reached</el-lit>"</el-txt></el-field> &mdash;  a <el-type>String</el-type> value</el-const>
-<el-const class="ok multiline" id="const10" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>fruit</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text12" class="ok" tabindex="-1"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>banana</el-lit>"}</el-txt></el-field> &mdash;  a <el-type>ListImmutable</el-type></el-const>
-<el-const class="ok multiline" id="const58" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident59" class="ok" tabindex="-1"><el-txt><el-id>palette</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text60" class="ok" tabindex="-1"><el-txt>{<el-id>red</el-id>, <el-id>blue</el-id>, <el-id>yellow</el-id>, <el-id>turquoise</el-id>}</el-txt></el-field> &mdash;  a <el-type>ListImmutable</el-type> of system and above defined constants</el-const>
-<el-enum class="ok multiline" id="enum28" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type29" class="ok" tabindex="-1"><el-txt><el-type>Suit</el-type></el-txt></el-field></el-top> <el-field id="enumVals30" class="ok" tabindex="-1"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt></el-field> &mdash;  an <el-kw>enum</el-kw> for use in the following constant <el-id>colours</el-id></el-enum>
-<el-const class="ok multiline" id="const19" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident20" class="ok" tabindex="-1"><el-txt><el-id>colours</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text21" class="ok" tabindex="-1"><el-txt>{<el-type>Suit</el-type>.<el-id>spades</el-id>:<el-id>black</el-id>, <el-type>Suit</el-type>.<el-id>hearts</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>diamonds</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>clubs</el-id>:<el-id>black</el-id>}</el-txt></el-field> &mdash;  a <el-type>DictionaryImmutable</el-type> using <el-kw>enum</el-kw> <el-type>Suit</el-type></el-const>
-<el-const class="ok multiline" id="const22" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident23" class="ok" tabindex="-1"><el-txt><el-id>scrabbleValues</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text24" class="ok" tabindex="-1"><el-txt>{"<el-lit>A</el-lit>":<el-lit>1</el-lit>, "<el-lit>B</el-lit>":<el-lit>3</el-lit>, "<el-lit>C</el-lit>":<el-lit>3</el-lit>, "<el-lit>D</el-lit>":<el-lit>2</el-lit>, "<el-lit>E</el-lit>":<el-lit>1</el-lit>, "<el-lit>F</el-lit>":<el-lit>4</el-lit>, "<el-lit>G</el-lit>":<el-lit>2</el-lit>, "<el-lit>H</el-lit>":<el-lit>4</el-lit>, "<el-lit>I</el-lit>":<el-lit>1</el-lit>, "<el-lit>J</el-lit>":<el-lit>8</el-lit>, "<el-lit>K</el-lit>":<el-lit>5</el-lit>, "<el-lit>L</el-lit>":<el-lit>1</el-lit>, "<el-lit>M</el-lit>":<el-lit>3</el-lit>, "<el-lit>N</el-lit>":<el-lit>1</el-lit>, "<el-lit>O</el-lit>":<el-lit>1</el-lit>, "<el-lit>P</el-lit>":<el-lit>3</el-lit>, "<el-lit>Q</el-lit>":<el-lit>10</el-lit>, "<el-lit>R</el-lit>":<el-lit>1</el-lit>, "<el-lit>S</el-lit>":<el-lit>1</el-lit>, "<el-lit>T</el-lit>":<el-lit>1</el-lit>, "<el-lit>U</el-lit>":<el-lit>1</el-lit>, "<el-lit>V</el-lit>":<el-lit>4</el-lit>, "<el-lit>W</el-lit>":<el-lit>4</el-lit>, "<el-lit>X</el-lit>":<el-lit>8</el-lit>, "<el-lit>Y</el-lit>":<el-lit>4</el-lit>, "<el-lit>Z</el-lit>":<el-lit>10</el-lit>}</el-txt></el-field> &mdash;  a <el-type>DictionaryImmutable</el-type></el-const>
 </el-code-block>
 
 <h2 id="enum"><el-kw>enum</el-kw></h2>
@@ -778,6 +784,7 @@ number of values (which must be valid <a href="#Identifier">identifiers</a>).
 
 <p>Examples of definition and use:</p>
 <el-code-block source="constants_enum.elan">
+<el-enum class="ok multiline" id="enum28" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type29" class="ok" tabindex="-1"><el-txt><el-type>Suit</el-type></el-txt></el-field></el-top> <el-field id="enumVals30" class="ok" tabindex="-1"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt></el-field> &mdash;  an <el-kw>enum</el-kw> for use in the following constant <el-id>colours</el-id></el-enum>
 <el-enum class="ok multiline" id="enum137" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type138" class="ok" tabindex="0"><el-txt><el-type>Action</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals139" class="ok" tabindex="0"><el-txt><el-id>stand</el-id>, <el-id>draw</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum140" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type141" class="ok" tabindex="0"><el-txt><el-type>Outcome</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals142" class="ok" tabindex="0"><el-txt><el-id>undecided</el-id>, <el-id>win</el-id>, <el-id>lose</el-id>, <el-id>draw</el-id>, <el-id>winDouble</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum143" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type144" class="ok" tabindex="0"><el-txt><el-type>Status</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals145" class="ok" tabindex="0"><el-txt><el-id>pending</el-id>, <el-id>playing</el-id>, <el-id>standing</el-id>, <el-id>blackjack</el-id>, <el-id>bust</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
@@ -802,9 +809,8 @@ number of values (which must be valid <a href="#Identifier">identifiers</a>).
 
 <p>Member instructions (also referred to simply as 'members') are located within an
  <el-kw>interface</el-kw>,
- <el-kw>abstract class</el-kw>,
- (concrete) <el-kw>class</el-kw> or
- <el-kw>record</el-kw>.
+ <el-kw>abstract class</el-kw> or
+ (concrete) <el-kw>class</el-kw>.
 The <el-code>new code</el-code> prompt will offer a context appropriate subset of the following member instructions:</p>
 <p>
  <a href="#abstract_property"><el-kw>abstract property</el-kw></a>,
@@ -825,14 +831,13 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
  <tr>
   <th></th>
   <th colspan="2">Abstract</th>
-  <th colspan="2">Concrete</th>
+  <th>Concrete</th>
   <th>notes</th>
  </tr><tr>
   <td width="150"></td>
   <td width="40"><a href="#interface"><br><el-kw>interface</el-kw></a></td>
   <td width="40"><a href="#abstract_class"><el-kw>abstract class</el-kw></a></td>
   <td width="40"><a href="#class"><br><el-kw>class</el-kw></a></td>
-  <td width="40"><a href="#record"><br><el-kw>record</el-kw></a></td>
   <td></td>
  </tr><tr>
   <td><a href="#abstract_property"><el-kw>abstract property</el-kw></a></td>
@@ -840,12 +845,10 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td>&#x2714;</td>
   <td></td>
   <td></td>
-  <td></td>
  </tr><tr>
   <td><a href="#abstract_function"><el-kw>abstract function</el-kw></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
-  <td></td>
   <td></td>
   <td>prototype for function reference only</td>
  </tr><tr>
@@ -853,19 +856,16 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
-  <td></td>
   <td>prototype for procedure call only</td>
  </tr><tr>
   <td><a href="#property"><el-kw>property</el-kw></a></td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
-  <td>&#x2714;</td>
   <td></td>
  </tr><tr>
   <td><a href="#function"><el-kw>function</el-kw> method</a></td>
   <td></td>
-  <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
@@ -875,19 +875,16 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
-  <td></td>
  </tr><tr>
   <td><a href="#private"><el-kw>private property</el-kw></a></td>
   <td></td>
   <td></td>
-  <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
  </tr><tr>
   <td><a href="#private"><el-kw>private function</el-kw></a></td>
   <td></td>
   <td></td>
-  <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
  </tr><tr>
@@ -896,13 +893,11 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td></td>
   <td>&#x2714;</td>
   <td></td>
-  <td></td>
  </tr><tr>
   <td><a href="#constructor"><el-kw>constructor</el-kw></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
-  <td></td>
   <td></td>
  </tr>
 </table>
@@ -1088,12 +1083,13 @@ which is the mechanism for running unit tests during program development, not du
 <p>It is recommended that you always use <el-kw>constant</el-kw> in preference to <el-kw>variable</el-kw>, unless you need to be able to re-assign its value.</p>
 <p>You can put a <el-kw>constant</el-kw> in a loop, so that the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
-<h2 id="each"><el-kw>each</el-kw> (loop)</h2>
-<p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
+<h3 class="no-TOC" id="constant_structure">Constant data structures</h3>
+<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function,
+and refer to with a variable. For example:>/p>
 
 <h2 id="each"><el-kw>each</el-kw></h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
-<p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
+<p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
 <p>The loop counter variable does not have to have been previously declared or initialised.</p>
 
 <div class="accordion">
@@ -1145,7 +1141,7 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 <p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative,
 and may be defined by literals, integer named values or expressions that evaluate to integer values.</p>
 <p>Note that, if you require a negative step value, then the literal, named value or expression must be positive and prefixed with a negative sign.
-This is needed at compile time to determine the nature of the exit condition. For example, to step in descending sequence you might write:</p>
+This is needed at compile time to determine the nature of the exit condition. For example, to step in descending sequence you can write:</p>
 
 <el-code-block source="forStepNeg.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
@@ -1161,8 +1157,8 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <div id="then"></div>
 <div id="else"></div>
 <div id="elif"></div>
-<h2 id="if_statement"><el-kw>if</el-kw></h2>
-<p>The <el-kw>if</el-kw> instruction specifies which of several code sequences is to be executed next.</p>
+<h2 id="if_statement"><el-kw>if</el-kw> (instruction)</h2>
+<p>The <el-kw>if..then..else..elif..</el-kw> construct specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li> It is structured like this (<el-kw>elif</el-kw> is the Elan keyword for 'else if'):<br>
  <el-kw>if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
@@ -1176,7 +1172,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
  <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
  <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
 </ul>
-<p>See also <a href="#if_expression"><el-kw>if</el-kw> expression</a> for using the related <el-kw>if</el-kw>  to return a value.</p>
+<p>See also <a href="#if_expression"><el-kw>if</el-kw> (expression)</a> for using the related <el-kw>if</el-kw>  to return a value.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> instruction</h4>
@@ -1365,8 +1361,8 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <li>with a single index, the result is of the same Type as the elements of the data structure being indexed</li>
 <li>with an index range, the result is of the same Type as the data structure itself</li>
 </ul>
-<p>Indexable Types are <a href="LibRef.html#String"><el-type>String</el-type></a>, <a href="LibRef.html#StandardDataStructures"><el-type>Array</el-type>, <el-type>Array2D</el-type>, <el-type>List</el-type>, <el-type>Dictionary</el-type></a>, <a href="LibRef.html#ImmutableDataStructures"><el-type>ListImmutable</el-type> and <el-type>DictionaryImmutable</el-type></a>.</p>
-<p>Index ranges cannot be applied to <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
+<p>Indexable Types are <a href="LibRef.html#String"><el-type>String</el-type></a>, <a href="LibRef.html#StandardDataStructures"><el-type>List</el-type>, <el-type>Dictionary</el-type></a>.</p>
+<p>Index ranges cannot be applied to <el-type>Dictionary</el-type>.</p>
 <p>If the index values in a range are equal, or the second is smaller than the first,
 then an empty data structure of the correct Type is generated.</p>
 <p>Unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
@@ -1475,7 +1471,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 </el-code-block>
 
 <h2 id="functionCall">Function reference</h2>
-An expression may simply be a reference to a  function, or it may include several function references within it. Examples:
+An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
 <el-statement class="ok" id="call3" tabindex="-1"><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
@@ -1509,7 +1505,7 @@ You would typically define a <el-code>lambda</el-code>:</p>
 <p>Although a <el-code>lambda</el-code> is commonly defined 'inline' it is also possible
  to assign a <el-code>lambda</el-code> to a named value, so as to reuse it within the scope of that named value.</p>
 
-Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an array of Booleans:
+Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a list of Boolean values:
 <el-code-block source="liveNeighbours.elan">
 <el-func class="ok multiline" id="func3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>liveNeighbours</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>cells</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -1557,14 +1553,14 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an 
 
 <h2 id="new"><el-kw>new</el-kw></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
-   or a <a href="#class"> user-defined class</a> or <a href="#record">record</a> &ndash; either to assign to a named value, or as part
+   or a <a href="#class"> user-defined class</a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program <el-code>snake_PP.elan</el-code>:</p>
 
 <el-code-block>
-<el-statement id="var5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-method>createBlockGraphics</el-method>(<el-id>white</el-id>)</el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>Where the new instance is of a <a href="#class"> user-defined class</a> or <a href="#record">record</a> the expression may optionally
+<p>Where the new instance is of a <a href="#class"> user-defined class</a> the expression may optionally
 be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
 
 <el-code-block source="dealCard.elan">
@@ -1583,7 +1579,7 @@ be followed by a <el-kw>with</el-kw> clause in order to specify any property val
 <h2 id="copyWith"><el-kw>copy</el-kw>..<el-kw>with</el-kw></h2>
 <p>A <el-kw>copy..with</el-kw> expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   &ndash; either to assign to a named value, or as part of a more complex expression.</p>
-<p>It is used extensively within functional programming where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> Types.
+<p>It is used extensively within functional programming where you are dealing with <i>immutable</i> Types.
 Example of use in this manner, taken from demo program <el-code>snake_FP.elan</el-code>:</p>
 
 <el-code-block>
@@ -1605,7 +1601,7 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
 <h2 id="empty"><el-kw>empty</el-kw> of <el-type>Type</el-type></h2>
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   &ndash; usually only created for comparing to another instance to test whether that other instance is also empty or default.
-  This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
+  This may arise, for example, if a <a href="#class">class</a> is defined with a property that has never had a value assigned to it.
   The following example is taken from demo program <el-code>pathfinder.elan</el-code>:</p>
 
 <el-code-block>
@@ -1690,17 +1686,17 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
 
 <h3 id="NotIndexableCompileError" class="no-TOC">Cannot ...index ...</h3>
- <p>An index (in square brackets) may be applied only to certain data structure Types: <el-type>String</el-type>, <el-type>Array</el-type>, <el-type>Array2D</el-type>,
- <el-type>List</el-type>, <el-type>ListImmutable</el-type>, <el-type>Dictionary</el-type>, and <el-type>DictionaryImmutable</el-type>.</p>
+ <p>An index (in square brackets) may be applied only to certain data structure Types: <el-type>String</el-type>, <el-type>List</el-type>
+ and <el-type>Dictionary</el-type>.</p>
 
 <h3 id="NotRangeableCompileError" class="no-TOC">Cannot range ...</h3>
- <p>A range may be applied only to certain data structure Types: <el-type>String</el-type>, <el-type>Array</el-type>, <el-type>List</el-type>, and <el-type>ListImmutable</el-type>.</p>
+ <p>A range may be applied only to certain data structure Types: <el-type>String</el-type> and <el-type>List</el-type>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
  <p>The Type specified after the <el-kw>call</el-kw> keyword cannot be instantiated. Either the Type is inapplicable,
  or it is an abstract class or interface.</p>
 
-<h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be an Array, List, or String.</h3>
+<h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
 
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
  <p>A concrete class may inherit from an abstract class, and/or an interface, but not from another concrete class.
@@ -1725,10 +1721,12 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
  <p>You cannot create an instance of any abstract class or interface: only of a concrete class.</p>
 
+<!--
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
  <p>If a parameter of a procedure is marked with <el-kw>out</el-kw> then this means that the parameter may be
  reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
  constant, a literal value, or a named value that is defined by a <el-kw>let</el-kw> instruction.</p>
+-->
 
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
  <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>asString</el-method>, may be called on a named
@@ -1747,8 +1745,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>One or more arguments provided to the method are of the wrong Type.</p>
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
- <p>Certain data structure Types, including <el-type>Array</el-type>, <el-type>Array2D</el-type>,
- <el-type>List</el-type> must specify the Type of their members, for example <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;.
+ <p>Certain data structure Types, including <el-type>List</el-type>, must specify the Type of their members, for example <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
  for example: <el-code><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Float</el-type>&gt;</el-code>.</p>
@@ -1805,7 +1802,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:</p>
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
-  <li>Lowercase versions of Elan Type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
+  <li>Lowercase versions of Elan Type names, such as <el-code>int, float, string, boolean, list, dictionary</el-code>.
   It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
   what it does (for a method), or represents (for a named value).</li>
   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
@@ -1820,7 +1817,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
- <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
+ <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
  <el-code><el-id>a</el-id>[&minus;<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
@@ -1829,8 +1826,10 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  It is, however, possible to compare the results of two function evaluations.
  You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
 
+<!--
 <h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>
  <p>Properties on a <a href="#record">record</a> may only be of immutable Types.</p>
+-->
 
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
  <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable Type.
@@ -1839,10 +1838,12 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
  <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary</a> must be an immutable Type, and not itself an indexable Type.</p>
 
+<!--
 <h3 id="invalidPropertyInRecordDeconstruction" class="no-TOC">No such property ... on record ...</h3>
  <p>The property name given in the record deconstruction does not match a property on the given Type of record.</p>
 
 <h3 id="discardInRecordDeconstruction" class="no-TOC">Cannot discard in record deconstruction ...</h3>
+-->
 
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
 
@@ -1954,9 +1955,8 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>The definition for a variable or for a <el-kw>let</el-kw> instruction is most commonly
  a simple name. Less commonly, it may take the form of a dconstruction of a
  <a href="LibRef.html#deconstructList"><el-type>List</el-type></a>,
- <a href="LibRef.html#deconstructListImmutable"><el-type>ListImmutabl</el-type>e</a>,
- <a href="LibRef.html#deconstructTuple"><el-code>Tuple</el-code></a> or
- <a href="#deconstructRecord"><el-kw>Record</el-kw></a>.</p>
+ <a href="LibRef.html#deconstructListImmutable"><el-type>ListImmutabl</el-type>e</a> or
+ <a href="LibRef.html#deconstructTuple"><el-code>Tuple</el-code></a>.</p>
 
 <h2>Advisory</h2>
 
