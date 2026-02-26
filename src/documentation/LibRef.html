@@ -167,7 +167,7 @@ in the range:</li>
    <li>Minimum value: approximately 5.0 &times; 10<sup>-324</sup></li>
   </ul></li>
  <li>A variable that has been defined as being of Type <el-type>Float</el-type> may not be passed as an argument into a method that requires an <el-type>Int</el-type>,
-    nor as an index into a <el-type>List</el-type> or an <el-type>Array2D</el-type> even if the variable contains no fractional part.
+    nor as an index into a <el-type>List</el-type>  even if the variable contains no fractional part.
     It may, however, be converted into an <el-type>Int</el-type> before passing, using the function <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of Type <el-type>Float</el-type>, but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
  <el-code>variable hour set to 3.0</el-code></li>
@@ -487,7 +487,7 @@ for example:</p>
 </ul>
 
 <h1 id="StandardDataStructures">Standard data structures</h1>
-<p>Elan has three mutable data structure Types <el-type>List</el-type>, <el-type>Array2D</el-type> and <el-type>Dictionary</el-type>, and
+<p>Elan has two mutable data structure Types <el-type>List</el-type> and <el-type>Dictionary</el-type>, and
 three immutable data structure Types <el-type>Set</el-type>, <el-type>Stack</el-type> and <el-type>Queue</el-type>.</p>
 <p>The contents of these structures are referred to as items (or sometimes elements).</p> 
 <p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
@@ -506,14 +506,12 @@ with specified changes: that is why all such methods have names starting '<el-co
  <tr>
   <th></th>
   <th>List</th>
-  <th>Array2D</th>
   <th>Dictionary</th>
   <th>Set</th>
   <th>Stack</th>
   <th>Queue</th>
  </tr><tr
- ><td>Mutability</td>
-  <td>Mutable</td>
+ ><td>mutability</td>
   <td>Mutable</td>
   <td>Mutable</td>
   <td>Immutable</td>
@@ -521,18 +519,16 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td>Immutable</td>
  </tr><tr>
   <td>Type form</td>
-  <td><el-type>List</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item can be any, including <el-type>Array2D</el-type> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
-  <td><el-type>Array2D</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
+  <td><el-type>List</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item can be any, including <el-type>List</el-type> for 'jagged' data</td>
   <td><el-type>Dictionary&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;<br>
-  <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, or a <el-code>record</el-code>, and<br>
+  <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, and<br>
   <el-id>valueType</el-id> may be any Type</td>
   <td><el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
   <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
   <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
  </tr><tr>
-  <td>size</td><td>Dynamic</td><td>Static</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td></tr>
+  <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td></tr>
   <td>literal definition</td>
-  <td><el-code>["a","b","c"]</el-code></td>
   <td>not available</td>
   <td><el-code>["a":3, "b":5]</el-code></td>
   <td>Only as converted from a literal <el-type>List</el-type> e.g.:<br><el-code>["a","b","c"].<el-method>asSet</el-method>()</el-code></td>
@@ -542,7 +538,6 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td>create empty</td>
   <td><el-code>empty</el-code> <el-type>List&lt;of <el-id>Type</el-id>&gt;</el-type> or<br>
   <el-code>new <el-type>List</el-type>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Array2D&lt;of <el-id>Type</el-id>&gt;</el-type></td>
   <td><el-code>empty</el-code> <el-type>Dictionary&lt;of <el-id>keyType</el-id>&gt;, <el-id>valueType</el-id>&gt;</el-type> or<br>
   <el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
   <td><el-code>empty</el-code> <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
@@ -554,10 +549,6 @@ with specified changes: that is why all such methods have names starting '<el-co
  </tr><tr>
   <td>create initialised</td>
   <td>not available</td>
-  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-id>Type</el-id>&gt;(<el-id>cols</el-id>, <el-id>rows</el-id>, <el-id>value</el-id>)<br>
-  <el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,<br>
-  <el-id>cols</el-id> is the number of columns,<el-id><br>rows</el-id> is the number of rows</el-code>, and<br>
-  <el-id>value</el-id> is the initial value of every item<br>(all are named values or literals)</td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
@@ -565,7 +556,6 @@ with specified changes: that is why all such methods have names starting '<el-co
  </tr><tr>
   <td>read by index</td>
   <td><el-code>li[2]</el-code></td>
-  <td><el-code>a2[3, 4]</el-code></td>
   <td><el-code>d["b"]</el-code></td>
   <td>not available</td>
   <td>not available</td>
@@ -577,11 +567,9 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
-  <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
   <td>see <a href="#List_procedures">Procedure methods on a List</a></td>
-  <td>see <a href="#Array2D_procedures">Procedure methods on an Array2D</a></td>
   <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
   <td>not available</td>
   <td>not available</td>
@@ -589,7 +577,6 @@ with specified changes: that is why all such methods have names starting '<el-co
  </tr><tr>
   <td>function dot methods</td>
   <td>see <a href="#List_functions">Function dot methods on a List</a></td>
-  <td>see <a href="#Array2D_functions">Function dot methods on an Array2D</a></td>
   <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
   <td>see <a href="#Set_functions">Function dot methods on a Set</a></td>
   <td>see <a href="#Stack_functions">Function dot methods on a Stack</a></td>
@@ -599,7 +586,7 @@ with specified changes: that is why all such methods have names starting '<el-co
 
 <h2 id="List">List</h2>
 <p>The <el-type>List</el-type> Type defines a data structure containing <i>n</i> items of any single Type,
- including fundamental value Types, structure Types such we <el-type>List</el-type> or <el-type>Array2D</el-type>,
+ including fundamental value Types, structure Types such we <el-type>List</el-type>,
  and also user-defined Types such as a class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>,</p>
 <p>A List is created either empty or initialised from a literal definition.</p>
@@ -877,123 +864,11 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
  </tr>
 </table>
 
-<h2 id="Array2D">Array2D</h2>
-
-<p>The <el-type>Array2D</el-type> Type defines a 2-dimensional aray data structure of fixed size containing items of a single Type.
- The items' Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type>.</p>
-<p>The extents of its two dimensions are specified when the array is created. They may be of the same size (giving a square array)
- or different (a rectangular array).
- (If you want to create a 'jagged' array, you should instead use a <el-type>List</el-type> of <el-type>List</el-type>s).</p>
-<p>You refer to the position of an item in such an array by two <el-type>Int</el-type> index values <i>(x,y)</i>, where <i>x</i> is the column number
- and <i>y</i> is the row number of a rectangular grid.
-Each index runs from <i>0</i> to <i>n-1</i>, where <i>n</i> is the specified <i>x</i> or <i>y</i> extent.</p>  
-<p>The single initial item value at every <i>(x,y)</i> position is specified at the creation of the array.</p>
-<p>To modify an item you may either <el-kw>call</el-kw> the <el-method>put</el-method> procedure method, or use the
-<el-method>withPut</el-method> function dot method.</p>
-<p>It is not possible to change the dimensions of an array.
-(If you want to vary an array's dimensions, you should instead use a <el-type>List</el-type> of <el-type>List</el-type>s).</p>
-
-<h3 class="no-TOC" id="Array2D_procedures">Procedure methods on an <el-type>Array2D</el-type></h3>
-<table class="tableMethod">
- <tr>
-  <th>procedure<br>method</th>
-  <th>on<br>Type</th>
-  <th>argument<br>Types</th>
-  <th>action</th>
- </tr><tr id="put_Array2D">
-  <td><el-method>put</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td><el-type>Int, Int</el-type>, value</td>
-  <td>puts the value at the (two integers) index position in the array</td>
- </tr>
-</table>
-
-<h3 class="no-TOC" id="Array2D_functions">Function dot methods on an <el-type>Array2D</el-type></h3>
-<table class="tableMethod">
- <tr>
-  <th>function<br>dot method</th>
-  <th>on<br>Type</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
-  <th>returns</th>
- </tr><tr id="asString_Array2D">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the array's columns each of which contains a comma+space-separated list
-    of row values enclosed in square brackets, the whole enclosed in square brackets</td>
- </tr><tr id="blocksAsHtml">
-  <td><el-method>blocksAsHtml</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr id="columns">
-  <td><el-method>columns</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td>(none)</td>
-  <td><el-type>Int</el-type></td>
-  <td>the number of columns in the array (the maximum <i>x</i> value)</td>
- </tr><tr id="contains_Array2D">
-  <td><el-method>contains</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td>value</td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if the array contains the item<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="indexOf_Array2D">
-  <td><el-method>indexOf</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td>value</td>
-  <td><el-type>Int, Int</el-type></td>
-  <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
-      by searching the columns in order, or (-1,-1) if no match is found</td>
- </tr><tr id="isSameReferenceAs_Array2D">
-  <td><el-method>isSameReferenceAs</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr id="isSameValueAs_Array2D">
-  <td><el-method>isSameValueAs</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr id="row">
-  <td><el-method>rows</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td>(none)</td>
-  <td><el-type>Int</el-type></td>
-  <td>the number of rows in the array (the maximum <i>y</i> value)</td>
- </tr><tr id="withPut_Array2D">
-  <td><el-method>withPut</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td><el-type>Int, Int</el-type>, value</td>
-  <td><el-type>Array2D</el-type></td>
-  <td>a new <el-type>Array2D</el-type> with the item at the (two integers) index position in the array</td>
- </tr>
-</table>
-
-<p>Since an <el-type>Array2D</el-type> has a known fixed size, methods <el-method>rows</el-method> and <el-method>columns</el-method> are of use only when passing such an array into a procedure or function that needs to discover its size.</p>
-<p>You can read individual items with a double index, for example:</p>
-<el-code-block source="col_row.elan">
-<el-statement class="ok multiline" id="for13" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-id>col</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok multiline" id="for19" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>row</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr24" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print25" tabindex="0"><el-kw>print </el-kw><el-field id="expr26" class="optional ok" tabindex="0"><el-txt><el-id>board</el-id>[<el-id>col</el-id>, <el-id>row</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-</el-code-block>
-
 <h2 id="Dictionary">Dictionary</h2>
-<p>A Dictionary works like an Array, but instead of having a numeric (integer) index, each entry has a <i>key</i>. Each key is associated with a <i>value</i>,
-so the Dictionary is a set of <i>key:value</i> pairs.
-The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,
-<i>or</i> it may be a user-defined <el-code>record</el-code>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
+<p>A Dictionary is like a List whose items are pairs but, instead of having a numeric index, each item has a <i>key</i> plus  an  associated <i>value</i>.
+The Dictionary is a set of <i>key:value</i> pairs.</p>
+<p>The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>.
+ The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
 
 <h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a Dictionary</h3>
 <table class="tableMethod">
@@ -1315,9 +1190,9 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
 
 <h1 id="CommonDotMethods">Common dot methods</h1>
 
-<h2>Dot methods that work on more than one fundamental Type</h2>
+<h2>Dot methods that work on more than one Type</h2>
 <p>Although all applicable methods are described in earlier sections under each Type, this table lists those which are applicable to several Types.</p>
-<p>Click on a Type to go to the Type's dot methods, or on the <el-id>&#x2714;</el-id> tick to go to the specific method on that Type.</p>
+<p>Click on a Type to go to the Type's dot methods, or on the tick <el-code>&#x2714;</el-code> to go to the specific method on that Type.</p>
 
 <table >
  <tr>
@@ -1330,35 +1205,10 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><a href="#Boolean"><el-type>Boolean</el-type></a></td>
   <td><a href="#String"><el-type>String</el-type></a></td>
   <td><a href="#List"><el-type>List</el-type></a></td>
-  <td><a href="#Array2D"><el-type>Array2D</el-type></a></td>
   <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
   <td><a href="#SetType"><el-type>Set</el-type></a></td>
   <td><a href="#Stack"><el-type>Stack</el-type></a></td>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
- </tr><tr><!---->
-  <td id="asList"><el-method>asList</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asList_Set">&#x2714;</a></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="asSet"><el-method>asSet</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asSet_List">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
  </tr><tr><!---->
   <td id="asString"><el-method>asString</el-method></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
@@ -1366,7 +1216,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><a href="#asString_Boolean">&#x2714;</a></td>
   <td><a href="#asString_String">&#x2714;</a></td>
   <td><a href="#asString_List">&#x2714;</a></td>
-  <td><a href="#asString_Array2D">&#x2714;</a></td>
   <td><a href="#asString_Dictionary">&#x2714;</a></td>
   <td><a href="#asString_Set">&#x2714;</a></td>
   <td><a href="#asString_Stack">&#x2714;</a></td>
@@ -1378,33 +1227,8 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td><a href="#contains_String">&#x2714;</a></td>
   <td><a href="#contains_List">&#x2714;</a></td>
-  <td><a href="#contains_Array2D">&#x2714;</a></td>
   <td>see notes</td>
   <td><a href="#contains_Set">&#x2714;</a></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="hasKey"><el-method>hasKey</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#hasKey_Dictionary">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="head"><el-method>head</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#head_List">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
   <td></td>
   <td></td>
  </tr><tr><!---->
@@ -1414,20 +1238,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td><a href="#indexOf_String">&#x2714;</a></td>
   <td><a href="#indexOf_List">&#x2714;</a></td>
-  <td><a href="#indexOf_Array2D">&#x2714;</a></td>
   <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="keys"><el-method>keys</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#keys_Dictionary">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1438,7 +1249,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td><a href="#length_String">&#x2714;</a></td>
   <td><a href="#length_List">&#x2714;</a></td>
-  <td></td>
   <td>see notes</td>
   <td><a href="#length_Set">&#x2714;</a></td>
   <td><a href="#length_Stack">&#x2714;</a></td>
@@ -1452,21 +1262,8 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td></td>
   <td></td>
-  <td></td>
   <td><a href="#peek_Stack">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
- </tr><tr><!---->
-  <td id="values"><el-method>values</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#values_Dictionary">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
  </tr><tr><!---->
   <td id="withPut"><el-method>withPut</el-method></td>
   <td></td>
@@ -1474,7 +1271,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td></td>
   <td><a href="#withPut_List">&#x2714;</a></td>
-  <td><a href="#withPut_Array2D">&#x2714;</a></td>
   <td><a href="#withPut_Dictionary">&#x2714;</a></td>
   <td></td>
   <td></td>
@@ -1486,7 +1282,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td></td>
   <td></td>
   <td><a href="#withRemoveAt_List">&#x2714;</a></td>
-  <td></td>
   <td><a href="#withRemoveAt_Dictionary">&#x2714;</a></td>
   <td></td>
   <td></td>
@@ -1515,25 +1310,30 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
 <el-code-block source="block_graphics.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="while6" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt></el-field></el-top>
-<el-statement class="ok" id="let9" tabindex="0"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let12" tabindex="0"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>y</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>colour</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-id>white</el-id> - <el-lit>1</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id>.<el-method>put</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>colour</el-id></el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call21" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-method>displayBlocks</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var37" tabindex="-1"><el-kw>variable </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>grid</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-method>createBlockGraphics</el-method>(<el-id>white</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="while6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>y</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>colour</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-id>white</el-id> - <el-lit>1</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="set45" tabindex="-1"><el-kw>set </el-kw><el-field id="ident46" class="ok" tabindex="-1"><el-txt><el-id>grid</el-id>[<el-id>x</el-id>][<el-id>y</el-id>]</el-txt></el-field><el-kw> to </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-id>colour</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>displayBlocks</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>grid</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
 </el-code-block>
 
-<h4 class="no-TOC">Notes</h4>
+<h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
 <ul>
- <li>The definition of the grid must be an <el-type>Array2D</el-type> of Type <el-type>Int</el-type> and of size 40 x 30.</li>
+ <li>The definition of the grid is made using the system method <el-method>createBlockGraphics</el-method> which initialises
+  a <el-type>List</el-type>&lt;of <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;&gt; structure
+  containing 40 columns &times; 30 rows.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in [0..39] and <i>y</i> is in [0..29].</li>
  <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li>
- <li>You may create multiple <el-type>Array2Ds</el-type> holding different patterns of blocks, and switch between them
- just by passing the required one as the argument to the <el-method>displayBlocks</el-method> method.</li>
+ <li>You may create multiple such structures holding different patterns of blocks, and switch between them
+ just by passing the required one as the argument to method <el-method>displayBlocks</el-method>.</li>
+ <li>Any <el-type>List</el-type>&lt;of <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;&gt; structure of the same
+ 40 &times; 30 dimensions can be the argument to method <el-method>displayBlocks</el-method>.</li>
  <li>A colour is specified as an <el-type>Int</el-type>, as described under <a href="#Colours">Colours</a>.</li>
 </ul>
 
@@ -2150,7 +1950,7 @@ By this means features such as simple SVG animation can be defined.</p>
   see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="createFileForWriting">
   <td><el-method>createFileForWriting</el-method></td>
-  <td>(none)</td>
+  <td><el-type>String</el-type></td>
   <td><el-type>TextFileWriter</el-type></td>
   <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
   with or without the default filetype of <el-code>.txt</el-code>, and returns a file handle<br>
@@ -3055,7 +2855,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of record <el-type>Point</el-type>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of class <el-type>Point</el-type>):</p>
 <el-code-block source="pathfinder.elan">
 <el-func class="ok multiline" id="func333" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident335" class="ok" tabindex="-1"><el-txt><el-method>getNodeFor</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params336" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="-1"><el-txt><el-type>Node</el-type></el-txt></el-field></el-top>

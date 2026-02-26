@@ -1,12 +1,12 @@
-# cd4c537ef76ac2affe80874c97e92c5490765294e0e8a18c42f26753ee5ee117 Elan 2.0.0-alpha guest default_profile valid
+# 9a84ea9f634a1f9f67187064003b662e0864103af1987e8fb964a15f9d44f455 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable fruit set to example
+  variable fruit set to getFruit()
   call print(binarySearch(fruit, "lime"))
   call print(binarySearch(fruit, "orange"))
 end main
 
-function binarySearch(li as ListImmutable<of String>, item as String) returns Boolean
+function binarySearch(li as List<of String>, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to (divAsInt(li.length(), 2)).floor()
@@ -22,21 +22,26 @@ function binarySearch(li as ListImmutable<of String>, item as String) returns Bo
   return result
 end function
 
+function getFruit() returns List<of String>
+  return ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+end function
+
+# snipFrom
 test test_binarySearch
-  variable li1 set to {"lemon", "lime", "orange"}
+  variable li1 set to ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
   assert binarySearch(li1, "orange") is true
   assert binarySearch(li1, "pear") is false
-  variable li2 set to {"lemon", "orange"}
+  variable li2 set to ["lemon", "orange"]
   assert binarySearch(li2, "lemon") is true
   assert binarySearch(li2, "orange") is true
   assert binarySearch(li2, "pear") is false
-  variable li3 set to {"lemon"}
+  variable li3 set to ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
   variable li4 set to new List<of String>()
   assert binarySearch(li4, "pear") is false
 end test
 
-constant example set to {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"}
+# snipTo
