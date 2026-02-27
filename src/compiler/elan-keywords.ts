@@ -74,13 +74,6 @@ export function matchesElanKeyword(target: string): boolean {
   return elanKeywords.includes(target);
 }
 
-export function allElanKeywordsUC(): Set<string> {
-  const kws = new Set<string>();
-  elanKeywords.forEach((item) => kws.add(item.toUpperCase()));
-  elanReservedWords.forEach((item) => kws.add(item.toUpperCase()));
-  return kws;
-}
-
 const elanKeywords: string[] = [
   abstractKeyword,
   andKeyword,
@@ -141,73 +134,6 @@ const elanKeywords: string[] = [
   variableKeyword,
   whileKeyword,
   withKeyword,
-];
-
-const elanReservedWords = [
-  "action",
-  "arguments",
-  "array",
-  "async",
-  "await",
-  "boolean",
-  "break",
-  "by",
-  "byte",
-  "case",
-  "catch",
-  "char",
-  "const",
-  "continue",
-  "curry",
-  "debugger",
-  "default",
-  "delete",
-  "dictionary",
-  "do",
-  "double",
-  "eval",
-  "export",
-  "extends",
-  "final",
-  "finally",
-  "float",
-  "goto",
-  "implements",
-  "instanceof",
-  "int",
-  "into",
-  "list",
-  "long",
-  "match",
-  "mock",
-  "namespace",
-  "native",
-  "null",
-  "on",
-  "optional",
-  "otherwise",
-  "package",
-  "partial",
-  "pattern",
-  "protected",
-  "public",
-  "scenario",
-  "short",
-  "static",
-  "stdlib", // Used for injected property
-  "string",
-  "super",
-  "switch",
-  "system",
-  "synchronized",
-  "throws",
-  "transient",
-  "typeof",
-  "void",
-  "volatile",
-  "var",
-  "when",
-  "yield",
 ];
 
 export const ghostedAnnotation = "ghosted";

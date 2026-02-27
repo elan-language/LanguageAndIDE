@@ -110,4 +110,6 @@ export abstract class LanguageAbstract implements Language {
   protected spaced(text: string): string {
     return ` ${text} `;
   }
+
+  abstract reservedWords: Set<string>;
 }

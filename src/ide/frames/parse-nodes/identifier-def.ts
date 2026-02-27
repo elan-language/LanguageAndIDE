@@ -14,8 +14,8 @@ export class IdentifierDef extends IdentifierUse {
       );
     }
     if (this.isValid()) {
-      if (ReservedWords.Instance.matchesReservedWord_caseIgnored(this.matchedText)) {
-        this.status = ParseStatus.invalid;
+      if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
+        this.status = ParseStatus.incomplete;
         this.message = `'${this.matchedText}' is reserved word.`;
       } else {
         this._done = true;
