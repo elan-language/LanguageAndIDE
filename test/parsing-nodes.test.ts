@@ -22,6 +22,7 @@ import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
+import { LitBoolean } from "../src/ide/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
@@ -1978,6 +1979,35 @@ suite("Parsing Nodes", () => {
       "",
       "image http://website.com/images/image1.png with height set to 10, width set to 20",
       `<img src="http://website.com/images/image1.png"><el-kw> with </el-kw><el-id>height</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <el-id>width</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>`,
+    );
+  });
+  test("Literal Boolean", () => {
+    testNodeParse(
+      new LitBoolean(f),
+      `true`,
+      ParseStatus.valid,
+      `true`,
+      "",
+      `true`,
+      `<el-kw>true</el-kw>`,
+    );
+    testNodeParse(
+      new LitBoolean(f),
+      `false`,
+      ParseStatus.valid,
+      `false`,
+      "",
+      `false`,
+      `<el-kw>false</el-kw>`,
+    );
+    testNodeParse(
+      new ExprNode(f),
+      `false`,
+      ParseStatus.valid,
+      `false`,
+      "",
+      `false`,
+      `<el-kw>false</el-kw>`,
     );
   });
 });

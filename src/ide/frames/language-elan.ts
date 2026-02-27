@@ -225,6 +225,9 @@ export class LanguageElan extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
+  TRUE: string = "true";
+  FALSE: string = "false";
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     return node || text ? false : false; // so will use the default on the node
   }

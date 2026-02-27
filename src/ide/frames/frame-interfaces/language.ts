@@ -42,4 +42,7 @@ export interface Language {
   BOOL_NAME: string;
   STRING_NAME: string;
   LIST_NAME: string;
+
+  TRUE: string;
+  FALSE: string;
 }
