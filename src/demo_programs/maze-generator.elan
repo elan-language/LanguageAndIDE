@@ -1,4 +1,4 @@
-# c28d27ec755906773b71648d4864167a63c0a5c5c81d7da1f057f57ae6dfdd9a Elan 2.0.0-alpha guest default_profile valid
+# f25802de01d41c3d7b34ed9a15b7f838ce824060921c1e037e16a3bc9792c34b Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -49,14 +49,18 @@ function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, 
   constant paint set to white
   variable b2 set to b
   for x from startX to startX + width step 1
-    set b2 to b2.withPut(x, startY, paint)
-    set b2 to b2.withPut(x, startY + depth, paint)
+    set b2 to withPut(b2, x, startY, paint)
+    set b2 to withPut(b2, x, startY + depth, paint)
   end for
   for y from startY to startY + depth step 1
-    set b2 to b2.withPut(startX, y, paint)
-    set b2 to b2.withPut(startX + width, y, paint)
+    set b2 to withPut(b2, startX, y, paint)
+    set b2 to withPut(b2, startX + width, y, paint)
   end for
   return b2
+end function
+
+function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 # colour: 0 for black, 1 for white

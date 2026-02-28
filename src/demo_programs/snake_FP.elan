@@ -1,11 +1,11 @@
-# 399e79e12fbb3809b4bc97b8bd3043255b6babf7209282575ef7a2d68b4bf212 Elan 2.0.0-alpha guest default_profile valid
+# fd3ffdb143366742db757673823c3233fa06b4fff94833a352b2b5f5ace03357 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
   variable blocks set to createBlockGraphics(white)
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
-  variable game set to newGame(rnd)
+  variable game set to (new Game(rnd)).withNewApple()
   while game.isOn
     set blocks to updateGraphics(game, blocks)
     call displayBlocks(blocks)
@@ -16,30 +16,23 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  constant g2 set to if k.isSameValueAs("") then g else copy g with key set to k
-  constant g3 set to moveSnake(g2)
-  constant g4 set to eatAppleIfPoss(g3)
-  return if gameOver(g4) then copy g4 with isOn set to false else g4
+  variable g2 set to if k.isSameValueAs("") then g else g.withKey(k)
+  variable g3 set to moveSnake(g2)
+  variable g4 set to eatAppleIfPoss(g3)
+  return if gameOver(g4) then g4.withIsOn(false) else g4
 end function
 
 function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
-  constant b2 set to b.withPut(g.apple.x, g.apple.y, red)
-  constant b3 set to b2.withPut(g.head.x, g.head.y, green)
-  constant tail set to g.body[0]
-  constant tailColour set to if tail.isSameValueAs(g.priorTail) then green else white
-  return b3.withPut(tail.x, tail.y, tailColour)
+  variable b2 set to graphicsPut(b, g.apple.x, g.apple.y, red)
+  variable b3 set to graphicsPut(b2, g.head.x, g.head.y, green)
+  variable tail set to g.body[0]
+  variable tailColour set to if tail.isSameValueAs(g.priorTail) then green else white
+  return graphicsPut(b3, tail.x, tail.y, tailColour)
 end function
 
-function newApple(g as Game) returns Game
-  constant x_rnd2 set to g.rnd.nextInt(0, 39)
-  constant x set to x_rnd2.item0
-  constant rnd2 set x_rnd2.item1
-  constant y_rnd3 set to rnd2.nextInt(0, 29)
-  constant y set to y_rnd3.item0
-  constant rnd3 set to y_rnd3.item1
-  constant apple2 set to newSquare(x, y)
-  constant g2 set to copy g with apple set to apple2, rnd set to rnd3
-  return if g2.body.contains(apple2) then newApple(g2) else g2
+# Temporary solution pending creation of withPut as an extension method to ListOfList
+function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 function score(g as Game) returns Int
@@ -47,18 +40,18 @@ function score(g as Game) returns Int
 end function
 
 function moveSnake(g as Game) returns Game
-  constant k set to g.key
-  constant x set to g.head.item0
-  constant y set to g.head.item1
-  constant newX set to if k.isSameValueAs("a") then x - 1 else if k.isSameValueAs("d") then x + 1 else x
-  constant newY set to if k.isSameValueAs("w") then y - 1 else if k.isSameValueAs("s") then y + 1 else y
-  return copy g with body set to g.body.withAppend(g.head), head set to newSquare(newX, newY)
+  variable k set to g.key
+  variable x set to g.head.x
+  variable y set to g.head.y
+  variable newX set to if k.isSameValueAs("a") then x - 1 else if k.isSameValueAs("d") then x + 1 else x
+  variable newY set to if k.isSameValueAs("w") then y - 1 else if k.isSameValueAs("s") then y + 1 else y
+  return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
-  constant tail set to g.body[0]
-  constant moveTail set to g.body[1..g.body.length()]
-  return if headOverApple(g) then newApple(g) else copy g with priorTail set to tail, body set to moveTail
+  variable tail set to g.body[0]
+  variable moveTail set to g.body.subList(1, g.body.length())
+  return if headOverApple(g) then g.withNewApple() else g.withPriorTail(tail).withBody(moveTail)
 end function
 
 function headOverApple(g as Game) returns Boolean
@@ -70,14 +63,9 @@ function gameOver(g as Game) returns Boolean
 end function
 
 function hasHitEdge(g as Game) returns Boolean
-  constant x set to g.head.item0
-  constant y set to g.head.item1
+  constant x set to g.head.x
+  constant y set to g.head.y
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
-end function
-
-function newGame(rnd as Random) returns Game
-  constant g set to new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to [newSquare(20, 15), newSquare(21, 15)], priorTail set to empty Square, key set to "d", isOn set to true
-  return newApple(g)
 end function
 
 class Game
@@ -95,162 +83,239 @@ class Game
 
   property key as String
 
+  constructor(rnd as Random)
+    set property.head to new Square(22, 15)
+    set property.body to [new Square(20, 15), new Square(21, 15)]
+    set property.priorTail to new Square(0, 0)
+    set property.key to "d"
+    set property.isOn to true
+    set property.apple to new Square(12, 15)
+    set property.rnd to rnd
+  end constructor
+
+  function withNewApple() returns Game
+    variable x_rnd2 set to this.rnd.nextInt(0, 39)
+    variable x set to x_rnd2.item0
+    variable rnd2 set to x_rnd2.item1
+    variable y_rnd3 set to rnd2.nextInt(0, 29)
+    variable y set to y_rnd3.item0
+    variable rnd3 set to y_rnd3.item1
+    variable apple2 set to new Square(x, y)
+    variable g2 set to withApple(apple2).withRnd(rnd3)
+    return if g2.body.contains(apple2) then g2.withNewApple() else g2
+  end function
+
+  function withHead(value as Square) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.head to value
+    return copyOfThis
+  end function
+
+  function withBody(value as List<of Square>) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.body to value
+    return copyOfThis
+  end function
+
+  function withPriorTail(value as Square) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.priorTail to value
+    return copyOfThis
+  end function
+
+  function withApple(value as Square) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.apple to value
+    return copyOfThis
+  end function
+
+  function withIsOn(value as Boolean) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.isOn to value
+    return copyOfThis
+  end function
+
+  function withRnd(value as Random) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.rnd to value
+    return copyOfThis
+  end function
+
+  function withKey(value as String) returns Game
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.key to value
+    return copyOfThis
+  end function
+
 end class
 
-function newSquare(x as Int, y as Int) returns Square
-  return new Square() with x set to x, y set to y
-end function
-
-record Square
+class Square
   property x as Int
 
   property y as Int
+
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  function withX(value as Int) returns Square
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.x to value
+    return copyOfThis
+  end function
+
+  function withY(value as Int) returns Square
+    variable copyOfThis set to shallowCopy(this)
+    set copyOfThis.y to value
+    return copyOfThis
+  end function
 
   function asString() returns String
     return "{property.x}, {property.y}"
   end function
 
-end record
+end class
 
 test test_clockTick
-  constant g1 set to newGame(new Random())
-  constant g2 set to newApple(g1)
-  constant g3 set to clockTick(g2, "s")
-  assert g3.head is newSquare(22, 16)
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withNewApple()
+  variable g3 set to clockTick(g2, "s")
+  assert g3.head is new Square(22, 16)
   assert g3.body.length() is 2
   assert g3.priorTail is g2.body[0]
   assert g3.isOn is true
-  constant g4 set to copy g3 with apple set to newSquare(22, 17)
-  constant g5 set to clockTick(g4, "s")
+  variable g4 set to g3.withApple(new Square(22, 17))
+  variable g5 set to clockTick(g4, "s")
   assert g5.body.length() is 3
   assert g5.priorTail is g4.priorTail
   assert g5.isOn is true
-  constant g6 set to copy g5 with head set to newSquare(22, 29)
-  constant g7 set to clockTick(g6, "s")
+  variable g6 set to g5.withHead(new Square(22, 29))
+  variable g7 set to clockTick(g6, "s")
   assert g7.isOn is false
 end test
 
 test test_updateGraphics
-  variable blocks set to new List<of List<of Int>>(40, 30, white)
-  variable g1 set to newGame(new Random())
+  variable blocks set to createBlockGraphics(white)
+  variable g1 set to new Game(new Random())
   set blocks to updateGraphics(g1, blocks)
-  assert blocks[12, 15] is red
-  assert blocks[22, 15] is green
-  assert blocks[21, 15] is white
+  assert blocks[12][15] is red
+  assert blocks[22][15] is green
+  assert blocks[21][15] is white
   variable g3 set to clockTick(g1, "d")
   set blocks to updateGraphics(g3, blocks)
-  assert blocks[12, 15] is red
-  assert blocks[22, 15] is green
-  assert blocks[23, 15] is green
+  assert blocks[12][15] is red
+  assert blocks[22][15] is green
+  assert blocks[23][15] is green
 end test
 
-[ghosted] test test_newApple
-  variable g1 set to newGame(new Random())
-  assert g1.apple is newSquare(12, 15)
-  variable g2 set to newApple(g1)
-  assert g2.apple is newSquare(10, 12)
-  variable g3 set to newApple(g2)
-  assert g3.apple is newSquare(28, 24)
+test testnewApple
+  variable g1 set to new Game(new Random())
+  assert g1.apple is new Square(12, 15)
+  variable g2 set to g1.withNewApple()
+  assert g2.apple is new Square(12, 15)
+  variable g3 set to g2.withNewApple()
+  assert g3.apple is new Square(10, 12)
   # test that apple is never over snake
-  variable g4 set to newGame(new Random())
-  variable g5 set to copy g4 with body set to {newSquare(10, 12)}
-  variable g6 set to newApple(g5)
-  assert g6.apple is newSquare(28, 24)
+  variable g4 set to (new Game(new Random()))
+  variable g5 set to g4.withBody([new Square(10, 12)])
+  variable g6 set to g5.withNewApple()
+  assert g4.apple is new Square(12, 15)
 end test
 
-[ghosted] test test_score
-  variable g1 set to newGame(new Random())
+test test_score
+  variable g1 set to new Game(new Random())
   assert score(g1) is 0
-  variable g2 set to copy g1 with body set to {newSquare(4, 4), newSquare(5, 4)}
+  variable g2 set to g1.withBody([new Square(4, 4), new Square(5, 4)])
   assert score(g2) is 0
-  variable g3 set to copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
+  variable g3 set to g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
   assert score(g3) is 1
-  variable g4 set to copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4), newSquare(5, 5)}
+  variable g4 set to g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
   assert score(g4) is 2
 end test
 
 test test_moveSnake
-  variable g1 set to newGame(new Random())
-  variable g2 set to copy g1 with key set to "a"
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withKey("a")
   variable g3 set to moveSnake(g2)
-  assert g3.head is newSquare(21, 15)
-  variable g4 set to copy g1 with key set to "d"
+  assert g3.head is new Square(21, 15)
+  variable g4 set to g1.withKey("d")
   variable g5 set to moveSnake(g4)
-  assert g5.head is newSquare(23, 15)
-  variable g6 set to copy g1 with key set to "w"
+  assert g5.head is new Square(23, 15)
+  variable g6 set to g1.withKey("w")
   variable g7 set to moveSnake(g6)
-  assert g7.head is newSquare(22, 14)
-  variable g8 set to copy g1 with key set to "s"
+  assert g7.head is new Square(22, 14)
+  variable g8 set to g1.withKey("s")
   variable g9 set to moveSnake(g8)
-  assert g9.head is newSquare(22, 16)
+  assert g9.head is new Square(22, 16)
 end test
 
 test test_eatAppleIfPoss
-  variable g1 set to newGame(new Random())
+  variable g1 set to new Game(new Random())
   assert g1.body.length() is 2
   # negative case
-  variable g2 set to copy g1 with apple set to newSquare(23, 15)
+  variable g2 set to g1.withApple(new Square(23, 15))
   variable g3 set to eatAppleIfPoss(g2)
   assert g3.body.length() is 1
   assert g3.apple is g2.apple
   assert g3.priorTail is g2.body[0]
   # positive case
-  variable g4 set to copy g2 with head set to newSquare(23, 15)
+  variable g4 set to g2.withHead(new Square(23, 15))
   variable g5 set to eatAppleIfPoss(g4)
   assert g5.body.length() is 2
-  assert g5.apple is newSquare(10, 12)
+  assert g5.apple is new Square(12, 15)
   assert g5.priorTail is g1.priorTail
 end test
 
 test test_overApple
-  variable g1 set to newGame(new Random())
-  variable g2 set to copy g1 with apple set to newSquare(23, 15)
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withApple(new Square(23, 15))
   assert headOverApple(g2) is false
-  variable g3 set to copy g2 with head set to newSquare(23, 15)
+  variable g3 set to g2.withHead(new Square(23, 15))
   assert headOverApple(g3) is true
 end test
 
 test test_gameOver
-  variable g1 set to newGame(new Random())
+  variable g1 set to new Game((new Random()))
   assert gameOver(g1) is false
-  variable g2 set to copy g1 with head set to newSquare(0, 0)
+  variable g2 set to g1.withHead(new Square(0, 0))
   assert gameOver(g2) is false
-  variable g3 set to copy g1 with head set to newSquare(40, 15)
+  variable g3 set to g1.withHead(new Square(40, 15))
   assert gameOver(g3) is true
-  variable g4 set to copy g1 with head set to newSquare(21, 15)
+  variable g4 set to g1.withHead(new Square(21, 15))
   assert gameOver(g4) is true
 end test
 
 test test_headIsAtEdge
-  variable g1 set to newGame(new Random())
+  variable g1 set to new Game(new Random())
   assert hasHitEdge(g1) is false
-  variable g2 set to copy g1 with head set to newSquare(40, 15)
+  variable g2 set to g1.withHead(new Square(40, 15))
   assert hasHitEdge(g2) is true
-  variable g3 set to copy g1 with head set to newSquare(-1, 15)
+  variable g3 set to g1.withHead(new Square(-1, 15))
   assert hasHitEdge(g3) is true
-  variable g4 set to copy g1 with head set to newSquare(20, 30)
+  variable g4 set to g1.withHead(new Square(20, 30))
   assert hasHitEdge(g4) is true
-  variable g5 set to copy g1 with head set to newSquare(20, -1)
+  variable g5 set to g1.withHead(new Square(20, -1))
   assert hasHitEdge(g5) is true
 end test
 
 test test_newSquare
-  variable sq set to newSquare(3, 4)
+  variable sq set to new Square(3, 4)
   assert sq.x is 3
   assert sq.y is 4
 end test
 
 test test_newGame
   variable rnd set to new Random()
-  variable game set to newGame(rnd)
+  variable game set to new Game(rnd)
   variable totest set to game.rnd.isSameValueAs(rnd)
-  assert totest is false
-  assert game.head is newSquare(22, 15)
+  assert totest is true
+  assert game.head is new Square(22, 15)
   variable body set to game.body
   assert body.length() is 2
-  assert body[0] is newSquare(20, 15)
-  assert body[1] is newSquare(21, 15)
-  assert game.priorTail is newSquare(0, 0)
+  assert body[0] is new Square(20, 15)
+  assert body[1] is new Square(21, 15)
+  assert game.priorTail is new Square(0, 0)
   assert game.key is "d"
   assert game.isOn is true
 end test

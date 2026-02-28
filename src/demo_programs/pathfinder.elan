@@ -1,8 +1,8 @@
-# 45765c00e351195490cf4aa5a88fc5e16dcb9a2721aa7c86752b16143dfd2c87 Elan 2.0.0-alpha guest default_profile valid
+# 1e26ad908363cc86aabff1040b9933c8d903300490fac2268bd40c4d91326c97 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable start set to newPoint(5, 5)
-  variable destination set to newPoint(34, 24)
+  variable start set to new Point(5, 5)
+  variable destination set to new Point(34, 24)
   variable percentRocks set to inputIntBetween("Enter % rocks (0-100): ", 0, 100)
   call clearPrintedText()
   variable rocks set to new List<of Point>()
@@ -43,7 +43,7 @@ end procedure
 procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
-      variable p set to newPoint(x, y)
+      variable p set to new Point(x, y)
       if p.isSameValueAs(start) then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       elif p.isSameValueAs(dest) then
@@ -58,29 +58,33 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, node
 end procedure
 
 function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
-  variable gr set to new List<of List<of Int>>(40, 30, white)
+  variable gr set to createBlockGraphics(white)
   each rock in rocks
-    set gr to gr.withPut(rock.x, rock.y, black)
+    set gr to withPut(gr, rock.x, rock.y, black)
   end each
-  set gr to gr.withPut(start.x, start.y, green)
-  set gr to gr.withPut(dest.x, dest.y, red)
+  set gr to withPut(gr, start.x, start.y, green)
+  set gr to withPut(gr, dest.x, dest.y, red)
   return gr
 end function
 
+function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
+end function
+
 function addVisited(gr as List<of List<of Int>>, visited as Point) returns List<of List<of Int>>
-  return gr.withPut(visited.x, visited.y, lightBlue)
+  return withPut(gr, visited.x, visited.y, lightBlue)
 end function
 
 function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
-  variable gr2 set to gr
+  variable graphics set to gr
   each p in route
-    set gr2 to gr2.withPut(p.x, p.y, orange)
+    set graphics to withPut(graphics, p.x, p.y, orange)
   end each
   variable start set to route[0]
   variable dest set to route[route.length() - 1]
-  set gr2 to gr2.withPut(start.x, start.y, green)
-  set gr2 to gr2.withPut(dest.x, dest.y, red)
-  return gr2
+  set graphics to withPut(graphics, start.x, start.y, green)
+  set graphics to withPut(graphics, dest.x, dest.y, red)
+  return graphics
 end function
 
 class Solver
@@ -88,6 +92,7 @@ class Solver
     set property.nodes to nodes
     set property.start to start
     set property.destination to destination
+    set property.current to new Node(emptyPoint(), 0, 0)
   end constructor
 
   property nodes as List<of Node>
@@ -102,13 +107,14 @@ class Solver
 
   property running as Boolean
 
+  # TODO can this go into the constructor ?
   procedure initialise(alg as Algorithm)
     set property.alg to alg
     set property.current to new Node(property.start, 0, infinity)
     set property.running to true
     each node in property.nodes
       call node.setDistanceFromStart(infinity)
-      call node.setVia(empty Point)
+      call node.setVia(emptyPoint())
       call node.setVisited(false)
     end each
   end procedure
@@ -116,7 +122,7 @@ class Solver
   procedure visitNextPoint()
     call updateNeighbours()
     set property.current to nextNodeToVisit()
-    if (property.current.isSameValueAs(empty Node)) or (property.current.point.isSameValueAs(property.destination)) then
+    if (property.current.isEmpty or (property.current.point.isSameValueAs(property.destination))) then
       set property.running to false
     else
       call property.current.setVisited(true)
@@ -124,24 +130,25 @@ class Solver
   end procedure
 
   procedure updateNeighbours()
-    constant distToCurrent set to property.current.distFromStart
+    variable distToCurrent set to property.current.distFromStart
+    variable currentPoint set to property.current.point
     each neighbour in currentNeighbours()
-      variable currentPoint set to property.current.point
       variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
-        call neighbour.setVia(property.current.point)
+        call neighbour.setVia(currentPoint)
         call neighbour.setDistanceFromStart(distViaCurrent)
       end if
     end each
   end procedure
 
   function currentNeighbours() returns List<of Node>
+    variable currentNode set to property.current
+    variable currentPoint set to currentNode.point
     variable neighbours set to new List<of Node>()
-    variable currentPoint set to property.current.point
     each p in currentPoint.neighbouringPoints()
       variable node set to getNodeFor(p)
       variable point set to node.point
-      if point.isNotEmpty then
+      if not point.isEmpty then
         set neighbours to neighbours.withAppend(node)
       end if
     end each
@@ -203,10 +210,13 @@ end class
 
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
+    if p.isEmpty then
+      set property.isEmpty to true
+    end if
     set property.point to p
     set property.visited to false
     set property.distFromStart to distFromStart
-    set property.via to empty Point
+    set property.via to emptyPoint()
     set property.estDistToDest to estDistToDest
   end constructor
 
@@ -219,6 +229,8 @@ class Node
   property via as Point
 
   property estDistToDest as Float
+
+  property isEmpty as Boolean
 
   procedure setVisited(value as Boolean)
     set property.visited to value
@@ -238,12 +250,25 @@ class Node
 
 end class
 
-record Point
+function emptyPoint() returns Point
+  return new Point(-1, -1)
+end function
+
+class Point
   property x as Int
 
   property y as Int
 
-  property isNotEmpty as Boolean
+  property isEmpty as Boolean
+
+  constructor(x as Int, y as Int)
+    if (x < 0) or (y < 0) then
+      set property.isEmpty to true
+    else
+      set property.x to x
+      set property.y to y
+    end if
+  end constructor
 
   function minDistTo(p as Point) returns Float
     return sqrt(power((p.x - property.x), 2) + power((p.y - property.y), 2))
@@ -255,18 +280,14 @@ record Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return [newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)]
+    return [new Point(property.x - 1, property.y - 1), new Point(property.x, property.y - 1), new Point(property.x + 1, property.y - 1), new Point(property.x - 1, property.y), new Point(property.x + 1, property.y), new Point(property.x - 1, property.y + 1), new Point(property.x, property.y + 1), new Point(property.x + 1, property.y + 1)]
   end function
 
   function asString() returns String
     return "{property.x},{property.y}"
   end function
 
-end record
-
-function newPoint(x as Int, y as Int) returns Point
-  return new Point() with x set to x, y set to y, isNotEmpty set to true
-end function
+end class
 
 enum Algorithm dijkstra, aStar, heuristic
 
@@ -292,8 +313,8 @@ test test_getAlgFromLetter
 end test
 
 test test_point
-  variable p set to newPoint(0, 0)
+  variable p set to new Point(0, 0)
   variable n set to p.neighbouringPoints()
-  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
   assert n is expected
 end test
