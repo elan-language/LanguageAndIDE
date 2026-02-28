@@ -1,0 +1,11 @@
+# 03b65c8045c0de59c35f921e4ff29d1fdd312afd1b952e0b962589e151966b00 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  call print("Hello")
+  variable a set to 3
+  variable b set to 4
+  call print(a*b)
+  call print("{a} times {b} equals {a*b}")
+  # snipTo
+end main

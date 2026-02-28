@@ -185,12 +185,14 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; A <el-kw>main</el-kw> method</p>
 <el-code-block source="main.elan">
-<main class="multiline" id="main1" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw> <el-msg class="warning"></el-msg></el-top>
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="warning" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end main</el-kw></main>
+<el-main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call9" tabindex="-1"><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args11" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
 </el-code-block>
 <hr>
 </div></div>
@@ -1096,29 +1098,30 @@ and refer to with a variable. For example:>/p>
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print a <el-type>List</el-type> and then each item in it</p>
-<el-code-block source="each.elan">
-<el-statement class="ok" id="let34" tabindex="-1"><el-kw>let </el-kw><el-field id="var35" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="each8" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field></el-top>
-<el-statement class="ok" id="print12" tabindex="-1"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print the first item in a <el-type>List</el-type> and then each item in it:</p>
+<el-code-block source="each_1.elan">
+<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call8" tabindex="-1"><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok multiline" id="each11" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end each</el-kw>
 </el-statement>
-<el-statement class="ok" id="print14" tabindex="-1"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="-1"><el-txt><el-method>reverse</el-method>("<el-lit>Harriet</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Function to reverse a <el-type>String</el-type></p>
-<el-code-block source="each.elan">
-<el-func class="ok multiline" id="func15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident17" class="ok" tabindex="-1"><el-txt>reverse</el-txt></el-field></el-method>(<el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type19" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="var36" tabindex="-1"><el-kw>variable </el-kw><el-field id="var37" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-kw>empty</el-kw> <el-type>String</el-type></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="each28" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident30" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field></el-top>
-<el-statement class="ok" id="set32" tabindex="-1"><el-kw>set </el-kw><el-field id="ident33" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr34" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id> + <el-id>sReturn</el-id></el-txt></el-field></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Function to reverse a <el-type>String</el-type>:</p>
+<el-code-block source="each_2.elan">
+<el-func class="ok multiline" id="func23" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>reverse</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params26" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type27" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var30" tabindex="-1"><el-kw>variable </el-kw><el-field id="var31" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt>""</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="each33" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="set37" tabindex="-1"><el-kw>set </el-kw><el-field id="ident38" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id> + <el-id>sReturn</el-id></el-txt></el-field></el-statement>
 <el-kw>end each</el-kw>
 </el-statement>
-<el-statement class="ok" id="return20" tabindex="-1"><el-kw>return </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="return28" tabindex="-1"><el-kw>return </el-kw><el-field id="expr29" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -1144,11 +1147,12 @@ and may be defined by literals, integer named values or expressions that evaluat
 This is needed at compile time to determine the nature of the exit condition. For example, to step in descending sequence you can write:</p>
 
 <el-code-block source="forStepNeg.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let21" tabindex="-1"><el-kw>let </el-kw><el-field id="var22" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="for9" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>-<el-id>s</el-id></el-txt></el-field></el-top>
-<el-statement class="ok" id="print15" tabindex="-1"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>-<el-id>s</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -1205,25 +1209,6 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <hr>
 </div></div>
 
-<h2 id="print"><el-kw>print</el-kw></h2>
-<p>The <el-kw>print</el-kw> instruction sends text strings to the display pane. For example:</p>
-<ul>
- <li><el-code>
-    <el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hello</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-   &#x27f6; Hello</el-code></li>
-<li><el-code>
-    <el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="let10" tabindex="0"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>4</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="print13" tabindex="0"><el-kw>print </el-kw><el-field id="expr14" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>*<el-id>b</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    &#x27f6; 12</el-code></li>
-<li><el-code>
-    <el-statement class="ok" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>a</el-id>}<el-lit> times </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id>*<el-id>b</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    &#x27f6; 3 times 4 equals 12</el-code></li>
-</ul>
-
-<p>The last example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#print">print procedures</a>.</p>
-<p>If the <el-kw>print</el-kw> instruction is used without any following expression, then it prints a newline, i.e. its effect is the same as <el-code>print "\n"</el-code>.</p>
-
 <h2 id="set"><el-kw>set</el-kw></h2>
 <p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
@@ -1261,35 +1246,48 @@ where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, 
 
 <div id="catch"></div>
 <div id="exception"></div>
-<h2 id="try"><el-kw>try</el-kw> (test)</h2>
+<h2 id="try"><el-kw>try</el-kw></h2>
 <p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> instruction. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
 
-<el-code-block source="tryCatch.elan">
-<el-statement class="ok multiline" id="try18" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
-<el-statement class="ok" id="call38" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident39" class="ok" tabindex="0"><el-txt><el-method>foo</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args40" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="print47" tabindex="0"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="0"><el-txt>"<el-lit>not caught</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline outdent" id="catch20" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catch exception in </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>variableName</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print64" tabindex="0"><el-kw>print </el-kw><el-field id="expr65" class="optional ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-statement>
+<el-code-block source="try_1.elan">
+<el-test id="test3" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>test_try_1</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok multiline" id="try6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>try </el-kw>
+</el-top>
+<el-statement class="ok" id="call11" tabindex="-1"><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>foo</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args13" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call14" tabindex="-1"><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args16" class="optional ok" tabindex="-1"><el-txt>"<el-lit>not caught</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok outdent" id="catch8" tabindex="-1"><el-kw>catch exception in </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call17" tabindex="-1"><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args19" class="optional ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end try</el-kw>
 </el-statement>
+<el-kw>end test</el-kw>
+</el-test>
 </el-code-block>
-The variable holding the exception (by default iys name is <el-code>e</el-code>, but this may be changed by you) is of Type <el-type>String</el-type>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
-<el-code-block source="tryCatch.elan">
-<el-statement class="ok multiline" id="try141" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
-<el-statement class="ok" id="call158" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident159" class="ok" tabindex="0"><el-txt><el-method>foo</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args160" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="print177" tabindex="0"><el-kw>print </el-kw><el-field id="expr178" class="optional ok" tabindex="0"><el-txt>"<el-lit>not caught</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline outdent" id="catch143" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catch exception in </el-kw><el-field id="ident145" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>variableName</i></el-place></el-field></el-top>
-<el-statement class="ok multiline" id="if211" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr213" class="ok" tabindex="0"><el-txt><el-id>e</el-id><el-kw> isnt </el-kw>"<el-lit>an expected message</el-lit>"</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
-<el-statement class="ok" id="throw234" tabindex="0"><el-kw>throw exception </el-kw><el-field id="msg235" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>message</i></el-place></el-field></el-statement>
+
+The variable holding the exception (by default its name is <el-text><el-id>e</el-id></el-text>, but this may be changed by you) is of Type <el-type>String</el-type>.</p>
+<p>You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
+<el-code-block source="try_2.elan">
+<el-test class="none multiline" id="test22" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-id>test_try_2</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok multiline" id="try25" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>try </el-kw>
+</el-top>
+<el-statement class="ok" id="call30" tabindex="-1"><el-kw>call </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-method>foo</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args32" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call33" tabindex="-1"><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args35" class="optional ok" tabindex="-1"><el-txt>"<el-lit>not caught</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok outdent" id="catch27" tabindex="-1"><el-kw>catch exception in </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="if36" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> (<el-id>e</el-id>.<el-method>isSameValueAs</el-method>("<el-lit>an expected message</el-lit>"))</el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="throw39" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg40" class="ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field></el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
-</el-statement>
 <el-kw>end try</el-kw>
 </el-statement>
+<el-kw>end test</el-kw>
+</el-test>
 </el-code-block>
 
 <h2 id="variable"><el-kw>variable</el-kw></h2>
@@ -1301,19 +1299,22 @@ instruction declares and initalises a mutable named valued. The name defined mus
 <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>note</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-lit>440</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h2 id="while"><el-kw>while</el-kw> (loop)</h2>
+<h2 id="while"><el-kw>while</el-kw></h2>
 <p>The <el-kw>while <el-code>condition</el-code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
  when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
 
-<el-code-block source="while.elan">
-<el-statement id="while6" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt></el-field></el-top>
-<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt></el-field></el-statement>
+<el-code-block source="while_read.elan">
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>openFileForReading</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="while9" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>close</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 
 <h1 id="Expression">Expressions</h1>
@@ -1346,33 +1347,42 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
-<p>If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:</p>
-<pre>
-<el-kw>variable<el-kw> <el-code>a</el-code> <el-kw>set to</el-kw> <el-code>"Hello World!"</el-code><br>
-<el-kw>print</el-kw><el-code> a[4]</el-code>     &#x27f6; <el-code>o</el-code><br>
-<el-kw>print</el-kw><el-code> a[4..]</el-code>   &#x27f6; <el-code>o World!</el-code><br>
-<el-kw>print</el-kw><el-code> a[..7]</el-code>   &#x27f6; <el-code>Hello W</el-code>  <el-code>(since the upper bound of a range is <i>exclusive</i>)</el-code><br>
-<el-kw>print</el-kw><el-code> a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>     <el-code>(for the same reason)</el-code>
-</pre>
-
-<p>In the examples above, the result is of Type <el-type>String</el-type> in all cases.</p>
-<p>When using indexing on other Types:</p>
-<ul>
-<li>with a single index, the result is of the same Type as the elements of the data structure being indexed</li>
-<li>with an index range, the result is of the same Type as the data structure itself</li>
-</ul>
-<p>Indexable Types are <a href="LibRef.html#String"><el-type>String</el-type></a>, <a href="LibRef.html#StandardDataStructures"><el-type>List</el-type>, <el-type>Dictionary</el-type></a>.</p>
-<p>Index ranges cannot be applied to <el-type>Dictionary</el-type>.</p>
+<p>If a named value is of an indexable Type (<el-type>String</el-type> or <el-type>List</el-type>), then you can refer to a contiguous subset (or range) of its values
+ using methods <el-method>subString</el-method> and <el-method>subList</el-method>.</p>
 <p>If the index values in a range are equal, or the second is smaller than the first,
-then an empty data structure of the correct Type is generated.</p>
-<p>Unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
-Writing a value to a specific index location is done through a method such as in these examples:</p>
-<pre>
-    <a href="LibRef.html#put_List"><el-method>put</el-method></a>           on a   <el-type>List</el-type>
-    <a href="LibRef.html#withPut_ListImmutable"><el-method>withPut</el-method></a>   on a    <el-type>ListImmutable</el-type>
-    <a href="LibRef.html#put_Dictionary"><el-method>put</el-method></a>           on a    <el-type>Dictionary</el-type>
-    <a href="libRef.html#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
-</pre>
+then an empty string or list is returned.</p>
+<p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
+<a href="LibRef.html#put_List"><el-method>put</el-method></a>.</p>
+
+<p>Example of using indexing on a string:</p>
+<el-code-block source="subString.elan">
+<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>"<el-lit>Hello world!</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call8" tabindex="-1"><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call11" tabindex="-1"><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args13" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>.<el-method>subString</el-method>(<el-lit>4</el-lit>, <el-id>a</el-id>.<el-method>length</el-method>())</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>.<el-method>subString</el-method>(<el-lit>0</el-lit>, <el-lit>7</el-lit>)</el-txt></el-field><el-punc>)</el-punc></el-statement>
+</el-code-block>
+<p>would print these lines to the display:</p>
+<pre><el-code>
+   o
+   o world!
+   Hello w     (since the upper bound of a range is <i>exclusive</i>)
+</el-code></pre>
+
+<p>And on a list:</p>
+<el-code-block source="subString.elan">
+<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="set8" tabindex="-1"><el-kw>set </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>[<el-lit>0</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>7</el-lit>, <el-lit>8</el-lit>, <el-lit>9</el-lit>, <el-lit>10</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call11" tabindex="-1"><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args13" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call14" tabindex="-1"><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args16" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>subList</el-method>(<el-lit>4</el-lit>, <el-id>li</el-id>.<el-method>length</el-method>())</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call17" tabindex="-1"><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args19" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>subList</el-method>(<el-lit>0</el-lit>, <el-lit>7</el-lit>)</el-txt></el-field><el-punc>)</el-punc></el-statement>
+</el-code-block>
+<p>would print these lines to the display:</p>
+<pre><el-code>
+   4                            (the value of the list item)
+   [4, 5, 6, 7, 8, 9, 10, 11]   (a new list)
+   [0, 1, 2, 3, 4, 5, 6]        (since the upper bound of a range is <i>exclusive</i>)
+</el-code></pre>
+
 
 <div id="operator"></div>
 <h2 id="Operators">Operators</h2>
