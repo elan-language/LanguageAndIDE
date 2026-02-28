@@ -1,6 +1,6 @@
-# 31aa153ecf3c22e18df0712766186069b97a12dcce02ae96c8f9d343f67fb269 Elan 2.0.0-alpha guest default_profile valid
+# ad9dea346d4d0d5a61c317eb74abccc0da65b2601b585baef0b81c3c0f116836 Elan 2.0.0-alpha guest default_profile valid
 
-test test_try1
+test test_try_1
   try
     call foo()
     call print("not caught")
@@ -9,7 +9,8 @@ test test_try1
   end try
 end test
 
-test test_try2
+# snipFrom
+test test_try_2
   try
     call foo()
     call print("not caught")
@@ -20,6 +21,7 @@ test test_try2
   end try
 end test
 
+# snipTo
 procedure foo()
 
 end procedure

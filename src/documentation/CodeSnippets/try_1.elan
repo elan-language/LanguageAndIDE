@@ -1,0 +1,27 @@
+# f79e9997e37e3f5cc641f16e1facb2aa66b750bb4f980e3b6adb765c25c55811 Elan 2.0.0-alpha guest default_profile valid
+
+# snipFrom
+test test_try_1
+  try
+    call foo()
+    call print("not caught")
+  catch exception in e
+    call print(e)
+  end try
+end test
+
+# snipTo
+test test_try_2
+  try
+    call foo()
+    call print("not caught")
+  catch exception in e
+    if not (e.isSameValueAs("an expected message")) then
+      throw exception e
+    end if
+  end try
+end test
+
+procedure foo()
+
+end procedure

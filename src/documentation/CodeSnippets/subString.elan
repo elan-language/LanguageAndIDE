@@ -1,0 +1,10 @@
+# 65829125c04f8b1b82c17786a7dd98d2469048a7768602bbc5aa0a7e1f1138ce Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable a set to "Hello world!"
+  call print(a[4])
+  call print(a.subString(4, a.length()))
+  call print(a.subString(0, 7))
+  # snipTo
+end main
