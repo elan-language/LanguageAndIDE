@@ -156,7 +156,6 @@ suite("Parsing Nodes", () => {
       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
     );
     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-    testNodeParse(new ExprNode(f), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
       new ExprNode(f),
       "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",

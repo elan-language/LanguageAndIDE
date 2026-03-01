@@ -28,7 +28,6 @@ import { CopyWithAsn } from "../../compiler/syntax-nodes/copy-with-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { EmptyTypeAsn } from "../../compiler/syntax-nodes/empty-type-asn";
 import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-from-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
@@ -129,7 +128,6 @@ import { CSV } from "../frames/parse-nodes/csv";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
 import { DottedTerm } from "../frames/parse-nodes/dotted-term";
-import { EmptyOfTypeNode } from "../frames/parse-nodes/empty-of-type-node";
 import { EnumVal } from "../frames/parse-nodes/enum-val";
 import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
@@ -820,11 +818,6 @@ export function transform(
       return new CsvAsn(types, fieldId);
     }
     return EmptyAsn.Instance;
-  }
-
-  if (node instanceof EmptyOfTypeNode) {
-    const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new EmptyTypeAsn(type, fieldId);
   }
 
   if (node instanceof OptionalNode) {

@@ -1,4 +1,4 @@
-# 1e26ad908363cc86aabff1040b9933c8d903300490fac2268bd40c4d91326c97 Elan 2.0.0-alpha guest default_profile valid
+# c998d1294bb99c7aa9897d394dc1d82e839c667b0084224a399ce2c403632975 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to new Point(5, 5)
@@ -157,7 +157,7 @@ class Solver
 
   function getNodeFor(p as Point) returns Node
     variable matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
-    return if matches.length() is 1 then matches.head() else empty Node
+    return if matches.length() is 1 then matches.head() else emptyNode()
   end function
 
   function getLastVisited() returns Point
@@ -166,7 +166,7 @@ class Solver
 
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
-    variable lowestCostNode set to empty Node
+    variable lowestCostNode set to emptyNode()
     variable possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       variable cost set to calculateCost(nd)
@@ -207,6 +207,10 @@ class Solver
   end function
 
 end class
+
+function emptyNode() returns Node
+  return new Node(emptyPoint(), 0, 0)
+end function
 
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
