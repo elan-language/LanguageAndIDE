@@ -200,17 +200,6 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("new record + with clause", () => {
-    testNodeParse(
-      new ExprNode(f),
-      "new Foo() with x set to 3, y set to 1",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
   test("Identifier", () => {
     testNodeParse(new IdentifierUse(f), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new IdentifierUse(f), `  `, ParseStatus.invalid, ``, "", "");
