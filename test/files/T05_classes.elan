@@ -1,4 +1,4 @@
-# 2eee777910db9307720e0e2701a50332f2891cfa0bf4a5265a93c475b0123887 Elan 2.0.0-alpha guest default_profile valid
+# 6d1e8b8b76ffd7528cf5af97674703cba454539143c1859c4d4d9693590ab88b Elan 2.0.0-alpha guest default_profile valid
 
 class Player
   constructor()
@@ -9,10 +9,10 @@ class Player
 
 end class
 
-record Card
-  property value as Int
+interface Card
+  abstract property value as Int
 
-end record
+end interface
 
 abstract class Person
   abstract property name as String

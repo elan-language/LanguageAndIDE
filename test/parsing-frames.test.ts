@@ -430,29 +430,6 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - record", async () => {
-    const code = `${testHeader}
-
-record Foo
-  property bar as Int
-
-end record
-`;
-    const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
-  });
-
   test("parse Frames - abstract class", async () => {
     const code = `${testHeader}
 

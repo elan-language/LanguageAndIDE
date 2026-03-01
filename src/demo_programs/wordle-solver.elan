@@ -1,4 +1,4 @@
-# 322a05f3a86b260c4f045703a1a68fb4fc2653d02218c4685e784e71f06ca7c6 Elan 2.0.0-alpha guest default_profile valid
+# 434dcf2f2b3ca577d1131c776e7e43ba2db94cb5b2b3fb8379628ca32cc6b605 Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -187,7 +187,7 @@ test test_maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  return possAnswers.map(lambda w as String => newWordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
@@ -198,9 +198,9 @@ end function
 
 test test_betterOf
   variable possAnswers set to new List<of String>()
-  variable b2 set to newWordCount("B", 2)
-  variable a3 set to newWordCount("A", 3)
-  variable a2 set to newWordCount("A", 2)
+  variable b2 set to new WordCount("B", 2)
+  variable a3 set to new WordCount("A", 3)
+  variable a2 set to new WordCount("A", 2)
   assert betterOf(a3, b2, possAnswers) is b2
   assert betterOf(b2, a3, possAnswers) is b2
   assert betterOf(b2, a2, possAnswers) is b2
@@ -225,16 +225,17 @@ test test_bestAttempt
   assert bestAttempt(possAnswers2) is "BCDEA"
 end test
 
-record WordCount
+class WordCount
   property word as String
 
   property count as Int
 
-end record
+  constructor(word as String, count as Int)
+    set property.word to word
+    set property.count to count
+  end constructor
 
-function newWordCount(word as String, count as Int) returns WordCount
-  return new WordCount() with word set to word, count set to count
-end function
+end class
 
 # 2309 words
 function getAllPossibleAnswers() returns List<of String>

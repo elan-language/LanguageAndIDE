@@ -1,4 +1,4 @@
-# f25802de01d41c3d7b34ed9a15b7f838ce824060921c1e037e16a3bc9792c34b Elan 2.0.0-alpha guest default_profile valid
+# be685d34986e704ee62e662581316d7b7355e49b1ebe02c5456d360a18669f84 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -6,7 +6,7 @@ main
   for i from 0 to displayWidth step 1
     constant x set to randomInt(0, 39)
     constant y set to randomInt(0, 29)
-    variable p set to newPoint(x, y)
+    variable p set to new Point(x, y)
     constant existing set to getValue(p, blocks)
     constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
@@ -114,27 +114,28 @@ test test_isValidQuadrant
   assert isValidQuadrant(15) is false
 end test
 
-record Point
+class Point
   property x as Int
 
   property y as Int
 
-  property isNotEmpty as Boolean
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return [newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)]
+    constant x set to property.x
+    constant y set to property.y
+    return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)]
   end function
 
-end record
-
-function newPoint(x as Int, y as Int) returns Point
-  return new Point() with x set to x, y set to y, isNotEmpty set to true
-end function
+end class
 
 test test_neighbouringPoints
-  variable p set to newPoint(0, 0)
+  variable p set to new Point(0, 0)
   variable n set to p.neighbouringPoints()
-  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
   assert n is expected
 end test

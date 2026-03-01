@@ -1329,7 +1329,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  test("Pass_joinListOfRecord", async () => {
+  test("Pass_joinListOfObjects", async () => {
     const code = `${testHeader}
 
 main
@@ -1338,8 +1338,8 @@ main
   call printNoLine(s)
 end main
 
-record Point
-end record`;
+class Point
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
