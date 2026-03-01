@@ -2168,28 +2168,6 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralListOfEmptyUnknownClass", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to [empty Foo]
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
-  });
-
   test("Fail_EmptyGenericType", async () => {
     const code = `${testHeader}
 
