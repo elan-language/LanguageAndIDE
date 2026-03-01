@@ -20,7 +20,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
-import { RecordFrame } from "./globals/record-frame";
+
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
@@ -150,8 +150,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
@@ -188,8 +186,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TryStatement) {

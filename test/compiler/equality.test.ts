@@ -384,21 +384,25 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable f1 set to new Foo() with p set to 1
-  variable f2 set to new Foo() with p set to 2
+  variable f1 set to new Foo(1)
+  variable f2 set to new Foo(2)
   variable l1 set to [f1, f2]
   variable l2 set to [f1, f2]
   call printNoLine(l1.isSameValueAs(l2))
   variable l3 set to [f2, f1]
   call printNoLine(l1.isSameValueAs(l3))
-  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
+  variable l4 set to [new Foo(1), new Foo(2)]
   call printNoLine( l4.isSameValueAs(l1))
 end main
 
-record Foo
+class Foo
   property p as Int
 
-end record`;
+  constructor(p as Int)
+    set property.p to p
+  end constructor
+
+end class`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -414,21 +418,26 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f1 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 1; return elan_a;})();
-  let f2 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 2; return elan_a;})();
+  let f1 = system.initialise(await new Foo()._initialise(1));
+  let f2 = system.initialise(await new Foo()._initialise(2));
   let l1 = system.list([f1, f2]);
   let l2 = system.list([f1, f2]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l2));
   let l3 = system.list([f2, f1]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l3));
-  let l4 = system.list([await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 1; return elan_a;})(), await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 2; return elan_a;})()]);
+  let l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
   await _stdlib.printNoLine(_stdlib.isSameValueAs(l4, l1));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
-  async _initialise() { return this; }
+
   p = 0;
+
+  async _initialise(p) {
+    this.p = p;
+    return this;
+  }
 
 }
 return [main, _tests];}`;
@@ -523,21 +532,25 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable f1 set to new Foo() with p set to 1
-  variable f2 set to new Foo() with p set to 2
+  variable f1 set to new Foo(1) with p set to 1
+  variable f2 set to new Foo(2) with p set to 2
   variable l1 set to [f1, f2]
   variable l2 set to [f1, f2]
   call printNoLine(l1.isSameReferenceAs(l2))
   variable l3 set to [f2, f1]
   call printNoLine(l1.isSameReferenceAs(l3))
-  variable l4 set to [new Foo() with p set to 1, new Foo() with p set to 2]
+  variable l4 set to [new Foo(2), new Foo(2)]
   call printNoLine( l4.isSameReferenceAs(l1))
 end main
 
-record Foo
+class Foo
   property p as Int
 
-end record`;
+  constructor(p as Int)
+    set property.p to p
+  end constructor
+
+end class`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -553,21 +566,26 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let f1 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 1; return elan_a;})();
-  let f2 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 2; return elan_a;})();
+  let f1 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise(1))}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise(1)))); elan_a.p = 1; return elan_a;})();
+  let f2 = await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise(2))}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise(2)))); elan_a.p = 2; return elan_a;})();
   let l1 = system.list([f1, f2]);
   let l2 = system.list([f1, f2]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
   let l3 = system.list([f2, f1]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
-  let l4 = system.list([await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 1; return elan_a;})(), await (async () => {const elan_a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); elan_a.p = 2; return elan_a;})()]);
+  let l4 = system.list([system.initialise(await new Foo()._initialise(2)), system.initialise(await new Foo()._initialise(2))]);
   await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
 }
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
-  async _initialise() { return this; }
+
   p = 0;
+
+  async _initialise(p) {
+    this.p = p;
+    return this;
+  }
 
 }
 return [main, _tests];}`;

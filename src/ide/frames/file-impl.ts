@@ -39,7 +39,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
-import { RecordFrame } from "./globals/record-frame";
+
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
 import { LanguageElan } from "./language-elan";
@@ -603,9 +603,6 @@ export class FileImpl implements File {
   }
   createInterface(): Frame {
     return new InterfaceFrame(this);
-  }
-  createRecord(): Frame {
-    return new RecordFrame(this);
   }
   createGlobalComment(): Frame {
     return new GlobalComment(this);

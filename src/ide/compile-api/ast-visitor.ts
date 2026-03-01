@@ -44,7 +44,6 @@ import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-fu
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { InterfaceAsn } from "../../compiler/syntax-nodes/globals/interface-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
-import { RecordAsn } from "../../compiler/syntax-nodes/globals/record-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
@@ -115,7 +114,6 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { InterfaceFrame } from "../frames/globals/interface-frame";
 import { MainFrame } from "../frames/globals/main-frame";
-import { RecordFrame } from "../frames/globals/record-frame";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Index } from "../frames/parse-nodes";
 import { AbstractAlternatives } from "../frames/parse-nodes/abstract-alternatives";
@@ -305,22 +303,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), classAsn)) as AstNode[];
 
     return classAsn;
-  }
-
-  if (node instanceof RecordFrame) {
-    const recordAsn = new RecordAsn(node.getHtmlId(), scope);
-    recordAsn.breakpointStatus = node.breakpointStatus;
-
-    recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-    recordAsn.inheritance =
-      transform(node.inheritance, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-
-    recordAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), recordAsn)) as AstNode[];
-
-    return recordAsn;
   }
 
   if (node instanceof InterfaceFrame) {
