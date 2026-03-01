@@ -98,8 +98,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable r set to empty RegExp
-  set r to testRegex()
+  variable r set to testRegex()
   call printNoLine("aa".matchesRegExp(r))
 end main
 
@@ -110,8 +109,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let r = system.emptyRegExp();
-  r = (await global.testRegex());
+  let r = (await global.testRegex());
   await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", r));
 }
 

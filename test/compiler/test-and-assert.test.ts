@@ -612,12 +612,6 @@ test test_string_
   assert a is b
 end test
 
-test test_default_
-  variable a set to 0
-  variable b set to empty Int
-  assert a is b
-end test
-
 constant hello set to "Hello"
 
 test test_constant_
@@ -636,12 +630,6 @@ end class
 test test_class1
   variable a set to new Foo(3)
   variable b set to new Foo(3)
-  assert a is b
-end test
-
-test test_class2
-  variable a set to empty Foo
-  variable b set to empty Foo
   assert a is b
 end test`;
 
@@ -672,15 +660,9 @@ _tests.push(["test27", async (_outcomes) => {
   _outcomes.push(await system.assert([async () => a, "String"], [b, "String"], "assert36", _stdlib, false));
 }]);
 
-_tests.push(["test39", async (_outcomes) => {
-  let a = 0;
-  let b = 0;
-  _outcomes.push(await system.assert([async () => a, "Int"], [b, "Int"], "assert48", _stdlib, false));
-}]);
-
-_tests.push(["test54", async (_outcomes) => {
+_tests.push(["test42", async (_outcomes) => {
   let b = "Hello";
-  _outcomes.push(await system.assert([async () => global.hello, "String"], [b, "String"], "assert60", _stdlib, false));
+  _outcomes.push(await system.assert([async () => global.hello, "String"], [b, "String"], "assert48", _stdlib, false));
 }]);
 
 class Foo {
@@ -695,16 +677,10 @@ class Foo {
 
 }
 
-_tests.push(["test76", async (_outcomes) => {
+_tests.push(["test64", async (_outcomes) => {
   let a = system.initialise(await new Foo()._initialise(3));
   let b = system.initialise(await new Foo()._initialise(3));
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert85", _stdlib, false));
-}]);
-
-_tests.push(["test88", async (_outcomes) => {
-  let a = Foo.emptyInstance();
-  let b = Foo.emptyInstance();
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert97", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert73", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -729,10 +705,8 @@ return [main, _tests];}`;
         [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "assert24")],
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
-      ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],
-      ["test54", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")]],
-      ["test76", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert85")]],
-      ["test88", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert97")]],
+      ["test42", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert48")]],
+      ["test64", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert73")]],
     ]);
   });
 
