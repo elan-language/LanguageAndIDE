@@ -44,7 +44,6 @@ import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-fu
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { InterfaceAsn } from "../../compiler/syntax-nodes/globals/interface-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
-import { RecordAsn } from "../../compiler/syntax-nodes/globals/record-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
