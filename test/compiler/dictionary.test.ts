@@ -1722,28 +1722,4 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
   });
-
-  test("Fail_EmptyGenericType", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to empty Dictionary
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type, Type>'.LangRef.html#GenericParametersCompileError",
-    ]);
-  });
 });

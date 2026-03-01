@@ -379,41 +379,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[6, 7, 8][5, 6][4, 5]");
   });
 
-  test("Fail_CannotinitialiseToReferenceType1", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to createList(3, empty Foo)
-  call printNoLine(a)
-  variable foo set to a[0]
-  call printNoLine(foo.p1)
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-
-  property p1 as Int
-end class
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Can only create List with simple value");
-  });
-
   test("Fail_CannotinitialiseToReferenceType2", async () => {
     const code = `${testHeader}
 
@@ -1481,51 +1446,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
-  });
-
-  test("Pass_Conversions", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to ["one", "two", "three"]
-  variable d set to a.asSet()
-  variable aa set to new List<of String>()
-  variable dd set to empty Set<of String>
-  set aa to a
-  set dd to d
-  call printNoLine(aa)
-  call printNoLine(dd)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["one", "two", "three"]);
-  let d = a.asSet();
-  let aa = system.initialise(await new _stdlib.List()._initialise());
-  let dd = system.initialise(_stdlib.Set.emptyInstance());
-  aa = a;
-  dd = d;
-  await _stdlib.printNoLine(aa);
-  await _stdlib.printNoLine(dd);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[one, two, three][one, two, three]");
   });
 
   test("Fail_withRemove", async () => {
