@@ -1722,40 +1722,6 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "args8", "0, new C", expected);
   });
 
-  test("Pass_withParameters", async () => {
-    const code = `${testHeader}
-
-main
-  variable c set to new Foo() with x set to 1
-end main
-
-record Foo
-  property x1 as Int
-
-  property x2 as Int
-
-end record
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["x1", "x1", "x1"],
-      ["x2", "x2", "x2"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with x", expected);
-  });
-
   ignore_test("Pass_newConcreteType #897", async () => {
     const code = `${testHeader}
 

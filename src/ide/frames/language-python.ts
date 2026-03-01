@@ -19,7 +19,6 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
-import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
@@ -155,8 +154,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.SELF}</el-kw><el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Property) {
       html = ``;
-    } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.DEF} </el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
