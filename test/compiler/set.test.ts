@@ -316,51 +316,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[2, 4, 6, 3][2, 4, 6, 3, 5]");
   });
 
-  test("Pass_Conversions", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to ["one", "two", "three"].asSet()
-  variable c set to a.asList()
-  variable aa set to empty Set<of String>
-  variable cc set to new List<of String>()
-  set aa to a
-  set cc to c
-  call printNoLine(aa)
-  call printNoLine(cc)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = system.list(["one", "two", "three"]).asSet();
-  let c = a.asList();
-  let aa = system.initialise(_stdlib.Set.emptyInstance());
-  let cc = system.initialise(await new _stdlib.List()._initialise());
-  aa = a;
-  cc = c;
-  await _stdlib.printNoLine(aa);
-  await _stdlib.printNoLine(cc);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[one, two, three][one, two, three]");
-  });
-
   test("Pass_Contains1", async () => {
     const code = `${testHeader}
 

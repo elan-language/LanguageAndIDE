@@ -25,13 +25,13 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     function times(value as Float) returns Float
-        return property.p1 * value
+        return this.p1 * value
     end function
 
     function asString() returns String
@@ -97,13 +97,13 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     function times(value as Float) returns Float
-        return property.p1 * value
+        return this.p1 * value
     end function
 
     function asString() returns String
@@ -171,13 +171,13 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return [property.p1 * value]
+        return [this.p1 * value]
     end function
 
     function asString() returns String
@@ -244,14 +244,14 @@ end main
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   property p1 as Foo
 
   function getTimes() returns List<of Float>
     variable x set to new List<of Float>()
-    set x to property.p1.times(2)
+    set x to this.p1.times(2)
     return x
   end function
 
@@ -259,13 +259,13 @@ end class
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     function times(value as Float) returns List<of Float>
-        return [property.p1 * value]
+        return [this.p1 * value]
     end function
 
 end class`;
@@ -286,12 +286,12 @@ class Bar {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Foo.emptyInstance();
+    return this.elan_p1 ??= Foo.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
   async getTimes() {
@@ -347,14 +347,14 @@ end main
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   property p1 as Foo
 
   function getTimes() returns List<of Qux>
     variable x set to new List<of Qux>()
-    set x to property.p1.times(2)
+    set x to this.p1.times(2)
     return x
   end function
 
@@ -362,7 +362,7 @@ end class
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -394,12 +394,12 @@ class Bar {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Foo.emptyInstance();
+    return this.elan_p1 ??= Foo.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
   async getTimes() {
@@ -464,13 +464,13 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to new Bar()
+        set this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
 
     function length() returns Float
-        return property.p1.length() + 2
+        return this.p1.length() + 2
     end function
 
     function asString() returns String
@@ -481,13 +481,13 @@ end class
 
 class Bar
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     function length() returns Float
-        return property.p1
+        return this.p1
     end function
 
     function asString() returns String
@@ -511,12 +511,12 @@ class Foo {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Bar.emptyInstance();
+    return this.elan_p1 ??= Bar.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
   async length() {
@@ -578,7 +578,7 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -588,7 +588,7 @@ class Foo
     end function
 
     function p1PlusOne() returns Float
-        return property.p1 + 1
+        return this.p1 + 1
     end function
 
     function asString() returns String
@@ -599,13 +599,13 @@ end class
 
 class Bar
     constructor()
-        set property.p1 to 1
+        set this.p1 to 1
     end constructor
 
     property p1 as Float
 
     function p1PlusOne() returns Float
-        return property.p1 + 1
+        return this.p1 + 1
     end function
 
     function asString() returns String
@@ -694,7 +694,7 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -704,7 +704,7 @@ class Foo
   end procedure
 
   function asString() returns String
-    return property.p1.asString()
+    return this.p1.asString()
   end function
 
 end class`;
@@ -764,7 +764,7 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -836,14 +836,14 @@ end class`;
 
 class Foo
   constructor()
-    set property.p1 to 5
+    set this.p1 to 5
   end constructor
 
   property p1 as Float
 
   function times(value as Float) returns Float
-    set property.p1 to property.p1 * value
-    return property.p1
+    set this.p1 to this.p1 * value
+    return this.p1
   end function
 
 end class`;
@@ -870,7 +870,7 @@ end class`;
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -881,7 +881,7 @@ class Foo
     end function
 
     procedure setP1(value as Float) 
-        set property.p1 to value
+        set this.p1 to value
     end procedure
 
     function asString() returns String
@@ -1100,10 +1100,10 @@ class Foo
   end constructor
 
   function foo() returns Int
-    if property.p2 then
-      set property.p1 to 1
+    if this.p2 then
+      set this.p1 to 1
     end if
-    return property.p1
+    return this.p1
   end function
 
   property p1 as Int
@@ -1141,14 +1141,14 @@ class Foo
   end constructor
 
   function foo() returns Int
-    if property.p2 then
-      if property.p2 then
-        if property.p2 then
-          set property.p1 to 1
+    if this.p2 then
+      if this.p2 then
+        if this.p2 then
+          set this.p1 to 1
         end if
       end if
     end if
-    return property.p1
+    return this.p1
   end function
 
   property p1 as Int
@@ -1209,6 +1209,8 @@ end function`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   function foo(foo as Int) returns String
       return ""
   end function
@@ -1236,6 +1238,8 @@ end class`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   function foo(a as Int, foo as Int) returns String
       return ""
   end function

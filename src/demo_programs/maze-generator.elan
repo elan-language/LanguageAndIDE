@@ -1,4 +1,4 @@
-# c28d27ec755906773b71648d4864167a63c0a5c5c81d7da1f057f57ae6dfdd9a Elan 2.0.0-alpha guest default_profile valid
+# be685d34986e704ee62e662581316d7b7355e49b1ebe02c5456d360a18669f84 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -6,7 +6,7 @@ main
   for i from 0 to displayWidth step 1
     constant x set to randomInt(0, 39)
     constant y set to randomInt(0, 29)
-    variable p set to newPoint(x, y)
+    variable p set to new Point(x, y)
     constant existing set to getValue(p, blocks)
     constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
@@ -16,7 +16,7 @@ main
   end for
   call displayBlocks(blocks)
   constant name set to inputString("File name to save: ")
-  if not name.isSameValueAs("x") then
+  if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if
 end main
@@ -49,14 +49,18 @@ function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, 
   constant paint set to white
   variable b2 set to b
   for x from startX to startX + width step 1
-    set b2 to b2.withPut(x, startY, paint)
-    set b2 to b2.withPut(x, startY + depth, paint)
+    set b2 to withPut(b2, x, startY, paint)
+    set b2 to withPut(b2, x, startY + depth, paint)
   end for
   for y from startY to startY + depth step 1
-    set b2 to b2.withPut(startX, y, paint)
-    set b2 to b2.withPut(startX + width, y, paint)
+    set b2 to withPut(b2, startX, y, paint)
+    set b2 to withPut(b2, startX + width, y, paint)
   end for
   return b2
+end function
+
+function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 # colour: 0 for black, 1 for white
@@ -110,27 +114,28 @@ test test_isValidQuadrant
   assert isValidQuadrant(15) is false
 end test
 
-record Point
+class Point
   property x as Int
 
   property y as Int
 
-  property isNotEmpty as Boolean
+  constructor(x as Int, y as Int)
+    set this.x to x
+    set this.y to y
+  end constructor
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return [newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)]
+    constant x set to this.x
+    constant y set to this.y
+    return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)]
   end function
 
-end record
-
-function newPoint(x as Int, y as Int) returns Point
-  return new Point() with x set to x, y set to y, isNotEmpty set to true
-end function
+end class
 
 test test_neighbouringPoints
-  variable p set to newPoint(0, 0)
+  variable p set to new Point(0, 0)
   variable n set to p.neighbouringPoints()
-  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
   assert n is expected
 end test

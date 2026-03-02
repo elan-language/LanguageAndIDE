@@ -1,11 +1,12 @@
-# 613adf1de2e35584c94a67f8f51adc0b13c093ad3252ea0431d5506678a5e997 Elan 2.0.0-alpha guest default_profile valid
+# ffe699b70585b442ee1cc263ec5328bf3700bf7cebef2d947bbeb2211811b8ed Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable tab set to 10
-  variable i set to 0
   for i from 1 to (tab - 1) step 1
-    variable j set to power(9, i)
-    variable f set to lambda j as Int => j.asString().length()
-    call printTab(tab - f(j), "{j}\n")
+    variable j set to power(9, i).floor()
+    variable f set to (lambda j as Int => j.asString().length())
+    call printTab(tab - f(j), "{j}")
   end for
+  # snipTo
 end main

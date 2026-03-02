@@ -179,7 +179,7 @@ end function
 
 class Game
   constructor(dealerStartPoints as Int)
-    set property.dealer to new Dealer(dealerStartPoints)
+    set this.dealer to new Dealer(dealerStartPoints)
   end constructor
 
   property dealer as Dealer
@@ -189,34 +189,34 @@ class Game
   property message as String
 
   procedure newRound()
-    call property.dealer.newHand()
-    each player in property.players
+    call this.dealer.newHand()
+    each player in this.players
       call player.newHand()
     end each
   end procedure
 
   procedure updatePoints()
-    each player in property.players
-      variable playerOutcome set to determinePlayerOutcome(property.dealer, player)
-      call global.updatePoints(property.dealer, player, playerOutcome)
+    each player in this.players
+      variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
+      call global.updatePoints(this.dealer, player, playerOutcome)
     end each
   end procedure
 
   procedure addPlayer(player as Player)
-    call property.players.append(player)
+    call this.players.append(player)
   end procedure
 
   procedure setMessage(message as String)
-    set property.message to message
+    set this.message to message
   end procedure
 
 end class
 
 class Card
   constructor(rank as String, suit as Suit)
-    set property.rank to rank
-    set property.suit to suit
-    set property.value to rankValue[rank]
+    set this.rank to rank
+    set this.suit to suit
+    set this.value to rankValue[rank]
   end constructor
 
   property suit as Suit
@@ -228,11 +228,11 @@ class Card
   property faceDown as Boolean
 
   procedure turnFaceUp()
-    set property.faceDown to false
+    set this.faceDown to false
   end procedure
 
   procedure turnFaceDown()
-    set property.faceDown to true
+    set this.faceDown to true
   end procedure
 
 end class
@@ -253,68 +253,68 @@ abstract class Player
   property hasTurn as Boolean
 
   procedure startTurn()
-    if property.status is Status.active then
-      set property.hasTurn to true
+    if this.status is Status.active then
+      set this.hasTurn to true
     end if
   end procedure
 
   procedure evaluateStatus(newCard as Card)
-    if (cardCount() is 2) and (property.handTotal is 21) then
-      set property.status to Status.blackjack
-    elif (property.handTotal > 21) and (property.hasSoftAce) then
-      set property.handTotal to property.handTotal - 10
-      set property.hasSoftAce to false
-    elif property.handTotal > 21 then
-      set property.status to Status.bust
-    elif property.handTotal is 21 then
-      set property.status to Status.standing
+    if (cardCount() is 2) and (this.handTotal is 21) then
+      set this.status to Status.blackjack
+    elif (this.handTotal > 21) and (this.hasSoftAce) then
+      set this.handTotal to this.handTotal - 10
+      set this.hasSoftAce to false
+    elif this.handTotal > 21 then
+      set this.status to Status.bust
+    elif this.handTotal is 21 then
+      set this.status to Status.standing
     end if
-    if property.status isnt Status.active then
-      set property.hasTurn to false
+    if this.status isnt Status.active then
+      set this.hasTurn to false
     end if
   end procedure
 
   procedure stand()
-    set property.status to Status.standing
-    set property.hasTurn to false
+    set this.status to Status.standing
+    set this.hasTurn to false
   end procedure
 
   procedure draw()
     variable newCard set to dealCard(random())
-    call property.cards.append(newCard)
+    call this.cards.append(newCard)
     if newCard.rank is "A" then
       call addAce()
     else
-      set property.handTotal to property.handTotal + newCard.value
+      set this.handTotal to this.handTotal + newCard.value
     end if
     call evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
-    if property.hasSoftAce then
-      set property.handTotal to property.handTotal + 1
+    if this.hasSoftAce then
+      set this.handTotal to this.handTotal + 1
     else
-      set property.handTotal to property.handTotal + 11
-      set property.hasSoftAce to true
+      set this.handTotal to this.handTotal + 11
+      set this.hasSoftAce to true
     end if
   end procedure
 
   function cardCount() returns Int
-    return property.cards.length()
+    return this.cards.length()
   end function
 
   procedure changePointsBy(amount as Int)
-    set property.points to property.points + amount
+    set this.points to this.points + amount
   end procedure
 
   abstract procedure newHand()
 
   procedure newHandHelper()
-    set property.hasTurn to false
-    set property.hasSoftAce to false
-    set property.cards to new List<of Card>()
-    set property.handTotal to 0
-    set property.status to Status.active
+    set this.hasTurn to false
+    set this.hasSoftAce to false
+    set this.cards to new List<of Card>()
+    set this.handTotal to 0
+    set this.status to Status.active
     call draw()
     call draw()
   end procedure
@@ -323,8 +323,8 @@ abstract class Player
 
   function statusAsString() returns String
     variable msg set to ""
-    variable status set to property.status
-    if property.hasTurn then
+    variable status set to this.status
+    if this.hasTurn then
       set msg to msg + " - PLAYING"
     elif status is Status.standing then
       set msg to msg + " - STANDING"
@@ -342,8 +342,8 @@ end class
 
 class Dealer inherits Player
   constructor(startingPoints as Int)
-    set property.name to "Dealer"
-    set property.points to startingPoints
+    set this.name to "Dealer"
+    set this.points to startingPoints
   end constructor
 
   property faceCard as Card
@@ -352,21 +352,21 @@ class Dealer inherits Player
 
   procedure play()
     call startTurn()
-    variable hiddenCard set to property.cards[1]
+    variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceUp()
-    set property.hasPlayed to true
+    set this.hasPlayed to true
   end procedure
 
   procedure newHand()
-    set property.hasPlayed to false
+    set this.hasPlayed to false
     call newHandHelper()
-    set property.faceCard to property.cards[0]
-    variable hiddenCard set to property.cards[1]
+    set this.faceCard to this.cards[0]
+    variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
 
   procedure nextAction(faceCard as Card)
-    if property.handTotal < 17 then
+    if this.handTotal < 17 then
       call draw()
     else
       call stand()
@@ -375,8 +375,8 @@ class Dealer inherits Player
 
   function getMessage() returns String
     variable msg set to ""
-    if property.hasPlayed then
-      set msg to statusAsString() + " - hand total: {property.handTotal}"
+    if this.hasPlayed then
+      set msg to statusAsString() + " - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -385,8 +385,8 @@ end class
 
 class HumanPlayer inherits Player
   constructor(name as String, startingPoints as Int)
-    set property.name to name
-    set property.points to startingPoints
+    set this.name to name
+    set this.points to startingPoints
   end constructor
 
   procedure newHand()
@@ -409,8 +409,8 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to statusAsString() + "- hand total: {property.handTotal}"
-    if property.hasTurn then
+    variable msg set to statusAsString() + "- hand total: {this.handTotal}"
+    if this.hasTurn then
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
@@ -420,9 +420,9 @@ end class
 
 class AutomatedPlayer inherits Player
   constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
-    set property.name to name
-    set property.decisionFunc to decisionFunc
-    set property.points to startingPoints
+    set this.name to name
+    set this.decisionFunc to decisionFunc
+    set this.points to startingPoints
   end constructor
 
   property decisionFunc as Func<of Player, Card => Action>
@@ -441,7 +441,7 @@ class AutomatedPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    return statusAsString() + " - hand total: {property.handTotal}"
+    return statusAsString() + " - hand total: {this.handTotal}"
   end function
 
 end class

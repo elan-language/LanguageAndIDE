@@ -23,7 +23,7 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
   constant p set to divAsInt(200, order)
   variable turnI set to 0
   each turn in turns
-    set turnI to (if turn.isSameValueAs(left) then 1 else -1)
+    set turnI to (if turn.equals(left) then 1 else -1)
     call t.turn(-45*turnI)
     call t.move(corner)
     call t.turn(-45*turnI)
@@ -51,7 +51,7 @@ end function
 function reflect(s as String) returns String
   variable sR set to ""
   for i from 1 to s.length() step 1
-    set sR to (if s[i - 1].isSameValueAs(left) then right else left) + sR
+    set sR to (if s[i - 1].equals(left) then right else left) + sR
   end for
   return sR
 end function

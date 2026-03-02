@@ -3,7 +3,6 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { propertyKeyword } from "./elan-keywords";
 
 import {
   CannotCallAFunction,
@@ -471,6 +470,10 @@ export function mustBeConcreteClass(
   }
 }
 
+export function mustHaveConstructor(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new SyntaxCompileError("Concrete class must have a constructor.", location));
+}
+
 export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (!isClass(symbol)) {
     const st = symbol.symbolType();
@@ -686,7 +689,7 @@ export function mustBeValueType(
   if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs' or '.isSameReferenceAs'`,
+        `Can only compare value types with an operator. To compare reference types use '.equals'`,
         location,
       ),
     );
@@ -870,7 +873,7 @@ export function mustConformToCopyOfThisBoilerPlate(
     if (
       isVariable &&
       rhs instanceof FuncCallAsn &&
-      rhs.id === "shallowCopy" &&
+      rhs.id === "copy" &&
       rhs.parameters.length === 1 &&
       rhs.parameters[0] instanceof ThisAsn &&
       innerFunction &&
@@ -880,7 +883,7 @@ export function mustConformToCopyOfThisBoilerPlate(
     }
     compileErrors.push(
       new SyntaxCompileError(
-        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).",
+        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).",
         location,
       ),
     );
@@ -937,10 +940,7 @@ export function mustNotBePropertyOnFunctionMethod(
       );
     } else {
       if (isAstQualifiedNode(assignable)) {
-        if (
-          assignable.qualifier instanceof ThisAsn &&
-          assignable.qualifier.originalKeyword === propertyKeyword
-        ) {
+        if (assignable.qualifier instanceof ThisAsn) {
           return;
         }
       }

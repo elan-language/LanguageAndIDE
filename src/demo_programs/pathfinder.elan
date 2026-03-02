@@ -1,8 +1,8 @@
-# 45765c00e351195490cf4aa5a88fc5e16dcb9a2721aa7c86752b16143dfd2c87 Elan 2.0.0-alpha guest default_profile valid
+# d9385f43fea83b9655cb073395c22540b7204b09cc8a1c3074752616539e76eb Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable start set to newPoint(5, 5)
-  variable destination set to newPoint(34, 24)
+  variable start set to new Point(5, 5)
+  variable destination set to new Point(34, 24)
   variable percentRocks set to inputIntBetween("Enter % rocks (0-100): ", 0, 100)
   call clearPrintedText()
   variable rocks set to new List<of Point>()
@@ -12,9 +12,9 @@ main
   call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
-    constant option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
+    constant k set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
     call clearPrintedText()
-    constant alg set to getAlgFromLetter(option)
+    constant alg set to getAlgFromLetter(k)
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
@@ -28,7 +28,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     call displayBlocks(gr2)
     call pause(0)
   end while
-  if solver.getLastVisited().isSameValueAs(destination) then
+  if solver.getLastVisited().equals(destination) then
     variable rl set to solver.getRouteAndLength()
     variable route set to rl.item0
     constant length set to rl.item1
@@ -43,10 +43,10 @@ end procedure
 procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
-      variable p set to newPoint(x, y)
-      if p.isSameValueAs(start) then
+      variable p set to new Point(x, y)
+      if p.equals(start) then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
-      elif p.isSameValueAs(dest) then
+      elif p.equals(dest) then
         call nodes.append(new Node(p, infinity, 0))
       elif random() < divAsFloat(percentRocks, 100) then
         call rocks.append(p)
@@ -58,36 +58,41 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, node
 end procedure
 
 function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
-  variable gr set to new List<of List<of Int>>(40, 30, white)
+  variable gr set to createBlockGraphics(white)
   each rock in rocks
-    set gr to gr.withPut(rock.x, rock.y, black)
+    set gr to withPut(gr, rock.x, rock.y, black)
   end each
-  set gr to gr.withPut(start.x, start.y, green)
-  set gr to gr.withPut(dest.x, dest.y, red)
+  set gr to withPut(gr, start.x, start.y, green)
+  set gr to withPut(gr, dest.x, dest.y, red)
   return gr
 end function
 
+function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
+end function
+
 function addVisited(gr as List<of List<of Int>>, visited as Point) returns List<of List<of Int>>
-  return gr.withPut(visited.x, visited.y, lightBlue)
+  return withPut(gr, visited.x, visited.y, lightBlue)
 end function
 
 function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
-  variable gr2 set to gr
+  variable graphics set to gr
   each p in route
-    set gr2 to gr2.withPut(p.x, p.y, orange)
+    set graphics to withPut(graphics, p.x, p.y, orange)
   end each
   variable start set to route[0]
   variable dest set to route[route.length() - 1]
-  set gr2 to gr2.withPut(start.x, start.y, green)
-  set gr2 to gr2.withPut(dest.x, dest.y, red)
-  return gr2
+  set graphics to withPut(graphics, start.x, start.y, green)
+  set graphics to withPut(graphics, dest.x, dest.y, red)
+  return graphics
 end function
 
 class Solver
   constructor(nodes as List<of Node>, start as Point, destination as Point)
-    set property.nodes to nodes
-    set property.start to start
-    set property.destination to destination
+    set this.nodes to nodes
+    set this.start to start
+    set this.destination to destination
+    set this.current to new Node(emptyPoint(), 0, 0)
   end constructor
 
   property nodes as List<of Node>
@@ -102,46 +107,48 @@ class Solver
 
   property running as Boolean
 
+  # TODO can this go into the constructor ?
   procedure initialise(alg as Algorithm)
-    set property.alg to alg
-    set property.current to new Node(property.start, 0, infinity)
-    set property.running to true
-    each node in property.nodes
+    set this.alg to alg
+    set this.current to new Node(this.start, 0, infinity)
+    set this.running to true
+    each node in this.nodes
       call node.setDistanceFromStart(infinity)
-      call node.setVia(empty Point)
+      call node.setVia(emptyPoint())
       call node.setVisited(false)
     end each
   end procedure
 
   procedure visitNextPoint()
     call updateNeighbours()
-    set property.current to nextNodeToVisit()
-    if (property.current.isSameValueAs(empty Node)) or (property.current.point.isSameValueAs(property.destination)) then
-      set property.running to false
+    set this.current to nextNodeToVisit()
+    if (this.current.isEmpty or (this.current.point.equals(this.destination))) then
+      set this.running to false
     else
-      call property.current.setVisited(true)
+      call this.current.setVisited(true)
     end if
   end procedure
 
   procedure updateNeighbours()
-    constant distToCurrent set to property.current.distFromStart
+    variable distToCurrent set to this.current.distFromStart
+    variable currentPoint set to this.current.point
     each neighbour in currentNeighbours()
-      variable currentPoint set to property.current.point
       variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
-        call neighbour.setVia(property.current.point)
+        call neighbour.setVia(currentPoint)
         call neighbour.setDistanceFromStart(distViaCurrent)
       end if
     end each
   end procedure
 
   function currentNeighbours() returns List<of Node>
+    variable currentNode set to this.current
+    variable currentPoint set to currentNode.point
     variable neighbours set to new List<of Node>()
-    variable currentPoint set to property.current.point
     each p in currentPoint.neighbouringPoints()
       variable node set to getNodeFor(p)
       variable point set to node.point
-      if point.isNotEmpty then
+      if not point.isEmpty then
         set neighbours to neighbours.withAppend(node)
       end if
     end each
@@ -149,18 +156,18 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    variable matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
-    return if matches.length() is 1 then matches.head() else empty Node
+    variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
+    return if matches.length() is 1 then matches.head() else emptyNode()
   end function
 
   function getLastVisited() returns Point
-    return property.current.point
+    return this.current.point
   end function
 
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
-    variable lowestCostNode set to empty Node
-    variable possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    variable lowestCostNode set to emptyNode()
+    variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       variable cost set to calculateCost(nd)
       if cost < lowestCostSoFar then
@@ -175,21 +182,21 @@ class Solver
     variable cost set to 0.0
     constant fromStart set to node.distFromStart
     constant estToDest set to node.estDistToDest
-    if property.alg is Algorithm.dijkstra then
+    if this.alg is Algorithm.dijkstra then
       set cost to fromStart
-    elif property.alg is Algorithm.aStar then
+    elif this.alg is Algorithm.aStar then
       set cost to fromStart + estToDest
-    elif property.alg is Algorithm.heuristic then
+    elif this.alg is Algorithm.heuristic then
       set cost to estToDest
     end if
     return cost
   end function
 
   function getRouteAndLength() returns (List<of Point>, Float)
-    variable route set to [property.destination]
+    variable route set to [this.destination]
     variable length set to 0.0
-    variable node set to getNodeFor(property.destination)
-    while not node.point.isSameValueAs(property.start)
+    variable node set to getNodeFor(this.destination)
+    while not node.point.equals(this.start)
       variable previous set to node.via
       variable p set to node.point
       set length to length + p.minDistTo(previous)
@@ -201,13 +208,20 @@ class Solver
 
 end class
 
+function emptyNode() returns Node
+  return new Node(emptyPoint(), 0, 0)
+end function
+
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
-    set property.point to p
-    set property.visited to false
-    set property.distFromStart to distFromStart
-    set property.via to empty Point
-    set property.estDistToDest to estDistToDest
+    if p.isEmpty then
+      set this.isEmpty to true
+    end if
+    set this.point to p
+    set this.visited to false
+    set this.distFromStart to distFromStart
+    set this.via to emptyPoint()
+    set this.estDistToDest to estDistToDest
   end constructor
 
   property point as Point
@@ -220,33 +234,48 @@ class Node
 
   property estDistToDest as Float
 
+  property isEmpty as Boolean
+
   procedure setVisited(value as Boolean)
-    set property.visited to value
+    set this.visited to value
   end procedure
 
   procedure setDistanceFromStart(d as Float)
-    set property.distFromStart to d
+    set this.distFromStart to d
   end procedure
 
   procedure setVia(p as Point)
-    set property.via to p
+    set this.via to p
   end procedure
 
   function asString() returns String
-    return "[{property.point.asString()} {property.visited} {property.distFromStart}]"
+    return "[{this.point.asString()} {this.visited} {this.distFromStart}]"
   end function
 
 end class
 
-record Point
+function emptyPoint() returns Point
+  return new Point(-1, -1)
+end function
+
+class Point
   property x as Int
 
   property y as Int
 
-  property isNotEmpty as Boolean
+  property isEmpty as Boolean
+
+  constructor(x as Int, y as Int)
+    if (x < 0) or (y < 0) then
+      set this.isEmpty to true
+    else
+      set this.x to x
+      set this.y to y
+    end if
+  end constructor
 
   function minDistTo(p as Point) returns Float
-    return sqrt(power((p.x - property.x), 2) + power((p.y - property.y), 2))
+    return sqrt(power((p.x - this.x), 2) + power((p.y - this.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
@@ -255,18 +284,14 @@ record Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return [newPoint(property.x - 1, property.y - 1), newPoint(property.x, property.y - 1), newPoint(property.x + 1, property.y - 1), newPoint(property.x - 1, property.y), newPoint(property.x + 1, property.y), newPoint(property.x - 1, property.y + 1), newPoint(property.x, property.y + 1), newPoint(property.x + 1, property.y + 1)]
+    return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
   end function
 
   function asString() returns String
-    return "{property.x},{property.y}"
+    return "{this.x},{this.y}"
   end function
 
-end record
-
-function newPoint(x as Int, y as Int) returns Point
-  return new Point() with x set to x, y set to y, isNotEmpty set to true
-end function
+end class
 
 enum Algorithm dijkstra, aStar, heuristic
 
@@ -280,20 +305,19 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 function getAlgFromLetter(letter as String) returns Algorithm
-  variable dict set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
-  return dict[letter]
+  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
+  return algs[letter]
 end function
 
 test test_getAlgFromLetter
   assert getAlgFromLetter("a") is Algorithm.aStar
   assert getAlgFromLetter("h") is Algorithm.heuristic
   assert getAlgFromLetter("d") is Algorithm.dijkstra
-  assert getAlgFromLetter("x") is "No such key: x"
 end test
 
 test test_point
-  variable p set to newPoint(0, 0)
+  variable p set to new Point(0, 0)
   variable n set to p.neighbouringPoints()
-  variable expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
   assert n is expected
 end test

@@ -1,7 +1,7 @@
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { propertyKeyword } from "../../compiler/elan-keywords";
+import { thisKeyword } from "../../compiler/elan-keywords";
 import { FunctionType } from "../../compiler/symbols/function-type";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
@@ -170,10 +170,10 @@ export function getFilteredSymbols(
   const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
   let symbols = filteredSymbols(spec, scope);
   if (isInsideClass(scope)) {
-    if (propertyKeyword.startsWith(spec.toMatch)) {
+    if (thisKeyword.startsWith(spec.toMatch)) {
       const allProperties = allPropertiesInScope(getClassScope(scope)).sort(orderSymbol);
       symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
-    } else if (spec.context === propertyKeyword) {
+    } else if (spec.context === thisKeyword) {
       const newSpec = new SymbolCompletionSpec(
         spec.toMatch,
         new Set<TokenType>([TokenType.id_property]),

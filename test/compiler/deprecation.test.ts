@@ -422,33 +422,6 @@ end main`;
     ]);
   });
 
-  test("Fail_EmptyClassDeprecation", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to empty DeprecatedClass
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
-
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0.LibRef.html#Xxxx`,
-    ]);
-  });
-
   test("Fail_OfClassDeprecation", async () => {
     const code = `${testHeader}
 

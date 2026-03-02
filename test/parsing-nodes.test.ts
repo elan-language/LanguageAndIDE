@@ -16,7 +16,6 @@ import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
 import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { IfExpr } from "../src/ide/frames/parse-nodes/if-expr";
-import { ImageNode } from "../src/ide/frames/parse-nodes/image-node";
 import { InstanceNode } from "../src/ide/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
@@ -156,7 +155,6 @@ suite("Parsing Nodes", () => {
       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
     );
     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-    testNodeParse(new ExprNode(f), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
       new ExprNode(f),
       "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
@@ -182,29 +180,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new CSV(f, () => new SetToClause(f, () => ""), 1),
       "x set to p.x + 3, y set to p.y - 1",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
-
-  test("Expression + with clause", () => {
-    testNodeParse(
-      new ExprNode(f),
-      "copy p with x set to p.x + 3, y set to p.y - 1",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
-  test("new record + with clause", () => {
-    testNodeParse(
-      new ExprNode(f),
-      "new Foo() with x set to 3, y set to 1",
       ParseStatus.valid,
       "",
       "",
@@ -1436,12 +1411,12 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-    testNodeParse(new Qualifier(f), `property`, ParseStatus.valid, `property`, "");
+    testNodeParse(new Qualifier(f), `this`, ParseStatus.valid, `this`, "");
     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
     testNodeParse(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
-    testNodeParse(new TermChained(f), `property.a`, ParseStatus.valid, `property.a`, "");
+    testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
     testNodeParse(
       new TermChained(f),
       `a[1].b().subList(1, 2).c(d)[e][f]`,
@@ -1451,9 +1426,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TermChained(f),
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       ParseStatus.valid,
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       "",
     );
     testNodeParse(
@@ -1474,9 +1449,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(f),
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       ParseStatus.valid,
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       "",
     );
     testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref foo`, "");
@@ -1968,24 +1943,6 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-    );
-    testNodeParse(
-      new ImageNode(f),
-      "image http://website.com/images/image1.png",
-      ParseStatus.valid,
-      "image http://website.com/images/image1.png",
-      "",
-      "image http://website.com/images/image1.png",
-      `<img src="http://website.com/images/image1.png">`,
-    );
-    testNodeParse(
-      new ImageNode(f),
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      ParseStatus.valid,
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      "",
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      `<img src="http://website.com/images/image1.png"><el-kw> with </el-kw><el-id>height</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <el-id>width</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>`,
     );
   });
 });

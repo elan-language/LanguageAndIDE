@@ -55,7 +55,7 @@
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># c0efef073be38f4aba118d5b349dc8a952aa71c06ae7c46294fcd06cf2a74ea9 Elan 2.0.0-alpha guest default_profile valid
+      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># f9dcff83372dc8408276b3d13e4d94c152045baea4e93c37ee2cdafa18102b34 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable game set to new Game(1000)
@@ -67,7 +67,7 @@ main
     call clearKeyBuffer()
     call display(game)
     variable k set to waitForKey().lowerCase()
-    if k.isSameValueAs('y') then
+    if k.equals('y') then
       call game.setMessage("")
     else
       set anotherRound to false
@@ -177,7 +177,7 @@ function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
   variable rank set to rankValue().keys()[divAsInt(number, 4)]
   variable suit set to number mod 4
-  return new Card() with rank set to rank, suit set to intAsSuit(suit)
+  return new Card(rank, intAsSuit(suit), false)
 end function
 
 test test_dealCard
@@ -225,12 +225,12 @@ function htmlForGame(game as Game) returns String
 end function
 
 test test_htmlForGame
-  variable c1 set to new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  variable c2 set to new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  variable c1 set to new Card("3", Suit.clubs, false)
+  variable c2 set to new Card("K", Suit.spades, true)
   variable p set to new HumanPlayer("fred", 10) with cards set to [c1, c2]
   variable players set to (new List&lt;of Player&gt;()).withAppend(p)
   variable g2 set to new Game(1) with players set to players
-  assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
+  assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForPlayer(player as Player) returns String
@@ -246,10 +246,10 @@ function htmlForPlayer(player as Player) returns String
 end function
 
 test test_htmlForPlayer
-  variable c1 set to new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  variable c2 set to new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  variable c1 set to new Card("3", Suit.clubs, false)
+  variable c2 set to new Card("K", Suit.spades, true)
   variable p set to new HumanPlayer("charlie", 10) with cards set to [c1, c2]
-  assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+  assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForCard(card as Card) returns String
@@ -266,7 +266,7 @@ function htmlForCard(card as Card) returns String
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridForRank(rank)
-      if location.isSameValueAs("royal") then
+      if location.equals("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
@@ -278,9 +278,9 @@ function htmlForCard(card as Card) returns String
 end function
 
 test test_htmlForCard
-  variable c1 set to new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
-  variable c2 set to new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  variable c1 set to new Card("3", Suit.clubs, false)
+  assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;amp;clubs;&lt;/div&gt;&lt;/div&gt;"
+  variable c2 set to new Card("K", Suit.spades, true)
   assert htmlForCard(c2) is "&lt;div class='card reversed'&gt;&lt;/div&gt;"
 end test
 
@@ -289,15 +289,15 @@ function htmlForSpot(id as String, content as String) returns String
 end function
 
 test test_htmlForSpot
-  assert htmlForSpot("c", "&amp;hearts;") is "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
+  assert htmlForSpot("c", "&amp;amp;hearts;") is "&lt;div class='c'&gt;&amp;amp;hearts;&lt;/div&gt;"
   assert htmlForSpot("u", "10") is "&lt;div class='u'&gt;10&lt;/div&gt;"
 end test
 
 class Game
   constructor(dealerStartPoints as Int)
-    set property.dealer to new Dealer(dealerStartPoints)
-    set property.players to new List&lt;of Player&gt;()
-    set property.message to ""
+    set this.dealer to new Dealer(dealerStartPoints)
+    set this.players to new List&lt;of Player&gt;()
+    set this.message to ""
   end constructor
 
   property dealer as Dealer
@@ -307,25 +307,25 @@ class Game
   property message as String
 
   procedure newRound()
-    call property.dealer.newHand()
-    each player in property.players
+    call this.dealer.newHand()
+    each player in this.players
       call player.newHand()
     end each
   end procedure
 
   procedure updatePoints()
-    each player in property.players
-      variable playerOutcome set to determinePlayerOutcome(property.dealer, player)
-      call global.updatePoints(property.dealer, player, playerOutcome)
+    each player in this.players
+      variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
+      call global.updatePoints(this.dealer, player, playerOutcome)
     end each
   end procedure
 
   procedure addPlayer(player as Player)
-    call property.players.append(player)
+    call this.players.append(player)
   end procedure
 
   procedure setMessage(message as String)
-    set property.message to message
+    set this.message to message
   end procedure
 
 end class
@@ -337,12 +337,18 @@ class Card
 
   property faceDown as Boolean
 
+  constructor(rank as String, suit as Suit, facedown as Boolean)
+    set this.rank to rank
+    set this.suit to suit
+    set this.faceDown to facedown
+  end constructor
+
   procedure turnFaceUp()
-    set property.faceDown to false
+    set this.faceDown to false
   end procedure
 
   procedure turnFaceDown()
-    set property.faceDown to true
+    set this.faceDown to true
   end procedure
 
 end class
@@ -363,68 +369,68 @@ abstract class Player
   property hasTurn as Boolean
 
   procedure startTurn()
-    if property.status is Status.active then
-      set property.hasTurn to true
+    if this.status is Status.active then
+      set this.hasTurn to true
     end if
   end procedure
 
   procedure evaluateStatus(newCard as Card)
-    if (cardCount() is 2) and (property.handTotal is 21) then
-      set property.status to Status.blackjack
-    elif (property.handTotal &gt; 21) and (property.softAce) then
-      set property.handTotal to property.handTotal - 10
-      set property.softAce to false
-    elif property.handTotal &gt; 21 then
-      set property.status to Status.bust
-    elif property.handTotal is 21 then
-      set property.status to Status.standing
+    if (cardCount() is 2) and (this.handTotal is 21) then
+      set this.status to Status.blackjack
+    elif (this.handTotal &gt; 21) and (this.softAce) then
+      set this.handTotal to this.handTotal - 10
+      set this.softAce to false
+    elif this.handTotal &gt; 21 then
+      set this.status to Status.bust
+    elif this.handTotal is 21 then
+      set this.status to Status.standing
     end if
-    if property.status isnt Status.active then
-      set property.hasTurn to false
+    if this.status isnt Status.active then
+      set this.hasTurn to false
     end if
   end procedure
 
   procedure stand()
-    set property.status to Status.standing
-    set property.hasTurn to false
+    set this.status to Status.standing
+    set this.hasTurn to false
   end procedure
 
   procedure draw()
     variable newCard set to dealCard(random())
-    call property.cards.append(newCard)
-    if newCard.rank.isSameValueAs("A") then
+    call this.cards.append(newCard)
+    if newCard.rank.equals("A") then
       call addAce()
     else
-      set property.handTotal to property.handTotal + rankValue()[newCard.rank]
+      set this.handTotal to this.handTotal + rankValue()[newCard.rank]
     end if
     call evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
-    if property.softAce then
-      set property.handTotal to property.handTotal + 1
+    if this.softAce then
+      set this.handTotal to this.handTotal + 1
     else
-      set property.handTotal to property.handTotal + 11
-      set property.softAce to true
+      set this.handTotal to this.handTotal + 11
+      set this.softAce to true
     end if
   end procedure
 
   function cardCount() returns Int
-    return property.cards.length()
+    return this.cards.length()
   end function
 
   procedure changePointsBy(amount as Int)
-    set property.points to property.points + amount
+    set this.points to this.points + amount
   end procedure
 
   abstract procedure newHand()
 
   procedure newHandHelper()
-    set property.hasTurn to false
-    set property.softAce to false
-    set property.cards to new List&lt;of Card&gt;()
-    set property.handTotal to 0
-    set property.status to Status.active
+    set this.hasTurn to false
+    set this.softAce to false
+    set this.cards to new List&lt;of Card&gt;()
+    set this.handTotal to 0
+    set this.status to Status.active
     call draw()
     call draw()
   end procedure
@@ -433,8 +439,8 @@ abstract class Player
 
   function statusAsString() returns String
     variable msg set to ""
-    variable status set to property.status
-    if property.hasTurn then
+    variable status set to this.status
+    if this.hasTurn then
       set msg to msg + " - PLAYING"
     elif status is Status.standing then
       set msg to msg + " - STANDING"
@@ -452,9 +458,9 @@ end class
 
 class Dealer inherits Player
   constructor(startingPoints as Int)
-    set property.name to "Dealer"
-    set property.points to startingPoints
-    set property.faceCard to new Optional&lt;of Card&gt;()
+    set this.name to "Dealer"
+    set this.points to startingPoints
+    set this.faceCard to new Optional&lt;of Card&gt;()
   end constructor
 
   property faceCard as Optional&lt;of Card&gt;
@@ -463,21 +469,21 @@ class Dealer inherits Player
 
   procedure play()
     call startTurn()
-    variable hiddenCard set to property.cards[1]
+    variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceUp()
-    set property.hasPlayed to true
+    set this.hasPlayed to true
   end procedure
 
   procedure newHand()
-    set property.hasPlayed to false
+    set this.hasPlayed to false
     call newHandHelper()
-    call property.faceCard.set(property.cards[0])
-    variable hiddenCard set to property.cards[1]
+    call this.faceCard.set(this.cards[0])
+    variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
 
   procedure nextAction(faceCard as Card)
-    if property.handTotal &lt; 17 then
+    if this.handTotal &lt; 17 then
       call draw()
     else
       call stand()
@@ -486,8 +492,8 @@ class Dealer inherits Player
 
   function getMessage() returns String
     variable msg set to ""
-    if property.hasPlayed then
-      set msg to statusAsString() + " - hand total: {property.handTotal}"
+    if this.hasPlayed then
+      set msg to statusAsString() + " - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -496,8 +502,8 @@ end class
 
 class HumanPlayer inherits Player
   constructor(name as String, startingPoints as Int)
-    set property.name to name
-    set property.points to startingPoints
+    set this.name to name
+    set this.points to startingPoints
   end constructor
 
   procedure newHand()
@@ -507,11 +513,11 @@ class HumanPlayer inherits Player
   procedure nextAction(dealerFaceCard as Card)
     variable key set to ""
     call clearKeyBuffer()
-    while key.isSameValueAs("")
+    while key.equals("")
       set key to waitForKey()
-      if key.isSameValueAs("d") then
+      if key.equals("d") then
         call draw()
-      elif key.isSameValueAs("s") then
+      elif key.equals("s") then
         call stand()
       else
         set key to ""
@@ -520,8 +526,8 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to statusAsString() + "- hand total: {property.handTotal}"
-    if property.hasTurn then
+    variable msg set to statusAsString() + "- hand total: {this.handTotal}"
+    if this.hasTurn then
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
@@ -538,7 +544,7 @@ enum Status active, standing, blackjack, bust
 enum Suit clubs, diamonds, hearts, spades
 
 function symbolForSuit(suit as Suit) returns String
-  variable dict set to [Suit.clubs:"&amp;clubs;", Suit.diamonds:"&amp;diams;", Suit.hearts:"&amp;hearts;", Suit.spades:"&amp;spades;"]
+  variable dict set to [Suit.clubs:"&amp;amp;clubs;", Suit.diamonds:"&amp;amp;diams;", Suit.hearts:"&amp;amp;hearts;", Suit.spades:"&amp;amp;spades;"]
   return dict[suit]
 end function
 
@@ -556,7 +562,7 @@ function colourForSuit(suit as Suit) returns String
   return dict[suit]
 end function
 
-constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
+constant styleSheet set to ':root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .s {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
 </div> and immediately use <b>file &gt; auto save</b> the
      <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.
     

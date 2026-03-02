@@ -36,18 +36,18 @@ end class
 
 class Bar inherits Foo
     constructor()
-        set property.p1 to 3
-        set property.p2 to 4
+        set this.p1 to 3
+        set this.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        set property.p1 to p1
+        set this.p1 to p1
     end procedure
 
     function product() returns Float
-        return property.p1 * property.p2
+        return this.p1 * this.p2
     end function
 
     function asString() returns String 
@@ -153,8 +153,8 @@ end class
 
 class Yon inherits Bar
     constructor()
-        set property.p1 to 3
-        set property.p2 to "apple"
+        set this.p1 to 3
+        set this.p2 to "apple"
     end constructor
     property p1 as Float
     property p2 as String
@@ -478,23 +478,23 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
   private function ff() returns Int
-    return property.p1
+    return this.p1
   end function
 end class
 
 class Bar inherits Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
 
   procedure testPrivate(a as Int)
     call setP1(a)
     call printNoLine(ff())
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -565,11 +565,11 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
   private function ff() returns Int
-    return property.p1
+    return this.p1
   end function
 end class
 
@@ -577,11 +577,11 @@ abstract class Yon inherits Foo
   private property p2 as Int
 
   private procedure setP2(a as Int)
-    set property.p2 to a
+    set this.p2 to a
   end procedure
 
   private function ff2() returns Int
-    return property.p2
+    return this.p2
   end function
 end class
 
@@ -592,10 +592,10 @@ class Bar inherits Yon
   procedure testPrivate(a as Int)
     call setP1(a)
     call printNoLine(ff())
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
     call setP2(a + 1)
     call printNoLine(ff2())
-    call printNoLine(property.p2)
+    call printNoLine(this.p2)
   end procedure
 end class`;
 
@@ -683,11 +683,11 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
   private function ff() returns Int
-    return property.p1
+    return this.p1
   end function
 end class
 
@@ -695,11 +695,11 @@ abstract class Yon inherits Foo
   private property p2 as Int
 
   private procedure setP2(a as Int)
-    set property.p2 to a
+    set this.p2 to a
   end procedure
 
   private function ff2() returns Int
-    return property.p2
+    return this.p2
   end function
 end class
 
@@ -710,10 +710,10 @@ class Bar inherits Yon
   procedure testPrivate(a as Int)
     call setP1(a)
     call printNoLine(ff())
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
     call setP2(a + 1)
     call printNoLine(ff2())
-    call printNoLine(property.p2)
+    call printNoLine(this.p2)
   end procedure
 end class`;
 
@@ -803,13 +803,13 @@ end class
 
 class Bar inherits Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
 
   procedure testPrivate(a as Int)
-    call printNoLine(property.p1)
-    set property.p1 to a
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
+    set this.p1 to a
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -872,21 +872,21 @@ abstract class Foo
   abstract property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
 end class
 
 class Bar inherits Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
   
   property p1 as Int
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -965,18 +965,18 @@ end class
 
 class Bar inherits Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
   
   property p1 as Int
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
   end procedure
 
   procedure setP(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 end class`;
 
@@ -1056,14 +1056,14 @@ end class
 
 class Bar inherits Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
   
   property p1 as Int
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
   end procedure
 
   function ff(a as Int) returns Int
@@ -1144,7 +1144,7 @@ end class
 abstract class Foo inherits Yon
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
 end class
@@ -1155,7 +1155,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(property.p1)
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -1399,7 +1399,7 @@ end interface
 abstract class Foo
 
   function ff() returns Int
-    return property.prop
+    return this.prop
   end function
 
   abstract property prop as Int
@@ -1407,7 +1407,7 @@ end class
 
 class Bar inherits Foo, Yon
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   property prop as Int
@@ -1487,7 +1487,7 @@ end interface
 abstract class Foo inherits Yon
 
   function ff() returns Int
-    return property.prop
+    return this.prop
   end function
 
   abstract property prop as Int
@@ -1495,7 +1495,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   property prop as Int
@@ -1575,7 +1575,7 @@ end interface
 abstract class Foo inherits Yon
 
   function ff() returns Int
-    return property.prop
+    return this.prop
   end function
 
   abstract property prop as Int
@@ -1583,7 +1583,7 @@ end class
 
 class Bar inherits Foo, Yon
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   property prop as Int
@@ -1703,7 +1703,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      set property.p1 to 3
+      set this.p1 to 3
     end constructor
 
     property p1 as Float
@@ -1790,7 +1790,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      set property.p1 to 3
+      set this.p1 to 3
     end constructor
 
     property p1 as Float
@@ -1845,18 +1845,18 @@ end class
 
 class Bar inherits Foo
     constructor()
-        set property.p1 to 3
-        set property.p2 to 4
+        set this.p1 to 3
+        set this.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        set property.p1 to p1
+        set this.p1 to p1
     end procedure
 
     function product() returns Float
-        return property.p1 * property.p2
+        return this.p1 * this.p2
     end function
 
     function asString() returns String 
@@ -1893,7 +1893,7 @@ abstract class Foo
     abstract property p2 as Int
 
     abstract procedure setP1(v as Int)
-        set property.p1 to p1
+        set this.p1 to p1
     end procedure
 
     abstract function product() returns Int
@@ -1973,6 +1973,8 @@ interface Yon inherits Foo
 end interface
 
 class Qux inherits Bar, Yon
+  constructor()
+  end constructor
   property p1 as Int
   property p2 as Int
   property p3 as Int
@@ -2016,7 +2018,12 @@ class Yon {
 
 class Qux {
   static emptyInstance() { return system.emptyClass(Qux, [["p1", 0], ["p2", 0], ["p3", 0]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   p1 = 0;
 
   p2 = 0;
@@ -2966,7 +2973,7 @@ end class
 
 class Bar inherits Yon
   constructor()
-    set property.p1 to ""
+    set this.p1 to ""
   end constructor
   property p1 as String
   property p2 as Int
@@ -3059,8 +3066,8 @@ end class
 
 class Yon inherits Foo, Bar
     constructor()
-        set property.p1 to 3
-        set property.p2 to "apple"
+        set this.p1 to 3
+        set this.p2 to "apple"
     end constructor
     property p1 as Float
     property p2 as String
@@ -3109,18 +3116,18 @@ end class
 
 class Bar inherits Yon
     constructor()
-        set property.p1 to 3
-        set property.p2 to 4
+        set this.p1 to 3
+        set this.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        set property.p1 to p1
+        set this.p1 to p1
     end procedure
 
     function product() returns Float
-        return property.p1 * property.p2
+        return this.p1 * this.p2
     end function
 
     function asString() returns String 
@@ -3171,18 +3178,18 @@ end interface
 
 class Bar inherits Foo, Yon
     constructor()
-        set property.p1 to 3
-        set property.p2 to 4
+        set this.p1 to 3
+        set this.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        set property.p1 to p1
+        set this.p1 to p1
     end procedure
 
     function product() returns Float
-        return property.p1 * property.p2
+        return this.p1 * this.p2
     end function
 
     function asString() returns String 
@@ -3343,6 +3350,8 @@ abstract class Foo inherits Yon
 end class
 
 class Bar inherits Foo
+  constructor()
+  end constructor
   property p1 as Int
 end class`;
 

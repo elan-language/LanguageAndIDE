@@ -27,8 +27,8 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to 5
-    set property.p2 to ""
+    set this.p1 to 5
+    set this.p2 to ""
   end constructor
 
   property p1 as Float
@@ -98,8 +98,8 @@ end main
 
 class Foo
     constructor(p_1 as Float,  p_2 as String)
-        set property.p1 to p_1
-        set property.p2 to p_2
+        set this.p1 to p_1
+        set this.p2 to p_2
     end constructor
 
     property p1 as Float
@@ -167,7 +167,7 @@ end main
 class Foo
     constructor()
       variable bar set to new Bar()
-      set property.b to bar
+      set this.b to bar
     end constructor
 
     property b as Bar 
@@ -176,13 +176,13 @@ end class
 
 class Bar
     constructor()
-      set property.p1 to 5
+      set this.p1 to 5
     end constructor
 
     property p1 as Int
 
     procedure printP1()
-      call printNoLine(property.p1)
+      call printNoLine(this.p1)
     end procedure
 end class`;
 
@@ -203,12 +203,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -265,7 +265,7 @@ end main
 
 class Foo
   constructor()
-    set property.bar to new Bar()
+    set this.bar to new Bar()
   end constructor
 
   property bar as Bar
@@ -278,8 +278,8 @@ end class
 
 class Bar
   constructor()
-    set property.p2 to ""
-    set property.foo to new Optional<of Foo>()
+    set this.p2 to ""
+    set this.foo to new Optional<of Foo>()
   end constructor
 
   property p1 as Int
@@ -317,12 +317,12 @@ class Foo {
     return this;
   }
 
-  _bar;
+  elan_bar;
   get bar() {
-    return this._bar ??= Bar.emptyInstance();
+    return this.elan_bar ??= Bar.emptyInstance();
   }
   set bar(bar) {
-    this._bar = bar;
+    this.elan_bar = bar;
   }
 
   async asString() {
@@ -344,12 +344,12 @@ class Bar {
 
   p2 = "";
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
   async asString() {
@@ -387,7 +387,7 @@ end main
 
 class Foo
   constructor()
-    set property.strArr to ["apple", "orange", "pair"]
+    set this.strArr to ["apple", "orange", "pair"]
   end constructor
 
   property strArr as List<of String>
@@ -507,7 +507,7 @@ class Foo
   property p1 as Int
 
   procedure updateP1()
-    set property.p1 to 0
+    set this.p1 to 0
   end procedure
 end class
 
@@ -600,7 +600,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to ff()
+    set this.p1 to ff()
   end constructor
 
   property p1 as Int
@@ -661,10 +661,13 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.p1 to p
     return copyOfThis
   end function
@@ -680,11 +683,16 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   p1 = 0;
 
   async withP1(p) {
-    let copyOfThis = _stdlib.shallowCopy(this);
+    let copyOfThis = _stdlib.copy(this);
     copyOfThis.p1 = p;
     return copyOfThis;
   }
@@ -725,6 +733,11 @@ main
 end main
 
 class Foo
+  constructor()
+    set this.p2 to ""
+    set this.p3 to ""
+  end constructor
+
   property p1 as Int
 
   property p2 as String
@@ -732,25 +745,25 @@ class Foo
   property p3 as String
 
   function withP1(p as Int) returns Foo
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.p1 to p
     return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
-     variable copyOfThis set to shallowCopy(this)
+     variable copyOfThis set to copy(this)
     set copyOfThis.p2 to p
     return copyOfThis
   end function
 
   procedure setup(pI as Int, pS as String)
-    set property.p1 to pI
-    set property.p2 to pS
-    set property.p3 to "unchanged"
+    set this.p1 to pI
+    set this.p2 to pS
+    set this.p3 to "unchanged"
   end procedure
 
   function asString() returns String
-    return "Foo:{property.p1}:{property.p2}:{property.p3}"
+    return "Foo:{this.p1}:{this.p2}:{this.p3}"
   end function
 
 end class`;
@@ -771,7 +784,13 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""], ["p3", ""]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+    this.p2 = "";
+    this.p3 = "";
+    return this;
+  }
+
   p1 = 0;
 
   p2 = "";
@@ -779,13 +798,13 @@ class Foo {
   p3 = "";
 
   async withP1(p) {
-    let copyOfThis = _stdlib.shallowCopy(this);
+    let copyOfThis = _stdlib.copy(this);
     copyOfThis.p1 = p;
     return copyOfThis;
   }
 
   async withP2(p) {
-    let copyOfThis = _stdlib.shallowCopy(this);
+    let copyOfThis = _stdlib.copy(this);
     copyOfThis.p2 = p;
     return copyOfThis;
   }
@@ -832,11 +851,15 @@ main
 end main
 
 class Foo
+  constructor()
+    set this.p1 to new List<of Int>()
+  end constructor
+
   property p1 as List<of Int>
 
   procedure append()
-    call property.p1.append(1)
-    call printNoLine(property.p1)
+    call this.p1.append(1)
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -849,7 +872,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+    this.p1 = system.initialise(await new _stdlib.List()._initialise());
+    return this;
+  }
+
   p1 = system.initialise(_stdlib.List.emptyInstance());
 
   async append() {
@@ -947,7 +975,7 @@ class Foo
   end constructor
 
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -981,7 +1009,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -1018,7 +1046,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -1094,7 +1122,7 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
 
   property p1 as Int
@@ -1238,7 +1266,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to new Bar()
+    set this.p1 to new Bar()
   end constructor
   property p1 as Bar
 end class`;
@@ -1303,7 +1331,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to ""
+    set this.p1 to ""
   end constructor
   property p1 as String
   property p1 as Int
@@ -1501,7 +1529,7 @@ class Foo
     end constructor
 
     procedure setP1(a as Int)
-      set property.b to a
+      set this.b to a
     end procedure
     
     property b as Int
@@ -1636,13 +1664,13 @@ end main
 
 class Foo
     constructor()
-      set property.vg to new CircleVG()
+      set this.vg to new CircleVG()
     end constructor
 
     property vg as CircleVG
 
     procedure bar()
-      set property.vg to property.vg.noSuch
+      set this.vg to this.vg.noSuch
     end procedure
 
 end class`;
@@ -1840,6 +1868,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(nf as Foo, p as Int) returns Foo
@@ -1875,10 +1906,13 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    set property.p1 to p
+    set this.p1 to p
     return this
   end function
 end class`;
@@ -1910,11 +1944,16 @@ main
 end main
 
 class Bar
+  constructor()
+  end constructor
+
   property p1 as Int
 
 end class
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Bar
@@ -1951,6 +1990,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(nff as Foo, p as Int) returns Foo
@@ -1987,6 +2029,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -2009,7 +2053,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
     ]);
   });
 
@@ -2023,10 +2067,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    variable cpy set to shallowCopy(this)
+    variable cpy set to copy(this)
     set cpy.p1 to p
     return cpy
   end function
@@ -2058,10 +2104,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   procedure withP1(p as Int)
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set cpy.p1 to p
   end procedure
 end class`;
@@ -2079,7 +2127,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
     ]);
   });
 });

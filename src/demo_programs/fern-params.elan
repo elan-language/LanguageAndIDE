@@ -46,8 +46,8 @@ procedure processoneline(line as String, result as Ref<of String>, skippingRef a
     # fetch the number at the end of the line
     # note that the number is held as a string at all times in this program
     variable num set to gettrailingnumber(linem)
-    if not num.isSameValueAs("") then
-      if num.isSameValueAs("0") then
+    if not num.equals("") then
+      if num.equals("0") then
         # all values must be Floats
         set num to "0.0"
       end if
@@ -75,7 +75,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() - 1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.equals("") then "" else s[last(sequence(0, s.length() - 1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean

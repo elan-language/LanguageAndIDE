@@ -445,8 +445,8 @@ end main
     const code = `${testHeader}
 
 main
-  call printNoLine(3.isSameValueAs("3"))
-  call printNoLine(not 3.isSameValueAs("3"))
+  call printNoLine(3.equals("3"))
+  call printNoLine(not 3.equals("3"))
   call printNoLine(3 < "3")
   call printNoLine(3 <= "3")
   call printNoLine(3 > "3")
@@ -473,33 +473,6 @@ end main
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-    ]);
-  });
-
-  test("Fail_compareDifferentTypesByReference", async () => {
-    const code = `${testHeader}
-
-main
-  call printNoLine(3.isSameReferenceAs("3"))
-  call printNoLine(not 3.isSameReferenceAs("3"))
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
     ]);
   });
 

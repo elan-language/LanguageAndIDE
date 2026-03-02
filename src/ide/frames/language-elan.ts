@@ -17,7 +17,6 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
-import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -132,8 +131,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.RECORD} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
@@ -175,7 +172,6 @@ export class LanguageElan extends LanguageAbstract {
   private FUNCTION = "function";
   private GLOBAL = "global";
   private IF = "if";
-  private IMAGE = "image";
   private IMPORT = "import";
   private IN = "in";
   private INHERITS = "inherits";
@@ -261,7 +257,6 @@ export class LanguageElan extends LanguageAbstract {
     `class`,
     `constant`,
     `constructor`,
-    `copy`,
     `div`,
     `each`,
     `elif`,
@@ -311,7 +306,6 @@ export class LanguageElan extends LanguageAbstract {
     `tuple`,
     `variable`,
     `while`,
-    `with`,
     `action`,
     `arguments`,
     `array`,
@@ -326,7 +320,6 @@ export class LanguageElan extends LanguageAbstract {
     `char`,
     `const`,
     `continue`,
-    `curry`,
     `debugger`,
     `default`,
     `delete`,

@@ -1,5 +1,4 @@
 import {
-  copyKeyword,
   emptyKeyword,
   ifKeyword,
   lambdaKeyword,
@@ -79,9 +78,7 @@ export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_enum,
 ];
 export const allKeywordsThatCanStartAnExpression: Set<KeywordCompletion> = new Set(
-  [newKeyword, copyKeyword, ifKeyword, lambdaKeyword, emptyKeyword].map((kw) =>
-    KeywordCompletion.create(kw),
-  ),
+  [newKeyword, ifKeyword, lambdaKeyword, emptyKeyword].map((kw) => KeywordCompletion.create(kw)),
 );
 export function removeUnmatchedClosingBracket(text: string): string {
   if (text.endsWith(")") && text.split("(").length - text.split(")").length !== 0) {

@@ -9,7 +9,6 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
-export const copyKeyword = "copy";
 export const divKeyword = "div";
 export const eachKeyword = "each";
 export const elifKeyword = "elif";
@@ -23,7 +22,6 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const imageKeyword = "image";
 export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
@@ -57,7 +55,6 @@ export const tryKeyword = "try";
 export const tupleKeyword = "tuple";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
-export const withKeyword = "with";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
@@ -85,7 +82,6 @@ const elanKeywords: string[] = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  copyKeyword,
   divKeyword,
   eachKeyword,
   elifKeyword,
@@ -99,7 +95,6 @@ const elanKeywords: string[] = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  imageKeyword,
   importKeyword,
   inKeyword,
   inheritsKeyword,
@@ -133,7 +128,6 @@ const elanKeywords: string[] = [
   tupleKeyword,
   variableKeyword,
   whileKeyword,
-  withKeyword,
 ];
 
 export const ghostedAnnotation = "ghosted";

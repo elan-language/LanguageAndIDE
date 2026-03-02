@@ -27,11 +27,11 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
     property p1 as Float
     procedure setP1(value as Float)
-        set property.p1 to value
+        set this.p1 to value
     end procedure
     function asString() returns String
          return ""
@@ -95,13 +95,13 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
 
   property p1 as Float
 
   procedure display()
-      call printNoLine(property.p1)
+      call printNoLine(this.p1)
   end procedure
 
   function asString() returns String
@@ -166,7 +166,7 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
+        set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -174,12 +174,12 @@ class Foo
     procedure times(b as Bar)
         call b.p1PlusOne()
         call p1PlusOne()
-        set property.p1 to property.p1 + b.p1
-        call printNoLine(property.p1)
+        set this.p1 to this.p1 + b.p1
+        call printNoLine(this.p1)
     end procedure
 
     procedure p1PlusOne()
-        set property.p1 to property.p1 + 1
+        set this.p1 to this.p1 + 1
     end procedure
 
     function asString() returns String
@@ -190,13 +190,13 @@ end class
 
 class Bar
     constructor()
-        set property.p1 to 1
+        set this.p1 to 1
     end constructor
 
     property p1 as Float
 
     procedure p1PlusOne()
-        set property.p1 to property.p1 + 1
+        set this.p1 to this.p1 + 1
     end procedure
 
     function asString() returns String
@@ -288,7 +288,7 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -328,7 +328,7 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
   property p1 as Int
 
@@ -603,6 +603,8 @@ end procedure`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   procedure foo(foo as Int)
 
   end procedure
@@ -630,6 +632,8 @@ end class`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   procedure foo(a as Int, foo as Int)
 
   end procedure

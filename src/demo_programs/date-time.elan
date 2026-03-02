@@ -2,9 +2,9 @@
 
 main
   variable reply set to ""
-  while not reply.upperCase().isSameValueAs("Q")
+  while not reply.upperCase().equals("Q")
     set reply to inputString('RETURN for time now orUnix time (positive integer) orQ to quit')
-    if reply.isSameValueAs("") then
+    if reply.equals("") then
       call printDate(divAsInt(clock(), 1000))
     else
       variable td set to parseAsInt(reply)
@@ -141,10 +141,10 @@ function pad(d as String, p as String, s as String) returns String
   # s: input string
   variable sR set to s
   if p.length() > s.length() then
-    if d.upperCase().isSameValueAs("L") then
+    if d.upperCase().equals("L") then
       constant ps set to p + s
       set sR to ps.subString(ps.length() - p.length(), ps.length())
-    elif d.upperCase().isSameValueAs("R") then
+    elif d.upperCase().equals("R") then
       set sR to (s + p).subString(0, p.length())
     end if
   end if

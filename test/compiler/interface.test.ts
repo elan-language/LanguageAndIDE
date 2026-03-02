@@ -33,7 +33,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -135,7 +135,7 @@ end interface
 
 class Bar inherits Foo2
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -245,7 +245,7 @@ end interface
 
 class Bar inherits Foo, Foo1, Foo2
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -677,7 +677,7 @@ end interface
 
 class Bar
   constructor()
-    set property.foo to new Optional<of Foo>()
+    set this.foo to new Optional<of Foo>()
   end constructor
 
   property foo as Optional<of Foo>
@@ -720,12 +720,12 @@ class Bar {
     return this;
   }
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
 }
@@ -837,7 +837,8 @@ main
 end main
 
 class Foo inherits Bar
- 
+  constructor()
+  end constructor
 end class
 
 interface Bar
@@ -851,7 +852,11 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 
@@ -985,7 +990,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   procedure proc()
@@ -1027,7 +1032,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -1282,6 +1287,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property prop1 as Int
 end class
 

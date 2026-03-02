@@ -184,19 +184,11 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
-  isSameValueAs<T1>(
+  equals<T1>(
     @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
     @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
   ): boolean {
     return this.system.objectEquals(v1, v2);
-  }
-
-  @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
-  isSameReferenceAs<T1>(
-    @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
-    @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
-  ): boolean {
-    return v1 === v2;
   }
 
   @elanFunction(["value"])
@@ -867,7 +859,7 @@ export class StdLib {
   }
 
   @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
-  shallowCopy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
+  copy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
     const newObject = Object.create(toCopy);
     return Object.assign(newObject, toCopy);
   }

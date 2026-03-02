@@ -95,7 +95,7 @@ end main
 
 class Foo
   constructor()
-    set property.a to [1]
+    set this.a to [1]
   end constructor
   
   property a as List<of Int>
@@ -151,7 +151,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -159,7 +159,7 @@ end class
 
 class Bar
   constructor()
-    set property.y to new Yon()
+    set this.y to new Yon()
   end constructor
   
   property y as Yon
@@ -167,7 +167,7 @@ end class
 
 class Yon
   constructor()
-    set property.z to 2
+    set this.z to 2
   end constructor
   
   property z as Int
@@ -190,12 +190,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -208,12 +208,12 @@ class Bar {
     return this;
   }
 
-  _y;
+  elan_y;
   get y() {
-    return this._y ??= Yon.emptyInstance();
+    return this.elan_y ??= Yon.emptyInstance();
   }
   set y(y) {
-    this._y = y;
+    this.elan_y = y;
   }
 
 }
@@ -260,7 +260,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -292,12 +292,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -346,7 +346,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -378,12 +378,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -502,7 +502,7 @@ end main
 
 class Bar
   constructor()
-    set property.strArr to ["apple", "orange", "pair"]
+    set this.strArr to ["apple", "orange", "pair"]
   end constructor
 
   property strArr as List<of String>
@@ -619,7 +619,7 @@ end main
 
 class Bar
   constructor()
-    set property.foo to new Foo()
+    set this.foo to new Foo()
   end constructor
 
   property foo as Foo
@@ -653,12 +653,12 @@ class Bar {
     return this;
   }
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= Foo.emptyInstance();
+    return this.elan_foo ??= Foo.emptyInstance();
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
 }

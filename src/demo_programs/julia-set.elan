@@ -1,4 +1,4 @@
-# 55f38bcf4aff2b4dec59650a6e418601654c7d4ac11f83ff59d9eb50c305752a Elan 2.0.0-alpha guest default_profile valid
+# cab56f5afc3178821f7cb1c2d10357806953554317d37a703fe9c982450422f4 Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -26,7 +26,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point
       constant col set to if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      variable rect set to new RectangleVG() with x set to divAsFloat(xp, 2), y set to divAsFloat(yp, 2), width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
+      variable rect set to (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25)
       set vg2 to vg2.withAppend(rect)
     end for
   end for
@@ -53,13 +53,13 @@ end function
 class Coords
   constructor()
     # number of cells per unit distance on complex plane
-    set property.scale to 100
+    set this.scale to 100
     # centered on the screen to start
-    set property.xoff to 0
-    set property.yoff to 0
+    set this.xoff to 0
+    set this.yoff to 0
     # Julia set parameters
-    set property.jx to -0.512
-    set property.jy to 0.521
+    set this.jx to -0.512
+    set this.jy to 0.521
   end constructor
 
   property scale as Float
@@ -75,34 +75,34 @@ class Coords
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   procedure checkkeys()
-    constant panstep set to 10/property.scale
+    constant panstep set to 10/this.scale
     variable jstep set to 0.001
     # save some CPU by not recalculating until a parameter has been changed
     variable changed set to false
     while not changed
       variable k set to getKey()
       # loop because more than one key may have been pressed
-      while not k.isSameValueAs("")
-        if k.isSameValueAs("z") then
-          set property.scale to property.scale*1.2
-        elif k.isSameValueAs("x") then
-          set property.scale to property.scale/1.2
-        elif k.isSameValueAs("ArrowUp") then
-          set property.yoff to property.yoff + panstep
-        elif k.isSameValueAs("ArrowDown") then
-          set property.yoff to property.yoff - panstep
-        elif k.isSameValueAs("ArrowLeft") then
-          set property.xoff to property.xoff + panstep
-        elif k.isSameValueAs("ArrowRight") then
-          set property.xoff to property.xoff - panstep
-        elif k.isSameValueAs("g") then
-          set property.jx to property.jx + jstep
-        elif k.isSameValueAs("j") then
-          set property.jx to property.jx - jstep
-        elif k.isSameValueAs("y") then
-          set property.jy to property.jy + jstep
-        elif k.isSameValueAs("h") then
-          set property.jy to property.jy - jstep
+      while not k.equals("")
+        if k.equals("z") then
+          set this.scale to this.scale*1.2
+        elif k.equals("x") then
+          set this.scale to this.scale/1.2
+        elif k.equals("ArrowUp") then
+          set this.yoff to this.yoff + panstep
+        elif k.equals("ArrowDown") then
+          set this.yoff to this.yoff - panstep
+        elif k.equals("ArrowLeft") then
+          set this.xoff to this.xoff + panstep
+        elif k.equals("ArrowRight") then
+          set this.xoff to this.xoff - panstep
+        elif k.equals("g") then
+          set this.jx to this.jx + jstep
+        elif k.equals("j") then
+          set this.jx to this.jx - jstep
+        elif k.equals("y") then
+          set this.jy to this.jy + jstep
+        elif k.equals("h") then
+          set this.jy to this.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else
           # ignore erroneous key presses

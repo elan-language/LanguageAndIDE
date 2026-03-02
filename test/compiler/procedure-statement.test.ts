@@ -496,13 +496,13 @@ end main
 
 class Foo
     constructor()
-      set property.p1 to new Bar()
+      set this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
 
     procedure length()
-      call property.p1.length(2)
+      call this.p1.length(2)
     end procedure
 
     function asString() returns String
@@ -513,13 +513,13 @@ end class
 
 class Bar
     constructor()
-      set property.p1 to 5
+      set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     procedure length(plus as Float)
-      call printNoLine(property.p1 + plus)
+      call printNoLine(this.p1 + plus)
     end procedure
 
     function asString() returns String
@@ -543,12 +543,12 @@ class Foo {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Bar.emptyInstance();
+    return this.elan_p1 ??= Bar.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
   async length() {
@@ -849,7 +849,7 @@ end procedure
 
 class Foo
   constructor()
-    set property.ff to 1
+    set this.ff to 1
   end constructor
 
   property ff as Int
@@ -1590,7 +1590,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  variable a set to p2.isSameValueAs(p2)
+  variable a set to p2.equals(p2)
   variable b set to p1 + p2
   variable c set to -p1
 end main

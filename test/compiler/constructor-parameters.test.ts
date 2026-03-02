@@ -17,7 +17,7 @@ suite("Constructor Parameters", () => {
 
 class Foo
     constructor(p_1 as Int)
-        set p_1 to property.p1
+        set p_1 to this.p1
     end constructor
 
     property p1 as Int

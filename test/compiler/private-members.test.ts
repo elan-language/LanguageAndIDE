@@ -24,8 +24,8 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
-        set property.p2 to "Apple"
+        set this.p1 to 5
+        set this.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -33,7 +33,7 @@ class Foo
     private property p2 as String
 
     function asString() returns String
-         return property.p2
+         return this.p2
     end function
 
 end class`;
@@ -98,7 +98,7 @@ class Foo
   property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
   procedure testSetP1(a as Int)
@@ -228,8 +228,8 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
-        set property.p2 to "Apple"
+        set this.p1 to 5
+        set this.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -273,7 +273,7 @@ end class
 
 class Foo inherits Bar
     constructor()
-      set property.p1 to 5
+      set this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -311,7 +311,7 @@ class Foo
   property p1 as Int
 
   private procedure setP1(a as Int)
-    set property.p1 to a
+    set this.p1 to a
   end procedure
 
 end class`;
@@ -380,8 +380,8 @@ end main
 
 class Foo
     constructor()
-        set property.p1 to 5
-        set property.p2 to "Apple"
+        set this.p1 to 5
+        set this.p2 to "Apple"
     end constructor
 
     property p1 as Float
