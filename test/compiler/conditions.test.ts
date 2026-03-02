@@ -476,33 +476,6 @@ end main
     ]);
   });
 
-  test("Fail_compareDifferentTypesByReference", async () => {
-    const code = `${testHeader}
-
-main
-  call printNoLine(3.isSameReferenceAs("3"))
-  call printNoLine(not 3.isSameReferenceAs("3"))
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_greaterOrLessThan", async () => {
     const code = `${testHeader}
 

@@ -686,7 +686,7 @@ export function mustBeValueType(
   if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs' or '.isSameReferenceAs'`,
+        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs'`,
         location,
       ),
     );

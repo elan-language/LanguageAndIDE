@@ -194,14 +194,6 @@ export class StdLib {
     return this.system.objectEquals(v1, v2);
   }
 
-  @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
-  isSameReferenceAs<T1>(
-    @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
-    @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
-  ): boolean {
-    return v1 === v2;
-  }
-
   @elanFunction(["value"])
   unicode(@elanIntType() n: number): string {
     return String.fromCharCode(n);

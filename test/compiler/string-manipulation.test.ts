@@ -353,49 +353,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsefalsetruetruetruetrue");
   });
 
-  test("Pass_ReferenceEqualityTesting", async () => {
-    const code = `${testHeader}
-
-main
-    call printNoLine("abc".isSameReferenceAs("abc"))
-    call printNoLine("abc".isSameReferenceAs("abcd"))
-    call printNoLine("abc".isSameReferenceAs("Abc"))
-    call printNoLine("abc".isSameReferenceAs("abc"))
-    call printNoLine(not "abc".isSameReferenceAs("abcd"))
-    call printNoLine(not "abc".isSameReferenceAs("abcd"))
-    call printNoLine(not "abc".isSameReferenceAs("Abc"))
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abc"));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abcd"));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "Abc"));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs("abc", "abc"));
-  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "abcd"));
-  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "abcd"));
-  await _stdlib.printNoLine(!_stdlib.isSameReferenceAs("abc", "Abc"));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truefalsefalsetruetruetruetrue");
-  });
-
   test("Pass_ComparisonMethods", async () => {
     const code = `${testHeader}
 

@@ -851,7 +851,6 @@ end main`;
     const expected = [
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
@@ -1260,7 +1259,6 @@ end test`;
     const expected = [
       ["asString", "*", "*"],
       ["ff", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
@@ -1511,7 +1509,6 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
@@ -1561,7 +1558,6 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
@@ -1621,7 +1617,6 @@ end main`;
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
@@ -2723,7 +2718,6 @@ end procedure`;
     const expected = [
       ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
-      ["isSameReferenceAs", "*", "*"],
       ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 

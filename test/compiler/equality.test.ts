@@ -95,87 +95,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
   });
 
-  test("Pass_DifferentInstancesWithSameValuesAreNotReferenceEqual", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Foo(7, "Apple")
-  variable y set to new Foo(7, "Orange")
-  variable z set to new Foo(7, "Orange")
-  call printNoLine(x.isSameReferenceAs(x))
-  call printNoLine(x.isSameReferenceAs(y))
-  call printNoLine(y.isSameReferenceAs(z))
-end main
-
-class Foo
-    constructor(p1 as Float, p2 as String)
-        set property.p1 to p1
-        set property.p2 to p2
-    end constructor
-    property p1 as Float
-    property p2 as String
-
-    procedure setP1(v as Float)
-        set property.p1 to v
-    end procedure
-
-    function asString() returns String
-      return "{property.p1} {property.p2}"
-    end function
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let x = system.initialise(await new Foo()._initialise(7, "Apple"));
-  let y = system.initialise(await new Foo()._initialise(7, "Orange"));
-  let z = system.initialise(await new Foo()._initialise(7, "Orange"));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, x));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, y));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(y, z));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
-
-  async _initialise(p1, p2) {
-    this.p1 = p1;
-    this.p2 = p2;
-    return this;
-  }
-
-  p1 = 0;
-
-  p2 = "";
-
-  async setP1(v) {
-    this.p1 = v;
-  }
-
-  async asString() {
-    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
-  }
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truefalsefalse");
-  });
-
   test("Pass_ActuallyTheSameReference", async () => {
     const code = `${testHeader}
 
@@ -187,9 +106,6 @@ main
   call printNoLine(x.isSameValueAs(x))
   call printNoLine(x.isSameValueAs(y))
   call printNoLine(x.isSameValueAs(z))
-  call printNoLine(x.isSameReferenceAs(x))
-  call printNoLine(x.isSameReferenceAs(y))
-  call printNoLine(x.isSameReferenceAs(z))
 end main
 
 class Foo
@@ -220,9 +136,6 @@ async function main() {
   await _stdlib.printNoLine(_stdlib.isSameValueAs(x, x));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(x, y));
   await _stdlib.printNoLine(_stdlib.isSameValueAs(x, z));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, x));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, y));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, z));
 }
 
 class Foo {
@@ -263,7 +176,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruefalsetruetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
   test("Fail_CompareLambdas", async () => {
@@ -446,153 +359,5 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
-  });
-
-  test("Pass_ListReferenceEquality1", async () => {
-    const code = `${testHeader}
-
-main
-  variable f1 set to new Foo(1)
-  variable f2 set to new Foo(2)
-  variable l1 set to [f1, f2]
-  variable l2 set to [f1, f2]
-  call printNoLine(l1.isSameReferenceAs(l2))
-  variable l3 set to [f2, f1]
-  call printNoLine(l1.isSameReferenceAs(l3))
-  variable l4 set to [new Foo(1), new Foo(2)]
-  call printNoLine( l4.isSameReferenceAs(l1))
-  call l4[0].setP(3)
-  call printNoLine(l4.isSameReferenceAs(l1))
-end main
-
-class Foo
-  constructor(p as Int)
-    set property.p to p
-  end constructor
-
-  property p as Int
-
-  procedure setP(value as Int)
-    set property.p to value
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f1 = system.initialise(await new Foo()._initialise(1));
-  let f2 = system.initialise(await new Foo()._initialise(2));
-  let l1 = system.list([f1, f2]);
-  let l2 = system.list([f1, f2]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
-  let l3 = system.list([f2, f1]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
-  let l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
-  await system.safeIndex(l4, 0).setP(3);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
-
-  async _initialise(p) {
-    this.p = p;
-    return this;
-  }
-
-  p = 0;
-
-  async setP(value) {
-    this.p = value;
-  }
-
-}
-return [main, _tests];}`;
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalse");
-  });
-
-  test("Pass_ListReferenceEquality2", async () => {
-    const code = `${testHeader}
-
-main
-  variable f1 set to new Foo(1)
-  variable f2 set to new Foo(2)
-  variable l1 set to [f1, f2]
-  variable l2 set to [f1, f2]
-  call printNoLine(l1.isSameReferenceAs(l2))
-  variable l3 set to [f2, f1]
-  call printNoLine(l1.isSameReferenceAs(l3))
-  variable l4 set to [new Foo(2), new Foo(2)]
-  call printNoLine( l4.isSameReferenceAs(l1))
-end main
-
-class Foo
-  property p as Int
-
-  constructor(p as Int)
-    set property.p to p
-  end constructor
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f1 = system.initialise(await new Foo()._initialise(1));
-  let f2 = system.initialise(await new Foo()._initialise(2));
-  let l1 = system.list([f1, f2]);
-  let l2 = system.list([f1, f2]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
-  let l3 = system.list([f2, f1]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
-  let l4 = system.list([system.initialise(await new Foo()._initialise(2)), system.initialise(await new Foo()._initialise(2))]);
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
-
-  p = 0;
-
-  async _initialise(p) {
-    this.p = p;
-    return this;
-  }
-
-}
-return [main, _tests];}`;
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "falsefalsefalse");
   });
 });
