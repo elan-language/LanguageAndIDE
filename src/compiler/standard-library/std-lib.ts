@@ -862,7 +862,7 @@ export class StdLib {
   }
 
   @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
-  shallowCopy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
+  copy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
     const newObject = Object.create(toCopy);
     return Object.assign(newObject, toCopy);
   }

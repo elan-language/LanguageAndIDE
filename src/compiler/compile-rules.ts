@@ -870,7 +870,7 @@ export function mustConformToCopyOfThisBoilerPlate(
     if (
       isVariable &&
       rhs instanceof FuncCallAsn &&
-      rhs.id === "shallowCopy" &&
+      rhs.id === "copy" &&
       rhs.parameters.length === 1 &&
       rhs.parameters[0] instanceof ThisAsn &&
       innerFunction &&
@@ -880,7 +880,7 @@ export function mustConformToCopyOfThisBoilerPlate(
     }
     compileErrors.push(
       new SyntaxCompileError(
-        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).",
+        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).",
         location,
       ),
     );
