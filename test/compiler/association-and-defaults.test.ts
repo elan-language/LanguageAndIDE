@@ -75,20 +75,20 @@ class Game {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Player.emptyInstance();
+    return this.elan_p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
-  _p2;
+  elan_p2;
   get p2() {
-    return this._p2 ??= Player.emptyInstance();
+    return this.elan_p2 ??= Player.emptyInstance();
   }
   set p2(p2) {
-    this._p2 = p2;
+    this.elan_p2 = p2;
   }
 
   previousScores = system.initialise(_stdlib.List.emptyInstance());
@@ -376,12 +376,12 @@ class Player {
     return this;
   }
 
-  _g;
+  elan_g;
   get g() {
-    return this._g ??= Game.emptyInstance();
+    return this.elan_g ??= Game.emptyInstance();
   }
   set g(g) {
-    this._g = g;
+    this.elan_g = g;
   }
 
 }
@@ -494,20 +494,20 @@ class Game {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Player.emptyInstance();
+    return this.elan_p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
-  _previousGame;
+  elan_previousGame;
   get previousGame() {
-    return this._previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set previousGame(previousGame) {
-    this._previousGame = previousGame;
+    this.elan_previousGame = previousGame;
   }
 
   async asString() {
@@ -596,20 +596,20 @@ class Game {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
-  _p2;
+  elan_p2;
   get p2() {
-    return this._p2 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p2 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p2(p2) {
-    this._p2 = p2;
+    this.elan_p2 = p2;
   }
 
   async asString() {
@@ -772,12 +772,12 @@ class Bar {
     await this.p1.pp();
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= Foo.emptyInstance();
+    return this.elan_p1 ??= Foo.emptyInstance();
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
 }

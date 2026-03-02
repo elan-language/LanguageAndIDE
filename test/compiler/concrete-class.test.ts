@@ -203,12 +203,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -317,12 +317,12 @@ class Foo {
     return this;
   }
 
-  _bar;
+  elan_bar;
   get bar() {
-    return this._bar ??= Bar.emptyInstance();
+    return this.elan_bar ??= Bar.emptyInstance();
   }
   set bar(bar) {
-    this._bar = bar;
+    this.elan_bar = bar;
   }
 
   async asString() {
@@ -344,12 +344,12 @@ class Bar {
 
   p2 = "";
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
   async asString() {

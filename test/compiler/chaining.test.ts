@@ -190,12 +190,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -208,12 +208,12 @@ class Bar {
     return this;
   }
 
-  _y;
+  elan_y;
   get y() {
-    return this._y ??= Yon.emptyInstance();
+    return this.elan_y ??= Yon.emptyInstance();
   }
   set y(y) {
-    this._y = y;
+    this.elan_y = y;
   }
 
 }
@@ -292,12 +292,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -378,12 +378,12 @@ class Foo {
     return this;
   }
 
-  _b;
+  elan_b;
   get b() {
-    return this._b ??= Bar.emptyInstance();
+    return this.elan_b ??= Bar.emptyInstance();
   }
   set b(b) {
-    this._b = b;
+    this.elan_b = b;
   }
 
 }
@@ -653,12 +653,12 @@ class Bar {
     return this;
   }
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= Foo.emptyInstance();
+    return this.elan_foo ??= Foo.emptyInstance();
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
 }

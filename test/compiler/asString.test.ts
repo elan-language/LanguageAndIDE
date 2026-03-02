@@ -137,12 +137,12 @@ class Foo {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
 }
@@ -209,12 +209,12 @@ class Foo {
     return this;
   }
 
-  _p1;
+  elan_p1;
   get p1() {
-    return this._p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set p1(p1) {
-    this._p1 = p1;
+    this.elan_p1 = p1;
   }
 
   async asString() {

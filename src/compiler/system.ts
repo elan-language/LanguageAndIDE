@@ -220,7 +220,7 @@ export class System {
       return false;
     }
 
-    for (const i of o1items.filter((i) => !i.startsWith("_"))) {
+    for (const i of o1items.filter((i) => !i.startsWith("elan_"))) {
       if (!this.equals(o1[i], o2[i])) {
         return false;
       }
@@ -353,7 +353,7 @@ export class System {
   }
 
   ignoredProperty(s: string) {
-    return s === "system" || s === "stdlib" || s.startsWith("_");
+    return s === "system" || s === "stdlib" || s.startsWith("elan_");
   }
 
   getProtoTypes(v: any): any[] {
