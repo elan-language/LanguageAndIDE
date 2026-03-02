@@ -16,7 +16,6 @@ import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
 import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { IfExpr } from "../src/ide/frames/parse-nodes/if-expr";
-import { ImageNode } from "../src/ide/frames/parse-nodes/image-node";
 import { InstanceNode } from "../src/ide/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
@@ -1936,15 +1935,6 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-    );
-    testNodeParse(
-      new ImageNode(f),
-      "image http://website.com/images/image1.png",
-      ParseStatus.valid,
-      "image http://website.com/images/image1.png",
-      "",
-      "image http://website.com/images/image1.png",
-      `<img src="http://website.com/images/image1.png">`,
     );
   });
 });

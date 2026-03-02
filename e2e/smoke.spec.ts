@@ -233,26 +233,6 @@ test('help focus', async ({ page }) => {
   
 }); 
 
-test('display image', async ({ page }) => {
-  page.once('dialog', dialog => {
-    //console.log(`Dialog message: ${dialog.message()}`);
-    dialog.accept().catch(() => {});
-  });
-  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
-
-  await page.getByText('main procedure function test').click();
-  await page.keyboard.type('m');
-  await page.keyboard.type('va');
-  await page.keyboard.type('a');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('image https://elan-lang.org/documentation/images/logo.png');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('ca');
-  await page.keyboard.type('displayHtml(a.asString())');
-  await page.getByRole('button', { name: 'run' }).click();
-  await expect(page.locator('img[src="https://elan-lang.org/documentation/images/logo.png"]')).toBeVisible();
-});
-
 test('ghost test', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
