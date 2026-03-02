@@ -10,7 +10,7 @@ import {
   propertyKeyword,
   thisKeyword,
 } from "../../compiler/elan-keywords";
-import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
+import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
@@ -132,7 +132,6 @@ import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
-import { ImageNode } from "../frames/parse-nodes/image-node";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
 import { IndexRange } from "../frames/parse-nodes/index-range";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
@@ -896,13 +895,6 @@ export function transform(
     const type = transform(node.type, fieldId, scope) as TypeAsn;
     const pp = transformMany(node.args as CSV, fieldId, scope).items;
     const obj = new NewAsn(type, pp, fieldId, scope);
-    return obj;
-  }
-
-  if (node instanceof ImageNode) {
-    const imageType = new TypeAsn(ImageName, EmptyAsn.Instance, [], fieldId, scope);
-    const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
-    const obj = new NewAsn(imageType, [url], fieldId, scope);
     return obj;
   }
 

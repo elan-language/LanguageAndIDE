@@ -1,8 +1,6 @@
 import {
-  copyKeyword,
   emptyKeyword,
   ifKeyword,
-  imageKeyword,
   lambdaKeyword,
   newKeyword,
   notKeyword,
@@ -16,7 +14,6 @@ import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { IfExpr } from "./if-expr";
-import { ImageNode } from "./image-node";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { Term } from "./term";
@@ -35,7 +32,6 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new IfExpr(this.file));
       this.alternatives.push(new Lambda(this.file));
       this.alternatives.push(new TupleNode(this.file));
-      this.alternatives.push(new ImageNode(this.file));
       //then others
       this.alternatives.push(new Term(this.file));
       this.alternatives.push(new BinaryExpression(this.file));
@@ -74,9 +70,7 @@ export class ExprNode extends AbstractAlternatives {
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
     let kws = [
       newKeyword,
-      copyKeyword,
       ifKeyword,
-      imageKeyword,
       lambdaKeyword,
       emptyKeyword,
       thisKeyword,

@@ -172,7 +172,6 @@ export class LanguageElan extends LanguageAbstract {
   private FUNCTION = "function";
   private GLOBAL = "global";
   private IF = "if";
-  private IMAGE = "image";
   private IMPORT = "import";
   private IN = "in";
   private INHERITS = "inherits";
