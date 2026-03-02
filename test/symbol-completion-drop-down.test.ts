@@ -2399,7 +2399,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["with", "*", "*"]] as [string, string, string][];
+    const expected = [] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo()", expected);
   });

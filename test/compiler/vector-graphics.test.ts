@@ -468,7 +468,8 @@ return [main, _tests];}`;
 
 main
   variable vg set to new List<of VectorGraphic>()
-  variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with x set to 50, y set to 50, width set to 50, height set to 50
+  variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
+  set i to i.withX(50).withY(50).withWidth(50).withHeight(50)
   call vg.append(i)
   call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
@@ -477,7 +478,8 @@ end main`;
 const global = new class {};
 async function main() {
   let vg = system.initialise(await new _stdlib.List()._initialise());
-  let i = await (async () => {const elan_a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); elan_a.x = 50; elan_a.y = 50; elan_a.width = 50; elan_a.height = 50; return elan_a;})();
+  let i = system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"));
+  i = i.withX(50).withY(50).withWidth(50).withHeight(50);
   vg.append(i);
   await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg));
 }

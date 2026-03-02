@@ -173,14 +173,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with width set to 50, height set to 50, title set to "foo", alt set to "bar"
+  variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
+  set i to i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar")
   call printNoLine(i)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let i = await (async () => {const elan_a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(elan_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); elan_a.width = 50; elan_a.height = 50; elan_a.title = "foo"; elan_a.alt = "bar"; return elan_a;})();
+  let i = system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"));
+  i = i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar");
   await _stdlib.printNoLine(i);
 }
 return [main, _tests];}`;

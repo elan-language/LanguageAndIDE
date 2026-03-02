@@ -4,17 +4,14 @@ import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ArgListNode } from "./arg-list-node";
 import { KeywordNode } from "./keyword-node";
-import { OptionalNode } from "./optional-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
 import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
-import { WithClause } from "./with-clause";
 
 export class NewInstance extends AbstractSequence {
   type: TypeSimpleOrGeneric | undefined;
   args: ArgListNode | undefined;
-  withClause: OptionalNode | undefined;
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
@@ -29,11 +26,6 @@ export class NewInstance extends AbstractSequence {
       this.addElement(this.args);
       this.addElement(new SpaceNode(this.file, Space.ignored));
       this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
-      this.withClause = new OptionalNode(
-        this.file,
-        new WithClause(this.file, () => this.type!.matchedText),
-      );
-      this.addElement(this.withClause);
       super.parseText(text);
     }
   }
