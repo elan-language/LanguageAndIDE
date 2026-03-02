@@ -184,7 +184,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => _stdlib.parseAsInt("3"), "tuple(Boolean, Int)"], [system.tuple([_stdlib.true, 3]), "tuple(Boolean, Int)"], "assert6", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.parseAsInt("3"), "tuple(Boolean, Int)"], [system.tuple([true, 3]), "tuple(Boolean, Int)"], "assert6", _stdlib, false));
 }]);
 return [main, _tests];}`;
 

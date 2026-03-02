@@ -30,7 +30,8 @@ export class IdentifierUse extends AbstractParseNode {
       );
     }
     if (this.isValid() && this.remainingText.length > 0) {
-      if (ReservedWords.Instance.matchesReservedWord_caseIgnored(this.matchedText)) {
+      const text = this.matchedText;
+      if (ReservedWords.Instance.matchesIgnoringCase(text)) {
         this.status = ParseStatus.invalid;
       } else {
         this._done = true;

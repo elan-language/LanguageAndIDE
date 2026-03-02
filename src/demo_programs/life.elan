@@ -109,15 +109,15 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
 end function
 
 procedure nextGeneration(gridRef as Ref<of List<of List<of Int>>>)
-  variable next set to createBlockGraphics(white)
+  variable nextGen set to createBlockGraphics(white)
   variable grid set to gridRef.value()
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       constant colour set to nextCellValue(grid, x, y)
-      set next[x][y] to colour
+      set nextGen[x][y] to colour
     end for
   end for
-  call gridRef.set(next)
+  call gridRef.set(nextGen)
 end procedure
 
 test test_north

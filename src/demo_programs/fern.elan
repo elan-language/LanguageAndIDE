@@ -1,4 +1,4 @@
-# b3d21dcb6470c8478d07e985b17844acd0ee799693c855d7da5722c9697be7c1 Elan 2.0.0-alpha guest default_profile valid
+# 77df2a84a7ef7221fff1346c6dc8cd2bd17c64e482f972c7001303f3d6e54b50 Elan 2.0.0-alpha guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -28,9 +28,9 @@ end main
 
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
   # next pseudo-random number (Grogono parameters)
-  variable rnd set to r.next()
-  constant rValue set to rnd.item0
-  variable rNext set to rnd.item1
+  variable r2 set to r.nextRandom()
+  constant rValue set to r2.item0
+  variable rNext set to r2.item1
   variable nx_ny set to onestep(x, y, rValue)
   constant nx set to nx_ny.item0
   variable ny set to nx_ny.item1
@@ -49,13 +49,13 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable p2 set to [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
   variable p3 set to [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07]
   variable p4 set to [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]
-  variable params set to [p1, p2, p3, p4]
+  variable allPs set to [p1, p2, p3, p4]
   # cumulative probabilty
   variable cumuprob set to 0.0
   variable done set to false
   variable nx set to 0.0
   variable ny set to 0.0
-  each pp in params
+  each pp in allPs
     set cumuprob to cumuprob + pp[6]
     if (not done) and (r < cumuprob) then
       set nx to x*pp[0] + y*pp[1] + pp[4]

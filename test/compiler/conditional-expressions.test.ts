@@ -147,7 +147,7 @@ end main
 const global = new class {};
 async function main() {
   let score = 70.1;
-  score = (_stdlib.true ? 60.1 : 60);
+  score = (true ? 60.1 : 60);
   await _stdlib.printNoLine(score);
 }
 return [main, _tests];}`;
@@ -183,7 +183,7 @@ end main
 const global = new class {};
 async function main() {
   let score = 70.1;
-  score = (_stdlib.false ? 60 : 60.1);
+  score = (false ? 60 : 60.1);
   await _stdlib.printNoLine(score);
 }
 return [main, _tests];}`;
@@ -230,7 +230,7 @@ end function`;
 const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
-  score = (_stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise()))));
+  score = (false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise()))));
   await _stdlib.printNoLine(score);
 }
 
@@ -297,7 +297,7 @@ end function`;
 const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
-  score = (_stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise()));
+  score = (false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise()));
   await _stdlib.printNoLine(score);
 }
 

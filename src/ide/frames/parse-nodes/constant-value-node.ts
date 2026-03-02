@@ -13,8 +13,8 @@ export class ConstantValueNode extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new IdentifierUse(this.file));
     this.alternatives.push(new LitValueNode(this.file));
+    this.alternatives.push(new IdentifierUse(this.file));
     this.alternatives.push(new TupleNode(this.file)); //TODO This could do with constraints on members - as below
     this.alternatives.push(new ListNode(this.file, () => new ConstantValueNode(this.file)));
     this.alternatives.push(

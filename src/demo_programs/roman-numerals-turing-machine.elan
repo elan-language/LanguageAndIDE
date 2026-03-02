@@ -8,8 +8,8 @@
 main
   variable tm set to new TuringMachine(initState, haltState)
   call addRulesForRomanNumeralsInto(tm)
-  constant decimal set to inputIntBetween("Enter a year:", 1, 3999)
-  call tm.setTape(decimal.asString())
+  constant dec set to inputIntBetween("Enter a year:", 1, 3999)
+  call tm.setTape(dec.asString())
   variable steps set to 0
   while not tm.isHalted()
     variable rule set to tm.findMatchingRule()
@@ -23,7 +23,7 @@ main
     call print("Rule applied: {rule.asString()}")
     call pause(40)
   end while
-  call print("The roman numeral equivalent for {decimal} is {tm.tape.trim()}")
+  call print("The roman numeral equivalent for {dec} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"

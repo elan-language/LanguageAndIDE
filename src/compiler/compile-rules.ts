@@ -198,7 +198,7 @@ export function mustBeKnownSymbolType(
 }
 
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (ReservedWords.Instance.matchesReservedWord_caseIgnored(id)) {
+  if (ReservedWords.Instance.matchesIgnoringCase(id)) {
     compileErrors.push(
       new SyntaxCompileError(
         `'${id}' matches a reserved word (even if different case), so may not be defined as an identifier.`,

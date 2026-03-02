@@ -203,6 +203,9 @@ export class LanguagePython extends LanguageAbstract {
   STRING_NAME: string = "str";
   LIST_NAME: string = "list";
 
+  TRUE: string = "True";
+  FALSE: string = "False";
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
@@ -249,4 +252,57 @@ export class LanguagePython extends LanguageAbstract {
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
   }
+
+  reservedWords: Set<string> = new Set<string>([
+    `false`,
+    `await`,
+    `else`,
+    `import`,
+    `pass`,
+    `none`,
+    `break`,
+    `except`,
+    `in`,
+    `raise`,
+    `true`,
+    `class`,
+    `finally`,
+    `is`,
+    `return`,
+    `and`,
+    `continue`,
+    `for`,
+    `lambda`,
+    `try`,
+    `as`,
+    `def`,
+    `from`,
+    `nonlocal`,
+    `while`,
+    `assert`,
+    `del`,
+    `global`,
+    `not`,
+    `with`,
+    `async`,
+    `elif`,
+    `if`,
+    `or`,
+    `yield`,
+    `str`,
+    `int`,
+    `float`,
+    `complex`,
+    `list`,
+    `tuple`,
+    `range`,
+    `dict`,
+    `set`,
+    `frozenset`,
+    `bool`,
+    `bytes`,
+    `bytearray`,
+    `memoryview`,
+    `nonetype`,
+  ]);
 }

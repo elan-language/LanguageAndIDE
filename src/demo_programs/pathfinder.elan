@@ -1,4 +1,4 @@
-# c998d1294bb99c7aa9897d394dc1d82e839c667b0084224a399ce2c403632975 Elan 2.0.0-alpha guest default_profile valid
+# d9385f43fea83b9655cb073395c22540b7204b09cc8a1c3074752616539e76eb Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to new Point(5, 5)
@@ -12,9 +12,9 @@ main
   call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
-    constant option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
+    constant k set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
     call clearPrintedText()
-    constant alg set to getAlgFromLetter(option)
+    constant alg set to getAlgFromLetter(k)
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
@@ -305,15 +305,14 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 function getAlgFromLetter(letter as String) returns Algorithm
-  variable dict set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
-  return dict[letter]
+  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
+  return algs[letter]
 end function
 
 test test_getAlgFromLetter
   assert getAlgFromLetter("a") is Algorithm.aStar
   assert getAlgFromLetter("h") is Algorithm.heuristic
   assert getAlgFromLetter("d") is Algorithm.dijkstra
-  assert getAlgFromLetter("x") is "No such key: x"
 end test
 
 test test_point

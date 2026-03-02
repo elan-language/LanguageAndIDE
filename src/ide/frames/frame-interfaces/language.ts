@@ -42,4 +42,10 @@ export interface Language {
   BOOL_NAME: string;
   STRING_NAME: string;
   LIST_NAME: string;
+
+  TRUE: string;
+  FALSE: string;
+
+  // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
+  reservedWords: Set<string>;
 }

@@ -1387,7 +1387,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
     testNodeParse(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
     testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, "this", "");
-    testNodeParse(new TermSimple(f), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
+    testNodeParse(new TermSimple(f), `abc(defg, hi)`, ParseStatus.valid, "abc(defg, hi)", "");
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
     // testNodeParse(
@@ -1400,13 +1400,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc[1, 2]", "");
     testNodeParse(
       new TermSimpleWithOptIndex(f),
-      `abc(def, ghi)[0]`,
+      `abc(defg, hi)[0]`,
       ParseStatus.valid,
-      "abc(def, ghi)[0]",
+      "abc(defg, hi)[0]",
       "",
     );
-    testNodeParse(new ExprNode(f), `tuple(def, ghi)`, ParseStatus.valid, "tuple(def, ghi)", ""); // tuple
-    testNodeParse(new TermSimple(f), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", "");
+    testNodeParse(new ExprNode(f), `tuple(defg, hi)`, ParseStatus.valid, "tuple(defg, hi)", ""); // tuple
+    testNodeParse(new TermSimple(f), `[defg, hi]`, ParseStatus.valid, "[defg, hi]", "");
     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
@@ -1534,6 +1534,14 @@ suite("Parsing Nodes", () => {
     testNodeParse(new BinaryOperation(f), `not`, ParseStatus.invalid, "", "not", "", "");
 
     //test expressions
+    testNodeParse(
+      new BinaryExpression(f),
+      `true and false`,
+      ParseStatus.valid,
+      `true and false`,
+      "",
+      "",
+    );
     testNodeParse(
       new BinaryExpression(f),
       `"a"+  "b"`,

@@ -1,12 +1,12 @@
-# 2786b7d89671c84fcc37acb1cf0b4d033b32bb6ba9d6edb4bee832af68e97b6e Elan 2.0.0-alpha guest default_profile valid
+# 1bdd15e226bec8c94875b3c3c7ce90a7388970834aa8bd2b1a05cd84e259cefa Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
-  variable exit set to false
-  while not exit
+  variable done set to false
+  while not done
     variable wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
-      set exit to true
+      set done to true
     else
       variable result set to binarySearch(fruit, wanted)
       if result then

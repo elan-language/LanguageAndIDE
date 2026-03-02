@@ -36,7 +36,7 @@ export class Random {
   private v: number;
 
   @elanFunction([], FunctionOptions.pure, ElanTuple([ElanFloat, ElanClass(Random)]))
-  next() {
+  nextRandom() {
     return this.nextImpl();
   }
 

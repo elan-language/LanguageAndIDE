@@ -28,12 +28,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine((_stdlib.true ? 1 : 2));
-  await _stdlib.printNoLine((_stdlib.false ? 3 : 4));
-  await _stdlib.printNoLine((_stdlib.true ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await _stdlib.printNoLine((_stdlib.true ? (_stdlib.false ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await _stdlib.printNoLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await _stdlib.printNoLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.false ? "C" : "D")));
+  await _stdlib.printNoLine((true ? 1 : 2));
+  await _stdlib.printNoLine((false ? 3 : 4));
+  await _stdlib.printNoLine((true ? (true ? "A" : "B") : (true ? "C" : "D")));
+  await _stdlib.printNoLine((true ? (false ? "A" : "B") : (true ? "C" : "D")));
+  await _stdlib.printNoLine((false ? (true ? "A" : "B") : (true ? "C" : "D")));
+  await _stdlib.printNoLine((false ? (true ? "A" : "B") : (false ? "C" : "D")));
 }
 return [main, _tests];}`;
 

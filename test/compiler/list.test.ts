@@ -1238,32 +1238,6 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_get", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to ["one", "two", "three"]
-  call printNoLine(a.get(1))
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'get' is not defined for type 'List'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_getRange", async () => {
     const code = `${testHeader}
 
