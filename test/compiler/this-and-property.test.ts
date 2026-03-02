@@ -228,6 +228,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   procedure bar()
     call printNoLine(this)
   end procedure
@@ -242,7 +244,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   async bar() {
     await _stdlib.printNoLine(this);
   }

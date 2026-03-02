@@ -218,6 +218,8 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
+  constructor()
+  end constructor
 end class
 
 function cast(bar as Foo) returns Foo
@@ -239,7 +241,11 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 
@@ -279,6 +285,8 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
+  constructor()
+  end constructor
 end class
 
 function cast(bar as Foo) returns Foo
@@ -300,7 +308,11 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 

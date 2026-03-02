@@ -725,7 +725,8 @@ main
 end main
 
 class Foo
-  
+  constructor()
+  end constructor
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -753,7 +754,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   async pp() {
     await _stdlib.printNoLine(1);
   }
@@ -1012,7 +1018,7 @@ end class`;
     ]);
   });
 
-  test("Fail_MissingPropertyKeyword4", async () => {
+  test("Fail_MissingPropertyKeyword5", async () => {
     const code = `${testHeader}
 
 main
@@ -1021,7 +1027,9 @@ main
 end main
 
 class Foo
-  
+  constructor()
+  end constructor
+
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -1057,7 +1065,7 @@ end class`;
     ]);
   });
 
-  test("Fail_MissingPropertyKeyword5", async () => {
+  test("Fail_MissingPropertyKeyword6", async () => {
     const code = `${testHeader}
 
 main
@@ -1066,7 +1074,9 @@ main
 end main
 
 class Foo
-  
+  constructor()
+  end constructor
+
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -1114,7 +1124,8 @@ main
 end main
 
 class Foo
-  
+  constructor()
+  end constructor
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -1157,6 +1168,9 @@ end class`;
     const code = `${testHeader}
 
 class Bar
+  constructor()
+  end constructor
+
   procedure p()
     variable a set to property.asString()
   end procedure
@@ -1188,6 +1202,9 @@ function foo() returns Int
 end function
 
 class Bar
+  constructor()
+  end constructor
+
   procedure p()
     variable a set to property.foo()
   end procedure
@@ -1217,6 +1234,9 @@ end class`;
 constant aa set to 1
 
 class Bar
+  constructor()
+  end constructor
+
   procedure p()
     variable a set to property.aa
   end procedure

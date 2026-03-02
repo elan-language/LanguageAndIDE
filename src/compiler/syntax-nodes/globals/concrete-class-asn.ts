@@ -3,7 +3,12 @@ import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../../compiler/compiler-interfaces/type-options";
 import { ClassSubType, ClassType } from "../../../compiler/symbols/class-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
-import { getId, mustBeDeclaredAbove, mustImplementSuperClasses } from "../../compile-rules";
+import {
+  getId,
+  mustBeDeclaredAbove,
+  mustHaveConstructor,
+  mustImplementSuperClasses,
+} from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { compileNodes, isConstructor } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
@@ -63,6 +68,12 @@ export class ConcreteClassAsn extends ClassAsn {
       this.compileErrors,
       this.fieldId,
     );
+
+    const hasConstructor = this.getChildren().some((m) => isConstructor(m));
+
+    if (!hasConstructor) {
+      mustHaveConstructor(this.compileErrors, this.fieldId);
+    }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

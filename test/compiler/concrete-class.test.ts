@@ -661,6 +661,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -680,7 +683,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   p1 = 0;
 
   async withP1(p) {
@@ -725,6 +733,11 @@ main
 end main
 
 class Foo
+  constructor()
+    set property.p2 to ""
+    set property.p3 to ""
+  end constructor
+
   property p1 as Int
 
   property p2 as String
@@ -771,7 +784,13 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""], ["p3", ""]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+    this.p2 = "";
+    this.p3 = "";
+    return this;
+  }
+
   p1 = 0;
 
   p2 = "";
@@ -832,6 +851,10 @@ main
 end main
 
 class Foo
+  constructor()
+    set property.p1 to new List<of Int>()
+  end constructor
+
   property p1 as List<of Int>
 
   procedure append()
@@ -849,7 +872,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+    this.p1 = system.initialise(await new _stdlib.List()._initialise());
+    return this;
+  }
+
   p1 = system.initialise(_stdlib.List.emptyInstance());
 
   async append() {
@@ -1840,6 +1868,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(nf as Foo, p as Int) returns Foo
@@ -1875,6 +1906,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -1910,11 +1944,16 @@ main
 end main
 
 class Bar
+  constructor()
+  end constructor
+
   property p1 as Int
 
 end class
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Bar
@@ -1951,6 +1990,9 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
   property p1 as Int
 
   function withP1(nff as Foo, p as Int) returns Foo
@@ -1987,6 +2029,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -2023,6 +2067,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -2058,6 +2104,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property p1 as Int
 
   procedure withP1(p as Int)
