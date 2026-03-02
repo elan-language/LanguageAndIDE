@@ -12,7 +12,7 @@ main
   variable possible set to getAllPossibleAnswers()
   variable mark set to ""
   variable attempt set to "RAISE"
-  while not mark.isSameValueAs("*****")
+  while not mark.equals("*****")
     set mark to inputString("" + attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     set attempt to bestAttempt(possible)
@@ -20,7 +20,7 @@ main
 end main
 
 function isGreen(attempt as String, target as String, n as Int) returns Boolean
-  return target[n].isSameValueAs(attempt[n])
+  return target[n].equals(attempt[n])
 end function
 
 test test_isGreen
@@ -86,7 +86,7 @@ test test_isYellow
 end test
 
 function setAttemptIfYellow(attempt as String, target as String, n as Int) returns String
-  return if attempt[n].isSameValueAs("*") then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
+  return if attempt[n].equals("*") then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 end function
 
 test test_setAttemptIfYellow
@@ -97,7 +97,7 @@ test test_setAttemptIfYellow
 end test
 
 function isAlreadyMarkedGreen(attempt as String, n as Int) returns Boolean
-  return attempt[n].isSameValueAs("*")
+  return attempt[n].equals("*")
 end function
 
 test test_isAlreadyMarkedGreen
@@ -153,7 +153,7 @@ test test_markAttempt
 end test
 
 function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w).isSameValueAs(mark))
+  return prior.filter(lambda w as String => markAttempt(attempt, w).equals(mark))
 end function
 
 test test_possibleAnswersAfterAttempt

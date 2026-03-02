@@ -314,25 +314,25 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    call printNoLine("abc".isSameValueAs("abc"))
-    call printNoLine("abc".isSameValueAs("abcd"))
-    call printNoLine("abc".isSameValueAs("Abc"))
-    call printNoLine("abc".isSameValueAs("abc"))
-    call printNoLine(not "abc".isSameValueAs("abcd"))
-    call printNoLine(not "abc".isSameValueAs("abcd"))
-    call printNoLine(not "abc".isSameValueAs("Abc"))
+    call printNoLine("abc".equals("abc"))
+    call printNoLine("abc".equals("abcd"))
+    call printNoLine("abc".equals("Abc"))
+    call printNoLine("abc".equals("abc"))
+    call printNoLine(not "abc".equals("abcd"))
+    call printNoLine(not "abc".equals("abcd"))
+    call printNoLine(not "abc".equals("Abc"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abc"));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abcd"));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "Abc"));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs("abc", "abc"));
-  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "abcd"));
-  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "abcd"));
-  await _stdlib.printNoLine(!_stdlib.isSameValueAs("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.equals("abc", "abc"));
+  await _stdlib.printNoLine(_stdlib.equals("abc", "abcd"));
+  await _stdlib.printNoLine(_stdlib.equals("abc", "Abc"));
+  await _stdlib.printNoLine(_stdlib.equals("abc", "abc"));
+  await _stdlib.printNoLine(!_stdlib.equals("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.equals("abc", "abcd"));
+  await _stdlib.printNoLine(!_stdlib.equals("abc", "Abc"));
 }
 return [main, _tests];}`;
 

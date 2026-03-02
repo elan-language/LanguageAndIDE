@@ -187,7 +187,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanBoolean)
-  isSameValueAs<T1>(
+  equals<T1>(
     @elanGenericParamT1Type() v1: T1 | T1[] | undefined,
     @elanGenericParamT1Type() v2: T1 | T1[] | undefined,
   ): boolean {

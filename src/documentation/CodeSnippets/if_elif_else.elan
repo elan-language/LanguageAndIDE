@@ -6,7 +6,7 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
     constant mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     # snipFrom
-    if item.isSameValueAs(value) then
+    if item.equals(value) then
       set result to true
     elif item.isBefore(value) then
       set result to binarySearch(li.subList(0, mid), item)

@@ -534,9 +534,9 @@ main
   call a.append([3])
   call printNoLine(a)
   call printNoLine(b)
-  call printNoLine(a.isSameValueAs(b))
-  call printNoLine(a.isSameValueAs(new List<of List<of Int>>()))
-  call printNoLine(b.isSameValueAs(new List<of List<of Int>>()))
+  call printNoLine(a.equals(b))
+  call printNoLine(a.equals(new List<of List<of Int>>()))
+  call printNoLine(b.equals(new List<of List<of Int>>()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -547,9 +547,9 @@ async function main() {
   a.append(system.list([3]));
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(await new _stdlib.List()._initialise())));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(await new _stdlib.List()._initialise())));
+  await _stdlib.printNoLine(_stdlib.equals(a, b));
+  await _stdlib.printNoLine(_stdlib.equals(a, system.initialise(await new _stdlib.List()._initialise())));
+  await _stdlib.printNoLine(_stdlib.equals(b, system.initialise(await new _stdlib.List()._initialise())));
 }
 return [main, _tests];}`;
 

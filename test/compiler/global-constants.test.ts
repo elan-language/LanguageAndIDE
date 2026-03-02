@@ -202,7 +202,7 @@ return [main, _tests];}`;
 constant a set to ""
 main
   call printNoLine(a)
-  call printNoLine(a.isSameValueAs(""))
+  call printNoLine(a.equals(""))
 end main
 `;
 
@@ -213,7 +213,7 @@ const global = new class {
 };
 async function main() {
   await _stdlib.printNoLine(global.a);
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(global.a, ""));
+  await _stdlib.printNoLine(_stdlib.equals(global.a, ""));
 }
 return [main, _tests];}`;
 

@@ -15,7 +15,7 @@ test test_try_2
     call foo()
     call print("not caught")
   catch exception in e
-    if not (e.isSameValueAs("an expected message")) then
+    if not (e.equals("an expected message")) then
       throw exception e
     end if
   end try

@@ -1265,7 +1265,7 @@ ignore_test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
   const code = `${testHeader}
 
 main
-  variable a set to (ref p1).isSameValueAs(ref p2)
+  variable a set to (ref p1).equals(ref p2)
 end main
 
 function p1() returns Int
@@ -1395,7 +1395,7 @@ ignore_test("Fail_OperatorsAndProcedures1", async () => {
   const code = `${testHeader}
 
 main
-  variable a set to p1.isSameValueAs(p2)
+  variable a set to p1.equals(p2)
 end main
 
 function p1() returns Int

@@ -82,26 +82,26 @@ class Coords
     while not changed
       variable k set to getKey()
       # loop because more than one key may have been pressed
-      while not k.isSameValueAs("")
-        if k.isSameValueAs("z") then
+      while not k.equals("")
+        if k.equals("z") then
           set property.scale to property.scale*1.2
-        elif k.isSameValueAs("x") then
+        elif k.equals("x") then
           set property.scale to property.scale/1.2
-        elif k.isSameValueAs("ArrowUp") then
+        elif k.equals("ArrowUp") then
           set property.yoff to property.yoff + panstep
-        elif k.isSameValueAs("ArrowDown") then
+        elif k.equals("ArrowDown") then
           set property.yoff to property.yoff - panstep
-        elif k.isSameValueAs("ArrowLeft") then
+        elif k.equals("ArrowLeft") then
           set property.xoff to property.xoff + panstep
-        elif k.isSameValueAs("ArrowRight") then
+        elif k.equals("ArrowRight") then
           set property.xoff to property.xoff - panstep
-        elif k.isSameValueAs("g") then
+        elif k.equals("g") then
           set property.jx to property.jx + jstep
-        elif k.isSameValueAs("j") then
+        elif k.equals("j") then
           set property.jx to property.jx - jstep
-        elif k.isSameValueAs("y") then
+        elif k.equals("y") then
           set property.jy to property.jy + jstep
-        elif k.isSameValueAs("h") then
+        elif k.equals("h") then
           set property.jy to property.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else

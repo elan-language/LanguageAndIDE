@@ -64,7 +64,7 @@ end procedure
 
 function uniform(grid as List<of List<of Int>>) returns Boolean
   variable uniformGrid set to createBlockGraphics(grid[0][0])
-  return if grid.isSameValueAs(uniformGrid) then true else false
+  return if grid.equals(uniformGrid) then true else false
 end function
 
 function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) returns List<of Int>

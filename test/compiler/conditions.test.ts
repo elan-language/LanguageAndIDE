@@ -445,8 +445,8 @@ end main
     const code = `${testHeader}
 
 main
-  call printNoLine(3.isSameValueAs("3"))
-  call printNoLine(not 3.isSameValueAs("3"))
+  call printNoLine(3.equals("3"))
+  call printNoLine(not 3.equals("3"))
   call printNoLine(3 < "3")
   call printNoLine(3 <= "3")
   call printNoLine(3 > "3")
