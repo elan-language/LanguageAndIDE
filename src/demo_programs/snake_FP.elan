@@ -106,43 +106,43 @@ class Game
   end function
 
   function withHead(value as Square) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.head to value
     return copyOfThis
   end function
 
   function withBody(value as List<of Square>) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.body to value
     return copyOfThis
   end function
 
   function withPriorTail(value as Square) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.priorTail to value
     return copyOfThis
   end function
 
   function withApple(value as Square) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.apple to value
     return copyOfThis
   end function
 
   function withIsOn(value as Boolean) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.isOn to value
     return copyOfThis
   end function
 
   function withRnd(value as Random) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.rnd to value
     return copyOfThis
   end function
 
   function withKey(value as String) returns Game
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.key to value
     return copyOfThis
   end function
@@ -160,13 +160,13 @@ class Square
   end constructor
 
   function withX(value as Int) returns Square
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.x to value
     return copyOfThis
   end function
 
   function withY(value as Int) returns Square
-    variable copyOfThis set to shallowCopy(this)
+    variable copyOfThis set to copy(this)
     set copyOfThis.y to value
     return copyOfThis
   end function

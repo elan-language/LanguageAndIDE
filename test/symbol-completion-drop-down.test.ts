@@ -1586,7 +1586,6 @@ end main`;
     const expected = [
       ["alpha", "*", "*"],
       ["false", "*", "*"],
-      ["shallowCopy", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);

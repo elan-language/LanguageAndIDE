@@ -749,7 +749,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to shallowCopy(this).LangRef.html#compile_error",
+      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
     ]);
   });
 
