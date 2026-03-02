@@ -107,6 +107,9 @@ export abstract class LanguageAbstract implements Language {
   abstract STRING_NAME: string;
   abstract LIST_NAME: string;
 
+  abstract TRUE: string;
+  abstract FALSE: string;
+
   protected spaced(text: string): string {
     return ` ${text} `;
   }

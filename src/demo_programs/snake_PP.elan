@@ -88,12 +88,12 @@ function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of In
 end function
 
 function directionByKey(current as String, key as String) returns String
-  variable dir set to current
-  variable dict set to ["w":"up", "s":"down", "a":"left", "d":"right"]
-  if dict.keys().contains(key) then
-    set dir to dict[key]
+  variable dirn set to current
+  variable d set to ["w":"up", "s":"down", "a":"left", "d":"right"]
+  if d.keys().contains(key) then
+    set dirn to d[key]
   end if
-  return dir
+  return dirn
 end function
 
 test test_getTailColour

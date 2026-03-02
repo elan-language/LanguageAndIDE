@@ -204,6 +204,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
 
+  TRUE: string = "true";
+  FALSE: string = "false";
+
   common_parseParamDef(node: ParamDefNode, text: string): boolean {
     node.type = new TypeNode(
       node.file,

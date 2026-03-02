@@ -257,6 +257,9 @@ export class LanguageVB extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
+  TRUE: string = "True";
+  FALSE: string = "False";
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);

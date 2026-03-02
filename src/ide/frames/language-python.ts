@@ -206,6 +206,9 @@ export class LanguagePython extends LanguageAbstract {
   STRING_NAME: string = "str";
   LIST_NAME: string = "list";
 
+  TRUE: string = "True";
+  FALSE: string = "False";
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);

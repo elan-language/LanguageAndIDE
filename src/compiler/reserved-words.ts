@@ -14,9 +14,6 @@ export class ReservedWords {
       .union(LanguageVB.Instance.reservedWords)
       .union(LanguageCS.Instance.reservedWords)
       .union(LanguageJava.Instance.reservedWords);
-      //TODO temporary kludge
-      this._set.delete("true");
-      this._set.delete("false");
   }
 
   private _set: Set<string>;

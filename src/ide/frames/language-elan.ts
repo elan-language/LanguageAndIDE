@@ -225,6 +225,9 @@ export class LanguageElan extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
 
+  TRUE: string = "true";
+  FALSE: string = "false";
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     return node || text ? false : false; // so will use the default on the node
   }
@@ -267,6 +270,7 @@ export class LanguageElan extends LanguageAbstract {
     `end`,
     `enum`,
     `exception`,
+    `false`,
     `for`,
     `from`,
     `function`,
@@ -302,6 +306,7 @@ export class LanguageElan extends LanguageAbstract {
     `this`,
     `throw`,
     `to`,
+    `true`,
     `try`,
     `tuple`,
     `variable`,

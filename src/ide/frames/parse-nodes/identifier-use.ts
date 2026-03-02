@@ -32,7 +32,7 @@ export class IdentifierUse extends AbstractParseNode {
     if (this.isValid() && this.remainingText.length > 0) {
       const text = this.matchedText;
       if (ReservedWords.Instance.matchesIgnoringCase(text)) {
-        this.status = ParseStatus.incomplete;
+        this.status = ParseStatus.invalid;
       } else {
         this._done = true;
       }

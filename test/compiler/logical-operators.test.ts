@@ -493,7 +493,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "'true' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
     ]);
   });
 
