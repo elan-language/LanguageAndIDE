@@ -1,7 +1,7 @@
 * {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
-p { margin-top:0; margin-bottom:0; line-height:inherit; }
+p { margin-top:0; margin-bottom:0; line-height:inherit; }                          
 
 
 h1,h2,h3,h4
@@ -34,8 +34,8 @@ table
  th, th * {color: white; background-color: var(--docHeading);}
  th { text-align:center; margin-top:4pt; margin-bottom:4pt; padding-left: 5px; padding-right: 5px; }
  tr { text-align:left; margin-top:4pt; margin-bottom:4pt; }
- tr:nth-child(even) td { background-color: var(--docTable0); }
- tr:nth-child(odd)  td { background-color: var(--docTable1); }
+ tr:nth-child(even) td { background-color: var(--docTable1); }
+ tr:nth-child(odd)  td { background-color: var(--docTable0); }
  td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
  /* tr.subhead for ElanIndex head letters */
  tr.subhead td, tr.subhead td * { background-color: var(--docHeading); color: white; font-weight: bold; text-align:left; }
