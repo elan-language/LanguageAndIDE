@@ -846,12 +846,12 @@ class Bar {
     return this;
   }
 
-  _foo;
+  elan_foo;
   get foo() {
-    return this._foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
   }
   set foo(foo) {
-    this._foo = foo;
+    this.elan_foo = foo;
   }
 
 }

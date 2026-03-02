@@ -464,12 +464,12 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
   async _initialise() { return this; }
-  _a;
+  elan_a;
   get a() {
-    return this._a ??= Foo.emptyInstance();
+    return this.elan_a ??= Foo.emptyInstance();
   }
   set a(a) {
-    this._a = a;
+    this.elan_a = a;
   }
 
   b = 0;
