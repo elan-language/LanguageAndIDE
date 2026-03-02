@@ -1946,15 +1946,6 @@ suite("Parsing Nodes", () => {
       "image http://website.com/images/image1.png",
       `<img src="http://website.com/images/image1.png">`,
     );
-    testNodeParse(
-      new ImageNode(f),
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      ParseStatus.valid,
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      "",
-      "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      `<img src="http://website.com/images/image1.png"><el-kw> with </el-kw><el-id>height</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <el-id>width</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>`,
-    );
   });
 });
 

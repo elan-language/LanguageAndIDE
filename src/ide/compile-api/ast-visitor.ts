@@ -172,7 +172,6 @@ import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
 import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
-import { WithClause } from "../frames/parse-nodes/with-clause";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
@@ -825,10 +824,6 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof WithClause) {
-    return transformMany(node.toClauses as CSV, fieldId, scope);
-  }
-
   if (node instanceof ArgListNode) {
     return transformMany(node as CSV, fieldId, scope);
   }
@@ -909,10 +904,6 @@ export function transform(
     const imageType = new TypeAsn(ImageName, EmptyAsn.Instance, [], fieldId, scope);
     const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
     const obj = new NewAsn(imageType, [url], fieldId, scope);
-    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
-    if (withClause) {
-      return new CopyWithAsn(obj, withClause, fieldId, scope);
-    }
     return obj;
   }
 
