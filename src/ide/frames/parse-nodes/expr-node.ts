@@ -15,7 +15,6 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
-import { CopyWith } from "./copy-with";
 import { IfExpr } from "./if-expr";
 import { ImageNode } from "./image-node";
 import { Lambda } from "./lambda";
@@ -33,7 +32,6 @@ export class ExprNode extends AbstractAlternatives {
     //evaluate options that start with a keyword, first
     if (text.trim().length > 0) {
       this.alternatives.push(new NewInstance(this.file));
-      this.alternatives.push(new CopyWith(this.file));
       this.alternatives.push(new IfExpr(this.file));
       this.alternatives.push(new Lambda(this.file));
       this.alternatives.push(new TupleNode(this.file));

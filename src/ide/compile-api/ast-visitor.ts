@@ -24,7 +24,6 @@ import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/pr
 import { PropertyAsn } from "../../compiler/syntax-nodes/class-members/property-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/comment-asn";
 import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
-import { CopyWithAsn } from "../../compiler/syntax-nodes/copy-with-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
@@ -122,7 +121,6 @@ import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
 import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CommentNode } from "../frames/parse-nodes/comment-node";
-import { CopyWith } from "../frames/parse-nodes/copy-with";
 import { CSV } from "../frames/parse-nodes/csv";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
@@ -173,7 +171,6 @@ import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
 import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
-import { WithClause } from "../frames/parse-nodes/with-clause";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
@@ -826,10 +823,6 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof WithClause) {
-    return transformMany(node.toClauses as CSV, fieldId, scope);
-  }
-
   if (node instanceof ArgListNode) {
     return transformMany(node as CSV, fieldId, scope);
   }
@@ -910,10 +903,6 @@ export function transform(
     const imageType = new TypeAsn(ImageName, EmptyAsn.Instance, [], fieldId, scope);
     const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
     const obj = new NewAsn(imageType, [url], fieldId, scope);
-    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
-    if (withClause) {
-      return new CopyWithAsn(obj, withClause, fieldId, scope);
-    }
     return obj;
   }
 
@@ -935,12 +924,6 @@ export function transform(
 
   if (node instanceof DottedTerm) {
     return transform(node.term, fieldId, scope);
-  }
-
-  if (node instanceof CopyWith) {
-    const obj = transform(node.original, fieldId, scope) as AstNode;
-    const withClause = transform(node.withClause!, fieldId, scope) as AstCollectionNode;
-    return new CopyWithAsn(obj, withClause, fieldId, scope);
   }
 
   if (node instanceof TypeTupleNode) {
