@@ -32,10 +32,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.false && _stdlib.false;
-  let b = _stdlib.false && _stdlib.true;
-  let c = _stdlib.true && _stdlib.false;
-  let d = _stdlib.true && _stdlib.true;
+  let a = false && false;
+  let b = false && true;
+  let c = true && false;
+  let d = true && true;
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
   await _stdlib.printNoLine(c);
@@ -77,10 +77,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.false || _stdlib.false;
-  let b = _stdlib.false || _stdlib.true;
-  let c = _stdlib.true || _stdlib.false;
-  let d = _stdlib.true || _stdlib.true;
+  let a = false || false;
+  let b = false || true;
+  let c = true || false;
+  let d = true || true;
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
   await _stdlib.printNoLine(c);
@@ -118,8 +118,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = !_stdlib.false;
-  let b = !_stdlib.true;
+  let a = !false;
+  let b = !true;
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
 }
@@ -155,8 +155,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = !_stdlib.false && _stdlib.true;
-  let b = !(_stdlib.false && _stdlib.true);
+  let a = !false && true;
+  let b = !(false && true);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
 }
@@ -229,7 +229,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (_stdlib.true && _stdlib.false) === (_stdlib.true || _stdlib.false);
+  let a = (true && false) === (true || false);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -353,7 +353,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.true && _stdlib.false === _stdlib.true || _stdlib.false;
+  let a = true && false === true || false;
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;

@@ -263,7 +263,7 @@ async function main() {
   let e = 3 >= 4;
   let f = 3 === 4;
   let g = 3 !== 4;
-  let h = !_stdlib.false;
+  let h = !false;
   let k = 4 / 3;
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
@@ -616,7 +616,6 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: Boolean, Provided: Float.LangRef.html#TypesCompileError",
-
       "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: String, Provided: List<of Float>.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",

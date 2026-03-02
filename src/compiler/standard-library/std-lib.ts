@@ -117,9 +117,6 @@ export class StdLib {
   @elanConstant(ElanInt) brown = 0xa52a2a;
   @elanConstant(ElanInt) transparent = -1;
 
-  @elanConstant(ElanBoolean) true = true;
-  @elanConstant(ElanBoolean) false = false;
-
   @elanConstant() pi: number = Math.PI;
   @elanConstant(ElanInt) meaningOfLife = 42;
 

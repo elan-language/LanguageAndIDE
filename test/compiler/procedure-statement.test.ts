@@ -145,8 +145,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2]);
   let b = system.list([3, 4]);
-  let c = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
-  let d = system.dictionary([["a", _stdlib.true], ["b", _stdlib.false]]);
+  let c = system.dictionary([["a", true], ["b", false]]);
+  let d = system.dictionary([["a", true], ["b", false]]);
   await foo(a, b, c, d);
 }
 

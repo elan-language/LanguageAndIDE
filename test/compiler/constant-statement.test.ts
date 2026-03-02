@@ -228,7 +228,7 @@ async function main() {
 }
 
 async function foo() {
-  if (_stdlib.true) {
+  if (true) {
     const i = 0;
   }
   const i = 1;
