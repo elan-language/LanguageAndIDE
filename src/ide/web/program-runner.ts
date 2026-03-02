@@ -298,7 +298,7 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
-function getDebugSymbolList(
+/* function getDebugSymbolList(
   name: string | string[],
   nameType: string,
   value: [],
@@ -311,7 +311,7 @@ function getDebugSymbolList(
     getDebugSymbolHtml(`${i}`, "Int", item, typeMap["OfTypes"], true),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
-}
+} */
 
 function getDebugSymbolTuple(
   name: string | string[],
@@ -329,7 +329,7 @@ function getDebugSymbolTuple(
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
+/* function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
   const list = value;
   const summary = getSummary("", "", simpleId([`${index}`, "_"], true, "Int"));
   const items = list.map((item, subindex) =>
@@ -338,21 +338,6 @@ function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolArray2D(
-  name: string | string[],
-  nameType: string,
-  value: [[]],
-  typeMap: { [index: string]: any },
-  asIndex: boolean = false,
-) {
-  const type = typeMap["Type"];
-  const cols = value.length;
-  const rows = value[0].length;
-  const size = ` <el-comment># size ${cols} x ${rows}</el-comment>`;
-  const summary = getSummary(type, size, simpleId(name, asIndex, nameType));
-  const items = value.map((item, index) => getDebugItemHtml2D(index, item, typeMap));
-  return getDebugHtml(`${summary}`, `${items.join("")}`);
-}
 
 function getDebugSymbolDictionary(
   name: string | string[],
@@ -373,6 +358,7 @@ function getDebugSymbolDictionary(
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
+*/
 
 function safeIndex(key: string, toIndex: { [index: string]: any }) {
   if (Object.keys(toIndex).includes(key)) {
@@ -528,12 +514,7 @@ function getDebugSymbolHtml(
       return getDebugSymbolString(name, nameType, value, asIndex);
     case "List":
     case "ListImmutable":
-    case "Array":
-      return getDebugSymbolList(name, nameType, value, typeMap, asIndex);
     case "Dictionary":
-      return getDebugSymbolDictionary(name, nameType, value, typeMap, asIndex);
-    case "Array2D":
-      return getDebugSymbolArray2D(name, nameType, value, typeMap, asIndex);
     case "tuple":
       return getDebugSymbolTuple(name, nameType, value, typeMap, asIndex);
     case "Deconstructed":

@@ -39,7 +39,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
   variable word set to ""
   while chNo <= 5
     variable k set to waitForKey().upperCase()
-    if (k.isSameValueAs("BACKSPACE")) and (chNo > 0) then
+    if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
       call grid.put(chNo, attemptNo, "")
       set word to word[0..chNo]
@@ -48,7 +48,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
       call grid.put(chNo, attemptNo, k)
       set chNo to chNo + 1
       set word to word + k
-    elif (chNo is 5) and (k.isSameValueAs("ENTER")) then
+    elif (chNo is 5) and (k.equals("ENTER")) then
       if allValidAttemptWords.contains(word) then
         set chNo to chNo + 1
       else
@@ -70,7 +70,7 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
       call used.put(letter, mark)
     end if
   end for
-  if marks.isSameValueAs("22222") then
+  if marks.equals("22222") then
     call solvedRef.set(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -107,7 +107,7 @@ end function
 function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
   each k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
-    if k.isSameValueAs("-") then
+    if k.equals("-") then
       set html to html + "</div><div>"
     else
       set html to html + "<key class='_{used[k]}'>{k}</key>"

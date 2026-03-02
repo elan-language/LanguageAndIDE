@@ -11,6 +11,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -611,12 +612,6 @@ test test_string_
   assert a is b
 end test
 
-test test_default_
-  variable a set to 0
-  variable b set to empty Int
-  assert a is b
-end test
-
 constant hello set to "Hello"
 
 test test_constant_
@@ -635,12 +630,6 @@ end class
 test test_class1
   variable a set to new Foo(3)
   variable b set to new Foo(3)
-  assert a is b
-end test
-
-test test_class2
-  variable a set to empty Foo
-  variable b set to empty Foo
   assert a is b
 end test`;
 
@@ -671,15 +660,9 @@ _tests.push(["test27", async (_outcomes) => {
   _outcomes.push(await system.assert([async () => a, "String"], [b, "String"], "assert36", _stdlib, false));
 }]);
 
-_tests.push(["test39", async (_outcomes) => {
-  let a = 0;
-  let b = 0;
-  _outcomes.push(await system.assert([async () => a, "Int"], [b, "Int"], "assert48", _stdlib, false));
-}]);
-
-_tests.push(["test54", async (_outcomes) => {
+_tests.push(["test42", async (_outcomes) => {
   let b = "Hello";
-  _outcomes.push(await system.assert([async () => global.hello, "String"], [b, "String"], "assert60", _stdlib, false));
+  _outcomes.push(await system.assert([async () => global.hello, "String"], [b, "String"], "assert48", _stdlib, false));
 }]);
 
 class Foo {
@@ -694,16 +677,10 @@ class Foo {
 
 }
 
-_tests.push(["test76", async (_outcomes) => {
+_tests.push(["test64", async (_outcomes) => {
   let a = system.initialise(await new Foo()._initialise(3));
   let b = system.initialise(await new Foo()._initialise(3));
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert85", _stdlib, false));
-}]);
-
-_tests.push(["test88", async (_outcomes) => {
-  let a = Foo.emptyInstance();
-  let b = Foo.emptyInstance();
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert97", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert73", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -728,10 +705,8 @@ return [main, _tests];}`;
         [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "assert24")],
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
-      ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],
-      ["test54", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")]],
-      ["test76", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert85")]],
-      ["test88", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert97")]],
+      ["test42", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert48")]],
+      ["test64", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert73")]],
     ]);
   });
 
@@ -897,56 +872,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert13")]],
-    ]);
-  });
-
-  test("Pass_NonObviousDifferentTypes", async () => {
-    const code = `${testHeader}
-
-test test_arrayContent
-  variable a set to new Array2D<of String>(2, 2, "*")
-  assert a is [["*", "*"], ["*", "*"]]
-end test
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-_tests.push(["test1", async (_outcomes) => {
-  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, "*"));
-  _outcomes.push(await system.assert([async () => a, "Array2D<of String>"], [system.list([system.list(["*", "*"]), system.list(["*", "*"])]), "List<of List<of String>>"], "assert7", _stdlib, false));
-}]);
-
-async function main() {
-
-}
-return [main, _tests];}`;
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test1",
-        [
-          new AssertOutcome(
-            TestStatus.fail,
-            "Array2D<of String> expected: List<of List<of String>>",
-            "[[*, *], [*, *]]",
-            "assert7",
-          ),
-        ],
-      ],
     ]);
   });
 

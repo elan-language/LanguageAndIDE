@@ -1026,92 +1026,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
   });
-  test("Pass_2DArrays", async () => {
-    const code = `${testHeader}
-
-main
-  variable oxoBoard set to new Array2D<of String>(3,3,"")
-  call oxoBoard.put(0, 0, "o")
-  call oxoBoard.put(2, 2, "o")
-  call oxoBoard.put(1, 1, "x")
-  call printNoLine(oxoBoard)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let oxoBoard = system.initialise(await new _stdlib.Array2D()._initialise(3, 3, ""));
-  oxoBoard.put(0, 0, "o");
-  oxoBoard.put(2, 2, "o");
-  oxoBoard.put(1, 1, "x");
-  await _stdlib.printNoLine(oxoBoard);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[[o, , ], [, x, ], [, , o]]");
-  });
-
-  test("Pass_2DArray_withPut", async () => {
-    const code = `${testHeader}
-
-main
-  variable oxoBoard set to new Array2D<of String>(3,3,"")
-  variable ob2 set to oxoBoard.withPut(0, 0, "o")
-  variable ob3 set to ob2.withPut(2, 1, "x")
-  variable ob4 set to ob3.withPut(1, 2, "o")
-  call printNoLine(oxoBoard)
-  call printNoLine(ob2)
-  call printNoLine(ob3)
-  call printNoLine(ob4)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let oxoBoard = system.initialise(await new _stdlib.Array2D()._initialise(3, 3, ""));
-  let ob2 = oxoBoard.withPut(0, 0, "o");
-  let ob3 = ob2.withPut(2, 1, "x");
-  let ob4 = ob3.withPut(1, 2, "o");
-  await _stdlib.printNoLine(oxoBoard);
-  await _stdlib.printNoLine(ob2);
-  await _stdlib.printNoLine(ob3);
-  await _stdlib.printNoLine(ob4);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[[, , ], [, , ], [, , ]][[o, , ], [, , ], [, , ]][[o, , ], [, , ], [, x, ]][[o, , ], [, , o], [, x, ]]",
-    );
-  });
 
   test("Pass_stringForUnicode", async () => {
     const code = `${testHeader}
@@ -1415,7 +1329,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
-  test("Pass_joinListOfRecord", async () => {
+  test("Pass_joinListOfObjects", async () => {
     const code = `${testHeader}
 
 main
@@ -1424,8 +1338,8 @@ main
   call printNoLine(s)
 end main
 
-record Point
-end record`;
+class Point
+end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -2192,13 +2106,13 @@ main
   variable b set to ["2", "7"].asSet()
   variable c set to ["7", "2"].asSet()
   variable d set to ["8", "2"].asSet()
-  call printNoLine(b.isSameValueAs(c))
-  call printNoLine(b.isSameValueAs(d))
+  call printNoLine(b.equals(c))
+  call printNoLine(b.equals(d))
   variable b2 set to [2, 7].asSet()
   variable c2 set to [7, 2].asSet()
   variable d2 set to [8, 2].asSet()
-  call printNoLine(b2.isSameValueAs(c2))
-  call printNoLine(b2.isSameValueAs(d2))
+  call printNoLine(b2.equals(c2))
+  call printNoLine(b2.equals(d2))
 end main
 `;
 
@@ -2208,13 +2122,13 @@ async function main() {
   let b = system.list(["2", "7"]).asSet();
   let c = system.list(["7", "2"]).asSet();
   let d = system.list(["8", "2"]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, c));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, d));
+  await _stdlib.printNoLine(_stdlib.equals(b, c));
+  await _stdlib.printNoLine(_stdlib.equals(b, d));
   let b2 = system.list([2, 7]).asSet();
   let c2 = system.list([7, 2]).asSet();
   let d2 = system.list([8, 2]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, c2));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, d2));
+  await _stdlib.printNoLine(_stdlib.equals(b2, c2));
+  await _stdlib.printNoLine(_stdlib.equals(b2, d2));
 }
 return [main, _tests];}`;
 
@@ -2233,56 +2147,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
-  });
-
-  test("Pass_SetComparisonByReference", async () => {
-    const code = `${testHeader}
-
-main
-  variable b set to ["2", "7"].asSet()
-  variable c set to ["7", "2"].asSet()
-  variable d set to ["8", "2"].asSet()
-  call printNoLine(b.isSameReferenceAs(c))
-  call printNoLine(b.isSameReferenceAs(d))
-  variable b2 set to [2, 7].asSet()
-  variable c2 set to [7, 2].asSet()
-  variable d2 set to [8, 2].asSet()
-  call printNoLine(b2.isSameReferenceAs(c2))
-  call printNoLine(b2.isSameReferenceAs(d2))
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let b = system.list(["2", "7"]).asSet();
-  let c = system.list(["7", "2"]).asSet();
-  let d = system.list(["8", "2"]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, c));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, d));
-  let b2 = system.list([2, 7]).asSet();
-  let c2 = system.list([7, 2]).asSet();
-  let d2 = system.list([8, 2]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, c2));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, d2));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalse");
   });
 
   test("Pass_divideFunctions", async () => {
@@ -2335,7 +2199,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable b set to new Array2D<of Int>(40, 30, white)
+  variable b set to new List<of List<of Int>>()
+  for i from 0 to 39 step 1
+    variable sa set to new List<of Int>()
+    for j from 0 to 29 step 1
+      call sa.append(white)
+    end for
+    call b.append(sa)
+  end for
   set b to createBlockGraphics(white)
 end main
 `;
@@ -2343,7 +2214,16 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let b = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
+  let b = system.initialise(await new _stdlib.List()._initialise());
+  const _tofor6 = 39;
+  for (let i = 0; i <= _tofor6; i = i + 1) {
+    let sa = system.initialise(await new _stdlib.List()._initialise());
+    const _tofor15 = 29;
+    for (let j = 0; j <= _tofor15; j = j + 1) {
+      sa.append(_stdlib.white);
+    }
+    b.append(sa);
+  }
   b = (await _stdlib.createBlockGraphics(_stdlib.white));
 }
 return [main, _tests];}`;

@@ -1,15 +1,15 @@
-# 02bbc61108d701622c1e565a98ad04663b3cd8fd030cea4c1609b221348528fc Elan 2.0.0-alpha guest default_profile valid
+# c2315396afe77141ca00e5d8a9a79eb49fdc4fd19b2126173545c6100ea3e50f Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable blocks set to createBlockGraphics(white)
   while true
     constant x set to randomInt(0, 19)
     constant y set to randomInt(0, 14)
     constant colour set to randomInt(0, (power(2, 24) - 1).floor())
-    call blocks.put(20 + x, 15 - y, colour)
-    call blocks.put(20 + x, 15 + y, colour)
-    call blocks.put(20 - x, 15 - y, colour)
-    call blocks.put(20 - x, 15 + y, colour)
+    set blocks[20 + x][15 - y] to colour
+    set blocks[20 + x][15 + y] to colour
+    set blocks[20 - x][15 - y] to colour
+    set blocks[20 - x][15 + y] to colour
     call displayBlocks(blocks)
   end while
 end main

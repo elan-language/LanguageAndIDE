@@ -1,0 +1,20 @@
+# b18e40b699bd4b76398ab3e723106aef1e7c46c1d1ba06144c67ddd22127044b Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable names set to ["Tom", "Dick", "Harriet"]
+  call print(names[0])
+  each n in names
+    call print(n)
+  end each
+  # snipTo
+  call print(reverse("Harriet"))
+end main
+
+function reverse(s as String) returns String
+  variable sReturn set to ""
+  each ch in s
+    set sReturn to ch + sReturn
+  end each
+  return sReturn
+end function

@@ -42,7 +42,7 @@ end procedure
 procedure displayMove(move as Int, interval as Int)
   variable colours set to [red, yellow, blue, green]
   variable tones set to [164.81, 220, 277.18, 329.63]
-  variable circle set to new CircleVG() with centreX set to move*20 - 5, centreY set to 15, radius set to 10, strokeWidth set to 0, fillColour set to colours[move - 1]
+  variable circle set to (new CircleVG()).withCentreX(move*20 - 5).withCentreY(15).withRadius(10).with strokeWidth().with 0, fillColour set to colours[move - 1]
   call displayVectorGraphics([circle])
   call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()

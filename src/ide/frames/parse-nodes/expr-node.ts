@@ -1,8 +1,6 @@
 import {
-  copyKeyword,
   emptyKeyword,
   ifKeyword,
-  imageKeyword,
   lambdaKeyword,
   newKeyword,
   notKeyword,
@@ -15,10 +13,7 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
-import { CopyWith } from "./copy-with";
-import { EmptyOfTypeNode } from "./empty-of-type-node";
 import { IfExpr } from "./if-expr";
-import { ImageNode } from "./image-node";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { Term } from "./term";
@@ -34,12 +29,9 @@ export class ExprNode extends AbstractAlternatives {
     //evaluate options that start with a keyword, first
     if (text.trim().length > 0) {
       this.alternatives.push(new NewInstance(this.file));
-      this.alternatives.push(new CopyWith(this.file));
       this.alternatives.push(new IfExpr(this.file));
       this.alternatives.push(new Lambda(this.file));
-      this.alternatives.push(new EmptyOfTypeNode(this.file));
       this.alternatives.push(new TupleNode(this.file));
-      this.alternatives.push(new ImageNode(this.file));
       //then others
       this.alternatives.push(new Term(this.file));
       this.alternatives.push(new BinaryExpression(this.file));
@@ -78,9 +70,7 @@ export class ExprNode extends AbstractAlternatives {
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
     let kws = [
       newKeyword,
-      copyKeyword,
       ifKeyword,
-      imageKeyword,
       lambdaKeyword,
       emptyKeyword,
       thisKeyword,

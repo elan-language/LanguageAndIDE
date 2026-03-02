@@ -158,7 +158,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 84);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 82);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -850,9 +850,8 @@ end main`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["hasKey", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -1259,9 +1258,8 @@ end test`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["ff", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
@@ -1508,11 +1506,10 @@ end class`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1558,11 +1555,10 @@ end class`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1596,66 +1592,6 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);
   });
 
-  test("Pass_with1", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo()
-      variable b set to copy a with a set to 2
-    end main
-    
-    record Foo
-      property a as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["a", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with ", expected);
-  });
-
-  test("Pass_with2", async () => {
-    const code = `${testHeader}
-
-    main
-      variable a set to new Foo()
-      variable b set to copy a with a set to 2
-    end main
-    
-    record Foo
-      property aa as Int
-      property ab as Int
-    end record`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa", "*", "*"],
-      ["ab", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "copy a with a", expected);
-  });
-
   test("Pass_libExtension1", async () => {
     const code = `${testHeader}
 
@@ -1678,11 +1614,10 @@ end main`;
     const expected = [
       ["asString", "*", "*"],
       ["ceiling", "*", "*"],
+      ["equals", "*", "*"],
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
 
@@ -1732,7 +1667,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -1783,40 +1717,6 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "args8", "0, new C", expected);
   });
 
-  test("Pass_withParameters", async () => {
-    const code = `${testHeader}
-
-main
-  variable c set to new Foo() with x set to 1
-end main
-
-record Foo
-  property x1 as Int
-
-  property x2 as Int
-
-end record
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["x1", "x1", "x1"],
-      ["x2", "x2", "x2"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo() with x", expected);
-  });
-
   ignore_test("Pass_newConcreteType #897", async () => {
     const code = `${testHeader}
 
@@ -1837,7 +1737,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Array2D", "*", "Array2D<of "],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
@@ -2495,7 +2394,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["with", "*", "*"]] as [string, string, string][];
+    const expected = [] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo()", expected);
   });
@@ -2819,8 +2718,7 @@ end procedure`;
     const expected = [
       ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
+      ["equals", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(

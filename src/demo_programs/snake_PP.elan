@@ -1,4 +1,4 @@
-# 3f6027b56d1d5bcf397ef0d34e601c20c49c86ffb5335d5348524e23e0b8ccaf Elan 2.0.0-alpha guest default_profile valid
+# 5ef4d5a0d63c7b972c21bb73e729d78a7fa35b702d38b4f4848d56e557aef9b4 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -20,7 +20,7 @@ main
     set tail to tailRef.value()
     set currentDir to currentDirRef.value()
     set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
-    if head.isSameValueAs(apple) then
+    if head.equals(apple) then
       call setAppleToRandomPosition(apple, body)
     else
       call body.removeAt(0)
@@ -41,11 +41,11 @@ procedure updateSnake(currentDirRef as Ref<of String>, tailRef as Ref<of List<of
   call currentDirRef.set(currentDir)
 end procedure
 
-procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
-  call blocks.put(head[0], head[1], green)
+procedure updateDisplay(blocks as List<of List<of Int>>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
+  set blocks[head[0]][head[1]] to green
   variable tailColour set to getTailColour(tail, body)
-  call blocks.put(tail[0], tail[1], tailColour)
-  call blocks.put(apple[0], apple[1], red)
+  set blocks[tail[0]][tail[1]] to tailColour
+  set blocks[apple[0]][apple[1]] to red
   call displayBlocks(blocks)
 end procedure
 
@@ -62,7 +62,7 @@ end procedure
 
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
   variable colour set to white
-  if body[0].isSameValueAs(tail) then
+  if body[0].equals(tail) then
     set colour to green
   end if
   return colour
@@ -75,13 +75,13 @@ end function
 function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
-  if dir.isSameValueAs("left") then
+  if dir.equals("left") then
     set newX to newX - 1
-  elif dir.isSameValueAs("right") then
+  elif dir.equals("right") then
     set newX to newX + 1
-  elif dir.isSameValueAs("up") then
+  elif dir.equals("up") then
     set newY to newY - 1
-  elif dir.isSameValueAs("down") then
+  elif dir.equals("down") then
     set newY to newY + 1
   end if
   return [newX, newY]

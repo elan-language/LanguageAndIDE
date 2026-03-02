@@ -10,7 +10,7 @@ import {
   propertyKeyword,
   thisKeyword,
 } from "../../compiler/elan-keywords";
-import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
+import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
@@ -24,11 +24,9 @@ import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/pr
 import { PropertyAsn } from "../../compiler/syntax-nodes/class-members/property-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/comment-asn";
 import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
-import { CopyWithAsn } from "../../compiler/syntax-nodes/copy-with-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { EmptyTypeAsn } from "../../compiler/syntax-nodes/empty-type-asn";
 import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-from-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
@@ -45,7 +43,6 @@ import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-fu
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { InterfaceAsn } from "../../compiler/syntax-nodes/globals/interface-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
-import { RecordAsn } from "../../compiler/syntax-nodes/globals/record-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
@@ -116,7 +113,6 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { InterfaceFrame } from "../frames/globals/interface-frame";
 import { MainFrame } from "../frames/globals/main-frame";
-import { RecordFrame } from "../frames/globals/record-frame";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Index } from "../frames/parse-nodes";
 import { AbstractAlternatives } from "../frames/parse-nodes/abstract-alternatives";
@@ -125,12 +121,10 @@ import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
 import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CommentNode } from "../frames/parse-nodes/comment-node";
-import { CopyWith } from "../frames/parse-nodes/copy-with";
 import { CSV } from "../frames/parse-nodes/csv";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
 import { DottedTerm } from "../frames/parse-nodes/dotted-term";
-import { EmptyOfTypeNode } from "../frames/parse-nodes/empty-of-type-node";
 import { EnumVal } from "../frames/parse-nodes/enum-val";
 import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
@@ -138,7 +132,6 @@ import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
-import { ImageNode } from "../frames/parse-nodes/image-node";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
 import { IndexRange } from "../frames/parse-nodes/index-range";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
@@ -177,7 +170,6 @@ import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
 import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
-import { WithClause } from "../frames/parse-nodes/with-clause";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
@@ -307,22 +299,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), classAsn)) as AstNode[];
 
     return classAsn;
-  }
-
-  if (node instanceof RecordFrame) {
-    const recordAsn = new RecordAsn(node.getHtmlId(), scope);
-    recordAsn.breakpointStatus = node.breakpointStatus;
-
-    recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-    recordAsn.inheritance =
-      transform(node.inheritance, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-
-    recordAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), recordAsn)) as AstNode[];
-
-    return recordAsn;
   }
 
   if (node instanceof InterfaceFrame) {
@@ -839,20 +815,11 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof EmptyOfTypeNode) {
-    const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new EmptyTypeAsn(type, fieldId);
-  }
-
   if (node instanceof OptionalNode) {
     if (node.matchedNode) {
       return transform(node.matchedNode, fieldId, scope);
     }
     return undefined;
-  }
-
-  if (node instanceof WithClause) {
-    return transformMany(node.toClauses as CSV, fieldId, scope);
   }
 
   if (node instanceof ArgListNode) {
@@ -927,23 +894,7 @@ export function transform(
   if (node instanceof NewInstance) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
     const pp = transformMany(node.args as CSV, fieldId, scope).items;
-    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
-
     const obj = new NewAsn(type, pp, fieldId, scope);
-    if (withClause) {
-      return new CopyWithAsn(obj, withClause, fieldId, scope);
-    }
-    return obj;
-  }
-
-  if (node instanceof ImageNode) {
-    const imageType = new TypeAsn(ImageName, EmptyAsn.Instance, [], fieldId, scope);
-    const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
-    const obj = new NewAsn(imageType, [url], fieldId, scope);
-    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
-    if (withClause) {
-      return new CopyWithAsn(obj, withClause, fieldId, scope);
-    }
     return obj;
   }
 
@@ -965,12 +916,6 @@ export function transform(
 
   if (node instanceof DottedTerm) {
     return transform(node.term, fieldId, scope);
-  }
-
-  if (node instanceof CopyWith) {
-    const obj = transform(node.original, fieldId, scope) as AstNode;
-    const withClause = transform(node.withClause!, fieldId, scope) as AstCollectionNode;
-    return new CopyWithAsn(obj, withClause, fieldId, scope);
   }
 
   if (node instanceof TypeTupleNode) {

@@ -1,0 +1,10 @@
+# cedec9cce51ff309ebcfabf28c5ea664c72f0493e3616907b1c8967bb1d40c96 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable array2D set to new List<of List<of Float>>()
+  variable x set to new List<of Float>()
+  call x.initialise(100, 0.0)
+  for i from 0 to 99 step 1
+    call array2D[i].initialise(50, x)
+  end for
+end main

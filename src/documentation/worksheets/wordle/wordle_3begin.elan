@@ -35,7 +35,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
   variable word set to ""
   while chNo <= 5
     variable k set to waitForKey().upperCase()
-    if (k.isSameValueAs("BACKSPACE")) and (chNo > 0) then
+    if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
       call grid.put(chNo, attemptNo, "")
       set word to word[0..chNo]
@@ -44,7 +44,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
       call grid.put(chNo, attemptNo, k)
       set chNo to chNo + 1
       set word to word + k
-    elif (chNo is 5) and (k.isSameValueAs("ENTER")) then
+    elif (chNo is 5) and (k.equals("ENTER")) then
       if allValidAttemptWords.contains(word) then
         set chNo to chNo + 1
       else
@@ -66,7 +66,7 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
       call used.put(letter, mark)
     end if
   end for
-  if marks.isSameValueAs("22222") then
+  if marks.equals("22222") then
     call solvedRef.set(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -78,7 +78,7 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as Ref
   variable chNo set to 0
   while chNo <= 5
     variable k set to waitForKey().upperCase()
-    if (k.isSameValueAs("BACKSPACE")) and (chNo > 0) then
+    if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
       variable entry set to grid[chNo, attemptNo]
       call grid.put(chNo, attemptNo, entry[0])
@@ -88,7 +88,7 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as Ref
       call grid.put(chNo, attemptNo, ch + k)
       set chNo to chNo + 1
       set mark to mark + k
-    elif (chNo is 5) and (k.isSameValueAs("ENTER")) then
+    elif (chNo is 5) and (k.equals("ENTER")) then
       set chNo to chNo + 1
     end if
     call displayHtml(drawGrid(grid))
@@ -134,7 +134,7 @@ end function
 function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
   each k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
-    if k.isSameValueAs("-") then
+    if k.equals("-") then
       set html to html + "</div><div>"
     else
       set html to html + "<key class='_{used[k]}'>{k}</key>"
@@ -147,13 +147,13 @@ function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   variable unused set to target
   for n from 0 to 4 step 1
-    if attempt[n].isSameValueAs(unused[n]) then
+    if attempt[n].equals(unused[n]) then
       set mark to setChar(mark, n, "2")
       set unused to setChar(unused, n, " ")
     end if
   end for
   for n from 0 to 4 step 1
-    if (not mark[n].isSameValueAs("2")) and unused.contains(attempt[n]) then
+    if (not mark[n].equals("2")) and unused.contains(attempt[n]) then
       set mark to setChar(mark, n, "1")
       set unused to setChar(unused, unused.indexOf(attempt[n]), " ")
     end if
@@ -205,7 +205,7 @@ function possibleTargetsAfterAttempt(possible as List<of String>, attempt as Str
   variable newPossible set to new List<of String>()
   each word in possible
     variable markForWord set to markAttempt(attempt, word)
-    if markForWord.isSameValueAs(mark) then
+    if markForWord.equals(mark) then
       set newPossible to newPossible.withAppend(word)
     end if
   end each
@@ -223,7 +223,7 @@ procedure playReverseGame(firstAttempt as String)
     variable markRef set to new Ref<of String>("")
     call enterMark(attemptNo, grid, markRef)
     variable mark set to markRef.value()
-    if mark.isSameValueAs("22222") then
+    if mark.equals("22222") then
       set solved to true
     else
       set attemptNo to attemptNo + 1

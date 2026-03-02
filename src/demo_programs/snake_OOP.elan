@@ -1,4 +1,4 @@
-# 6e4b62cce8028b4ac0b6f823fe7889bf3648a13188508d79628d367c9bd4b70e Elan 2.0.0-alpha guest default_profile valid
+# 4217ec33a9cb53eca87812a9808068ea833600f647fb11448a469115c75c4840 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -38,17 +38,17 @@ class Snake
     set property.priorTail to property.body[0]
     call property.body.append(property.head)
     set property.head to property.head.getAdjacentSquare(property.currentDir)
-    if property.head.isSameValueAs(apple.location) then
+    if property.head.equals(apple.location) then
       call apple.newRandomPosition(this)
     else
       set property.body to property.body.subList(1, property.body.length())
     end if
   end procedure
 
-  procedure updateBlocks(blocks as Array2D<of Int>)
-    call blocks.put(property.head.x, property.head.y, green)
-    if not property.body[0].isSameValueAs(property.priorTail) then
-      call blocks.put(property.priorTail.x, property.priorTail.y, white)
+  procedure updateBlocks(blocks as List<of List<of Int>>)
+    set blocks[property.head.x][property.head.y] to green
+    if not property.body[0].equals(property.priorTail) then
+      set blocks[property.priorTail.x][property.priorTail.y] to white
     end if
   end procedure
 
@@ -59,7 +59,7 @@ class Snake
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
     each seg in property.body
-      if (seg.isSameValueAs(sq)) then
+      if (seg.equals(sq)) then
         set result to true
       end if
     end each
@@ -71,13 +71,13 @@ class Snake
   end function
 
   private procedure setDirection(key as String)
-    if key.isSameValueAs("w") then
+    if key.equals("w") then
       set property.currentDir to Direction.up
-    elif key.isSameValueAs("s") then
+    elif key.equals("s") then
       set property.currentDir to Direction.down
-    elif key.isSameValueAs("a") then
+    elif key.equals("a") then
       set property.currentDir to Direction.left
-    elif key.isSameValueAs("d") then
+    elif key.equals("d") then
       set property.currentDir to Direction.right
     end if
   end procedure
@@ -99,8 +99,8 @@ class Apple
     end while
   end procedure
 
-  procedure updateBlocks(blocks as Array2D<of Int>)
-    call blocks.put(property.location.x, property.location.y, red)
+  procedure updateBlocks(blocks as List<of List<of Int>>)
+    set blocks[property.location.x][property.location.y] to red
   end procedure
 
 end class

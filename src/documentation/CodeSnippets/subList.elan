@@ -1,0 +1,11 @@
+# 0cd9d91fd7afb8e03d1f4254b2b99fc808409a5ee5d76088d950092177f1c1b4 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable li set to new List<of Int>()
+  set li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  call print(li[4])
+  call print(li.subList(4, li.length()))
+  call print(li.subList(0, 7))
+  # snipTo
+end main

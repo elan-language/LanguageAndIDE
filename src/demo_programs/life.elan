@@ -1,21 +1,21 @@
-# a31b40ce0d5c8522baf99d99944998c8ebfae61e8318daffdfb2c8125aaefe93 Elan 2.0.0-alpha guest default_profile valid
+# 07ef999228e7c7e3bf1c73b9268dd8489295ffad850e6edda316a58fcac3b349 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphics(white)
   call fillRandom(grid)
   while true
     call displayBlocks(grid)
-    variable gridRef set to new Ref<of Array2D<of Int>>(grid)
+    variable gridRef set to new Ref<of List<of List<of Int>>>(grid)
     call nextGeneration(gridRef)
     set grid to gridRef.value()
     call pause(50)
   end while
 end main
 
-procedure fillRandom(grid as Array2D<of Int>)
+procedure fillRandom(grid as List<of List<of Int>>)
   for col from 0 to 39 step 1
     for row from 0 to 29 step 1
-      call grid.put(col, row, blackOrWhite(random()))
+      set grid[col][row] to blackOrWhite(random())
     end for
   end for
 end procedure
@@ -77,12 +77,12 @@ function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
-function liveNeighbours(grid as Array2D<of Int>, x as Int, y as Int) returns Int
+function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   variable count set to 0
   each cell in neighbourCells(x, y)
     constant cx set to cell.item0
     constant cy set to cell.item1
-    if grid[cx, cy] is black then
+    if grid[cx][cy] is black then
       set count to count + 1
     end if
   end each
@@ -99,22 +99,22 @@ function willLive(cell as Int, liveNeighbours as Int) returns Boolean
   return result
 end function
 
-function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Int
+function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   variable colour set to white
-  constant live set to willLive(grid[x, y], liveNeighbours(grid, x, y))
+  constant live set to willLive(grid[x][y], liveNeighbours(grid, x, y))
   if live then
     set colour to black
   end if
   return colour
 end function
 
-procedure nextGeneration(gridRef as Ref<of Array2D<of Int>>)
-  variable next set to new Array2D<of Int>(40, 30, white)
+procedure nextGeneration(gridRef as Ref<of List<of List<of Int>>>)
+  variable next set to createBlockGraphics(white)
   variable grid set to gridRef.value()
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       constant colour set to nextCellValue(grid, x, y)
-      call next.put(x, y, colour)
+      set next[x][y] to colour
     end for
   end for
   call gridRef.set(next)
@@ -188,8 +188,8 @@ test test_blackOrWhite
   assert blackOrWhite(1) is white
 end test
 
-test test_neighbourCells
-  assert neighbourCells(3, 4) is [tuple(2, 3), tuple(3, 3), tuple(4, 3), tuple(2, 4), tuple(4, 4), tuple(2, 5), tuple(3, 5), tuple(4, 5)]
+[ghosted] test test_neighbourCells
+  [ghosted] assert neighbourCells(3, 4) is [tuple(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
 end test
 
 test test_willLive

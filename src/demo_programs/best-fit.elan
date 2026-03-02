@@ -1,4 +1,4 @@
-# bc2771550f79f311477a089d8435f22fda9df007d28c479c88ff725171c330d8 Elan 2.0.0-alpha guest default_profile valid
+# cd3b7dc0391c950cab95aed8444bc57173d228cac9dd6615a8629eab10785ad6 Elan 2.0.0-alpha guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -11,15 +11,20 @@ function bestFitLine(points as List<of Point>) returns (Float, Float)
   return tuple(a, b)
 end function
 
-record Point
+class Point
   property x as Float
 
   property y as Float
 
-end record
+  constructor(x as Float, y as Float)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+end class
 
 function newPoint(x as Float, y as Float) returns Point
-  return new Point() with x set to x, y set to y
+  return new Point(x, y)
 end function
 
 test test_

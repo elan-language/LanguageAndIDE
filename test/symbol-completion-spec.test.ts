@@ -171,7 +171,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,empty,this,ref,not,tuple"],
     );
   });
   test("Expression3", () => {
@@ -360,7 +360,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -436,74 +436,6 @@ suite("Symbol Completion Spec", () => {
       "none",
     );
   });
-  test("'to' clause #902 - 1", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "new CircleVG() with ",
-      ParseStatus.incomplete,
-      IdentifierUse.name,
-      "",
-      [TokenType.id_property],
-      [],
-      "CircleVG",
-    );
-  });
-  test("'to' clause #902 - 2", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "new CircleVG() with cx set to ",
-      ParseStatus.incomplete,
-      ExprNode.name,
-      "",
-      [
-        TokenType.id_constant,
-        TokenType.id_let,
-        TokenType.id_parameter_regular,
-        TokenType.id_property,
-        TokenType.id_variable,
-        TokenType.id_enumValue,
-        TokenType.method_function,
-        TokenType.method_system,
-        TokenType.type_enum,
-      ],
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
-      "",
-    );
-  });
-  test("'to' clause #902 - 3", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "copy c with ",
-      ParseStatus.incomplete,
-      IdentifierUse.name,
-      "",
-      [TokenType.id_property],
-      [],
-      "c",
-    );
-  });
-  test("'to' clause #902 - 4", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "copy c with cx set to ",
-      ParseStatus.incomplete,
-      ExprNode.name,
-      "",
-      [
-        TokenType.id_constant,
-        TokenType.id_let,
-        TokenType.id_parameter_regular,
-        TokenType.id_property,
-        TokenType.id_variable,
-        TokenType.id_enumValue,
-        TokenType.method_function,
-        TokenType.method_system,
-        TokenType.type_enum,
-      ],
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
-      "",
-    );
-  });
   test("Enum values #924", () => {
     testSymbolCompletionSpec(
       new ExprNode(f),
@@ -524,7 +456,7 @@ suite("Symbol Completion Spec", () => {
       ExprNode.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
@@ -560,7 +492,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,copy,if,image,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,empty,this,ref,not,tuple"],
       "",
     );
   });
