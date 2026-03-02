@@ -95,7 +95,7 @@ end main
 
 class Foo
   constructor()
-    set property.a to [1]
+    set this.a to [1]
   end constructor
   
   property a as List<of Int>
@@ -151,7 +151,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -159,7 +159,7 @@ end class
 
 class Bar
   constructor()
-    set property.y to new Yon()
+    set this.y to new Yon()
   end constructor
   
   property y as Yon
@@ -167,7 +167,7 @@ end class
 
 class Yon
   constructor()
-    set property.z to 2
+    set this.z to 2
   end constructor
   
   property z as Int
@@ -260,7 +260,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -346,7 +346,7 @@ end main
 
 class Foo
   constructor()
-    set property.b to new Bar()
+    set this.b to new Bar()
   end constructor
   
   property b as Bar
@@ -502,7 +502,7 @@ end main
 
 class Bar
   constructor()
-    set property.strArr to ["apple", "orange", "pair"]
+    set this.strArr to ["apple", "orange", "pair"]
   end constructor
 
   property strArr as List<of String>
@@ -619,7 +619,7 @@ end main
 
 class Bar
   constructor()
-    set property.foo to new Foo()
+    set this.foo to new Foo()
   end constructor
 
   property foo as Foo

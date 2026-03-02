@@ -192,11 +192,11 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to lambda x as Int => 0
+    set this.p1 to lambda x as Int => 0
   end constructor
 
   procedure setP1(p as Func<of Int => Int>)
-    set property.p1 to ref p
+    set this.p1 to ref p
   end procedure
 
   property p1 as Func<of Int => Int>

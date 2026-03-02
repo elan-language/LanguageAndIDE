@@ -84,13 +84,13 @@ class Game
   property key as String
 
   constructor(rnd as Random)
-    set property.head to new Square(22, 15)
-    set property.body to [new Square(20, 15), new Square(21, 15)]
-    set property.priorTail to new Square(0, 0)
-    set property.key to "d"
-    set property.isOn to true
-    set property.apple to new Square(12, 15)
-    set property.rnd to rnd
+    set this.head to new Square(22, 15)
+    set this.body to [new Square(20, 15), new Square(21, 15)]
+    set this.priorTail to new Square(0, 0)
+    set this.key to "d"
+    set this.isOn to true
+    set this.apple to new Square(12, 15)
+    set this.rnd to rnd
   end constructor
 
   function withNewApple() returns Game
@@ -155,8 +155,8 @@ class Square
   property y as Int
 
   constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
+    set this.x to x
+    set this.y to y
   end constructor
 
   function withX(value as Int) returns Square
@@ -172,7 +172,7 @@ class Square
   end function
 
   function asString() returns String
-    return "{property.x}, {property.y}"
+    return "{this.x}, {this.y}"
   end function
 
 end class

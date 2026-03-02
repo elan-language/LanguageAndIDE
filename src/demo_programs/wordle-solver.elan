@@ -231,8 +231,8 @@ class WordCount
   property count as Int
 
   constructor(word as String, count as Int)
-    set property.word to word
-    set property.count to count
+    set this.word to word
+    set this.count to count
   end constructor
 
 end class

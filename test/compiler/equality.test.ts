@@ -28,18 +28,18 @@ end main
 
 class Foo
     constructor(p1 as Float, p2 as String)
-        set property.p1 to p1
-        set property.p2 to p2
+        set this.p1 to p1
+        set this.p2 to p2
     end constructor
     property p1 as Float
     property p2 as String
 
     procedure setP1(v as Float)
-        set property.p1 to v
+        set this.p1 to v
     end procedure
 
     function asString() returns String
-      return "{property.p1} {property.p2}"
+      return "{this.p1} {this.p2}"
     end function
 end class`;
 
@@ -110,19 +110,19 @@ end main
 
 class Foo
   constructor(p1 as Int, p2 as String)
-    set property.p1 to p1
-    set property.p2 to p2
+    set this.p1 to p1
+    set this.p2 to p2
   end constructor
 
   property p1 as Int
   property p2 as String
 
   procedure setP1(v as Int)
-    set property.p1 to v
+    set this.p1 to v
   end procedure
 
   function asString() returns String
-    return "{property.p1} {property.p2}"
+    return "{this.p1} {this.p2}"
   end function
 end class`;
 
@@ -232,13 +232,13 @@ end main
 
 class Foo
   constructor(p as Int)
-    set property.p to p
+    set this.p to p
   end constructor
 
   property p as Int
 
   procedure setP(value as Int)
-    set property.p to value
+    set this.p to value
   end procedure
 
 end class`;
@@ -312,7 +312,7 @@ class Foo
   property p as Int
 
   constructor(p as Int)
-    set property.p to p
+    set this.p to p
   end constructor
 
 end class`;

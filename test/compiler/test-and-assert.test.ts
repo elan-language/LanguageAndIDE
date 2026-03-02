@@ -11,7 +11,6 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -273,7 +272,7 @@ end test
 
 class Foo
   constructor()
-    set property.p1 to 10
+    set this.p1 to 10
   end constructor
 
   property p1 as Int
@@ -338,7 +337,7 @@ end test
 
 class Foo
   constructor()
-    set property.p1 to 10
+    set this.p1 to 10
   end constructor
 
   property p1 as Int
@@ -621,7 +620,7 @@ end test
 
 class Foo
   constructor(b as Int)
-    set property.bar to b
+    set this.bar to b
   end constructor
 
   property bar as Int

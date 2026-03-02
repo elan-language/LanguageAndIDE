@@ -3,7 +3,6 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { propertyKeyword } from "./elan-keywords";
 
 import {
   CannotCallAFunction,
@@ -941,10 +940,7 @@ export function mustNotBePropertyOnFunctionMethod(
       );
     } else {
       if (isAstQualifiedNode(assignable)) {
-        if (
-          assignable.qualifier instanceof ThisAsn &&
-          assignable.qualifier.originalKeyword === propertyKeyword
-        ) {
+        if (assignable.qualifier instanceof ThisAsn) {
           return;
         }
       }

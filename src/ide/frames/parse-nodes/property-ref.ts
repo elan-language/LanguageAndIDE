@@ -1,4 +1,4 @@
-import { propertyKeyword } from "../../../compiler/elan-keywords";
+import { thisKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -12,7 +12,7 @@ export class PropertyRef extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.qualifier = new KeywordNode(file, propertyKeyword);
+    this.qualifier = new KeywordNode(file, thisKeyword);
     this.addElement(this.qualifier);
     this.addElement(new PunctuationNode(this.file, DOT));
     this.name = new InstanceNode(file);

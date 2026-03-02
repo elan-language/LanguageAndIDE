@@ -1411,12 +1411,12 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-    testNodeParse(new Qualifier(f), `property`, ParseStatus.valid, `property`, "");
+    testNodeParse(new Qualifier(f), `this`, ParseStatus.valid, `this`, "");
     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
     testNodeParse(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
-    testNodeParse(new TermChained(f), `property.a`, ParseStatus.valid, `property.a`, "");
+    testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
     testNodeParse(
       new TermChained(f),
       `a[1].b().subList(1, 2).c(d)[e][f]`,
@@ -1426,9 +1426,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TermChained(f),
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       ParseStatus.valid,
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       "",
     );
     testNodeParse(
@@ -1449,9 +1449,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(f),
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       ParseStatus.valid,
-      `property.a[1].b().c(d)[e]`,
+      `this.a[1].b().c(d)[e]`,
       "",
     );
     testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref foo`, "");

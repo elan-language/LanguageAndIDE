@@ -17,8 +17,8 @@ class Point
   property y as Float
 
   constructor(x as Float, y as Float)
-    set property.x to x
-    set property.y to y
+    set this.x to x
+    set this.y to y
   end constructor
 
 end class

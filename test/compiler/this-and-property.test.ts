@@ -25,7 +25,7 @@ end main
 
 class Foo
   constructor(p1 as Float)
-    set property.p1 to p1
+    set this.p1 to p1
   end constructor
 
   property p1 as Float
@@ -91,7 +91,7 @@ end function
 
 class Foo
     constructor()
-        set property.p1 to 3
+        set this.p1 to 3
     end constructor
 
     property p1 as Float
@@ -166,14 +166,14 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to 1
+    set this.p1 to 1
   end constructor
 
   property p1 as Int
 
   function bar() returns Int
     variable lst set to [1, 2]
-    return lst[property.p1]
+    return lst[this.p1]
   end function
 end class`;
 
@@ -319,7 +319,7 @@ end main
 
 class Foo
     constructor(p1 as Float)
-        set property.p to p1
+        set this.p to p1
     end constructor
 
     property p1 as Float

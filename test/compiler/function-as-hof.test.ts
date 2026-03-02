@@ -279,7 +279,7 @@ end function
   
 class Foo
   constructor(f as Func<of Int => Int>)
-    set property.pf to ref f
+    set this.pf to ref f
   end constructor
 
   property pf as Func<of Int => Int>
@@ -627,7 +627,7 @@ end function
   
 class Foo
   constructor(f as Func<of Int => Int>)
-    set property.pf to f
+    set this.pf to f
   end constructor
 
   property pf as Func<of Int => Int>

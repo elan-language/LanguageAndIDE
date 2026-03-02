@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -27,9 +26,9 @@ end main
 
 class Game
     constructor()
-      set property.p2 to new Player("Chloe")
-      set property.p1 to new Player("Joe")
-      set property.previousScores to [5, 2, 4]
+      set this.p2 to new Player("Chloe")
+      set this.p1 to new Player("Joe")
+      set this.previousScores to [5, 2, 4]
     end constructor
 
     property p1 as Player
@@ -45,13 +44,13 @@ end class
 
 class Player
     constructor(name as String)
-        set property.name to name
+        set this.name to name
     end constructor
 
     property name as String
 
     function asString() returns String
-        return property.name
+        return this.name
     end function
 
 end class`;
@@ -144,8 +143,8 @@ end main
 
 class Foo
     constructor()
-      set property.p2 to 1
-      set property.p1 to property.p2
+      set this.p2 to 1
+      set this.p1 to this.p2
     end constructor
 
     property p1 as Int
@@ -211,11 +210,11 @@ end main
 
 class Game
     constructor()
-      set property.s to ""
-      set property.ds to new Dictionary<of String, Int>()
-      set property.ai to new List<of Int>()
-      set property.t to tuple(0, "", new List<of Int>())
-      set property.ff to lambda a as String, b as String => 0
+      set this.s to ""
+      set this.ds to new Dictionary<of String, Int>()
+      set this.ai to new List<of Int>()
+      set this.t to tuple(0, "", new List<of Int>())
+      set this.ff to lambda a as String, b as String => 0
     end constructor
 
     property i as Int
@@ -321,7 +320,7 @@ end main
 
 class Player
   constructor()
-    set property.g to new Game()
+    set this.g to new Game()
   end constructor
 
   property g as Game
@@ -330,11 +329,11 @@ end class
 
 class Game
     constructor()
-      set property.s to ""
-      set property.li to new List<of Int>()
-      set property.ds to new Dictionary<of String, Int>()
-      set property.ai to new List<of Int>()
-      set property.t to tuple(0, "", new List<of Int>())
+      set this.s to ""
+      set this.li to new List<of Int>()
+      set this.ds to new Dictionary<of String, Int>()
+      set this.ai to new List<of Int>()
+      set this.t to tuple(0, "", new List<of Int>())
     end constructor
 
     property i as Int
@@ -451,8 +450,8 @@ end main
 
 class Game
   constructor()
-    set property.p1 to new Player("Player1")
-    set property.previousGame to new Optional<of Game>()
+    set this.p1 to new Player("Player1")
+    set this.previousGame to new Optional<of Game>()
   end constructor
 
   property p1 as Player
@@ -466,13 +465,13 @@ end class
 
 class Player
   constructor(name as String)
-    set property.name to name
+    set this.name to name
   end constructor
 
   property name as String
 
   function asString() returns String
-    return property.name
+    return this.name
   end function
 
 end class`;
@@ -561,8 +560,8 @@ end main
 
 class Game
   constructor()
-    set property.p1 to new Optional<of Player>()
-    set property.p2 to new Optional<of Player>()
+    set this.p1 to new Optional<of Player>()
+    set this.p2 to new Optional<of Player>()
   end constructor
 
   property p1 as Optional<of Player>
@@ -660,14 +659,14 @@ end main
 
 class Game
   constructor()
-    set property.p1 to [1,2,3]
+    set this.p1 to [1,2,3]
   end constructor
 
   property p1 as List<of Int>
 
   procedure something()
     variable a set to 1
-    set a to property.p1[0]
+    set a to this.p1[0]
     call printNoLine(a)
   end procedure
 
@@ -735,11 +734,11 @@ end class
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   procedure p()
-    call property.p1.pp()
+    call this.p1.pp()
   end procedure
 
   property p1 as Foo
@@ -879,7 +878,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to p2
+    set this.p1 to p2
   end constructor
 
   property p1 as Int
@@ -913,8 +912,8 @@ end main
 
 class Foo
   constructor()
-    set property.p2 to [0]
-    set property.p1 to p2[0]
+    set this.p2 to [0]
+    set this.p1 to p2[0]
   end constructor
 
   property p1 as Int
@@ -948,14 +947,14 @@ end main
 
 class Foo
   constructor()
-    set property.p2 to new List<of Int>()
+    set this.p2 to new List<of Int>()
   end constructor
 
   property p1 as Int
   property p2 as List<of Int>
 
   procedure foo()
-    if property.p1 is 0 then
+    if this.p1 is 0 then
       set p2 to [0]
     end if
   end procedure
@@ -988,15 +987,15 @@ end main
 
 class Foo
   constructor()
-    set property.p2 to new List<of Int>()
+    set this.p2 to new List<of Int>()
   end constructor
 
   property p1 as Int
   property p2 as List<of Int>
 
   procedure foo()
-    set property.p2 to [0]
-    set p1 to property.p2[0]
+    set this.p2 to [0]
+    set p1 to this.p2[0]
   end procedure
 
 end class`;
@@ -1038,7 +1037,7 @@ end class
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   procedure p()
@@ -1085,11 +1084,11 @@ end class
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   procedure p()
-    if property.p2 then
+    if this.p2 then
       call p1.pp()
     end if 
   end procedure
@@ -1134,11 +1133,11 @@ end class
 
 class Bar
   constructor()
-    set property.p1 to new Foo()
+    set this.p1 to new Foo()
   end constructor
 
   procedure p()
-    if property.p2 then
+    if this.p2 then
       set p2 to false
     end if 
   end procedure
@@ -1172,7 +1171,7 @@ class Bar
   end constructor
 
   procedure p()
-    variable a set to property.asString()
+    variable a set to this.asString()
   end procedure
 
 end class`;
@@ -1206,7 +1205,7 @@ class Bar
   end constructor
 
   procedure p()
-    variable a set to property.foo()
+    variable a set to this.foo()
   end procedure
 
 end class`;
@@ -1238,7 +1237,7 @@ class Bar
   end constructor
 
   procedure p()
-    variable a set to property.aa
+    variable a set to this.aa
   end procedure
 
 end class`;

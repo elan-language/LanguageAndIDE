@@ -52,7 +52,7 @@ end for`;
 
   test("process constructor", async () => {
     const code = `constructor()
-  set property.p1 to 1
+  set this.p1 to 1
 end constructor`;
 
     const actual = await processInnerCode(code);

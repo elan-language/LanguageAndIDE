@@ -33,7 +33,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -135,7 +135,7 @@ end interface
 
 class Bar inherits Foo2
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -245,7 +245,7 @@ end interface
 
 class Bar inherits Foo, Foo1, Foo2
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int
@@ -677,7 +677,7 @@ end interface
 
 class Bar
   constructor()
-    set property.foo to new Optional<of Foo>()
+    set this.foo to new Optional<of Foo>()
   end constructor
 
   property foo as Optional<of Foo>
@@ -990,7 +990,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   procedure proc()
@@ -1032,7 +1032,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set property.prop to 3
+    set this.prop to 3
   end constructor
 
   function func() returns Int

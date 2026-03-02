@@ -194,7 +194,7 @@ end class`;
         '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
-      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
+      asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set32", expected);
@@ -243,7 +243,7 @@ end class`;
         '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
-      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
+      asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set35", expected);
@@ -291,7 +291,7 @@ end class`;
         '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
       ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
-      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
+      asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set25", expected);
@@ -603,9 +603,9 @@ end class
 
 class Foo
   constructor()
-    set property.a to 1
-    set property.b to new Bar()
-    set property.c to [1,2]
+    set this.a to 1
+    set this.b to new Bar()
+    set this.c to [1,2]
   end constructor
 
   property a as Int
@@ -700,7 +700,7 @@ end function
 
 class Foo
   constructor(f as Func<of Foo => Int>)
-    set property.ff to ref f
+    set this.ff to ref f
   end constructor
 
   property ff as Func<of Foo => Int>
