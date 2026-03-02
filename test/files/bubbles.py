@@ -4,7 +4,7 @@ def main(): None:
   bubbles = new list[CircleVG]() # variable
   # create 20 small bubbles at the bottom
   for i in sequence(1, 20, 1):
-    b = new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 0, fillColour set to transparent, strokeColour set to randomInt(0, white) # variable
+    b = (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white) # variable
     bubbles.append(b) # call
   while true:
     moveGrowBurst(bubbles) # call

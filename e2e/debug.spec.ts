@@ -588,8 +588,6 @@ test('debug deconstruct tuple', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
-
-// test('debug deconstruct record', async ({ page }) => {
 //   page.once('dialog', dialog => {
 //     //console.log(`Dialog message: ${dialog.message()}`);
 //     dialog.accept().catch(() => {});

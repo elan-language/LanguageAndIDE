@@ -902,12 +902,7 @@ export function transform(
   if (node instanceof NewInstance) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
     const pp = transformMany(node.args as CSV, fieldId, scope).items;
-    const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
-
     const obj = new NewAsn(type, pp, fieldId, scope);
-    if (withClause) {
-      return new CopyWithAsn(obj, withClause, fieldId, scope);
-    }
     return obj;
   }
 

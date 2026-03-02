@@ -34,7 +34,7 @@ function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Flo
   variable nx_ny set to onestep(x, y, rValue)
   constant nx set to nx_ny.item0
   variable ny set to nx_ny.item1
-  variable rect set to new RectangleVG() with x set to nx*scale + 50, y set to 75 - ny*scale, width set to 0.5, height set to 0.5, fillColour set to 0x408040, strokeColour set to 0x408040, strokeWidth set to 0.25
+  variable rect set to (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25)
   return tuple(rect, nx, ny, rNext)
 end function
 
