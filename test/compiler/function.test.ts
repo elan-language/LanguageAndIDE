@@ -366,6 +366,8 @@ function foo(bar as library.List<of Int>) returns String
 end function
 
 class List
+  constructor()
+  end constructor
 
 end class`;
 
@@ -383,7 +385,11 @@ global["foo"] = foo;
 
 class List {
   static emptyInstance() { return system.emptyClass(List, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 return [main, _tests];}`;

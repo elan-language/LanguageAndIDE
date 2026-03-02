@@ -1973,6 +1973,8 @@ interface Yon inherits Foo
 end interface
 
 class Qux inherits Bar, Yon
+  constructor()
+  end constructor
   property p1 as Int
   property p2 as Int
   property p3 as Int
@@ -2016,7 +2018,12 @@ class Yon {
 
 class Qux {
   static emptyInstance() { return system.emptyClass(Qux, [["p1", 0], ["p2", 0], ["p3", 0]]);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   p1 = 0;
 
   p2 = 0;
@@ -3343,6 +3350,8 @@ abstract class Foo inherits Yon
 end class
 
 class Bar inherits Foo
+  constructor()
+  end constructor
   property p1 as Int
 end class`;
 

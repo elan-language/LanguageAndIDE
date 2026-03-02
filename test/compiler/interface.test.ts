@@ -837,7 +837,8 @@ main
 end main
 
 class Foo inherits Bar
- 
+  constructor()
+  end constructor
 end class
 
 interface Bar
@@ -851,7 +852,11 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 
@@ -1282,6 +1287,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property prop1 as Int
 end class
 

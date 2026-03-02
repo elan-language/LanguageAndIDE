@@ -1441,6 +1441,8 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
   property prop1 as Int
 end class
 

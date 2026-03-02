@@ -1143,6 +1143,8 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
+  constructor()
+  end constructor
 end class
 `;
 
@@ -1163,7 +1165,11 @@ class Foo {
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 return [main, _tests];}`;
@@ -1339,6 +1345,8 @@ main
 end main
 
 class Point
+  constructor()
+  end constructor
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1351,7 +1359,11 @@ async function main() {
 
 class Point {
   static emptyInstance() { return system.emptyClass(Point, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
 
 }
 return [main, _tests];}`;
@@ -2053,6 +2065,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 class List
+  constructor()
+  end constructor
   function asString() returns String
     return "MyList"
   end function
@@ -2069,7 +2083,12 @@ end main
 const global = new class {};
 class List {
   static emptyInstance() { return system.emptyClass(List, []);};
-  async _initialise() { return this; }
+
+  async _initialise() {
+
+    return this;
+  }
+
   async asString() {
     return "MyList";
   }

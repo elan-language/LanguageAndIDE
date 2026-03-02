@@ -1209,6 +1209,8 @@ end function`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   function foo(foo as Int) returns String
       return ""
   end function
@@ -1236,6 +1238,8 @@ end class`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   function foo(a as Int, foo as Int) returns String
       return ""
   end function

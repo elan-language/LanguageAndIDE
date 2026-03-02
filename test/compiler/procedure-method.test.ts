@@ -603,6 +603,8 @@ end procedure`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   procedure foo(foo as Int)
 
   end procedure
@@ -630,6 +632,8 @@ end class`;
     const code = `${testHeader}
 
 class Foo
+  constructor()
+  end constructor
   procedure foo(a as Int, foo as Int)
 
   end procedure
