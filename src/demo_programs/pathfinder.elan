@@ -89,10 +89,10 @@ end function
 
 class Solver
   constructor(nodes as List<of Node>, start as Point, destination as Point)
-    set property.nodes to nodes
-    set property.start to start
-    set property.destination to destination
-    set property.current to new Node(emptyPoint(), 0, 0)
+    set this.nodes to nodes
+    set this.start to start
+    set this.destination to destination
+    set this.current to new Node(emptyPoint(), 0, 0)
   end constructor
 
   property nodes as List<of Node>
@@ -109,10 +109,10 @@ class Solver
 
   # TODO can this go into the constructor ?
   procedure initialise(alg as Algorithm)
-    set property.alg to alg
-    set property.current to new Node(property.start, 0, infinity)
-    set property.running to true
-    each node in property.nodes
+    set this.alg to alg
+    set this.current to new Node(this.start, 0, infinity)
+    set this.running to true
+    each node in this.nodes
       call node.setDistanceFromStart(infinity)
       call node.setVia(emptyPoint())
       call node.setVisited(false)
@@ -121,17 +121,17 @@ class Solver
 
   procedure visitNextPoint()
     call updateNeighbours()
-    set property.current to nextNodeToVisit()
-    if (property.current.isEmpty or (property.current.point.equals(property.destination))) then
-      set property.running to false
+    set this.current to nextNodeToVisit()
+    if (this.current.isEmpty or (this.current.point.equals(this.destination))) then
+      set this.running to false
     else
-      call property.current.setVisited(true)
+      call this.current.setVisited(true)
     end if
   end procedure
 
   procedure updateNeighbours()
-    variable distToCurrent set to property.current.distFromStart
-    variable currentPoint set to property.current.point
+    variable distToCurrent set to this.current.distFromStart
+    variable currentPoint set to this.current.point
     each neighbour in currentNeighbours()
       variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
@@ -142,7 +142,7 @@ class Solver
   end procedure
 
   function currentNeighbours() returns List<of Node>
-    variable currentNode set to property.current
+    variable currentNode set to this.current
     variable currentPoint set to currentNode.point
     variable neighbours set to new List<of Node>()
     each p in currentPoint.neighbouringPoints()
@@ -156,18 +156,18 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    variable matches set to property.nodes.filter(lambda n as Node => n.point.equals(p))
+    variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
     return if matches.length() is 1 then matches.head() else emptyNode()
   end function
 
   function getLastVisited() returns Point
-    return property.current.point
+    return this.current.point
   end function
 
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to emptyNode()
-    variable possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       variable cost set to calculateCost(nd)
       if cost < lowestCostSoFar then
@@ -182,21 +182,21 @@ class Solver
     variable cost set to 0.0
     constant fromStart set to node.distFromStart
     constant estToDest set to node.estDistToDest
-    if property.alg is Algorithm.dijkstra then
+    if this.alg is Algorithm.dijkstra then
       set cost to fromStart
-    elif property.alg is Algorithm.aStar then
+    elif this.alg is Algorithm.aStar then
       set cost to fromStart + estToDest
-    elif property.alg is Algorithm.heuristic then
+    elif this.alg is Algorithm.heuristic then
       set cost to estToDest
     end if
     return cost
   end function
 
   function getRouteAndLength() returns (List<of Point>, Float)
-    variable route set to [property.destination]
+    variable route set to [this.destination]
     variable length set to 0.0
-    variable node set to getNodeFor(property.destination)
-    while not node.point.equals(property.start)
+    variable node set to getNodeFor(this.destination)
+    while not node.point.equals(this.start)
       variable previous set to node.via
       variable p set to node.point
       set length to length + p.minDistTo(previous)
@@ -215,13 +215,13 @@ end function
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
     if p.isEmpty then
-      set property.isEmpty to true
+      set this.isEmpty to true
     end if
-    set property.point to p
-    set property.visited to false
-    set property.distFromStart to distFromStart
-    set property.via to emptyPoint()
-    set property.estDistToDest to estDistToDest
+    set this.point to p
+    set this.visited to false
+    set this.distFromStart to distFromStart
+    set this.via to emptyPoint()
+    set this.estDistToDest to estDistToDest
   end constructor
 
   property point as Point
@@ -237,19 +237,19 @@ class Node
   property isEmpty as Boolean
 
   procedure setVisited(value as Boolean)
-    set property.visited to value
+    set this.visited to value
   end procedure
 
   procedure setDistanceFromStart(d as Float)
-    set property.distFromStart to d
+    set this.distFromStart to d
   end procedure
 
   procedure setVia(p as Point)
-    set property.via to p
+    set this.via to p
   end procedure
 
   function asString() returns String
-    return "[{property.point.asString()} {property.visited} {property.distFromStart}]"
+    return "[{this.point.asString()} {this.visited} {this.distFromStart}]"
   end function
 
 end class
@@ -267,15 +267,15 @@ class Point
 
   constructor(x as Int, y as Int)
     if (x < 0) or (y < 0) then
-      set property.isEmpty to true
+      set this.isEmpty to true
     else
-      set property.x to x
-      set property.y to y
+      set this.x to x
+      set this.y to y
     end if
   end constructor
 
   function minDistTo(p as Point) returns Float
-    return sqrt(power((p.x - property.x), 2) + power((p.y - property.y), 2))
+    return sqrt(power((p.x - this.x), 2) + power((p.y - this.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
@@ -284,11 +284,11 @@ class Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    return [new Point(property.x - 1, property.y - 1), new Point(property.x, property.y - 1), new Point(property.x + 1, property.y - 1), new Point(property.x - 1, property.y), new Point(property.x + 1, property.y), new Point(property.x - 1, property.y + 1), new Point(property.x, property.y + 1), new Point(property.x + 1, property.y + 1)]
+    return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
   end function
 
   function asString() returns String
-    return "{property.x},{property.y}"
+    return "{this.x},{this.y}"
   end function
 
 end class

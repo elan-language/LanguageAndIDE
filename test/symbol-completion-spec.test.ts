@@ -11,13 +11,16 @@ import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expressio
 import { BinaryOperation } from "../src/ide/frames/parse-nodes/binary-operation";
 import { CSV } from "../src/ide/frames/parse-nodes/csv";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
+import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
+import { MethodNameUse } from "../src/ide/frames/parse-nodes/method-name-use";
 import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
 import { allIds } from "../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
 import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
+import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../src/ide/frames/status-enums";
@@ -26,9 +29,6 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
-import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
-import { MethodNameUse } from "../src/ide/frames/parse-nodes/method-name-use";
-import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
 
 suite("Symbol Completion Spec", () => {
   const f = new FileImpl(
@@ -209,7 +209,7 @@ suite("Symbol Completion Spec", () => {
   test("Assignable", () => {
     testSymbolCompletionSpec(
       new AssignableNode(f),
-      "property.f",
+      "this.f",
       ParseStatus.valid,
       IdentifierUse.name,
       "f",
@@ -546,7 +546,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_variable,
         TokenType.method_procedure,
       ],
-      ["global,library,property"],
+      ["global,library,this"],
       "",
     );
   });

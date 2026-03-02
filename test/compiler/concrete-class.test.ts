@@ -27,8 +27,8 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to 5
-    set property.p2 to ""
+    set this.p1 to 5
+    set this.p2 to ""
   end constructor
 
   property p1 as Float
@@ -98,8 +98,8 @@ end main
 
 class Foo
     constructor(p_1 as Float,  p_2 as String)
-        set property.p1 to p_1
-        set property.p2 to p_2
+        set this.p1 to p_1
+        set this.p2 to p_2
     end constructor
 
     property p1 as Float
@@ -167,7 +167,7 @@ end main
 class Foo
     constructor()
       variable bar set to new Bar()
-      set property.b to bar
+      set this.b to bar
     end constructor
 
     property b as Bar 
@@ -176,13 +176,13 @@ end class
 
 class Bar
     constructor()
-      set property.p1 to 5
+      set this.p1 to 5
     end constructor
 
     property p1 as Int
 
     procedure printP1()
-      call printNoLine(property.p1)
+      call printNoLine(this.p1)
     end procedure
 end class`;
 
@@ -265,7 +265,7 @@ end main
 
 class Foo
   constructor()
-    set property.bar to new Bar()
+    set this.bar to new Bar()
   end constructor
 
   property bar as Bar
@@ -278,8 +278,8 @@ end class
 
 class Bar
   constructor()
-    set property.p2 to ""
-    set property.foo to new Optional<of Foo>()
+    set this.p2 to ""
+    set this.foo to new Optional<of Foo>()
   end constructor
 
   property p1 as Int
@@ -387,7 +387,7 @@ end main
 
 class Foo
   constructor()
-    set property.strArr to ["apple", "orange", "pair"]
+    set this.strArr to ["apple", "orange", "pair"]
   end constructor
 
   property strArr as List<of String>
@@ -507,7 +507,7 @@ class Foo
   property p1 as Int
 
   procedure updateP1()
-    set property.p1 to 0
+    set this.p1 to 0
   end procedure
 end class
 
@@ -600,7 +600,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to ff()
+    set this.p1 to ff()
   end constructor
 
   property p1 as Int
@@ -734,8 +734,8 @@ end main
 
 class Foo
   constructor()
-    set property.p2 to ""
-    set property.p3 to ""
+    set this.p2 to ""
+    set this.p3 to ""
   end constructor
 
   property p1 as Int
@@ -757,13 +757,13 @@ class Foo
   end function
 
   procedure setup(pI as Int, pS as String)
-    set property.p1 to pI
-    set property.p2 to pS
-    set property.p3 to "unchanged"
+    set this.p1 to pI
+    set this.p2 to pS
+    set this.p3 to "unchanged"
   end procedure
 
   function asString() returns String
-    return "Foo:{property.p1}:{property.p2}:{property.p3}"
+    return "Foo:{this.p1}:{this.p2}:{this.p3}"
   end function
 
 end class`;
@@ -852,14 +852,14 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to new List<of Int>()
+    set this.p1 to new List<of Int>()
   end constructor
 
   property p1 as List<of Int>
 
   procedure append()
-    call property.p1.append(1)
-    call printNoLine(property.p1)
+    call this.p1.append(1)
+    call printNoLine(this.p1)
   end procedure
 end class`;
 
@@ -975,7 +975,7 @@ class Foo
   end constructor
 
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -1009,7 +1009,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -1046,7 +1046,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set property.p1 to val
+      set this.p1 to val
   end constructor
 
   property p1 as Int
@@ -1122,7 +1122,7 @@ end main
 
 class Foo
   constructor()
-      set property.p1 to 5
+      set this.p1 to 5
   end constructor
 
   property p1 as Int
@@ -1266,7 +1266,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to new Bar()
+    set this.p1 to new Bar()
   end constructor
   property p1 as Bar
 end class`;
@@ -1331,7 +1331,7 @@ end main
 
 class Foo
   constructor()
-    set property.p1 to ""
+    set this.p1 to ""
   end constructor
   property p1 as String
   property p1 as Int
@@ -1529,7 +1529,7 @@ class Foo
     end constructor
 
     procedure setP1(a as Int)
-      set property.b to a
+      set this.b to a
     end procedure
     
     property b as Int
@@ -1664,13 +1664,13 @@ end main
 
 class Foo
     constructor()
-      set property.vg to new CircleVG()
+      set this.vg to new CircleVG()
     end constructor
 
     property vg as CircleVG
 
     procedure bar()
-      set property.vg to property.vg.noSuch
+      set this.vg to this.vg.noSuch
     end procedure
 
 end class`;
@@ -1912,7 +1912,7 @@ class Foo
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    set property.p1 to p
+    set this.p1 to p
     return this
   end function
 end class`;

@@ -120,14 +120,14 @@ class Point
   property y as Int
 
   constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
+    set this.x to x
+    set this.y to y
   end constructor
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    constant x set to property.x
-    constant y set to property.y
+    constant x set to this.x
+    constant y set to this.y
     return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)]
   end function
 

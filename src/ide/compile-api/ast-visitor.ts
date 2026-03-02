@@ -4,12 +4,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { ElanCompilerError } from "../../compiler/elan-compiler-error";
-import {
-  globalKeyword,
-  libraryKeyword,
-  propertyKeyword,
-  thisKeyword,
-} from "../../compiler/elan-keywords";
+import { globalKeyword, libraryKeyword, thisKeyword } from "../../compiler/elan-keywords";
 import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
@@ -856,8 +851,8 @@ export function transform(
     if (node.fixedText === globalKeyword) {
       return new FixedIdAsn(globalKeyword, fieldId);
     }
-    if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
-      return new ThisAsn(node.fixedText, fieldId, scope);
+    if (node.fixedText === thisKeyword) {
+      return new ThisAsn(fieldId, scope);
     }
 
     return undefined;

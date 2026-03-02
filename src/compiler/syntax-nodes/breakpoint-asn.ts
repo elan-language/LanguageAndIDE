@@ -171,7 +171,7 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
         symbol.symbolScope === SymbolScope.program
           ? "global."
           : symbol.symbolScope === SymbolScope.member
-            ? "property."
+            ? "this."
             : "";
 
       const scopePrefix =

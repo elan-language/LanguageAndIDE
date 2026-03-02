@@ -32,12 +32,12 @@ constant haltState set to "halt"
 
 class TuringMachine
   constructor(initialState as String, haltState as String)
-    set property.tape to ""
-    set property.initialState to initialState
-    set property.haltState to haltState
-    set property.rules to new List<of Rule>()
-    set property.currentState to initialState
-    set property.headPosition to 0
+    set this.tape to ""
+    set this.initialState to initialState
+    set this.haltState to haltState
+    set this.rules to new List<of Rule>()
+    set this.currentState to initialState
+    set this.headPosition to 0
   end constructor
 
   property initialState as String
@@ -53,11 +53,11 @@ class TuringMachine
   property tape as String
 
   procedure setTape(tape as String)
-    set property.tape to tape
+    set this.tape to tape
   end procedure
 
   procedure append(rule as Rule)
-    set property.rules to property.rules.withAppend(rule)
+    set this.rules to this.rules.withAppend(rule)
   end procedure
 
   procedure singleStep()
@@ -66,35 +66,35 @@ class TuringMachine
   end procedure
 
   function isHalted() returns Boolean
-    return property.currentState.equals(property.haltState)
+    return this.currentState.equals(this.haltState)
   end function
 
   function findMatchingRule() returns Rule
-    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState.equals(property.currentState)) and (r.currentSymbol.equals(property.tape[property.headPosition])))
+    variable matches set to this.rules.filter(lambda r as Rule => (r.currentState.equals(this.currentState)) and (r.currentSymbol.equals(this.tape[this.headPosition])))
     if matches.length() is 0 then
-      throw exception "No rule matching state {property.currentState} and symbol {property.tape[property.headPosition]}"
+      throw exception "No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
     end if
     return matches.head()
   end function
 
   procedure write(newSymbol as String)
-    constant hp set to property.headPosition
-    set property.tape to property.tape.subString(0, hp) + newSymbol + property.tape.subString(hp + 1, property.tape.length())
+    constant hp set to this.headPosition
+    set this.tape to this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length())
   end procedure
 
   procedure execute(rule as Rule)
-    set property.currentState to rule.nextState
+    set this.currentState to rule.nextState
     call write(rule.writeSymbol)
     if rule.move is Dir.right then
-      set property.headPosition to property.headPosition + 1
-      if property.headPosition >= property.tape.length() then
-        set property.tape to property.tape + " "
+      set this.headPosition to this.headPosition + 1
+      if this.headPosition >= this.tape.length() then
+        set this.tape to this.tape + " "
       end if
     else
-      set property.headPosition to property.headPosition - 1
-      if property.headPosition < 0 then
-        set property.tape to " " + property.tape
-        set property.headPosition to 0
+      set this.headPosition to this.headPosition - 1
+      if this.headPosition < 0 then
+        set this.tape to " " + this.tape
+        set this.headPosition to 0
       end if
     end if
   end procedure
@@ -113,15 +113,15 @@ class Rule
   property move as Dir
 
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
-    set property.currentState to currentState
-    set property.currentSymbol to currentSymbol
-    set property.nextState to nextState
-    set property.writeSymbol to writeSymbol
-    set property.move to move
+    set this.currentState to currentState
+    set this.currentSymbol to currentSymbol
+    set this.nextState to nextState
+    set this.writeSymbol to writeSymbol
+    set this.move to move
   end constructor
 
   function asString() returns String
-    return "{property.currentState},{property.currentSymbol},{property.nextState},{property.writeSymbol},{property.move}"
+    return "{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{this.move}"
   end function
 
 end class

@@ -496,13 +496,13 @@ end main
 
 class Foo
     constructor()
-      set property.p1 to new Bar()
+      set this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
 
     procedure length()
-      call property.p1.length(2)
+      call this.p1.length(2)
     end procedure
 
     function asString() returns String
@@ -513,13 +513,13 @@ end class
 
 class Bar
     constructor()
-      set property.p1 to 5
+      set this.p1 to 5
     end constructor
 
     property p1 as Float
 
     procedure length(plus as Float)
-      call printNoLine(property.p1 + plus)
+      call printNoLine(this.p1 + plus)
     end procedure
 
     function asString() returns String
@@ -849,7 +849,7 @@ end procedure
 
 class Foo
   constructor()
-    set property.ff to 1
+    set this.ff to 1
   end constructor
 
   property ff as Int

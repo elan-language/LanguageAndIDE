@@ -53,13 +53,13 @@ end function
 class Coords
   constructor()
     # number of cells per unit distance on complex plane
-    set property.scale to 100
+    set this.scale to 100
     # centered on the screen to start
-    set property.xoff to 0
-    set property.yoff to 0
+    set this.xoff to 0
+    set this.yoff to 0
     # Julia set parameters
-    set property.jx to -0.512
-    set property.jy to 0.521
+    set this.jx to -0.512
+    set this.jy to 0.521
   end constructor
 
   property scale as Float
@@ -75,7 +75,7 @@ class Coords
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   procedure checkkeys()
-    constant panstep set to 10/property.scale
+    constant panstep set to 10/this.scale
     variable jstep set to 0.001
     # save some CPU by not recalculating until a parameter has been changed
     variable changed set to false
@@ -84,25 +84,25 @@ class Coords
       # loop because more than one key may have been pressed
       while not k.equals("")
         if k.equals("z") then
-          set property.scale to property.scale*1.2
+          set this.scale to this.scale*1.2
         elif k.equals("x") then
-          set property.scale to property.scale/1.2
+          set this.scale to this.scale/1.2
         elif k.equals("ArrowUp") then
-          set property.yoff to property.yoff + panstep
+          set this.yoff to this.yoff + panstep
         elif k.equals("ArrowDown") then
-          set property.yoff to property.yoff - panstep
+          set this.yoff to this.yoff - panstep
         elif k.equals("ArrowLeft") then
-          set property.xoff to property.xoff + panstep
+          set this.xoff to this.xoff + panstep
         elif k.equals("ArrowRight") then
-          set property.xoff to property.xoff - panstep
+          set this.xoff to this.xoff - panstep
         elif k.equals("g") then
-          set property.jx to property.jx + jstep
+          set this.jx to this.jx + jstep
         elif k.equals("j") then
-          set property.jx to property.jx - jstep
+          set this.jx to this.jx - jstep
         elif k.equals("y") then
-          set property.jy to property.jy + jstep
+          set this.jy to this.jy + jstep
         elif k.equals("h") then
-          set property.jy to property.jy - jstep
+          set this.jy to this.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else
           # ignore erroneous key presses

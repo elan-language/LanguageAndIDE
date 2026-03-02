@@ -19,10 +19,10 @@ end main
 class Snake
   constructor()
     variable tail set to new Square(20, 15)
-    set property.currentDir to Direction.right
-    set property.body to [tail]
-    set property.head to tail.getAdjacentSquare(property.currentDir)
-    set property.priorTail to tail
+    set this.currentDir to Direction.right
+    set this.body to [tail]
+    set this.head to tail.getAdjacentSquare(this.currentDir)
+    set this.priorTail to tail
   end constructor
 
   private property currentDir as Direction
@@ -35,30 +35,30 @@ class Snake
 
   procedure clockTick(key as String, apple as Apple)
     call setDirection(key)
-    set property.priorTail to property.body[0]
-    call property.body.append(property.head)
-    set property.head to property.head.getAdjacentSquare(property.currentDir)
-    if property.head.equals(apple.location) then
+    set this.priorTail to this.body[0]
+    call this.body.append(this.head)
+    set this.head to this.head.getAdjacentSquare(this.currentDir)
+    if this.head.equals(apple.location) then
       call apple.newRandomPosition(this)
     else
-      set property.body to property.body.subList(1, property.body.length())
+      set this.body to this.body.subList(1, this.body.length())
     end if
   end procedure
 
   procedure updateBlocks(blocks as List<of List<of Int>>)
-    set blocks[property.head.x][property.head.y] to green
-    if not property.body[0].equals(property.priorTail) then
-      set blocks[property.priorTail.x][property.priorTail.y] to white
+    set blocks[this.head.x][this.head.y] to green
+    if not this.body[0].equals(this.priorTail) then
+      set blocks[this.priorTail.x][this.priorTail.y] to white
     end if
   end procedure
 
   function score() returns Int
-    return property.body.length() - 1
+    return this.body.length() - 1
   end function
 
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
-    each seg in property.body
+    each seg in this.body
       if (seg.equals(sq)) then
         set result to true
       end if
@@ -67,18 +67,18 @@ class Snake
   end function
 
   function gameOver() returns Boolean
-    return bodyCovers(property.head) or property.head.hasHitEdge()
+    return bodyCovers(this.head) or this.head.hasHitEdge()
   end function
 
   private procedure setDirection(key as String)
     if key.equals("w") then
-      set property.currentDir to Direction.up
+      set this.currentDir to Direction.up
     elif key.equals("s") then
-      set property.currentDir to Direction.down
+      set this.currentDir to Direction.down
     elif key.equals("a") then
-      set property.currentDir to Direction.left
+      set this.currentDir to Direction.left
     elif key.equals("d") then
-      set property.currentDir to Direction.right
+      set this.currentDir to Direction.right
     end if
   end procedure
 
@@ -86,7 +86,7 @@ end class
 
 class Apple
   constructor()
-    set property.location to new Square(0, 0)
+    set this.location to new Square(0, 0)
   end constructor
 
   property location as Square
@@ -96,23 +96,23 @@ class Apple
     while changePosition
       constant ranX set to randomInt(0, 39)
       constant ranY set to randomInt(0, 29)
-      set property.location to new Square(ranX, ranY)
-      if not snake.bodyCovers(property.location) then
+      set this.location to new Square(ranX, ranY)
+      if not snake.bodyCovers(this.location) then
         set changePosition to false
       end if
     end while
   end procedure
 
   procedure updateBlocks(blocks as List<of List<of Int>>)
-    set blocks[property.location.x][property.location.y] to red
+    set blocks[this.location.x][this.location.y] to red
   end procedure
 
 end class
 
 class Square
   constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
+    set this.x to x
+    set this.y to y
   end constructor
 
   property x as Int
@@ -120,22 +120,22 @@ class Square
   property y as Int
 
   function getAdjacentSquare(d as Direction) returns Square
-    variable newX set to property.x
-    variable newY set to property.y
+    variable newX set to this.x
+    variable newY set to this.y
     if d is Direction.left then
-      set newX to property.x - 1
+      set newX to this.x - 1
     elif d is Direction.right then
-      set newX to property.x + 1
+      set newX to this.x + 1
     elif d is Direction.up then
-      set newY to property.y - 1
+      set newY to this.y - 1
     elif d is Direction.down then
-      set newY to property.y + 1
+      set newY to this.y + 1
     end if
     return new Square(newX, newY)
   end function
 
   function hasHitEdge() returns Boolean
-    return (property.x is -1) or (property.y is -1) or (property.x is 40) or (property.y is 30)
+    return (this.x is -1) or (this.y is -1) or (this.x is 40) or (this.y is 30)
   end function
 
 end class
