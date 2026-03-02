@@ -122,7 +122,6 @@ import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
 import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CommentNode } from "../frames/parse-nodes/comment-node";
-import { CopyWith } from "../frames/parse-nodes/copy-with";
 import { CSV } from "../frames/parse-nodes/csv";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
@@ -935,12 +934,6 @@ export function transform(
 
   if (node instanceof DottedTerm) {
     return transform(node.term, fieldId, scope);
-  }
-
-  if (node instanceof CopyWith) {
-    const obj = transform(node.original, fieldId, scope) as AstNode;
-    const withClause = transform(node.withClause!, fieldId, scope) as AstCollectionNode;
-    return new CopyWithAsn(obj, withClause, fieldId, scope);
   }
 
   if (node instanceof TypeTupleNode) {

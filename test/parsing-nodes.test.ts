@@ -188,18 +188,6 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-
-  test("Expression + with clause", () => {
-    testNodeParse(
-      new ExprNode(f),
-      "copy p with x set to p.x + 3, y set to p.y - 1",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
   test("Identifier", () => {
     testNodeParse(new IdentifierUse(f), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new IdentifierUse(f), `  `, ParseStatus.invalid, ``, "", "");
