@@ -207,7 +207,7 @@ function htmlForCard(card as Card) returns String
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridForRank(rank)
-      if location.isSameValueAs("royal") then
+      if location.equals("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
@@ -327,7 +327,7 @@ abstract class Player
   procedure draw()
     variable newCard set to dealCard(random())
     call property.cards.append(newCard)
-    if newCard.rank.isSameValueAs("A") then
+    if newCard.rank.equals("A") then
       call addAce()
     else
       set property.handTotal to property.handTotal + newCard.value
@@ -441,11 +441,11 @@ class HumanPlayer inherits Player
   procedure nextAction(dealerFaceCard as Card)
     variable key set to ""
     call clearKeyBuffer()
-    while key.isSameValueAs("")
+    while key.equals("")
       set key to waitForKey()
-      if key.isSameValueAs("d") then
+      if key.equals("d") then
         call draw()
-      elif key.isSameValueAs("s") then
+      elif key.equals("s") then
         call stand()
       else
         set key to ""

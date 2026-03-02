@@ -50,6 +50,7 @@ import {
   UndefinedSymbolCompileError,
 } from "./compile-error";
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
+import { ReservedWords } from "./reserved-words";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
@@ -96,7 +97,6 @@ import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { ReservedWords } from "./reserved-words";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -686,7 +686,7 @@ export function mustBeValueType(
   if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs' or '.isSameReferenceAs'`,
+        `Can only compare value types with an operator. To compare reference types use '.equals'`,
         location,
       ),
     );

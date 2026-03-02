@@ -2106,13 +2106,13 @@ main
   variable b set to ["2", "7"].asSet()
   variable c set to ["7", "2"].asSet()
   variable d set to ["8", "2"].asSet()
-  call printNoLine(b.isSameValueAs(c))
-  call printNoLine(b.isSameValueAs(d))
+  call printNoLine(b.equals(c))
+  call printNoLine(b.equals(d))
   variable b2 set to [2, 7].asSet()
   variable c2 set to [7, 2].asSet()
   variable d2 set to [8, 2].asSet()
-  call printNoLine(b2.isSameValueAs(c2))
-  call printNoLine(b2.isSameValueAs(d2))
+  call printNoLine(b2.equals(c2))
+  call printNoLine(b2.equals(d2))
 end main
 `;
 
@@ -2122,13 +2122,13 @@ async function main() {
   let b = system.list(["2", "7"]).asSet();
   let c = system.list(["7", "2"]).asSet();
   let d = system.list(["8", "2"]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, c));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, d));
+  await _stdlib.printNoLine(_stdlib.equals(b, c));
+  await _stdlib.printNoLine(_stdlib.equals(b, d));
   let b2 = system.list([2, 7]).asSet();
   let c2 = system.list([7, 2]).asSet();
   let d2 = system.list([8, 2]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, c2));
-  await _stdlib.printNoLine(_stdlib.isSameValueAs(b2, d2));
+  await _stdlib.printNoLine(_stdlib.equals(b2, c2));
+  await _stdlib.printNoLine(_stdlib.equals(b2, d2));
 }
 return [main, _tests];}`;
 
@@ -2147,56 +2147,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
-  });
-
-  test("Pass_SetComparisonByReference", async () => {
-    const code = `${testHeader}
-
-main
-  variable b set to ["2", "7"].asSet()
-  variable c set to ["7", "2"].asSet()
-  variable d set to ["8", "2"].asSet()
-  call printNoLine(b.isSameReferenceAs(c))
-  call printNoLine(b.isSameReferenceAs(d))
-  variable b2 set to [2, 7].asSet()
-  variable c2 set to [7, 2].asSet()
-  variable d2 set to [8, 2].asSet()
-  call printNoLine(b2.isSameReferenceAs(c2))
-  call printNoLine(b2.isSameReferenceAs(d2))
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let b = system.list(["2", "7"]).asSet();
-  let c = system.list(["7", "2"]).asSet();
-  let d = system.list(["8", "2"]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, c));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, d));
-  let b2 = system.list([2, 7]).asSet();
-  let c2 = system.list([7, 2]).asSet();
-  let d2 = system.list([8, 2]).asSet();
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, c2));
-  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b2, d2));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalse");
   });
 
   test("Pass_divideFunctions", async () => {

@@ -16,7 +16,7 @@ main
   end for
   call displayBlocks(blocks)
   constant name set to inputString("File name to save: ")
-  if not name.isSameValueAs("x") then
+  if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if
 end main

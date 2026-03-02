@@ -20,7 +20,7 @@ main
     set tail to tailRef.value()
     set currentDir to currentDirRef.value()
     set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
-    if head.isSameValueAs(apple) then
+    if head.equals(apple) then
       call setAppleToRandomPosition(apple, body)
     else
       call body.removeAt(0)
@@ -62,7 +62,7 @@ end procedure
 
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
   variable colour set to white
-  if body[0].isSameValueAs(tail) then
+  if body[0].equals(tail) then
     set colour to green
   end if
   return colour
@@ -75,13 +75,13 @@ end function
 function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
-  if dir.isSameValueAs("left") then
+  if dir.equals("left") then
     set newX to newX - 1
-  elif dir.isSameValueAs("right") then
+  elif dir.equals("right") then
     set newX to newX + 1
-  elif dir.isSameValueAs("up") then
+  elif dir.equals("up") then
     set newY to newY - 1
-  elif dir.isSameValueAs("down") then
+  elif dir.equals("down") then
     set newY to newY + 1
   end if
   return [newX, newY]

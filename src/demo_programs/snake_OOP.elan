@@ -38,7 +38,7 @@ class Snake
     set property.priorTail to property.body[0]
     call property.body.append(property.head)
     set property.head to property.head.getAdjacentSquare(property.currentDir)
-    if property.head.isSameValueAs(apple.location) then
+    if property.head.equals(apple.location) then
       call apple.newRandomPosition(this)
     else
       set property.body to property.body.subList(1, property.body.length())
@@ -47,7 +47,7 @@ class Snake
 
   procedure updateBlocks(blocks as List<of List<of Int>>)
     set blocks[property.head.x][property.head.y] to green
-    if not property.body[0].isSameValueAs(property.priorTail) then
+    if not property.body[0].equals(property.priorTail) then
       set blocks[property.priorTail.x][property.priorTail.y] to white
     end if
   end procedure
@@ -59,7 +59,7 @@ class Snake
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
     each seg in property.body
-      if (seg.isSameValueAs(sq)) then
+      if (seg.equals(sq)) then
         set result to true
       end if
     end each
@@ -71,13 +71,13 @@ class Snake
   end function
 
   private procedure setDirection(key as String)
-    if key.isSameValueAs("w") then
+    if key.equals("w") then
       set property.currentDir to Direction.up
-    elif key.isSameValueAs("s") then
+    elif key.equals("s") then
       set property.currentDir to Direction.down
-    elif key.isSameValueAs("a") then
+    elif key.equals("a") then
       set property.currentDir to Direction.left
-    elif key.isSameValueAs("d") then
+    elif key.equals("d") then
       set property.currentDir to Direction.right
     end if
   end procedure

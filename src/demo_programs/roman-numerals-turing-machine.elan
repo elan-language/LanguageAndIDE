@@ -66,11 +66,11 @@ class TuringMachine
   end procedure
 
   function isHalted() returns Boolean
-    return property.currentState.isSameValueAs(property.haltState)
+    return property.currentState.equals(property.haltState)
   end function
 
   function findMatchingRule() returns Rule
-    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState.isSameValueAs(property.currentState)) and (r.currentSymbol.isSameValueAs(property.tape[property.headPosition])))
+    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState.equals(property.currentState)) and (r.currentSymbol.equals(property.tape[property.headPosition])))
     if matches.length() is 0 then
       throw exception "No rule matching state {property.currentState} and symbol {property.tape[property.headPosition]}"
     end if

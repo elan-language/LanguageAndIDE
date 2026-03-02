@@ -28,7 +28,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     call displayBlocks(gr2)
     call pause(0)
   end while
-  if solver.getLastVisited().isSameValueAs(destination) then
+  if solver.getLastVisited().equals(destination) then
     variable rl set to solver.getRouteAndLength()
     variable route set to rl.item0
     constant length set to rl.item1
@@ -44,9 +44,9 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, node
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
       variable p set to new Point(x, y)
-      if p.isSameValueAs(start) then
+      if p.equals(start) then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
-      elif p.isSameValueAs(dest) then
+      elif p.equals(dest) then
         call nodes.append(new Node(p, infinity, 0))
       elif random() < divAsFloat(percentRocks, 100) then
         call rocks.append(p)
@@ -122,7 +122,7 @@ class Solver
   procedure visitNextPoint()
     call updateNeighbours()
     set property.current to nextNodeToVisit()
-    if (property.current.isEmpty or (property.current.point.isSameValueAs(property.destination))) then
+    if (property.current.isEmpty or (property.current.point.equals(property.destination))) then
       set property.running to false
     else
       call property.current.setVisited(true)
@@ -156,7 +156,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    variable matches set to property.nodes.filter(lambda n as Node => n.point.isSameValueAs(p))
+    variable matches set to property.nodes.filter(lambda n as Node => n.point.equals(p))
     return if matches.length() is 1 then matches.head() else emptyNode()
   end function
 
@@ -196,7 +196,7 @@ class Solver
     variable route set to [property.destination]
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
-    while not node.point.isSameValueAs(property.start)
+    while not node.point.equals(property.start)
       variable previous set to node.via
       variable p set to node.point
       set length to length + p.minDistTo(previous)

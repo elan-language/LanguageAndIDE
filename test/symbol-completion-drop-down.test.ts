@@ -850,9 +850,8 @@ end main`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["hasKey", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -1259,9 +1258,8 @@ end test`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["ff", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
@@ -1508,11 +1506,10 @@ end class`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1558,11 +1555,10 @@ end class`;
 
     const expected = [
       ["asString", "*", "*"],
+      ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1618,11 +1614,10 @@ end main`;
     const expected = [
       ["asString", "*", "*"],
       ["ceiling", "*", "*"],
+      ["equals", "*", "*"],
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
 
@@ -2723,8 +2718,7 @@ end procedure`;
     const expected = [
       ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
-      ["isSameReferenceAs", "*", "*"],
-      ["isSameValueAs", "*", "*"],
+      ["equals", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
