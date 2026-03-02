@@ -24,7 +24,6 @@ import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/pr
 import { PropertyAsn } from "../../compiler/syntax-nodes/class-members/property-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/comment-asn";
 import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
-import { CopyWithAsn } from "../../compiler/syntax-nodes/copy-with-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
