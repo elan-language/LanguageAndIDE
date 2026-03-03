@@ -92,7 +92,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Term2", () => {
-    testNodeParse(new Term(f), "empty ", ParseStatus.invalid, "", "empty ", "");
     testNodeParse(new Term(f), "", ParseStatus.empty, "", "", "");
     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });

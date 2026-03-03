@@ -69,7 +69,7 @@ end constructor`;
   });
 
   test("process keyword1", async () => {
-    const code = `let`;
+    const code = `set`;
 
     const actual = await processInnerCode(code);
 
@@ -152,24 +152,24 @@ end constructor`;
   });
 
   test("process multiple code", async () => {
-    const code = `<code>let</code>
+    const code = `<code>new</code>
 <code>Int</code>`;
 
     const actual = await processCode(code, codeTag, codeEndTag);
 
-    const expected = `<el-code><el-kw>let</el-kw></el-code>
+    const expected = `<el-code><el-kw>new</el-kw></el-code>
 <el-code><el-type>Int</el-type></el-code>`;
 
     assert.strictEqual(actual, expected);
   });
 
   test("process multiple codeblock", async () => {
-    const code = `<codeblock>let</codeblock>
+    const code = `<codeblock>new</codeblock>
 <codeblock>Int</codeblock>`;
 
     const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
 
-    const expected = `<el-code-block><el-kw>let</el-kw></el-code-block>
+    const expected = `<el-code-block><el-kw>new</el-kw></el-code-block>
 <el-code-block><el-type>Int</el-type></el-code-block>`;
 
     assert.strictEqual(actual, expected);

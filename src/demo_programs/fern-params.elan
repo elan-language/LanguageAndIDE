@@ -21,8 +21,8 @@
 main
   variable openbrace set to unicode(123)
   variable file set to openFileForReading()
-  variable result set to new Ref<of String>(openbrace + openbrace)
-  variable skipping set to new Ref<of Boolean>(true)
+  variable result set to new AsRef<of String>(openbrace + openbrace)
+  variable skipping set to new AsRef<of Boolean>(true)
   while not file.endOfFile()
     variable line set to file.readLine()
     call processoneline(line, result, skipping)
@@ -31,7 +31,7 @@ main
   call print(result.value())
 end main
 
-procedure processoneline(line as String, result as Ref<of String>, skippingRef as Ref<of Boolean>)
+procedure processoneline(line as String, result as AsRef<of String>, skippingRef as AsRef<of Boolean>)
   variable skipping set to skippingRef.value()
   variable openbrace set to unicode(123)
   variable closebrace set to unicode(125)

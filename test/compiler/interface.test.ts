@@ -677,10 +677,10 @@ end interface
 
 class Bar
   constructor()
-    set this.foo to new Optional<of Foo>()
+    set this.foo to new Maybe<of Foo>()
   end constructor
 
-  property foo as Optional<of Foo>
+  property foo as Maybe<of Foo>
 
 end class`;
 
@@ -716,13 +716,13 @@ class Bar {
   static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
-    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
+    this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
   elan_foo;
   get foo() {
-    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set foo(foo) {
     this.elan_foo = foo;
@@ -745,7 +745,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Optionalfalse");
+    await assertObjectCodeExecutes(fileImpl, "a Maybefalse");
   });
 
   test("Pass_DiamondInheritance", async () => {

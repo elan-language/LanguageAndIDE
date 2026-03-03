@@ -13,9 +13,9 @@ import { System } from "../system";
 import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(ClassOption.concrete, [ElanT1], [], [], [])
-export class Optional<T1> {
+export class Maybe<T1> {
   static emptyInstance() {
-    return new Optional();
+    return new Maybe();
   }
 
   async _initialise() {
@@ -32,7 +32,7 @@ export class Optional<T1> {
   getValue(): T1 {
     if (!this._value) {
       throw new ElanRuntimeError(
-        "calling getValue() on an empty Optional type. Check hasValue() before calling getValue()",
+        "calling getValue() on an empty Maybe type. Check hasValue() first.",
       );
     }
     return this._value!;
@@ -48,9 +48,9 @@ export class Optional<T1> {
     this._value = value;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(Optional))
-  withSet(@elanGenericParamT1Type() value: T1): Optional<T1> {
-    const opt = new Optional<T1>();
+  @elanFunction([], FunctionOptions.pure, ElanClass(Maybe))
+  withSet(@elanGenericParamT1Type() value: T1): Maybe<T1> {
+    const opt = new Maybe<T1>();
     opt.set(value);
     return opt;
   }
@@ -60,8 +60,8 @@ export class Optional<T1> {
     this._value = undefined;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(Optional))
-  withClear(): Optional<T1> {
-    return new Optional<T1>();
+  @elanFunction([], FunctionOptions.pure, ElanClass(Maybe))
+  withClear(): Maybe<T1> {
+    return new Maybe<T1>();
   }
 }

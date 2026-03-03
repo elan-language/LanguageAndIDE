@@ -95,7 +95,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       }
     }
 
-    if (rootSt instanceof ClassType && rootSt.className === "Optional") {
+    if (rootSt instanceof ClassType && rootSt.className === "Maybe") {
       for (const gp of this.genericParameters) {
         mustBeReferenceGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
       }

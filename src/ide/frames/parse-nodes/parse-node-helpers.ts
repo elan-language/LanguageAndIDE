@@ -1,9 +1,4 @@
-import {
-  emptyKeyword,
-  ifKeyword,
-  lambdaKeyword,
-  newKeyword,
-} from "../../../compiler/elan-keywords";
+import { ifKeyword, lambdaKeyword, newKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
@@ -78,7 +73,7 @@ export const concreteAndAbstractTypes: TokenType[] = [
   TokenType.type_enum,
 ];
 export const allKeywordsThatCanStartAnExpression: Set<KeywordCompletion> = new Set(
-  [newKeyword, ifKeyword, lambdaKeyword, emptyKeyword].map((kw) => KeywordCompletion.create(kw)),
+  [newKeyword, ifKeyword, lambdaKeyword].map((kw) => KeywordCompletion.create(kw)),
 );
 export function removeUnmatchedClosingBracket(text: string): string {
   if (text.endsWith(")") && text.split("(").length - text.split(")").length !== 0) {

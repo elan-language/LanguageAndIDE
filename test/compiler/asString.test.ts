@@ -114,10 +114,10 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Optional<of Foo>()
+    set this.p1 to new Maybe<of Foo>()
   end constructor
 
-  property p1 as Optional<of Foo>
+  property p1 as Maybe<of Foo>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -133,13 +133,13 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
+    this.p1 = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
   elan_p1;
   get p1() {
-    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set p1(p1) {
     this.elan_p1 = p1;
@@ -162,7 +162,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Optional");
+    await assertObjectCodeExecutes(fileImpl, "a Maybe");
   });
 
   // this behaviour has changed from c# compiler
@@ -180,10 +180,10 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Optional<of Foo>()
+    set this.p1 to new Maybe<of Foo>()
   end constructor
 
-  property p1 as Optional<of Foo>
+  property p1 as Maybe<of Foo>
 
   function asString() returns String
      return "Custom asString"
@@ -205,13 +205,13 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
-    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
+    this.p1 = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
   elan_p1;
   get p1() {
-    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set p1(p1) {
     this.elan_p1 = p1;
@@ -238,7 +238,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Custom asStringa Optional");
+    await assertObjectCodeExecutes(fileImpl, "Custom asStringa Maybe");
   });
 
   test("Pass_AsStringMayBeCalled", async () => {

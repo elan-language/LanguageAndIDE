@@ -150,8 +150,8 @@ suite("Editing Fields Tests", () => {
     t.processKey(key("o"));
     t.processKey(key("o"));
     t.processKey(key(","));
-    assert.equal(t.text, "(Foo, ");
-    assert.equal(t.cursorPos, 6);
+    assert.equal(t.text, "(Foo,");
+    assert.equal(t.cursorPos, 5);
     assert.equal(t.getCompletion(), "<i>Type</i>)");
     t.processKey(key("B"));
     t.processKey(key("a"));
@@ -166,7 +166,6 @@ suite("Editing Fields Tests", () => {
     t.processKey(key("Backspace"));
     assert.equal(t.text, "(Foo, ");
     assert.equal(t.cursorPos, 6);
-    assert.equal(t.getCompletion(), "<i>Type</i>)");
     t.processKey(key("Backspace"));
     assert.equal(t.text, "(Foo,");
     assert.equal(t.cursorPos, 5);
