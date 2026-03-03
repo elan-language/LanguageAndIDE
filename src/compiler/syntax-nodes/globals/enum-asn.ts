@@ -3,7 +3,7 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { EnumType } from "../../../compiler/symbols/enum-type";
-import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, match, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { isEnumValuesAsn } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
@@ -43,14 +43,14 @@ ${this.singleIndent()}${this.values.compile()}\r
     return isEnumValuesAsn(this.values) ? this.values.getSymbols(getId(this.name)) : [];
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     for (const n of this.enumValueSymbols()) {
-      if (n.symbolId === id) {
+      if (match(n.symbolId, id, caseSensitive)) {
         return n;
       }
     }
 
-    return this.getParentScope().resolveSymbol(id, this);
+    return this.getParentScope().resolveSymbol(id, caseSensitive, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

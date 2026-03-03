@@ -20,7 +20,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const symbol = this.scope.resolveSymbol(this.type.name, this.scope);
+    const symbol = this.scope.resolveSymbol(this.type.name, true, this.scope);
 
     mustBeKnownSymbol(
       symbol,
@@ -32,7 +32,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     );
 
     if (isScope(symbol)) {
-      const value = symbol.resolveSymbol(this.value, symbol);
+      const value = symbol.resolveSymbol(this.value, true, symbol);
       mustBeKnownSymbol(
         value,
         NullScope.Instance,

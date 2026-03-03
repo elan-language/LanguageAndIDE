@@ -121,7 +121,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   rootSymbol() {
     const globalScope = getGlobalScope(this.scope);
     const scope = this.isLibraryQualified() ? globalScope.libraryScope : globalScope;
-    return scope.resolveSymbol(this.id, this.scope);
+    return scope.resolveSymbol(this.id, true, this.scope);
   }
 
   symbolType() {

@@ -432,7 +432,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
-      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, true, classType);
 
       if (
         subSymbol instanceof UnknownSymbol ||
@@ -546,7 +546,7 @@ export function mustCallMemberViaQualifier(
   location: string,
 ) {
   if (!ft.isExtension && isClass(scope)) {
-    const t = scope.resolveOwnSymbol(id);
+    const t = scope.resolveOwnSymbol(id, true);
     if (t instanceof UnknownSymbol) {
       compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
     }
@@ -1074,7 +1074,7 @@ export function mustBeUniqueNameInScope(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const symbol = scope.resolveSymbol(name, scope);
+  const symbol = scope.resolveSymbol(name, true, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     let postFix = "";
@@ -1139,6 +1139,7 @@ function mapToPurpose(symbol: ElanSymbol) {
 
 export function mustNotBeRedefined(
   variable: ElanSymbol,
+  match: ElanSymbol,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1151,9 +1152,18 @@ export function mustNotBeRedefined(
     // ok
     return;
   }
-  compileErrors.push(
-    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
-  );
+  if (variable.symbolId !== match.symbolId) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `'${variable.symbolId}' already exists. Identifiers must be distinct by more than just case. Either rename '${match.symbolId}' or extend it e.g. by adding underscore.`,
+        location,
+      ),
+    );
+  } else {
+    compileErrors.push(
+      new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+    );
+  }
 }
 
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {

@@ -10,6 +10,7 @@ import {
   getGlobalScope,
   isMember,
   isSymbol,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -131,7 +132,9 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     filter: (s: ElanSymbol) => boolean,
   ): ClassAsn[] {
     const nodes = superClasses.filter((i) => isAstIdNode(i));
-    const symbols = nodes.map((n) => getGlobalScope(this).resolveSymbol(n.id, this)).filter(filter);
+    const symbols = nodes
+      .map((n) => getGlobalScope(this).resolveSymbol(n.id, true, this))
+      .filter(filter);
     return symbols as ClassAsn[];
   }
 
@@ -207,23 +210,23 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id);
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id, caseSensitive);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, this);
+      return this.getParentScope().resolveSymbol(id, caseSensitive, this);
     }
 
     return symbol;
   }
 
-  resolveOwnSymbol(id: string): ElanSymbol {
+  resolveOwnSymbol(id: string, caseSensitive: boolean): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
 
     let matches = this.getChildren().filter(
-      (f) => isSymbol(f) && f.symbolId === id,
+      (f) => isSymbol(f) && match(f.symbolId, id, caseSensitive),
     ) as ElanSymbol[];
 
     const types = this.getDirectSuperClassesTypeAndName()
@@ -231,7 +234,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
       .filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id);
+      const s = ct.scope!.resolveOwnSymbol(id, caseSensitive);
       if (isMember(s)) {
         matches.push(s);
       }

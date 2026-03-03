@@ -43,11 +43,11 @@ export class TupleAsn implements Scope {
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
     const symbol = this.resolveOwnSymbol(id);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, this);
+      return this.getParentScope().resolveSymbol(id, caseSensitive, this);
     }
 
     return symbol;

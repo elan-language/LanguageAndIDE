@@ -45,7 +45,7 @@ export class SetAsn extends BreakpointAsn {
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCopyOfThis(assignableAstNode, this.compileErrors, this.fieldId);
 
-    const symbol = this.getParentScope().resolveSymbol(id, this);
+    const symbol = this.getParentScope().resolveSymbol(id, true, this);
     mustNotBeLet(symbol, this.compileErrors, this.fieldId);
 
     if (this.assignable instanceof VarAsn) {

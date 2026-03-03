@@ -5,6 +5,7 @@ import { FunctionType } from "../../../compiler/symbols/function-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId } from "../../compile-rules";
+import { match } from "../../symbols/symbol-helpers";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
@@ -38,16 +39,16 @@ export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
     return this.children.filter((s) => s instanceof ReturnAsn)[0];
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
-    if (getId(this.name) === id) {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (match(getId(this.name), id, caseSensitive)) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, this)
+        ? this.params.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public compile(): string {
