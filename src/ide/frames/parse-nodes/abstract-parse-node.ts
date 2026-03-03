@@ -37,7 +37,9 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   renderAsExport(): string {
-    return removeHtmlTagsAndEscChars(this.renderAsHtml());
+    return this.status === ParseStatus.valid
+      ? removeHtmlTagsAndEscChars(this.renderAsHtml())
+      : this.matchedText;
   }
 
   renderAsHtml(): string {
