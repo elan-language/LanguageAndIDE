@@ -803,10 +803,10 @@ end class
 
 class Bar
   constructor()
-    set this.foo to new Optional<of Foo>()
+    set this.foo1 to new Maybe<of Foo>()
   end constructor
 
-  property foo as Optional<of Foo> 
+  property foo1 as Maybe<of Foo> 
 
 end class`;
 

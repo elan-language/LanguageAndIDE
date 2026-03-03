@@ -279,14 +279,14 @@ end class
 class Bar
   constructor()
     set this.p2 to ""
-    set this.foo to new Optional<of Foo>()
+    set this.foo to new Maybe<of Foo>()
   end constructor
 
   property p1 as Int
 
   property p2 as String
 
-  property foo as Optional<of Foo>
+  property foo as Maybe<of Foo>
 
   function asString() returns String
     return ""

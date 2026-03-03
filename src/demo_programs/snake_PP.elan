@@ -12,9 +12,9 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new Ref<of String>(currentDir)
-    variable headRef set to new Ref<of List<of Int>>(head)
-    variable tailRef set to new Ref<of List<of Int>>(tail)
+    variable currentDirRef set to new AsRef<of String>(currentDir)
+    variable headRef set to new AsRef<of List<of Int>>(head)
+    variable tailRef set to new AsRef<of List<of Int>>(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
     set head to headRef.value()
     set tail to tailRef.value()
@@ -30,7 +30,7 @@ main
   call print("Game Over! Score: {body.length() - 1}")
 end main
 
-procedure updateSnake(currentDirRef as Ref<of String>, tailRef as Ref<of List<of Int>>, headRef as Ref<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef<of String>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()

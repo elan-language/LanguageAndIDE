@@ -33,7 +33,7 @@ constant vN set to false
 main
   # colour grids: hodge for display, podge for working
   variable podge set to createBlockGraphics(healthy)
-  variable hodge set to new Ref<of List<of List<of Int>>>(createBlockGraphics(healthy))
+  variable hodge set to new AsRef<of List<of List<of Int>>>(createBlockGraphics(healthy))
   variable blank set to createBlockGraphics(healthy)
   # initial colours of grid
   call updateGrid(hodge, podge, true)
@@ -44,7 +44,7 @@ main
   end while
 end main
 
-procedure updateGrid(hodge as Ref<of List<of List<of Int>>>, podge as List<of List<of Int>>, initial as Boolean)
+procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of List<of Int>>, initial as Boolean)
   variable colours set to getColours()
   for j from 0 to gH - 1 step 1
     for i from 0 to gW - 1 step 1

@@ -171,7 +171,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,if,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not,tuple"],
     );
   });
   test("Expression3", () => {
@@ -360,7 +360,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,if,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not,tuple"],
       "",
     );
   });
@@ -456,7 +456,7 @@ suite("Symbol Completion Spec", () => {
       ExprNode.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,if,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not,tuple"],
       "",
     );
   });
@@ -492,7 +492,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,if,lambda,empty,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not,tuple"],
       "",
     );
   });

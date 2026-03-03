@@ -677,10 +677,10 @@ end interface
 
 class Bar
   constructor()
-    set this.foo to new Optional<of Foo>()
+    set this.foo to new Maybe<of Foo>()
   end constructor
 
-  property foo as Optional<of Foo>
+  property foo as Maybe<of Foo>
 
 end class`;
 

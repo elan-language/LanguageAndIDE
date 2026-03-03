@@ -5,6 +5,7 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertGraphicsContains,
   assertObjectCodeDoesNotExecute,
@@ -2262,5 +2263,70 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
+  });
+  test("Pass_allLibraryTypeNamesValid", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new CircleVG()
+  variable b set to new Dictionary<of String, Int>()
+  variable c set to new ElanRuntimeError("msg")
+  variable d set to new HashHashSet<of Int>
+  variable e set to new ImageVG()
+  variable f set to new LineVG()
+  variable g set to new List<of Int>()
+  variable h set to new Maybe<of Int>()
+  variable g set to new Queue<of Int>()
+  variable i set to new Random()
+  variable j set to new RawVG()
+  variable k set to new RectangleVG()
+  variable l set to new AsRef<of Int>()
+  variable m set to new Stack<of Int>()
+  variable n set to new TextFileReader()
+  variable o set to new TextFileWriter()
+  variable p set to new Turtle()
+end main
+
+procedure foo(q as GraphicsBase, r as VectorGraphic)
+
+end procedure
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_allLibraryProceduresValid", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
   });
 });

@@ -24,19 +24,19 @@ import {
   elanStringType,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import { AsRef } from "./as-ref";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { ElanRuntimeError } from "./elan-runtime-error";
-import { ElanSet } from "./elan-set";
+import { HashSet } from "./hash-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
-import { Optional } from "./optional";
+import { Maybe } from "./maybe";
 import { Queue } from "./queue";
 import { Random } from "./random";
 import { RawVG } from "./raw-vg";
 import { RectangleVG } from "./rectangle-vg";
-import { Ref } from "./ref";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
@@ -69,8 +69,8 @@ export class StdLib {
   @elanClassExport(Queue)
   Queue = Queue;
 
-  @elanClassExport(ElanSet)
-  Set = ElanSet;
+  @elanClassExport(HashSet)
+  HashSet = HashSet;
 
   @elanClassExport(Turtle)
   Turtle = Turtle;
@@ -99,11 +99,11 @@ export class StdLib {
   @elanClassExport(Dictionary)
   Dictionary = Dictionary;
 
-  @elanClassExport(Ref)
-  Ref = Ref;
+  @elanClassExport(AsRef)
+  AsRef = AsRef;
 
-  @elanClassExport(Optional)
-  Optional = Optional;
+  @elanClassExport(Maybe)
+  Maybe = Maybe;
 
   // Standard colours
 

@@ -451,11 +451,11 @@ end main
 class Game
   constructor()
     set this.p1 to new Player("Player1")
-    set this.previousGame to new Optional<of Game>()
+    set this.previousGame to new Maybe<of Game>()
   end constructor
 
   property p1 as Player
-  property previousGame as Optional<of Game>
+  property previousGame as Maybe<of Game>
 
   function asString() returns String
     return "A game"
@@ -560,12 +560,12 @@ end main
 
 class Game
   constructor()
-    set this.p1 to new Optional<of Player>()
-    set this.p2 to new Optional<of Player>()
+    set this.p1 to new Maybe<of Player>()
+    set this.p2 to new Maybe<of Player>()
   end constructor
 
-  property p1 as Optional<of Player>
-  property p2 as Optional<of Player>
+  property p1 as Maybe<of Player>
+  property p2 as Maybe<of Player>
 
   function asString() returns String
     return "A game"
@@ -832,9 +832,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -864,9 +862,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'break' matches a reserved wor.LangRef.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {

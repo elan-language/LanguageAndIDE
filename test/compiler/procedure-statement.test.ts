@@ -603,14 +603,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Ref<of Int>(2)
-  variable b set to new Ref<of String>("hello")
+  variable a set to new AsRef<of Int>(2)
+  variable b set to new AsRef<of String>("hello")
   call foo(a, b)
   call printNoLine(a.value())
   call printNoLine(b.value())
 end main
 
-procedure foo(x as Ref<of Float>, y as Ref<of String>)
+procedure foo(x as AsRef<of Float>, y as AsRef<of String>)
   call x.set(3)
   call y.set("goodbye")
 end procedure`;
@@ -653,14 +653,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Ref<of Float>(2)
-  variable b set to new Ref<of Float>(3)
+  variable a set to new AsRef<of Float>(2)
+  variable b set to new AsRef<of Float>(3)
   call foo(a, b)
   call printNoLine(a.value())
   call printNoLine(b.value())
 end main
 
-procedure foo(x as Ref<of Float>, y as Ref<of Float>)
+procedure foo(x as AsRef<of Float>, y as AsRef<of Float>)
   variable c set to x.value()
   call x.set(y.value())
   call y.set(c)
@@ -705,18 +705,18 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Ref<of Float>(2)
-  variable b set to new Ref<of Float>(3)
+  variable a set to new AsRef<of Float>(2)
+  variable b set to new AsRef<of Float>(3)
   call foo(a, b)
   call printNoLine(a.value())
   call printNoLine(b.value())
 end main
 
-procedure foo(a as Ref<of Float>, b as Ref<of Float>)
+procedure foo(a as AsRef<of Float>, b as AsRef<of Float>)
   call bar(a, b)
 end procedure
 
-procedure bar(a as Ref<of Float>, b as Ref<of Float>)
+procedure bar(a as AsRef<of Float>, b as AsRef<of Float>)
   variable c set to a.value()
   call a.set(b.value())
   call b.set(c)
@@ -766,13 +766,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Ref<of Foo>(new Foo())
-  variable b set to new Ref<of Int>(0)
+  variable a set to new AsRef<of Foo>(new Foo())
+  variable b set to new AsRef<of Int>(0)
   call foo(a, b)
   call printNoLine(b.value())
 end main
 
-procedure foo(f as Ref<of Foo>, y as Ref<of Int>)
+procedure foo(f as AsRef<of Foo>, y as AsRef<of Int>)
   variable ff set to f.value()
   call ff.bar(y)
 end procedure
@@ -781,7 +781,7 @@ class Foo
   constructor()
   end constructor
 
-  procedure bar(z as Ref<of Int>)
+  procedure bar(z as AsRef<of Int>)
     call z.set(1)
   end procedure
 end class`;
@@ -837,13 +837,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to new Ref<of Foo>(new Foo())
-  variable b set to new Ref<of Int>(100)
+  variable a set to new AsRef<of Foo>(new Foo())
+  variable b set to new AsRef<of Int>(100)
   call foo(a, b)
   call printNoLine(b.value())
 end main
 
-procedure foo(f as  Ref<of Foo>, y as  Ref<of Int>)
+procedure foo(f as  AsRef<of Foo>, y as  AsRef<of Int>)
   call y.set(f.value().ff + y.value())
 end procedure
 
@@ -903,14 +903,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to new Ref<of Int>(1)
+  variable x set to new AsRef<of Int>(1)
   call addOne(x)
   call printNoLine(x.value())
   call addOne(x)
   call printNoLine(x.value())
 end main
 
-procedure addOne(n as Ref<of Int>)
+procedure addOne(n as AsRef<of Int>)
   call n.set(n.value() + 1)
 end procedure`;
 
@@ -951,11 +951,11 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to new Ref<of Int>(1)
+  variable x set to new AsRef<of Int>(1)
   call printParameter(x)
 end main
 
-procedure printParameter(n as Ref<of Int>)
+procedure printParameter(n as AsRef<of Int>)
   call printNoLine(n.value())
 end procedure`;
 

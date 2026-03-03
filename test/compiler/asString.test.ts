@@ -114,10 +114,10 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Optional<of Foo>()
+    set this.p1 to new Maybe<of Foo>()
   end constructor
 
-  property p1 as Optional<of Foo>
+  property p1 as Maybe<of Foo>
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -180,10 +180,10 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Optional<of Foo>()
+    set this.p1 to new Maybe<of Foo>()
   end constructor
 
-  property p1 as Optional<of Foo>
+  property p1 as Maybe<of Foo>
 
   function asString() returns String
      return "Custom asString"
