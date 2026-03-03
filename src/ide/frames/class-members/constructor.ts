@@ -10,10 +10,15 @@ export class Constructor extends FrameWithStatements {
   isMember = true;
   isAbstract = false;
   private = false;
+
   public params: ParamListField;
   constructor(parent: Parent) {
     super(parent);
     this.params = new ParamListField(this);
+  }
+
+  override isDeletable(): boolean {
+    return false;
   }
 
   initialKeywords(): string {
