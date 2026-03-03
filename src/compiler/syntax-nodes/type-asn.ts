@@ -16,6 +16,7 @@ import {
   checkForDeprecation,
   mustBeImmutableGenericType,
   mustBeKnownSymbolType,
+  mustBeReferenceGenericType,
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
@@ -91,6 +92,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     if (rootSt.typeOptions.isImmutable) {
       for (const gp of this.genericParameters) {
         mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+      }
+    }
+
+    if (rootSt instanceof ClassType && rootSt.className === "Optional") {
+      for (const gp of this.genericParameters) {
+        mustBeReferenceGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
       }
     }
   }

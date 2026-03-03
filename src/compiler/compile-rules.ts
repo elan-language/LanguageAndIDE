@@ -788,6 +788,19 @@ export function mustBeImmutableGenericType(
   }
 }
 
+export function mustBeReferenceGenericType(
+  type: SymbolType,
+  ofType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isValueType(ofType)) {
+    compileErrors.push(
+      new SyntaxCompileError(`${type} cannot be of value type '${ofType.name}'.`, location),
+    );
+  }
+}
+
 export function mustBeValidKeyType(
   type: SymbolType,
   ofType: SymbolType,
