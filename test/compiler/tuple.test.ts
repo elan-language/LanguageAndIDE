@@ -21,8 +21,8 @@ suite("Tuple", () => {
 main
     variable x set to tuple(3, "Apple")
     call printNoLine(x)
-    variable f set to x.item0
-    variable s set to x.item1
+    variable f set to x.item_0
+    variable s set to x.item_1
     call printNoLine(f)
     call printNoLine(s)
 end main`;
@@ -62,8 +62,8 @@ return [main, _tests];}`;
 main
   variable x set to f()
   call printNoLine(x)
-  variable fst set to x.item0
-  variable snd set to x.item1
+  variable fst set to x.item_0
+  variable snd set to x.item_1
   call printNoLine(fst)
   call printNoLine(snd)
 end main
@@ -111,7 +111,7 @@ return [main, _tests];}`;
 
 main
   variable t set to f()
-  variable fst set to t.item0
+  variable fst set to t.item_0
   call printNoLine(fst)
 end main
 
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 main
   variable a set to [tuple(1,2)]
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
-  variable fst set to t.item0
+  variable fst set to t.item_0
   call printNoLine(fst)
 end main`;
 
@@ -197,7 +197,7 @@ main
 end main
 
 function f(t as (String, String)) returns String
-   variable first set to t.item0
+   variable first set to t.item_0
    return first
 end function`;
 
@@ -275,10 +275,10 @@ return [main, _tests];}`;
 main
   variable p set to [1, 2, 3, 4, 5]
   variable x set to tuple(3, 4)
-  variable y set to x.item0 + x.item1
-  variable z set to p[x.item0]
-  variable q set to abs(x.item1)
-  variable s set to abs(p[x.item1])
+  variable y set to x.item_0 + x.item_1
+  variable z set to p[x.item_0]
+  variable q set to abs(x.item_1)
+  variable s set to abs(p[x.item_1])
   call printNoLine(y)
   call printNoLine(z)
   call printNoLine(q)
@@ -325,7 +325,7 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3,"Apple")
   variable y set to 4
-  set y to x.item1
+  set y to x.item_1
   call printNoLine(y)
 end main
 `;
@@ -353,7 +353,7 @@ end main
 
 main
   variable x set to (3, "Apple")
-  set x.item0 to 4
+  set x.item_0 to 4
 end main
 `;
 
@@ -457,7 +457,7 @@ end main
 
 main
   variable x set to tuple(3, "Apple")
-  variable y set to x.item2
+  variable y set to x.item_2
 end main
 `;
 
@@ -475,7 +475,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'item2' is not defined for type 'tuple(Int, String)'.LangRef.html#compile_error",
+      "'item_2' is not defined for type 'tuple(Int, String)'.LangRef.html#compile_error",
     ]);
   });
 });

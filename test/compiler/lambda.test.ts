@@ -64,7 +64,7 @@ main
 end main
 
 function first(t as (Int, Int)) returns Int
-    variable a set to t.item0
+    variable a set to t.item_0
     return a
 end function
   
@@ -111,7 +111,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item0)
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)

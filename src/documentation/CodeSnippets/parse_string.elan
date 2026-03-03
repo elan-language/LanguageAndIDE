@@ -3,6 +3,6 @@
 main
   variable myString set to "1"
   constant successValue set to parseAsInt(myString)
-  call print(successValue.item1)
-  call print(successValue.item2)
+  call print(successValue.item_1)
+  call print(successValue.item_2)
 end main

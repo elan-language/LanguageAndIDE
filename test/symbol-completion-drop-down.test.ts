@@ -2486,7 +2486,7 @@ end main`;
 
 main
   variable t set to tuple(1, "fred")
-  variable a set to t.item0
+  variable a set to t.item_0
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2501,8 +2501,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["item0", "item0", "item0"],
-      ["item1", "item1", "item1"],
+      ["item_0", "item_0", "item_0"],
+      ["item_1", "item_1", "item_1"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "t.it", expected);
@@ -2512,7 +2512,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to foo().item0
+  variable a set to foo().item_0
 end main
 
 function foo() returns (Int, String)
@@ -2531,8 +2531,8 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["item0", "item0", "item0"],
-      ["item1", "item1", "item1"],
+      ["item_0", "item_0", "item_0"],
+      ["item_1", "item_1", "item_1"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().it", expected);
@@ -2542,7 +2542,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item0)
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -2561,8 +2561,8 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["item0", "item0", "item0"],
-      ["item1", "item1", "item1"],
+      ["item_0", "item_0", "item_0"],
+      ["item_1", "item_1", "item_1"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(

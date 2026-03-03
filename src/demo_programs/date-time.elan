@@ -8,8 +8,8 @@ main
       call printDate(divAsInt(clock(), 1000))
     else
       variable td set to parseAsInt(reply)
-      if td.item0 and (td.item1 >= 0) then
-        call printDate(td.item1)
+      if td.item_0 and (td.item_1 >= 0) then
+        call printDate(td.item_1)
       end if
     end if
   end while
@@ -17,20 +17,20 @@ end main
 
 procedure printDate(unixSecs as Int)
   variable dt set to dateTime(unixSecs)
-  constant hour set to dt.item0
-  constant minute set to dt.item1
-  constant second set to dt.item2
-  constant days set to dt.item3
-  constant year set to dt.item4
-  constant weekday set to dt.item5
+  constant hour set to dt.item_0
+  constant minute set to dt.item_1
+  constant second set to dt.item_2
+  constant days set to dt.item_3
+  constant year set to dt.item_4
+  constant weekday set to dt.item_5
   constant h set to pad("L", z2, hour.asString())
   constant m set to pad("L", z2, minute.asString())
   constant s set to pad("L", z2, second.asString())
   variable startDays set to getStartDays()
   variable startDaysL set to startDaysList(year, startDays)
   variable month_day set to monthDay(startDaysL, (days mod startDays[12]))
-  constant month set to month_day.item0
-  constant day set to month_day.item1
+  constant month set to month_day.item_0
+  constant day set to month_day.item_1
   call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC")
 end procedure
 

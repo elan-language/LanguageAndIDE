@@ -781,8 +781,8 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to foo().item0
-  variable length set to foo().item1
+  variable a set to foo().item_0
+  variable length set to foo().item_1
 end main
 
 function foo() returns (Int, Int)

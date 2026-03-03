@@ -809,8 +809,8 @@ main
   call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
     variable t set to rnd.nextInt(0, 1)
-    set val to t.item0
-    set rnd to t.item1
+    set val to t.item_0
+    set rnd to t.item_1
     call results.put(val, results[val] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -863,8 +863,8 @@ main
   variable val set to 0
   for i from 1 to 10000 step 1
     variable t set to rnd.nextInt(3, 5)
-    set val to t.item0
-    set rnd to t.item1
+    set val to t.item_0
+    set rnd to t.item_1
     call results.put(val, results[val] + 1)
   end for
   for i from 0 to 6 step 1
@@ -921,8 +921,8 @@ main
   variable dice set to 0
   for i from 1 to 10000 step 1
     variable t set to rollDice(rnd)
-    set dice to t.item0
-    set rnd to t.item1
+    set dice to t.item_0
+    set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1

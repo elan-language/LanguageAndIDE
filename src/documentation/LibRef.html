@@ -466,13 +466,13 @@ A Tuple differs from a List in that:
 </el-code-block>
 
 <p id="itemN">Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual items
-may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with <a href="LangRef.html#dotSyntax">dot syntax</a>,
+may be accessed using the special properties <el-id>item_0</el-id>, <el-id>item_1</el-id>, <el-id>item_2</el-id>,...  with <a href="LangRef.html#dotSyntax">dot syntax</a>,
 for example:</p>
 
 <el-code-block source="tuples1.elan">
 <el-func class="ok multiline" id="func17" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>)^<el-lit>2</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>)^<el-lit>2</el-lit>)</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>

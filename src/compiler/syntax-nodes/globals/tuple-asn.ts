@@ -14,8 +14,8 @@ export class TupleAsn implements Scope {
   ) {}
 
   parseId(id: string): [boolean, number] {
-    if (id.startsWith("item") && id.length >= 5) {
-      const index = id.slice(4);
+    if (id.startsWith("item_") && id.length >= 6) {
+      const index = id.slice(5);
       const i = parseInt(index);
       if (!isNaN(i) && i < this.type.ofTypes.length) {
         return [true, i];
@@ -58,7 +58,7 @@ export class TupleAsn implements Scope {
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const symbols = this.type.ofTypes.map((t, i) => this.typeToSymbol(`item${i}`, t));
+    const symbols = this.type.ofTypes.map((t, i) => this.typeToSymbol(`item_${i}`, t));
     const matches = symbolMatches(id, all, symbols);
     return matches;
   }
