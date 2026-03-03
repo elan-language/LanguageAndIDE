@@ -2,12 +2,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
-import {
-  getIdsFromString,
-  handleDeconstruction,
-  isSymbol,
-  symbolMatches,
-} from "../symbols/symbol-helpers";
+import { handleDeconstruction, isSymbol, match, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes, isAstNode } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
@@ -44,8 +39,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
 
       for (const f of range) {
         if (isSymbol(f) && id) {
-          const sids = getIdsFromString(f.symbolId);
-          if (sids.includes(id)) {
+          if (match(f.symbolId, id, caseSensitive)) {
             return f;
           }
         }

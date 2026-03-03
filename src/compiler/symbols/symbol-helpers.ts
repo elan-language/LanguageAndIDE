@@ -597,3 +597,7 @@ export function allPropertiesInScope(scope: Scope): ElanSymbol[] {
   const all = scope.symbolMatches("", true, scope);
   return all.filter((s) => isProperty(s));
 }
+
+export function match(id1: string, id2: string, caseSensitive: boolean) {
+  return caseSensitive ? id1 === id2 : id1.toUpperCase() === id2.toUpperCase();
+}

@@ -4,7 +4,7 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { DuplicateSymbol } from "../../../compiler/symbols/duplicate-symbol";
-import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, match, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import {
   mustBeUniqueNameInScope,
@@ -77,8 +77,11 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
 
   private mustNotBeRedefined(id: string) {
     // up two or we just get the parameter again
-    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, this);
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, true, this);
+    const caseInsensitiveSymbol = this.getParentScope()
+      .getParentScope()
+      .resolveSymbol(id, false, this);
+    mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
   }
 
   private getIdNodes(parms: AstNode): AstIdNode[] {

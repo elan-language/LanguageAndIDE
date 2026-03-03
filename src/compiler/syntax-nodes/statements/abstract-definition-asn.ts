@@ -4,6 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import {
   getDeconstructionIds,
   getGlobalScope,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -41,8 +42,9 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const id = getId(this.name);
 
     mustNotBeKeyword(id, this.compileErrors, this.fieldId);
-    const symbol = this.getScope().resolveSymbol(id, this);
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    const symbol = this.getScope().resolveSymbol(id, true, this);
+    const caseInsensitiveSymbol = this.getScope().resolveSymbol(id, false, this);
+    mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
 
     const lhs = this.name;
     const rhs = this.expr;

@@ -26,8 +26,8 @@ export class EachAsn extends CompoundAsn {
 
     const id = this.variable.compile();
     const symbol = this.scope.resolveSymbol(id, true, this);
-
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    const caseInsensitiveSymbol = this.scope.resolveSymbol(id, false, this);
+    mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
 
     const iterType = this.iter.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.fieldId);

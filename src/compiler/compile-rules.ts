@@ -1139,6 +1139,7 @@ function mapToPurpose(symbol: ElanSymbol) {
 
 export function mustNotBeRedefined(
   variable: ElanSymbol,
+  match: ElanSymbol,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1151,9 +1152,18 @@ export function mustNotBeRedefined(
     // ok
     return;
   }
-  compileErrors.push(
-    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
-  );
+  if (variable.symbolId !== match.symbolId) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `'${variable.symbolId}' already exists. Identifiers must be distinct by more than just case. Either rename '${match.symbolId}' or extend it e.g. by adding underscore.`,
+        location,
+      ),
+    );
+  } else {
+    compileErrors.push(
+      new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+    );
+  }
 }
 
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
