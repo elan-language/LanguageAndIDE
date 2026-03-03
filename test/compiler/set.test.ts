@@ -33,7 +33,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st = system.initialise(await new _stdlib.Set()._initialise());
+  let st = system.initialise(await new _stdlib.HashSet()._initialise());
   st = st.add(3).add(7).add(5);
   await _stdlib.printNoLine(st.length());
   st = st.add(7);
@@ -78,8 +78,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st1 = system.initialise(await new _stdlib.Set()._initialise());
-  let st2 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = system.initialise(await new _stdlib.HashSet()._initialise());
+  let st2 = system.initialise(await new _stdlib.HashSet()._initialise());
   st1 = st1.add(2).add(4).add(6);
   st2 = st2.add(1).add(4).add(9);
   let st3 = st1.union(st2);
@@ -119,8 +119,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st1 = system.initialise(await new _stdlib.Set()._initialise());
-  let st2 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = system.initialise(await new _stdlib.HashSet()._initialise());
+  let st2 = system.initialise(await new _stdlib.HashSet()._initialise());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.intersection(st2);
@@ -160,8 +160,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st1 = system.initialise(await new _stdlib.Set()._initialise());
-  let st2 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = system.initialise(await new _stdlib.HashSet()._initialise());
+  let st2 = system.initialise(await new _stdlib.HashSet()._initialise());
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.difference(st2);
@@ -202,7 +202,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st0 = system.initialise(await new _stdlib.HashSet()._initialise());
   let st1 = st0.add(2).add(4).add(6).add(3);
   let st2 = st0.add(3).add(1).add(4).add(9);
   let st3 = st0.add(8).add(9);
@@ -248,7 +248,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st0 = system.initialise(await new _stdlib.HashSet()._initialise());
   let st1 = st0.add(2).add(4).add(6).add(3);
   let st2 = st0.add(4).add(6);
   let st3 = st0.add(4).add(6).add(1);
@@ -291,7 +291,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st0 = system.initialise(await new _stdlib.HashSet()._initialise());
   let st1 = st0.addFromList(system.list([2, 4, 6, 3]));
   await _stdlib.printNoLine(st1);
   let st2 = st1.addFromList(system.list([2, 5, 6]));
@@ -328,7 +328,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Set()._initialise());
+  let a = system.initialise(await new _stdlib.HashSet()._initialise());
   a = a.add("foo");
   await _stdlib.printNoLine(a.contains("foo"));
 }
@@ -363,7 +363,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Set()._initialise());
+  let a = system.initialise(await new _stdlib.HashSet()._initialise());
   a = a.add("bar");
   await _stdlib.printNoLine(a.contains("foo"));
 }

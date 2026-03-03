@@ -2125,7 +2125,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable points set to new List<of Tuple<of Int, Int>>()
+  variable points set to new List<of (Int, Int)>()
   set points to points + tuple(1, 2)
   call printNoLine(points)
 end main`;
@@ -2151,7 +2151,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable points set to new List<of Tuple<of Int, Int>>()
+  variable points set to new List<of (Int, Int)>()
   call points.appendList(tuple(1, 2))
   call printNoLine(points)
 end main`;

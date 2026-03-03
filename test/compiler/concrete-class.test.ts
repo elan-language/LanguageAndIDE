@@ -336,7 +336,7 @@ class Bar {
 
   async _initialise() {
     this.p2 = "";
-    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
+    this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
@@ -346,7 +346,7 @@ class Bar {
 
   elan_foo;
   get foo() {
-    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set foo(foo) {
     this.elan_foo = foo;

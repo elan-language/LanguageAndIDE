@@ -618,8 +618,8 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
-  let b = system.initialise(await new _stdlib.Ref()._initialise("hello"));
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise("hello"));
   await foo(a, b);
   await _stdlib.printNoLine(a.value());
   await _stdlib.printNoLine(b.value());
@@ -669,8 +669,8 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
-  let b = system.initialise(await new _stdlib.Ref()._initialise(3));
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(3));
   await foo(a, b);
   await _stdlib.printNoLine(a.value());
   await _stdlib.printNoLine(b.value());
@@ -725,8 +725,8 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Ref()._initialise(2));
-  let b = system.initialise(await new _stdlib.Ref()._initialise(3));
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(3));
   await foo(a, b);
   await _stdlib.printNoLine(a.value());
   await _stdlib.printNoLine(b.value());
@@ -789,8 +789,8 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Ref()._initialise(system.initialise(await new Foo()._initialise())));
-  let b = system.initialise(await new _stdlib.Ref()._initialise(0));
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(0));
   await foo(a, b);
   await _stdlib.printNoLine(b.value());
 }
@@ -858,8 +858,8 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.initialise(await new _stdlib.Ref()._initialise(system.initialise(await new Foo()._initialise())));
-  let b = system.initialise(await new _stdlib.Ref()._initialise(100));
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(100));
   await foo(a, b);
   await _stdlib.printNoLine(b.value());
 }
@@ -917,7 +917,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(await new _stdlib.Ref()._initialise(1));
+  let x = system.initialise(await new _stdlib.AsRef()._initialise(1));
   await addOne(x);
   await _stdlib.printNoLine(x.value());
   await addOne(x);
@@ -962,7 +962,7 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = system.initialise(await new _stdlib.Ref()._initialise(1));
+  let x = system.initialise(await new _stdlib.AsRef()._initialise(1));
   await printParameter(x);
 }
 
