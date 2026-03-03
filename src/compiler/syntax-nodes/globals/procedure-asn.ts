@@ -2,7 +2,7 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { ProcedureType } from "../../../compiler/symbols/procedure-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
@@ -32,16 +32,16 @@ export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Sc
     return new ProcedureType(pn, pt, false, true);
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
-    if (getId(this.name) === id) {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (match(getId(this.name), id, caseSensitive)) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, this)
+        ? this.params.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public compile(): string {

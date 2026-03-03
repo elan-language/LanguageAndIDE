@@ -419,6 +419,36 @@ end main
     assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
   });
 
+  test("Fail_variableIsScoped3", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [7, 8, 9]
+  variable xx set to "hello"
+  each xX in a
+    call printNoLine(x)
+  end each
+  call printNoLine(x)
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'xx' already exists. Identifiers must be distinct by more than just case. Either rename 'xX' or extend it e.g. by adding underscore.LangRef.html#compile_error",
+    ]);
+  });
+
   test("Fail_duplicateId", async () => {
     const code = `${testHeader}
 

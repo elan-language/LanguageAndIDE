@@ -4,6 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import {
   getGlobalScope,
   isGenericSymbolType,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -24,9 +25,9 @@ export class EachAsn extends CompoundAsn {
     this.compileErrors = [];
 
     const id = this.variable.compile();
-    const symbol = this.scope.resolveSymbol(id, this);
-
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    const symbol = this.scope.resolveSymbol(id, true, this);
+    const caseInsensitiveSymbol = this.scope.resolveSymbol(id, false, this);
+    mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
 
     const iterType = this.iter.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.fieldId);
@@ -39,10 +40,10 @@ ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
-    if (id === v) {
+    if (match(id, v, caseSensitive)) {
       const iterSt = this.iter.symbolType();
       const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
       return {
@@ -52,7 +53,7 @@ ${this.indent()}}`;
       };
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

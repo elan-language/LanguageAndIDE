@@ -45,7 +45,7 @@ export class ExpressionField extends AbstractField {
     const an = this.rootNode?.getActiveNode();
     if (an instanceof ArgListNode) {
       const context = an.context();
-      const ps = scope?.resolveSymbol(context, scope);
+      const ps = scope?.resolveSymbol(context, true, scope);
       descriptions = "<i>arguments</i>";
       if (ps && !(ps instanceof UnknownSymbol)) {
         const names = parameterNames(ps.symbolType());

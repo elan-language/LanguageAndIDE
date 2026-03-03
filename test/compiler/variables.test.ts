@@ -752,6 +752,31 @@ end main`;
     ]);
   });
 
+  test("Fail_differsByCase", async () => {
+    const code = `${testHeader}
+
+main
+  variable name set to 1
+  variable nAME set to 2
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'name' already exists. Identifiers must be distinct by more than just case. Either rename 'nAME' or extend it e.g. by adding underscore.LangRef.html#compile_error",
+    ]);
+  });
+
   test("Pass_Redefine", async () => {
     const code = `${testHeader}
 

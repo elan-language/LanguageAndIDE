@@ -16,6 +16,7 @@ import {
   checkForDeprecation,
   mustBeImmutableGenericType,
   mustBeKnownSymbolType,
+  mustBeReferenceGenericType,
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
@@ -93,6 +94,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
       }
     }
+
+    if (rootSt instanceof ClassType && rootSt.className === "Optional") {
+      for (const gp of this.genericParameters) {
+        mustBeReferenceGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+      }
+    }
   }
 
   compile(): string {
@@ -121,7 +128,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   rootSymbol() {
     const globalScope = getGlobalScope(this.scope);
     const scope = this.isLibraryQualified() ? globalScope.libraryScope : globalScope;
-    return scope.resolveSymbol(this.id, this.scope);
+    return scope.resolveSymbol(this.id, true, this.scope);
   }
 
   symbolType() {

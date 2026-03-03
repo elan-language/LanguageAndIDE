@@ -4,6 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import {
   getDeconstructionIds,
   getGlobalScope,
+  match,
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
@@ -41,8 +42,9 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const id = getId(this.name);
 
     mustNotBeKeyword(id, this.compileErrors, this.fieldId);
-    const symbol = this.getScope().resolveSymbol(id, this);
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    const symbol = this.getScope().resolveSymbol(id, true, this);
+    const caseInsensitiveSymbol = this.getScope().resolveSymbol(id, false, this);
+    mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
 
     const lhs = this.name;
     const rhs = this.expr;
@@ -80,12 +82,12 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
-    if (id === this.symbolId) {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (match(id, this.symbolId, caseSensitive)) {
       return this;
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
