@@ -61,7 +61,7 @@ export class CallAsn extends BreakpointAsn {
 
     let qualifier = updatedQualifier;
 
-    const procSymbol = currentScope.resolveSymbol(id, this);
+    const procSymbol = currentScope.resolveSymbol(id, true, this);
 
     mustBeKnownSymbol(
       procSymbol,
@@ -148,13 +148,13 @@ export class CallAsn extends BreakpointAsn {
     return "";
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     if (isAstCollectionNode(this.args)) {
       const items = this.args.items;
       const last = items.length > 0 ? items[items.length - 1] : new UnknownSymbol();
 
       if (last instanceof LambdaAsn) {
-        const ss = last.signature.resolveSymbol(id, initialScope);
+        const ss = last.signature.resolveSymbol(id, caseSensitive, initialScope);
 
         if (!(ss instanceof UnknownSymbol)) {
           return ss;
@@ -162,7 +162,7 @@ export class CallAsn extends BreakpointAsn {
       }
     }
 
-    return super.resolveSymbol(id, this);
+    return super.resolveSymbol(id, caseSensitive, this);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

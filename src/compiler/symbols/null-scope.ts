@@ -5,7 +5,7 @@ import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 
 export class NullScope implements Scope {
-  resolveSymbol(_id: string, _scope: Scope): ElanSymbol {
+  resolveSymbol(_id: string, _caseSensitive: boolean, _scope: Scope): ElanSymbol {
     return new UnknownSymbol();
   }
 

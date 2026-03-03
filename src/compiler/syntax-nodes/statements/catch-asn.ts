@@ -5,8 +5,8 @@ import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { StringType } from "../../../compiler/symbols/string-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId } from "../../compile-rules";
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../elan-keywords";
-import { symbolMatches } from "../../symbols/symbol-helpers";
+import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
+import { match, symbolMatches } from "../../symbols/symbol-helpers";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
@@ -64,13 +64,13 @@ ${compileNodes(this.compileChildren)}\r`;
     return this.getCurrentScope().getParentScope();
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
-    if (getId(this.variable) === id) {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (match(getId(this.variable), id, caseSensitive)) {
       return this;
     }
     return (
-      getChildSymbol(this.compileChildren, id, initialScope) ??
-      this.getOuterScope().resolveSymbol(id, this.getCurrentScope())
+      getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
+      this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
     );
   }
 

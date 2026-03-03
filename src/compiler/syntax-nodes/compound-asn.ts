@@ -36,7 +36,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
     return fst < lst ? this.children.slice(fst, lst + 1) : this.children.slice(lst, fst + 1);
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope);
     if (range.length > 1) {
@@ -52,7 +52,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
       }
     }
 
-    return this.getParentScope().resolveSymbol(id, this.getCurrentScope());
+    return this.getParentScope().resolveSymbol(id, caseSensitive, this.getCurrentScope());
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {

@@ -432,7 +432,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
-      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, true, classType);
 
       if (
         subSymbol instanceof UnknownSymbol ||
@@ -546,7 +546,7 @@ export function mustCallMemberViaQualifier(
   location: string,
 ) {
   if (!ft.isExtension && isClass(scope)) {
-    const t = scope.resolveOwnSymbol(id);
+    const t = scope.resolveOwnSymbol(id, true);
     if (t instanceof UnknownSymbol) {
       compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
     }
@@ -1074,7 +1074,7 @@ export function mustBeUniqueNameInScope(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const symbol = scope.resolveSymbol(name, scope);
+  const symbol = scope.resolveSymbol(name, true, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     let postFix = "";

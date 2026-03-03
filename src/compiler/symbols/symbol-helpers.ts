@@ -269,7 +269,7 @@ export function isPossibleExtensionForType(
 
 export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope): boolean {
   const currentClass = getClassScope(scope);
-  const matchingMember = currentClass.resolveSymbol(s.symbolId, scope);
+  const matchingMember = currentClass.resolveSymbol(s.symbolId, true, scope);
   return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
 }
 
@@ -306,7 +306,7 @@ function internalUpdateScopeAndQualifier(
   qualifier: AstNode,
 ): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {
-    const classSymbol = currentScope.resolveSymbol(qualifierScope.className, currentScope);
+    const classSymbol = currentScope.resolveSymbol(qualifierScope.className, true, currentScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
 
@@ -401,7 +401,7 @@ export function matchingSymbolsWithQualifier(
   qualId: string,
   scope: Scope,
 ): ElanSymbol[] {
-  const qual = scope.resolveSymbol(qualId, scope);
+  const qual = scope.resolveSymbol(qualId, true, scope);
 
   if (qual instanceof UnknownSymbol) {
     return [];
@@ -417,7 +417,7 @@ export function matchingSymbolsWithQualifier(
   let qualifiedSymbols: ElanSymbol[] = [];
 
   if (qualSt instanceof ClassType) {
-    const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, scope);
+    const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, true, scope);
 
     if (isClass(cls)) {
       qualifiedSymbols = cls
@@ -427,7 +427,7 @@ export function matchingSymbolsWithQualifier(
   }
 
   if (qualSt instanceof EnumType) {
-    const en = getGlobalScope(scope).resolveSymbol(qualSt.name, scope);
+    const en = getGlobalScope(scope).resolveSymbol(qualSt.name, true, scope);
 
     if (isEnum(en)) {
       qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
@@ -464,7 +464,7 @@ export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScop
   let currentScope = originalScope;
   const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {
-    const classSymbol = originalScope.resolveSymbol(classScope.className, originalScope);
+    const classSymbol = originalScope.resolveSymbol(classScope.className, true, originalScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
   } else {

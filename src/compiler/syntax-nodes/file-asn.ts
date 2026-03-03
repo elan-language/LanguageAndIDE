@@ -7,7 +7,7 @@ import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { DuplicateSymbol } from "../../compiler/symbols/duplicate-symbol";
 import { elanSymbols } from "../../compiler/symbols/elan-symbols";
 import { NullScope } from "../../compiler/symbols/null-scope";
-import { isSymbol, symbolMatches } from "../../compiler/symbols/symbol-helpers";
+import { isSymbol, match, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
@@ -225,7 +225,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
     // only constants above scope
 
     let globalSymbols: ElanSymbol[] = [];
@@ -244,7 +244,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       );
     }
 
-    const matches = globalSymbols.filter((s) => s.symbolId === id);
+    const matches = globalSymbols.filter((s) => match(s.symbolId, id, caseSensitive));
 
     if (matches.length === 1) {
       return matches[0];
@@ -253,6 +253,6 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       return new DuplicateSymbol(matches);
     }
 
-    return this.scope.resolveSymbol(id, this);
+    return this.scope.resolveSymbol(id, caseSensitive, this);
   }
 }

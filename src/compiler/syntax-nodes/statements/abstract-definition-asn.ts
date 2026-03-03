@@ -80,12 +80,12 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
-    if (id === this.symbolId) {
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (match(id, this.symbolId, caseSensitive)) {
       return this;
     }
 
-    return super.resolveSymbol(id, initialScope);
+    return super.resolveSymbol(id, caseSensitive, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
