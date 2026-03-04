@@ -1249,8 +1249,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     ); //But should fail type tests
-    testNodeParse(new LitValueNode(f), `''`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LitValueNode(f), `'`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new LitValueNode(f), `''`, ParseStatus.invalid, "", "", "");
+    testNodeParse(new LitValueNode(f), `'`, ParseStatus.invalid, "", "", "");
   });
   test("Literal", () => {
     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
@@ -1316,8 +1316,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(f), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
     testNodeParse(new LitString(f), `"`, ParseStatus.incomplete, `"`, "", "", "");
     testNodeParse(new LitString(f), `abc`, ParseStatus.invalid, "", "abc", "", "");
-    testNodeParse(new LitString(f), `'abc'`, ParseStatus.valid, "'abc'", "", "", "");
-    testNodeParse(new LitString(f), `'abc"`, ParseStatus.incomplete, `'abc"`, "", "", "");
+    testNodeParse(new LitString(f), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
+    testNodeParse(new LitString(f), `'abc"`, ParseStatus.invalid, ``, `'abc"`, "", "");
     testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
     //Test embedded html
     testNodeParse(

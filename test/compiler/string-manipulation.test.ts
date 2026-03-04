@@ -50,41 +50,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
   });
 
-  test("Pass_AppendMixedStrings", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to "Hello"
-  variable b set to 'World!'
-  call printNoLine(a + " " + b)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = "Hello";
-  let b = 'World!';
-  await _stdlib.printNoLine(a + " " + b);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello World!");
-  });
-
   test("Pass_AppendOrPrependChar", async () => {
     const code = `${testHeader}
 

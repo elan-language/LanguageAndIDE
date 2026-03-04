@@ -56,7 +56,7 @@ import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
 import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
 import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
-import { LiteralStringNonInterpAsn } from "../../compiler/syntax-nodes/literal-string-non-interp-asn";
+//import { LiteralStringNonInterpAsn } from "../../compiler/syntax-nodes/literal-string-non-interp-asn";
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
@@ -144,7 +144,6 @@ import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
 import { LitStringDoubleQuotesEmpty } from "../frames/parse-nodes/lit-string-double-quotes-empty";
 import { LitStringDoubleQuotesNonEmpty } from "../frames/parse-nodes/lit-string-double-quotes-non-empty";
 import { LitStringInterpolation } from "../frames/parse-nodes/lit-string-interpolation";
-import { LitStringSingleQuotes } from "../frames/parse-nodes/lit-string-single-quotes";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
@@ -691,10 +690,6 @@ export function transform(
 
   if (node instanceof LitFloat) {
     return new LiteralFloatAsn(node.matchedText, fieldId);
-  }
-
-  if (node instanceof LitStringSingleQuotes) {
-    return new LiteralStringNonInterpAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof LitStringDoubleQuotesEmpty) {

@@ -3,7 +3,7 @@
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    set reply to inputString('RETURN for time now orUnix time (positive integer) orQ to quit')
+    set reply to inputString("RETURN for time now orUnix time (positive integer) orQ to quit")
     if reply.equals("") then
       call printDate(divAsInt(clock(), 1000))
     else
@@ -51,7 +51,7 @@ function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
 end function
 
 function dayInYear(year as Int, unixDays as Int) returns Int
-  # unixDays start at 0, months' day numbers start at 1
+  # unixDays start at 0, months, day numbers start at 1
   variable dayNumber set to unixDays + 1
   if year > unixYear then
     # discount previous nominal years

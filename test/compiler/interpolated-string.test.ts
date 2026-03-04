@@ -14,19 +14,17 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Strings", () => {
-  test("Pass_SingleAndDoubleQuotes", async () => {
+  test("Pass_SingleInsideDoubleQuotes", async () => {
     const code = `${testHeader}
 
 main
   call printNoLine("'Hello,' she said.")
-  call printNoLine('"Hello," she said.')
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine("'Hello,' she said.");
-  await _stdlib.printNoLine('"Hello," she said.');
 }
 return [main, _tests];}`;
 
@@ -44,7 +42,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, `'Hello,' she said."Hello," she said.`);
+    await assertObjectCodeExecutes(fileImpl, `'Hello,' she said.`);
   });
   test("Pass_InterpolatedAndNonInterpolatedString", async () => {
     const code = `${testHeader}
@@ -54,7 +52,6 @@ main
   variable b set to "Apple"
   variable c set to [1,2,3]
   call printNoLine("{a} {b} {c}")
-  call printNoLine('{a} {b} {c}')
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -64,7 +61,6 @@ async function main() {
   let b = "Apple";
   let c = system.list([1, 2, 3]);
   await _stdlib.printNoLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
-  await _stdlib.printNoLine('{a} {b} {c}');
 }
 return [main, _tests];}`;
 
@@ -82,7 +78,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]{a} {b} {c}");
+    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]");
   });
 
   test("Fail_missingBrace", async () => {
