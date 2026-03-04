@@ -158,7 +158,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 80);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 79);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1287,9 +1287,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Set", "*", "*"],
       ["Stack", "*", "*"],
       ["String", "*", "*"],
+      ["HashSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "params6", "a as S", expected);
@@ -1379,7 +1379,7 @@ end function`;
       ["Int", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Set<of I", expected);
+    await assertSymbolCompletionWithString(fileImpl, "params6", "a as HashSet<of I", expected);
   });
 
   test("Pass_typeName7", async () => {
@@ -1434,9 +1434,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["Set", "*", "*"],
       ["Stack", "*", "*"],
       ["String", "*", "*"],
+      ["HashSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "type5", "S", expected);
@@ -1662,22 +1662,22 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["AsRef", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
       ["Float", "*", "*"],
+      ["HashSet", "*", "*"],
       ["ImageVG", "*", "*"],
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "List<of "],
-      ["Optional", "*", "Optional<of "],
+      ["Maybe", "*", "Maybe<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
-      ["Ref", "*", "*"],
       ["RegExp", "*", "*"],
-      ["Set", "*", "*"],
       ["Stack", "*", "*"],
       ["String", "*", "*"],
       ["TextFileReader", "*", "*"],
@@ -1740,12 +1740,12 @@ end main`;
       ["Int", "*", "*"],
       ["LineVG", "*", "*"],
       ["List", "*", "*"],
-      ["Optional", "*", "Optional<of "],
+      ["Optional", "*", "Maybe<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
       ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
-      ["Ref", "*", "Ref<of "],
+      ["Ref", "*", "AsRef<of "],
       ["RegExp", "*", "*"],
       ["Set", "*", "*"],
       ["Stack", "*", "*"],

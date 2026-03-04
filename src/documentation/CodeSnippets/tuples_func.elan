@@ -1,0 +1,14 @@
+# d17c0911f9d7ac2d7797ecd221c6b23d562055155043bc976fe2040714766e78 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  variable p1 set to tuple(4.0, 0)
+  variable p2 set to tuple(0, 3.0)
+  call print(distanceBetween(p1, p2))
+end main
+
+# snipFrom
+function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
+  return sqrt(power(p2.item0 - p1.item0, 2) + power(p2.item1 - p1.item1, 2))
+end function
+
+# snipTo

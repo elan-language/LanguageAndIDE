@@ -5,7 +5,7 @@ main
   call fillRandom(grid)
   while true
     call displayBlocks(grid)
-    variable gridRef set to new Ref<of List<of List<of Int>>>(grid)
+    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
     call nextGeneration(gridRef)
     set grid to gridRef.value()
     call pause(50)
@@ -108,7 +108,7 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
   return colour
 end function
 
-procedure nextGeneration(gridRef as Ref<of List<of List<of Int>>>)
+procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
   variable nextGen set to createBlockGraphics(white)
   variable grid set to gridRef.value()
   for x from 0 to 39 step 1

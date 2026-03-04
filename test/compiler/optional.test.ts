@@ -4,7 +4,6 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -14,12 +13,12 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Optional", () => {
-  test("Pass_Optional1", async () => {
+suite("Maybe", () => {
+  test("Pass_Maybe1", async () => {
     const code = `${testHeader}
 
 main
-  variable foo set to new Optional<of Foo>()  
+  variable foo set to new Maybe<of Foo>()  
 end main
 
 class Foo
@@ -30,7 +29,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(await new _stdlib.Optional()._initialise());
+  let foo = system.initialise(await new _stdlib.Maybe()._initialise());
 }
 
 class Foo {
@@ -61,17 +60,17 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_Optional2", async () => {
+  test("Pass_Maybe2", async () => {
     const code = `${testHeader}
 
 main
-  variable foo set to new Optional<of List<of Int>>()  
+  variable foo set to new Maybe<of List<of Int>>()  
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let foo = system.initialise(await new _stdlib.Optional()._initialise());
+  let foo = system.initialise(await new _stdlib.Maybe()._initialise());
 }
 return [main, _tests];}`;
 
@@ -96,7 +95,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable foo set to new Optional<of String>()
+  variable foo set to new Maybe<of String>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -113,14 +112,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Optional cannot be of value type 'String'.LangRef.html#compile_error",
+      "Maybe cannot be of value type 'String'.LangRef.html#compile_error",
     ]);
   });
 
   test("Fail_ValueType2", async () => {
     const code = `${testHeader}
 
-function foo(p as Optional<of Int>) returns Int
+function foo(p as Maybe<of Int>) returns Int
   return 0
 end function`;
 
@@ -138,7 +137,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Optional cannot be of value type 'Int'.LangRef.html#compile_error",
+      "Maybe cannot be of value type 'Int'.LangRef.html#compile_error",
     ]);
   });
 });

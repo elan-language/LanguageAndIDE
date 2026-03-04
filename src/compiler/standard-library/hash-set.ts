@@ -14,11 +14,11 @@ import {
 import { System } from "../system";
 import { List } from "./list";
 
-@elanClass(ClassOption.record, [ElanT1], [], [], [], "Set")
-export class ElanSet<T1> {
+@elanClass(ClassOption.record, [ElanT1], [], [], [], "HashSet")
+export class HashSet<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new ElanSet();
+    return new HashSet();
   }
 
   async _initialise() {
@@ -44,8 +44,8 @@ export class ElanSet<T1> {
 
   private contents: Set<T1>;
 
-  private copyOfThis(): ElanSet<T1> {
-    const copy = this.system!.initialise(new ElanSet<T1>());
+  private copyOfThis(): HashSet<T1> {
+    const copy = this.system!.initialise(new HashSet<T1>());
     copy.contents = new Set<T1>(this.contents);
     return copy;
   }
@@ -60,15 +60,15 @@ export class ElanSet<T1> {
     return this.contents.has(item);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  add(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(HashSet))
+  add(@elanGenericParamT1Type() item: T1): HashSet<T1> {
     const copy = this.copyOfThis();
     copy.contents.add(item);
     return copy;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  addFromList(@elanClassType(List) list: List<T1>): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(HashSet))
+  addFromList(@elanClassType(List) list: List<T1>): HashSet<T1> {
     const copy = this.copyOfThis();
     for (const item of list) {
       copy.contents.add(item as T1);
@@ -76,46 +76,46 @@ export class ElanSet<T1> {
     return copy;
   }
 
-  @elanFunction([], FunctionOptions.impure, ElanClass(ElanSet))
-  remove(@elanGenericParamT1Type() item: T1): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.impure, ElanClass(HashSet))
+  remove(@elanGenericParamT1Type() item: T1): HashSet<T1> {
     const copy = this.copyOfThis();
     copy.contents.delete(item);
     return copy;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  union(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(HashSet))
+  union(@elanClassType(HashSet) other: HashSet<T1>): HashSet<T1> {
     const copy = this.copyOfThis();
     copy.contents = this.contents.union(other.contents);
     return copy;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  difference(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(HashSet))
+  difference(@elanClassType(HashSet) other: HashSet<T1>): HashSet<T1> {
     const copy = this.copyOfThis();
     copy.contents = this.contents.difference(other.contents);
     return copy;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ElanSet))
-  intersection(@elanClassType(ElanSet) other: ElanSet<T1>): ElanSet<T1> {
+  @elanFunction([], FunctionOptions.pure, ElanClass(HashSet))
+  intersection(@elanClassType(HashSet) other: HashSet<T1>): HashSet<T1> {
     const copy = this.copyOfThis();
     copy.contents = this.contents.intersection(other.contents);
     return copy;
   }
 
   @elanFunction([], FunctionOptions.pure)
-  isDisjointFrom(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+  isDisjointFrom(@elanClassType(HashSet) other: HashSet<T1>): boolean {
     return this.contents.isDisjointFrom(other.contents);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanBoolean)
-  isSubsetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+  isSubsetOf(@elanClassType(HashSet) other: HashSet<T1>): boolean {
     return this.contents.isSubsetOf(other.contents);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanBoolean)
-  isSupersetOf(@elanClassType(ElanSet) other: ElanSet<T1>): boolean {
+  isSupersetOf(@elanClassType(HashSet) other: HashSet<T1>): boolean {
     return this.contents.isSupersetOf(other.contents);
   }
 

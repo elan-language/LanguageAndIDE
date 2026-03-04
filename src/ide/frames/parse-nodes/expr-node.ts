@@ -1,5 +1,4 @@
 import {
-  emptyKeyword,
   ifKeyword,
   lambdaKeyword,
   newKeyword,
@@ -68,15 +67,9 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
-    let kws = [
-      newKeyword,
-      ifKeyword,
-      lambdaKeyword,
-      emptyKeyword,
-      thisKeyword,
-      refKeyword,
-      notKeyword,
-    ].map((kw) => KeywordCompletion.create(kw));
+    let kws = [newKeyword, ifKeyword, lambdaKeyword, thisKeyword, refKeyword, notKeyword].map(
+      (kw) => KeywordCompletion.create(kw),
+    );
     kws.push(KeywordCompletion.create(tupleKeyword, false, false, true));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {

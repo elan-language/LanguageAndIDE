@@ -10,9 +10,9 @@ import {
 import { System } from "../system";
 
 @elanClass(ClassOption.concrete, [ElanT1], ["to"], [ElanT1], [])
-export class Ref<T1> {
+export class AsRef<T1> {
   static emptyInstance() {
-    return new Ref();
+    return new AsRef();
   }
 
   async _initialise(v: T1) {

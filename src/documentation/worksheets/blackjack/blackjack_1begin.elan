@@ -403,10 +403,10 @@ class Dealer inherits Player
   constructor(startingPoints as Int)
     set this.name to "Dealer"
     set this.points to startingPoints
-    set this.faceCard to new Optional<of Card>()
+    set this.faceCard to new Maybe<of Card>()
   end constructor
 
-  property faceCard as Optional<of Card>
+  property faceCard as Maybe<of Card>
 
   property hasPlayed as Boolean
 

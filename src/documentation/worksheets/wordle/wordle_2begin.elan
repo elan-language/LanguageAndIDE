@@ -23,7 +23,7 @@ procedure playGame()
   variable solved set to false
   while (attemptNo < 6) and (not solved)
     call enterAttempt(attemptNo, grid, used)
-    variable solvedRef set to new Ref<of Boolean>(solved)
+    variable solvedRef set to new AsRef<of Boolean>(solved)
     call colourAttempt(attemptNo, grid, target, solvedRef, used)
     set solved to solvedRef.value()
     set attemptNo to attemptNo + 1
@@ -59,7 +59,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
   end while
 end procedure
 
-procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as Ref<of Boolean>, used as Dictionary<of String, String>)
+procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
   for i from 0 to 4 step 1
@@ -76,7 +76,7 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
 end procedure
 
-procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as Ref<of String>)
+procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as AsRef<of String>)
   variable mark set to markRef.value()
   variable guess set to getWord(attemptNo, grid)
   variable chNo set to 0
@@ -213,7 +213,7 @@ procedure playReverseGame()
   variable grid set to new Array2D<of String>(5, 6, "")
   while (attemptNo < 6) and (not solved)
     call putAttemptIntoGrid(attempt, attemptNo, grid)
-    variable mark set to new Ref<of String>("")
+    variable mark set to new AsRef<of String>("")
     call enterMark(attemptNo, grid, mark)
     if mark.value().equals("22222") then
       set solved to true

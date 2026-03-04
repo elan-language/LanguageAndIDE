@@ -1,11 +1,6 @@
 import assert from "assert";
 
-import {
-  assertKeyword,
-  functionKeyword,
-  letKeyword,
-  testKeyword,
-} from "../src/compiler/elan-keywords";
+import { assertKeyword, functionKeyword, testKeyword } from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
@@ -32,7 +27,7 @@ import { key } from "./testHelpers";
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
   globals: string[] = [functionKeyword, testKeyword];
-  statements: string[] = [assertKeyword, letKeyword];
+  statements: string[] = [assertKeyword];
   class_members: string[] = [];
   require_log_on: boolean = false;
   can_load_only_own_files: boolean = false;

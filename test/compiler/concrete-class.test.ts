@@ -279,14 +279,14 @@ end class
 class Bar
   constructor()
     set this.p2 to ""
-    set this.foo to new Optional<of Foo>()
+    set this.foo to new Maybe<of Foo>()
   end constructor
 
   property p1 as Int
 
   property p2 as String
 
-  property foo as Optional<of Foo>
+  property foo as Maybe<of Foo>
 
   function asString() returns String
     return ""
@@ -336,7 +336,7 @@ class Bar {
 
   async _initialise() {
     this.p2 = "";
-    this.foo = system.initialise(await new _stdlib.Optional()._initialise());
+    this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
@@ -346,7 +346,7 @@ class Bar {
 
   elan_foo;
   get foo() {
-    return this.elan_foo ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set foo(foo) {
     this.elan_foo = foo;

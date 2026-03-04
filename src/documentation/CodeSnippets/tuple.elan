@@ -1,8 +1,7 @@
-# 29c281e0f7644a7be287fba0453f9396b00174fb800beb186a3ba9c9ad02153c Elan 2.0.0-alpha guest default_profile valid
+# 19af7ef17144c8d631a0b32efc37d3e39e737a315680149fc845305acc98a236 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable x set to empty List<of Boolean>
-  call x.initialise(2, false)
-  variable t set to tuple("a", 1, x)
-  call print(t)
+  variable point set to tuple(3, 4)
+  variable t set to point
+  call print(t.item1)
 end main

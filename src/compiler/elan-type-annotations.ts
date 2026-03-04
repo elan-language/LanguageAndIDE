@@ -58,7 +58,15 @@ export function stdlibClassUniqueId(name: string, ofTypes?: TypeDescriptor[]) {
   const fullName = [name];
 
   for (const st of ofTypes ?? []) {
-    fullName.push(st.name);
+    if ("ofType" in st) {
+      fullName.push(
+        stdlibClassUniqueId(st.name, st.ofType ? [st.ofType as TypeDescriptor] : undefined),
+      );
+    } else if ("ofTypes" in st) {
+      fullName.push(stdlibClassUniqueId(st.name, st.ofTypes as TypeDescriptor[]));
+    } else {
+      fullName.push(st.name);
+    }
   }
 
   return fullName.join("_");
