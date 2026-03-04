@@ -168,6 +168,9 @@ class Foo
   constructor()
     set this.p1 to 1
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -190,6 +193,10 @@ class Foo {
   async _initialise() {
     this.p1 = 1;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -230,6 +237,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return "a Foo"
+  end function
   procedure bar()
     call printNoLine(this)
   end procedure
@@ -248,6 +258,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "a Foo";
   }
 
   async bar() {
@@ -285,6 +299,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -321,6 +338,9 @@ class Foo
     constructor(p1 as Float)
         set this.p to p1
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 
@@ -357,6 +377,9 @@ class Foo
     constructor(p1 as Float)
         set p1 to p1
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 

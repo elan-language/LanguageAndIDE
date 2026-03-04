@@ -1,4 +1,4 @@
-# f662f5422333497c2df9e9bc265c9003d3c9413d657effb50674a332585686c3 Elan 2.0.0-alpha guest default_profile valid
+# c64d5dea2591ebe6d07c4a5864284371719d6e7bb9c810db5e6add69bf63a4bb Elan 2.0.0-alpha guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -39,6 +39,10 @@ class TuringMachine
     set this.currentState to initialState
     set this.headPosition to 0
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   property initialState as String
 

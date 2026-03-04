@@ -5,7 +5,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertDoesNotParseWithMessage,
   assertExportedCSIs,
   assertExportedJavaIs,
   assertExportedPythonIs,
@@ -369,6 +368,9 @@ end function
 class List
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
 end class`;
 
@@ -1001,6 +1003,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class
 `;
 

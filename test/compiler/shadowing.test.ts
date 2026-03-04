@@ -179,6 +179,9 @@ end function
 class Foo
     constructor()
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     function sin(x as Float) returns Float
       return 222
@@ -206,6 +209,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async sin(x) {
@@ -250,6 +257,9 @@ end procedure
 class Foo
     constructor()
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     procedure pause(x as Float)
       call printNoLine(222)
@@ -277,6 +287,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async pause(x) {

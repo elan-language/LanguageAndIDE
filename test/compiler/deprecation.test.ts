@@ -32,6 +32,10 @@ export class DeprecatedClass {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   static emptyInstance() {
     return new DeprecatedClass();
   }
@@ -41,6 +45,10 @@ export class DeprecatedClass {
 export class DeprecatedClass1 {
   async _initialise() {
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   static emptyInstance() {

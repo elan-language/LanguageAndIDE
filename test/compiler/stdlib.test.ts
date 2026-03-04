@@ -8,7 +8,6 @@ import {
   assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertDoesNotParseWithMessage,
   assertGraphicsContains,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -1148,6 +1147,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class
 `;
 
@@ -1172,6 +1174,10 @@ class Bar extends Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
 }
@@ -1350,6 +1356,9 @@ end main
 class Point
   constructor()
   end constructor
+  function asString() returns String
+    return "a Point"
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1366,6 +1375,10 @@ class Point {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "a Point";
   }
 
 }
@@ -2070,6 +2083,9 @@ return [main, _tests];}`;
 class List
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function asString() returns String
     return "MyList"
   end function

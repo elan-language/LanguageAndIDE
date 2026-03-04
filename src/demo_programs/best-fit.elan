@@ -1,4 +1,4 @@
-# cd3b7dc0391c950cab95aed8444bc57173d228cac9dd6615a8629eab10785ad6 Elan 2.0.0-alpha guest default_profile valid
+# f91424cdeb7a5815335246d1e9d286ba2fc9eea03fdbb95933eb21b36572f339 Elan 2.0.0-alpha guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -20,6 +20,10 @@ class Point
     set this.x to x
     set this.y to y
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
 end class
 

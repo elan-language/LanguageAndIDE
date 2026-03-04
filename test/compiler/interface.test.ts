@@ -35,6 +35,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -79,6 +82,10 @@ class Bar {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -137,6 +144,9 @@ class Bar inherits Foo2
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -189,6 +199,10 @@ class Bar {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -247,6 +261,9 @@ class Bar inherits Foo, Foo1, Foo2
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -299,6 +316,10 @@ class Bar {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -359,6 +380,9 @@ end interface
 class Bar inherits Foo1, Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -410,6 +434,10 @@ class Bar {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff1() {
@@ -468,6 +496,9 @@ end interface
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -519,6 +550,10 @@ class Bar {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff1() {
@@ -577,6 +612,9 @@ end interface
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -630,6 +668,10 @@ class Bar {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   async ff1() {
     return 1;
   }
@@ -679,6 +721,9 @@ class Bar
   constructor()
     set this.foo to new Maybe<of Foo>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property foo as Maybe<of Foo>
 
@@ -718,6 +763,10 @@ class Bar {
   async _initialise() {
     this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   elan_foo;
@@ -839,6 +888,9 @@ end main
 class Foo inherits Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class
 
 interface Bar
@@ -856,6 +908,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
 }
@@ -947,6 +1003,9 @@ end interface
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -992,6 +1051,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure proc()
     call printNoLine(2)
@@ -1034,6 +1096,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1078,6 +1143,9 @@ end interface
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1125,6 +1193,9 @@ end interface
 class Bar inherits Foo, Foo1
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1289,6 +1360,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property prop1 as Int
 end class
 
@@ -1361,6 +1435,9 @@ end interface
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1

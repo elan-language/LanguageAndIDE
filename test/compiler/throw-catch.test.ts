@@ -221,6 +221,9 @@ end main
 class Foo
     constructor()
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Int
 
@@ -246,6 +249,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;

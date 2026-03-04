@@ -246,6 +246,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Foo
 
@@ -261,6 +264,9 @@ class Foo
     constructor()
         set this.p1 to 5
     end constructor
+    function asString() returns String
+      return ""
+    end function
 
     property p1 as Float
 
@@ -286,6 +292,10 @@ class Bar {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_p1;
   get p1() {
     return this.elan_p1 ??= Foo.emptyInstance();
@@ -308,6 +318,10 @@ class Foo {
   async _initialise() {
     this.p1 = 5;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -349,6 +363,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Foo
 
@@ -364,6 +381,9 @@ class Foo
     constructor()
         set this.p1 to 5
     end constructor
+    function asString() returns String
+      return ""
+    end function
 
     property p1 as Float
 
@@ -376,6 +396,9 @@ end class
 class Qux
   constructor()
   end constructor
+  function asString() returns String
+    return "a Qux"
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -392,6 +415,10 @@ class Bar {
   async _initialise() {
     this.p1 = system.initialise(await new Foo()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   elan_p1;
@@ -418,6 +445,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   p1 = 0;
 
   async times(value) {
@@ -432,6 +463,10 @@ class Qux {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "a Qux";
   }
 
 }
@@ -766,6 +801,9 @@ class Foo
     constructor()
         set this.p1 to 5
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 
@@ -807,6 +845,9 @@ class Foo
     constructor()
       
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     function such() returns Int
         return 0
@@ -838,6 +879,9 @@ class Foo
   constructor()
     set this.p1 to 5
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Float
 
@@ -872,6 +916,9 @@ class Foo
     constructor()
         set this.p1 to 5
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 
@@ -914,6 +961,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function changeValue(a as Bar) returns Int
     return 0
@@ -946,6 +996,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function changeValue(a as Int) returns Bar
     return 0
@@ -978,6 +1031,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function if(a as Int) returns Int
     return 0
@@ -1007,6 +1063,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function break(a as Int) returns Int
     return 0
@@ -1036,6 +1095,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function int(a as Int) returns Int
     return 0
@@ -1065,6 +1127,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function foo(a as Int, b as String, a as Int) returns Int
     return 0
@@ -1098,6 +1163,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function foo() returns Int
     if this.p2 then
@@ -1139,6 +1207,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function foo() returns Int
     if this.p2 then
@@ -1211,6 +1282,9 @@ end function`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function foo(foo as Int) returns String
       return ""
   end function
@@ -1240,6 +1314,9 @@ end class`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function foo(a as Int, foo as Int) returns String
       return ""
   end function
