@@ -1,4 +1,4 @@
-# be685d34986e704ee62e662581316d7b7355e49b1ebe02c5456d360a18669f84 Elan 2.0.0-alpha guest default_profile valid
+# b80855dde462dba8cc6f28db7a94ce51648859763ee3311b70a84607160a6e70 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -123,6 +123,10 @@ class Point
     set this.x to x
     set this.y to y
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>

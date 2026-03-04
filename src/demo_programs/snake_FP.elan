@@ -1,4 +1,4 @@
-# fd3ffdb143366742db757673823c3233fa06b4fff94833a352b2b5f5ace03357 Elan 2.0.0-alpha guest default_profile valid
+# ba49d079f35df5a54e8fc1879e14aa17c0da1eeb4ec5c48457f1e95ab92616db Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -92,6 +92,10 @@ class Game
     set this.apple to new Square(12, 15)
     set this.rnd to rnd
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   function withNewApple() returns Game
     variable x_rnd2 set to this.rnd.nextInt(0, 39)

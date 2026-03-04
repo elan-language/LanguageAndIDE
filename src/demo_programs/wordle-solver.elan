@@ -1,4 +1,4 @@
-# 434dcf2f2b3ca577d1131c776e7e43ba2db94cb5b2b3fb8379628ca32cc6b605 Elan 2.0.0-alpha guest default_profile valid
+# ff69f3e3e12e81779a9c64599b20559e3efbdfd5a2642939de6bbf56cfd64792 Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -234,6 +234,10 @@ class WordCount
     set this.word to word
     set this.count to count
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
 end class
 

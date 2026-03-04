@@ -403,6 +403,10 @@ class Player inherits Foo, Bar
 
   end constructor
 
+  function asString() returns String
+    return ""
+  end function
+
   property score as Int
 
   procedure foo()
@@ -537,6 +541,9 @@ abstract class Card
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 	  
  end class
 `;
@@ -560,6 +567,10 @@ class Foo
   constructor()
 
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   private property bar as Int
 

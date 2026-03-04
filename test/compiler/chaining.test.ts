@@ -97,6 +97,9 @@ class Foo
   constructor()
     set this.a to [1]
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property a as List<of Int>
 end class`;
@@ -115,6 +118,10 @@ class Foo {
   async _initialise() {
     this.a = system.list([1]);
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   a = system.initialise(_stdlib.List.emptyInstance());
@@ -153,6 +160,9 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property b as Bar
 end class
@@ -161,6 +171,9 @@ class Bar
   constructor()
     set this.y to new Yon()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property y as Yon
 end class
@@ -169,6 +182,9 @@ class Yon
   constructor()
     set this.z to 2
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property z as Int
 end class`;
@@ -190,6 +206,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_b;
   get b() {
     return this.elan_b ??= Bar.emptyInstance();
@@ -208,6 +228,10 @@ class Bar {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_y;
   get y() {
     return this.elan_y ??= Yon.emptyInstance();
@@ -224,6 +248,10 @@ class Yon {
   async _initialise() {
     this.z = 2;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   z = 0;
@@ -262,6 +290,9 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property b as Bar
 end class
@@ -269,6 +300,9 @@ end class
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff() returns Int
     return 4
@@ -292,6 +326,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_b;
   get b() {
     return this.elan_b ??= Bar.emptyInstance();
@@ -308,6 +346,10 @@ class Bar {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff() {
@@ -348,6 +390,9 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   property b as Bar
 end class
@@ -355,6 +400,9 @@ end class
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff() returns Int
     return 4
@@ -378,6 +426,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_b;
   get b() {
     return this.elan_b ??= Bar.emptyInstance();
@@ -394,6 +446,10 @@ class Bar {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff() {
@@ -504,6 +560,9 @@ class Bar
   constructor()
     set this.strArr to ["apple", "orange", "pair"]
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property strArr as List<of String>
 
@@ -523,6 +582,10 @@ class Bar {
   async _initialise() {
     this.strArr = system.list(["apple", "orange", "pair"]);
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   strArr = system.initialise(_stdlib.List.emptyInstance());
@@ -559,6 +622,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function createLst(n as Int) returns List<of Int>
     return createList(n, 7)
@@ -581,6 +647,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async createLst(n) {
@@ -621,6 +691,9 @@ class Bar
   constructor()
     set this.foo to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property foo as Foo
 
@@ -629,6 +702,9 @@ end class
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function create2DList() returns List<of List<of Int>>
     return [[8,8,8,8],[8,8,8,8],[8,8,8,8]]
@@ -653,6 +729,10 @@ class Bar {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_foo;
   get foo() {
     return this.elan_foo ??= Foo.emptyInstance();
@@ -669,6 +749,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async create2DList() {
@@ -802,6 +886,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff() returns Bar
     return new Bar()
@@ -811,6 +898,9 @@ end class
 class Bar
    constructor()
    end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff() returns Int
     return 0

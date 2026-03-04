@@ -469,6 +469,15 @@ export function mustHaveConstructor(compileErrors: CompileError[], location: str
   compileErrors.push(new SyntaxCompileError("Concrete class must have a constructor.", location));
 }
 
+export function mustHaveAsString(compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError(
+      "Concrete class must have an 'asString' function taking no parameters and returning a String.",
+      location,
+    ),
+  );
+}
+
 export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (!isClass(symbol)) {
     const st = symbol.symbolType();

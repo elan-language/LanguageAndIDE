@@ -332,6 +332,9 @@ class Foo
   constructor()
     set this.p to new List<of Int>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p as List<of Int>
 end class`;
@@ -350,6 +353,10 @@ class Foo {
   async _initialise() {
     this.p = system.initialise(await new _stdlib.List()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p = system.initialise(_stdlib.List.emptyInstance());

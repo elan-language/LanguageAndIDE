@@ -509,6 +509,9 @@ end main
 class Foo
     constructor()
     end constructor
+  function asString() returns String
+    return ""
+  end function
    
 end class
 

@@ -220,6 +220,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return "a Bar"
+  end function
 end class
 
 function cast(bar as Foo) returns Foo
@@ -245,6 +248,10 @@ class Bar extends Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "a Bar";
   }
 
 }
@@ -287,6 +294,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return "a Bar"
+  end function
 end class
 
 function cast(bar as Foo) returns Foo
@@ -312,6 +322,10 @@ class Bar extends Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "a Bar";
   }
 
 }

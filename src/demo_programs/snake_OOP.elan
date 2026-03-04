@@ -1,4 +1,4 @@
-# 7a1474b731f1feae659b448b5243db8710566ed60cf7ad2c0280f3000e742007 Elan 2.0.0-alpha guest default_profile valid
+# b5b02fd5605756c1e03a97bd5bfd04968b6b4f38e8525e5a8d4ca4f4e0cb1936 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -24,6 +24,10 @@ class Snake
     set this.head to tail.getAdjacentSquare(this.currentDir)
     set this.priorTail to tail
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   private property currentDir as Direction
 
@@ -89,6 +93,10 @@ class Apple
     set this.location to new Square(0, 0)
   end constructor
 
+  function asString() returns String
+    return ""
+  end function
+
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
@@ -114,6 +122,10 @@ class Square
     set this.x to x
     set this.y to y
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   property x as Int
 

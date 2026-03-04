@@ -281,6 +281,9 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to ref f
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property pf as Func<of Int => Int>
 
@@ -304,6 +307,10 @@ class Foo {
   async _initialise(f) {
     this.pf = f;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   pf = system.emptyFunc(0);
@@ -629,6 +636,9 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to f
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property pf as Func<of Int => Int>
 
@@ -652,6 +662,10 @@ class Foo {
   async _initialise(f) {
     this.pf = f;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   pf = system.emptyFunc(0);

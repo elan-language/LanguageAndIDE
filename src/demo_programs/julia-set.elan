@@ -1,4 +1,4 @@
-# cab56f5afc3178821f7cb1c2d10357806953554317d37a703fe9c982450422f4 Elan 2.0.0-alpha guest default_profile valid
+# 51e194f36e289da01bd1dfdc494fe0efeac7006e42dfd1c8c4ce90111a8499dc Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -61,6 +61,10 @@ class Coords
     set this.jx to -0.512
     set this.jy to 0.521
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   property scale as Float
 

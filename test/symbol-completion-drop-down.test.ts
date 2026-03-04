@@ -222,6 +222,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     set a to 2
@@ -247,7 +250,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident15", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident22", "a", 1, expected);
   });
 
   test("Pass_InConstructor", async () => {
@@ -257,6 +260,9 @@ class Foo
   constructor()
     set a to 0
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property aa2 as Int
   property aa3 as Int
@@ -287,6 +293,9 @@ end class`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp()
     variable a set to 0
@@ -314,7 +323,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident23", "a", expected);
   });
 
   test("Pass_InProcedureParameter", async () => {
@@ -323,6 +332,9 @@ end class`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp(aa4 as Int)
     variable a set to 0
@@ -351,7 +363,7 @@ end class`;
       ["aa4", "aa4", "aa4"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident23", "a", expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -471,6 +483,9 @@ end main`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure proc1()
   end procedure
@@ -511,7 +526,7 @@ end main`;
       ["proc2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "ident43", ".", 3, expected);
   });
 
   test("Pass_CallLibMembers", async () => {
@@ -555,6 +570,9 @@ end main`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure proc1()
   end procedure
@@ -591,7 +609,7 @@ end main`;
 
     const expected = [["pproc3", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident36", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "ident43", "p", 5, expected);
   });
 
   test("Pass_CallExtensions", async () => {
@@ -872,6 +890,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -900,7 +921,7 @@ end class`;
       ["foo", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "f", 0, expected, true);
+    await assertAutocompletes(fileImpl, "ident31", "f", 0, expected, true);
   });
 
   test("Pass_properties2", async () => {
@@ -914,6 +935,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -939,7 +963,7 @@ end class`;
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "ident31", "o", 1, expected);
   });
 
   ignore_test("Pass_properties3", async () => {
@@ -953,6 +977,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -996,6 +1023,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -1039,6 +1069,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -1063,7 +1096,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
-    await assertSymbolCompletionWithString(fileImpl, "ident24", "this.f", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident31", "this.f", expected);
   });
 
   test("Pass_properties6", async () => {
@@ -1077,6 +1110,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -1105,7 +1141,7 @@ end class`;
       ["bar", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "b", 0, expected, true);
+    await assertAutocompletes(fileImpl, "ident31", "b", 0, expected, true);
   });
 
   test("Pass_properties7", async () => {
@@ -1119,6 +1155,9 @@ class Foo
   constructor()
 
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp1()
     variable f set to 0
@@ -1144,7 +1183,7 @@ end class`;
 
     const expected = [["bar", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident31", "a", 1, expected);
   });
 
   test("Pass_private1", async () => {
@@ -1158,6 +1197,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   private procedure pp1()
   end procedure
@@ -1193,6 +1235,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   private procedure pp1()
   end procedure
@@ -1219,7 +1264,7 @@ end class`;
       ["pp2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident19", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident26", "pp", expected);
   });
 
   test("Pass_assert", async () => {
@@ -1232,6 +1277,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff() returns Int
     return 0
@@ -1261,7 +1309,7 @@ end test`;
       ["ff", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "text31", "gr.", expected);
   });
 
   test("Pass_typeName1", async () => {
@@ -1479,6 +1527,9 @@ end function
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function f1() returns Int
     return 0
@@ -1528,6 +1579,9 @@ end function
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function f1() returns Int
     return 0
@@ -1822,6 +1876,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property bar1 as Int
 
@@ -1850,7 +1907,7 @@ end class`;
       ["bar2", "bar2", "bar2"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident22", "ba", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident29", "ba", expected);
   });
 
   test("Pass_largeConstant", async () => {

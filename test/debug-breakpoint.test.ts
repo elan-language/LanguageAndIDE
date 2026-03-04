@@ -265,6 +265,9 @@ class Foo
     variable d set to [1:2]
     set a to 2
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property f as Int
 
@@ -607,6 +610,9 @@ class Foo
     set this.b to new Bar()
     set this.c to [1,2]
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property a as Int
   property b as Bar
@@ -702,6 +708,9 @@ class Foo
   constructor(f as Func<of Foo => Int>)
     set this.ff to ref f
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property ff as Func<of Foo => Int>
 

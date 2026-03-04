@@ -780,6 +780,9 @@ end procedure
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure bar(z as AsRef<of Int>)
     call z.set(1)
@@ -807,6 +810,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async bar(z) {
@@ -851,6 +858,9 @@ class Foo
   constructor()
     set this.ff to 1
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property ff as Int
 end class`;
@@ -875,6 +885,10 @@ class Foo {
   async _initialise() {
     this.ff = 1;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   ff = 0;

@@ -6,10 +6,13 @@ import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import {
   getId,
   mustBeDeclaredAbove,
+  mustHaveAsString,
   mustHaveConstructor,
   mustImplementSuperClasses,
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
+import { FunctionType } from "../../symbols/function-type";
+import { StringType } from "../../symbols/string-type";
 import { compileNodes, isConstructor } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
@@ -69,15 +72,32 @@ export class ConcreteClassAsn extends ClassAsn {
       this.fieldId,
     );
 
-    const hasConstructor = this.getChildren().some((m) => isConstructor(m));
+    const children = this.getChildren();
+
+    const hasConstructor = children.some((m) => isConstructor(m));
 
     if (!hasConstructor) {
       mustHaveConstructor(this.compileErrors, this.fieldId);
     }
 
+    const hasAsString = children.some((m) => {
+      const st = m.symbolType();
+
+      return (
+        m.symbolId === "asString" &&
+        st instanceof FunctionType &&
+        st.parameterTypes.length === 0 &&
+        st.returnType === StringType.Instance
+      );
+    });
+
+    if (!hasAsString) {
+      mustHaveAsString(this.compileErrors, this.fieldId);
+    }
+
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    const emptyInitialise = this.getChildren().some((m) => isConstructor(m))
+    const emptyInitialise = hasConstructor
       ? ""
       : `  ${this.indent()}async _initialise() { return this; }`;
 

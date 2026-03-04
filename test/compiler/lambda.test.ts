@@ -194,6 +194,9 @@ class Foo
   constructor()
     set this.p1 to lambda x as Int => 0
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure setP1(p as Func<of Int => Int>)
     set this.p1 to ref p
@@ -217,6 +220,10 @@ class Foo {
   async _initialise() {
     this.p1 = async (x) => 0;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async setP1(p) {

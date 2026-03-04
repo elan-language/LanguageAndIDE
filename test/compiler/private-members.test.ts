@@ -94,6 +94,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -121,6 +124,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -164,6 +171,9 @@ end main
 class Foo
   constructor()  
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   private function ff(f as String) returns String
     return f
@@ -188,6 +198,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff(f) {
@@ -231,6 +245,9 @@ class Foo
         set this.p1 to 5
         set this.p2 to "Apple"
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 
@@ -275,6 +292,9 @@ class Foo inherits Bar
     constructor()
       set this.p1 to 5
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 end class`;
@@ -307,6 +327,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -344,6 +367,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -383,6 +409,9 @@ class Foo
         set this.p1 to 5
         set this.p2 to "Apple"
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Float
 
@@ -422,6 +451,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 

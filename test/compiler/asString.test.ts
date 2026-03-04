@@ -3,6 +3,7 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -46,7 +47,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_ClassHasNoAsString", async () => {
+  test("Fail_ClassHasNoAsString", async () => {
     const code = `${testHeader}
 
 main
@@ -64,27 +65,6 @@ class Foo
 
 end class`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f = system.initialise(await new Foo()._initialise());
-  let s = (await _stdlib.asString(f));
-  await _stdlib.printNoLine(s);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-
-  async _initialise() {
-    this.p1 = 5;
-    return this;
-  }
-
-  p1 = 0;
-
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -97,9 +77,9 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Foo");
+    assertDoesNotCompile(fileImpl, [
+      "Concrete class must have an 'asString' function taking no parameters and returning a String.LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_emptyClassAsString", async () => {
@@ -116,6 +96,9 @@ class Foo
   constructor()
     set this.p1 to new Maybe<of Foo>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Maybe<of Foo>
 end class`;
@@ -135,6 +118,10 @@ class Foo {
   async _initialise() {
     this.p1 = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   elan_p1;
@@ -187,7 +174,7 @@ class Foo
 
   function asString() returns String
      return "Custom asString"
-end function 
+  end function 
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

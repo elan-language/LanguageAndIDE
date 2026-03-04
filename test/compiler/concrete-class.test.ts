@@ -169,6 +169,9 @@ class Foo
       variable bar set to new Bar()
       set this.b to bar
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property b as Bar 
 
@@ -178,6 +181,9 @@ class Bar
     constructor()
       set this.p1 to 5
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Int
 
@@ -203,6 +209,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   elan_b;
   get b() {
     return this.elan_b ??= Bar.emptyInstance();
@@ -219,6 +229,10 @@ class Bar {
   async _initialise() {
     this.p1 = 5;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -389,6 +403,9 @@ class Foo
   constructor()
     set this.strArr to ["apple", "orange", "pair"]
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property strArr as List<of String>
 
@@ -408,6 +425,10 @@ class Foo {
   async _initialise() {
     this.strArr = system.list(["apple", "orange", "pair"]);
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   strArr = system.initialise(_stdlib.List.emptyInstance());
@@ -443,6 +464,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
@@ -464,6 +488,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -504,6 +532,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   procedure updateP1()
@@ -529,6 +560,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -602,6 +637,9 @@ class Foo
   constructor()
     set this.p1 to ff()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -623,6 +661,10 @@ class Foo {
   async _initialise() {
     this.p1 = (await this.ff());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -663,6 +705,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -687,6 +732,10 @@ class Foo {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -854,6 +903,9 @@ class Foo
   constructor()
     set this.p1 to new List<of Int>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as List<of Int>
 
@@ -876,6 +928,10 @@ class Foo {
   async _initialise() {
     this.p1 = system.initialise(await new _stdlib.List()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = system.initialise(_stdlib.List.emptyInstance());
@@ -944,6 +1000,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -973,10 +1032,16 @@ end class`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   constructor(val as Int)
       set this.p1 to val
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1011,6 +1076,9 @@ class Foo
   constructor(val as Int)
       set this.p1 to val
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1048,6 +1116,9 @@ class Foo
   constructor(val as Int)
       set this.p1 to val
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1084,6 +1155,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1124,6 +1198,9 @@ class Foo
   constructor()
       set this.p1 to 5
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1182,12 +1259,18 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
@@ -1225,12 +1308,18 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
@@ -1268,6 +1357,9 @@ class Foo
   constructor()
     set this.p1 to new Bar()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Bar
 end class`;
 
@@ -1297,12 +1389,18 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class
 
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 end class`;
 
@@ -1333,6 +1431,9 @@ class Foo
   constructor()
     set this.p1 to ""
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as String
   property p1 as Int
 end class`;
@@ -1363,6 +1464,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function ff() returns Int
     return 0
   end function
@@ -1397,6 +1501,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure ff()
   end procedure
   procedure ff()
@@ -1429,6 +1536,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure ff()
   end procedure
   property ff as Int
@@ -1460,6 +1570,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function ff() returns Int
     return 0
   end function
@@ -1492,6 +1605,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   function ff() returns Int
     return 0
   end function
@@ -1527,6 +1643,9 @@ class Foo
     constructor()
       call setP1(5)
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     procedure setP1(a as Int)
       set this.b to a
@@ -1560,6 +1679,9 @@ end main
 class Foo
     constructor()
     end constructor
+  function asString() returns String
+    return ""
+  end function
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1666,6 +1788,9 @@ class Foo
     constructor()
       set this.vg to new CircleVG()
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property vg as CircleVG
 
@@ -1839,6 +1964,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1870,6 +1998,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1908,6 +2039,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1946,6 +2080,9 @@ end main
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -1954,6 +2091,9 @@ end class
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   function withP1(p as Int) returns Bar
@@ -1992,6 +2132,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -2031,6 +2174,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -2069,6 +2215,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   function withP1(p as Int) returns Foo
@@ -2106,6 +2255,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   procedure withP1(p as Int)

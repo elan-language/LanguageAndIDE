@@ -146,6 +146,9 @@ class Foo
       set this.p2 to 1
       set this.p1 to this.p2
     end constructor
+  function asString() returns String
+    return ""
+  end function
 
     property p1 as Int
     property p2 as Int
@@ -166,6 +169,10 @@ class Foo {
     this.p2 = 1;
     this.p1 = this.p2;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -322,6 +329,9 @@ class Player
   constructor()
     set this.g to new Game()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property g as Game
 
@@ -373,6 +383,10 @@ class Player {
   async _initialise() {
     this.g = system.initialise(await new Game()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   elan_g;
@@ -661,6 +675,9 @@ class Game
   constructor()
     set this.p1 to [1,2,3]
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as List<of Int>
 
@@ -685,6 +702,10 @@ class Game {
   async _initialise() {
     this.p1 = system.list([1, 2, 3]);
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = system.initialise(_stdlib.List.emptyInstance());
@@ -726,6 +747,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -736,6 +760,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     call this.p1.pp()
@@ -759,6 +786,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   async pp() {
     await _stdlib.printNoLine(1);
   }
@@ -771,6 +802,10 @@ class Bar {
   async _initialise() {
     this.p1 = system.initialise(await new Foo()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async p() {
@@ -815,6 +850,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property if as Int
 
@@ -845,6 +883,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property break as Int
 
@@ -876,6 +917,9 @@ class Foo
   constructor()
     set this.p1 to p2
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
   property p2 as Int
@@ -911,6 +955,9 @@ class Foo
     set this.p2 to [0]
     set this.p1 to p2[0]
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
   property p2 as List<of Int>
@@ -945,6 +992,9 @@ class Foo
   constructor()
     set this.p2 to new List<of Int>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
   property p2 as List<of Int>
@@ -985,6 +1035,9 @@ class Foo
   constructor()
     set this.p2 to new List<of Int>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
   property p2 as List<of Int>
@@ -1024,6 +1077,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp()
     call printNoLine(1)
@@ -1035,6 +1091,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     call p1.pp()
@@ -1071,6 +1130,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure pp()
     call printNoLine(1)
@@ -1082,6 +1144,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     if this.p2 then
@@ -1121,6 +1186,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure pp()
     call printNoLine(1)
   end procedure
@@ -1131,6 +1199,9 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     if this.p2 then
@@ -1165,6 +1236,9 @@ end class`;
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     variable a set to this.asString()
@@ -1199,6 +1273,9 @@ end function
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     variable a set to this.foo()
@@ -1231,6 +1308,9 @@ constant aa set to 1
 class Bar
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure p()
     variable a set to this.aa

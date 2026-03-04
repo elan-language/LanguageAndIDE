@@ -1,4 +1,4 @@
-# d9385f43fea83b9655cb073395c22540b7204b09cc8a1c3074752616539e76eb Elan 2.0.0-alpha guest default_profile valid
+# c3e8633a6669feb2c4a10b9ac0bde01d7fbc9347a17e1a155f3a87eca5eae570 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to new Point(5, 5)
@@ -94,6 +94,10 @@ class Solver
     set this.destination to destination
     set this.current to new Node(emptyPoint(), 0, 0)
   end constructor
+
+  function asString() returns String
+    return ""
+  end function
 
   property nodes as List<of Node>
 
