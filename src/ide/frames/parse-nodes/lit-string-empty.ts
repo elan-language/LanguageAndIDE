@@ -2,7 +2,7 @@ import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
 
-export class LitStringDoubleQuotesEmpty extends AbstractSequence {
+export class LitStringEmpty extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));

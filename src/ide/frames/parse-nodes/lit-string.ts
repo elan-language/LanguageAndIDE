@@ -1,7 +1,7 @@
 import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { LitStringDoubleQuotesEmpty } from "./lit-string-double-quotes-empty";
-import { LitStringDoubleQuotesNonEmpty } from "./lit-string-double-quotes-non-empty";
+import { LitStringEmpty } from "./lit-string-empty";
+import { LitStringInterpolated } from "./lit-string-interpolated";
 
 export class LitString extends AbstractAlternatives {
   constructor(file: File) {
@@ -11,8 +11,8 @@ export class LitString extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.alternatives.push(new LitStringDoubleQuotesEmpty(this.file));
-      this.alternatives.push(new LitStringDoubleQuotesNonEmpty(this.file));
+      this.alternatives.push(new LitStringEmpty(this.file));
+      this.alternatives.push(new LitStringInterpolated(this.file));
       super.parseText(text);
     }
   }

@@ -1,9 +1,9 @@
 import { Regexes } from "../fields/regexes";
 import { renderBackslashNasABreak } from "../frame-helpers";
-import { RegExMatchNode } from "./regex-match-node";
 import { File } from "../frame-interfaces/file";
+import { RegExMatchNode } from "./regex-match-node";
 
-export class LitStringDoubleQuotesContents extends RegExMatchNode {
+export class LitStringText extends RegExMatchNode {
   constructor(file: File) {
     super(file, Regexes.nonEmptyStringContent);
   }

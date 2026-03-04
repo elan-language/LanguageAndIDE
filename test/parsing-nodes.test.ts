@@ -25,8 +25,8 @@ import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
-import { LitStringDoubleQuotesNonEmpty } from "../src/ide/frames/parse-nodes/lit-string-double-quotes-non-empty";
-import { LitStringInterpolation } from "../src/ide/frames/parse-nodes/lit-string-interpolation";
+import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -1280,18 +1280,10 @@ suite("Parsing Nodes", () => {
     );
   });
   test("String Interpolation", () => {
-    testNodeParse(new LitStringInterpolation(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParse(
-      new LitStringInterpolation(f),
-      "{x + 1}",
-      ParseStatus.valid,
-      "{x + 1}",
-      "",
-      "",
-      "",
-    );
-    testNodeParse(new LitStringInterpolation(f), "{x", ParseStatus.incomplete, "{x", "", "", "");
-    testNodeParse(new LitStringInterpolation(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+    testNodeParse(new LitStringField(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(new LitStringField(f), "{x + 1}", ParseStatus.valid, "{x + 1}", "", "", "");
+    testNodeParse(new LitStringField(f), "{x", ParseStatus.incomplete, "{x", "", "", "");
+    testNodeParse(new LitStringField(f), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
     testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
@@ -1321,7 +1313,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
     //Test embedded html
     testNodeParse(
-      new LitStringDoubleQuotesNonEmpty(f),
+      new LitStringInterpolated(f),
       `"<p>abc</p>"`,
       ParseStatus.valid,
       `"<p>abc</p>"`,
@@ -1330,7 +1322,7 @@ suite("Parsing Nodes", () => {
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     testNodeParse(
-      new LitStringDoubleQuotesNonEmpty(f),
+      new LitStringInterpolated(f),
       `"&#123;curly braces&#125;"`,
       ParseStatus.valid,
       `"&#123;curly braces&#125;"`,
@@ -1340,7 +1332,7 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Interpolated strings", () => {
-    const field = () => new LitStringInterpolation(f);
+    const field = () => new LitStringField(f);
     const plainText = () => new RegExMatchNode(f, Regexes.nonEmptyStringContent);
     const segment = () => new Alternatives(f, [field, plainText]);
     testNodeParse(segment(), `abc`, ParseStatus.valid, "abc", "");
