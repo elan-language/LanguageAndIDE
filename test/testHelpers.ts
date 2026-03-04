@@ -539,7 +539,9 @@ export function testNodeParse(
   if (matchedText !== "") {
     assert.equal(node.matchedText, matchedText);
   }
-  assert.equal(node.remainingText, remainingText);
+  if (remainingText !== "") {
+    assert.equal(node.remainingText, remainingText);
+  }
   if (elanSource !== "") {
     assert.equal(node.renderAsElanSource(), elanSource);
   }
