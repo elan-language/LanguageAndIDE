@@ -402,7 +402,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   variable b set to 4
-  variable c set to "{a} x {b} = {a * b}"
+  variable c set to $"{a} x {b} = {a * b}"
   call printNoLine(c)
 end main`;
 

@@ -10,9 +10,9 @@ main
     else
       variable result set to binarySearch(fruit, wanted)
       if result then
-        call print("We can supply a {wanted}")
+        call print($"We can supply a {wanted}")
       else
-        call print("Sorry, we cannot supply a {wanted}")
+        call print($"Sorry, we cannot supply a {wanted}")
       end if
     end if
   end while

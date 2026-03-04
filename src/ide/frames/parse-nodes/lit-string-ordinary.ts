@@ -1,21 +1,30 @@
 import { File } from "../frame-interfaces/file";
-import { ParseStatus } from "../status-enums";
+import { DOUBLE_QUOTES } from "../symbols";
+import { AbstractSequence } from "./abstract-sequence";
+import { PunctuationNode } from "./punctuation-node";
 import { RegExMatchNode } from "./regex-match-node";
 
-export class LitStringOrdinary extends RegExMatchNode {
-  contents(): string {
-    let contents = "";
-    if (this.status === ParseStatus.valid) {
-      contents = contents.substring(1, contents.length - 2);
-    }
-    return contents;
-  }
-
+export class LitStringOrdinary extends AbstractSequence {
   constructor(file: File) {
-    super(file, /^".*?"/);
+    super(file);
+    this.contents = new RegExMatchNode(this.file, /^[^"]*/);
     this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
   }
+
+  private contents: RegExMatchNode;
+
+  parseText(text: string): void {
+    if (text.length > 0) {
+      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
+      this.addElement(this.contents);
+      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
+      super.parseText(text);
+    }
+  }
   renderAsHtml(): string {
-    return `"<el-lit>${this.contents()}</el-lit>"`;
+    const text = this.contents.matchedText;
+    const contents =
+      text.length > 0 ? `<el-lit>${this.contents.renderAsElanSource()}</el-lit>` : ``;
+    return `"${contents}"`;
   }
 }

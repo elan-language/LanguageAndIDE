@@ -34,7 +34,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     constant length set to rl.item_1
     set gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
-    call printNoLine("Length of route: {length.round(2)} ")
+    call printNoLine($"Length of route: {length.round(2)} ")
   else
     call printNoLine("No path found. ")
   end if
@@ -249,7 +249,7 @@ class Node
   end procedure
 
   function asString() returns String
-    return "[{this.point.asString()} {this.visited} {this.distFromStart}]"
+    return $"[{this.point.asString()} {this.visited} {this.distFromStart}]"
   end function
 
 end class
@@ -288,7 +288,7 @@ class Point
   end function
 
   function asString() returns String
-    return "{this.x},{this.y}"
+    return $"{this.x},{this.y}"
   end function
 
 end class

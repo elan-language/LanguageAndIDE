@@ -31,6 +31,7 @@ export class LitStringInterpolated extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
+    const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
+    return `${langPrefix}"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
   }
 }

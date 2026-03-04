@@ -51,7 +51,7 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to [1,2,3]
-  call printNoLine("{a} {b} {c}")
+  call printNoLine($"{a} {b} {c}")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -88,7 +88,7 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to [1,2,3]
-  call printNoLine("{a {b} {c}")
+  call printNoLine($"{a {b} {c}")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -112,7 +112,7 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to [1,2,3]
-  call printNoLine("{a} {b} {{c}")
+  call printNoLine($"{a} {b} {{c}")
 end main`;
 
     const fileImpl = new FileImpl(

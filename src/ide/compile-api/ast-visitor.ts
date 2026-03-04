@@ -692,7 +692,7 @@ export function transform(
   }
 
   if (node instanceof LitStringOrdinary) {
-    return new LiteralStringAsn(node.contents(), fieldId);
+    return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof LitStringInterpolated) {

@@ -17,6 +17,6 @@ export class LitStringField extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`; //Tags appear wrong way around - because field is breaking out of the string.
+    return `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`; //Tags appear wrong way around, but are correct: field is breaking out of the string.
   }
 }

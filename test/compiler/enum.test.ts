@@ -279,7 +279,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to "Eat more {Fruit.apple}s!"
+  variable a set to $"Eat more {Fruit.apple}s!"
   call printNoLine(a)
 end main
    
