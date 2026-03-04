@@ -29,29 +29,29 @@ function blackOrWhite(random as Float) returns Int
 end function
 
 function north(cell as (Int, Int)) returns (Int, Int)
-  constant x set to cell.item0
-  constant y set to cell.item1
+  constant x set to cell.item_0
+  constant y set to cell.item_1
   constant y2 set to if y is 0 then 29 else y - 1
   return tuple(x, y2)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
-  constant x set to cell.item0
-  constant y set to cell.item1
+  constant x set to cell.item_0
+  constant y set to cell.item_1
   constant y2 set to if y is 29 then 0 else y + 1
   return tuple(x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
-  constant x set to cell.item0
-  constant y set to cell.item1
+  constant x set to cell.item_0
+  constant y set to cell.item_1
   constant x2 set to if x is 39 then 0 else x + 1
   return tuple(x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
-  constant x set to cell.item0
-  constant y set to cell.item1
+  constant x set to cell.item_0
+  constant y set to cell.item_1
   constant x2 set to if x is 0 then 39 else x - 1
   return tuple(x2, y)
 end function
@@ -80,8 +80,8 @@ end function
 function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   variable count set to 0
   each cell in neighbourCells(x, y)
-    constant cx set to cell.item0
-    constant cy set to cell.item1
+    constant cx set to cell.item_0
+    constant cy set to cell.item_1
     if grid[cx][cy] is black then
       set count to count + 1
     end if

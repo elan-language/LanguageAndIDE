@@ -258,8 +258,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  constant a set to foo().item0
-  constant length set to foo().item1
+  constant a set to foo().item_0
+  constant length set to foo().item_1
 end main
 
 function foo() returns (Int, Int)
@@ -425,7 +425,7 @@ end main
 
 function foo() returns Int
   constant x set to tuple(1, 2)
-  return x.item0
+  return x.item_0
 end function`;
 
     const fileImpl = new FileImpl(

@@ -28,12 +28,12 @@ main
   call printNoLine(st.peek())
   variable fruit set to ""
   variable t set to st.pop()
-  set fruit to t.item0
-  set st to t.item1
+  set fruit to t.item_0
+  set st to t.item_1
   call printNoLine(fruit)
   set t to st.pop()
-  set fruit to t.item0
-  set st to t.item1
+  set fruit to t.item_0
+  set st to t.item_1
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)

@@ -378,7 +378,7 @@ test('debug tuple', async ({ page }) => {
   await page.getByText(summary).click();
 
   await expect(page.getByText('item0 1')).toBeVisible();
-  await expect(page.getByText('item1 "bill"')).toBeVisible();
+  await expect(page.getByText('item_1 "bill"')).toBeVisible();
 
   await page.getByText(summary).click();
 

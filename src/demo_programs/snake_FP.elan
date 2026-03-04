@@ -95,11 +95,11 @@ class Game
 
   function withNewApple() returns Game
     variable x_rnd2 set to this.rnd.nextInt(0, 39)
-    variable x set to x_rnd2.item0
-    variable rnd2 set to x_rnd2.item1
+    variable x set to x_rnd2.item_0
+    variable rnd2 set to x_rnd2.item_1
     variable y_rnd3 set to rnd2.nextInt(0, 29)
-    variable y set to y_rnd3.item0
-    variable rnd3 set to y_rnd3.item1
+    variable y set to y_rnd3.item_0
+    variable rnd3 set to y_rnd3.item_1
     variable apple2 set to new Square(x, y)
     variable g2 set to withApple(apple2).withRnd(rnd3)
     return if g2.body.contains(apple2) then g2.withNewApple() else g2

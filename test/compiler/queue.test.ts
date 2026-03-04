@@ -28,12 +28,12 @@ main
   call printNoLine(q.peek())
   variable fruit set to ""
   variable t set to q.dequeue()
-  set fruit to t.item0
-  set q to t.item1
+  set fruit to t.item_0
+  set q to t.item_1
   call printNoLine(fruit)
   set t to q.dequeue()
-  set fruit to t.item0
-  set q to t.item1
+  set fruit to t.item_0
+  set q to t.item_1
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
