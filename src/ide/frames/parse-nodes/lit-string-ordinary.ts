@@ -1,27 +1,21 @@
 import { File } from "../frame-interfaces/file";
-import { DOUBLE_QUOTES } from "../symbols";
-import { AbstractSequence } from "./abstract-sequence";
-import { LitStringText } from "./lit-string-text";
-import { Multiple } from "./multiple";
-import { PunctuationNode } from "./punctuation-node";
+import { ParseStatus } from "../status-enums";
+import { RegExMatchNode } from "./regex-match-node";
 
-export class LitStringOrdinary extends AbstractSequence {
-  segments: Multiple | undefined;
+export class LitStringOrdinary extends RegExMatchNode {
+  contents(): string {
+    let contents = "";
+    if (this.status === ParseStatus.valid) {
+      contents = contents.substring(1, contents.length - 2);
+    }
+    return contents;
+  }
 
   constructor(file: File) {
-    super(file);
+    super(file, /^".*?"/);
     this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
   }
-
-  parseText(text: string): void {
-    if (text.length > 0) {
-      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-      this.addElement(new LitStringText(this.file));
-      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-      super.parseText(text);
-    }
-  }
   renderAsHtml(): string {
-    return `"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
+    return `"<el-lit>${this.contents()}</el-lit>"`;
   }
 }

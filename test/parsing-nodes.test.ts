@@ -1333,7 +1333,7 @@ suite("Parsing Nodes", () => {
   });
   test("Interpolated strings", () => {
     const field = () => new LitStringField(f);
-    const plainText = () => new RegExMatchNode(f, Regexes.nonEmptyStringContent);
+    const plainText = () => new RegExMatchNode(f, Regexes.ordinaryStringContent);
     const segment = () => new Alternatives(f, [field, plainText]);
     testNodeParse(segment(), `abc`, ParseStatus.valid, "abc", "");
     testNodeParse(segment(), `{x}`, ParseStatus.valid, "{x}", "");

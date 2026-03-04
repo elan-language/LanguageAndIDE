@@ -246,6 +246,7 @@ export class LanguageVB extends LanguageAbstract {
   COMMENT_MARKER: string = this.SINGLE_QUOTE;
   LIST_START: string = "{";
   LIST_END: string = "}";
+  INTERPOLATED_STRING_PREFIX: string = "$";
 
   INT_NAME: string = "Integer";
   FLOAT_NAME: string = "Double";

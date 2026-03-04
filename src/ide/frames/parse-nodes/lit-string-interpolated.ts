@@ -3,9 +3,9 @@ import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { LitStringField } from "./lit-string-field";
-import { LitStringText } from "./lit-string-text";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
+import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringInterpolated extends AbstractSequence {
   segments: Multiple | undefined;
@@ -18,9 +18,12 @@ export class LitStringInterpolated extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const field = () => new LitStringField(this.file);
-      const plainText = () => new LitStringText(this.file);
+      const plainText = () => new RegExMatchNode(this.file, /^[^{"]+/);
       const segment = () => new Alternatives(this.file, [field, plainText]);
       this.segments = new Multiple(this.file, segment, 1);
+      this.addElement(
+        new PunctuationNode(this.file, this.file.language().INTERPOLATED_STRING_PREFIX),
+      );
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
       this.addElement(this.segments);
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));

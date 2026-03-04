@@ -1,7 +1,7 @@
 import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { LitStringEmpty } from "./lit-string-empty";
 import { LitStringInterpolated } from "./lit-string-interpolated";
+import { LitStringOrdinary } from "./lit-string-ordinary";
 
 export class LitString extends AbstractAlternatives {
   constructor(file: File) {
@@ -11,7 +11,7 @@ export class LitString extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.alternatives.push(new LitStringEmpty(this.file));
+      this.alternatives.push(new LitStringOrdinary(this.file));
       this.alternatives.push(new LitStringInterpolated(this.file));
       super.parseText(text);
     }
