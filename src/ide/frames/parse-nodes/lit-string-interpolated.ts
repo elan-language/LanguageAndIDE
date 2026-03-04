@@ -2,12 +2,12 @@ import { File } from "../frame-interfaces/file";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { LitStringDoubleQuotesContents } from "./lit-string-double-quotes-contents";
-import { LitStringInterpolation } from "./lit-string-interpolation";
+import { LitStringField } from "./lit-string-field";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
+import { RegExMatchNode } from "./regex-match-node";
 
-export class LitStringDoubleQuotesNonEmpty extends AbstractSequence {
+export class LitStringInterpolated extends AbstractSequence {
   segments: Multiple | undefined;
 
   constructor(file: File) {
@@ -17,10 +17,13 @@ export class LitStringDoubleQuotesNonEmpty extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const field = () => new LitStringInterpolation(this.file);
-      const plainText = () => new LitStringDoubleQuotesContents(this.file);
+      const field = () => new LitStringField(this.file);
+      const plainText = () => new RegExMatchNode(this.file, /^[^{"]+/);
       const segment = () => new Alternatives(this.file, [field, plainText]);
       this.segments = new Multiple(this.file, segment, 1);
+      this.addElement(
+        new PunctuationNode(this.file, this.file.language().INTERPOLATED_STRING_PREFIX),
+      );
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
       this.addElement(this.segments);
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
@@ -28,6 +31,7 @@ export class LitStringDoubleQuotesNonEmpty extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
+    const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
+    return `${langPrefix}"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
   }
 }

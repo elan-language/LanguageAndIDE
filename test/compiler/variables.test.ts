@@ -373,7 +373,7 @@ return [main, _tests];}`;
 
   // main
   //   variable a set to ""
-  //   variable b set to "{a}\` + eval('console.warn(\`fred\`)') + \`"
+  //   variable b set to $"{a}\` + eval('console.warn(\`fred\`)') + \`"
   // end main`;
 
   //     const objectCode = "let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

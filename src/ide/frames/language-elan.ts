@@ -214,6 +214,7 @@ export class LanguageElan extends LanguageAbstract {
   COMMENT_MARKER = "#";
   LIST_START: string = "[";
   LIST_END: string = "]";
+  INTERPOLATED_STRING_PREFIX: string = "$";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";

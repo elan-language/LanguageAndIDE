@@ -18,12 +18,12 @@ main
     call clearPrintedText()
     call print(tm.tape)
     call printTab(tm.headPosition - 1, "^")
-    call print("Step: {steps}")
-    call print("State: {tm.currentState}")
-    call print("Rule applied: {rule.asString()}")
+    call print($"Step: {steps}")
+    call print($"State: {tm.currentState}")
+    call print($"Rule applied: {rule.asString()}")
     call pause(40)
   end while
-  call print("The roman numeral equivalent for {dec} is {tm.tape.trim()}")
+  call print($"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"
@@ -72,7 +72,7 @@ class TuringMachine
   function findMatchingRule() returns Rule
     variable matches set to this.rules.filter(lambda r as Rule => (r.currentState.equals(this.currentState)) and (r.currentSymbol.equals(this.tape[this.headPosition])))
     if matches.length() is 0 then
-      throw exception "No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
+      throw exception $"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
     end if
     return matches.head()
   end function
@@ -121,7 +121,7 @@ class Rule
   end constructor
 
   function asString() returns String
-    return "{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{this.move}"
+    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{this.move}"
   end function
 
 end class

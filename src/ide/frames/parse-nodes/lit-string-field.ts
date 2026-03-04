@@ -1,9 +1,9 @@
-import { OPEN_BRACE, CLOSE_BRACE } from "../symbols";
+import { CLOSE_BRACE, OPEN_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class LitStringInterpolation extends AbstractSequence {
+export class LitStringField extends AbstractSequence {
   expr: ExprNode | undefined;
 
   parseText(text: string): void {
@@ -17,6 +17,6 @@ export class LitStringInterpolation extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`; //Tags appear wrong way around - because field is breaking out of the string.
+    return `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`; //Tags appear wrong way around, but are correct: field is breaking out of the string.
   }
 }

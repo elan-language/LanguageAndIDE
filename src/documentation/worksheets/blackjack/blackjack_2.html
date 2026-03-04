@@ -90,7 +90,7 @@ procedure playOneRound(game as Game)
 end procedure
 
 procedure display(game as Game)
-  variable html set to "&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
+  variable html set to $"&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
   call displayHtml(html)
   call pause(1500)
 end procedure
@@ -177,13 +177,13 @@ function htmlForGame(game as Game) returns String
   each player in game.players
     set html to html + htmlForPlayer(player)
   end each
-  set html to html + "&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
+  set html to html + $"&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
   return html + "&lt;/div&gt;"
 end function
 
 function htmlForPlayer(player as Player) returns String
   variable html set to "&lt;div class='player'&gt;"
-  set html to html + "&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
+  set html to html + $"&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
   set html to html + "&lt;div class='hand'&gt;"
   each card in player.cards
     variable suit set to card.suit
@@ -202,7 +202,7 @@ function htmlForCard(card as Card) returns String
     variable suit set to card.suit
     variable colour set to colourForSuit(suit)
     variable symbol set to symbolForSuit(suit)
-    set html to "&lt;div class='card {colour}'&gt;"
+    set html to $"&lt;div class='card {colour}'&gt;"
     variable u set to htmlForSpot("u", rank)
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
@@ -213,13 +213,13 @@ function htmlForCard(card as Card) returns String
         set grid to grid + htmlForSpot(location, symbol)
       end if
     end each
-    set html to html + "{u}{v}{grid}"
+    set html to html + $"{u}{v}{grid}"
   end if
   return html + "&lt;/div&gt;"
 end function
 
 function htmlForSpot(id as String, content as String) returns String
-  return "&lt;div class='{id}'&gt;{content}&lt;/div&gt;"
+  return $"&lt;div class='{id}'&gt;{content}&lt;/div&gt;"
 end function
 
 class Game
@@ -421,7 +421,7 @@ class Dealer inherits Player
   function getMessage() returns String
     variable msg set to ""
     if this.hasPlayed then
-      set msg to statusAsString() + " - hand total: {this.handTotal}"
+      set msg to statusAsString() + $" - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -454,7 +454,7 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to statusAsString() + "- hand total: {this.handTotal}"
+    variable msg set to statusAsString() + $"- hand total: {this.handTotal}"
     if this.hasTurn then
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
@@ -486,7 +486,7 @@ class AutomatedPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    return statusAsString() + " - hand total: {this.handTotal}"
+    return statusAsString() + $" - hand total: {this.handTotal}"
   end function
 
 end class

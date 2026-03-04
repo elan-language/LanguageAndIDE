@@ -121,14 +121,14 @@ function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
 end function
 
 function drawGrid(grid as Array2D<of String>) returns String
-  variable html set to "<style>{styleSheet}</style> <grid>"
+  variable html set to $"<style>{styleSheet}</style> <grid>"
   for row from 0 to 5 step 1
     set html to html + "<word>"
     for col from 0 to 4 step 1
       variable entry set to grid[col, row]
       variable ch set to if entry.length() > 0 then entry[0] else ""
       variable mark set to if entry.length() > 1 then entry.subString(1, entry.length()) else ""
-      set html to html + "<ch class='_{mark}'>{ch}</ch>"
+      set html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
     set html to html + "</word>"
   end for
@@ -141,7 +141,7 @@ function drawKeyboard(used as Dictionary<of String, String>) returns String
     if k.equals("-") then
       set html to html + "</div><div>"
     else
-      set html to html + "<key class='_{used[k]}'>{k}</key>"
+      set html to html + $"<key class='_{used[k]}'>{k}</key>"
     end if
   end each
   return html + "<key></key></div></keyboard>"

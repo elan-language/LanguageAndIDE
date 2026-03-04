@@ -372,7 +372,7 @@ return [main, _tests];}`;
 main
   variable limit set to 10
   for i from 1 to limit step 1
-    call printNoLine("{i}")
+    call printNoLine($"{i}")
     set limit to limit + 1
   end for
 end main`;
