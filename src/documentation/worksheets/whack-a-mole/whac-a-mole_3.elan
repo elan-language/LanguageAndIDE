@@ -35,7 +35,7 @@ enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
   variable core set to htmlForHole(hole, "hole")
-  return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
+  return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
 function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
@@ -43,12 +43,12 @@ function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   for i from 0 to holes.length() - 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
   end for
-  return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
+  return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
 function htmlForHole(hole as Hole, label as String) returns String
   variable img set to imageForStatus[hole]
-  return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
+  return $"<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
 
 # Acknowledgement:  mole icon source https://www.flaticon.com/

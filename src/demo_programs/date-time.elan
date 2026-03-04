@@ -1,9 +1,9 @@
-# 068b87cf060486140a380f10731f7b305330db4c38da844a2eb2e396bceac618 Elan 2.0.0-alpha guest default_profile valid
+# 92269c8d63b9ed4de7a34732b1493555125963392dabf8421cd577c42a866554 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    set reply to inputString('RETURN for time now orUnix time (positive integer) orQ to quit')
+    set reply to inputString("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       call printDate(divAsInt(clock(), 1000))
     else
@@ -31,7 +31,7 @@ procedure printDate(unixSecs as Int)
   variable month_day set to monthDay(startDaysL, (days mod startDays[12]))
   constant month set to month_day.item_0
   constant day set to month_day.item_1
-  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + "{year}" + s1 + h + co + m + co + s + " UTC")
+  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + $"{year}" + s1 + h + co + m + co + s + " UTC")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
@@ -51,7 +51,7 @@ function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
 end function
 
 function dayInYear(year as Int, unixDays as Int) returns Int
-  # unixDays start at 0, months' day numbers start at 1
+  # unixDays start at 0, months, day numbers start at 1
   variable dayNumber set to unixDays + 1
   if year > unixYear then
     # discount previous nominal years

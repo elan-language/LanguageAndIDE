@@ -143,7 +143,7 @@ return [main, _tests];}`;
 main
   each x in "12"
     each y in "34"
-      call printNoLine("{x}{y}")
+      call printNoLine($"{x}{y}")
     end each
   end each
 end main`;

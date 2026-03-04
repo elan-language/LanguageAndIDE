@@ -1119,9 +1119,9 @@ main
   variable s42 set to "42"
   call di.put(i42, 99)
   call ds.put(s42, 98)
-  call printNoLine("{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}")
-  call printNoLine("{di} {ds}")
-  call printNoLine("{di.keys()} {di.keys().contains(42)}")
+  call printNoLine($"{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}")
+  call printNoLine($"{di} {ds}")
+  call printNoLine($"{di.keys()} {di.keys().contains(42)}")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

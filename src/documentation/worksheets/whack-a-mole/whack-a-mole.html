@@ -92,7 +92,7 @@ enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
   variable core set to htmlForHole(hole, "hole")
-  return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
+  return $"&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
 function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns String
@@ -100,12 +100,12 @@ function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns St
   for i from 0 to holes.length() - 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
   end for
-  return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
+  return $"&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
 function htmlForHole(hole as Hole, label as String) returns String
   variable img set to imageForStatus[hole]
-  return "&lt;div class='hole'&gt;&lt;img src='{img}'&gt;&lt;div class='label'&gt;{label}&lt;/div&gt;&lt;/div&gt;"
+  return $"&lt;div class='hole'&gt;&lt;img src='{img}'&gt;&lt;div class='label'&gt;{label}&lt;/div&gt;&lt;/div&gt;"
 end function
 
 # Acknowledgement:  mole icon source https://www.flaticon.com/
@@ -246,7 +246,7 @@ enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
   variable core set to htmlForHole(hole, "hole")
-  return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
+  return $"&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
 function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns String
@@ -254,12 +254,12 @@ function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns St
   for i from 0 to holes.length() - 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
   end for
-  return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
+  return $"&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
 function htmlForHole(hole as Hole, label as String) returns String
   variable img set to imageForStatus[hole]
-  return "&lt;div class='hole'&gt;&lt;img src='{img}'&gt;&lt;div class='label'&gt;{label}&lt;/div&gt;&lt;/div&gt;"
+  return $"&lt;div class='hole'&gt;&lt;img src='{img}'&gt;&lt;div class='label'&gt;{label}&lt;/div&gt;&lt;/div&gt;"
 end function
 
 # Acknowledgement:  mole icon source https://www.flaticon.com/

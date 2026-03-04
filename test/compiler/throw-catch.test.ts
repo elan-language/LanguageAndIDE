@@ -85,7 +85,7 @@ return [main, _tests];}`;
 
 main
   variable bar set to 1
-  throw exception "{bar}"
+  throw exception $"{bar}"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

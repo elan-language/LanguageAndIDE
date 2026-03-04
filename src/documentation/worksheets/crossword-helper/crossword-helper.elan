@@ -14,7 +14,7 @@ main
     set w to w.filter(lambda w as String => sortLettersOfWord(w) is anagram)
   end if
   variable output set to w.join("\n")
-  call print("{w.length()} matching words:\n{w}")
+  call print($"{w.length()} matching words:\n{w}")
 end main
 
 function sortLettersOfWord(word as String) returns String

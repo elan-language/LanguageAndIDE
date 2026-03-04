@@ -196,6 +196,7 @@ export class LanguagePython extends LanguageAbstract {
   COMMENT_MARKER = "#";
   LIST_START: string = "[";
   LIST_END: string = "]";
+  INTERPOLATED_STRING_PREFIX: string = "f";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";

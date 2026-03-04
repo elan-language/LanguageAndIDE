@@ -201,13 +201,13 @@ suite("Field Parsing Tests", () => {
       );
       const v = new VariableStatement(main);
       const expr = v.expr;
-      expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1*op2}"`);
+      expr.setFieldToKnownValidText(`$"{op} times {op2} equals {op1*op2}"`);
       expr.parseCurrentText();
       assert.equal(expr.readParseStatus(), ParseStatus.valid);
-      assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1*op2}"`);
+      assert.equal(expr.textAsSource(), `$"{op} times {op2} equals {op1*op2}"`);
       assert.equal(
         expr.textAsHtml(),
-        `"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
+        `$"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
       );
     });
 

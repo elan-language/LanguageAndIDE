@@ -36,6 +36,7 @@ export interface Language {
   COMMENT_MARKER: string; //e.g. `#`
   LIST_START: string;
   LIST_END: string;
+  INTERPOLATED_STRING_PREFIX: string;
 
   INT_NAME: string;
   FLOAT_NAME: string;

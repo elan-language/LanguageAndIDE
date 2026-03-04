@@ -3,7 +3,7 @@
 main
   variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
-  call print("Dragon of order {order}")
+  call print($"Dragon of order {order}")
   constant side set to 75.0/power(sqrt(2), order)
   constant corner set to side/12.0/cos(45)
   variable turns set to left

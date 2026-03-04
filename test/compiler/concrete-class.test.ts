@@ -812,7 +812,7 @@ class Foo
   end procedure
 
   function asString() returns String
-    return "Foo:{this.p1}:{this.p2}:{this.p3}"
+    return $"Foo:{this.p1}:{this.p2}:{this.p3}"
   end function
 
 end class`;

@@ -59,6 +59,8 @@ export class LanguageJava extends LanguageCfamily {
 
   public STRING_NAME: string = "String";
 
+  INTERPOLATED_STRING_PREFIX: string = "$"; // But shouldn't ever be used because the rendering and parsing should be overridden
+
   parseParamDef(node: ParamDefNode, text: string): boolean {
     return this.common_parseParamDef(node, text);
   }
