@@ -223,7 +223,7 @@ class Game
     property s as String
     property ds as Dictionary<of String, Int>
     property ai as List<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property t as (Int, String, List<of Int>)
     property ff as Func<of String, String => Int>
     property r as RegExp
 
@@ -343,7 +343,7 @@ class Game
     property li as List<of Int>
     property ds as Dictionary<of String, Int>
     property ai as List<of Int>
-    property t as Tuple<of Int, String, List<of Int>>
+    property t as (Int, String, List<of Int>)
     property r as RegExp
 
     function asString() returns String
@@ -451,11 +451,11 @@ end main
 class Game
   constructor()
     set this.p1 to new Player("Player1")
-    set this.previousGame to new Optional<of Game>()
+    set this.previousGame to new Maybe<of Game>()
   end constructor
 
   property p1 as Player
-  property previousGame as Optional<of Game>
+  property previousGame as Maybe<of Game>
 
   function asString() returns String
     return "A game"
@@ -489,7 +489,7 @@ class Game {
 
   async _initialise() {
     this.p1 = system.initialise(await new Player()._initialise("Player1"));
-    this.previousGame = system.initialise(await new _stdlib.Optional()._initialise());
+    this.previousGame = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
@@ -503,7 +503,7 @@ class Game {
 
   elan_previousGame;
   get previousGame() {
-    return this.elan_previousGame ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_previousGame ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set previousGame(previousGame) {
     this.elan_previousGame = previousGame;
@@ -546,7 +546,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Player1a Optional");
+    await assertObjectCodeExecutes(fileImpl, "Player1a Maybe");
   });
 
   test("Pass_PropertyOfAbstractType", async () => {
@@ -560,12 +560,12 @@ end main
 
 class Game
   constructor()
-    set this.p1 to new Optional<of Player>()
-    set this.p2 to new Optional<of Player>()
+    set this.p1 to new Maybe<of Player>()
+    set this.p2 to new Maybe<of Player>()
   end constructor
 
-  property p1 as Optional<of Player>
-  property p2 as Optional<of Player>
+  property p1 as Maybe<of Player>
+  property p2 as Maybe<of Player>
 
   function asString() returns String
     return "A game"
@@ -590,14 +590,14 @@ class Game {
   static emptyInstance() { return system.emptyClass(Game, []);};
 
   async _initialise() {
-    this.p1 = system.initialise(await new _stdlib.Optional()._initialise());
-    this.p2 = system.initialise(await new _stdlib.Optional()._initialise());
+    this.p1 = system.initialise(await new _stdlib.Maybe()._initialise());
+    this.p2 = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
   }
 
   elan_p1;
   get p1() {
-    return this.elan_p1 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p1 ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set p1(p1) {
     this.elan_p1 = p1;
@@ -605,7 +605,7 @@ class Game {
 
   elan_p2;
   get p2() {
-    return this.elan_p2 ??= system.initialise(_stdlib.Optional.emptyInstance());
+    return this.elan_p2 ??= system.initialise(_stdlib.Maybe.emptyInstance());
   }
   set p2(p2) {
     this.elan_p2 = p2;
@@ -832,9 +832,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -864,9 +862,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'break' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {

@@ -73,7 +73,6 @@ suite("Parsing Nodes", () => {
     false,
     true,
   );
-
   test("UnaryExpression", () => {
     testNodeParse(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
     testNodeParse(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
@@ -93,7 +92,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Term2", () => {
-    testNodeParse(new Term(f), "empty ", ParseStatus.invalid, "", "empty ", "");
     testNodeParse(new Term(f), "", ParseStatus.empty, "", "", "");
     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
   });
@@ -201,6 +199,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IdentifierUse(f), `x as`, ParseStatus.valid, `x`, " as", "x");
     testNodeParse(new IdentifierUse(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
     testNodeParse(new IdentifierUse(f), `_`, ParseStatus.invalid, ``, "_", "");
+    testNodeParse(new IdentifierUse(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
   });
   test("LitString - single chars", () => {
     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");

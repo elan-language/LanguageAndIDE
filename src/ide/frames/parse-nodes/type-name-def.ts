@@ -1,3 +1,4 @@
+import { ReservedWords } from "../../../compiler/reserved-words";
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
@@ -57,6 +58,13 @@ export class TypeNameDef extends AbstractParseNode {
           Regexes.typeSimpleName,
         );
         this.elanTypeName = this.matchedText;
+        if (
+          this.status === ParseStatus.valid &&
+          ReservedWords.Instance.matchesIgnoringCase(this.matchedText)
+        ) {
+          this.status = ParseStatus.invalid;
+          this.message = `matches a reserved word.`;
+        }
       }
     }
   }

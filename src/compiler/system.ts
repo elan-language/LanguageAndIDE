@@ -4,7 +4,7 @@ import { DebugSymbol } from "./compiler-interfaces/debug-symbol";
 import { ElanInputOutput } from "./compiler-interfaces/elan-input-output";
 import { Dictionary } from "./standard-library/dictionary";
 import { ElanRuntimeError } from "./standard-library/elan-runtime-error";
-import { ElanSet } from "./standard-library/elan-set";
+import { HashSet } from "./standard-library/hash-set";
 import { List } from "./standard-library/list";
 import { TestStatus } from "./test-status";
 
@@ -528,8 +528,8 @@ export class System {
     return arr;
   }
 
-  listAsSet<T1>(list: List<T1>): ElanSet<T1> {
+  listAsSet<T1>(list: List<T1>): HashSet<T1> {
     const newList = [...list];
-    return this.initialise(new ElanSet<T1>(newList));
+    return this.initialise(new HashSet<T1>(newList));
   }
 }

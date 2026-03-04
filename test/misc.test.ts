@@ -13,6 +13,10 @@ suite("Misc Tests", () => {
     assert.equal(Regexes.newLine.test(""), false);
     assert.equal(Regexes.newLine.test("\n"), true);
     assert.equal(Regexes.newLine.test("\r\n"), true);
+    assert.equal(Regexes.identifier.test(`foo_bar`), true);
+    assert.equal(Regexes.identifier.test(`_bar`), true);
+    assert.equal(Regexes.identifier.test(`3foo_bar`), false);
+    assert.equal(Regexes.identifier.test(`3_bar`), false);
   });
 
   //Code source

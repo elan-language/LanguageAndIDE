@@ -9,11 +9,9 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
-export const divKeyword = "div";
 export const eachKeyword = "each";
 export const elifKeyword = "elif";
 export const elseKeyword = "else";
-export const emptyKeyword = "empty";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
 export const exceptionKeyword = "exception";
@@ -22,14 +20,12 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
-export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
 export const modKeyword = "mod";
@@ -40,7 +36,6 @@ export const orKeyword = "or";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
-export const recordKeyword = "record";
 export const refKeyword = "ref";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
@@ -82,11 +77,9 @@ const elanKeywords: string[] = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  divKeyword,
   eachKeyword,
   elifKeyword,
   elseKeyword,
-  emptyKeyword,
   endKeyword,
   enumKeyword,
   exceptionKeyword,
@@ -95,14 +88,12 @@ const elanKeywords: string[] = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  importKeyword,
   inKeyword,
   inheritsKeyword,
   interfaceKeyword,
   isKeyword,
   isntKeyword,
   lambdaKeyword,
-  letKeyword,
   libraryKeyword,
   mainKeyword,
   modKeyword,
@@ -113,7 +104,6 @@ const elanKeywords: string[] = [
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
-  recordKeyword,
   refKeyword,
   returnKeyword,
   returnsKeyword,

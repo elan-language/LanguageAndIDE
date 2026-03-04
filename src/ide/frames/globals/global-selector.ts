@@ -8,7 +8,6 @@ import {
   interfaceKeyword,
   mainKeyword,
   procedureKeyword,
-  recordKeyword,
   testKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
@@ -49,7 +48,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword !== commentMarker && keyword !== recordKeyword;
+    return keyword !== commentMarker; //TODO: should have comment marker instead of comment, but symbol obtained from current language
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {

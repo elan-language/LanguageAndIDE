@@ -23,7 +23,7 @@ procedure playGame()
   variable solved set to false
   while (attemptNo < 6) and (not solved)
     call enterAttempt(attemptNo, grid, used)
-    variable solvedRef set to new Ref<of Boolean>(solved)
+    variable solvedRef set to new AsRef<of Boolean>(solved)
     call colourAttempt(attemptNo, grid, target, solvedRef, used)
     set solved to solvedRef.value()
     set attemptNo to attemptNo + 1
@@ -59,7 +59,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
   end while
 end procedure
 
-procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as Ref<of Boolean>, used as Dictionary<of String, String>)
+procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
   for i from 0 to 4 step 1

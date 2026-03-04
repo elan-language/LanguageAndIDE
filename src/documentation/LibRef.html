@@ -412,78 +412,65 @@ in the range:</li>
 
 <h2 id="Tuple">Tuple</h2>
 <p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
-It may be considered a lightweight alternative to defining a specific class for some purposes.
-Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.
-Common uses include:</p>
+It may be considered a lightweight alternative to defining a specific class for some purpose.</p>
+<p>The items in a Tuple may be literal or named values.</p>
+<p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
+<p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
+<p>A function may return a Tuple.</p>
+
+<p>A Tuple differs from a List in that:</p>
+<ul>
+ <li>A Tuple may hold items of <i>different</i> Types</li>
+ <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
+  Once defined, Tuples are effectively read-only. Nor, unlike a <el-type>List</el-type>, can you copy a Tuple
+  from an existing one with specified differences except by referencing each of its items (see below).</li>
+</ul>
+<p>Common uses include:</p>
 <ul>
  <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
  <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
 </ul>
-A Tuple differs from a List in that:
-<ul>
- <li>A Tuple may hold items of <i>different</i> Types</li>
- <li>A Tuple is <i>immutable</i> &ndash; you may read, but not modify, the values it contains.</li>
-</ul>
 
 <h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
 <p>A new Tuple is defined using this syntax:</p>
 
-<elan-code>
-<el-statement id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>t1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-id>true</el-id>)</el-txt></el-field></el-statement>
-</elan-code>
-
-<p>Note that the items may be literal or named values. An item within a Tuple may even be another Tuple.</p>
-
-<h3 class="no-TOC">Passing a <el-code>Tuple</el-code> to or from a function</h3>
-<p>You may pass a Tuple into a function, or return one from a function. The Type of a Tuple is specified
-  in round brackets, containing the comma-separated Types for each item in order, for example:</p>
-
 <el-code>
-<el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="11" data-cursorend="11" size="10" style="width: 11ch" value="tuple(3, 4)" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="23" data-cursorend="23" size="22" style="width: 23ch" value="tuple(3, &quot;apple&quot;, true)" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code>
+<p>which, on leaving the editable fields, are presented as:</p>
+<el-code>
+<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit>, <el-lit>4</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw></el-txt></el-field></el-statement>
 </el-code>
 
-<h3 class="no-TOC" id="deconstructTuple">Deconstructing a <el-code>Tuple</el-code></h3>
+<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
+<p id="itemN">The items in a tuple may be individually addressed by a dot reference and its special properties <el-lit>itemN</el-lit>, thus:</p>
+<table class="tablePlain">                                                   
+<tr>
+ <td><el-code>
+ <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt><el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw></el-txt><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id></el-txt><el-punc>)</el-punc><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item0</el-id></el-txt><el-punc>)</el-punc><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item1</el-id></el-txt><el-punc>)</el-punc><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item2</el-id></el-txt><el-punc>)</el-punc>
+ </el-code></td>
+ <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+ <td><br>tuple(3, apple, true)<br>3<br>apple<br>true</td>
+ </tr>
+</table>
 
-<p>The Tuple <el-code>point</el-code> defined by:</p>
-<el-code-block source="tuples1.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
-</el-code-block>
-<p> may be deconstructed into new or existing named values where the number of names must match the number of items in the Tuple, for example:</p>
-
-
-<el-code-block source="tuples1.elan">
-<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x1</el-id>, <el-id>y1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var11" tabindex="-1"><el-kw>variable </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>x2</el-id>, <el-id>y2</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="set23" tabindex="-1"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-id>x2</el-id>, <el-id>y2</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>The 'discard' symbol <el-code>_</el-code> (underscore) may also be used when deconstructing a Tuple when there is no need to capture some of its items:</p>
-
-<el-code-block source="tuples1.elan">
-<el-statement class="ok" id="var16" tabindex="-1"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="-1"><el-txt><el-id>x3</el-id>, _</el-txt></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var19" tabindex="-1"><el-kw>variable </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt>_, <el-id>y3</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p id="itemN">Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual items
-may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with <a href="LangRef.html#dotSyntax">dot syntax</a>,
-for example:</p>
-
-<el-code-block source="tuples1.elan">
-<el-func class="ok multiline" id="func17" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>)^<el-lit>2</el-lit>)</el-txt></el-field></el-statement>
+<p>And where p1 and p2 represent points each with tuples containing two <el-type>Float</el-type> values, this function returns the distance between them:</p>
+<el-code-block source="tuples_func.elan">
+<el-func class="ok multiline" id="func3" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params6" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return8" tabindex="-1"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-
 <p>Note that the appropriate <el-id>itemN</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>As in most languages, an Elan <el-code>Tuple</el-code> is immutable. Once defined, Tuples are effectively read-only. You cannot alter any of the items in a Tuple nor (unlike a <el-type>List</el-type>) can you create a new Tuple from an existing one with specified differences.</li>
-<li>You cannot deconstruct a Tuple into a mixture of new and existing named values.</li>
-<li>Tuples may be nested: you can define a Tuple within a Tuple.</li>
-</ul>
 
 <h1 id="StandardDataStructures">Standard data structures</h1>
 <p>Elan has two mutable data structure Types <el-type>List</el-type> and <el-type>Dictionary</el-type>, and
@@ -585,10 +572,10 @@ with specified changes: that is why all such methods have names starting '<el-co
 
 <h2 id="List">List</h2>
 <p>The <el-type>List</el-type> Type defines a data structure containing <i>n</i> items of any single Type,
- including fundamental value Types, structure Types such we <el-type>List</el-type>,
+ including fundamental value Types, structure Types such as <el-type>List</el-type>,
  and also user-defined Types such as a class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>,</p>
-<p>A List is created either empty or initialised from a literal definition.</p>
+<p>A List is created empty, and is then initialised with items of the stated Type.</p>
 <p>A List's size can be dynamically changed.</p>
 
 <div id="tail"></div>
@@ -946,32 +933,39 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </table>
 
 <h2 id="SetType">Set</h2>
-    <p>A <el-type>Set</el-type> is a standard data structure containing set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a set member may appear only once.
-     If a member being added to a <el-type>Set</el-type> has the same value as an existing member in the Set then the Set remains the same length as before.</p>
-    <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.
-     For the same reason, a Set is an immutable data structure: there are no methods that modify an existing Set, but several (including <el-method>add</el-method>, <el-method>remove</el-method>)
-      return a new Set that is based on the original Set or Sets, with specified differences.</p>
-    <p>Example of use:</p>
-<el-code-block source="set.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="set11" tabindex="0"><el-kw>set </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="set16" tabindex="0"><el-kw>set </el-kw><el-field id="ident17" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print19" tabindex="0"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
- </el-code-block>
+<p>A <el-type>Set</el-type> is a standard data structure containing set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a set member may appear only once.
+ If a member being added to a <el-type>Set</el-type> has the same value as an existing member in the Set then the Set remains the same length as before.</p>
+<p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
+<p>For the same reason, a Set is an immutable data structure: there are no methods that modify an existing Set, but several (including <el-method>add</el-method>, <el-method>remove</el-method>)
+ return a new Set that is based on the original Set or Sets, with specified differences.</p>
+<p>When creating a Set, the Type of its members must be specified in the form
+ <el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a Set.</p>
+<p>You can add members: individually with <el-method>add</el-method>, or multiple members with <el-code>addFromList</el-code>.</p>
+<p>You can create a new Set from an existing <el-type>List</el-type> by calling <el-code>asSet</el-code> on it.</p>
+<p>Examples of use:</p>
 
-<h4 class="no-TOC">Notes</h4>
-<ul>
-    <li> When creating a Set, the Type of its members must be specified in the form
-    <el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
-    <li>You can add members: individually with <el-method>add</el-method>, or multiple members with <el-code>addFromList</el-code>.</li>
-    <li>You can create a new Set from an existing <el-type>List</el-type> by calling <el-code>asSet</el-code> on it.</li>
-</ul>
+<table class="tablePlain"><!--source="set.elan"-->                                                   
+<tr><td>
+<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>Set</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>>()<br>
+<el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])<br> 
+<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code><br></td>
+<td><br><br>&#x27f6;</td><td><br><br>3</td>
+</tr><tr></tr><tr>
+<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)<br> 
+<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><br>&#x27f6;</td><td><br>3</td>
+</tr><tr></tr><tr>
+<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br> 
+<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><br>&#x27f6;</td><td><br>3</td>
+</tr><tr></tr><tr>
+<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br> 
+<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><br>&#x27f6;</td><td><br>3</td>
+</tr><tr></tr><tr>
+<td><el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>)</el-code></td>
+<td>&#x27f6;</td><td>[5, 7]</td>
+</table>
 
 <h3 class="no-TOC" id="Set_functions">Function dot methods on a Set</h3>
 <table class="tableMethod">

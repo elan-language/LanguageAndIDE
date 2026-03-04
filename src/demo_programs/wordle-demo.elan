@@ -49,7 +49,7 @@ procedure playGame()
   variable solved set to false
   while (attemptNo < 6) and (not solved)
     call enterAttempt(attemptNo, grid, used)
-    variable solvedRef set to new Ref<of Boolean>(solved)
+    variable solvedRef set to new AsRef<of Boolean>(solved)
     call colourAttempt(attemptNo, grid, target, solvedRef, used)
     set solved to solvedRef.value()
     set attemptNo to attemptNo + 1
@@ -95,7 +95,7 @@ procedure enterAttempt(attemptNo as Int, grid as List<of List<of String>>, used 
   end while
 end procedure
 
-procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, target as String, solved as Ref<of Boolean>, used as Dictionary<of String, String>)
+procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, target as String, solved as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
   for i from 0 to 4 step 1
@@ -125,7 +125,7 @@ procedure playReverseGame()
     end for
     call displayHtml(drawGrid(grid))
     variable mark set to ""
-    variable markRef set to new Ref<of String>(mark)
+    variable markRef set to new AsRef<of String>(mark)
     call enterMark(attemptNo, grid, markRef)
     set mark to markRef.value()
     if mark.equals("22222") then
@@ -143,7 +143,7 @@ procedure playReverseGame()
   end while
 end procedure
 
-procedure enterMark(attemptNo as Int, grid as List<of List<of String>>, markRef as Ref<of String>)
+procedure enterMark(attemptNo as Int, grid as List<of List<of String>>, markRef as AsRef<of String>)
   variable mark set to markRef.value()
   variable guess set to getWord(attemptNo, grid)
   variable chNo set to 0

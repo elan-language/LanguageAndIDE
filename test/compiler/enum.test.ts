@@ -526,9 +526,7 @@ enum Fruit apple, orange, if`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'if' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_UseOfReservedWordAsValue", async () => {
@@ -552,9 +550,7 @@ enum Fruit apple, orange, break`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'break' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateNames", async () => {

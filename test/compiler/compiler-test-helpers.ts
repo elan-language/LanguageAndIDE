@@ -13,13 +13,13 @@ import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageCS } from "../../src/ide/frames/language-cs";
 import { LanguageJava } from "../../src/ide/frames/language-java";
 import { LanguagePython } from "../../src/ide/frames/language-python";
+import { LanguageVB } from "../../src/ide/frames/language-vb";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { encodeCode } from "../../src/ide/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { LanguageVB } from "../../src/ide/frames/language-vb";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);

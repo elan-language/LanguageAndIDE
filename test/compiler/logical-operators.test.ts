@@ -492,9 +492,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'true' matches a reserved word (even if different case), so may not be defined as an identifier.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'true' matches a reserved word.LangRef.html#compile_error"]);
   });
 
   test("Fail_minusOnNonNumber2", async () => {
