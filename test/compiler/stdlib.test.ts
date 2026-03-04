@@ -7,6 +7,8 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertCompiles,
   assertDoesNotCompile,
+  assertDoesNotParse,
+  assertDoesNotParseWithMessage,
   assertGraphicsContains,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -2062,7 +2064,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Pass_shadowLibraryType", async () => {
+  test("Fail_shadowLibraryType", async () => {
     const code = `${testHeader}
 
 class List
@@ -2080,28 +2082,6 @@ main
 end main
 `;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-class List {
-  static emptyInstance() { return system.emptyClass(List, []);};
-
-  async _initialise() {
-
-    return this;
-  }
-
-  async asString() {
-    return "MyList";
-  }
-
-}
-
-async function main() {
-  await _stdlib.printNoLine(system.initialise(await new List()._initialise()));
-  await _stdlib.printNoLine(system.initialise(await new _stdlib.List()._initialise()));
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -2113,10 +2093,7 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "MyList[]");
+    assertDoesNotParse(fileImpl);
   });
 
   test("Pass_SetComparisonByValue", async () => {

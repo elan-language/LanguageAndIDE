@@ -5,6 +5,7 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertDoesNotParseWithMessage,
   assertExportedCSIs,
   assertExportedJavaIs,
   assertExportedPythonIs,
@@ -353,7 +354,7 @@ return [main, _tests];}`;
   await assertObjectCodeExecutes(fileImpl, "bar");
 });
 
-test("Pass_LibraryClassParameter", async () => {
+test("Fail_LibraryClassParameter", async () => {
   const code = `${testHeader}
 
 main
@@ -371,29 +372,6 @@ class List
 
 end class`;
 
-  const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let b = system.initialise(await new _stdlib.List()._initialise());
-  await _stdlib.printNoLine((await global.foo(b)));
-}
-
-async function foo(bar) {
-  return (await _stdlib.asString(bar));
-}
-global["foo"] = foo;
-
-class List {
-  static emptyInstance() { return system.emptyClass(List, []);};
-
-  async _initialise() {
-
-    return this;
-  }
-
-}
-return [main, _tests];}`;
-
   const fileImpl = new FileImpl(
     testHash,
     new DefaultProfile(),
@@ -405,10 +383,7 @@ return [main, _tests];}`;
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertStatusIsValid(fileImpl);
-  assertObjectCodeIs(fileImpl, objectCode);
-  await assertObjectCodeExecutes(fileImpl, "[]");
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_ExtensionParameterCount", async () => {
@@ -1753,7 +1728,7 @@ end function`;
   ]);
 });
 
-test("Fail_LibraryClassParameter", async () => {
+test("Fail_LibraryClassParameter2", async () => {
   const code = `${testHeader}
 
 main
@@ -1778,12 +1753,7 @@ end class`;
     true,
   );
   await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-  assertParses(fileImpl);
-  assertStatusIsValid(fileImpl);
-  assertDoesNotCompile(fileImpl, [
-    "Argument types. Expected: bar (List<of Int>), Provided: List.LangRef.html#compile_error",
-  ]);
+  assertDoesNotParse(fileImpl);
 });
 
 test("Fail_ParameterNameClash1", async () => {

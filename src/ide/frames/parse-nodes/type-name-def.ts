@@ -33,41 +33,21 @@ export class TypeNameDef extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langInt);
-      this.elanTypeName = "Int";
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langFloat);
-        this.elanTypeName = "Float";
-      }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langBool);
-        this.elanTypeName = "Boolean";
-      }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langString);
-        this.elanTypeName = "String";
-      }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
-        this.elanTypeName = "List";
-      }
-
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(
-          text,
-          Regexes.typeSimpleName,
-        );
-        this.elanTypeName = this.matchedText;
-        if (
-          this.status === ParseStatus.valid &&
-          ReservedWords.Instance.matchesIgnoringCase(this.matchedText)
-        ) {
-          this.status = ParseStatus.invalid;
-          this.message = `matches a reserved word.`;
-        }
+      [this.status, this.matchedText, this.remainingText] = matchRegEx(
+        text,
+        Regexes.typeSimpleName,
+      );
+      this.elanTypeName = this.matchedText;
+      if (
+        this.status === ParseStatus.valid &&
+        ReservedWords.Instance.matchesIgnoringCase(this.matchedText)
+      ) {
+        this.status = ParseStatus.invalid;
+        this.message = `matches a reserved word.`;
       }
     }
   }
+
   renderAsHtml(): string {
     return `<el-type>${this.renderAsExport()}</el-type>`;
   }
