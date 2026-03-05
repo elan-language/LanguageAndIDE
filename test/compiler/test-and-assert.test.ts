@@ -127,8 +127,8 @@ main
 end main
 
 test test_square
-  variable t set to tuple("one", "two")
-  assert t is tuple("one", "two")
+  variable t set to ("one", "two")
+  assert t is ("one", "two")
 end test
 `;
 
@@ -140,7 +140,7 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   let t = system.tuple(["one", "two"]);
-  _outcomes.push(await system.assert([async () => t, "tuple(String, String)"], [system.tuple(["one", "two"]), "tuple(String, String)"], "assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => t, "(String, String)"], [system.tuple(["one", "two"]), "(String, String)"], "assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -159,10 +159,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert9")],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9")]],
     ]);
   });
 
@@ -173,7 +170,7 @@ main
 end main
 
 test test_square
-  assert parseAsInt("3") is tuple(true, 3)
+  assert parseAsInt("3") is (true, 3)
 end test
 `;
 
@@ -184,7 +181,7 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => _stdlib.parseAsInt("3"), "tuple(Boolean, Int)"], [system.tuple([true, 3]), "tuple(Boolean, Int)"], "assert6", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.parseAsInt("3"), "(Boolean, Int)"], [system.tuple([true, 3]), "(Boolean, Int)"], "assert6", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -203,10 +200,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [new AssertOutcome(TestStatus.pass, "tuple(true, 3)", "tuple(true, 3)", "assert6")],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "(true, 3)", "(true, 3)", "assert6")]],
     ]);
   });
 
@@ -217,8 +211,8 @@ main
 end main
 
 test test_square
-  variable t1 set to tuple("one", "two")
-  variable t2 set to tuple("one", "two")
+  variable t1 set to ("one", "two")
+  variable t2 set to ("one", "two")
   assert t1 is t2
 end test
 `;
@@ -232,7 +226,7 @@ async function main() {
 _tests.push(["test3", async (_outcomes) => {
   let t1 = system.tuple(["one", "two"]);
   let t2 = system.tuple(["one", "two"]);
-  _outcomes.push(await system.assert([async () => t1, "tuple(String, String)"], [t2, "tuple(String, String)"], "assert12", _stdlib, false));
+  _outcomes.push(await system.assert([async () => t1, "(String, String)"], [t2, "(String, String)"], "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -251,10 +245,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [new AssertOutcome(TestStatus.pass, "tuple(one, two)", "tuple(one, two)", "assert12")],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert12")]],
     ]);
   });
 

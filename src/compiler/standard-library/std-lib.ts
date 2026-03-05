@@ -165,7 +165,7 @@ export class StdLib {
         return items.join("");
       }
 
-      return `tuple(${items.join(", ")})`;
+      return `(${items.join(", ")})`;
     }
 
     if (typeof v === "object" && "asString" in v) {

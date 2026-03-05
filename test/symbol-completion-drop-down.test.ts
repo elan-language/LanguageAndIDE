@@ -158,7 +158,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 79);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 78);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -2013,33 +2013,6 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "sequence(1,4).ma", expected);
   });
 
-  test("Pass_bracketedExpression", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to 1 < 2
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["black", "black", "black"],
-      ["blue", "blue", "blue"],
-      ["createBlockGraphics", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "(1 < bl", expected);
-  });
-
   ignore_test("Pass_callProperty", async () => {
     const code = `${testHeader}
 
@@ -2542,7 +2515,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable t set to tuple(1, "fred")
+  variable t set to (1, "fred")
   variable a set to t.item_0
 end main`;
 
@@ -2573,7 +2546,7 @@ main
 end main
 
 function foo() returns (Int, String)
-  return tuple(1, "fred")
+  return (1, "fred")
 end function`;
 
     const fileImpl = new FileImpl(
@@ -2599,7 +2572,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item_0)
+  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -2625,7 +2598,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "tuple(4, 5), lambda t as (Int, Int) => t.it",
+      "(4, 5), lambda t as (Int, Int) => t.it",
       expected,
     );
   });

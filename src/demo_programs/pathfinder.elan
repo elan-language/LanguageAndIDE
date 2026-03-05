@@ -207,7 +207,7 @@ class Solver
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
     end while
-    return tuple(route, length)
+    return (route, length)
   end function
 
 end class

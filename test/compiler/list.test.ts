@@ -2126,7 +2126,7 @@ end main`;
 
 main
   variable points set to new List<of (Int, Int)>()
-  set points to points + tuple(1, 2)
+  set points to points + (1, 2)
   call printNoLine(points)
 end main`;
 
@@ -2143,7 +2143,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: List<of tuple(Int, Int)>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of (Int, Int)>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -2152,7 +2152,7 @@ end main`;
 
 main
   variable points set to new List<of (Int, Int)>()
-  call points.appendList(tuple(1, 2))
+  call points.appendList((1, 2))
   call printNoLine(points)
 end main`;
 
@@ -2169,7 +2169,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of tuple(Int, Int)>), Provided: tuple(Int, Int).LangRef.html#compile_error",
+      "Argument types. Expected: other (List<of (Int, Int)>), Provided: (Int, Int).LangRef.html#compile_error",
     ]);
   });
 

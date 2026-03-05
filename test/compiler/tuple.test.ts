@@ -4,7 +4,6 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -19,7 +18,7 @@ suite("Tuple", () => {
     const code = `${testHeader}
 
 main
-    variable x set to tuple(3, "Apple")
+    variable x set to (3, "Apple")
     call printNoLine(x)
     variable f set to x.item_0
     variable s set to x.item_1
@@ -53,7 +52,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)3Apple");
+    await assertObjectCodeExecutes(fileImpl, "(3, Apple)3Apple");
   });
 
   test("Pass_FunctionReturnsTupleItem", async () => {
@@ -69,7 +68,7 @@ main
 end main
 
 function f() returns (String, String)
-   return tuple("1", "2")
+   return ("1", "2")
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -103,7 +102,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(1, 2)12");
+    await assertObjectCodeExecutes(fileImpl, "(1, 2)12");
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
@@ -116,7 +115,7 @@ main
 end main
 
 function f() returns (String, String)
-   return tuple("1", "2")
+   return ("1", "2")
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -154,8 +153,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to [tuple(1,2)]
-  variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  variable a set to [(1,2)]
+  variable t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
   variable fst set to t.item_0
   call printNoLine(fst)
 end main`;
@@ -193,7 +192,7 @@ return [main, _tests];}`;
 main
   variable x set to "one"
   variable y set to "two"
-  call printNoLine(f(tuple(x,y)))
+  call printNoLine(f((x,y)))
 end main
 
 function f(t as (String, String)) returns String
@@ -237,8 +236,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3,"Apple")
-  set x to tuple(4,"Pear")
+  variable x set to (3,"Apple")
+  set x to (4,"Pear")
   call printNoLine(x)
 end main
 `;
@@ -266,7 +265,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(4, Pear)");
+    await assertObjectCodeExecutes(fileImpl, "(4, Pear)");
   });
 
   test("Pass_item in expression", async () => {
@@ -274,7 +273,7 @@ return [main, _tests];}`;
 
 main
   variable p set to [1, 2, 3, 4, 5]
-  variable x set to tuple(3, 4)
+  variable x set to (3, 4)
   variable y set to x.item_0 + x.item_1
   variable z set to p[x.item_0]
   variable q set to abs(x.item_1)
@@ -323,7 +322,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3,"Apple")
+  variable x set to (3,"Apple")
   variable y set to 4
   set y to x.item_1
   call printNoLine(y)
@@ -368,15 +367,16 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'item_0' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3, "Apple")
-  set x to tuple("4", "Pear")
+  variable x set to (3, "Apple")
+  set x to ("4", "Pear")
 end main
 `;
 
@@ -394,7 +394,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(String, String).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String), Provided: (String, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -402,8 +402,8 @@ end main
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3, "Apple", 4)
-  set x to tuple(4, "Pear")
+  variable x set to (3, "Apple", 4)
+  set x to (4, "Pear")
 end main
 `;
 
@@ -421,7 +421,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String, Int), Provided: tuple(Int, String).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String, Int), Provided: (Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -429,8 +429,8 @@ end main
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3, "Apple")
-  set x to tuple(4, "Pear", 3)
+  variable x set to (3, "Apple")
+  set x to (4, "Pear", 3)
 end main
 `;
 
@@ -448,7 +448,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(Int, String, Int).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String), Provided: (Int, String, Int).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -456,7 +456,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable x set to tuple(3, "Apple")
+  variable x set to (3, "Apple")
   variable y set to x.item_2
 end main
 `;
@@ -475,7 +475,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'item_2' is not defined for type 'tuple(Int, String)'.LangRef.html#compile_error",
+      "'item_2' is not defined for type '(Int, String)'.LangRef.html#compile_error",
     ]);
   });
 });

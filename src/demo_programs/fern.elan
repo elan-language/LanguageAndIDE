@@ -35,7 +35,7 @@ function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Flo
   constant nx set to nx_ny.item_0
   variable ny set to nx_ny.item_1
   variable rect set to (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25)
-  return tuple(rect, nx, ny, rNext)
+  return (rect, nx, ny, rNext)
 end function
 
 # r is random Float 0.0 <= r < 1.0
@@ -63,7 +63,7 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
       set done to true
     end if
   end each
-  return tuple(nx, ny)
+  return (nx, ny)
 end function
 
 test test_one
@@ -75,7 +75,7 @@ end test
 function roundtuple1(n as (Float, Float)) returns (Float, Float)
   constant a set to n.item_0
   constant b set to n.item_1
-  return tuple(a.round(8), b.round(8))
+  return (a.round(8), b.round(8))
 end function
 
 function roundtuple2(n as (Float, Float)) returns List<of Float>

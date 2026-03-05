@@ -358,7 +358,7 @@ test('debug tuple', async ({ page }) => {
   await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
-  await page.keyboard.type('tuple(1, "bill")');
+  await page.keyboard.type('(1, "bill")');
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('ca')
@@ -373,7 +373,7 @@ test('debug tuple', async ({ page }) => {
 
   await page.getByText('set breakpoint').click();
   await page.getByRole('button', { name: 'debug' }).click();
-  const summary = 'a tuple(Int, String)'
+  const summary = 'a (Int, String)'
   await expect(page.locator('#system-info')).toContainText(summary);
   await page.getByText(summary).click();
 
@@ -558,7 +558,7 @@ test('debug deconstruct tuple', async ({ page }) => {
   await page.keyboard.type('con'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
-  await page.keyboard.type('tuple(1, "bill", {1, 2})');
+  await page.keyboard.type('(1, "bill", {1, 2})');
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m'); // main

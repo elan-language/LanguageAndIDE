@@ -22,7 +22,10 @@ export class TypeNode extends AbstractAlternatives {
       if (text.trimStart().startsWith("Func")) {
         // tested first because 'Func' is *syntactically* valid simple type
         this.alternatives.push(new TypeFuncNode(this.file));
-      } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
+      } else if (
+        text.trimStart().startsWith(OPEN_BRACKET) ||
+        text.trimStart().startsWith("tuple") //`tuple` is a kludge specifically to accommodate Python
+      ) {
         this.alternatives.push(new TypeTupleNode(this.file));
       } else {
         this.alternatives.push(new TypeNameQualifiedNode(this.file, this.tokenTypes));

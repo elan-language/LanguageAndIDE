@@ -220,7 +220,7 @@ class Game
       set this.s to ""
       set this.ds to new Dictionary<of String, Int>()
       set this.ai to new List<of Int>()
-      set this.t to tuple(0, "", new List<of Int>())
+      set this.t to (0, "", new List<of Int>())
       set this.ff to lambda a as String, b as String => 0
     end constructor
 
@@ -306,7 +306,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])0true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])0true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -343,7 +343,7 @@ class Game
       set this.li to new List<of Int>()
       set this.ds to new Dictionary<of String, Int>()
       set this.ai to new List<of Int>()
-      set this.t to tuple(0, "", new List<of Int>())
+      set this.t to (0, "", new List<of Int>())
     end constructor
 
     property i as Int
@@ -450,7 +450,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][]tuple(0, , [])A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])A RegExp");
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
