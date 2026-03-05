@@ -32,28 +32,28 @@ function north(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
   constant y2 set to if y is 0 then 29 else y - 1
-  return tuple(x, y2)
+  return (x, y2)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
   constant y2 set to if y is 29 then 0 else y + 1
-  return tuple(x, y2)
+  return (x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
   constant x2 set to if x is 39 then 0 else x + 1
-  return tuple(x2, y)
+  return (x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
   constant x2 set to if x is 0 then 39 else x - 1
-  return tuple(x2, y)
+  return (x2, y)
 end function
 
 function northEast(cell as (Int, Int)) returns (Int, Int)
@@ -73,7 +73,7 @@ function southWest(cell as (Int, Int)) returns (Int, Int)
 end function
 
 function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
-  variable c set to tuple(x, y)
+  variable c set to (x, y)
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
@@ -121,63 +121,63 @@ procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
 end procedure
 
 test test_north
-  assert north(tuple(3, 4)) is tuple(3, 3)
-  assert north(tuple(39, 0)) is tuple(39, 29)
-  assert north(tuple(0, 29)) is tuple(0, 28)
-  assert north(tuple(39, 29)) is tuple(39, 28)
+  assert north((3, 4)) is (3, 3)
+  assert north((39, 0)) is (39, 29)
+  assert north((0, 29)) is (0, 28)
+  assert north((39, 29)) is (39, 28)
 end test
 
 test test_south
-  assert south(tuple(3, 4)) is tuple(3, 5)
-  assert south(tuple(39, 0)) is tuple(39, 1)
-  assert south(tuple(0, 29)) is tuple(0, 0)
-  assert south(tuple(39, 29)) is tuple(39, 0)
+  assert south((3, 4)) is (3, 5)
+  assert south((39, 0)) is (39, 1)
+  assert south((0, 29)) is (0, 0)
+  assert south((39, 29)) is (39, 0)
 end test
 
 test test_east
-  assert east(tuple(10, 2)) is tuple(11, 2)
-  assert east(tuple(39, 0)) is tuple(0, 0)
-  assert east(tuple(0, 1)) is tuple(1, 1)
-  assert east(tuple(39, 29)) is tuple(0, 29)
+  assert east((10, 2)) is (11, 2)
+  assert east((39, 0)) is (0, 0)
+  assert east((0, 1)) is (1, 1)
+  assert east((39, 29)) is (0, 29)
 end test
 
 test test_west
-  assert west(tuple(3, 4)) is tuple(2, 4)
-  assert west(tuple(39, 0)) is tuple(38, 0)
-  assert west(tuple(0, 0)) is tuple(39, 0)
-  assert west(tuple(0, 29)) is tuple(39, 29)
+  assert west((3, 4)) is (2, 4)
+  assert west((39, 0)) is (38, 0)
+  assert west((0, 0)) is (39, 0)
+  assert west((0, 29)) is (39, 29)
 end test
 
 test test_northEast
-  assert northEast(tuple(3, 4)) is tuple(4, 3)
-  assert northEast(tuple(0, 0)) is tuple(1, 29)
-  assert northEast(tuple(39, 0)) is tuple(0, 29)
-  assert northEast(tuple(0, 29)) is tuple(1, 28)
-  assert northEast(tuple(39, 29)) is tuple(0, 28)
+  assert northEast((3, 4)) is (4, 3)
+  assert northEast((0, 0)) is (1, 29)
+  assert northEast((39, 0)) is (0, 29)
+  assert northEast((0, 29)) is (1, 28)
+  assert northEast((39, 29)) is (0, 28)
 end test
 
 test test_southEast
-  assert southEast(tuple(3, 4)) is tuple(4, 5)
-  assert southEast(tuple(0, 0)) is tuple(1, 1)
-  assert southEast(tuple(39, 0)) is tuple(0, 1)
-  assert southEast(tuple(0, 29)) is tuple(1, 0)
-  assert southEast(tuple(39, 29)) is tuple(0, 0)
+  assert southEast((3, 4)) is (4, 5)
+  assert southEast((0, 0)) is (1, 1)
+  assert southEast((39, 0)) is (0, 1)
+  assert southEast((0, 29)) is (1, 0)
+  assert southEast((39, 29)) is (0, 0)
 end test
 
 test test_northWest
-  assert northWest(tuple(3, 4)) is tuple(2, 3)
-  assert northWest(tuple(0, 0)) is tuple(39, 29)
-  assert northWest(tuple(39, 0)) is tuple(38, 29)
-  assert northWest(tuple(0, 29)) is tuple(39, 28)
-  assert northWest(tuple(39, 29)) is tuple(38, 28)
+  assert northWest((3, 4)) is (2, 3)
+  assert northWest((0, 0)) is (39, 29)
+  assert northWest((39, 0)) is (38, 29)
+  assert northWest((0, 29)) is (39, 28)
+  assert northWest((39, 29)) is (38, 28)
 end test
 
 test test_southWest
-  assert southWest(tuple(3, 4)) is tuple(2, 5)
-  assert southWest(tuple(0, 0)) is tuple(39, 1)
-  assert southWest(tuple(39, 0)) is tuple(38, 1)
-  assert southWest(tuple(0, 29)) is tuple(39, 0)
-  assert southWest(tuple(39, 29)) is tuple(38, 0)
+  assert southWest((3, 4)) is (2, 5)
+  assert southWest((0, 0)) is (39, 1)
+  assert southWest((39, 0)) is (38, 1)
+  assert southWest((0, 29)) is (39, 0)
+  assert southWest((39, 29)) is (38, 0)
 end test
 
 test test_blackOrWhite
@@ -189,7 +189,7 @@ test test_blackOrWhite
 end test
 
 [ghosted] test test_neighbourCells
-  [ghosted] assert neighbourCells(3, 4) is [tuple(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
+  [ghosted] assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
 end test
 
 test test_willLive

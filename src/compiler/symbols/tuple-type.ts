@@ -12,11 +12,11 @@ export class TupleType implements SymbolType {
   }
 
   get name() {
-    return `tuple(${this.ofTypes.map((t) => t.name).join(", ")})`;
+    return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
   }
 
   toString(): string {
-    return `tuple(${this.ofTypes.map((t) => t.name).join(", ")})`;
+    return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

@@ -153,11 +153,11 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
     testNodeParse(
       new ExprNode(f),
-      "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.valid,
-      "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       "",
-      "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       "",
     );
   });
@@ -840,78 +840,49 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
   });
   test("TupleNode", () => {
-    testNodeParse(new TupleNode(f), `tuple(3,4)`, ParseStatus.valid, "", "", "");
+    testNodeParse(new TupleNode(f), `(3,4)`, ParseStatus.valid, "", "", "");
+    testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
+    testNodeParse(new TupleNode(f), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
     testNodeParse(
       new TupleNode(f),
-      `tuple(3,"a", "hello", 4.1, true)`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new TupleNode(f),
-      `tuple(tuple(3,4), tuple("a", true))`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new TupleNode(f),
-      `tuple(3,"a", "hello", 4.1, true`,
+      `(3,"a", "hello", 4.1, true`,
       ParseStatus.incomplete,
       "",
       "",
       "",
     );
-    testNodeParse(
-      new TupleNode(f),
-      `tuple(3,"a", "hello", 4.1,`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
+    testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
     testNodeParse(new TupleNode(f), `tuple[3,4]`, ParseStatus.invalid, "", "tuple[3,4]", "");
-    testNodeParse(new TupleNode(f), `tuple(a,b)`, ParseStatus.valid, "tuple(a,b)", "", "");
-    testNodeParse(new TupleNode(f), `tuple(`, ParseStatus.incomplete, "tuple(", "", "");
-    testNodeParse(new TupleNode(f), `tuple(3`, ParseStatus.incomplete, "tuple(3", "", "");
-    testNodeParse(new TupleNode(f), `tuple(3)`, ParseStatus.invalid, "", "tuple(3)", "");
-    testNodeParse(new TupleNode(f), `tuple()`, ParseStatus.invalid, "", "tuple()", "");
+    testNodeParse(new TupleNode(f), `(a,b)`, ParseStatus.valid, "(a,b)", "", "");
+    testNodeParse(new TupleNode(f), `(`, ParseStatus.incomplete, "(", "", "");
+    testNodeParse(new TupleNode(f), `(3`, ParseStatus.incomplete, "(3", "", "");
+    testNodeParse(new TupleNode(f), `(3)`, ParseStatus.invalid, "", "(3)", "");
+    testNodeParse(new TupleNode(f), `()`, ParseStatus.invalid, "", "()", "");
+    testNodeParse(new TupleNode(f), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "");
     testNodeParse(
       new TupleNode(f),
-      `tuple("foo", 3)`,
+      `(foo, 3, bar(a), x)`,
       ParseStatus.valid,
-      'tuple("foo", 3)',
-      "",
+      "(foo, 3, bar(a), x)",
       "",
       "",
     );
+    testNodeParse(new TupleNode(f), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
     testNodeParse(
       new TupleNode(f),
-      `tuple(foo, 3, bar(a), x)`,
-      ParseStatus.valid,
-      "tuple(foo, 3, bar(a), x)",
-      "",
-      "",
-    );
-    testNodeParse(new TupleNode(f), `tuple(foo)`, ParseStatus.invalid, "", "tuple(foo)", "");
-    testNodeParse(
-      new TupleNode(f),
-      `tuple(foo, 3, bar(a), x`,
+      `(foo, 3, bar(a), x`,
       ParseStatus.incomplete,
-      "tuple(foo, 3, bar(a), x",
+      "(foo, 3, bar(a), x",
       "",
       "",
     );
     testNodeParse(
       new TupleNode(f),
-      `tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+      `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
       ParseStatus.valid,
       "",
       "",
-      "tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
     );
   });
   test("Lambda", () => {
@@ -942,11 +913,11 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new Lambda(f),
-      `lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+      `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
       ParseStatus.valid,
       "",
       "",
-      "lambda a as (String, String), x as Int => tuple(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
     );
   });
   test("IfExpr", () => {
@@ -1391,7 +1362,7 @@ suite("Parsing Nodes", () => {
       "abc(defg, hi)[0]",
       "",
     );
-    testNodeParse(new ExprNode(f), `tuple(defg, hi)`, ParseStatus.valid, "tuple(defg, hi)", ""); // tuple
+    testNodeParse(new ExprNode(f), `(defg, hi)`, ParseStatus.valid, "(defg, hi)", ""); // tuple
     testNodeParse(new TermSimple(f), `[defg, hi]`, ParseStatus.valid, "[defg, hi]", "");
     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");

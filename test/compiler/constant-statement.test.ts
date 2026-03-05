@@ -263,7 +263,7 @@ main
 end main
 
 function foo() returns (Int, Int)
-  return tuple(0, 0)
+  return (0, 0)
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -424,7 +424,7 @@ main
 end main
 
 function foo() returns Int
-  constant x set to tuple(1, 2)
+  constant x set to (1, 2)
   return x.item_0
 end function`;
 

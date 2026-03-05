@@ -671,7 +671,7 @@ enum Fruit apple, pear`;
     const code = `${testHeader}
 
 main
-  variable x set to tuple(1, "fred")
+  variable x set to (1, "fred")
   call printNoLine(x)
 end main`;
 
@@ -690,7 +690,7 @@ end main`;
       asDebugSymbol(
         "x",
         [1, "fred"],
-        '{"Type":"tuple(Int, String)","OfTypes":[{"Type":"Int"},{"Type":"String"}]}',
+        '{"Type":"(Int, String)","OfTypes":[{"Type":"Int"},{"Type":"String"}]}',
       ),
     ];
 

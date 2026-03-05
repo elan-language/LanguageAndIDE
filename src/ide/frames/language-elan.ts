@@ -198,7 +198,6 @@ export class LanguageElan extends LanguageAbstract {
   private THROW = "throw";
   private TO = "to";
   private TRY = "try";
-  private TUPLE = "tuple";
   private VARIABLE = "variable";
   private WHILE = "while";
   private WITH = "with";
@@ -296,7 +295,6 @@ export class LanguageElan extends LanguageAbstract {
     `throw`,
     `to`,
     `try`,
-    `tuple`,
     `variable`,
     `while`,
     `action`,

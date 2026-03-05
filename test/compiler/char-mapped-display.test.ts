@@ -252,7 +252,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(, )");
+    await assertObjectCodeExecutes(fileImpl, "(, )");
   });
 
   test("Pass_clearKeyBuffer", async () => {

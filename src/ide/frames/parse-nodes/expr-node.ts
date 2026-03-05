@@ -5,7 +5,6 @@ import {
   notKeyword,
   refKeyword,
   thisKeyword,
-  tupleKeyword,
 } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
@@ -70,7 +69,6 @@ export class ExprNode extends AbstractAlternatives {
     let kws = [newKeyword, ifKeyword, lambdaKeyword, thisKeyword, refKeyword, notKeyword].map(
       (kw) => KeywordCompletion.create(kw),
     );
-    kws.push(KeywordCompletion.create(tupleKeyword, false, false, true));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
       kws = kws.filter((kw) => kw.keyword.startsWith(trim));

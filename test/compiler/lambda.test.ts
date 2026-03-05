@@ -60,7 +60,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => global.first(t))
+  call printModified((4, 5), lambda t as (Int, Int) => global.first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -111,7 +111,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item_0)
+  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)

@@ -254,12 +254,12 @@ end function
 end test
 
 function analyseAlgorithm(firstAttempt as String, validAnswers as List<of String>) returns (Float, Float)
-  return tuple(0, 0)
+  return (0, 0)
 end function
 
 [ghosted] test test_analyseAlgorithm
   variable validTargets set to ["ABODE", "ACRID", "ARISE", "CRAZY", "FLUTE", "LOWER", "QUITE", "ZESTY"]
-  assert analyseAlgorithm("ABODE", validTargets) is tuple(87.5, 4.0)
-  assert analyseAlgorithm("ZESTY", validTargets) is tuple(87.5, 3.29)
-  assert analyseAlgorithm("ARISE", validTargets) is tuple(75.0, 3.50)
+  assert analyseAlgorithm("ABODE", validTargets) is (87.5, 4.0)
+  assert analyseAlgorithm("ZESTY", validTargets) is (87.5, 3.29)
+  assert analyseAlgorithm("ARISE", validTargets) is (75.0, 3.50)
 end test

@@ -97,7 +97,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "t",
       ParseStatus.valid,
-      ExprNode.name,
+      ReferenceNode.name,
       "t",
       [
         TokenType.id_constant,
@@ -108,9 +108,8 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_enumValue,
         TokenType.method_function,
         TokenType.method_system,
-        TokenType.type_enum,
       ],
-      ["this,tuple"],
+      ["this"],
     );
   });
   test("Expression2", () => {
@@ -171,7 +170,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,if,lambda,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not"],
     );
   });
   test("Expression3", () => {
@@ -342,13 +341,13 @@ suite("Symbol Completion Spec", () => {
       "",
     );
   });
-  test("Bracketed expression", () => {
+  test("Open brackets", () => {
     testSymbolCompletionSpec(
       new ExprNode(f),
       "(",
       ParseStatus.incomplete,
-      ExprNode.name,
-      "",
+      ExprNode.name, // because it is now ambigious between a bracketed expression and a tuple
+      "(",
       [
         TokenType.id_constant,
         TokenType.id_let,
@@ -360,7 +359,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,if,lambda,this,ref,not,tuple"],
+      [],
       "",
     );
   });
@@ -448,34 +447,10 @@ suite("Symbol Completion Spec", () => {
       "Direction",
     );
   });
-  test("#909 Tuple 1", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "tuple(",
-      ParseStatus.incomplete,
-      ExprNode.name,
-      "",
-      allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,if,lambda,this,ref,not,tuple"],
-      "",
-    );
-  });
-  test("#909 Tuple 2", () => {
-    testSymbolCompletionSpec(
-      new ExprNode(f),
-      "(a",
-      ParseStatus.incomplete,
-      ReferenceNode.name,
-      "a",
-      allIds.concat([TokenType.method_function, TokenType.method_system]),
-      [""],
-      "",
-    );
-  });
   test("#909 Tuple 3", () => {
     testSymbolCompletionSpec(
       new ExprNode(f),
-      "tuple(a, a",
+      "(a, a",
       ParseStatus.incomplete,
       ReferenceNode.name,
       "a",
@@ -492,7 +467,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,if,lambda,this,ref,not,tuple"],
+      ["new,if,lambda,this,ref,not"],
       "",
     );
   });

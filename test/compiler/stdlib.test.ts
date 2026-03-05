@@ -212,7 +212,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(true, 10.1)");
+    await assertObjectCodeExecutes(fileImpl, "(true, 10.1)");
   });
 
   test("Pass_parseAsFloat2", async () => {
@@ -245,7 +245,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
 
   test("Pass_parseAsFloat3", async () => {
@@ -278,7 +278,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
 
   test("Pass_parseAsFloat4", async () => {
@@ -311,7 +311,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(true, 10)");
+    await assertObjectCodeExecutes(fileImpl, "(true, 10)");
   });
 
   test("Pass_parseAsFloatExponent", async () => {
@@ -352,7 +352,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "[tuple(true, 1010), tuple(true, 1010), tuple(true, 0.101), tuple(true, 12)]",
+      "[(true, 1010), (true, 1010), (true, 0.101), (true, 12)]",
     );
   });
 
@@ -386,7 +386,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
 
   test("Pass_parseAsInt1", async () => {
@@ -419,7 +419,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(true, 10)");
+    await assertObjectCodeExecutes(fileImpl, "(true, 10)");
   });
 
   test("Pass_parseAsInt2", async () => {
@@ -452,7 +452,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
 
   test("Pass_parseAsInt3", async () => {
@@ -485,7 +485,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
   });
   test("Pass print (procedure) String", async () => {
     const code = `${testHeader}
@@ -1762,7 +1762,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "tuple(true, 34)zbbz");
+    await assertObjectCodeExecutes(fileImpl, "(true, 34)zbbz");
   });
 
   test("Pass_drawHtml", async () => {

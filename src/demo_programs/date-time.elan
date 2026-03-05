@@ -47,7 +47,7 @@ function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
   constant weekday set to (unixDay + unixWeekday) mod 7
   # day number (1-365 or 1-366) in this year
   constant day set to dayInYear(year, unixDay)
-  return tuple(hour, minute, second, day, year, weekday)
+  return (hour, minute, second, day, year, weekday)
 end function
 
 function dayInYear(year as Int, unixDays as Int) returns Int
@@ -90,7 +90,7 @@ function monthDay(startDays as List<of Int>, dayNumber as Int) returns (Int, Int
       set month to month + 1
     end if
   end while
-  return tuple(month, day)
+  return (month, day)
 end function
 
 function startDaysList(year as Int, startDays as List<of Int>) returns List<of Int>
