@@ -25,7 +25,6 @@ import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
-import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -1331,7 +1330,11 @@ suite("Parsing Nodes", () => {
     // );
   });
   test("Interpolated strings", () => {
-    testNodeParse(new LitString(f), `$"{x}{y}"`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `$""`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `$"x"`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `$" "`, ParseStatus.valid, "", "");
+    testNodeParse(new LitString(f), `$"{}"`, ParseStatus.invalid, "", "");
+    testNodeParse(new LitString(f), `$"{x}"`, ParseStatus.valid, "", "");
     testNodeParse(new LitString(f), `$"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
   });
   test("Bug #290", () => {

@@ -142,6 +142,7 @@ import { LitInt } from "../frames/parse-nodes/lit-int";
 import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
 import { LitStringField } from "../frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedEmpty } from "../frames/parse-nodes/lit-string-interpolated-empty";
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
@@ -695,6 +696,10 @@ export function transform(
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
+  if (node instanceof LitStringInterpolatedEmpty) {
+    return new LiteralStringAsn(node.matchedText.substring(1), fieldId);
+  }
+
   if (node instanceof LitStringInterpolated) {
     const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
 
@@ -702,7 +707,7 @@ export function transform(
       return new SegmentedStringAsn(ss, fieldId);
     }
 
-    return new LiteralStringAsn(node.matchedText, fieldId);
+    return new LiteralStringAsn(node.matchedText.substring(1), fieldId);
   }
 
   if (node instanceof LitRegExp) {
