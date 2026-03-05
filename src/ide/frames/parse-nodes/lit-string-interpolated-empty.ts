@@ -1,12 +1,9 @@
 import { File } from "../frame-interfaces/file";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
 
 export class LitStringInterpolatedEmpty extends AbstractSequence {
-  segments: Multiple | undefined;
-
   constructor(file: File) {
     super(file);
     this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
@@ -23,6 +20,6 @@ export class LitStringInterpolatedEmpty extends AbstractSequence {
   }
   renderAsHtml(): string {
     const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
-    return `${langPrefix}"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
+    return `${langPrefix}""`;
   }
 }

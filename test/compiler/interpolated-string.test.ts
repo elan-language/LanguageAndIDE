@@ -134,6 +134,7 @@ end main`;
 
 main
   variable a set to $""
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -151,6 +152,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "";
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -164,6 +166,7 @@ return [main, _tests];}`;
 
 main
   variable a set to $" "
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -181,12 +184,13 @@ end main`;
 const global = new class {};
 async function main() {
   let a = " ";
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    await assertObjectCodeExecutes(fileImpl, " ");
   });
 });

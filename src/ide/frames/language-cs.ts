@@ -35,7 +35,7 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
-  INTERPOLATED_STRING_PREFIX: string = "f";
+  INTERPOLATED_STRING_PREFIX: string = "$";
 
   renderTopAsHtml(frame: Frame): string {
     return this.common_renderTopAsHtml(frame);
