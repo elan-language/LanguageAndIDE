@@ -3,6 +3,8 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -59,7 +61,7 @@ export class LanguageJava extends LanguageCfamily {
 
   public STRING_NAME: string = "String";
 
-  INTERPOLATED_STRING_PREFIX: string = "$"; // But shouldn't ever be used because the rendering and parsing should be overridden
+  INTERPOLATED_STRING_PREFIX: string = ""; // Indicates that interpolated string is not recognised by Java
 
   parseParamDef(node: ParamDefNode, text: string): boolean {
     return this.common_parseParamDef(node, text);
@@ -81,6 +83,14 @@ export class LanguageJava extends LanguageCfamily {
 
   propertyRefAsHtml(node: PropertyRef): string {
     return this.common_propertyRefAsHtml(node);
+  }
+
+  litStringInterpolatedAsHtml(node: LitStringInterpolated) {
+    return `"<el-lit>${node.segments!.renderAsHtml()}</el-lit>"`; //i.e. without any prefix
+  }
+
+  litStringFieldAsHtml(_node: LitStringField) {
+    return `" + (${_node.expr?.renderAsExport()}).asString() + "`; // i.e. it turns an interpolated string into a sequence of appended strings
   }
 
   reservedWords: Set<string> = new Set<string>([

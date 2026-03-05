@@ -29,8 +29,13 @@ export class LitStringInterpolated extends AbstractSequence {
       super.parseText(text);
     }
   }
+
   renderAsHtml(): string {
     const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
-    return `${langPrefix}"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
+    const lang = this.file.language();
+    const langSpecific = lang.renderNodeAsHtml(this);
+    return langSpecific.length > 0
+      ? langSpecific
+      : `${langPrefix}"<el-lit>${this.segments!.renderAsHtml()}</el-lit>"`;
   }
 }

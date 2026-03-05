@@ -5,6 +5,8 @@ import { ParseNode } from "./frame-interfaces/parse-node";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -55,6 +57,10 @@ export abstract class LanguageAbstract implements Language {
         html = this.typeGenericAsHtml(node);
       } else if (node instanceof PropertyRef) {
         html = this.propertyRefAsHtml(node);
+      } else if (node instanceof LitStringInterpolated) {
+        html = this.litStringInterpolatedAsHtml(node);
+      } else if (node instanceof LitStringField) {
+        html = this.litStringFieldAsHtml(node);
       }
     }
     return html;
@@ -63,6 +69,16 @@ export abstract class LanguageAbstract implements Language {
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
+
+  litStringInterpolatedAsHtml(_node: LitStringInterpolated) {
+    //To be overridden by an language that wants it different
+    return "";
+  }
+
+  litStringFieldAsHtml(_node: LitStringField) {
+    //To be overridden by an language that wants it different
+    return "";
+  }
 
   completionWhenEmpty(node: ParseNode): string {
     let result = "";
