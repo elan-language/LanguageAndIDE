@@ -133,4 +133,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\in-place-ripple-sort.java`,
     );
   });
+  test("Binary Search", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\binary-search.elan`,
+      ``,
+      `${__dirname}\\files\\binary-search.py`,
+      `${__dirname}\\files\\binary-search.vb`,
+      `${__dirname}\\files\\binary-search.cs`,
+      //`${__dirname}\\files\\binary-search.java`,
+    );
+  });
 });
