@@ -274,6 +274,9 @@ class Foo
   constructor()
     set this.p1 to 10
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -297,6 +300,10 @@ class Foo {
   async _initialise() {
     this.p1 = 10;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -339,6 +346,9 @@ class Foo
   constructor()
     set this.p1 to 10
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Int
 
@@ -362,6 +372,10 @@ class Foo {
   async _initialise() {
     this.p1 = 10;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   p1 = 0;
@@ -622,6 +636,9 @@ class Foo
   constructor(b as Int)
     set this.bar to b
   end constructor
+  function asString() returns String
+    return "a Foo"
+  end function
 
   property bar as Int
 end class
@@ -672,14 +689,18 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "a Foo";
+  }
+
   bar = 0;
 
 }
 
-_tests.push(["test64", async (_outcomes) => {
+_tests.push(["test71", async (_outcomes) => {
   let a = system.initialise(await new Foo()._initialise(3));
   let b = system.initialise(await new Foo()._initialise(3));
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert73", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert80", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -705,7 +726,7 @@ return [main, _tests];}`;
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
       ["test42", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert48")]],
-      ["test64", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert73")]],
+      ["test71", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert80")]],
     ]);
   });
 

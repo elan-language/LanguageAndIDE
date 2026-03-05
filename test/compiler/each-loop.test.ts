@@ -338,6 +338,9 @@ class Bar
   constructor(li as List<of Int>)
     set this.l to li
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure display()
     each item in li

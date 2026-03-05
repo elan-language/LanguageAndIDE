@@ -29,6 +29,7 @@ class Foo
     constructor()
         set this.p1 to 5
     end constructor
+
     property p1 as Float
     procedure setP1(value as Float)
         set this.p1 to value
@@ -290,6 +291,9 @@ class Foo
   constructor()
       set this.p1 to 5
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Float
 
@@ -330,6 +334,9 @@ class Foo
   constructor()
       set this.p1 to 5
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property p1 as Int
 
   property p2 as String
@@ -367,6 +374,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure changeValue(a as Bar)
 
@@ -399,6 +409,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure if(a as Int)
 
@@ -428,6 +441,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure break(a as Int)
 
@@ -457,6 +473,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure short(a as Int)
 
@@ -486,6 +505,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   procedure foo(a as Int, b as String, a as Int)
    
@@ -518,6 +540,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   
   procedure foo()
     set p1 to 4
@@ -605,6 +630,9 @@ end procedure`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure foo(foo as Int)
 
   end procedure
@@ -634,6 +662,9 @@ end class`;
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   procedure foo(a as Int, foo as Int)
 
   end procedure

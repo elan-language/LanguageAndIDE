@@ -35,6 +35,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -79,6 +82,10 @@ class Bar extends Foo {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -137,6 +144,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -168,6 +178,10 @@ class Bar extends Foo {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
 }
@@ -214,6 +228,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -243,6 +260,10 @@ class Bar extends Foo {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
 }
@@ -287,6 +308,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return this.prop
@@ -320,6 +344,10 @@ class Bar extends Foo {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -372,6 +400,9 @@ class Bar inherits Foo2
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -424,6 +455,10 @@ class Bar extends Foo2 {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -482,6 +517,9 @@ class Bar inherits Foo2
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -534,6 +572,10 @@ class Bar extends Foo2 {
   async _initialise() {
     this.prop = 3;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async func() {
@@ -594,6 +636,9 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -645,6 +690,10 @@ class Bar extends Foo2 {
   async _initialise() {
 
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   async ff1() {
@@ -703,6 +752,9 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -756,6 +808,10 @@ class Bar extends Foo2 {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   async ff1() {
     return 1;
   }
@@ -805,6 +861,9 @@ class Bar
   constructor()
     set this.foo to new Maybe<of Foo>()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property foo as Maybe<of Foo> 
 
@@ -844,6 +903,10 @@ class Bar {
   async _initialise() {
     this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
   elan_foo;
@@ -1065,6 +1128,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1110,6 +1176,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   procedure proc()
     call printNoLine(2)
@@ -1152,6 +1221,9 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1196,6 +1268,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1243,6 +1318,9 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1
@@ -1443,6 +1521,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
   property prop1 as Int
 end class
 
@@ -1490,6 +1571,9 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function ff1() returns Int
     return 1
@@ -1545,6 +1629,9 @@ class Bar inherits Foo, Foo1, Foo2
   constructor()
     set this.prop to 3
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   function func() returns Int
     return 1

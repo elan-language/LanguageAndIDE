@@ -31,6 +31,7 @@ class Foo
         set this.p1 to p1
         set this.p2 to p2
     end constructor
+
     property p1 as Float
     property p2 as String
 
@@ -190,6 +191,9 @@ end main
 class Foo
   constructor()
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p1 as Func<of Int => Int>
 end class`;
@@ -234,6 +238,9 @@ class Foo
   constructor(p as Int)
     set this.p to p
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
   property p as Int
 
@@ -278,6 +285,10 @@ class Foo {
     return this;
   }
 
+  async asString() {
+    return "";
+  }
+
   p = 0;
 
   async setP(value) {
@@ -314,6 +325,9 @@ class Foo
   constructor(p as Int)
     set this.p to p
   end constructor
+  function asString() returns String
+    return ""
+  end function
 
 end class`;
 
@@ -350,6 +364,10 @@ class Foo {
   async _initialise(p) {
     this.p = p;
     return this;
+  }
+
+  async asString() {
+    return "";
   }
 
 }
