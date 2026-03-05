@@ -129,7 +129,37 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_Empty", async () => {
+  test("Pass_InterpolatedEmpty", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to $""
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = "";
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+  test("Pass_InterpolatedOneSpace", async () => {
     const code = `${testHeader}
 
 main
@@ -150,7 +180,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = $" ";
+  let a = " ";
 }
 return [main, _tests];}`;
 
