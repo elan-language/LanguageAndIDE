@@ -10,6 +10,7 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { CallStatement } from "./statements/call-statement";
 import { ConstantStatement } from "./statements/constant-statement";
 import { SetStatement } from "./statements/set-statement";
@@ -61,6 +62,8 @@ export abstract class LanguageAbstract implements Language {
         html = this.litStringInterpolatedAsHtml(node);
       } else if (node instanceof LitStringField) {
         html = this.litStringFieldAsHtml(node);
+      } else if (node instanceof TypeTupleNode) {
+        html = this.typeTupleAsHtml(node);
       }
     }
     return html;
@@ -80,6 +83,11 @@ export abstract class LanguageAbstract implements Language {
     return "";
   }
 
+  typeTupleAsHtml(_node: TypeTupleNode) {
+    //To be overridden by an language that wants it different
+    return "";
+  }
+
   completionWhenEmpty(node: ParseNode): string {
     let result = "";
     if (node instanceof ParamDefNode) {
@@ -94,15 +102,19 @@ export abstract class LanguageAbstract implements Language {
     let result = false;
     if (node instanceof ParamDefNode) {
       result = this.parseParamDef(node, text);
-    }
-    if (node instanceof TypeGenericNode) {
+    } else if (node instanceof TypeGenericNode) {
       result = this.parseTypeGeneric(node, text);
+    } else if (node instanceof TypeTupleNode) {
+      result = this.parseTypeTuple(node, text);
     }
     return result;
   }
 
   abstract parseParamDef(node: ParamDefNode, text: string): boolean;
   abstract parseTypeGeneric(node: TypeGenericNode, text: string): boolean;
+  parseTypeTuple(_node: TypeTupleNode, _text: string): boolean {
+    return false;
+  }
 
   getFields(node: Frame): Field[] {
     return node ? [] : [];

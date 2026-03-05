@@ -32,6 +32,7 @@ import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -49,7 +50,7 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
-import { COLON } from "./symbols";
+import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
 
 export class LanguagePython extends LanguageAbstract {
   private constructor() {
@@ -235,7 +236,6 @@ export class LanguagePython extends LanguageAbstract {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
-
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, this.OPEN_SQUARE_BRACKET));
     node.addElement(node.genericTypes);
@@ -252,6 +252,31 @@ export class LanguagePython extends LanguageAbstract {
 
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  override parseTypeTuple(node: TypeTupleNode, _text: string) {
+    node.types = new CSV(
+      node.file,
+      () =>
+        new TypeNode(
+          node.file,
+          new Set<TokenType>([
+            TokenType.type_concrete,
+            TokenType.type_abstract,
+            TokenType.type_notInheritable,
+          ]),
+        ),
+      2,
+    );
+    node.addElement(new PunctuationNode(node.file, "tuple"));
+    node.addElement(new PunctuationNode(node.file, OPEN_SQ_BRACKET));
+    node.addElement(node.types);
+    node.addElement(new PunctuationNode(node.file, CLOSE_SQ_BRACKET));
+    return true;
+  }
+
+  override typeTupleAsHtml(node: TypeTupleNode): string {
+    return `<el-type>tuple</el-type>[${node.types?.renderAsHtml()}]`;
   }
 
   reservedWords: Set<string> = new Set<string>([
