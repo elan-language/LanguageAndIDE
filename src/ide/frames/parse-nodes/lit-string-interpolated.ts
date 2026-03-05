@@ -29,6 +29,7 @@ export class LitStringInterpolated extends AbstractSequence {
       super.parseText(text);
     }
   }
+
   renderAsHtml(): string {
     const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
     const lang = this.file.language();
