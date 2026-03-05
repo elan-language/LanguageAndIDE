@@ -22,8 +22,4 @@ export class TupleNode extends AbstractSequence {
       super.parseText(text);
     }
   }
-
-  override renderAsHtml(): string {
-    return this.csv!.renderAsHtml();
-  }
 }
