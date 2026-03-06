@@ -61,9 +61,9 @@ procedure playGame()
 end procedure
 
 procedure initialiseGrid(grid as List<of List<of String>>)
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     variable sa set to new List<of String>()
-    for j from 0 to 5 step 1
+    for j from 0 to 5 + 1 step 1
       call sa.append("")
     end for
     call grid.append(sa)
@@ -98,7 +98,7 @@ end procedure
 procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, target as String, solved as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     variable letter set to grid[i][attemptNo]
     variable mark set to marks[i]
     set grid[i][attemptNo] to letter + mark
@@ -120,7 +120,7 @@ procedure playReverseGame()
   variable possible set to allValidAnswers.split(" ")
   variable attempt set to "ARISE"
   while (attemptNo < 6) and (not solved)
-    for i from 0 to 4 step 1
+    for i from 0 to 4 + 1 step 1
       set grid[i][attemptNo] to attempt[i]
     end for
     call displayHtml(drawGrid(grid))
@@ -185,7 +185,7 @@ procedure analyse()
   end each
   variable success set to 0
   variable weightedSum set to 0
-  for i from 1 to 6 step 1
+  for i from 1 to 6 + 1 step 1
     set success to success + outcomes[i]
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
@@ -208,7 +208,7 @@ end test
 
 function getWord(attemptNo as Int, grid as List<of List<of String>>) returns String
   variable guessWord set to ""
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     set guessWord to guessWord + grid[i][attemptNo]
   end for
   return guessWord
@@ -226,13 +226,13 @@ end test
 function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   variable unused set to target
-  for n from 0 to 4 step 1
+  for n from 0 to 4 + 1 step 1
     if attempt[n].equals(unused[n]) then
       set mark to setChar(mark, n, "2")
       set unused to setChar(unused, n, " ")
     end if
   end for
-  for n from 0 to 4 step 1
+  for n from 0 to 4 + 1 step 1
     if (not mark[n].equals("2")) and unused.contains(attempt[n]) then
       set mark to setChar(mark, n, "1")
       set unused to setChar(unused, unused.indexOf(attempt[n]), " ")
@@ -276,9 +276,9 @@ end test
 
 function drawGrid(grid as List<of List<of String>>) returns String
   variable html set to $"<style>{style}</style> <grid>"
-  for row from 0 to 5 step 1
+  for row from 0 to 5 + 1 step 1
     set html to html + "<word>"
-    for col from 0 to 4 step 1
+    for col from 0 to 4 + 1 step 1
       constant entry set to grid[col][row]
       constant ch set to if entry.length() > 0 then entry[0] else ""
       constant mark set to if entry.length() > 1 then entry.subString(1, entry.length()) else ""

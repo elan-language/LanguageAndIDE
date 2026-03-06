@@ -9,7 +9,7 @@ main
   while newGame
 
   end while
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
 
   end for
   each letter in "Charlie Duke"

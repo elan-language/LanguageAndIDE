@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Constant Statement", () => {
@@ -113,7 +113,7 @@ end main
 
 procedure foo()
   variable li set to [1,2,3,4,5]
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     variable temp set to li[i]
     call printNoLine(temp)
   end for
@@ -162,7 +162,7 @@ end main
 
 procedure foo()
   variable li set to [1,2,3,4,5]
-  for i from 0 to 3 step 1
+  for i from 0 to 3 + 1 step 1
     constant temp set to li[i]
     set li to li.withPut(i, li[i + 1])
     set li to li.withPut(i + 1, temp)

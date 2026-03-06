@@ -41,7 +41,7 @@ end function
 
 function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   variable core set to ""
-  for i from 0 to holes.length() - 1 step 1
+  for i from 0 to holes.length() - 1 + 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
   end for
   return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"

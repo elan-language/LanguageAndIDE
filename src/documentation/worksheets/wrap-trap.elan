@@ -6,7 +6,7 @@ main
   variable y1 set to 7
   variable dir1 set to "d"
   variable grid set to new Array2D<of Int>(40, 30, white)
-  for i from 1 to 1000 step 1
+  for i from 1 to 1000 + 1 step 1
     call displayBlocks(grid)
     call pause(500)
   end for

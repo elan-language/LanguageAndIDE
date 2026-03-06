@@ -5,19 +5,19 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertCompiles,
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertCompiles,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertGraphicsContains,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -760,7 +760,7 @@ return [main, _tests];}`;
 
 main
   variable results set to [0, 0]
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
   end for
@@ -809,7 +809,7 @@ main
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rnd.nextInt(0, 1)
     set val to t.item_0
     set rnd to t.item_1
@@ -863,13 +863,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable val set to 0
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rnd.nextInt(3, 5)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
   end for
-  for i from 0 to 6 step 1
+  for i from 0 to 6 + 1 step 1
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -921,13 +921,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable dice set to 0
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rollDice(rnd)
     set dice to t.item_0
     set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
   end for
-  for i from 0 to 6 step 1
+  for i from 0 to 6 + 1 step 1
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -2213,9 +2213,9 @@ return [main, _tests];}`;
 
 main
   variable b set to new List<of List<of Int>>()
-  for i from 0 to 39 step 1
+  for i from 0 to 39 + 1 step 1
     variable sa set to new List<of Int>()
-    for j from 0 to 29 step 1
+    for j from 0 to 29 + 1 step 1
       call sa.append(white)
     end for
     call b.append(sa)
