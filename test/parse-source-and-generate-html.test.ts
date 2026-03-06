@@ -143,4 +143,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\binary-search.java`,
     );
   });
+  ignore_test("Collatz", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\collatz.elan`,
+      ``,
+      `${__dirname}\\files\\collatz.py`,
+      `${__dirname}\\files\\collatz.vb`,
+      `${__dirname}\\files\\collatz.cs`,
+      `${__dirname}\\files\\collatz.java`,
+    );
+  });
 });
