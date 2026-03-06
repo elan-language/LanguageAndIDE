@@ -1,20 +1,19 @@
-# cc73c7f99b6ad988e8c9591653616a7dcf40cd8a0756b9467aeed5662ce9dd91 Elan 2.0.0-alpha guest default_profile valid
-
+# 0e00cd41358ea5fabe7db5f17538475e43f9e8b99ba4068b2056c0ccc2865d84 Elan 2.0.0-alpha guest default_profile valid
 main
   # snipFrom
-  variable st set to new Stack<of String>()
-  call print(st.length())
-  set st to st.push("apple")
-  set st to st.push("banana")
-  set st to st.push("cherry")
-  call print(st.length())
-  call print(st)
-  call print(st.peek())
-  call print(st.pop())
-  call print(st)
-  call print(st.pop().item_0)
-  call print(st)
-  set st to st.pop().item_1
-  call print(st)
+  variable sk set to new Stack<of String>()
+  call print(sk.length())
+  set sk to sk.push("apple")
+  set sk to sk.push("banana")
+  set sk to sk.push("cherry")
+  call print(sk.length())
+  call print(sk)
+  call print(sk.peek())
+  call print(sk.pop())
+  call print(sk)
+  call print(sk.pop().item_0)
+  call print(sk)
+  set sk to sk.pop().item_1
+  call print(sk)
   # snipTo
 end main
