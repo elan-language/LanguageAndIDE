@@ -24,6 +24,7 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -198,6 +199,7 @@ export class LanguagePython extends LanguageAbstract {
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "f";
+  NEW = ""; // i.e. there is no Python equivalent to 'new' keyword
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
@@ -232,6 +234,10 @@ export class LanguagePython extends LanguageAbstract {
     return `<i>name</i>: <i>Type</i>`;
   }
 
+  newInstanceAsHtml(node: NewInstance): string {
+    return `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
+  }
+
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
@@ -244,6 +250,10 @@ export class LanguagePython extends LanguageAbstract {
   }
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
+  }
+  override parseNewInstance(node: NewInstance, _text: string): boolean {
+    node.addCommonElements();
+    return true;
   }
 
   listNodeAsHtml(node: ListNode): string {

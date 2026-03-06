@@ -7,7 +7,7 @@ Sub main()
   print(li) ' call
 End Sub
 
-Sub inPlaceRippleSort(li As List(of Integer)) ' procedure
+Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure
   Dim hasChanged = true ' variable
   Dim lastComp = li.length() - 2 ' variable
   While hasChanged = true

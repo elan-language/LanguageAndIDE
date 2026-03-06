@@ -1,4 +1,3 @@
-import { ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -26,6 +25,7 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -222,7 +222,6 @@ export class LanguageVB extends LanguageAbstract {
   private INTERFACE = "Interface";
   private IS = "Is";
   private ME = "Me";
-  private NEW = "New";
   private NEXT = "Next";
   private OF = "Of";
   private PRIVATE = "Private";
@@ -256,6 +255,7 @@ export class LanguageVB extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
+  NEW = "New";
 
   TRUE: string = "True";
   FALSE: string = "False";
@@ -286,6 +286,13 @@ export class LanguageVB extends LanguageAbstract {
     return `<i>name</i> ${this.AS} <i>Type</i>`;
   }
 
+  override parseNewInstance(node: NewInstance, _text: string): boolean {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addCommonElements();
+    return true;
+  }
+
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
@@ -293,19 +300,23 @@ export class LanguageVB extends LanguageAbstract {
 
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.addElement(new KeywordNode(node.file, ofKeyword));
+    node.addElement(new KeywordNode(node.file, this.OF));
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
     return text ? true : true;
   }
-  // IMPORTANT: 'of' should be 'Of' (defined below) - but, strangely, making that change causes it to fail.
+  // IMPORTANT: 'of' should be 'Of' (defined below) - same problem as 'New'
   typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${ofKeyword}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  newInstanceAsHtml(node: NewInstance): string {
+    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 
   reservedWords: Set<string> = new Set<string>([

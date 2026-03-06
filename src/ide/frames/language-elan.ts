@@ -19,6 +19,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { StepNode } from "./parse-nodes/step-node";
@@ -183,7 +184,6 @@ export class LanguageElan extends LanguageAbstract {
   private letKeyword = "let";
   private LIBRARY = "library";
   private MAIN = "main";
-  private NEW = "new";
   private OF = "of";
   private OUT = "out";
   private PRINT = "print";
@@ -217,6 +217,7 @@ export class LanguageElan extends LanguageAbstract {
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "$";
+  NEW = "new";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
@@ -247,6 +248,10 @@ export class LanguageElan extends LanguageAbstract {
 
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  newInstanceAsHtml(node: NewInstance): string {
+    return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
   // Elan keywords followed by JavaScript keywords

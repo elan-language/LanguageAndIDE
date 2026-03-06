@@ -37,6 +37,7 @@ export interface Language {
   LIST_START: string;
   LIST_END: string;
   INTERPOLATED_STRING_PREFIX: string;
+  NEW: string;
 
   INT_NAME: string;
   FLOAT_NAME: string;
