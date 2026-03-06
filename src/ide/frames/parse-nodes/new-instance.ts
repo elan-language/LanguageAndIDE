@@ -15,24 +15,34 @@ export class NewInstance extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(this.file, newKeyword));
-      this.addElement(new SpaceNode(this.file, Space.required));
-      this.type = new TypeSimpleOrGeneric(this.file, new Set<TokenType>([TokenType.type_concrete]));
-      this.addElement(this.type);
-      this.addElement(new SpaceNode(this.file, Space.ignored));
-      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
-      this.addElement(new SpaceNode(this.file, Space.ignored));
-      this.args = new ArgListNode(this.file, () => this.type!.matchedText);
-      this.addElement(this.args);
-      this.addElement(new SpaceNode(this.file, Space.ignored));
-      this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
+      if (!this.file.language().parseText(this, text)) {
+        this.addElement(new KeywordNode(this.file, newKeyword));
+        this.addElement(new SpaceNode(this.file, Space.required));
+        this.addCommonElements();
+      }
       super.parseText(text);
     }
+  }
+
+  addCommonElements() {
+    this.type = new TypeSimpleOrGeneric(this.file, new Set<TokenType>([TokenType.type_concrete]));
+    this.addElement(this.type);
+    this.addElement(new SpaceNode(this.file, Space.ignored));
+    this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
+    this.addElement(new SpaceNode(this.file, Space.ignored));
+    this.args = new ArgListNode(this.file, () => this.type!.matchedText);
+    this.addElement(this.args);
+    this.addElement(new SpaceNode(this.file, Space.ignored));
+    this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
   }
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([KeywordCompletion.create(newKeyword)])
       : super.symbolCompletion_keywords();
+  }
+
+  renderAsHtml() {
+    return this.file.language().renderNodeAsHtml(this);
   }
 }

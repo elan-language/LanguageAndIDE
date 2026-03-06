@@ -23,6 +23,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
@@ -177,7 +178,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   protected IN = "in";
   protected INHERITS = "inherits";
   protected INTERFACE = "interface";
-  protected NEW = "new";
   protected PRIVATE = "private";
   protected RETURN = "return";
   protected STATIC = "static";
@@ -204,6 +204,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
+  NEW = "new";
 
   TRUE: string = "true";
   FALSE: string = "false";
@@ -248,5 +249,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   common_propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  common_newInstanceAsHtml(node: NewInstance): string {
+    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 }
