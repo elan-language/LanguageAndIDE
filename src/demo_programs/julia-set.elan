@@ -20,8 +20,8 @@ end main
 
 function allpoints(p as Coords) returns List<of VectorGraphic>
   variable vg2 set to new List<of VectorGraphic>()
-  for xp from 0 to width step 1
-    for yp from 0 to height step 1
+  for xp from 0 to width + 1 step 1
+    for yp from 0 to height + 1 step 1
       # scale and centre
       constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point

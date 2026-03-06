@@ -28,7 +28,7 @@ suite("For Loop", () => {
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -38,8 +38,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 10 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -65,7 +65,7 @@ return [main, _tests];}`;
 
 def main(): None:
   tot = 0 # variable
-  for i in sequence(1, 10, 1):
+  for i in range(1, 10 + 1, 1):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10; i = i + 1) {
+  for (int i = 1; i < 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10; i = i + 1) {
+  for (int i = 1; i < 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -96,7 +96,7 @@ static void main() {
 
 Sub main()
   Dim tot = 0 ' variable
-  For i = 1 To 10 Step 1
+  For i = 1 To 10 + 1 - 1 Step 1
     tot = tot + i ' set
   Next i
   printNoLine(tot) ' call
@@ -115,7 +115,7 @@ End Sub
 main
   variable tot set to 0
   variable i set to 0
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -126,8 +126,8 @@ const global = new class {};
 async function main() {
   let tot = 0;
   let i = 0;
-  const _tofor9 = 10;
-  for (i = 1; i <= _tofor9; i = i + 1) {
+  const _tofor9 = 10 + 1;
+  for (i = 1; i < _tofor9; i = i + 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 
 main
 variable tot set to 0
-for i from 1 to 10 step 2
+for i from 1 to 10 + 1 step 2
   set tot to tot + i
 end for
 call printNoLine(tot)
@@ -166,8 +166,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10;
-  for (let i = 1; i <= _tofor6; i = i + 2) {
+  const _tofor6 = 10 + 1;
+  for (let i = 1; i < _tofor6; i = i + 2) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -196,7 +196,7 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 10 to 3 step -1
+  for i from 10 to 2 step -1
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -206,8 +206,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 3;
-  for (let i = 10; i >= _tofor6; i = i - 1) {
+  const _tofor6 = 2;
+  for (let i = 10; i > _tofor6; i = i - 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -236,8 +236,8 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 1 to 3 step 1
-    for j from 1 to 4 step 1
+  for i from 1 to 3 + 1 step 1
+    for j from 1 to 4 + 1 step 1
       set tot to tot + 1
     end for
   end for
@@ -248,10 +248,10 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 3;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
-    const _tofor12 = 4;
-    for (let j = 1; j <= _tofor12; j = j + 1) {
+  const _tofor6 = 3 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
+    const _tofor12 = 4 + 1;
+    for (let j = 1; j < _tofor12; j = j + 1) {
       tot = tot + 1;
     }
   }
@@ -282,7 +282,7 @@ main
   variable lower set to 1
   variable upper set to 10
   variable tot set to 0
-  for i from lower to upper step 2
+  for i from lower to upper + 1 step 2
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -294,8 +294,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  const _tofor12 = upper;
-  for (let i = lower; i <= _tofor12; i = i + 2) {
+  const _tofor12 = upper + 1;
+  for (let i = lower; i < _tofor12; i = i + 2) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -327,7 +327,7 @@ main
 end main
 
 procedure foo(arr as List<of Int>)
-  for i from 0 to 10 step 1
+  for i from 0 to 10 + 1 step 1
     call arr.put(i, 1)
   end for
   call printNoLine(arr[0])
@@ -341,8 +341,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const _tofor13 = 10;
-  for (let i = 0; i <= _tofor13; i = i + 1) {
+  const _tofor13 = 10 + 1;
+  for (let i = 0; i < _tofor13; i = i + 1) {
     arr.put(i, 1);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
@@ -371,7 +371,7 @@ return [main, _tests];}`;
 
 main
   variable limit set to 10
-  for i from 1 to limit step 1
+  for i from 1 to limit + 1 step 1
     call printNoLine($"{i}")
     set limit to limit + 1
   end for
@@ -381,8 +381,8 @@ end main`;
 const global = new class {};
 async function main() {
   let limit = 10;
-  const _tofor6 = limit;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = limit + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }
@@ -412,7 +412,7 @@ return [main, _tests];}`;
 main
   variable tot set to 0
   variable i set to ""
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -439,7 +439,7 @@ end main`;
 
 main
   variable tot set to 0.0
-  for i from 1.5 to 10.1 step 1.0
+  for i from 1.5 to 10.1 + 1 step 1.0
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -457,12 +457,7 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Int.LangRef.html#TypeCompileError",
-      "Expression must be Int.LangRef.html#TypeCompileError",
-      "Expression must be Int.LangRef.html#TypeCompileError",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_modifyingCounter", async () => {
@@ -470,7 +465,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     set i to 10
   end for
 end main
@@ -498,7 +493,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     set tot to 10
   end for
   call printNoLine(i)
@@ -525,8 +520,8 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 3 step 1
-    for j from 1 to 4 step 1  set tot to tot + 1
+  for i from 1 to 3 + 1 step 1
+    for j from 1 to 4 + 1 step 1  set tot to tot + 1
     end for
 end main
 `;
@@ -574,7 +569,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1  set tot to tot + i
+  for i from 1 to 10 + 1 step 1  set tot to tot + i
     break
   end for
 end main
@@ -599,7 +594,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 step 1  set tot to tot + i
+  for i from 1 to 10 + 1 step 1  set tot to tot + i
     continue
   end for
 end main
@@ -624,7 +619,7 @@ end main
 
 main
   variable ids set to 10
-  for id from id to 11 step 1
+  for id from id to 11 + 1 step 1
     call printNoLine(id)
   end for
   call printNoLine(ids)
@@ -650,7 +645,7 @@ end main`;
 
 main
   variable ids set to 10
-  for id from 0 to id step 1
+  for id from 0 to id + 1 step 1
     call printNoLine(id)
   end for
   call printNoLine(ids)

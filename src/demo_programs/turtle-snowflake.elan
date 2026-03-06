@@ -4,7 +4,7 @@ main
   variable t set to new Turtle()
   call t.placeAt(-50, 30)
   call t.turn(90)
-  for i from 1 to 3 step 1
+  for i from 1 to 3 + 1 step 1
     call drawSide(side, t)
     call t.turn(120)
   end for

@@ -1,4 +1,3 @@
-import { ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -26,11 +25,13 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -135,7 +136,9 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
+      const negativeStep = (frame.step.getRootNode() as StepNode).minus!.matchedNode;
+      const op = negativeStep ? "+" : "-";
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()} ${op} <el-lit>1</el-lit><el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
@@ -219,7 +222,6 @@ export class LanguageVB extends LanguageAbstract {
   private INTERFACE = "Interface";
   private IS = "Is";
   private ME = "Me";
-  private NEW = "New";
   private NEXT = "Next";
   private OF = "Of";
   private PRIVATE = "Private";
@@ -253,6 +255,7 @@ export class LanguageVB extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
+  NEW = "New";
 
   TRUE: string = "True";
   FALSE: string = "False";
@@ -283,6 +286,13 @@ export class LanguageVB extends LanguageAbstract {
     return `<i>name</i> ${this.AS} <i>Type</i>`;
   }
 
+  override parseNewInstance(node: NewInstance, _text: string): boolean {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addCommonElements();
+    return true;
+  }
+
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
@@ -290,19 +300,23 @@ export class LanguageVB extends LanguageAbstract {
 
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.addElement(new KeywordNode(node.file, ofKeyword));
+    node.addElement(new KeywordNode(node.file, this.OF));
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
     return text ? true : true;
   }
-  // IMPORTANT: 'of' should be 'Of' (defined below) - but, strangely, making that change causes it to fail.
+  // IMPORTANT: 'of' should be 'Of' (defined below) - same problem as 'New'
   typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${ofKeyword}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  newInstanceAsHtml(node: NewInstance): string {
+    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 
   reservedWords: Set<string> = new Set<string>([

@@ -16,5 +16,3 @@ main
   call print(sk)
   set sk to sk.pop().item_1
   call print(sk)
-  # snipTo
-end main

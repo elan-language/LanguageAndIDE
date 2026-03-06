@@ -5,6 +5,7 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -91,6 +92,10 @@ export class LanguageJava extends LanguageCfamily {
 
   litStringFieldAsHtml(_node: LitStringField) {
     return `" + (${_node.expr?.renderAsExport()}).asString() + "`; // i.e. it turns an interpolated string into a sequence of appended strings
+  }
+
+  newInstanceAsHtml(node: NewInstance): string {
+    return this.common_newInstanceAsHtml(node);
   }
 
   reservedWords: Set<string> = new Set<string>([

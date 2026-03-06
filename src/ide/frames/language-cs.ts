@@ -3,6 +3,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -69,6 +70,10 @@ export class LanguageCS extends LanguageCfamily {
 
   propertyRefAsHtml(node: PropertyRef): string {
     return this.common_propertyRefAsHtml(node);
+  }
+
+  newInstanceAsHtml(node: NewInstance): string {
+    return this.common_newInstanceAsHtml(node);
   }
 
   reservedWords: Set<string> = new Set<string>([

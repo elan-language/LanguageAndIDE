@@ -5,7 +5,7 @@ main
   call printTab(0, "Number")
   call printTab(10, "Square")
   call printTab(20, "Cube")
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     call printTab(0, i.asString())
     call printTab(10, "{power(i, 2)}")
     call printTab(20, "{power(i, 3)}")

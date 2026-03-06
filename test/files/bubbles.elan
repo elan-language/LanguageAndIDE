@@ -1,9 +1,9 @@
-# 207b437e6a2a888eb265a24badcea44e59e4fee7c805442c0f428151a052b5d2 Elan 2.0.0-alpha guest default_profile valid
+# 79fb326458de46e9e8514ec7cc6bbb1f271358a321119d4edf882c1cd7b6a699 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable bubbles set to new List<of CircleVG>()
   # create 20 small bubbles at the bottom
-  for i from 1 to 20 step 1
+  for i from 1 to 20 + 1 step 1
     variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white)
     call bubbles.append(b)
   end for
