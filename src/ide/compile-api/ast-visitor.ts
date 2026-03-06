@@ -157,6 +157,7 @@ import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
 import { Sequence } from "../frames/parse-nodes/sequence";
 import { SetToClause } from "../frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../frames/parse-nodes/space-node";
+import { StepNode } from "../frames/parse-nodes/step-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
@@ -663,6 +664,15 @@ export function transform(
 
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
+  }
+
+  if (node instanceof StepNode) {
+    if (node.minus!.matchedNode) {
+      const value = transform(node.value, fieldId, scope) as AstNode;
+      return new UnaryExprAsn("-", value, fieldId, scope);
+    } else {
+      return new LiteralIntAsn(node.value!.matchedText, fieldId);
+    }
   }
 
   if (node instanceof UnaryExpression) {

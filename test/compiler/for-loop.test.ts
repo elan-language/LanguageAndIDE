@@ -457,12 +457,7 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Int.LangRef.html#TypeCompileError",
-      "Expression must be Int.LangRef.html#TypeCompileError",
-      "Expression must be Int.LangRef.html#TypeCompileError",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_modifyingCounter", async () => {

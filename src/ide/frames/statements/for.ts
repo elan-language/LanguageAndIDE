@@ -1,6 +1,7 @@
 import { forKeyword } from "../../../compiler/elan-keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { StepField } from "../fields/step-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -12,18 +13,16 @@ export class For extends FrameWithStatements implements Statement {
   variable: IdentifierField;
   from: ExpressionField;
   to: ExpressionField;
-  step: ExpressionField;
+  step: StepField;
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>counterName</i>");
     this.from = new ExpressionField(this, / to /);
-    this.from.setPlaceholder("<i>firstValue</i>");
+    this.from.setPlaceholder("<i>inclusive first value</i>");
     this.to = new ExpressionField(this, / step /);
-    this.to.setPlaceholder("<i>lastValue</i>");
-    this.step = new ExpressionField(this);
-    this.step.setPlaceholder("<i>stepValue</i>");
-    this.step.setFieldToKnownValidText("1");
+    this.to.setPlaceholder("<i>exclusive final value</i>");
+    this.step = new StepField(this);
   }
 
   initialKeywords(): string {
