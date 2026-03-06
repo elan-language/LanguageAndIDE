@@ -1,4 +1,3 @@
-import { ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -301,7 +300,7 @@ export class LanguageVB extends LanguageAbstract {
 
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.addElement(new KeywordNode(node.file, ofKeyword));
+    node.addElement(new KeywordNode(node.file, this.OF));
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
@@ -309,7 +308,7 @@ export class LanguageVB extends LanguageAbstract {
   }
   // IMPORTANT: 'of' should be 'Of' (defined below) - same problem as 'New'
   typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${ofKeyword}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
+    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
 
   propertyRefAsHtml(node: PropertyRef): string {

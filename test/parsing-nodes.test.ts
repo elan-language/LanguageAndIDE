@@ -768,12 +768,12 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeSimpleOrGeneric(fileWithVB()),
-      `Foo(of Bar)`, //This should properly be 'Of'
+      `Foo(Of Bar)`, //This should properly be 'Of'
       ParseStatus.valid,
-      "Foo(of Bar)",
+      "Foo(Of Bar)",
       "",
       "",
-      "<el-type>Foo</el-type>(<el-kw>of</el-kw> <el-type>Bar</el-type>)",
+      "<el-type>Foo</el-type>(<el-kw>Of</el-kw> <el-type>Bar</el-type>)",
     );
     testNodeParse(
       new TypeSimpleOrGeneric(fileWithCS()),

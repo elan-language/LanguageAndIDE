@@ -18,7 +18,7 @@ Sub main()
   End While
 End Sub
 
-Function binarySearch(li As List(of String), item As String) As Boolean
+Function binarySearch(li As List(Of String), item As String) As Boolean
   Dim result = false ' variable
   If li.length() > 0 Then
     Const mid = divAsInt(li.length(), 2)
@@ -47,6 +47,6 @@ Sub test_
   Dim li3 = {"lemon"} ' variable
   assert binarySearch(li3, "lemon") is true 
   assert binarySearch(li3, "lime") is false 
-  Dim li4 = New List(of String)() ' variable
+  Dim li4 = New List(Of String)() ' variable
   assert binarySearch(li4, "pear") is false 
 End Sub
