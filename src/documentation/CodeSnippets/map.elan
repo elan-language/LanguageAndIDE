@@ -20,7 +20,7 @@ end function
 
 function reverseString(s as String) returns String
   variable stringReversed set to ""
-  for i from 0 to s.length() - 1 step 1
+  for i from 0 to s.length() - 1 + 1 step 1
     set stringReversed to s[i] + stringReversed
   end for
   return stringReversed

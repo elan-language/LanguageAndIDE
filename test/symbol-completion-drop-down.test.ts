@@ -2482,7 +2482,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  for i from 1 to 1000 step 1
+  for i from 1 to 1000 + 1 step 1
     variable pacesThisAttempt set to 0
     while true
       set pacesThisAttempt to pacesThisAttempt + 1

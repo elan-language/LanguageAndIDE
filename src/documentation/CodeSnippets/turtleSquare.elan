@@ -4,7 +4,7 @@ main
   variable t set to new Turtle()
   call t.placeAt(-75, 50)
   call t.show()
-  for i from 1 to 4 step 1
+  for i from 1 to 4 + 1 step 1
     call t.turn(90)
     call t.move(80)
     call pause(500)

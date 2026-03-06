@@ -3,7 +3,7 @@
 static void main() {
   var bubbles = new List<CircleVG>();
   // create 20 small bubbles at the bottom
-  for (int i = 1; i <= 20; i = i + 1) {
+  for (int i = 1; i < 20 + 1; i = i + 1) {
     var b = (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white);
     bubbles.append(b); // call
   }

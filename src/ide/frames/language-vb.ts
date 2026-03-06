@@ -31,6 +31,7 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -135,7 +136,9 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
+      const negativeStep = (frame.step.getRootNode() as StepNode).minus!.matchedNode;
+      const op = negativeStep ? "+" : "-";
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()} ${op} <el-lit>1</el-lit><el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {

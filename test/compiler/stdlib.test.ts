@@ -760,7 +760,7 @@ return [main, _tests];}`;
 
 main
   variable results set to [0, 0]
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
   end for
@@ -773,8 +773,8 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  const _tofor6 = 10000;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 10000 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
@@ -809,7 +809,7 @@ main
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rnd.nextInt(0, 1)
     set val to t.item_0
     set rnd to t.item_1
@@ -827,8 +827,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const _tofor15 = 10000;
-  for (let i = 1; i <= _tofor15; i = i + 1) {
+  const _tofor15 = 10000 + 1;
+  for (let i = 1; i < _tofor15; i = i + 1) {
     let t = rnd.nextInt(0, 1);
     val = t[0];
     rnd = t[1];
@@ -863,13 +863,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable val set to 0
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rnd.nextInt(3, 5)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
   end for
-  for i from 0 to 6 step 1
+  for i from 0 to 6 + 1 step 1
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -882,15 +882,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  const _tofor12 = 10000;
-  for (let i = 1; i <= _tofor12; i = i + 1) {
+  const _tofor12 = 10000 + 1;
+  for (let i = 1; i < _tofor12; i = i + 1) {
     let t = rnd.nextInt(3, 5);
     val = t[0];
     rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const _tofor30 = 6;
-  for (let i = 0; i <= _tofor30; i = i + 1) {
+  const _tofor30 = 6 + 1;
+  for (let i = 0; i < _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -921,13 +921,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable dice set to 0
-  for i from 1 to 10000 step 1
+  for i from 1 to 10000 + 1 step 1
     variable t set to rollDice(rnd)
     set dice to t.item_0
     set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
   end for
-  for i from 0 to 6 step 1
+  for i from 0 to 6 + 1 step 1
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -944,15 +944,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  const _tofor12 = 10000;
-  for (let i = 1; i <= _tofor12; i = i + 1) {
+  const _tofor12 = 10000 + 1;
+  for (let i = 1; i < _tofor12; i = i + 1) {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  const _tofor30 = 6;
-  for (let i = 0; i <= _tofor30; i = i + 1) {
+  const _tofor30 = 6 + 1;
+  for (let i = 0; i < _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -2213,9 +2213,9 @@ return [main, _tests];}`;
 
 main
   variable b set to new List<of List<of Int>>()
-  for i from 0 to 39 step 1
+  for i from 0 to 39 + 1 step 1
     variable sa set to new List<of Int>()
-    for j from 0 to 29 step 1
+    for j from 0 to 29 + 1 step 1
       call sa.append(white)
     end for
     call b.append(sa)
@@ -2228,11 +2228,11 @@ end main
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const _tofor6 = 39;
-  for (let i = 0; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 39 + 1;
+  for (let i = 0; i < _tofor6; i = i + 1) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const _tofor15 = 29;
-    for (let j = 0; j <= _tofor15; j = j + 1) {
+    const _tofor15 = 29 + 1;
+    for (let j = 0; j < _tofor15; j = j + 1) {
       sa.append(_stdlib.white);
     }
     b.append(sa);

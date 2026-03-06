@@ -2,7 +2,7 @@
 
 main
   variable file set to createFileForWriting("squares.txt")
-  for i from 1 to 100 step 1
+  for i from 1 to 100 + 1 step 1
     call file.writeLine("{i*i}")
   end for
   try
