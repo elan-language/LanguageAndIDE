@@ -446,15 +446,15 @@ It may be considered a lightweight alternative to defining a specific class for 
 </el-code>
 
 <h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
-<p id="itemN">The items in a tuple may be individually addressed by a dot reference and its special properties <el-lit>itemN</el-lit>, thus:</p>
+<p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-lit>item_N</el-lit>, thus:</p>
 <table class="tablePlain">                                                   
 <tr>
  <td><el-code>
  <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt><el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw></el-txt><br>
  <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id></el-txt><el-punc>)</el-punc><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item0</el-id></el-txt><el-punc>)</el-punc><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item1</el-id></el-txt><el-punc>)</el-punc><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item2</el-id></el-txt><el-punc>)</el-punc>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt><el-punc>)</el-punc><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt><el-punc>)</el-punc><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt><el-punc>)</el-punc>
  </el-code></td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
  <td><br>tuple(3, apple, true)<br>3<br>apple<br>true</td>
@@ -466,11 +466,11 @@ It may be considered a lightweight alternative to defining a specific class for 
 <el-func class="ok multiline" id="func3" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params6" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="return8" tabindex="-1"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return8" tabindex="-1"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-<p>Note that the appropriate <el-id>itemN</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
+<p>Note that the appropriate <el-id>item_N</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
 <h1 id="StandardDataStructures">Standard data structures</h1>
 <p>Elan has two mutable data structure Types <el-type>List</el-type> and <el-type>Dictionary</el-type>, and
