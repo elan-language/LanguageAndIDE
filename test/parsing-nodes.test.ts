@@ -1247,6 +1247,42 @@ suite("Parsing Nodes", () => {
       "new List<of String>()",
       "",
     );
+    testNodeParse(
+      new NewInstance(fileWithPython()),
+      `Foo()`,
+      ParseStatus.valid,
+      "",
+      "",
+      "Foo()",
+      "",
+    );
+    testNodeParse(
+      new NewInstance(fileWithCS()),
+      `new Foo()`,
+      ParseStatus.valid,
+      "",
+      "",
+      "new Foo()",
+      "",
+    );
+    testNodeParse(
+      new NewInstance(fileWithJava()),
+      `new Foo()`,
+      ParseStatus.valid,
+      "",
+      "",
+      "new Foo()",
+      "",
+    );
+    testNodeParse(
+      new NewInstance(fileWithVB()),
+      `New Foo()`,
+      ParseStatus.valid,
+      "",
+      "",
+      "New Foo()",
+      "",
+    );
   });
   test("String Interpolation", () => {
     testNodeParse(new LitStringField(f), ``, ParseStatus.empty, "", "", "", "");

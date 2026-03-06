@@ -256,7 +256,7 @@ export class LanguageVB extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
-  NEW = "new"; //TODO temporary kludge - should be New ! Same problem as with Of
+  NEW = "New";
 
   TRUE: string = "True";
   FALSE: string = "False";

@@ -47,6 +47,6 @@ Sub test_
   Dim li3 = {"lemon"} ' variable
   assert binarySearch(li3, "lemon") is true 
   assert binarySearch(li3, "lime") is false 
-  Dim li4 = new List(of String)() ' variable
+  Dim li4 = New List(of String)() ' variable
   assert binarySearch(li4, "pear") is false 
 End Sub
