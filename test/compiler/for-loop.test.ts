@@ -65,7 +65,7 @@ return [main, _tests];}`;
 
 def main(): None:
   tot = 0 # variable
-  for i in sequence(1, 10 + 1, 1):
+  for i in range(1, 10 + 1, 1):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10 + 1; i = i + 1) {
+  for (int i = 1; i < 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10 + 1; i = i + 1) {
+  for (int i = 1; i < 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -96,7 +96,7 @@ static void main() {
 
 Sub main()
   Dim tot = 0 ' variable
-  For i = 1 To 10 + 1 Step 1
+  For i = 1 To 10 + 1 - 1 Step 1
     tot = tot + i ' set
   Next i
   printNoLine(tot) ' call

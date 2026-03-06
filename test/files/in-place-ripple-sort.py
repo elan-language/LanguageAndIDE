@@ -11,7 +11,7 @@ def inPlaceRippleSort(li: list[int]) -> None: # procedure
   lastComp = li.length() - 2 # variable
   while hasChanged == true:
     hasChanged = false # set
-    for i in sequence(0, lastComp + 1, 1):
+    for i in range(0, lastComp + 1, 1):
       if li[i] > li[i + 1]:
         temp = li[i] # variable
         li.put(i, li[i + 1]) # call
