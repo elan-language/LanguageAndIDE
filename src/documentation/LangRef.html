@@ -975,20 +975,6 @@ which is the mechanism for running unit tests during program development, not du
  If you need anything more complicated, use a <el-kw>set</el-kw> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
-<h2 id="assert"><el-kw>constant</el-kw></h2>
-
-<p>The <el-kw>constant</el-kw> kveyword specifies a named value of an immutable Type and initalises it with a value.
- The name must be a valid <a href="#Identifier">identifier</a>.</p>
-<p>The initial value is given by a following expression. For example:</p>
-
-<el-code-block>
-<el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>Like a <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, a <el-kw>constant</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.</p>
-<p>It is recommended that you always use constants in preference to variable, unless you need to be able to re-assign its value.</p>
-<p>You can put a <el-kw>constant</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
-
 <h2 id="constant_let"><el-kw>constant</el-kw> (local)</h2>
 <p>There are two uses of the <el-kw>constant</el-kw> instruction: this one local to a routine, the other global to the program and described under <a href="#constant">constant (global)</a>.</p>
 <p>The local <el-kw>constant</el-kw><el-code> instruction declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
