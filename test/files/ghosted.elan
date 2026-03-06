@@ -1,4 +1,4 @@
-# 0cf50ead2751fd1b14446b5f58d6a5a76c45bdaddbc80e64e32256cb9dbe78ab Elan 2.0.0-alpha guest default_profile valid
+# 63d3d58994e11cedcdbb514e80f8150ca645aade59551153e7c39a9b368f51f0 Elan 2.0.0-alpha guest default_profile valid
 
 [ghosted] constant k set to 3
 
@@ -12,7 +12,7 @@ end class
 
 [ghosted] # ghosted comment
 [ghosted] main
-  for i from 1 to 10 step 1
+  for i from 1 to 10 + 1 step 1
     call print(i)
   end for
 end main

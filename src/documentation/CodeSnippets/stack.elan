@@ -12,9 +12,9 @@ main
   call print(sk.peek())
   call print(sk.pop())
   call print(sk)
-  call print(sk.pop().item0)
+  call print(sk.pop().item_0)
   call print(sk)
-  set sk to sk.pop().item1
+  set sk to sk.pop().item_1
   call print(sk)
   # snipTo
 end main

@@ -20,7 +20,7 @@ export class KeywordNode extends FixedTextNode {
     if (text.length > 0) {
       const target = this.fixedText;
       const trimmed = text.trimStart();
-      const lcLetters = trimmed.match(/^[a-z]*/);
+      const lcLetters = trimmed.match(/^[A-Z]?[a-z]*/);
       if (lcLetters && lcLetters.length === 1) {
         if (lcLetters[0] === target) {
           const n = this.numLeadingSpaces(text) + this.fixedText.length;

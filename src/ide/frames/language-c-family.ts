@@ -23,11 +23,13 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -124,8 +126,10 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof For) {
       const v = frame.variable.renderAsHtml();
-      const vRep = `<el-id>${frame.variable.textAsSource()}</el-id>`;
-      html = `<el-kw>${this.FOR} </el-kw><el-punc>(<el-type>int</el-type> </el-punc>${v}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-punc>; </el-punc>${vRep} <el-punc>&lt;=</el-punc> ${frame.to.renderAsHtml()}<el-punc>; </el-punc>${vRep}<el-punc> = </el-punc>${vRep}<el-punc> + </el-punc>${frame.step.renderAsHtml()}<el-punc>) {</el-punc>`;
+      const vAsHtml = `<el-id>${frame.variable.textAsSource()}</el-id>`;
+      const negativeStep = (frame.step.getRootNode() as StepNode).minus!.matchedNode;
+      const condition = negativeStep ? "&gt;" : "&lt;";
+      html = `<el-kw>${this.FOR} </el-kw><el-punc>(<el-type>int</el-type> </el-punc>${v}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-punc>; </el-punc>${vAsHtml} <el-punc>${condition}</el-punc> ${frame.to.renderAsHtml()}<el-punc>; </el-punc>${vAsHtml}<el-punc> = </el-punc>${vAsHtml}<el-punc> + </el-punc>${frame.step.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
@@ -174,7 +178,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   protected IN = "in";
   protected INHERITS = "inherits";
   protected INTERFACE = "interface";
-  protected NEW = "new";
   protected PRIVATE = "private";
   protected RETURN = "return";
   protected STATIC = "static";
@@ -201,6 +204,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
+  NEW = "new";
 
   TRUE: string = "true";
   FALSE: string = "false";
@@ -245,5 +249,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   common_propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  common_newInstanceAsHtml(node: NewInstance): string {
+    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 }

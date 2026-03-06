@@ -1,16 +1,20 @@
-# 0c3b50314b2ea7f7c750ef3782dd14774b082e59147dc54d87de326e9f2ace73 Elan 2.0.0-alpha guest default_profile valid
+# ec5a942ce0eb8515407b14d007a8b5274fbfe2c63c44ea3a772db6588235bc4f Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable qu set to new Queue<of String>()
   call print(qu.length())
   set qu to qu.enqueue("apple")
-  set qu to qu.enqueue("Pear")
+  set qu to qu.enqueue("banana")
+  set qu to qu.enqueue("cherry")
   call print(qu.length())
+  call print(qu)
   call print(qu.peek())
-  variable fruit set to ""
-  set fruit, qu to qu.dequeue()
-  call print(fruit)
-  set fruit, qu to qu.dequeue()
-  call print(fruit)
-  call print(qu.length())
+  call print(qu.dequeue())
+  call print(qu)
+  call print(qu.dequeue().item_0)
+  call print(qu)
+  set qu to qu.dequeue().item_1
+  call print(qu)
+  # snipTo
 end main

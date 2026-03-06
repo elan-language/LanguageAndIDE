@@ -40,11 +40,11 @@ export class ForAsn extends CompoundAsn {
     mustBeOfSymbolType(this.to.symbolType(), IntType.Instance, this.compileErrors, this.fieldId);
     mustBeOfSymbolType(this.step.symbolType(), IntType.Instance, this.compileErrors, this.fieldId);
 
-    let compare = "<=";
+    let compare = "<";
     let incDec = "+";
 
     if (this.step instanceof UnaryExprAsn && this.step.isNegativeOperation()) {
-      compare = ">=";
+      compare = ">";
       incDec = "-";
       s = this.step.operand.compile();
     }

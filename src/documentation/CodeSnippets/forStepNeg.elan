@@ -4,7 +4,7 @@ main
   # snipFrom
   variable numbers set to ["One", "Two", "Three", "Four", "Five", "Six"]
   variable s set to 2
-  for i from numbers.length() - 1 to 0 step -s
+  for i from numbers.length() - 1 to -1 step -s
     call print(numbers[i])
   end for
   # snipTo

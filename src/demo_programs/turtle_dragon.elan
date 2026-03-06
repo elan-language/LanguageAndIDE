@@ -7,7 +7,7 @@ main
   constant side set to 75.0/power(sqrt(2), order)
   constant corner set to side/12.0/cos(45)
   variable turns set to left
-  for i from 1 to order step 1
+  for i from 1 to order + 1 step 1
     set turns to setTurns(turns)
   end for
   variable t set to new Turtle()
@@ -50,7 +50,7 @@ end function
 
 function reflect(s as String) returns String
   variable sR set to ""
-  for i from 1 to s.length() step 1
+  for i from 1 to s.length() + 1 step 1
     set sR to (if s[i - 1].equals(left) then right else left) + sR
   end for
   return sR

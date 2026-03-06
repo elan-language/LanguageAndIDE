@@ -7,6 +7,7 @@ import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -64,6 +65,8 @@ export abstract class LanguageAbstract implements Language {
         html = this.litStringFieldAsHtml(node);
       } else if (node instanceof TypeTupleNode) {
         html = this.typeTupleAsHtml(node);
+      } else if (node instanceof NewInstance) {
+        html = this.newInstanceAsHtml(node);
       }
     }
     return html;
@@ -72,6 +75,7 @@ export abstract class LanguageAbstract implements Language {
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
+  abstract newInstanceAsHtml(node: NewInstance): string;
 
   litStringInterpolatedAsHtml(_node: LitStringInterpolated) {
     //To be overridden by an language that wants it different
@@ -106,6 +110,8 @@ export abstract class LanguageAbstract implements Language {
       result = this.parseTypeGeneric(node, text);
     } else if (node instanceof TypeTupleNode) {
       result = this.parseTypeTuple(node, text);
+    } else if (node instanceof NewInstance) {
+      result = this.parseNewInstance(node, text);
     }
     return result;
   }
@@ -113,6 +119,9 @@ export abstract class LanguageAbstract implements Language {
   abstract parseParamDef(node: ParamDefNode, text: string): boolean;
   abstract parseTypeGeneric(node: TypeGenericNode, text: string): boolean;
   parseTypeTuple(_node: TypeTupleNode, _text: string): boolean {
+    return false;
+  }
+  parseNewInstance(_node: NewInstance, _text: string): boolean {
     return false;
   }
 
@@ -137,6 +146,7 @@ export abstract class LanguageAbstract implements Language {
   abstract BOOL_NAME: string;
   abstract STRING_NAME: string;
   abstract LIST_NAME: string;
+  abstract NEW: string;
 
   abstract TRUE: string;
   abstract FALSE: string;

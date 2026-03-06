@@ -40,5 +40,5 @@ def  test_()-> None:
   li3 = ["lemon"] # variable
   assert binarySearch(li3, "lemon") is true 
   assert binarySearch(li3, "lime") is false 
-  li4 = new list[str]() # variable
+  li4 = list[str]() # variable
   assert binarySearch(li4, "pear") is false 

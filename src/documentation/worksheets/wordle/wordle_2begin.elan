@@ -62,7 +62,7 @@ end procedure
 procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     variable letter set to grid[i, attemptNo]
     variable mark set to marks[i]
     call grid.put(i, attemptNo, letter + mark)
@@ -101,7 +101,7 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as AsR
 end procedure
 
 procedure putAttemptIntoGrid(attempt as String, position as Int, grid as Array2D<of String>)
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     call grid.put(i, position, attempt[i])
   end for
   call displayHtml(drawGrid(grid))
@@ -114,7 +114,7 @@ end function
 
 function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
   variable guessWord set to ""
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     set guessWord to guessWord + grid[i, attemptNo]
   end for
   return guessWord
@@ -122,9 +122,9 @@ end function
 
 function drawGrid(grid as Array2D<of String>) returns String
   variable html set to $"<style>{styleSheet}</style> <grid>"
-  for row from 0 to 5 step 1
+  for row from 0 to 5 + 1 step 1
     set html to html + "<word>"
-    for col from 0 to 4 step 1
+    for col from 0 to 4 + 1 step 1
       variable entry set to grid[col, row]
       variable ch set to if entry.length() > 0 then entry[0] else ""
       variable mark set to if entry.length() > 1 then entry.subString(1, entry.length()) else ""
@@ -150,13 +150,13 @@ end function
 function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   variable unused set to target
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     if attempt[i].equals(unused[i]) then
       set mark to setChar(mark, i, "2")
       set unused to setChar(unused, i, " ")
     end if
   end for
-  for i from 0 to 4 step 1
+  for i from 0 to 4 + 1 step 1
     if (not mark[i].equals("2")) and unused.contains(attempt[i]) then
       set mark to setChar(mark, i, "1")
       set unused to setChar(unused, unused.indexOf(attempt[i]), " ")
