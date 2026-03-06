@@ -2,13 +2,13 @@ import assert from "assert";
 import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-worksheets";
 import { processInnerCode } from "../src/tools/codeParser";
 import {
-    processCode,
-    processFinals,
-    processHelps,
-    processHints,
-    processLoads,
-    processQuestions,
-    processSteps,
+  processCode,
+  processFinals,
+  processHelps,
+  processHints,
+  processLoads,
+  processQuestions,
+  processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
 

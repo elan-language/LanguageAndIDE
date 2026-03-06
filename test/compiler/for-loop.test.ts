@@ -3,23 +3,23 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertExportedCSIs,
-    assertExportedJavaIs,
-    assertExportedPythonIs,
-    assertExportedVBis,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testCSHeader,
-    testHash,
-    testHeader,
-    testJavaHeader,
-    testPythonHeader,
-    testVBHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testCSHeader,
+  testHash,
+  testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
@@ -38,8 +38,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 10 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -65,7 +65,7 @@ return [main, _tests];}`;
 
 def main(): None:
   tot = 0 # variable
-  for i in sequence(1, 10, 1):
+  for i in sequence(1, 10 + 1, 1):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10; i = i + 1) {
+  for (int i = 1; i <= 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i <= 10; i = i + 1) {
+  for (int i = 1; i <= 10 + 1; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -96,7 +96,7 @@ static void main() {
 
 Sub main()
   Dim tot = 0 ' variable
-  For i = 1 To 10 Step 1
+  For i = 1 To 10 + 1 Step 1
     tot = tot + i ' set
   Next i
   printNoLine(tot) ' call
@@ -126,8 +126,8 @@ const global = new class {};
 async function main() {
   let tot = 0;
   let i = 0;
-  const _tofor9 = 10;
-  for (i = 1; i <= _tofor9; i = i + 1) {
+  const _tofor9 = 10 + 1;
+  for (i = 1; i < _tofor9; i = i + 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -166,8 +166,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10;
-  for (let i = 1; i <= _tofor6; i = i + 2) {
+  const _tofor6 = 10 + 1;
+  for (let i = 1; i < _tofor6; i = i + 2) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -206,8 +206,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 3;
-  for (let i = 10; i >= _tofor6; i = i - 1) {
+  const _tofor6 = 2;
+  for (let i = 10; i > _tofor6; i = i - 1) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -248,10 +248,10 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 3;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
-    const _tofor12 = 4;
-    for (let j = 1; j <= _tofor12; j = j + 1) {
+  const _tofor6 = 3 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
+    const _tofor12 = 4 + 1;
+    for (let j = 1; j < _tofor12; j = j + 1) {
       tot = tot + 1;
     }
   }
@@ -294,8 +294,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  const _tofor12 = upper;
-  for (let i = lower; i <= _tofor12; i = i + 2) {
+  const _tofor12 = upper + 1;
+  for (let i = lower; i < _tofor12; i = i + 2) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -341,8 +341,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const _tofor13 = 10;
-  for (let i = 0; i <= _tofor13; i = i + 1) {
+  const _tofor13 = 10 + 1;
+  for (let i = 0; i < _tofor13; i = i + 1) {
     arr.put(i, 1);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
@@ -381,8 +381,8 @@ end main`;
 const global = new class {};
 async function main() {
   let limit = 10;
-  const _tofor6 = limit;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = limit + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }

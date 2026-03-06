@@ -5,19 +5,19 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertCompiles,
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertGraphicsContains,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    assertTestObjectCodeExecutes,
-    testHash,
-    testHeader,
-    transforms,
+  assertCompiles,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -773,8 +773,8 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  const _tofor6 = 10000;
-  for (let i = 1; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 10000 + 1;
+  for (let i = 1; i < _tofor6; i = i + 1) {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
@@ -827,8 +827,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const _tofor15 = 10000;
-  for (let i = 1; i <= _tofor15; i = i + 1) {
+  const _tofor15 = 10000 + 1;
+  for (let i = 1; i < _tofor15; i = i + 1) {
     let t = rnd.nextInt(0, 1);
     val = t[0];
     rnd = t[1];
@@ -882,15 +882,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  const _tofor12 = 10000;
-  for (let i = 1; i <= _tofor12; i = i + 1) {
+  const _tofor12 = 10000 + 1;
+  for (let i = 1; i < _tofor12; i = i + 1) {
     let t = rnd.nextInt(3, 5);
     val = t[0];
     rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const _tofor30 = 6;
-  for (let i = 0; i <= _tofor30; i = i + 1) {
+  const _tofor30 = 6 + 1;
+  for (let i = 0; i < _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -944,15 +944,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  const _tofor12 = 10000;
-  for (let i = 1; i <= _tofor12; i = i + 1) {
+  const _tofor12 = 10000 + 1;
+  for (let i = 1; i < _tofor12; i = i + 1) {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  const _tofor30 = 6;
-  for (let i = 0; i <= _tofor30; i = i + 1) {
+  const _tofor30 = 6 + 1;
+  for (let i = 0; i < _tofor30; i = i + 1) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -2228,11 +2228,11 @@ end main
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const _tofor6 = 39;
-  for (let i = 0; i <= _tofor6; i = i + 1) {
+  const _tofor6 = 39 + 1;
+  for (let i = 0; i < _tofor6; i = i + 1) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const _tofor15 = 29;
-    for (let j = 0; j <= _tofor15; j = j + 1) {
+    const _tofor15 = 29 + 1;
+    for (let j = 0; j < _tofor15; j = j + 1) {
       sa.append(_stdlib.white);
     }
     b.append(sa);

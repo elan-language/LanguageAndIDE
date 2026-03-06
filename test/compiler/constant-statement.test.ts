@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Constant Statement", () => {
@@ -127,8 +127,8 @@ async function main() {
 
 async function foo() {
   let li = system.list([1, 2, 3, 4, 5]);
-  const _tofor13 = 4;
-  for (let i = 0; i <= _tofor13; i = i + 1) {
+  const _tofor13 = 4 + 1;
+  for (let i = 0; i < _tofor13; i = i + 1) {
     let temp = system.safeIndex(li, i);
     await _stdlib.printNoLine(temp);
   }
@@ -178,8 +178,8 @@ async function main() {
 
 async function foo() {
   let li = system.list([1, 2, 3, 4, 5]);
-  const _tofor13 = 3;
-  for (let i = 0; i <= _tofor13; i = i + 1) {
+  const _tofor13 = 3 + 1;
+  for (let i = 0; i < _tofor13; i = i + 1) {
     const temp = system.safeIndex(li, i);
     li = li.withPut(i, system.safeIndex(li, i + 1));
     li = li.withPut(i + 1, temp);
