@@ -1,7 +1,8 @@
-# 19af7ef17144c8d631a0b32efc37d3e39e737a315680149fc845305acc98a236 Elan 2.0.0-alpha guest default_profile valid
+# 0fbc380687b05cfd3455b48b29d372212b6bc5d8ed0d45494dbcd470e28cc15a Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable point set to tuple(3, 4)
+  variable point set to (3, 4)
   variable t set to point
-  call print(t.item1)
+  call print(point)
+  call print(t.item_1)
 end main

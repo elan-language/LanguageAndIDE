@@ -1,0 +1,23 @@
+# 0bd4ff9f25966514c4602f7535c050dae7651ebb6e37a94215b05277d18da2d4 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable rainbow set to getRainbow()
+  # snipTo
+  variable l set to rainbow.length()
+  variable h set to 0
+  variable grid set to createBlockGraphics(black)
+  for c from 0 to 40 step 1
+    for r from 0 to 30 step 1
+      set grid[c][r] to rainbow[r mod l]
+    end for
+  end for
+  call displayBlocks(grid)
+end main
+
+# snipFrom
+function getRainbow() returns List<of Int>
+  return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
+end function
+
+# snipTo

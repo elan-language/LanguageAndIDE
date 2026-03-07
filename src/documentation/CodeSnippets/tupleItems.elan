@@ -1,11 +1,11 @@
-# b1236f34e4e2b9343ebaa73484414a24e84758c184f7eb77a8d1c39d1342742c Elan 2.0.0-alpha guest default_profile valid
+# 485a2b6761bd2a89f4e05bea98a31d4546584e3109bc2cd1a49ec571f6482733 Elan 2.0.0-alpha guest default_profile valid
 
 main
   # snipFrom
-  variable t set to tuple(3, "apple", true)
+  variable t set to (3, "apple", true)
   call print(t)
-  call print(t.item0)
-  call print(t.item1)
-  call print(t.item2)
+  call print(t.item_0)
+  call print(t.item_1)
+  call print(t.item_2)
   # snipTo
 end main
