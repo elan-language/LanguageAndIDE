@@ -1,10 +1,9 @@
-# 2cfa6c49528e5b87c424f1e850b8ca62019b3deadd02f8c3deeeae49f4558eda Elan 2.0.0-alpha guest default_profile valid
+# 59a434b30c94c6fb63c5fafb11695c7e9f6f5a1e6da09fabdfb658d03a276641 Elan 2.0.0-alpha guest default_profile valid
 
 main
   # snipFrom
   variable numbers set to ["One", "Two", "Three", "Four", "Five", "Six"]
-  variable s set to 2
-  for i from numbers.length() - 1 to -1 step -s
+  for i from numbers.length() - 1 to 0 step -2
     call print(numbers[i])
   end for
   # snipTo
