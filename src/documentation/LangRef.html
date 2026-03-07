@@ -1057,21 +1057,21 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 <h2 id="for"><el-kw>for</el-kw></h2>
 <div id="to"></div>
 <div id="step"></div>
-<p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The loop counter variable (which counts from 0) is of Type <el-type>Int</el-type>.</p>
+<p>The <el-kw>for..from..to &gt;.. step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
+<p>The loop counter variable is of Type <el-type>Int</el-type>.</p>
+<p>It counts from the given <el-kw>from</el-kw> value through to <i>one less than</i> the <el-kw>to</el-kw> value
+(as implied by the <el-kw>&gt;</el-kw> sign supplied by the Editor). </p>
 <p>The loop counter variable does not have to have been previously declared or initialised.</p>
-<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative,
+<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to &gt;</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative,
 and may be defined by literals, integer named values or expressions that evaluate to integer values.</p>
-<p>Note that, if you require a negative step value, then the literal, named value or expression must be positive and prefixed with a negative sign.
-This is needed at compile time to determine the nature of the exit condition. For example, to step in descending sequence you can write:</p>
+<p>Note that, if you require a negative step value, then only a literal with a negative sign can be used, for example:
 
 <el-code-block source="forStepNeg.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for9" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>-<el-id>s</el-id></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field>)</el-statement>
+<el-statement class="ok multiline" id="for11" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&gt;<el-punc> <el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>-<el-lit>2</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -1258,11 +1258,8 @@ instruction declares and initalises a mutable named valued. The name defined mus
 <tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><el-code>tuple(3, "banana")</el-code></td></tr>
 <tr><td><a href="LibRef.html#List">List</a></td><td><el-code>["lemon", "lime", "orange"]</el-code></td></tr>
 <tr><td><a href="LibRef.html#Dictionary">Dictionary</a></td><td><el-code>["a":3, "b":5]</el-code></td></tr>
-<tr><td><a href="LibRef.html#ListImmutable">ListImmutable</a></td><td><el-code>{"lemon", "lime", "orange"}</el-code></td></tr>
-<tr><td><a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a></td><td><el-code>{"a":3, "b":5}</el-code></td></tr>
 </table>
-<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard (mutable) data structures</a> table.<br>
-For more about ListImmutable and DictionaryImmutable literals see the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> table.</p>
+<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures</a> table.<br>
 
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
@@ -1644,7 +1641,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>An existing named value may not be defined again within the same scope.</p>
 
 <h3 id="DuplicateKeyCompileError" class="no-TOC">Duplicate Dictionary key(s)</h3>
- <p>Attempting to define a literal <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type>
+ <p>Attempting to define a literal <el-type>Dictionary</el-type> <!--or <el-type>DictionaryImmutable</el-type>-->
  with one or more duplicated keys in the definition.</p>
 
 <!-- This message deleted>
@@ -1707,9 +1704,11 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  It is, however, possible to compare the results of two function evaluations.
  You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
 
+<!--
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
  <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable Type.
  Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a> the Types for both the key and the value must be immutable ones.</p>
+-->
 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
  <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary</a> must be an immutable Type, and not itself an indexable Type.</p>
@@ -1823,8 +1822,8 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
  <p>The definition for a variable or for a <el-kw>let</el-kw> instruction is most commonly
  a simple name. Less commonly, it may take the form of a dconstruction of a
- <a href="LibRef.html#deconstructList"><el-type>List</el-type></a>,
- <a href="LibRef.html#deconstructListImmutable"><el-type>ListImmutabl</el-type>e</a> or
+ <a href="LibRef.html#deconstructList"><el-type>List</el-type></a> or
+<!-- <a href="LibRef.html#deconstructListImmutable"><el-type>ListImmutabl</el-type>e</a> or-->
  <a href="LibRef.html#deconstructTuple"><el-code>Tuple</el-code></a>.</p>
 
 <h2>Advisory</h2>
