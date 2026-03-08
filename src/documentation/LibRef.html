@@ -53,6 +53,12 @@
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>a string of decimal digits representing the argument's integer value</td>
+ </tr><tr id="equals_Int">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td><el-type>Int</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if integer and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
 </table>
 
@@ -129,6 +135,12 @@ in the range:</li>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the first integer larger than or equal to the argument's floating point value</td>
+ </tr><tr id="equals_Float">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td><el-type>Float</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if floating point number and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr>
   <td><el-method>floor</el-method></td>
   <td><el-type>Float</el-type></td>
@@ -172,10 +184,10 @@ in the range:</li>
 </tr>
 </table>
 
-<h3 class="no-TOC">Dot method on a <el-type>Boolean</el-type></h3>
+<h3 class="no-TOC">Dot methods on a <el-type>Boolean</el-type></h3>
 <table class="tableMethod">
  <tr>
-  <th>function<br>dot method</th>
+  <th>function<br>dot methods</th>
   <th>on<br>Type</th>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
@@ -186,6 +198,12 @@ in the range:</li>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>String "true" if <el-id>true</el-id>,<br>"false" if <el-id>false</el-id></td>
+ </tr><tr id="equals_Boolean">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the truth value and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
  </table>
 
@@ -280,6 +298,12 @@ in the range:</li>
   <td>(none)</td>
   <td><el-type>RegExp</el-type></td>
   <td>a new string that is a a converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
+ </tr><tr id="equals_String">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the string and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="contains_String">
   <td><el-method>contains</el-method></td>
   <td><el-type>String</el-type></td>
@@ -344,7 +368,7 @@ in the range:</li>
   <td><el-method>split</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
-  <td><<el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</td>
+  <td><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</td>
   <td>a <el-type>List</el-type> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="subString">
@@ -461,6 +485,29 @@ It may be considered a lightweight alternative to defining a specific class for 
 </el-code-block>
 <p>Note that the appropriate <el-id>item_N</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
+<h3 class="no-TOC">Dot methods on a <el-type>Tuple</el-type></h3>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot methods</th>
+  <th>on</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Type</th>
+  <th>returns</th>
+ </tr><tr id="asString_Tuple">
+  <td><el-method>asString</el-method></td>
+  <td><el-type>Tuple</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>String containing Tuple's items surrounded by brackets</td>
+ </tr><tr id="equals_Tuple">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Tuple</el-type></td>
+  <td><el-type>Tuple</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argumentl<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr>
+</table>
+
 <h1 id="StandardDataStructures">Standard data structures</h1>
 <p>Elan has two mutable data structure Types <el-type>List</el-type> and <el-type>Dictionary</el-type>, and
 three immutable data structure Types <el-type>Set</el-type>, <el-type>Stack</el-type> and <el-type>Queue</el-type>.</p>
@@ -511,16 +558,11 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td>Not available</td>
  </tr><tr>
   <td>create empty</td>
-  <td><el-code>empty</el-code> <el-type>List</el-type>&lt;of <el-id>Type</el-id>&gt;<br>or<br>
-  <el-code>new <el-type>List</el-type>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt; or<br>
-  <el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br>or<br>
-  <el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br>or<br>
-  <el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br>or<br>
-  <el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>new <el-type>List</el-type>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
+  <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
+  <td><el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
  </tr><tr>
   <td>create initialised</td>
   <td>not available</td>
@@ -601,7 +643,7 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
 <p>and refer to a cell using three indexes.</p>
 <p>In principle arrays of higher dimension can be defined.</p>
 
-<h3 class="no-TOC" id="List_procedures">Procedure methods on a List</h3>
+<h3 class="no-TOC" id="List_procedures">Procedure methods on a <el-type>List</el-type></h3>
 <p>Where an argument provides a new value for an item in a List, that value must be of the same Type as defined for the List's items.</p>
 <table class="tableMethod">
  <tr>
@@ -665,7 +707,7 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="List_functions">Function dot methods on a List</h3>
+<h3 class="no-TOC" id="List_functions">Dot methods on a <el-type>List</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -692,6 +734,12 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the List contains the specified item<br>
   &ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="equals_List">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
   <td><el-type>List</el-type></td>
@@ -854,7 +902,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <p>The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>.
  The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
 
-<h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a Dictionary</h3>
+<h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a <el-type>Dictionary</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -874,7 +922,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Dictionary_functions">Function dot methods on a Dictionary</h3>
+<h3 class="no-TOC" id="Dictionary_functions">Dot methods on a <el-type>Dictionary</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -888,6 +936,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>a string that is a comma+space-separated list of the Dictionary's <i>key:value</i> pairs, enclosed in square brackets</td>
+ </tr><tr id="equals_Dictionary">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if dictionary and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="hasKey_Dictionary">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -935,7 +989,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 
 <table class="tablePlain"><!--source="set.elan"-->                                                   
 <tr><td>
-<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>Set</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>>()<br>
+<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>Set</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>()<br>
 <el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code><br></td>
 <td><br><br>&#x27f6;</td><td><br><br>3</td>
@@ -956,7 +1010,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <td>&#x27f6;</td><td>[5, 7]</td>
 </table>
 
-<h3 class="no-TOC" id="Set_functions">Function dot methods on a Set</h3>
+<h3 class="no-TOC" id="Set_functions">Dot methods on a <el-type>Set</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -994,6 +1048,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>value (of <el-type>Set</el-type> members' Type)</td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Set contains the item<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="equals_Set">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Set</el-type></td>
+  <td><el-type>Set</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if set and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
   <td><el-type>Set</el-type></td>
@@ -1057,7 +1117,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
     <li>The methods for adding and removing an item are different for <el-type>Stack</el-type> and <el-type>Queue</el-type>, as shown here:</li>
 </ul>
 
-<h3 class="no-TOC" id="Stack_functions">Function dot methods on a Stack</h3>
+<h3 class="no-TOC" id="Stack_functions">Dot methods on a <el-type>Stack</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1065,6 +1125,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
+ </tr><tr id="equals_Stack">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Stack</el-type></td>
+  <td><el-type>Stack</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if stack and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="push">
   <td><el-method>push</el-method></td>
   <td><el-type>Stack</el-type></td>
@@ -1099,7 +1165,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Queue_functions">Function dot methods on a Queue</h3>
+<h3 class="no-TOC" id="Queue_functions">Dot methods on a <el-type>Queue</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1107,6 +1173,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
+ </tr><tr id="equals_Queue">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Queue</el-type></td>
+  <td><el-type>Queue</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if queue and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="enqueue">
   <td><el-method>enqueue</el-method></td>
   <td><el-type>Queue</el-type></td>
@@ -1222,6 +1294,17 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><a href="#contains_Set">&#x2714;</a></td>
   <td></td>
   <td></td>
+ </tr><tr><!---->
+  <td id="equals"><el-method>equals</el-method></td>
+  <td><a href="#equals_Int">&#x2714;</a></td>
+  <td><a href="#equals_Float">&#x2714;</a></td>
+  <td><a href="#equals_Boolean">&#x2714;</a></td>
+  <td><a href="#equals_String">&#x2714;</a></td>
+  <td><a href="#equals_List">&#x2714;</a></td>
+  <td><a href="#equals_Dictionary">&#x2714;</a></td>
+  <td><a href="#equals_Set">&#x2714;</a></td>
+  <td><a href="#equals_Stack">&#x2714;</a></td>
+  <td><a href="#equals_Queue">&#x2714;</a></td>
  </tr><tr><!---->
   <td id="indexOf"><el-method>indexOf</el-method></td>
   <td></td>
@@ -1985,15 +2068,17 @@ By this means features such as simple SVG animation can be defined.</p>
 </el-code-block>
 <p>or to read a file line by line:</p>
 <el-code-block source="TextFileReader_2.elan">
-  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok multiline" id="while9" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt><el-place><i>condition</i></el-place></el-field></el-top>
-  <el-statement class="ok" id="let12" tabindex="0"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>lines</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-kw>end while</el-kw>
-  </el-statement>
-  <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>close</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>openFileForReading</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>lines</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="while9" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>line</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>lines</el-id>.<el-method><el-method>append</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>line</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-id>lines</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>close</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
@@ -2867,13 +2952,13 @@ The subset is chosen by a lambda function that tests list item values and return
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of class <el-type>Point</el-type>):</p>
 <el-code-block source="pathfinder.elan">
-<el-func class="ok multiline" id="func333" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident335" class="ok" tabindex="-1"><el-txt><el-method>getNodeFor</el-method></el-txt></el-field>(<el-field id="params336" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="-1"><el-txt><el-type>Node</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="let340" tabindex="-1"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="-1"><el-txt><el-id>matches</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="return338" tabindex="-1"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw><br>then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw> <el-type>Node</el-type></el-txt></el-field></el-statement>
+<el-func class="ok multiline" id="func353" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident355" class="ok" tabindex="-1"><el-txt><el-method>getNodeFor</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params356" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type357" class="ok" tabindex="-1"><el-txt><el-type>Node</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var360" tabindex="-1"><el-kw>variable </el-kw><el-field id="var361" class="ok" tabindex="-1"><el-txt><el-id>matches</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr362" class="ok" tabindex="-1"><el-txt><el-kw>this</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id>.<el-method>equals</el-method>(<el-id>p</el-id>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return358" tabindex="-1"><el-kw>return </el-kw><el-field id="expr359" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw> then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw> else </el-kw><el-method>emptyNode</el-method>()</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
+</el-func></el-code-block>
 <hr>
 </div></div>
 
@@ -2957,14 +3042,14 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the integer values in a list to their sum:</p>
 <el-code-block source source="reduce.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-lit>0</el-lit>, <el-kw>lambda</el-kw> <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>m</el-id> + <el-id>n</el-id>)</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; 15
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a list to their sum:</p>
 <el-code-block source source="reduce.elan">
-<el-statement class="ok" id="let12" tabindex="-1"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print15" tabindex="-1"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="-1"><el-txt><el-id>lj</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>fsum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; <el-id>fsum</el-id> + <el-id>item</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; 10.8
 </el-code-block>
@@ -2981,7 +3066,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 &nbsp;&nbsp;&#x27f6; [11, 7, 4, 3, 2]
 </el-code-block>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example on a <el-type>DictionaryImmutable</el-type> from demo program <el-code>wordle-solver.elan</el-code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example on a <el-type>Dictionary</el-type> from demo program <el-code>wordle-solver.elan</el-code>:</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>

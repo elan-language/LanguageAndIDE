@@ -1115,7 +1115,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
 <el-code-block source="if_elif_else.elan">
 <el-statement class="ok multiline" id="if22" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>item</el-id>.<el-method>isSameValueAs</el-method>(<el-id>value</el-id>)</el-txt></el-field><el-kw> then</el-kw>
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>item</el-id>.<el-method>equals</el-method>(<el-id>value</el-id>)</el-txt></el-field><el-kw> then</el-kw>
 </el-top>
 <el-statement class="ok" id="set25" tabindex="-1"><el-kw>set </el-kw><el-field id="ident26" class="ok" tabindex="-1"><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
 <el-statement class="ok outdent" id="else28" tabindex="-1"><el-kw>elif </el-kw><el-field id="expr29" class="ok" tabindex="-1"><el-txt><el-id>item</el-id>.<el-method>isBefore</el-method>(<el-id>value</el-id>)</el-txt></el-field><el-kw> then</el-kw></el-statement>
@@ -1198,7 +1198,7 @@ The variable holding the exception (by default its name is <el-text><el-id>e</el
 <el-statement class="ok" id="call33" tabindex="-1"><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args35" class="optional ok" tabindex="-1"><el-txt>"<el-lit>not caught</el-lit>"</el-txt></el-field>)</el-statement>
 <el-statement class="ok outdent" id="catch27" tabindex="-1"><el-kw>catch exception in </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="if36" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> (<el-id>e</el-id>.<el-method>isSameValueAs</el-method>("<el-lit>an expected message</el-lit>"))</el-txt></el-field><el-kw> then</el-kw>
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> (<el-id>e</el-id>.<el-method>equals</el-method>("<el-lit>an expected message</el-lit>"))</el-txt></el-field><el-kw> then</el-kw>
 </el-top>
 <el-statement class="ok" id="throw39" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg40" class="ok" tabindex="-1"><el-txt><el-id>e</el-id></el-txt></el-field></el-statement>
 <el-kw>end if</el-kw>

@@ -1,6 +1,7 @@
-# f695e657beee0fc430cec1cf8c58a05dbdf5c421bc75915bb28da9fd7c787b08 Elan 2.0.0-alpha guest default_profile valid
+# 12fd440680aed54632d92436547fbc18bf05f4d4fafc889a6a562bd4771c7fd1 Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable file set to openFileForReading()
   variable lines set to new List<of String>()
   while not file.endOfFile()
@@ -9,4 +10,5 @@ main
   end while
   call print(lines)
   call file.close()
+  # snipTo
 end main
