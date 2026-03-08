@@ -81,12 +81,13 @@ in the range:</li>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
 <el-code-block source="bigInt2.elan">
-<el-statement class="ok multiline" id="for6" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>^<el-id>n</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="call18" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt>-<el-method>s</el-method>(<el-id>n</el-id>), "{<el-id>n</el-id>}"</el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), "{<el-id>np</el-id>}<el-lit><br></el-lit>"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok multiline" id="for3" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-method>s</el-method>(<el-id>n</el-id>), $"<el-lit></el-lit>{<el-id>n</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), $"<el-lit></el-lit>{<el-id>np</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -238,15 +239,15 @@ in the range:</li>
 <table class="tablePlain">                                                   
 <tr>
  <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>Spanish introduces a question with </el-lit>{<el-method>unicode</el-method>(<el-lit>191</el-lit>)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with &#191;</el-code></td>
+ ("<el-lit>Spanish introduces a question with </el-lit>${<el-method>unicode</el-method>(<el-lit>191</el-lit>)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with #191;</el-code></td>
 </tr><tr>
 </tr><tr>
 <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</el-code></td>
+ ("<el-lit>This is an up arrow: </el-lit>${<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</el-code></td>
 </tr>
 </table>
 
-<p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
+<p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using a $ and curly braces (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
 </ul>
 
 <h3 class="no-TOC">Manipulating strings</h3>
@@ -398,20 +399,20 @@ in the range:</li>
 
 <h3 class="no-TOC" id="InterpolatedString">Interpolated fields in strings</h3>
 <p>Strings support interpolation, that is you can insert the values of variables
- or simple expressions within the string by enclosing them in curly braces:</p>
+ or simple expressions within the string by enclosing them in a $ and curly braces:</p>
 
 <p>If <el-code>a</el-code> and <el-code>b</el-code> have values 3 and 17:</p> 
 <table class="tablePlain">                                                   
 <tr>
  <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ("{<el-id>a</el-id>} <el-lit>times</el-lit> {<el-id>b</el-id>} <el-lit>equals</el-lit> {<el-id>a</el-id>*<el-id>b</el-id>})</td><td>&#x27f6;</td><td>3 times 17 equals 51</td></el-code>
+ ("${<el-id>a</el-id>} <el-lit>times</el-lit> ${<el-id>b</el-id>} <el-lit>equals</el-lit> ${<el-id>a</el-id>*<el-id>b</el-id>})</td><td>&#x27f6;</td><td>3 times 17 equals 51</td></el-code>
 </tr>
 </table>
 
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>set </el-kw><el-id>message</el-id><el-kw> to "</el-kw><el-lit>LANDED SAFELY AT SPEED </el-lit>{(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>{<el-id>fuel</el-id>.<el-method>floor</el-method>()}"<br>
+ <td><el-code><el-kw>set </el-kw><el-id>message</el-id><el-kw> to "</el-kw><el-lit>LANDED SAFELY AT SPEED </el-lit>${(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>${<el-id>fuel</el-id>.<el-method>floor</el-method>()}"<br>
  <el-code><el-kw>call </el-kw><el-method>print</el-method>(</el-code><el-id>message</el-id>)</td>
 </el-code></td>
  <td><br>&#x27f6;</td>
@@ -422,7 +423,7 @@ in the range:</li>
 <table class="tablePlain">                                                   
 <tr>
  <td><el-code><el-kw>constant</el-kw></el-code> <el-id>r</el-id> <el-kw>set to </el-kw>2.0<br>
- <el-code><el-kw>call </el-kw><el-method>print</el-method>("area = {(<el-id>pi</el-id>*<el-id>r</el-id>*<el-id>r</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>)}"</el-code>
+ <el-code><el-kw>call </el-kw><el-method>print</el-method>("area = ${(<el-id>pi</el-id>*<el-id>r</el-id>*<el-id>r</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>)}"</el-code>
  <td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
@@ -2802,7 +2803,7 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 <el-statement class="ok" id="var11" tabindex="-1"><el-kw>variable </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok" id="var14" tabindex="-1"><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>b</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok" id="call17" tabindex="-1"><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args19" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>*<el-id>b</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args22" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>{<el-id>a</el-id>}<el-lit> times </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id>*<el-id>b</el-id>}<el-lit></el-lit>"</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args22" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>${<el-id>a</el-id>}<el-lit> times </el-lit>${<el-id>b</el-id>}<el-lit> equals </el-lit>${<el-id>a</el-id>*<el-id>b</el-id>}<el-lit></el-lit>"</el-txt></el-field>)</el-statement>
 </el-code-block>
 <p>would print these lines to the display:</p>
 <pre><el-code>
@@ -2824,8 +2825,8 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args25" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit>, "<el-lit></el-lit>{<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>2</el-lit>)}<el-lit></el-lit>"</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args28" class="optional ok" tabindex="-1"><el-txt><el-lit>20</el-lit>, "<el-lit></el-lit>{<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>3</el-lit>)}<el-lit><br></el-lit>"</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args25" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit>, "<el-lit></el-lit>${<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>2</el-lit>)}<el-lit></el-lit>"</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args28" class="optional ok" tabindex="-1"><el-txt><el-lit>20</el-lit>, "<el-lit></el-lit>${<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>3</el-lit>)}<el-lit><br></el-lit>"</el-txt></el-field>)</el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -2839,7 +2840,7 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 </el-top>
 <el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-lit>9</el-lit>, <el-id>i</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="var18" tabindex="-1"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt>(<el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>())</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit><br></el-lit>"</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>${<el-id>j</el-id>}<el-lit><br></el-lit>"</el-txt></el-field>)</el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -3089,14 +3090,14 @@ They take a function as an argument, and return the list item corresponding to t
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the integer that has the highest last digit:</p>
 <el-code-block>
-<el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>${<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>maxBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id><el-kw> mod </el-kw><el-lit>10</el-lit>)</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; 89
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the the shortest string:</p>
 <el-code-block>
-<el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>${"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; pear
 </el-code-block>
