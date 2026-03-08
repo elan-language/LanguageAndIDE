@@ -1,13 +1,13 @@
-# 03ea5d33e04ed84c48121bc03c2ea0ef6159f1e1aaad5b8e6774b3b1c7597c89 Elan 2.0.0-alpha guest default_profile valid
+# 672430d9275f228ab2959e62232ed837b9ac9c8ea624473bceda0b7a79065b82 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
+  constant order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
-  call print($"Dragon of order {order}")
-  constant side set to 75.0/power(sqrt(2), order)
+  call print("Dragon of order {order}")
+  constant side set to (75/power(sqrt(2), order))
   constant corner set to side/12.0/cos(45)
   variable turns set to left
-  for i from 1 to order + 1 step 1
+  for i from 1 to (order + 1) step 1
     set turns to setTurns(turns)
   end for
   variable t set to new Turtle()
@@ -20,7 +20,7 @@ constant left set to "1"
 constant right set to "0"
 
 procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
-  constant p set to divAsInt(200, order)
+  constant p set to (200.0/order).floor()
   variable turnI set to 0
   each turn in turns
     set turnI to (if turn.equals(left) then 1 else -1)
@@ -50,8 +50,8 @@ end function
 
 function reflect(s as String) returns String
   variable sR set to ""
-  for i from 1 to s.length() + 1 step 1
-    set sR to (if s[i - 1].equals(left) then right else left) + sR
+  for i from 1 to (s.length() + 1) step 1
+    set sR to (if (s[i - 1]).equals(left) then right else left) + sR
   end for
   return sR
 end function
