@@ -1,4 +1,18 @@
+import { ClassOption, elanClass } from "../elan-type-annotations";
+import { System } from "../system";
+
+@elanClass(ClassOption.concrete)
 export class ElanRuntimeError extends Error {
+  static emptyInstance() {
+    return new ElanRuntimeError("");
+  }
+
+  async _initialise() {
+    return this;
+  }
+
+  private system?: System;
+
   constructor(private readonly err: string | Error) {
     super(err instanceof Error ? err.message : err);
   }

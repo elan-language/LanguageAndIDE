@@ -105,6 +105,9 @@ export class StdLib {
   @elanClassExport(Maybe)
   Maybe = Maybe;
 
+  @elanClassExport(ElanRuntimeError)
+  ElanRuntimeError = ElanRuntimeError;
+
   // Standard colours
 
   @elanConstant(ElanInt) black = 0x000000;
