@@ -2322,4 +2322,48 @@ end main
     assertParses(fileImpl);
     assertCompiles(fileImpl);
   });
+
+  test("Pass_Equals", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1.equals(1)
+  variable b set to "".equals("")
+  variable c set to true.equals(true)
+  variable d set to 1.notEqualTo(2)
+  variable e set to "".notEqualTo("1")
+  variable f set to true.notEqualTo(false)
+  call printNoLine(a and b and c and d and e and f)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.equals(1, 1);
+  let b = _stdlib.equals("", "");
+  let c = _stdlib.equals(true, true);
+  let d = _stdlib.notEqualTo(1, 2);
+  let e = _stdlib.notEqualTo("", "1");
+  let f = _stdlib.notEqualTo(true, false);
+  await _stdlib.printNoLine(a && b && c && d && e && f);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
 });

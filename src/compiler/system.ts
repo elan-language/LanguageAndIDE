@@ -178,10 +178,12 @@ export class System {
     return await this.elanInputOutput.readLine();
   }
 
-  equals(i1: any, i2: any) {
-    const t = typeof i1;
+  isValueType(type: string) {
+    return type === "boolean" || type === "string" || type === "number";
+  }
 
-    if (t === "boolean" || t === "string" || t === "number") {
+  equals(i1: any, i2: any) {
+    if (this.isValueType(typeof i1) || this.isValueType(typeof i2)) {
       return i1 === i2;
     }
 

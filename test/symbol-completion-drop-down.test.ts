@@ -871,6 +871,7 @@ end main`;
       ["equals", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
+      ["notEqualTo", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
       ["withRemoveAt", "*", "*"],
@@ -1307,6 +1308,7 @@ end test`;
       ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["ff", "*", "*"],
+      ["notEqualTo", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text31", "gr.", expected);
@@ -1560,6 +1562,7 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["notEqualTo", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1612,6 +1615,7 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["notEqualTo", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1667,6 +1671,7 @@ end main`;
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
+      ["notEqualTo", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
 
