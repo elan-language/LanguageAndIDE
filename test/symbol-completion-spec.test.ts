@@ -97,7 +97,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "t",
       ParseStatus.valid,
-      ReferenceNode.name,
+      TermSimple.name,
       "t",
       [
         TokenType.id_constant,
@@ -137,7 +137,7 @@ suite("Symbol Completion Spec", () => {
       new TermSimple(f),
       "t",
       ParseStatus.valid,
-      ReferenceNode.name,
+      TermSimple.name,
       "t",
       [
         TokenType.id_constant,

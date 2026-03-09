@@ -2,11 +2,11 @@
 
 def main(): None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable
-  done = false # variable
+  done = False # variable
   while not done:
     wanted = inputString("What type of fruit do you want ('x' to exit)? ") # variable
     if wanted.equals("x"):
-      done = true # set
+      done = True # set
     else:
       result = binarySearch(fruit, wanted) # variable
       if result:
@@ -15,12 +15,12 @@ def main(): None:
         print(f"\nSorry, we cannot supply a {wanted}") # call
 
 def binarySearch(li: list[str], item: str) -> bool: # function
-  result = false # variable
+  result = False # variable
   if li.length() > 0:
     mid = divAsInt(li.length(), 2) # constant
     value = li[mid] # variable
     if item.equals(value):
-      result = true # set
+      result = True # set
     elif item.isBefore(value):
       result = binarySearch(li.subList(0, mid), item) # set
     else:
@@ -29,16 +29,16 @@ def binarySearch(li: list[str], item: str) -> bool: # function
 
 def  test_()-> None:
   li1 = ["lemon", "lime", "orange"] # variable
-  assert binarySearch(li1, "lemon") is true 
-  assert binarySearch(li1, "lime") is true 
-  assert binarySearch(li1, "orange") is true 
-  assert binarySearch(li1, "pear") is false 
+  assert binarySearch(li1, "lemon") is True 
+  assert binarySearch(li1, "lime") is True 
+  assert binarySearch(li1, "orange") is True 
+  assert binarySearch(li1, "pear") is False 
   li2 = ["lemon", "orange"] # variable
-  assert binarySearch(li2, "lemon") is true 
-  assert binarySearch(li2, "orange") is true 
-  assert binarySearch(li2, "pear") is false 
+  assert binarySearch(li2, "lemon") is True 
+  assert binarySearch(li2, "orange") is True 
+  assert binarySearch(li2, "pear") is False 
   li3 = ["lemon"] # variable
-  assert binarySearch(li3, "lemon") is true 
-  assert binarySearch(li3, "lime") is false 
+  assert binarySearch(li3, "lemon") is True 
+  assert binarySearch(li3, "lime") is False 
   li4 = list[str]() # variable
-  assert binarySearch(li4, "pear") is false 
+  assert binarySearch(li4, "pear") is False 

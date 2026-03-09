@@ -4,7 +4,7 @@ Sub main()
   Dim blocks = createBlockGraphics(white) ' variable
   Dim x = 20 ' variable
   Dim y = 15 ' variable
-  While true
+  While True
     blocks.put(x, y, red) ' call
     displayBlocks(blocks) ' call
     blocks.put(x, y, black) ' call

@@ -7,14 +7,14 @@ def main(): None:
   print(li) # call
 
 def inPlaceRippleSort(li: list[int]) -> None: # procedure
-  hasChanged = true # variable
+  hasChanged = True # variable
   lastComp = li.length() - 2 # variable
-  while hasChanged == true:
-    hasChanged = false # set
+  while hasChanged == True:
+    hasChanged = False # set
     for i in range(0, lastComp + 1, 1):
       if li[i] > li[i + 1]:
         temp = li[i] # variable
         li.put(i, li[i + 1]) # call
         li.put(i + 1, temp) # call
-        hasChanged = true # set
+        hasChanged = True # set
     lastComp = lastComp - 1 # set
