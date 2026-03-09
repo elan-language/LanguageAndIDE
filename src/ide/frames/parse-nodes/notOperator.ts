@@ -46,11 +46,15 @@ export class NotOperator extends AbstractParseNode {
   }
 
   renderAsHtml(): string {
-    const langOp = this.langOp(this.file.language());
-    const kw = this.notIsKeyword();
-    const open = kw ? "<el-kw>" : "";
-    const close = kw ? "</el-kw> " : ""; //Note the appended space
-    return `${open}${langOp}${close}`;
+    let html = this.matchedText;
+    if (this.status === ParseStatus.valid) {
+      const langOp = this.langOp(this.file.language());
+      const kw = this.notIsKeyword();
+      const open = kw ? "<el-kw>" : "";
+      const close = kw ? "</el-kw> " : ""; //Note the appended space
+      html = `${open}${langOp}${close}`;
+    }
+    return html;
   }
 
   renderAsExport(): string {
