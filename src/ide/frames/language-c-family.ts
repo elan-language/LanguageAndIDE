@@ -83,7 +83,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type>${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type> ${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Elif) {

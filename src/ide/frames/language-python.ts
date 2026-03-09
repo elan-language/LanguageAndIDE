@@ -97,7 +97,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `${this.EXCEPT}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.EXCEPT}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -159,7 +159,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.DEF} </el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
-      html = `${this.TRY}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.TRY}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     }
@@ -174,7 +174,7 @@ export class LanguagePython extends LanguageAbstract {
   private CLASS = "class";
   private ELIF = "elif";
   private ELSE = "else";
-  private EXCEPT = "EXCEPT";
+  private EXCEPT = "except";
   private FOR = "for";
   private IF = "if";
   private IN = "in";
