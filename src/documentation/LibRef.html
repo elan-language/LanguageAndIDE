@@ -1191,13 +1191,13 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <hr>
 </div></div>
 <h2 id="Tuple">Tuple</h2>
-<p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
-It may be considered a lightweight alternative to defining a specific class for some purpose.</p>
+<p>A <el-code>Tuple</el-code> is not a value or data structure Type. Rather, it is a small <i>collection</i> of values
+of differing Types held together and referenced by a single identifier.</p>
+<p>It may be considered a lightweight alternative to defining a class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
 <p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
 <p>A function may return a Tuple.</p>
-
 <p>A Tuple differs from a List in that:</p>
 <ul>
  <li>A Tuple may hold items of <i>different</i> Types</li>
@@ -1207,13 +1207,13 @@ It may be considered a lightweight alternative to defining a specific class for 
 </ul>
 <p>Common uses include:</p>
 <ul>
- <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
+ <li>Holding a pair of <i>x,y</i> coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
  <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
 </ul>
 
 <h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
-<p>A new Tuple is defined using this syntax:</p>
+<p>A new Tuple is defined by a list of items separated by commas and  enclosed in round brackets:</p>
 
 <el-code>
 <el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
@@ -2344,19 +2344,19 @@ If you need another random value, you use the returned <el-type>Random</el-type>
   <th>function<br>dot method</th>
   <th>on<br>Type</th>
   <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>return<br>Types</th>
   <th>returns</th>
  </tr><tr id="next">
   <td><el-method>next</el-method></td>
   <td><el-type>Random</el-type></td>
   <td><el-type>Float, Float</el-type></td>
-  <td><el-code>Tuple</el-code> (<el-type>Float, Random</el-type>)</td>
+  <td>2-Tuple:<br>(<el-type>Float, Random</el-type>)</td>
   <td>random <el-type>Float</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
   <td><el-type>Random</el-type></td>
   <td><el-type>Int, Int</el-type></td>
-  <td><el-code>tuple</el-code>(<el-type>Int, Random</el-type>)</td>
+  <td>2-Tuple:<br>(<el-type>Int, Random</el-type>)</td>
   <td>random <el-type>Int</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr>
 </table>
@@ -2504,32 +2504,37 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
 
-<p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-Tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-id>true</el-id> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
-        <el-method>parseAsFloat</el-method> does the equivalent for floating point. Operation is illustrated by these tests: </p>
+<p>Method <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-Tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-id>true</el-id> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.</p>
+<p>Method <el-method>parseAsFloat</el-method> does the equivalent for floating point.</p>
+<p> Their operation is illustrated by these tests: </p>
+
 <el-code-block source="test_parse.elan">
-<el-test class="ok multiline" id="test88" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment90" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="assert91" tabindex="0"><el-kw>assert </el-kw><el-field id="text92" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr93" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert94" tabindex="0"><el-kw>assert </el-kw><el-field id="text95" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr96" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert97" tabindex="0"><el-kw>assert </el-kw><el-field id="text98" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>thirty one</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr99" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert100" tabindex="0"><el-kw>assert </el-kw><el-field id="text101" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr102" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert103" tabindex="0"><el-kw>assert </el-kw><el-field id="text104" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr105" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert106" tabindex="0"><el-kw>assert </el-kw><el-field id="text107" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr108" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert109" tabindex="0"><el-kw>assert </el-kw><el-field id="text110" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr111" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit><el-lit>3</el-lit>.1</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-test class="ok multiline" id="test3" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>test_parse</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="assert6" tabindex="-1"><el-kw>assert </el-kw><el-field id="text7" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>("<el-lit>31</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-kw>true</el-kw>, <el-lit>31</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert9" tabindex="-1"><el-kw>assert </el-kw><el-field id="text10" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>("<el-lit>0</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt>(<el-kw>true</el-kw>, <el-lit>0</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert12" tabindex="-1"><el-kw>assert </el-kw><el-field id="text13" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>("<el-lit>thirty one</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>(<el-kw>false</el-kw>, <el-lit>0</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert15" tabindex="-1"><el-kw>assert </el-kw><el-field id="text16" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>("<el-lit>3.1</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt>(<el-kw>false</el-kw>, <el-lit>0</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert18" tabindex="-1"><el-kw>assert </el-kw><el-field id="text19" class="ok" tabindex="-1"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>31</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt>(<el-kw>true</el-kw>, <el-lit>31</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert21" tabindex="-1"><el-kw>assert </el-kw><el-field id="text22" class="ok" tabindex="-1"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>0</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt>(<el-kw>true</el-kw>, <el-lit>0</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert24" tabindex="-1"><el-kw>assert </el-kw><el-field id="text25" class="ok" tabindex="-1"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>3.1</el-lit>")</el-txt></el-field><el-kw> is </el-kw><el-field id="expr26" class="ok" tabindex="-1"><el-txt>(<el-kw>true</el-kw>, <el-lit><el-lit>3</el-lit>.1</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-    <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
-    <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
-    <li> You can '<a href="#Tuple">deconstruct</a>' the Tuple into two variables:
+ <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
+ <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
+ <li> You can '<a href="#Tuple">deconstruct</a>' the 2-Tuple into its two variables:
 <el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt></el-field></el-statement>
-   </el-code-block></li>
-    <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#SystemMethods">input methods</a>.</li>
+<el-statement class="ok" id="var20" tabindex="-1"><el-kw>variable </el-kw><el-field id="var21" class="ok" tabindex="-1"><el-txt><el-id>success</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr22" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var23" tabindex="-1"><el-kw>variable </el-kw><el-field id="var24" class="ok" tabindex="-1"><el-txt><el-id>value</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
+</el-code-block></li>
+    <li>One use of these parsing methods is for validating user input, but note that an easier way is to use the various <a href="#SystemMethods">input methods</a>.</li>
 </ul>
+
 <div id="floor"></div>
 <div id="ceiling"></div>
 <div id="round"></div>
@@ -2541,18 +2546,19 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 
 <el-code-block source="test_floor.elan">
 <el-test class="ok multiline" id="test1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
-<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>p</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="let11" tabindex="-1"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt>-<el-id>pi</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="assert4" tabindex="-1"><el-kw>assert </el-kw><el-field id="text5" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert50" tabindex="-1"><el-kw>assert </el-kw><el-field id="text51" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr52" class="ok" tabindex="-1"><el-txt>-<el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert41" tabindex="-1"><el-kw>assert </el-kw><el-field id="text42" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert45" tabindex="-1"><el-kw>assert </el-kw><el-field id="text46" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt>-<el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert23" tabindex="-1"><el-kw>assert </el-kw><el-field id="text24" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert54" tabindex="-1"><el-kw>assert </el-kw><el-field id="text55" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr56" class="ok" tabindex="-1"><el-txt>-<el-lit><el-lit>3</el-lit>.14</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert36" tabindex="-1"><el-kw>assert </el-kw><el-field id="text37" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-id>p</el-id>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="let26" tabindex="-1"><el-kw>let </el-kw><el-field id="var27" class="ok" tabindex="-1"><el-txt><el-id>q</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr28" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="assert29" tabindex="-1"><el-kw>assert </el-kw><el-field id="text30" class="ok" tabindex="-1"><el-txt><el-id>q</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-id>test_floor</el-id></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var4" tabindex="-1"><el-kw>variable </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>p</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var7" tabindex="-1"><el-kw>variable </el-kw><el-field id="var8" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt>-<el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt>-<el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert19" tabindex="-1"><el-kw>assert </el-kw><el-field id="text20" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt>-<el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert22" tabindex="-1"><el-kw>assert </el-kw><el-field id="text23" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert25" tabindex="-1"><el-kw>assert </el-kw><el-field id="text26" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt>-<el-lit><el-lit>3</el-lit>.14</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert28" tabindex="-1"><el-kw>assert </el-kw><el-field id="text29" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-id>p</el-id>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-kw>true</el-kw></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="var31" tabindex="-1"><el-kw>variable </el-kw><el-field id="var32" class="ok" tabindex="-1"><el-txt><el-id>q</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-method>divAsInt</el-method>(<el-lit>1</el-lit>, <el-lit>0</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert34" tabindex="-1"><el-kw>assert </el-kw><el-field id="text35" class="ok" tabindex="-1"><el-txt><el-id>q</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-kw>true</el-kw></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
@@ -3021,36 +3027,30 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <h3 class="no-TOC" id="reduce">reduce</h3>
 <p>The function <el-method>reduce</el-method> is used to combine the items in a list in some way to produce
   a single result. This result may be of the same Type as the items in the list, for example to:
-
-  <ul>
-    <li>Find the sum or sum-of-squares of a list of numeric values.</li>
-    <li>Concatenate, or combine in some other way, the items from a List of Strings.</li>
-  </ul>
-
-  The result may, however, be of a different Type than the items in the list, and may even
-  be a data structure, for example to:
-
-  <ul>
-    <li>Generate a <a href="#Tuple"><el-code>Tuple</el-code></a> of the sum, sum-of-squares, and count of numerical items.</li>
-    <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input List</li>
-  </ul>
-
-  <el-method>reduce</el-method> requires two arguments:
-
-  <ol>
-    <li>The initial, or 'seed', value, of the Type that you wish to be returned by the function specified in the second argument..
-      For example, if you were finding the sum of a list of Type <el-type>Float</el-type>, the initial seed value
-      would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
-      value would be an empty Dictionary of the correct Types.</li>
-    <li>The function (or lambda) to be applied, which itself requires two arguments:
-      <ol>
-          <li>The accumulating value, which is therefore of the same Type as the initial seed value.
-          (This will be the return value of the function or lambda).</li>
-          <li>The item to which the function is applied, which is therefore of the same Type
-            as the items in the input list.</li>
-      </ol>
-    </li>
-  </ol>
+<ul>
+ <li>Find the sum or sum-of-squares of a list of numeric values.</li>
+ <li>Concatenate, or combine in some other way, the items from a List of Strings.</li>
+</ul>
+<p>The result may, however, be of a different Type than the items in the list, and may even  be a data structure, for example to:</p>
+<ul>
+ <li>Generate a <a href="#Tuple">3-Tuple</a> of the sum, sum-of-squares, and count of numerical items.</li>
+ <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input List</li>
+</ul>
+<p>Method <el-method>reduce</el-method> requires two arguments:</p>
+<ol>
+ <li>The initial, or 'seed', value, of the Type that you wish to be returned by the function specified in the second argument..
+ For example, if you were finding the sum of a list of Type <el-type>Float</el-type>, the initial seed value
+ would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
+ value would be an empty Dictionary of the correct Types.</li>
+ <li>The function (or lambda) to be applied, which itself requires two arguments:
+<ol>
+ <li>The accumulating value, which is therefore of the same Type as the initial seed value.
+ (This will be the return value of the function or lambda).</li>
+ <li>The item to which the function is applied, which is therefore of the same Type
+   as the items in the input list.</li>
+ </ol>
+ </li>
+</ol>
 
   In other words, the specified function or lambda is applied to each itme of the input List in turn, in each case passing in the current value
   of the result. The function makes use of both to generate a <i>new</i> value for the result, replacing the current one
