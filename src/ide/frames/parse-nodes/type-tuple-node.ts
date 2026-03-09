@@ -1,3 +1,4 @@
+import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -34,7 +35,8 @@ export class TypeTupleNode extends AbstractSequence {
   }
 
   renderAsHtml() {
+    const valid = this.status === ParseStatus.valid;
     const langSpecific = this.file.language().renderNodeAsHtml(this);
-    return langSpecific === "" ? super.renderAsHtml() : langSpecific;
+    return valid ? (langSpecific === "" ? super.renderAsHtml() : langSpecific) : this.matchedText;
   }
 }
