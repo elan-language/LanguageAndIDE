@@ -1904,13 +1904,14 @@ suite("Parsing Nodes", () => {
   test("not(a+b)", () => {
     testNodeParse(
       new ExprNode(f),
-      `not(a+b)`,
+      `not (a+b)`,
       ParseStatus.valid,
-      `not(a+b)`,
+      `not (a+b)`,
       "",
       "not (a + b)",
       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
+    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
   });
   test("Parse list of list of floats", () => {
     testNodeParse(
@@ -1936,6 +1937,38 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
+    );
+  });
+  test("UnaryExpression_VB", () => {
+    testNodeParse(
+      new UnaryExpression(fileWithVB()),
+      `Not a`,
+      ParseStatus.valid,
+      `Not a`,
+      "",
+      "",
+      "<el-kw>Not</el-kw> <el-id>a</el-id>",
+      `Not a`,
+    );
+    testNodeParse(
+      new UnaryExpression(fileWithVB()),
+      `N`,
+      ParseStatus.incomplete,
+      `N`,
+      "",
+      "",
+      "N",
+      ``,
+    );
+    testNodeParse(
+      new ExprNode(fileWithVB()),
+      `Not a`,
+      ParseStatus.valid,
+      `Not a`,
+      "",
+      "",
+      "<el-kw>Not</el-kw> <el-id>a</el-id>",
+      `Not a`,
     );
   });
 });
