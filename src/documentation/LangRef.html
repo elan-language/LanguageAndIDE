@@ -32,57 +32,71 @@ it provides a useful discipline in any code. Preferring immutable named values c
 <h2 id="Type">Types</h2>
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
 <table>
- <tr><th>Type group</th><th colspan="5">Types</th>
+ <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
  </tr><tr>
   <td>Value data</td>
   <td><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><el-type>Int</el-type></a></td>
   <td><a href="LibRef.html#Float"><el-topic>Floating point</el-type><br><el-type>Float</el-topic></a></td>
   <td><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><el-type>Boolean</el-type></a></td>
-  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><el-type>String</el-type></a></td>
-  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><el-type>RegExp</el-type></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
  </tr><tr>
   <td>Standard mutable<br>data structures</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><el-type>String</el-type></a></td>
+  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><el-type>RegExp</el-type></a></td>
   <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><el-type>List</el-type></a></td>
   <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><el-type>Dictionary</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
  </tr><tr>
   <td>Standard immutable<br>data structures</td>
-  <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
-  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
-  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
   <td></td>
   <td></td>
- </tr><tr>
-  <td>Data I/O</td>
-  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><el-type>TextFileReader</el-type></a></td>
-  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><el-type>TextFileWriter</el-type></a></td>
   <td></td>
-  <td></td>
+  <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>HashSet</el-type></a></td>
+  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-type></a></td>
+  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-type></a></td>
   <td></td>
  </tr><tr>
   <td>Graphics</td>
+  <td></td>
+  <td></td>
+  <td></td>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><el-type>Turtle</el-type></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><el-type>CircleVG</el-type><br>
   <el-type>ImageVG</el-type><br><el-type>LineVG</el-type><br><el-type>RawVG</el-type><br><el-type>RectangleVG</el-type></a></td>
   <td></td>
   <td></td>
+ </tr><tr>
+  <td>Data I/O</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><el-type>TextFileReader</el-type></a></td>
+  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><el-type>TextFileWriter</el-type></a></td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td>User-defined</td>
+  <td></td>
+  <td></td>
+  <td></td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#class"><el-topic>Class</el-topic><br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
-  <td></td>
  </tr><tr>
   <td>Other</td>
+  <td></td>
+  <td></td>
+  <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><el-type>Random</el-type></a></td>
-  <td><a href="LibRef.html#Ref"><el-topic>Argument reference</el-topic><br><el-type>Ref</el-type></td>
+  <td><a href="LibRef.html#Ref"><el-topic>Argument reference</el-topic><br><el-type>AsRef</el-type></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
-  <td></td>
-  <td></td>
+  <td><a href="LibRef.html#Tuple"><el-topic>Tuple</el-topic><br><el-kw>Tuple</el-kw></a></td>
   </tr>
 </table>
 

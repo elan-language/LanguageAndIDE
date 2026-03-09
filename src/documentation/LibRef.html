@@ -14,7 +14,21 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="ValueTypes">Value data Types</h1>
+<h1>Fundamentals</h1>
+
+<h2 id="DataTypes">Data Types</h2>
+
+<p>There are two fundamentally different kinds of data Type, differing by how their values
+are passed around in a running program:</p>
+<ul>
+ <li><b>Value Types</b> that contain a single value, and are passed around directly:<br>
+ <el-type>Integer</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type></li>  
+ <li><b>Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <el-type>String</el-type>, <el-type>List</el-type>, <el-type>HashSet</el-type>, <el-type>Stack</el-type>, <el-type>Queue</el-type>, as well as
+ any user-defined <el-kw>Class</el-kw>, <el-kw>Interface</el-kw> and </li>
+</ul>
+
+<h1 id="ValueTypes">Value data Types</h2>
 
 <h2 id="Int">Integer</h2>
 <p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
@@ -207,6 +221,10 @@ in the range:</li>
   <td><el-id>true</el-id> if the truth value and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
  </table>
+
+
+
+<h1 id="ReferenceTypes">Reference data Types</h1>
 
 <h2 id="String">String</h2>
 <p>A <el-type>String</el-type> represents text,  i.e. a sequence of zero or more characters.</p>
@@ -429,89 +447,10 @@ in the range:</li>
  </tr>
 </table>
 
-<h2 id="Tuple">Tuple</h2>
-<p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
-It may be considered a lightweight alternative to defining a specific class for some purpose.</p>
-<p>The items in a Tuple may be literal or named values.</p>
-<p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
-<p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
-<p>A function may return a Tuple.</p>
+<h2 id="StandardDataStructures">Standard data structures</h2>
 
-<p>A Tuple differs from a List in that:</p>
-<ul>
- <li>A Tuple may hold items of <i>different</i> Types</li>
- <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
-  Once defined, Tuples are effectively read-only. Nor, unlike a <el-type>List</el-type>, can you copy a Tuple
-  from an existing one with specified differences except by referencing each of its items (see below).</li>
-</ul>
-<p>Common uses include:</p>
-<ul>
- <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
- <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
- <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
-</ul>
-
-<h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
-<p>A new Tuple is defined using this syntax:</p>
-
-<el-code>
-<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt></el-field></el-statement>
-</el-code>
-
-<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
-<p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-lit>item_N</el-lit>, thus:</p>
-<table class="tablePlain">                                                   
-<tr>
- <td><el-code>
- <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt>)
- </el-code></td>
- <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
- <td><br>(3, apple, true)<br>3<br>apple<br>true</td>
- </tr>
-</table>
-
-<p>And where p1 and p2 represent points each with tuples containing two <el-type>Float</el-type> values, this function returns the distance between them:</p>
-<el-code-block source="tuples_func.elan">
-<el-func class="ok multiline" id="func15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type19" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="return20" tabindex="-1"><el-kw>return </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-<p>Note that the appropriate <el-id>item_N</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
-
-<h3 class="no-TOC">Dot methods on a <el-type>Tuple</el-type></h3>
-<table class="tableMethod">
- <tr>
-  <th>function<br>dot methods</th>
-  <th>on</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
-  <th>returns</th>
- </tr><tr id="asString_Tuple">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Tuple</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>String containing Tuple's items surrounded by brackets</td>
- </tr><tr id="equals_Tuple">
-  <td><el-method>equals</el-method></td>
-  <td><el-type>Tuple</el-type></td>
-  <td><el-type>Tuple</el-type></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argumentl<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr>
-</table>
-
-<h1 id="StandardDataStructures">Standard data structures</h1>
 <p>Elan has two mutable data structure Types <el-type>List</el-type> and <el-type>Dictionary</el-type>, and
-three immutable data structure Types <el-type>Set</el-type>, <el-type>Stack</el-type> and <el-type>Queue</el-type>.</p>
+three immutable data structure Types <el-type>HashSet</el-type>, <el-type>Stack</el-type> and <el-type>Queue</el-type>.</p>
 <p>The contents of these structures are referred to as items (or sometimes elements).</p> 
 <p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no <i>procedure</i> dot methods defined for them:
@@ -530,7 +469,7 @@ with specified changes: that is why all such methods have names starting '<el-co
   <th></th>
   <th>List</th>
   <th>Dictionary</th>
-  <th>Set</th>
+  <th>HashSet</th>
   <th>Stack</th>
   <th>Queue</th>
  </tr><tr
@@ -546,7 +485,7 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;<br>
   <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type><br>
   <el-id>valueType</el-id> may be any Type</td>
-  <td><el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>HashSet</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
   <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
   <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
  </tr><tr>
@@ -561,7 +500,7 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td>create empty</td>
   <td><el-code>new <el-type>List</el-type>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
   <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
-  <td><el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>new <el-type>HashSet</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
   <td><el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
   <td><el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
  </tr><tr>
@@ -720,7 +659,7 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-method>asSet</el-method></td>
   <td><el-type>List</el-type></td>
   <td>(none)</td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>a new Set containing all the <i>unique</i> items in the List</td>
  </tr><tr id="asString_List">
   <td><el-method>asString</el-method></td>
@@ -976,21 +915,21 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr>
 </table>
 
-<h2 id="SetType">Set</h2>
-<p>A <el-type>Set</el-type> is a standard data structure containing set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a set member may appear only once.
- If a member being added to a <el-type>Set</el-type> has the same value as an existing member in the Set then the Set remains the same length as before.</p>
+<h2 id="SetType">HashSet</h2>
+<p>A <el-type>HashSet</el-type> (usually referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a Set member may appear only once.
+ If a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</p>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
-<p>For the same reason, a Set is an immutable data structure: there are no methods that modify an existing Set, but several (including <el-method>add</el-method>, <el-method>remove</el-method>)
+<p>For the same reason, a <el-type>HashSet</el-type> is an immutable data structure: there are no methods that modify an existing Set, but several (including <el-method>add</el-method>, <el-method>remove</el-method>)
  return a new Set that is based on the original Set or Sets, with specified differences.</p>
-<p>When creating a Set, the Type of its members must be specified in the form
- <el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a Set.</p>
-<p>You can add members: individually with <el-method>add</el-method>, or multiple members with <el-code>addFromList</el-code>.</p>
-<p>You can create a new Set from an existing <el-type>List</el-type> by calling <el-code>asSet</el-code> on it.</p>
-<p>Example of creating a set from a literal list and changing its content:</p>
+<p>When creating a <el-type>HashSet</el-type>, the Type of its members must be specified in the form
+ <el-code><el-type>HashSet</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty Set and when defining the Type of a parameter to be a <el-type>HashSet</el-type>.</p>
+<p>You can add members: individually with <el-method>add</el-method>, or multiple members with <el-method>addFromList</el-method>.</p>
+<p>You can create a new <el-type>HashSet</el-type> from an existing <el-type>List</el-type> by calling <el-method>asSet</el-method> on it.</p>
+<p>Example of creating a Set from a literal List and changing its content:</p>
 
 <table class="tablePlain"><!--source="set.elan"-->                                                   
 <tr><td>
-<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>Set</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>()<br>
+<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>HashSet</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>()<br>
 <el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code><br></td>
 <td><br><br>&#x27f6;</td><td><br><br>3</td>
@@ -1011,7 +950,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <td>&#x27f6;</td><td>[5, 7]</td>
 </table>
 
-<h3 class="no-TOC" id="Set_functions">Dot methods on a <el-type>Set</el-type></h3>
+<h3 class="no-TOC" id="Set_functions">Dot methods on a <el-type>HashSet</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1021,87 +960,87 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>returns</th>
  </tr><tr id="add">
   <td><el-method>add</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td>value (of <el-type>Set</el-type> members' Type)</td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
+  <td><el-type>HashSet</el-type></td>
   <td>a new Set extended with the item, provided it differs from all the Set's current members</td>
  </tr><tr id="addFromList">
   <td><el-method>addFromList</el-method></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>a new Set extended with those items from the List that are not already in the Set</td>
  </tr><tr id="asList_Set">
   <td><el-method>asList</el-method></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>a List containing the Set's members as List items</td>
  </tr><tr id="asString_Set">
   <td><el-method>asString</el-method></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>a string that is a comma+space-separated list of the Set's members, enclosed in curly braces</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td>value (of <el-type>Set</el-type> members' Type)</td>
+  <td><el-type>HashSet</el-type></td>
+  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Set contains the item<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="equals_Set">
-  <td><el-method>equals</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if set and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>a Set containing those members of the Set that do not occur in the argument Set</td>
+ </tr><tr id="equals_Set">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if Set and argument Set are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="intersection">
   <td><el-method>intersection</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>a Set containing those members common to both the Set and the argument Set</td>
  </tr><tr id="isDisjointFrom">
   <td><el-method>isDisjointFrom</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Set has no items in common with the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="isSubsetOf">
   <td><el-method>isSubsetOf</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if all the Set's items are also in the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="isSupersetOf">
   <td><el-method>isSupersetOf</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Set contains all the  items that are in the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="length_Set">
   <td><el-method>length</el-method></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of members of the Set</td>
  </tr><tr id="remove">
   <td><el-method>remove</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td>value (of <el-type>Set</el-type> members' Type)</td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
+  <td><el-type>HashSet</el-type></td>
   <td>a new Set with the argument item removed (if present)</td>
  </tr><tr id="union">
   <td><el-method>union</el-method></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
-  <td><el-type>Set</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
   <td>a Set containing all the unique members of the Set and the argument Set (i.e. no duplicates)</td>
  </tr>
  </table>
@@ -1251,6 +1190,85 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </el-code-block>
 <hr>
 </div></div>
+<h2 id="Tuple">Tuple</h2>
+<p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
+It may be considered a lightweight alternative to defining a specific class for some purpose.</p>
+<p>The items in a Tuple may be literal or named values.</p>
+<p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
+<p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
+<p>A function may return a Tuple.</p>
+
+<p>A Tuple differs from a List in that:</p>
+<ul>
+ <li>A Tuple may hold items of <i>different</i> Types</li>
+ <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
+  Once defined, Tuples are effectively read-only. Nor, unlike a <el-type>List</el-type>, can you copy a Tuple
+  from an existing one with specified differences except by referencing each of its items (see below).</li>
+</ul>
+<p>Common uses include:</p>
+<ul>
+ <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
+ <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
+ <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
+</ul>
+
+<h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
+<p>A new Tuple is defined using this syntax:</p>
+
+<el-code>
+<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt></el-field></el-statement>
+</el-code>
+
+<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
+<p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-lit>item_N</el-lit>, thus:</p>
+<table class="tablePlain">                                                   
+<tr>
+ <td><el-code>
+ <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt><br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt>)
+ </el-code></td>
+ <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+ <td><br>(3, apple, true)<br>3<br>apple<br>true</td>
+ </tr>
+</table>
+
+<p>And where p1 and p2 represent points each with tuples containing two <el-type>Float</el-type> values, this function returns the distance between them:</p>
+<el-code-block source="tuples_func.elan">
+<el-func class="ok multiline" id="func15" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type19" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return20" tabindex="-1"><el-kw>return </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+<p>Note that the appropriate <el-id>item_N</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
+
+<h3 class="no-TOC">Dot methods on a <el-type>Tuple</el-type></h3>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot methods</th>
+  <th>on</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Type</th>
+  <th>returns</th>
+ </tr><tr id="asString_Tuple">
+  <td><el-method>asString</el-method></td>
+  <td><el-type>Tuple</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>String containing Tuple's items surrounded by brackets</td>
+ </tr><tr id="equals_Tuple">
+  <td><el-method>equals</el-method></td>
+  <td><el-type>Tuple</el-type></td>
+  <td><el-type>Tuple</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argumentl<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr>
+</table>
 
 <h1 id="CommonDotMethods">Common dot methods</h1>
 
@@ -1261,7 +1279,8 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <table >
  <tr>
   <th>Method</th>
-  <th colspan="13">Type</th>
+  <th colspan="3"> Value Type</th>
+  <th colspan="6">Reference Type</th>
  </tr><tr><!---->
   <td></td>
   <td><a href="#Int"><el-type>Int</el-type></a></td>
@@ -1270,7 +1289,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><a href="#String"><el-type>String</el-type></a></td>
   <td><a href="#List"><el-type>List</el-type></a></td>
   <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
-  <td><a href="#SetType"><el-type>Set</el-type></a></td>
+  <td><a href="#SetType"><el-type>HashSet</el-type></a></td>
   <td><a href="#Stack"><el-type>Stack</el-type></a></td>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
  </tr><tr><!---->

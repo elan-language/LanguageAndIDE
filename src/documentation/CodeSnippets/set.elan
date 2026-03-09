@@ -1,7 +1,7 @@
-# d0687f2f937627747e35e6ed9f423affa37be0ab1819305892165dcc5849cf94 Elan 2.0.0-alpha guest default_profile valid
+# fc36fd88ecc26a592715fa4a161f1931fce218ef8302c3b826c03f1806f4aacc Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable st set to new Set<of Int>()
+  variable st set to new HashSet<of Int>()
   set st to st.addFromList([3, 5, 7])
   call print(st.length())
   set st to st.add(7)
