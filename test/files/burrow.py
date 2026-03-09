@@ -4,7 +4,7 @@ def main(): None:
   blocks = createBlockGraphics(white) # variable
   x = 20 # variable
   y = 15 # variable
-  while true:
+  while True:
     blocks.put(x, y, red) # call
     displayBlocks(blocks) # call
     blocks.put(x, y, black) # call

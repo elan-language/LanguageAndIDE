@@ -2,11 +2,11 @@
 
 Sub main()
   Dim fruit = {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"} ' variable
-  Dim done = false ' variable
+  Dim done = False ' variable
   While not done
     Dim wanted = inputString("What type of fruit do you want ('x' to exit)? ") ' variable
     If wanted.equals("x") Then
-      done = true ' set
+      done = True ' set
     Else
       Dim result = binarySearch(fruit, wanted) ' variable
       If result Then
@@ -19,12 +19,12 @@ Sub main()
 End Sub
 
 Function binarySearch(li As List(Of String), item As String) As Boolean
-  Dim result = false ' variable
+  Dim result = False ' variable
   If li.length() > 0 Then
     Const mid = divAsInt(li.length(), 2)
     Dim value = li[mid] ' variable
     If item.equals(value) Then
-      result = true ' set
+      result = True ' set
     ElseIf item.isBefore(value) Then
       result = binarySearch(li.subList(0, mid), item) ' set
     Else
@@ -36,17 +36,17 @@ End Function
 
 Sub test_
   Dim li1 = {"lemon", "lime", "orange"} ' variable
-  assert binarySearch(li1, "lemon") is true 
-  assert binarySearch(li1, "lime") is true 
-  assert binarySearch(li1, "orange") is true 
-  assert binarySearch(li1, "pear") is false 
+  assert binarySearch(li1, "lemon") is True 
+  assert binarySearch(li1, "lime") is True 
+  assert binarySearch(li1, "orange") is True 
+  assert binarySearch(li1, "pear") is False 
   Dim li2 = {"lemon", "orange"} ' variable
-  assert binarySearch(li2, "lemon") is true 
-  assert binarySearch(li2, "orange") is true 
-  assert binarySearch(li2, "pear") is false 
+  assert binarySearch(li2, "lemon") is True 
+  assert binarySearch(li2, "orange") is True 
+  assert binarySearch(li2, "pear") is False 
   Dim li3 = {"lemon"} ' variable
-  assert binarySearch(li3, "lemon") is true 
-  assert binarySearch(li3, "lime") is false 
+  assert binarySearch(li3, "lemon") is True 
+  assert binarySearch(li3, "lime") is False 
   Dim li4 = New List(Of String)() ' variable
-  assert binarySearch(li4, "pear") is false 
+  assert binarySearch(li4, "pear") is False 
 End Sub

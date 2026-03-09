@@ -7,27 +7,35 @@ export class LitBoolean extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      if (text.startsWith(this.langTrue)) {
+      const lang = this.file.language();
+
+      //TODO what's missing here is if the target starts with the text e.g. for first character only
+      if (text.startsWith(lang.TRUE)) {
         this.value = true;
-        this.matchedText = this.langTrue;
+        this.matchedText = lang.TRUE;
         this.remainingText = text.substring(4);
         this.status = ParseStatus.valid;
-      } else if (text.startsWith(this.langFalse)) {
+        this._done = true;
+      } else if (text.startsWith(lang.FALSE)) {
         this.value = false;
-        this.matchedText = this.langFalse;
+        this.matchedText = lang.FALSE;
         this.remainingText = text.substring(5);
         this.status = ParseStatus.valid;
+        this._done = true;
+      } else if (lang.TRUE.startsWith(text) || lang.FALSE.startsWith(text)) {
+        this.matchedText = text;
+        this.remainingText = "";
+        this.status = ParseStatus.incomplete;
       } else {
         this.status = ParseStatus.invalid;
       }
     }
   }
 
-  langTrue: string = this.file.language().TRUE;
-  langFalse: string = this.file.language().FALSE;
-
   renderAsHtml(): string {
-    return `<el-kw>${this.value ? this.langTrue : this.langFalse}</el-kw>`;
+    const lang = this.file.language();
+    const valid = this.status === ParseStatus.valid;
+    return `<el-kw>${valid ? (this.value ? lang.TRUE : lang.FALSE) : this.matchedText}</el-kw>`;
   }
 
   renderAsElanSource(): string {

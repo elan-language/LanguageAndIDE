@@ -50,6 +50,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
 
@@ -235,7 +236,9 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   newInstanceAsHtml(node: NewInstance): string {
-    return `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
+    return node.status === ParseStatus.valid
+      ? `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`
+      : node.matchedText;
   }
 
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
