@@ -32,7 +32,6 @@ export class TypeTupleNode extends AbstractSequence {
       super.parseText(text);
     }
   }
-
   renderAsHtml() {
     const langSpecific = this.file.language().renderNodeAsHtml(this);
     return this.isValid()
