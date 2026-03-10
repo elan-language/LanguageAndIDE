@@ -1890,7 +1890,7 @@ By this means features such as simple SVG animation can be defined.</p>
  <li>The raw SVG may define multiple shapes.</li>
  <li>Multiple instances of <el-type>RawVG</el-type> may be added to the collection to be displayed, along with instances of other SVG Types;
  hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
- <li><el-id>rawSVGcontent</el-id> is the property of class <el-type>RawVG</el-type> that must contain the SVG string.</li> 
+ <li>Method <el-method>withConent</el-method> is used to specify the property of class <el-type>RawVG</el-type> that must contain the SVG string.</li> 
  <li>The example is of a simple animation in which the repetition defined in the SVG continues after the program has stopped,
   so you would then use the Clear button to blank the display.</li> 
 </ul>
@@ -1900,10 +1900,15 @@ By this means features such as simple SVG animation can be defined.</p>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To display a repeating movement of a circle:</p>
-<el-code-block source="VG_circle.elan">
-<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>movingCircle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;circle cx="50" cy="50" r="50" style="fill:red;"&gt;<br>&lt;animate attributeName="cx" begin="0s" dur="2s" from="50" to="90%" repeatCount="indefinite" /&gt;&lt;/circle&gt;</el-lit>'</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>raw</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>RawVG</el-type>()<el-kw> with </el-kw><br><el-id>rawSVGcontent</el-id><el-kw> set to </el-kw><el-id>movingCircle</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="call12" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field><span>(</span><el-field id="args14" class="optional ok" tabindex="-1"><el-txt>[<el-id>raw</el-id>]</el-txt></el-field><span>)</span></el-top></el-statement>
+<el-code-block source="rawVG.elan">
+<el-main class="ok multiline" id="main3" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>movingCircle</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;circle cx='50' cy='50' r='50' style='fill:red;'&gt;\n&lt;animate attributeName='cx' begin='0s' dur='2s' from='50' to='90%' repeatCount='indefinite' /&gt;&lt;/circle&gt;</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var8" tabindex="-1"><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>raw</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>(<el-kw>new</el-kw> <el-type>RawVG</el-type>()).<el-method>withContent</el-method>(<el-id>movingCircle</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call11" tabindex="-1"><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args13" class="optional ok" tabindex="-1"><el-txt>[<el-id>raw</el-id>]</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
 </el-code-block>
 <hr>
 </div></div>

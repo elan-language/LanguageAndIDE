@@ -1,8 +1,7 @@
-# fb54d62dd5f1668bb7bf59fcf71df0d917f4f9665cb6f7d104adbbd26498eb41 Elan 2.0.0-alpha guest default_profile valid
+# 342428288d433e344d97d14eef7dd9a52db9826abef691353a422a034000ec47 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  variable raw set to new RawVG()
   variable movingCircle set to "<circle cx='50' cy='50' r='50' style='fill:red;'>\n<animate attributeName='cx' begin='0s' dur='2s' from='50' to='90%' repeatCount='indefinite' /></circle>"
-  set raw.rawSVGcontent to movingCircle
+  variable raw set to (new RawVG()).withContent(movingCircle)
   call displayVectorGraphics([raw])
 end main
