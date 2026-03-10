@@ -48,6 +48,7 @@ import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
+import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { DOT } from "../src/ide/frames/symbols";
@@ -2044,6 +2045,68 @@ suite("Parsing Nodes", () => {
       "",
       "<el-kw>Not</el-kw> <el-id>a</el-id>",
       `Not a`,
+    );
+  });
+  test("TypeTupleNode", () => {
+    testNodeParse(
+      new TypeTupleNode(f),
+      "(Int, String)",
+      ParseStatus.valid,
+      "(Int, String)",
+      "",
+      "(Int, String)",
+      "(<el-type>Int</el-type>, <el-type>String</el-type>)",
+      "(Int, String)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithPython()),
+      "tuple[int, str]",
+      ParseStatus.valid,
+      "tuple[int, str]",
+      "",
+      "",
+      "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+      "tuple[int, str]",
+    );
+    testNodeParse(
+      new TypeNode(fileWithPython()),
+      "tuple[int, str]",
+      ParseStatus.valid,
+      "tuple[int, str]",
+      "",
+      "",
+      "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+      "tuple[int, str]",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithVB()),
+      "(Integer, String)",
+      ParseStatus.valid,
+      "(Integer, String)",
+      "",
+      "",
+      "(<el-type>Integer</el-type>, <el-type>String</el-type>)",
+      "(Integer, String)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithCS()),
+      "(int, string)",
+      ParseStatus.valid,
+      "(int, string)",
+      "",
+      "",
+      "(<el-type>int</el-type>, <el-type>string</el-type>)",
+      "(int, string)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithJava()),
+      "(int, String)",
+      ParseStatus.valid,
+      "(int, String)",
+      "",
+      "",
+      "(<el-type>int</el-type>, <el-type>String</el-type>)",
+      "(int, String)",
     );
   });
 });

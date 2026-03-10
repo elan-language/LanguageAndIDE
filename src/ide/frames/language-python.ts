@@ -289,7 +289,7 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   override typeTupleAsHtml(node: TypeTupleNode): string {
-    return `<el-type>tuple</el-type>[${node.types?.renderAsHtml()}]`;
+    return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
   }
 
   reservedWords: Set<string> = new Set<string>([
