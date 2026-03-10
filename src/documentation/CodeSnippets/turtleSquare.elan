@@ -1,6 +1,7 @@
-# 163410256987fa671f8316bc1e36116b476d736096a007d08485723a2514962d Elan 2.0.0-alpha guest default_profile valid
+# 811c065d73185d98cfa1240fb2d5858f8b03de06e876287b91eed039a38033ff Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable t set to new Turtle()
   call t.placeAt(-75, 50)
   call t.show()
@@ -9,4 +10,5 @@ main
     call t.move(80)
     call pause(500)
   end for
+  # snipTo
 end main

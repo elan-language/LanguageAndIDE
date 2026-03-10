@@ -3,7 +3,7 @@
 static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
   var done = false;
-  while (not done) {
+  while (!done) {
     var wanted = inputString("What type of fruit do you want ('x' to exit)? ");
     if (wanted.equals("x")) {
       done = true; // set

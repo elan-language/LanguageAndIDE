@@ -1,0 +1,8 @@
+# 1cd19a0e72bc3b01a70ca6be10f80fd70d15cdf7fc8d2f772e2831b39655f761 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable fruit set to ["apple", "orange", "pear"]
+  call print(fruit.minBy(lambda x as String => x.length()))
+  # snipTo
+end main

@@ -1,4 +1,4 @@
-# a0cb8b1ab2b7ed4c3fcc3a19135567374a5305ec235ecbd970a9cabac52ec30e Elan 2.0.0-alpha guest default_profile valid
+# 29290b5b3f896aefef359d7cb1c93ec8353ee536f3c14ed1071ba2ba2b0a3ef6 Elan 2.0.0-alpha guest default_profile valid
 
 test test_matchesRegExp
   variable s1 set to "hello"
@@ -7,7 +7,3 @@ test test_matchesRegExp
   assert s1.matchesRegExp(r) is true
   assert s2.matchesRegExp(r) is false
 end test
-
-main
-
-end main

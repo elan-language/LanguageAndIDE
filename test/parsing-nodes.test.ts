@@ -25,6 +25,8 @@ import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -46,6 +48,7 @@ import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
+import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { DOT } from "../src/ide/frames/symbols";
@@ -1316,25 +1319,76 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(f), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
     testNodeParse(new LitString(f), `'abc"`, ParseStatus.invalid, ``, `'abc"`, "", "");
     testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
-    //Test embedded html
-    // testNodeParse(
-    //   new LitStringInterpolated(f),
-    //   `$"<p>abc</p>"`,
-    //   ParseStatus.valid,
-    //   `$"<p>abc</p>"`,
-    //   "",
-    //   `$"<p>abc</p>"`,
-    //   `$"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-    // );
-    // testNodeParse(
-    //   new LitStringInterpolated(f),
-    //   `$"&#123;curly braces&#125;"`,
-    //   ParseStatus.valid,
-    //   `$"&#123;curly braces&#125;"`,
-    //   "",
-    //   `$"&#123;curly braces&#125;"`,
-    //   `$"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
-    // );
+    testNodeParse(
+      new LitStringOrdinary(f),
+      `"{curly braces}"`,
+      ParseStatus.valid,
+      `"{curly braces}"`,
+      "",
+      `"{curly braces}"`,
+      `"<el-lit>{curly braces}</el-lit>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(f),
+      `"&#123;curly braces&#125;"`,
+      ParseStatus.valid,
+      `"&#123;curly braces&#125;"`,
+      "",
+      `"&#123;curly braces&#125;"`,
+      `"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
+    );
+  });
+  test("Embedded Html tags", () => {
+    testNodeParse(
+      new LitStringOrdinary(f),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+    );
+    // In other langs
+    testNodeParse(
+      new LitStringOrdinary(fileWithPython()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithVB()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithCS()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithJava()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
   });
   test("Interpolated strings", () => {
     testNodeParse(new LitString(f), `$""`, ParseStatus.valid, "", "");
@@ -1343,6 +1397,33 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(f), `$"{}"`, ParseStatus.invalid, "", "");
     testNodeParse(new LitString(f), `$"{x}"`, ParseStatus.valid, "", "");
     testNodeParse(new LitString(f), `$"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"<p>abc</p>"`,
+      ParseStatus.valid,
+      `$"<p>abc</p>"`,
+      "",
+      `$"<p>abc</p>"`,
+      `$"<el-lit><p>abc</p></el-lit>"`,
+    );
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"{curly}"`,
+      ParseStatus.valid,
+      `$"{curly}"`,
+      "",
+      `$"{curly}"`,
+      `$"<el-lit></el-lit>{<el-id>curly</el-id>}<el-lit></el-lit>"`,
+    );
+    testNodeParse(
+      new LitStringInterpolated(f), // but with braces
+      `$"&#123;curly braces&#125;"`,
+      ParseStatus.valid,
+      `$"&#123;curly braces&#125;"`,
+      "",
+      `$"&#123;curly braces&#125;"`,
+      `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+    );
   });
   test("Bug #290", () => {
     testNodeParse(new LitInt(f), `3`, ParseStatus.valid, "3", "");
@@ -1606,11 +1687,6 @@ suite("Parsing Nodes", () => {
     );
   });
   test("BinaryExpression_Python", () => {
-    /* MOD: string = "%";
-  EQUAL: string = "==";
-  NOT_EQUAL: string = "!=";
-  AND: string = "and";
-  OR: string = "or"; */
     testNodeParse(
       new BinaryExpression(fileWithPython()),
       `10 % 3`,
@@ -1904,13 +1980,14 @@ suite("Parsing Nodes", () => {
   test("not(a+b)", () => {
     testNodeParse(
       new ExprNode(f),
-      `not(a+b)`,
+      `not (a+b)`,
       ParseStatus.valid,
-      `not(a+b)`,
+      `not (a+b)`,
       "",
       "not (a + b)",
       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
+    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
   });
   test("Parse list of list of floats", () => {
     testNodeParse(
@@ -1936,6 +2013,100 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
+    );
+  });
+  test("UnaryExpression_VB", () => {
+    testNodeParse(
+      new UnaryExpression(fileWithVB()),
+      `Not a`,
+      ParseStatus.valid,
+      `Not a`,
+      "",
+      "",
+      "<el-kw>Not</el-kw> <el-id>a</el-id>",
+      `Not a`,
+    );
+    testNodeParse(
+      new UnaryExpression(fileWithVB()),
+      `N`,
+      ParseStatus.incomplete,
+      `N`,
+      "",
+      "",
+      "N",
+      ``,
+    );
+    testNodeParse(
+      new ExprNode(fileWithVB()),
+      `Not a`,
+      ParseStatus.valid,
+      `Not a`,
+      "",
+      "",
+      "<el-kw>Not</el-kw> <el-id>a</el-id>",
+      `Not a`,
+    );
+  });
+  test("TypeTupleNode", () => {
+    testNodeParse(
+      new TypeTupleNode(f),
+      "(Int, String)",
+      ParseStatus.valid,
+      "(Int, String)",
+      "",
+      "(Int, String)",
+      "(<el-type>Int</el-type>, <el-type>String</el-type>)",
+      "(Int, String)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithPython()),
+      "tuple[int, str]",
+      ParseStatus.valid,
+      "tuple[int, str]",
+      "",
+      "",
+      "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+      "tuple[int, str]",
+    );
+    testNodeParse(
+      new TypeNode(fileWithPython()),
+      "tuple[int, str]",
+      ParseStatus.valid,
+      "tuple[int, str]",
+      "",
+      "",
+      "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+      "tuple[int, str]",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithVB()),
+      "(Integer, String)",
+      ParseStatus.valid,
+      "(Integer, String)",
+      "",
+      "",
+      "(<el-type>Integer</el-type>, <el-type>String</el-type>)",
+      "(Integer, String)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithCS()),
+      "(int, string)",
+      ParseStatus.valid,
+      "(int, string)",
+      "",
+      "",
+      "(<el-type>int</el-type>, <el-type>string</el-type>)",
+      "(int, string)",
+    );
+    testNodeParse(
+      new TypeTupleNode(fileWithJava()),
+      "(int, String)",
+      ParseStatus.valid,
+      "(int, String)",
+      "",
+      "",
+      "(<el-type>int</el-type>, <el-type>String</el-type>)",
+      "(int, String)",
     );
   });
 });
