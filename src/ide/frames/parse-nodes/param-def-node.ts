@@ -46,7 +46,6 @@ export class ParamDefNode extends AbstractSequence {
   }
 
   renderAsHtml() {
-    const lang = this.file.language();
-    return this.isValid() ? lang.renderNodeAsHtml(this) : this.matchedText;
+    return this.delegateHtmlToLanguage();
   }
 }

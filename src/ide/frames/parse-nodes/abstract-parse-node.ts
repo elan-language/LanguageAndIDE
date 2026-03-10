@@ -43,9 +43,11 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   renderAsHtml(): string {
-    const lang = this.file.language();
-    const langSpecific = lang.renderNodeAsHtml(this);
-    return langSpecific === "" ? this.renderAsElanSource() : langSpecific;
+    return this.renderAsElanSource();
+  }
+
+  delegateHtmlToLanguage() {
+    return this.isValid() ? this.file.language().renderNodeAsHtml(this) : this.matchedText;
   }
 
   abstract parseText(text: string): void;

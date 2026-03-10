@@ -17,11 +17,6 @@ export class LitStringField extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    const lang = this.file.language();
-    const langSpecific = lang.renderNodeAsHtml(this);
-    return langSpecific.length > 0
-      ? langSpecific
-      : `</el-lit>{${this.expr!.renderAsHtml()}}<el-lit>`;
-    //Tags appear wrong way around, but are correct: field is breaking out of the string.
+    return this.delegateHtmlToLanguage();
   }
 }
