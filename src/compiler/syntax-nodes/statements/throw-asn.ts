@@ -12,6 +12,6 @@ export class ThrowAsn extends BreakpointAsn {
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw new Error(${this.text.compile()});`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw new _stdlib.ElanRuntimeError(${this.text.compile()});`;
   }
 }

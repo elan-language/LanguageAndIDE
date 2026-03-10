@@ -1,13 +1,14 @@
-import { ClassOption, elanClass } from "../elan-type-annotations";
+import { ClassOption, elanClass, ElanString } from "../elan-type-annotations";
 import { System } from "../system";
 
-@elanClass(ClassOption.concrete)
+@elanClass(ClassOption.concrete, [], ["message"], [ElanString])
 export class ElanRuntimeError extends Error {
   static emptyInstance() {
     return new ElanRuntimeError("");
   }
 
-  async _initialise() {
+  async _initialise(message: string) {
+    this.message = message;
     return this;
   }
 

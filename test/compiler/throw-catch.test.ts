@@ -26,7 +26,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 return [main, _tests];}`;
 
@@ -59,7 +59,7 @@ end main`;
 const global = new class {};
 async function main() {
   let msg = "Foo";
-  throw new Error(msg);
+  throw new _stdlib.ElanRuntimeError(msg);
 }
 return [main, _tests];}`;
 
@@ -92,7 +92,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bar = 1;
-  throw new Error(\`\${await _stdlib.asString(bar)}\`);
+  throw new _stdlib.ElanRuntimeError(\`\${await _stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
 
@@ -131,7 +131,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -183,7 +183,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -313,7 +313,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -357,7 +357,7 @@ const global = new class {};
 async function main() {
   try {
     let a = 1;
-    throw new Error("fail");
+    throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
       let a = e;
@@ -367,7 +367,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -410,7 +410,7 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new Error("fail");
+    throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
       await _stdlib.printNoLine(a);
@@ -419,7 +419,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -458,7 +458,7 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new Error("fail");
+    throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
   
