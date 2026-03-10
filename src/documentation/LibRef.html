@@ -1248,7 +1248,7 @@ of differing Types held together and referenced by a single identifier.</p>
 </el-code-block>
 <p>Note that the appropriate <el-id>item_N</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
-<h3 class="no-TOC">Dot methods on a <el-type>Tuple</el-type></h3>
+<h3 class="no-TOC">Dot methods on a <el-code>Tuple</el-code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
@@ -1258,14 +1258,14 @@ of differing Types held together and referenced by a single identifier.</p>
   <th>returns</th>
  </tr><tr id="asString_Tuple">
   <td><el-method>asString</el-method></td>
-  <td><el-type>Tuple</el-type></td>
+  <td><el-code>Tuple</el-code></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>String containing Tuple's items surrounded by brackets</td>
  </tr><tr id="equals_Tuple">
   <td><el-method>equals</el-method></td>
-  <td><el-type>Tuple</el-type></td>
-  <td><el-type>Tuple</el-type></td>
+  <td><el-code>Tuple</el-code></td>
+  <td><el-code>Tuple</el-code></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Types, item values and order all equal those of the argumentl<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
@@ -2006,35 +2006,40 @@ By this means features such as simple SVG animation can be defined.</p>
 
 <h3 class="no-TOC"> Reading keys 'on the fly'</h3>
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use of graphics, or uses the display  just for text, reading keystrokes 'on the fly' is done via one of three methods:</p>
-<el-code-block>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getNumericKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key3</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
+<p>Whether your application makes use of graphics, or uses the display  just for text, reading keystrokes 'on the fly' is done via one of the three methods shown here:</p>
+<el-code-block source="getKey.elan">
+<el-statement class="ok" id="var18" tabindex="-1"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="-1"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var21" tabindex="-1"><el-kw>variable </el-kw><el-field id="var22" class="ok" tabindex="-1"><el-txt><el-id>key2</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>getNumericKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var25" tabindex="-1"><el-kw>variable </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>keyCap</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-method>getKeyWithModifier</el-method>().<el-id>item_0</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var28" tabindex="-1"><el-kw>variable </el-kw><el-field id="var29" class="ok" tabindex="-1"><el-txt><el-id>keyMod</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-method>getKeyWithModifier</el-method>().<el-id>item_1</el-id></el-txt></el-field></el-statement>
+</el-statement>
 </el-code-block>
 <ul>
- <li>When any of these functions is called, the system <i>does not wait for a response</i>, but immediately returns a <el-type>String</el-type>.</li>
- <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <el-code>"z"</el-code> or <el-code>"@"</el-code></li> 
+ <li>When any of these functions is called, the system <i>does not wait for a response</i>, but immediately returns a <el-type>String</el-type> or Tuple.</li>
+ <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <el-code>"z"</el-code> or <el-code>"@"</el-code>.</li> 
  <li><el-method>getNumericKey</el-method> returns a string containing either a digit (<el-code>"0".."9"</el-code>) or, if the last key pressed was not numeric, then <el-code>"-1"</el-code>.
  A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
- <li><el-method>getKeyWithModifier</el-method> returns a Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <el-code>"Shift"</el-code>,
+ <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <el-code>"Shift"</el-code>,
   <el-code>"Ctrl"</el-code> or <el-code>"Alt"</el-code> if simultaneously pressed.
-  If no modifier had been pressed, the Tuple's second item will be the empty string.  A few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
+  If no modifier had been pressed, the Tuple's second item will be the empty string. Note that a few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
  <li>Non-printable keys will also be returned as strings, e.g. <el-code>"Home"</el-code>, <el-code>"End"</el-code>, <el-code>"Delete"</el-code>, <el-code>"Tab"</el-code>,
  <el-code>"Backspace"</el-code>, <el-code>"Enter"</el-code>, <el-code>"Escape"</el-code>,
  <el-code>"ArrowUp"</el-code> etc., function key <el-code>"Fn"</el-code>, <el-code>"AltGraph"</el-code>, <el-code>"Meta"</el-code>, <el-code>"ContextMenu"</el-code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
- <li>All these  methods are System methods because they have a dependency on the system and so may only be used within a <el-kw>procedure</el-kw> or in <el-kw>main</el-kw>.</li>
+ <li>All these  methods are System methods because they have a dependency on the system and so may be used only within a <el-kw>procedure</el-kw> or in <el-kw>main</el-kw>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
- <li>Method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</li>
+ <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
+ if <el-id>true</el-id>, the prompt "Press any key to continue" appears,<br>
+ if <el-id>false</el-id>, no prompt appears. 
+ </li>
 </ul>
-<el-code-block>
-<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}"</el-txt></el-field></el-statement>
+<el-code-block source="waitForKey.elan">
+<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args25" class="optional ok" tabindex="-1"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="var26" tabindex="-1"><el-kw>variable </el-kw><el-field id="var27" class="ok" tabindex="-1"><el-txt><el-id>key</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr28" class="ok" tabindex="-1"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call29" tabindex="-1"><el-kw>call </el-kw><el-field id="ident30" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args31" class="optional ok" tabindex="-1"><el-txt>$"<el-lit>That was </el-lit>{<el-id>key</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 
 <h2 id="FileInputOutput">Text file input/output</h2>
@@ -2092,9 +2097,9 @@ By this means features such as simple SVG animation can be defined.</p>
 </table>
 <p>These methods may be used to read a whole file in one go:</p>
 <el-code-block source="TextFileReader_1.elan">
-  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="print12" tabindex="0"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>openFileForReading</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>text</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call9" tabindex="-1"><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args11" class="optional ok" tabindex="-1"><el-txt><el-id>text</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 <p>or to read a file line by line:</p>
 <el-code-block source="TextFileReader_2.elan">
@@ -2146,18 +2151,19 @@ By this means features such as simple SVG animation can be defined.</p>
 
 <p>These methods may be used to write a whole file in one go:</p>
 <el-code-block source="TextFileWriter_1.elan">
-    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>f</el-id>.<el-method>writeWholeFile</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit>this is\nmyText</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>writeWholeFile</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Text line 1\nText line 2</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 <p>or to write a file line by line:</p>
 <el-code-block source="TextFileWriter_2.elan">
-    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok multiline" id="for6" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-    <el-kw>end for</el-kw>
-    </el-statement>
-    <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-lit>100</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>writeLine</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt>$"<el-lit></el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>saveAndClose</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>

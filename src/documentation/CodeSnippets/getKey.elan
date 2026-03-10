@@ -1,0 +1,10 @@
+# 88970b444f96351575dc2837dc40692ec2546bffc7bc11839cb9598d175eb7b2 Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable key1 set to getKey()
+  variable key2 set to getNumericKey()
+  variable keyCap set to getKeyWithModifier().item_0
+  variable keyMod set to getKeyWithModifier().item_1
+  # snipTo
+end main
