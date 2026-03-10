@@ -42,10 +42,10 @@ export class CatchAsn extends BreakpointAsn {
 
   compile(): string {
     this.compileErrors = [];
-    const vid = this.variable.compile();
-    return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}${this.singleIndent()}let ${vid} = _${vid}.message;
-${compileNodes(this.compileChildren)}\r`;
+    return `${this.parentIndent()}} catch (e) {\r
+${this.indent()}${this.singleIndent()}if (e instanceof _stdlib.ElanRuntimeError) {
+${this.indent()}${compileNodes(this.compileChildren)}
+${this.indent()}${this.singleIndent()}}\r`;
   }
 
   compileChildren: AstNode[] = [];
