@@ -29,6 +29,13 @@ export class RawVG extends VectorGraphic {
   @elanProperty()
   rawSVGcontent: string = "";
 
+  @elanFunction(["content"], FunctionOptions.pure, ElanClass(RawVG))
+  withContent(rawSVGcontent: string): RawVG {
+    const copy = this.system!.initialise(new RawVG(this));
+    copy.rawSVGcontent = rawSVGcontent;
+    return copy;
+  }
+
   @elanFunction([], FunctionOptions.pure)
   asSVG(): string {
     return this.rawSVGcontent;

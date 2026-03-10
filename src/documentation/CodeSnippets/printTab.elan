@@ -1,14 +1,14 @@
-# e4e33747905136af0adbf7ce76fd8bb2d1278760af83db4c0c1a613d732a016b Elan 2.0.0-alpha guest default_profile valid
+# a071d152c29662f55eb3723cd0a54f35f4cde7835c2f8720163a8f741b04bafb Elan 2.0.0-alpha guest default_profile valid
 
 main
   # snipFrom
   call printTab(0, "Number")
   call printTab(10, "Square")
-  call printTab(20, "Cube")
+  call printTab(20, "Cube\n")
   for i from 1 to 10 + 1 step 1
     call printTab(0, i.asString())
-    call printTab(10, "{power(i, 2)}")
-    call printTab(20, "{power(i, 3)}")
+    call printTab(10, $"{power(i, 2)}")
+    call printTab(20, $"{power(i, 3)}\n")
   end for
   # snipTo
 end main

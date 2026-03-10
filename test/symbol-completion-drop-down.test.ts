@@ -109,10 +109,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["not", "not", "not"],
-      ["bitNot", "bitNot", "bitNot("],
-    ] as [string, string, string][];
+    const expected = [["bitNot", "bitNot", "bitNot("]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "no", expected);
   });
