@@ -40,4 +40,8 @@ export class TypeTupleNode extends AbstractSequence {
         : langSpecific
       : this.matchedText;
   }
+
+  override renderAsExport(): string {
+    return super.renderAsExport(); //TEMP - for debugging
+  }
 }

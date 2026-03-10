@@ -2069,6 +2069,16 @@ suite("Parsing Nodes", () => {
       "tuple[int, str]",
     );
     testNodeParse(
+      new TypeNode(fileWithPython()),
+      "tuple[int, str]",
+      ParseStatus.valid,
+      "tuple[int, str]",
+      "",
+      "",
+      "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+      "tuple[int, str]",
+    );
+    testNodeParse(
       new TypeTupleNode(fileWithVB()),
       "(Integer, String)",
       ParseStatus.valid,
