@@ -1,5 +1,4 @@
 import { newKeyword } from "../../../compiler/elan-keywords";
-import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -45,7 +44,6 @@ export class NewInstance extends AbstractSequence {
 
   renderAsHtml() {
     const lang = this.file.language();
-    const valid = this.status === ParseStatus.valid;
-    return valid ? lang.renderNodeAsHtml(this) : this.matchedText;
+    return this.isValid() ? lang.renderNodeAsHtml(this) : this.matchedText;
   }
 }
