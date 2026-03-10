@@ -25,6 +25,11 @@ export class LitStringOrdinary extends AbstractSequence {
     const text = this.contents.matchedText;
     const contents =
       text.length > 0 ? `<el-lit>${this.contents.renderAsElanSource()}</el-lit>` : ``;
-    return `"${contents}"`;
+    return this.isValid() ? `"${contents}"` : this.contents.matchedText;
+  }
+
+  //TEMP
+  override renderAsExport(): string {
+    return super.renderAsExport();
   }
 }
