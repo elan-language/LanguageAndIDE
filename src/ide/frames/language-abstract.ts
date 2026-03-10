@@ -87,9 +87,8 @@ export abstract class LanguageAbstract implements Language {
     return "";
   }
 
-  typeTupleAsHtml(_node: TypeTupleNode) {
-    //To be overridden by an language that wants it different
-    return "";
+  typeTupleAsHtml(node: TypeTupleNode): string {
+    return `(${node.types?.renderAsHtml()})`;
   }
 
   completionWhenEmpty(node: ParseNode): string {
