@@ -1334,7 +1334,7 @@ suite("Parsing Nodes", () => {
       `"&#123;curly braces&#125;"`,
       "",
       `"&#123;curly braces&#125;"`,
-      `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+      `"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
     );
   });
   test("Embedded Html tags", () => {
@@ -1345,7 +1345,7 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       "",
       `"<p>abc</p>"`,
-      `"<el-lit><p>abc</p></el-lit>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     // In other langs
     testNodeParse(
@@ -1355,7 +1355,37 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       "",
       `"<p>abc</p>"`,
-      `"<el-lit><p>abc</p></el-lit>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithVB()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithCS()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+      `"<p>abc</p>"`,
+    );
+    testNodeParse(
+      new LitStringOrdinary(fileWithJava()),
+      `"<p>abc</p>"`,
+      ParseStatus.valid,
+      `"<p>abc</p>"`,
+      "",
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
       `"<p>abc</p>"`,
     );
   });

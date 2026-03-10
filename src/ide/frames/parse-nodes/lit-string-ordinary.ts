@@ -1,3 +1,4 @@
+import { escapeHtmlChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -24,12 +25,11 @@ export class LitStringOrdinary extends AbstractSequence {
   renderAsHtml(): string {
     const text = this.contents.matchedText;
     const contents =
-      text.length > 0 ? `<el-lit>${this.contents.renderAsElanSource()}</el-lit>` : ``;
+      text.length > 0 ? `<el-lit>${escapeHtmlChars(this.contents.renderAsHtml())}</el-lit>` : ``;
     return this.isValid() ? `"${contents}"` : this.contents.matchedText;
   }
 
-  //TEMP
   override renderAsExport(): string {
-    return super.renderAsExport();
+    return this.isValid() ? `"${this.contents.matchedText}"` : this.matchedText;
   }
 }
