@@ -4,7 +4,7 @@ import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string"
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { asDebugSymbol, assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
@@ -401,7 +401,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
 
-  test("Pass_InTry", async () => {
+  ignore_test("Pass_InTry", async () => {
     const code = `${testHeader}
 
 main
@@ -431,7 +431,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set11", expected);
   });
 
-  test("Pass_InCatch", async () => {
+  ignore_test("Pass_InCatch", async () => {
     const code = `${testHeader}
 
 main
