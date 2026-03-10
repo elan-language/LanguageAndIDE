@@ -7,7 +7,7 @@ main
   end for
   try
     call file.saveAndClose()
-  catch exception in e
+  catch ElanRuntimeException in e
     call print("File save cancelled")
   end try
 end main

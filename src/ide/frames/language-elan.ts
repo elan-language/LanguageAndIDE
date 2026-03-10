@@ -67,7 +67,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} ${this.EXCEPTION} ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
+      html = `<el-kw>${this.CATCH} ${frame.exceptionType.renderAsHtml()} ${this.IN} <el-id>e</el-id>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {

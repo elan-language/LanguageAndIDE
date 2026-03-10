@@ -488,6 +488,32 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
+  test("parse Frames - try catch", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    call print("")
+  catch ElanRuntimeException in e
+    call print("")
+  end try
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
   test("abstract class can contain concrete property", async () => {
     const code = `${testHeader}
 
