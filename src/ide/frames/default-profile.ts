@@ -5,7 +5,6 @@ import {
   abstractPropertyKeywords,
   assertKeyword,
   callKeyword,
-  catchKeyword,
   classKeyword,
   commentMarker,
   constantKeyword,
@@ -51,7 +50,6 @@ export class DefaultProfile implements Profile {
   statements: string[] = [
     assertKeyword,
     callKeyword,
-    catchKeyword,
     eachKeyword,
     elifKeyword,
     elseKeyword,
