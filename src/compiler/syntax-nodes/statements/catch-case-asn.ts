@@ -1,48 +1,42 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { StringType } from "../../symbols/string-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { getId } from "../../compile-rules";
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../elan-keywords";
-import { match, symbolMatches } from "../../symbols/symbol-helpers";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
-import { EmptyAsn } from "../empty-asn";
 
 export class CatchCaseAsn extends BreakpointAsn {
-  constructor(fieldId: string, scope: Scope) {
+  constructor(
+    private readonly type: string,
+    fieldId: string,
+    scope: Scope,
+  ) {
     super(fieldId, scope);
   }
 
-  variable: AstNode = EmptyAsn.Instance;
+  // get symbolId() {
+  //   return getId(this.variable);
+  // }
 
-  get symbolId() {
-    return getId(this.variable);
-  }
+  // symbolType(): SymbolType {
+  //   return StringType.Instance;
+  // }
 
-  symbolType(): SymbolType {
-    return StringType.Instance;
-  }
-
-  get symbolScope() {
-    return SymbolScope.parameter;
-  }
+  // get symbolScope() {
+  //   return SymbolScope.parameter;
+  // }
 
   getCurrentScope(): Scope {
     return this.compileScope ?? this;
   }
 
-  // indent() {
-  //   return this.parentIndent(); //overrides the additional indent added for most child statements
-  // }
-
-  keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
-
   compile(): string {
     this.compileErrors = [];
-    return `${this.indent()}if (e instanceof _stdlib.ElanRuntimeError) {
+
+    const type = this.scope.resolveSymbol(this.type, false, this);
+    const scope = type.symbolScope === SymbolScope.stdlib ? "_stdlib." : "";
+
+    return `${this.indent()}if (e instanceof ${scope}${type.symbolId}) {
 ${compileNodes(this.compileChildren)}
 ${this.indent()}}`;
   }
@@ -64,9 +58,9 @@ ${this.indent()}}`;
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.variable), id, caseSensitive)) {
-      return this;
-    }
+    // if (match(getId(this.variable), id, caseSensitive)) {
+    //   return this;
+    // }
     return (
       getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
       this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
@@ -74,15 +68,15 @@ ${this.indent()}}`;
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    let matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-    const v = getId(this.variable);
-    const counter = {
-      symbolId: v,
-      symbolType: () => StringType.Instance,
-      symbolScope: SymbolScope.parameter,
-    };
+    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
+    // const v = getId(this.variable);
+    // const counter = {
+    //   symbolId: v,
+    //   symbolType: () => StringType.Instance,
+    //   symbolScope: SymbolScope.parameter,
+    // };
 
-    matches = matches.concat(symbolMatches(id, all, [counter]));
+    // matches = matches.concat(symbolMatches(id, all, [counter]));
 
     return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
   }

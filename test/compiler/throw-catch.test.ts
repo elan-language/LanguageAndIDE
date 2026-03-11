@@ -21,7 +21,7 @@ suite("Throw Catch", () => {
     const code = `${testHeader}
 
 main
-    throw ElanRuntimeException "Foo"
+    throw ElanRuntimeError "Foo"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -53,7 +53,7 @@ return [main, _tests];}`;
 
 main
   variable msg set to "Foo"
-  throw ElanRuntimeException msg
+  throw ElanRuntimeError msg
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -86,7 +86,7 @@ return [main, _tests];}`;
 
 main
   variable bar set to 1
-  throw ElanRuntimeException $"{bar}"
+  throw ElanRuntimeError $"{bar}"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -122,7 +122,7 @@ main
 end main
  
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -161,13 +161,13 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeException
-    call printNoLine(e)
+  catch ElanRuntimeError
+    call printNoLine("Foo")
   end try
 end main
 
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -178,7 +178,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(e);
+    await _stdlib.printNoLine("Foo");
     }
   }
 }
@@ -215,8 +215,8 @@ main
     variable y set to x[1]
     variable z set to y.p1
     call printNoLine("not caught")
-  catch ElanRuntimeException
-    call printNoLine(e)
+  catch ElanRuntimeError
+    call printNoLine("Out of range index: 1 size: 0")
   end try
 end main
 
@@ -241,7 +241,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(e);
+    await _stdlib.printNoLine("Out of range index: 1 size: 0");
     }
   }
 }
@@ -287,15 +287,14 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeException
-    variable s set to ""
-    set s to e
+  catch ElanRuntimeError
+    variable s set to "Foo"
     call printNoLine(s)
   end try
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -306,8 +305,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let s = "";
-    s = e;
+    let s = "Foo";
     await _stdlib.printNoLine(s);
     }
   }
@@ -342,15 +340,15 @@ return [main, _tests];}`;
 main
   try
     variable a set to 1
-    throw ElanRuntimeException "fail"
-  catch ElanRuntimeException
-    variable a set to e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
+    variable a set to "fail"
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -361,7 +359,7 @@ async function main() {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let a = e;
+    let a = "fail";
     await _stdlib.printNoLine(a);
     }
   }
@@ -396,14 +394,14 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw ElanRuntimeException "fail"
-  catch ElanRuntimeException
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -448,8 +446,8 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw ElanRuntimeException "fail"
-  catch ElanRuntimeException
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     [ghosted] constant a set to 1
   end try
 end main`;
@@ -492,10 +490,10 @@ main
   variable a set to 1
   try
     throw exception "fail"
-  catch ElanRuntimeException in e
+  catch ElanRuntimeError in e
     constant b set to 2
 
-  catch ElanRuntimeException in e
+  catch ElanRuntimeError in e
     constant a set to 1
   end try
 end main`;
@@ -528,7 +526,7 @@ main
 end main
  
 function foo(x String) as String
-  throw ElanRuntimeException x
+  throw ElanRuntimeError x
   return x
 end function
 `;
@@ -560,7 +558,7 @@ main
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure
 `;
 
@@ -583,7 +581,7 @@ end procedure
 
 main
   variable msg set to "Foo"
-  throw ElanRuntimeException msg + bar
+  throw ElanRuntimeError msg + bar
 end main
 `;
 
@@ -607,14 +605,14 @@ end main
 main
   try
     variable a set to 1
-    throw ElanRuntimeException "fail"
-  catch ElanRuntimeException
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure
 `;
     const fileImpl = new FileImpl(
@@ -639,15 +637,15 @@ end procedure
 main
   variable a set to 1
   try
-    throw ElanRuntimeException "fail"
-  catch ElanRuntimeException
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     variable a set to e
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw ElanRuntimeException "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -663,8 +661,6 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'e' is not defined.LangRef.html#compile_error"]);
   });
 });

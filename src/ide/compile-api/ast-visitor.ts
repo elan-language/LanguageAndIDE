@@ -591,10 +591,12 @@ export function transform(
   }
 
   if (node instanceof CatchStatement) {
-    const catchAsn = new CatchCaseAsn(node.getHtmlId(), scope);
+    const type = node.exceptionType.text;
+
+    const catchAsn = new CatchCaseAsn(type!, node.getHtmlId(), scope);
     catchAsn.breakpointStatus = node.breakpointStatus;
 
-    catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
+    //catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
     return catchAsn;
   }
 
