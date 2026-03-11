@@ -601,9 +601,11 @@ export function transform(
   }
 
   if (node instanceof Throw) {
-    const throwAsn = new ThrowAsn(node.getHtmlId(), scope);
+    const type = node.type.text;
+    const msg = transform(node.text, node.getHtmlId(), scope)!;
+
+    const throwAsn = new ThrowAsn(type, msg, node.getHtmlId(), scope);
     throwAsn.breakpointStatus = node.breakpointStatus;
-    throwAsn.text = transform(node.text, node.getHtmlId(), throwAsn) ?? EmptyAsn.Instance;
     return throwAsn;
   }
 

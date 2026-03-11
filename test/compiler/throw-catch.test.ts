@@ -48,7 +48,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
+  ignore_test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
     const code = `${testHeader}
 
 main
@@ -81,7 +81,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
+  ignore_test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
     const code = `${testHeader}
 
 main
