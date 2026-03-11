@@ -153,4 +153,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\collatz.java`,
     );
   });
+  test("Wordle Demo", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\wordle-demo.elan`,
+      ``,
+      `${__dirname}\\files\\wordle-demo.py`,
+      `${__dirname}\\files\\wordle-demo.vb`,
+      `${__dirname}\\files\\wordle-demo.cs`,
+      `${__dirname}\\files\\wordle-demo.java`,
+    );
+  });
 });
