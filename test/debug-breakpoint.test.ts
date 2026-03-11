@@ -4,7 +4,7 @@ import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string"
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { asDebugSymbol, assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
@@ -430,7 +430,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
 
-  ignore_test("Pass_InCatch", async () => {
+  test("Pass_InCatch", async () => {
     const code = `${testHeader}
 
 main
@@ -438,8 +438,9 @@ main
     variable a set to 1
     set a to 2
     throw exception "error"
-  catch exception in e
+  catch ElanRuntimeException in e
     variable b set to 1
+    call print(b)
   end try
 end main`;
 
@@ -454,8 +455,11 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("b", "1", '{"Type":"Int"}')];
-    await assertDebugBreakPoint(fileImpl, "set19", expected);
+    const expected = [
+      asDebugSymbol("b", 1, '{"Type":"Int"}'),
+      asDebugSymbol("e", "error", '{"Type":"String"}'),
+    ];
+    await assertDebugBreakPoint(fileImpl, "call20", expected);
   });
 
   test("Pass_InIf", async () => {
