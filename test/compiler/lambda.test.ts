@@ -673,7 +673,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => if x is 1 then x else l(x-1)
+  variable l set to lambda x as Int => if(x is 1, x, l(x-1))
 end main`;
 
     const fileImpl = new FileImpl(

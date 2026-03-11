@@ -14,7 +14,7 @@ main
   variable ls set to ["Eeny", "Meeny", "Miny", "Mo"]
   call print(ls.reduce("", lambda concat as String, item as String => concat + item))
   #   find the longest string
-  call print(ls.reduce("", lambda longest as String, item as String => if item.length() > longest.length() then item else longest))
+  call print(ls.reduce("", lambda longest as String, item as String => if(item.length() > longest.length(), item, longest)))
   #   reverse the order of a list
   call print(li.reduce(new List<of Int>(), lambda liR as List<of Int>, item as Int => liR.withPrepend(item)))
   #   reverse the order of a string

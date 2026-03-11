@@ -773,7 +773,7 @@ main
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if s.equals("") then "" else s[last(sequence(0, s.length() -1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if(s.equals(""), "", s[last(sequence(0, s.length() -1, 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()])
 end function
 
 function isnumberchar(s as String) returns Boolean

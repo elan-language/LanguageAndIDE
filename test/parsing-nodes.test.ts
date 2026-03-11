@@ -927,25 +927,35 @@ suite("Parsing Nodes", () => {
   test("IfExpr", () => {
     testNodeParse(
       new IfExpr(f),
-      `if cell then Colour.green else Colour.black)`,
-      ParseStatus.valid,
-      "",
-      ")",
-      "",
-      "<el-kw>if </el-kw><el-id>cell</el-id><el-kw> then </el-kw><el-type>Colour</el-type>.<el-id>green</el-id><el-kw> else </el-kw><el-type>Colour</el-type>.<el-id>black</el-id>",
-    );
-    testNodeParse(new IfExpr(f), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(
-      new IfExpr(f),
-      `if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")`,
+      `if(cell, Colour.green, Colour.black)`,
       ParseStatus.valid,
       "",
       "",
       "",
+      "<el-kw>if</el-kw>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
     );
     testNodeParse(
       new IfExpr(f),
-      `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target`,
+      `if(cell, Colour.green, Colour.black) + 1`,
+      ParseStatus.valid,
+      "if(cell, Colour.green, Colour.black)",
+      " + 1",
+      "",
+      "",
+    );
+    testNodeParse(
+      new ExprNode(f),
+      `if(cell, Colour.red, Colour.blue) + 1`,
+      ParseStatus.valid,
+      "if(cell, Colour.red, Colour.blue) + 1",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(new IfExpr(f), `if(cell, Colour.amber`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(
+      new IfExpr(f),
+      `if(attempt[n] is "*", attempt, if(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
       ParseStatus.valid,
       "",
       "",
@@ -953,7 +963,15 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new IfExpr(f),
-      `if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"`,
+      `if(attempt.isAlreadyMarkedGreen(n), target, if(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+      ParseStatus.valid,
+      "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new IfExpr(f),
+      `if(score > 80, "Distinction", if(score > 60, "Merit", if(score > 40, "Pass", "Fail")))`,
       ParseStatus.valid,
       "",
       "",
