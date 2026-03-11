@@ -10,7 +10,7 @@ export class ExceptionTypeField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.useHtmlTags = true;
-    this.setFieldToKnownValidText("ElanRuntimeException");
+    this.setFieldToKnownValidText("ElanRuntimeError");
   }
 
   helpId(): string {

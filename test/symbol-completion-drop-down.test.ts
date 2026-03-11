@@ -1722,6 +1722,7 @@ end main`;
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
+      ["ElanRuntimeError", "*", "*"],
       ["Float", "*", "*"],
       ["HashSet", "*", "*"],
       ["ImageVG", "*", "*"],

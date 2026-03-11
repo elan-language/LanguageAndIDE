@@ -39,10 +39,8 @@ export class CatchAsn extends BreakpointAsn {
 
   compile(): string {
     this.compileErrors = [];
-    const vid = this.variable.compile();
-    return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}${this.singleIndent()}let ${vid} = _${vid}.message;
-${compileNodes(this.compileChildren)}\r`;
+    return `${this.parentIndent()}} catch (e) {\r
+${compileNodes(this.compileChildren)}`;
   }
 
   compileChildren: AstNode[] = [];

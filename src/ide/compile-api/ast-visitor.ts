@@ -64,7 +64,7 @@ import { RangeAsn } from "../../compiler/syntax-nodes/range-asn";
 import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
 import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
-import { CatchAsn } from "../../compiler/syntax-nodes/statements/catch-asn";
+import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";
 import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
@@ -592,17 +592,21 @@ export function transform(
   }
 
   if (node instanceof CatchStatement) {
-    const catchAsn = new CatchAsn(node.getHtmlId(), scope);
+    const type = node.exceptionType.text;
+
+    const catchAsn = new CatchCaseAsn(type!, node.getHtmlId(), scope);
     catchAsn.breakpointStatus = node.breakpointStatus;
 
-    catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
+    //catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
     return catchAsn;
   }
 
   if (node instanceof Throw) {
-    const throwAsn = new ThrowAsn(node.getHtmlId(), scope);
+    const type = node.type.text;
+    const msg = transform(node.text, node.getHtmlId(), scope)!;
+
+    const throwAsn = new ThrowAsn(type, msg, node.getHtmlId(), scope);
     throwAsn.breakpointStatus = node.breakpointStatus;
-    throwAsn.text = transform(node.text, node.getHtmlId(), throwAsn) ?? EmptyAsn.Instance;
     return throwAsn;
   }
 
