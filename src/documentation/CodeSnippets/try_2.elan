@@ -16,7 +16,7 @@ test test_try_2
     call print("not caught")
   catch ElanRuntimeException in e
     if not (e.equals("an expected message")) then
-      throw exception e
+      throw ElanRuntimeException e
     end if
   end try
 end test

@@ -1,9 +1,9 @@
-# 034791554da09f10fd7c9ebf70849e30261497d805c2e089da6a6e73528541a7 Elan 2.0.0-alpha guest default_profile valid
+# 4282ac48917b2391f27ab11c88ee9c9de1660e4941e2f1c7610132c922cb0f25 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable a set to 3
   set a to 3 + 4
-  throw exception "error"
+  throw ElanRuntimeException "error"
   call signIn(rwp, password)
   call print("Hello World!")
   while newGame

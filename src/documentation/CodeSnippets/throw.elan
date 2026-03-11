@@ -7,7 +7,7 @@ end main
 function percent(value as Float, maximum as Float) returns Float
   variable r set to 100.0
   if value > maximum then
-    throw exception "proportion exceeds 100%"
+    throw ElanRuntimeException "proportion exceeds 100%"
   else
     set r to value/maximum*r
   end if
@@ -16,7 +16,7 @@ end function
 
 function onAxis(xp as Float, yp as Float, xq as Float, yq as Float) returns Float
   if yp is 0 then
-    throw exception "yp is zero: {xp},{yp} + {xq},{yq}"
+    throw ElanRuntimeException "yp is zero: {xp},{yp} + {xq},{yq}"
   end if
   return xp*yp
 end function

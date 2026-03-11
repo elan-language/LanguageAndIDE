@@ -408,7 +408,7 @@ main
   try
     variable a set to 1
     set a to 2
-    throw exception "error"
+    throw ElanRuntimeException "error"
   catch ElanRuntimeException in e
     call printNoLine("error")
   end try
@@ -437,7 +437,7 @@ main
   try
     variable a set to 1
     set a to 2
-    throw exception "error"
+    throw ElanRuntimeException "error"
   catch ElanRuntimeException in e
     variable b set to 1
     call print(b)

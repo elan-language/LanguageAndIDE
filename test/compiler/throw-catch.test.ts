@@ -20,7 +20,7 @@ suite("Throw Catch", () => {
     const code = `${testHeader}
 
 main
-    throw exception "Foo"
+    throw ElanRuntimeException "Foo"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable msg set to "Foo"
-  throw exception msg
+  throw ElanRuntimeException msg
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -85,7 +85,7 @@ return [main, _tests];}`;
 
 main
   variable bar set to 1
-  throw exception $"{bar}"
+  throw ElanRuntimeException $"{bar}"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -121,7 +121,7 @@ main
 end main
  
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -166,7 +166,7 @@ main
 end main
 
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -292,7 +292,7 @@ main
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -338,7 +338,7 @@ return [main, _tests];}`;
 main
   try
     variable a set to 1
-    throw exception "fail"
+    throw ElanRuntimeException "fail"
   catch ElanRuntimeException in e
     variable a set to e
     call printNoLine(a)
@@ -346,7 +346,7 @@ main
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -391,14 +391,14 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw exception "fail"
+    throw ElanRuntimeException "fail"
   catch ElanRuntimeException in e
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -442,7 +442,7 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw exception "fail"
+    throw ElanRuntimeException "fail"
   catch ElanRuntimeException in e
     [ghosted] constant a set to 1
   end try
@@ -486,7 +486,7 @@ main
 end main
  
 function foo(x String) as String
-  throw exception x
+  throw ElanRuntimeException x
   return x
 end function
 `;
@@ -518,7 +518,7 @@ main
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure
 `;
 
@@ -541,7 +541,7 @@ end procedure
 
 main
   variable msg set to "Foo"
-  throw exception msg + bar
+  throw ElanRuntimeException msg + bar
 end main
 `;
 
@@ -565,14 +565,14 @@ end main
 main
   try
     variable a set to 1
-    throw exception "fail"
+    throw ElanRuntimeException "fail"
   catch ElanRuntimeException in e
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure
 `;
     const fileImpl = new FileImpl(
@@ -597,7 +597,7 @@ end procedure
 main
   variable a set to 1
   try
-    throw exception "fail"
+    throw ElanRuntimeException "fail"
   catch ElanRuntimeException in e
     variable a set to e
     call printNoLine(a)
@@ -605,7 +605,7 @@ main
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeException "Foo"
 end procedure`;
 
     const fileImpl = new FileImpl(

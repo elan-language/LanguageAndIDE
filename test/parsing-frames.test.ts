@@ -136,7 +136,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - throw", () => {
-    const code = `  throw exception "Failure"`;
+    const code = `  throw ElanRuntimeException "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -154,7 +154,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - throw with variable", () => {
-    const code = `  throw exception message1`;
+    const code = `  throw ElanRuntimeException message1`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -341,7 +341,7 @@ end main
 main
   variable name set to value or expression
   set a to 3 + 4
-  throw exception "message"
+  throw ElanRuntimeException "message"
   call signIn(rwp, password)
   call printNoLine("Hello World!")
 end main
