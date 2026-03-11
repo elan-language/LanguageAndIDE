@@ -83,7 +83,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type> ${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -101,7 +101,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} <el-type>Exception</el-type> </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.NEW}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {

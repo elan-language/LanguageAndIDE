@@ -89,7 +89,8 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)<el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} <el-type>Exception</el-type> ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
+      //Catch e As DivideByZeroException
+      html = `<el-kw>${this.CATCH}</el-kw> ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -112,7 +113,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} <el-type>Exception</el-type> </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.NEW} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
