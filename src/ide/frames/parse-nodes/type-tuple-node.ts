@@ -33,12 +33,7 @@ export class TypeTupleNode extends AbstractSequence {
     }
   }
   renderAsHtml() {
-    const langSpecific = this.file.language().renderNodeAsHtml(this);
-    return this.isValid()
-      ? langSpecific === ""
-        ? super.renderAsHtml()
-        : langSpecific
-      : this.matchedText;
+    return this.delegateHtmlToLanguage();
   }
 
   override renderAsExport(): string {
