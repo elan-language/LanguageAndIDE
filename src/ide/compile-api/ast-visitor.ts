@@ -144,6 +144,7 @@ import { LitStringField } from "../frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../frames/parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedEmpty } from "../frames/parse-nodes/lit-string-interpolated-empty";
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
+import { LitStringPlainText } from "../frames/parse-nodes/lit-string-plain-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
@@ -996,6 +997,10 @@ export function transform(
 
   if (node instanceof CommentNode) {
     return new CommentAsn(node.matchedText, fieldId, scope);
+  }
+
+  if (node instanceof LitStringPlainText) {
+    return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof RegExMatchNode) {
