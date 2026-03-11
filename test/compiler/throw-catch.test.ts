@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -177,7 +178,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-      await _stdlib.printNoLine(e);
+    await _stdlib.printNoLine(e);
     }
   }
 }
@@ -240,7 +241,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-      await _stdlib.printNoLine(e);
+    await _stdlib.printNoLine(e);
     }
   }
 }
@@ -305,7 +306,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-      let s = "";
+    let s = "";
     s = e;
     await _stdlib.printNoLine(s);
     }
@@ -360,7 +361,7 @@ async function main() {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-      let a = e;
+    let a = e;
     await _stdlib.printNoLine(a);
     }
   }
@@ -413,7 +414,7 @@ async function main() {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-      await _stdlib.printNoLine(a);
+    await _stdlib.printNoLine(a);
     }
   }
 }
@@ -461,10 +462,45 @@ async function main() {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-  
+
     }
   }
 }
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  ignore_test("Pass_MultipleCatches", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch ElanRuntimeException in e
+    constant b set to 2
+
+  catch ElanRuntimeException in e
+    constant a set to 1
+  end try
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

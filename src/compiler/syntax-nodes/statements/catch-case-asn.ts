@@ -1,9 +1,9 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { StringType } from "../../../compiler/symbols/string-type";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
+import { StringType } from "../../symbols/string-type";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { getId } from "../../compile-rules";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../elan-keywords";
 import { match, symbolMatches } from "../../symbols/symbol-helpers";
@@ -11,7 +11,7 @@ import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CatchAsn extends BreakpointAsn {
+export class CatchCaseAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -34,16 +34,17 @@ export class CatchAsn extends BreakpointAsn {
     return this.compileScope ?? this;
   }
 
-  indent() {
-    return this.parentIndent(); //overrides the additional indent added for most child statements
-  }
+  // indent() {
+  //   return this.parentIndent(); //overrides the additional indent added for most child statements
+  // }
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.parentIndent()}} catch (e) {\r
-${compileNodes(this.compileChildren)}`;
+    return `${this.indent()}if (e instanceof _stdlib.ElanRuntimeError) {
+${compileNodes(this.compileChildren)}
+${this.indent()}}`;
   }
 
   compileChildren: AstNode[] = [];

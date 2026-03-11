@@ -64,7 +64,7 @@ import { RangeAsn } from "../../compiler/syntax-nodes/range-asn";
 import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
 import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
-import { CatchAsn } from "../../compiler/syntax-nodes/statements/catch-asn";
+import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";
 import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
@@ -591,7 +591,7 @@ export function transform(
   }
 
   if (node instanceof CatchStatement) {
-    const catchAsn = new CatchAsn(node.getHtmlId(), scope);
+    const catchAsn = new CatchCaseAsn(node.getHtmlId(), scope);
     catchAsn.breakpointStatus = node.breakpointStatus;
 
     catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
