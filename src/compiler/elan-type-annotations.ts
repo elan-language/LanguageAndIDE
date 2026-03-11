@@ -483,7 +483,9 @@ export function elanClass(
     alias,
   );
   return function (target: object) {
-    Reflect.defineMetadata(elanMetadataKey, classDesc, target);
+    if (Reflect.defineMetadata) {
+      Reflect.defineMetadata(elanMetadataKey, classDesc, target);
+    }
   };
 }
 

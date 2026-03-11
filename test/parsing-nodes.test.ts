@@ -27,6 +27,7 @@ import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
+import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -211,7 +212,7 @@ suite("Parsing Nodes", () => {
   });
   test("LitString - bug #328", () => {
     testNodeParse(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
-    testNodeParse(new LitString(f), `$"{a} `, ParseStatus.incomplete, `$"{a} `, "", `$"{a} `, "");
+    testNodeParse(new LitString(f), `$"{a} `, ParseStatus.incomplete, `$"{a} `, "", "", "");
   });
   test("LitInt", () => {
     testNodeParse(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
@@ -1366,6 +1367,26 @@ suite("Parsing Nodes", () => {
       `"<p>abc</p>"`,
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
+    testNodeParse(
+      new LitStringPlainText(f),
+      `<p>`,
+      ParseStatus.valid,
+      `<p>`,
+      "",
+      `<p>`,
+      `<el-lit>&lt;p&gt;</el-lit>`,
+      `<p>`,
+    );
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"<p>{2 + 3}</p>"`,
+      ParseStatus.valid,
+      `$"<p>{2 + 3}</p>"`,
+      "",
+      `$"<p>{2 + 3}</p>"`,
+      `$"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
+      `$"<p>{2 + 3}</p>"`,
+    );
     // In other langs
     testNodeParse(
       new LitStringOrdinary(fileWithPython()),
@@ -1407,6 +1428,16 @@ suite("Parsing Nodes", () => {
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
       `"<p>abc</p>"`,
     );
+    testNodeParse(
+      new LitStringInterpolated(fileWithPython()),
+      `f"<p>{2 + 3}</p>"`,
+      ParseStatus.valid,
+      `f"<p>{2 + 3}</p>"`,
+      "",
+      `f"<p>{2 + 3}</p>"`,
+      `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
+      `f"<p>{2 + 3}</p>"`,
+    );
   });
   test("Interpolated strings", () => {
     testNodeParse(new LitString(f), `$""`, ParseStatus.valid, "", "");
@@ -1417,21 +1448,12 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(f), `$"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
     testNodeParse(
       new LitStringInterpolated(f),
-      `$"<p>abc</p>"`,
-      ParseStatus.valid,
-      `$"<p>abc</p>"`,
-      "",
-      `$"<p>abc</p>"`,
-      `$"<el-lit><p>abc</p></el-lit>"`,
-    );
-    testNodeParse(
-      new LitStringInterpolated(f),
       `$"{curly}"`,
       ParseStatus.valid,
       `$"{curly}"`,
       "",
       `$"{curly}"`,
-      `$"<el-lit></el-lit>{<el-id>curly</el-id>}<el-lit></el-lit>"`,
+      `$"{<el-id>curly</el-id>}"`,
     );
     testNodeParse(
       new LitStringInterpolated(f), // but with braces
@@ -1440,7 +1462,7 @@ suite("Parsing Nodes", () => {
       `$"&#123;curly braces&#125;"`,
       "",
       `$"&#123;curly braces&#125;"`,
-      `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+      `$"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
     );
   });
   test("Bug #290", () => {
