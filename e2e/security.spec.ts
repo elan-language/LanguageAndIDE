@@ -21,7 +21,7 @@ import { expect, test } from '@playwright/test';
 //   variable b set to "{a}` + console.warn(`exploit`) + `"
 // end main
 // main
-//   throw exception "<iframe src=javascript:console.log('Youvebeenhacked!') ></iframe>"
+//   throw ElanRuntimeException "<iframe src=javascript:console.log('Youvebeenhacked!') ></iframe>"
 // end main
 
 

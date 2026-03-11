@@ -76,7 +76,7 @@ class TuringMachine
   function findMatchingRule() returns Rule
     variable matches set to this.rules.filter(lambda r as Rule => (r.currentState.equals(this.currentState)) and (r.currentSymbol.equals(this.tape[this.headPosition])))
     if matches.length() is 0 then
-      throw exception $"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
+      throw ElanRuntimeException $"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
     end if
     return matches.head()
   end function

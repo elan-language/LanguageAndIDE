@@ -67,7 +67,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} ${frame.exceptionType.renderAsHtml()} ${this.IN} <el-id>e</el-id>`;
+      html = `<el-kw>${this.CATCH} ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -90,7 +90,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `<el-kw>${this.SET} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} ${this.EXCEPTION} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
