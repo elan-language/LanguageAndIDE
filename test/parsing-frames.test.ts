@@ -136,7 +136,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - throw", () => {
-    const code = `  throw exception "Failure"`;
+    const code = `  throw ElanRuntimeException "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -154,7 +154,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - throw with variable", () => {
-    const code = `  throw exception message1`;
+    const code = `  throw ElanRuntimeException message1`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -341,7 +341,7 @@ end main
 main
   variable name set to value or expression
   set a to 3 + 4
-  throw exception "message"
+  throw ElanRuntimeException "message"
   call signIn(rwp, password)
   call printNoLine("Hello World!")
 end main
@@ -471,6 +471,32 @@ main
   elif true then
   else
   end if
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - try catch", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    call print("")
+  catch ElanRuntimeException
+    call print("")
+  end try
 end main
 `;
     const source = new CodeSourceFromString(code);

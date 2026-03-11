@@ -1,6 +1,7 @@
 import {
   assertKeyword,
   callKeyword,
+  catchKeyword,
   commentMarker,
   constantKeyword,
   eachKeyword,
@@ -36,6 +37,7 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
+      [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elifKeyword, (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
@@ -61,6 +63,8 @@ export class StatementSelector extends AbstractSelector {
     let result = false;
     if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
+    } else if (keyword === catchKeyword) {
+      result = parent.getIdPrefix() === tryKeyword;
     } else if (keyword === callKeyword) {
       result = !(
         this.isWithinAFunction() ||

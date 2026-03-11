@@ -408,10 +408,9 @@ main
   try
     variable a set to 1
     set a to 2
-    throw exception "error"
-  catch exception in e
-    variable b set to e
-    call printNoLine(b)
+    throw ElanRuntimeException "error"
+  catch ElanRuntimeException
+    call printNoLine("error")
   end try
 end main`;
 
@@ -428,7 +427,7 @@ end main`;
 
     const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
-    await assertDebugBreakPoint(fileImpl, "set11", expected);
+    await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
 
   test("Pass_InCatch", async () => {
@@ -438,10 +437,10 @@ main
   try
     variable a set to 1
     set a to 2
-    throw exception "error"
-  catch exception in e
-    variable b set to e
-    call printNoLine(b)
+    throw ElanRuntimeException "error"
+  catch ElanRuntimeException
+    variable b set to 1
+    call print(b)
   end try
 end main`;
 
@@ -457,11 +456,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("b", "error", '{"Type":"String"}'),
+      asDebugSymbol("b", 1, '{"Type":"Int"}'),
       asDebugSymbol("e", "error", '{"Type":"String"}'),
     ];
-
-    await assertDebugBreakPoint(fileImpl, "call19", expected);
+    await assertDebugBreakPoint(fileImpl, "call21", expected);
   });
 
   test("Pass_InIf", async () => {

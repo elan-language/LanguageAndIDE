@@ -4,7 +4,7 @@ test test_try_1
   try
     call foo()
     call print("not caught")
-  catch exception in e
+  catch ElanRuntimeException
     call print(e)
   end try
 end test
@@ -14,9 +14,9 @@ test test_try_2
   try
     call foo()
     call print("not caught")
-  catch exception in e
+  catch ElanRuntimeException
     if not (e.equals("an expected message")) then
-      throw exception e
+      throw ElanRuntimeException e
     end if
   end try
 end test
