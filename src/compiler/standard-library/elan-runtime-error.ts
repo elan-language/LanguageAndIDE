@@ -18,6 +18,10 @@ export class ElanRuntimeError extends Error {
     super(err instanceof Error ? err.message : err);
   }
 
+  asString() {
+    return this.message ?? "a ElanRuntimeError";
+  }
+
   useLine(token: string) {
     return !(
       token.startsWith("data") ||
