@@ -122,8 +122,8 @@ function drawGrid(grid as Array2D<of String>) returns String
     set html to html + "<word>"
     for col from 0 to 4 + 1 step 1
       variable entry set to grid[col, row]
-      variable ch set to if entry.length() > 0 then entry[0] else ""
-      variable mark set to if entry.length() > 1 then entry.subString(1, entry.length()) else ""
+      variable ch set to if(entry.length() > 0, entry[0], "")
+      variable mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
       set html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
     set html to html + "</word>"

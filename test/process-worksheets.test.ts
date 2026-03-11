@@ -26,7 +26,7 @@ suite("process worksheets", () => {
     const code = `procedure fillRandom(grid as List<of List<of Int>>)
   for col from 0 to 39 + 1 step 1
     for row from 0 to 29 + 1 step 1
-      variable cell set to if random() > 0.5 then black else white
+      variable cell set to if(random() > 0.5, black, white)
       set grid[col][row] to cell
     end for
   end for
@@ -40,7 +40,7 @@ end procedure`;
   test("process statement", async () => {
     const code = `for col from 0 to 39 + 1 step 1
   for row from 0 to 29 + 1 step 1
-    variable cell set to if random() > 0.5 then black else white
+    variable cell set to if(random() > 0.5, black, white)
     set grid[col][row] to cell
   end for
 end for`;

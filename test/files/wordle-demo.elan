@@ -1,4 +1,4 @@
-# 814a4392c1ff0554ade5292debc9ac0f789cadc526f3fc4f82496b489086b070 Elan 2.0.0-alpha guest default_profile valid
+# bea0ade7db941cc52be53163489077958699ef0034b910f5cd4bee1d51715401 Elan 2.0.0-alpha guest default_profile valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -78,7 +78,7 @@ procedure enterAttempt(attemptNo as Int, grid as List<of List<of String>>, used 
     if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
       set grid[chNo][attemptNo] to ""
-      set word to word
+      set word to word[0..chNo]
       call clearPrintedText()
     elif (chNo < 5) and isUCLetter(k) then
       set grid[chNo][attemptNo] to k
@@ -275,14 +275,14 @@ test test_possibleAnswersAfterAttempt
 end test
 
 function drawGrid(grid as List<of List<of String>>) returns String
-  variable html set to $"{style} "
+  variable html set to $"<style>{style}</style> <grid>"
   for row from 0 to 5 + 1 step 1
     set html to html + "<word>"
     for col from 0 to 4 + 1 step 1
       constant entry set to grid[col][row]
-      constant ch set to if entry.length() > 0 then entry[0] else ""
-      constant mark set to if entry.length() > 1 then entry.subString(1, entry.length()) else ""
-      set html to html + $"{mark}'>{ch}"
+      constant ch set to if(entry.length() > 0, entry[0], "")
+      constant mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
+      set html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
     set html to html + "</word>"
   end for
@@ -295,7 +295,7 @@ function drawKeyboard(used as Dictionary<of String, String>) returns String
     if k.equals("-") then
       set html to html + "</div><div>"
     else
-      set html to html + $"{used[k]}'>{k}"
+      set html to html + $"<key class='_{used[k]}'>{k}</key>"
     end if
   end each
   return html + "<key></key></div></keyboard>"

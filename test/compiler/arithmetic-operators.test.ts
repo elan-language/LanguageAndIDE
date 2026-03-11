@@ -294,7 +294,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(if (25 mod 20) < 19 then 1 else 2)
+  call printNoLine(if((25 mod 20) < 19, 1, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
