@@ -409,7 +409,7 @@ main
     variable a set to 1
     set a to 2
     throw ElanRuntimeException "error"
-  catch ElanRuntimeException in e
+  catch ElanRuntimeException
     call printNoLine("error")
   end try
 end main`;
@@ -438,7 +438,7 @@ main
     variable a set to 1
     set a to 2
     throw ElanRuntimeException "error"
-  catch ElanRuntimeException in e
+  catch ElanRuntimeException
     variable b set to 1
     call print(b)
   end try
@@ -459,7 +459,7 @@ end main`;
       asDebugSymbol("b", 1, '{"Type":"Int"}'),
       asDebugSymbol("e", "error", '{"Type":"String"}'),
     ];
-    await assertDebugBreakPoint(fileImpl, "call20", expected);
+    await assertDebugBreakPoint(fileImpl, "call21", expected);
   });
 
   test("Pass_InIf", async () => {

@@ -1,4 +1,4 @@
-import { catchKeyword, inKeyword } from "../../../compiler/elan-keywords";
+import { catchKeyword } from "../../../compiler/elan-keywords";
 import { ExceptionTypeField } from "../fields/exception-type-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -58,7 +58,7 @@ export class CatchStatement extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${catchKeyword} ${this.exceptionType.renderAsElanSource()} ${inKeyword} ${this.variable.renderAsElanSource()}`;
+    return `${this.indent()}${catchKeyword} ${this.exceptionType.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -66,9 +66,6 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     source.remove(catchKeyword);
     source.remove(" ");
     this.exceptionType.parseFrom(source);
-    source.remove(" ");
-    source.remove(inKeyword);
-    source.remove(" e");
     source.removeNewLine();
   }
   override isGhosted(): boolean {

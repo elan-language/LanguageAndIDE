@@ -494,7 +494,7 @@ end main
 main
   try
     call print("")
-  catch ElanRuntimeException in e
+  catch ElanRuntimeException
     call print("")
   end try
 end main
