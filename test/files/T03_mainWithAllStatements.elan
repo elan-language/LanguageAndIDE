@@ -1,4 +1,4 @@
-# 0d56094b2725e135c73ab60904d7748b4eeac56e394e645b095bdad1cf41898f Elan 2.0.0-alpha guest default_profile valid
+# 034791554da09f10fd7c9ebf70849e30261497d805c2e089da6a6e73528541a7 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable a set to 3
@@ -26,6 +26,6 @@ main
   else
   end if
   try
-  catch exception in e
+  catch ElanRuntimeException in e
   end try
 end main

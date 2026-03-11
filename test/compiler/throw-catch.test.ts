@@ -160,7 +160,7 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch exception in e
+  catch ElanRuntimeException in e
     call printNoLine(e)
   end try
 end main
@@ -214,7 +214,7 @@ main
     variable y set to x[1]
     variable z set to y.p1
     call printNoLine("not caught")
-  catch exception in e
+  catch ElanRuntimeException in e
     call printNoLine(e)
   end try
 end main
@@ -286,7 +286,7 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch exception in e
+  catch ElanRuntimeException in e
     variable s set to ""
     set s to e
     call printNoLine(s)
@@ -342,7 +342,7 @@ main
   try
     variable a set to 1
     throw exception "fail"
-  catch exception in e
+  catch ElanRuntimeException in e
     variable a set to e
     call printNoLine(a)
   end try
@@ -396,7 +396,7 @@ main
   variable a set to 1
   try
     throw exception "fail"
-  catch exception in e
+  catch ElanRuntimeException in e
     call printNoLine(a)
   end try
 end main
@@ -448,7 +448,7 @@ main
   variable a set to 1
   try
     throw exception "fail"
-  catch exception in e
+  catch ElanRuntimeException in e
     [ghosted] constant a set to 1
   end try
 end main`;
@@ -572,7 +572,7 @@ main
   try
     variable a set to 1
     throw exception "fail"
-  catch exception in e
+  catch ElanRuntimeException in e
     call printNoLine(a)
   end try
 end main
@@ -604,7 +604,7 @@ main
   variable a set to 1
   try
     throw exception "fail"
-  catch exception in e
+  catch ElanRuntimeException in e
     variable a set to e
     call printNoLine(a)
   end try
