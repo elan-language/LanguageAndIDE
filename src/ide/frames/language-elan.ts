@@ -90,7 +90,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `<el-kw>${this.SET} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} ${this.EXCEPTION} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.NEW}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
