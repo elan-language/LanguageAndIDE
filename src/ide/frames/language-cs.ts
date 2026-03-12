@@ -103,6 +103,8 @@ export class LanguageCS extends LanguageCfamily {
     return this.default_typeTupleAsHtml(node);
   }
 
+  inclusiveToField: boolean = false;
+
   reservedWords: Set<string> = new Set<string>([
     `abstract`,
     `as`,

@@ -334,6 +334,8 @@ export class LanguageVB extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
+  inclusiveToField: boolean = true;
+
   reservedWords: Set<string> = new Set<string>([
     `addhandler`,
     `addressof`,

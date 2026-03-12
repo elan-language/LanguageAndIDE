@@ -64,6 +64,7 @@ export interface Language {
   TRUE: string;
   FALSE: string;
 
+  inclusiveToField: boolean;
   // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
   reservedWords: Set<string>;
 }

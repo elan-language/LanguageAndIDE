@@ -311,6 +311,8 @@ export class LanguageElan extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
+  inclusiveToField: boolean = false;
+
   // Elan keywords followed by JavaScript keywords
   reservedWords: Set<string> = new Set<string>([
     `abstract`,

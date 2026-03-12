@@ -155,5 +155,6 @@ export abstract class LanguageAbstract implements Language {
     return ` ${text} `;
   }
 
+  abstract inclusiveToField: boolean;
   abstract reservedWords: Set<string>;
 }
