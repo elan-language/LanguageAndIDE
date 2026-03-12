@@ -50,4 +50,19 @@ export class ForToField extends ExpressionField {
     }
     return revised;
   }
+
+  //The *compiler* should append this string onto the end of the compiled expression for this field.
+  adjustmentToCompiledExpression(): string {
+    let adjustment ="";
+    const step = this.forLoop.step.getRootNode() as StepNode;
+    const negativeStep = step.minus!.matchedText === "-";
+    if (this.inclusiveTo) {
+      if (negativeStep) {
+        adjustment = " + 1";
+      } else {
+        adjustment = " - 1";
+      }
+    }
+    return adjustment;
+  }
 }
