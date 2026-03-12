@@ -174,10 +174,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof Each) {
-      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
-    } else if (frame instanceof For) {
-      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
+    } else if (frame instanceof Each || frame instanceof For) {
+      html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalFunction) {
