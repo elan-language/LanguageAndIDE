@@ -275,14 +275,14 @@ Sub test_possibleAnswersAfterAttempt
 End Sub
 
 Function drawGrid(grid As List(Of List(Of String))) As String
-  Dim html = $"{style} " ' variable
+  Dim html = $"<style>{style}</style> <grid>" ' variable
   For row = 0 To 5 + 1 - 1 Step 1
     html = html + "<word>" ' set
     For col = 0 To 4 + 1 - 1 Step 1
       Const entry = grid[col][row]
-      Const ch = if entry.length() > 0 then entry[0] else ""
-      Const mark = if entry.length() > 1 then entry.subString(1, entry.length()) else ""
-      html = html + $"{mark}'>{ch}" ' set
+      Const ch = if(entry.length() > 0, entry[0], "")
+      Const mark = if(entry.length() > 1, entry.subString(1, entry.length()), "")
+      html = html + $"<ch class='_{mark}'>{ch}</ch>" ' set
     Next col
     html = html + "</word>" ' set
   Next row
@@ -295,7 +295,7 @@ Function drawKeyboard(used As Dictionary(Of String, String)) As String
     If k.equals("-") Then
       html = html + "</div><div>" ' set
     Else
-      html = html + $"{used[k]}'>{k}" ' set
+      html = html + $"<key class='_{used[k]}'>{k}</key>" ' set
     End If
   Next k
   Return html + "<key></key></div></keyboard>"

@@ -275,14 +275,14 @@ static void test_possibleAnswersAfterAttempt() {
 }
 
 static String drawGrid(List<List<String>> grid) { // function
-  var html = "" + (style).asString() + " ";
+  var html = "<style>" + (style).asString() + "</style> <grid>";
   for (int row = 0; row < 5 + 1; row = row + 1) {
     html = html + "<word>"; // set
     for (int col = 0; col < 4 + 1; col = col + 1) {
       final String entry = grid[col][row]; // constant
-      final String ch = if entry.length() > 0 then entry[0] else ""; // constant
-      final String mark = if entry.length() > 1 then entry.subString(1, entry.length()) else ""; // constant
-      html = html + "" + (mark).asString() + "'>" + (ch).asString() + ""; // set
+      final String ch = if(entry.length() > 0, entry[0], ""); // constant
+      final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
+      html = html + "<ch class='_" + (mark).asString() + "'>" + (ch).asString() + "</ch>"; // set
     }
     html = html + "</word>"; // set
   }
@@ -295,7 +295,7 @@ static String drawKeyboard(Dictionary<String, String> used) { // function
     if (k.equals("-")) {
       html = html + "</div><div>"; // set
     } else {
-      html = html + "" + (used[k]).asString() + "'>" + (k).asString() + ""; // set
+      html = html + "<key class='_" + (used[k]).asString() + "'>" + (k).asString() + "</key>"; // set
     }
   }
   return html + "<key></key></div></keyboard>";

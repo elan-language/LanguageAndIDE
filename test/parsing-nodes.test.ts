@@ -932,7 +932,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
       "",
-      "<el-kw>if</el-kw>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+      "<el-method>if</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
     );
     testNodeParse(
       new IfExpr(f),

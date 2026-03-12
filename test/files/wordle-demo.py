@@ -227,14 +227,14 @@ def  test_possibleAnswersAfterAttempt()-> None:
   assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
 
 def drawGrid(grid: list[list[str]]) -> str: # function
-  html = f"{style} " # variable
+  html = f"<style>{style}</style> <grid>" # variable
   for row in range(0, 5 + 1, 1):
     html = html + "<word>" # set
     for col in range(0, 4 + 1, 1):
       entry = grid[col][row] # constant
-      ch = if entry.length() > 0 then entry[0] else "" # constant
-      mark = if entry.length() > 1 then entry.subString(1, entry.length()) else "" # constant
-      html = html + f"{mark}'>{ch}" # set
+      ch = if(entry.length() > 0, entry[0], "") # constant
+      mark = if(entry.length() > 1, entry.subString(1, entry.length()), "") # constant
+      html = html + f"<ch class='_{mark}'>{ch}</ch>" # set
     html = html + "</word>" # set
   return html + "</grid>"
 
@@ -244,7 +244,7 @@ def drawKeyboard(used: Dictionary[str, str]) -> str: # function
     if k.equals("-"):
       html = html + "</div><div>" # set
     else:
-      html = html + f"{used[k]}'>{k}" # set
+      html = html + f"<key class='_{used[k]}'>{k}</key>" # set
   return html + "<key></key></div></keyboard>"
 
 +style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant
