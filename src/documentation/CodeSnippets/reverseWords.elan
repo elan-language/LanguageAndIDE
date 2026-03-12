@@ -1,0 +1,11 @@
+# 54561d70579a0dca5a976b3259e06c0abeb52e30e13455cc70324112a0571c4c Elan 2.0.0-alpha guest default_profile valid
+
+main
+  # snipFrom
+  variable s set to "'Twas brillig and the slithy toves"
+  variable sR set to ""
+  variable eL set to new List<of String>()
+  set sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
+  call print(sR)
+  # snipTo
+end main

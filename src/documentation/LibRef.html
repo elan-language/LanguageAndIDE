@@ -1283,7 +1283,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><el-code>Tuple</el-code></td>
   <td><el-code>Tuple</el-code></td>
   <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argumentl<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
 </table>
 
@@ -1405,11 +1405,11 @@ of differing Types held together and referenced by a single identifier.</p>
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().length()</el-code> &#x27f6; 15</p>
+  <p><el-code><el-kw>call </el-kw><el-method>print</el-method>(dict.keys().length()</el-code>) &#x27f6; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().contains(42)</el-code> &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
-  <p><el-code>print dict.values().contains("widget")</el-code> &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
+  <p><el-code><el-kw>call </el-kw>(print dict.keys().contains(42)</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
+  <p><el-code><el-kw>call </el-kw>(print dict.values().contains("widget")</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
 </ul>
 
 <h1 id="Graphics">Graphics</h1>
@@ -2188,15 +2188,22 @@ By this means features such as simple SVG animation can be defined.</p>
 <li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
-<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-code>try..catch</el-code> like this:</li>
+<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-kw>try..catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a class provided by Elan for this purpose):</li>
 
 <el-code-block source="TextFileWriter_3.elan">
-<el-statement class="ok multiline" id="try35" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
-<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok multiline outdent" id="catch37" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catch exception in </el-kw><el-field id="ident39" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>variableName</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print47" tabindex="0"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="0"><el-txt>"<el-lit>File save cancelled</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for7" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr11" class="ok" tabindex="-1"><el-txt>(<el-lit>100</el-lit> + <el-lit>1</el-lit>)</el-txt></el-field><el-kw> step </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="call16" tabindex="-1"><el-kw>call </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>writeLine</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args18" class="optional ok" tabindex="-1"><el-txt>$"<el-lit></el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end for</el-kw>
 </el-statement>
+<el-statement class="ok multiline" id="try20" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>try </el-kw>
+</el-top>
+<el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-id>file</el-id>.<el-method><el-method>saveAndClose</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args28" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok outdent" id="catch22" tabindex="-1"><el-kw>catch <el-field id="type24" class="ok" tabindex="-1"><el-txt><el-type>ElanRuntimeError</el-type></el-txt><el-place>ElanRuntimeError</el-place></el-field></el-kw></el-statement>
+<el-statement class="ok" id="call30" tabindex="-1"><el-kw>call </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args32" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Save cancelled</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end try</el-kw>
 </el-statement>
 </el-code-block>
@@ -2216,7 +2223,7 @@ By this means features such as simple SVG animation can be defined.</p>
 <img src="images/Html_1.png" width="250" height="200">
 
 <p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
-    (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
+    (using <el-kw>call</el-kw> <el-method>print</el-method>() or any of the print procedures)
     will be overlaid on top of this.</p>
 
 <p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
@@ -2400,25 +2407,28 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To roll a dice in a function:</p>
 
 <el-code-block source="func_random.elan">
-<main class="ok multiline">
-<el-top><el-kw>main</el-kw></el-top>
-<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline">
-<el-top><el-kw>for </el-kw><el-field class="ok"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field class="ok"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field class="ok"><el-txt><el-lit>10</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field class="ok"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok"><el-kw>set </el-kw><el-field class="ok"><el-txt><el-id>dice</el-id>, <el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field class="ok"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>)</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt><el-id>dice</el-id></el-txt></el-field></el-statement>
+<el-main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method><el-method>initialiseFromClock</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for12" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="set18" tabindex="-1"><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="set21" tabindex="-1"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 <el-kw>end main</el-kw>
-</main>
-<el-func class="ok multiline">
-<el-top><el-kw>function </el-kw><el-method><el-field class="ok"><el-txt>rollDice</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field class="ok"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field></el-top>
-<el-statement class="ok"><el-kw>return </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-statement>
+</el-main>
+<el-func class="ok multiline" id="func27" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params30" class="optional ok" tabindex="-1"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type31" class="ok" tabindex="-1"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return32" tabindex="-1"><el-kw>return </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
+</el-func></el-code-block>
 <hr>
 </div></div>
 
@@ -2440,8 +2450,9 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <el-code-block source="functionChars.elan">
 <el-func class="ok multiline" id="func1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>matchAt</el-method></el-txt></el-field>(<el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>a</el-id>[<el-id>p</el-id>]<el-kw> is </el-kw><el-id>b</el-id>[<el-id>p</el-id>]<el-kw><br>then </el-kw><el-id>true</el-id><el-kw><br>else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>matchAt</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>a</el-id>[<el-id>p</el-id>].<el-method>equals</el-method>(<el-id>b</el-id>[<el-id>p</el-id>])<el-kw> then </el-kw><el-kw>true</el-kw><el-kw> else </el-kw><el-kw>false</el-kw></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -2841,9 +2852,7 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
   <td><el-method>print</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td>prints the string to the display followed by a newline.<br>
-  This method offers the means to do all printing via methods<br>
-  rather than coding a mixture of <el-code>call</el-code> and <el-code>print</el-code> instructions</td>
+  <td>prints the string to the display followed by a newline</td>
  </tr><tr id="printNoLine">
   <td><el-method>printNoLine</el-method></td>
   <td><el-type>String</el-type></td>
@@ -2875,7 +2884,8 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
    3 times 4 equals 12
 </el-code></pre>
 
-<p>The last example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed.</p>
+<p>The last <el-kw>call</el-kw> <el-method>print</el-method> above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>:
+variables to be evaluated before printing are put within curly braces, and the string containing them is prefixed with $.</p>
 <p>If you <el-kw>call</el-kw> <el-method>print</el-method>() with no arguments, then it prints a newline, i.e. its effect is the same as <el-kw>call</el-kw> <el-method>print</el-method><el-code>("<el-lit>\n</el-lit>")</el-code>.</p>
 
 <p>Procedure <el-method>printTab</el-method> helps in the layout of information printed to the display, in particular, when printing columns of data.
@@ -2894,7 +2904,7 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 </el-statement>
 </el-code-block>
 
-<p>For such numeric output, it is preferable to right-align the columns. For example, list powers of 9 using a lambda:</p>
+<p>For such numeric output, it is preferable to right-align the columns. For example, to list powers of 9:</p>
 
 <el-code-block source="printTab_R.elan">
 <el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>tab</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement>
@@ -3098,20 +3108,12 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>reduce</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the integer values in a list to their sum:</p>
-<el-code-block source source="reduce.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-lit>0</el-lit>, <el-kw>lambda</el-kw> <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>m</el-id> + <el-id>n</el-id>)</el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; 15
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a <el-type>List</el-type> to their sum:</p>
+<el-code-block source source="sumFloat.elan">
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.75</el-lit>, <el-lit><el-lit>0</el-lit>.29</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>sum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; (<el-id>sum</el-id> + <el-id>m</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
+&nbsp;&nbsp;&#x27f6; 10.94
 </el-code-block>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a list to their sum:</p>
-<el-code-block source source="reduce.elan">
-<el-statement class="ok" id="let12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print15" tabindex="-1"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="-1"><el-txt><el-id>lj</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>fsum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; <el-id>fsum</el-id> + <el-id>item</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)</el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; 10.8
-</el-code-block>
-
 <h5 class="no-TOC">&nbsp;&nbsp;&nbsp;Notes</h5>
 <ul>
  <li>You usually need to round floating point values when outputting them.</li>
@@ -3120,14 +3122,27 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of items in a <el-type>List</el-type>:</p>
 <el-code-block>
-<el-statement class="ok" id="print30" tabindex="-1"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-kw>lambda</el-kw> <el-id>liR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>liR</el-id>.<el-method>withPrepend</el-method>(<el-id>item</el-id>))</el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; [11, 7, 4, 3, 2]
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>nR</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>eL</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>reduce</el-method>(<el-id>eL</el-id>, <el-kw>lambda</el-kw> <el-id>nR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>nR</el-id>.<el-method>withPrepend</el-method>(<el-id>m</el-id>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
+&nbsp;&nbsp;&#x27f6; [13, 11, 7, 5, 3, 2]
 </el-code-block>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example on a <el-type>Dictionary</el-type> from demo program <el-code>wordle-solver.elan</el-code>:</p>
-<el-code-block source source="Wordle.elan">
-<el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of the words in a <el-type>String</el-type>,
+use <el-method>reduce</el-method> on a <el-type>List</el-type> of words (created by <el-method>split</el-method> and then reassembled by <el-method>join</el-method>):</p>
+<el-code-block source="reverseWords.elan">
+<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>"<el-lit>'Twas brillig and the slithy toves</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var8" tabindex="-1"><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>sR</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>""</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var11" tabindex="-1"><el-kw>variable </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>eL</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="set14" tabindex="-1"><el-kw>set </el-kw><el-field id="ident15" class="ok" tabindex="-1"><el-txt><el-id>sR</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-id>s</el-id>.<el-method>split</el-method>("<el-lit> </el-lit>").<el-method>reduce</el-method>(<el-id>eL</el-id>, <el-kw>lambda</el-kw> <el-id>sR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-id>word</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>sR</el-id>.<el-method>withPrepend</el-method>(<el-id>word</el-id>)).<el-method>join</el-method>("<el-lit> </el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call17" tabindex="-1"><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args19" class="optional ok" tabindex="-1"><el-txt><el-id>sR</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
+&nbsp;&nbsp;&#x27f6; toves slithy the and brillig 'Twas
 </el-code-block>
+<h5 class="no-TOC">&nbsp;&nbsp;&nbsp;Note</h5>
+<ul>
+ <li>In these two examples on Lists, an empty List has to defined for use as the first argument of <el-method>reduce</el-method>.</li>
+</ul>
 <hr>
 </div></div>
 
