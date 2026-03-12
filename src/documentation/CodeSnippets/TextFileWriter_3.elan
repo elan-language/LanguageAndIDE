@@ -1,13 +1,15 @@
-# 93015e833382f3f1d1094331beb80b608119b0667998991f8f09c371f69bfa5a Elan 2.0.0-alpha guest default_profile valid
+# fdbd3cb1fc2068fa337f77930186bd0f59519742054328b74fe8bd63214fd4ad Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable file set to createFileForWriting("squares.txt")
-  for i from 1 to 100 + 1 step 1
-    call file.writeLine("{i*i}")
+  for i from 1 to (100 + 1) step 1
+    call file.writeLine($"{i*i}")
   end for
   try
     call file.saveAndClose()
   catch ElanRuntimeException
     call print("File save cancelled")
   end try
+  # snipTo
 end main

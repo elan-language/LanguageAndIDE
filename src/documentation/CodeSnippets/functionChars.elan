@@ -1,14 +1,5 @@
-# 7ad435e36bc55d46e9b13fde7826114edad13bbb75b89e11ea2e9a47973d37dd Elan 2.0.0-alpha guest default_profile valid
+# c05025685fe3de9908894fa20a6fd6f1eb6b6c05c3a5e8abdf01cbcfecf0d0a3 Elan 2.0.0-alpha guest default_profile valid
 
 function matchAt(a as String, b as String, p as Int) returns Boolean
   return if(a[p].equals(b[p]), true, false)
 end function
-
-class Sequence
-  property matchAt as Func<of String, String, Int => Boolean>
-
-end class
-
-main
-  variable m set to new Sequence()
-end main
