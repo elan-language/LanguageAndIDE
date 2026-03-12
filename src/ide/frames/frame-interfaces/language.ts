@@ -1,3 +1,5 @@
+import { NewInstance } from "../parse-nodes/new-instance";
+import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
@@ -25,6 +27,9 @@ export interface Language {
   parseText(node: ParseNode, text: string): boolean;
 
   getFields(node: Frame): Field[];
+
+  addNodesForNewInstance(node: NewInstance): void;
+  addNodesForParamDef(node: ParamDefNode): void;
 
   MOD: string;
   EQUAL: string;

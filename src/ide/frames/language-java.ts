@@ -3,11 +3,14 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
+import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { ConstantStatement } from "./statements/constant-statement";
@@ -65,8 +68,8 @@ export class LanguageJava extends LanguageCfamily {
 
   INTERPOLATED_STRING_PREFIX: string = ""; // Indicates that interpolated string is not recognised by Java
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
-    return this.common_parseParamDef(node, text);
+  addNodesForParamDef(node: ParamDefNode): void {
+    this.common_addNodesForParamDef(node);
   }
   paramDefAsHtml(node: ParamDefNode): string {
     return this.common_paramDefAsHtml(node);
@@ -93,6 +96,12 @@ export class LanguageJava extends LanguageCfamily {
 
   litStringFieldAsHtml(_node: LitStringField) {
     return `" + (${_node.expr?.renderAsExport()}).asString() + "`; // i.e. it turns an interpolated string into a sequence of appended strings
+  }
+
+  addNodesForNewInstance(node: NewInstance): void {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    this.addCommonElementsForNewInstance(node);
   }
 
   newInstanceAsHtml(node: NewInstance): string {

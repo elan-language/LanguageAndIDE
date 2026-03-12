@@ -209,7 +209,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   TRUE: string = "true";
   FALSE: string = "false";
 
-  common_parseParamDef(node: ParamDefNode, text: string): boolean {
+  common_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
       node.file,
       new Set<TokenType>([
@@ -222,8 +222,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     node.addElement(new SpaceNode(node.file, Space.required));
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
-    return text ? true : true;
   }
+
   common_paramDefAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }

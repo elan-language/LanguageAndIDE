@@ -213,7 +213,7 @@ export class LanguagePython extends LanguageAbstract {
   TRUE: string = "True";
   FALSE: string = "False";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
+  addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
@@ -227,8 +227,8 @@ export class LanguagePython extends LanguageAbstract {
       ]),
     );
     node.addElement(node.type);
-    return text ? true : true;
   }
+
   paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
@@ -256,9 +256,9 @@ export class LanguagePython extends LanguageAbstract {
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
   }
-  override parseNewInstance(node: NewInstance, _text: string): boolean {
-    node.addCommonElements();
-    return true;
+
+  addNodesForNewInstance(node: NewInstance): void {
+    this.addCommonElementsForNewInstance(node);
   }
 
   listNodeAsHtml(node: ListNode): string {

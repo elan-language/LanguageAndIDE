@@ -1,3 +1,4 @@
+import { asKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -19,13 +20,18 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -43,6 +49,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
 export class LanguageElan extends LanguageAbstract {
   private constructor() {
@@ -231,8 +238,27 @@ export class LanguageElan extends LanguageAbstract {
   TRUE: string = "true";
   FALSE: string = "false";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
-    return node || text ? false : false; // so will use the default on the node
+  addNodesForNewInstance(node: NewInstance): void {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    this.addCommonElementsForNewInstance(node);
+  }
+
+  addNodesForParamDef(node: ParamDefNode): void {
+    node.name = new IdentifierDef(node.file);
+    node.addElement(node.name);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new KeywordNode(node.file, asKeyword));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
   }
   paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;

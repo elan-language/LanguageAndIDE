@@ -263,7 +263,7 @@ export class LanguageVB extends LanguageAbstract {
   TRUE: string = "True";
   FALSE: string = "False";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
+  addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
@@ -278,7 +278,6 @@ export class LanguageVB extends LanguageAbstract {
       ]),
     );
     node.addElement(node.type);
-    return text ? true : true;
   }
 
   paramDefAsHtml(node: ParamDefNode): string {
@@ -289,11 +288,10 @@ export class LanguageVB extends LanguageAbstract {
     return `<i>name</i> ${this.AS} <i>Type</i>`;
   }
 
-  override parseNewInstance(node: NewInstance, _text: string): boolean {
+  addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));
     node.addElement(new SpaceNode(node.file, Space.required));
-    node.addCommonElements();
-    return true;
+    this.addCommonElementsForNewInstance(node);
   }
 
   parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
