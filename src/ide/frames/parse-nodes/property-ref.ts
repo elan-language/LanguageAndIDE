@@ -19,7 +19,7 @@ export class PropertyRef extends AbstractSequence {
     this.addElement(this.name);
   }
 
-  renderAsHtml() {
-    return this.delegateHtmlToLanguage();
+  renderAsHtml(): string {
+    return this.isValid() ? this.file.language().propertyRefAsHtml(this) : this.matchedText;
   }
 }

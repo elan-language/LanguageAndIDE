@@ -31,6 +31,8 @@ export class LitStringInterpolated extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return this.delegateHtmlToLanguage();
+    return this.isValid()
+      ? this.file.language().litStringInterpolatedAsHtml(this)
+      : this.matchedText;
   }
 }

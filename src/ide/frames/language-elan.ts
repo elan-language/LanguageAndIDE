@@ -1,3 +1,4 @@
+import { asKeyword, ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -19,11 +20,22 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { CSV } from "./parse-nodes/csv";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { KeywordNode } from "./parse-nodes/keyword-node";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
+import { TypeNode } from "./parse-nodes/type-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -40,6 +52,8 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
+import { LT, GT } from "./symbols";
 
 export class LanguageElan extends LanguageAbstract {
   private constructor() {
@@ -228,8 +242,40 @@ export class LanguageElan extends LanguageAbstract {
   TRUE: string = "true";
   FALSE: string = "false";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
-    return node || text ? false : false; // so will use the default on the node
+  addNodesForNewInstance(node: NewInstance): void {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    this.addCommonElementsForNewInstance(node);
+  }
+
+  addNodesForParamDef(node: ParamDefNode): void {
+    node.name = new IdentifierDef(node.file);
+    node.addElement(node.name);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new KeywordNode(node.file, asKeyword));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+  }
+
+  addNodesForTypeGeneric(node: TypeGenericNode): void {
+    node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
+    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
+    node.genericTypes = new CSV(node.file, typeConstr, 1);
+
+    node.addElement(node.qualifiedName!);
+    node.addElement(new PunctuationNode(node.file, LT));
+    node.addElement(new KeywordNode(node.file, ofKeyword));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(node.genericTypes);
+    node.addElement(new PunctuationNode(node.file, GT));
   }
   paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
@@ -239,9 +285,6 @@ export class LanguageElan extends LanguageAbstract {
     return ``; //i.e. use default specified in the node
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
-    return node && text ? false : false;
-  }
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }
@@ -252,6 +295,20 @@ export class LanguageElan extends LanguageAbstract {
 
   newInstanceAsHtml(node: NewInstance): string {
     return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
+  }
+
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
+  }
+  litStringFieldAsHtml(node: LitStringField): string {
+    return this.default_litStringFieldAsHtml(node);
+  }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
+    this.addCommonElementsForTypeTuple(node);
+  }
+  typeTupleAsHtml(node: TypeTupleNode): string {
+    return this.default_typeTupleAsHtml(node);
   }
 
   // Elan keywords followed by JavaScript keywords

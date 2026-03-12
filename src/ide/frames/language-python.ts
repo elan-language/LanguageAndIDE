@@ -24,6 +24,8 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -211,7 +213,7 @@ export class LanguagePython extends LanguageAbstract {
   TRUE: string = "True";
   FALSE: string = "False";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
+  addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
@@ -225,8 +227,8 @@ export class LanguagePython extends LanguageAbstract {
       ]),
     );
     node.addElement(node.type);
-    return text ? true : true;
   }
+
   paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
@@ -241,7 +243,7 @@ export class LanguagePython extends LanguageAbstract {
       : node.matchedText;
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+  addNodesForTypeGeneric(node: TypeGenericNode) {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
@@ -249,14 +251,13 @@ export class LanguagePython extends LanguageAbstract {
     node.addElement(new PunctuationNode(node.file, this.OPEN_SQUARE_BRACKET));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, this.CLOSE_SQUARE_BRACKET));
-    return text ? true : true;
   }
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
   }
-  override parseNewInstance(node: NewInstance, _text: string): boolean {
-    node.addCommonElements();
-    return true;
+
+  addNodesForNewInstance(node: NewInstance): void {
+    this.addCommonElementsForNewInstance(node);
   }
 
   listNodeAsHtml(node: ListNode): string {
@@ -267,7 +268,14 @@ export class LanguagePython extends LanguageAbstract {
     return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
-  override parseTypeTuple(node: TypeTupleNode, _text: string) {
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
+  }
+  litStringFieldAsHtml(node: LitStringField): string {
+    return this.default_litStringFieldAsHtml(node);
+  }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
     node.types = new CSV(
       node.file,
       () =>
@@ -285,7 +293,6 @@ export class LanguagePython extends LanguageAbstract {
     node.addElement(new PunctuationNode(node.file, OPEN_SQ_BRACKET));
     node.addElement(node.types);
     node.addElement(new PunctuationNode(node.file, CLOSE_SQ_BRACKET));
-    return true;
   }
 
   override typeTupleAsHtml(node: TypeTupleNode): string {

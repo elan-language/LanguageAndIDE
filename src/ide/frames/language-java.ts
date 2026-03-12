@@ -3,19 +3,19 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
+import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageJava extends LanguageCfamily {
-  private constructor() {
-    super();
-  }
-
   static Instance: Language = new LanguageJava();
 
   languageClass = "java";
@@ -64,26 +64,26 @@ export class LanguageJava extends LanguageCfamily {
 
   INTERPOLATED_STRING_PREFIX: string = ""; // Indicates that interpolated string is not recognised by Java
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
-    return this.common_parseParamDef(node, text);
+  addNodesForParamDef(node: ParamDefNode): void {
+    this.c_langs_addNodesForParamDef(node);
   }
   paramDefAsHtml(node: ParamDefNode): string {
-    return this.common_paramDefAsHtml(node);
+    return this.c_langs_paramDefAsHtml(node);
   }
 
   paramDefCompletion(node: ParamDefNode): string {
-    return this.common_paramDefCompletion(node);
+    return this.c_langs_paramDefCompletion(node);
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
-    return this.common_parseTypeGeneric(node, text);
+  addNodesForTypeGeneric(node: TypeGenericNode): void {
+    this.c_langs_addNodesForTypeGeneric(node);
   }
   typeGenericAsHtml(node: TypeGenericNode): string {
-    return this.common_typeGenericAsHtml(node);
+    return this.c_langs_typeGenericAsHtml(node);
   }
 
   propertyRefAsHtml(node: PropertyRef): string {
-    return this.common_propertyRefAsHtml(node);
+    return this.c_langs_propertyRefAsHtml(node);
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {
@@ -94,8 +94,22 @@ export class LanguageJava extends LanguageCfamily {
     return `" + (${_node.expr?.renderAsExport()}).asString() + "`; // i.e. it turns an interpolated string into a sequence of appended strings
   }
 
+  addNodesForNewInstance(node: NewInstance): void {
+    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    this.addCommonElementsForNewInstance(node);
+  }
+
   newInstanceAsHtml(node: NewInstance): string {
-    return this.common_newInstanceAsHtml(node);
+    return this.c_langs_newInstanceAsHtml(node);
+  }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
+    this.addCommonElementsForTypeTuple(node);
+  }
+
+  typeTupleAsHtml(node: TypeTupleNode): string {
+    return this.default_typeTupleAsHtml(node);
   }
 
   reservedWords: Set<string> = new Set<string>([
