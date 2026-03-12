@@ -9,6 +9,7 @@ import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageJava extends LanguageCfamily {
@@ -96,6 +97,10 @@ export class LanguageJava extends LanguageCfamily {
 
   newInstanceAsHtml(node: NewInstance): string {
     return this.common_newInstanceAsHtml(node);
+  }
+
+  typeTupleAsHtml(node: TypeTupleNode): string {
+    return this.default_typeTupleAsHtml(node);
   }
 
   reservedWords: Set<string> = new Set<string>([

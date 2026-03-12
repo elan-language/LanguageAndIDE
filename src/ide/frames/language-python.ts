@@ -24,6 +24,8 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -265,6 +267,13 @@ export class LanguagePython extends LanguageAbstract {
 
   propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
+  }
+
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
+  }
+  litStringFieldAsHtml(node: LitStringField): string {
+    return this.default_litStringFieldAsHtml(node);
   }
 
   override parseTypeTuple(node: TypeTupleNode, _text: string) {

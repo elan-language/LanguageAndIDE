@@ -76,16 +76,19 @@ export abstract class LanguageAbstract implements Language {
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract propertyRefAsHtml(node: PropertyRef): string;
   abstract newInstanceAsHtml(node: NewInstance): string;
+  abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
+  abstract litStringFieldAsHtml(node: LitStringField): string;
+  abstract typeTupleAsHtml(node: TypeTupleNode): string;
 
-  litStringInterpolatedAsHtml(node: LitStringInterpolated) {
+  default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
   }
 
-  litStringFieldAsHtml(node: LitStringField) {
+  default_litStringFieldAsHtml(node: LitStringField): string {
     return `{${node.expr!.renderAsHtml()}}`;
   }
 
-  typeTupleAsHtml(node: TypeTupleNode): string {
+  default_typeTupleAsHtml(node: TypeTupleNode): string {
     return `(${node.types?.renderAsHtml()})`;
   }
 
