@@ -1,15 +1,18 @@
-import { TokenType } from "../symbol-completion-helpers";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
-import { PunctuationNode } from "./punctuation-node";
-import { TypeNode } from "./type-node";
 
 export class TypeTupleNode extends AbstractSequence {
   types: CSV | undefined;
   tupleTypeName: string = "";
 
   parseText(text: string): void {
+    if (text.trim().length > 0) {
+      this.file.language().addNodesForTypeTuple(this);
+      super.parseText(text);
+    }
+  }
+
+  /*   parseText(text: string): void {
     if (text.length > 0) {
       if (!this.file.language().parseText(this, text)) {
         this.types = new CSV(
@@ -31,7 +34,8 @@ export class TypeTupleNode extends AbstractSequence {
       }
       super.parseText(text);
     }
-  }
+  } */
+
   renderAsHtml() {
     return this.delegateHtmlToLanguage();
   }

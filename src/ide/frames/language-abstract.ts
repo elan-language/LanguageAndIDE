@@ -6,6 +6,7 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
+import { CSV } from "./parse-nodes/csv";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -15,6 +16,7 @@ import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "./parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { CallStatement } from "./statements/call-statement";
@@ -109,23 +111,10 @@ export abstract class LanguageAbstract implements Language {
 
   abstract paramDefCompletion(node: ParamDefNode): string;
 
-  parseText(node: ParseNode, text: string): boolean {
-    let result = false;
-    if (node instanceof TypeGenericNode) {
-      result = this.parseTypeGeneric(node, text);
-    } else if (node instanceof TypeTupleNode) {
-      result = this.parseTypeTuple(node, text);
-    }
-    return result;
-  }
-
-  abstract parseTypeGeneric(node: TypeGenericNode, text: string): boolean;
-  parseTypeTuple(_node: TypeTupleNode, _text: string): boolean {
-    return false;
-  }
-
   abstract addNodesForParamDef(node: ParamDefNode): void;
   abstract addNodesForNewInstance(node: NewInstance): void;
+  abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
+  abstract addNodesForTypeTuple(node: TypeTupleNode): void;
 
   protected addCommonElementsForNewInstance(node: NewInstance): void {
     node.type = new TypeSimpleOrGeneric(node.file, new Set<TokenType>([TokenType.type_concrete]));
@@ -136,6 +125,25 @@ export abstract class LanguageAbstract implements Language {
     node.args = new ArgListNode(node.file, () => node.type!.matchedText);
     node.addElement(node.args);
     node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
+  }
+
+  protected addCommonElementsForTypeTuple(node: TypeTupleNode): void {
+    node.types = new CSV(
+      node.file,
+      () =>
+        new TypeNode(
+          node.file,
+          new Set<TokenType>([
+            TokenType.type_concrete,
+            TokenType.type_abstract,
+            TokenType.type_notInheritable,
+          ]),
+        ),
+      2,
+    );
+    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
+    node.addElement(node.types);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
   }
 

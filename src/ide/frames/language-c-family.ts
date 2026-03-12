@@ -209,7 +209,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   TRUE: string = "true";
   FALSE: string = "false";
 
-  common_addNodesForParamDef(node: ParamDefNode): void {
+  c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
       node.file,
       new Set<TokenType>([
@@ -224,34 +224,32 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     node.addElement(node.name);
   }
 
-  common_paramDefAsHtml(node: ParamDefNode): string {
+  c_langs_paramDefAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }
 
-  common_paramDefCompletion(_node: ParamDefNode): string {
+  c_langs_paramDefCompletion(_node: ParamDefNode): string {
     return `<i>Type</i> <i>name</i>`;
   }
 
-  common_parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+  c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
-
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, LT));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, GT));
-    return text ? true : true;
   }
-  common_typeGenericAsHtml(node: TypeGenericNode): string {
+  c_langs_typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 
-  common_propertyRefAsHtml(node: PropertyRef): string {
+  c_langs_propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
-  common_newInstanceAsHtml(node: NewInstance): string {
+  c_langs_newInstanceAsHtml(node: NewInstance): string {
     return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 }

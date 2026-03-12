@@ -57,25 +57,30 @@ export class LanguageCS extends LanguageCfamily {
   }
 
   addNodesForParamDef(node: ParamDefNode): void {
-    this.common_addNodesForParamDef(node);
+    this.c_langs_addNodesForParamDef(node);
   }
   paramDefAsHtml(node: ParamDefNode): string {
-    return this.common_paramDefAsHtml(node);
+    return this.c_langs_paramDefAsHtml(node);
   }
 
   paramDefCompletion(node: ParamDefNode): string {
-    return this.common_paramDefCompletion(node);
+    return this.c_langs_paramDefCompletion(node);
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
-    return this.common_parseTypeGeneric(node, text);
+  addNodesForTypeGeneric(node: TypeGenericNode): void {
+    this.c_langs_addNodesForTypeGeneric(node);
   }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
+    this.addCommonElementsForTypeTuple(node);
+  }
+
   typeGenericAsHtml(node: TypeGenericNode): string {
-    return this.common_typeGenericAsHtml(node);
+    return this.c_langs_typeGenericAsHtml(node);
   }
 
   propertyRefAsHtml(node: PropertyRef): string {
-    return this.common_propertyRefAsHtml(node);
+    return this.c_langs_propertyRefAsHtml(node);
   }
 
   addNodesForNewInstance(node: NewInstance): void {
@@ -85,7 +90,7 @@ export class LanguageCS extends LanguageCfamily {
   }
 
   newInstanceAsHtml(node: NewInstance): string {
-    return this.common_newInstanceAsHtml(node);
+    return this.c_langs_newInstanceAsHtml(node);
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {

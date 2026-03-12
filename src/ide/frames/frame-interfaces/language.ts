@@ -1,5 +1,7 @@
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { TypeGenericNode } from "../parse-nodes/type-generic-node";
+import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
@@ -24,12 +26,12 @@ export interface Language {
 
   completionWhenEmpty(node: ParseNode): string;
 
-  parseText(node: ParseNode, text: string): boolean;
-
   getFields(node: Frame): Field[];
 
   addNodesForNewInstance(node: NewInstance): void;
   addNodesForParamDef(node: ParamDefNode): void;
+  addNodesForTypeGeneric(node: TypeGenericNode): void;
+  addNodesForTypeTuple(node: TypeTupleNode): void;
 
   MOD: string;
   EQUAL: string;

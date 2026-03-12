@@ -294,7 +294,7 @@ export class LanguageVB extends LanguageAbstract {
     this.addCommonElementsForNewInstance(node);
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+  addNodesForTypeGeneric(node: TypeGenericNode) {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
@@ -305,7 +305,6 @@ export class LanguageVB extends LanguageAbstract {
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-    return text ? true : true;
   }
 
   typeGenericAsHtml(node: TypeGenericNode): string {
@@ -326,6 +325,11 @@ export class LanguageVB extends LanguageAbstract {
   litStringFieldAsHtml(node: LitStringField): string {
     return this.default_litStringFieldAsHtml(node);
   }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
+    this.addCommonElementsForTypeTuple(node);
+  }
+
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
   }
