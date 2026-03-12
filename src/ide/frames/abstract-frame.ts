@@ -897,7 +897,8 @@ export abstract class AbstractFrame implements Frame {
   }
 
   annotationAsSource() {
-    return this.language().annotation(this).trim();
+    const annotation = this.language().annotation(this).trim();
+    return annotation.length > 0 ? ` ${this.language().COMMENT_MARKER} ${annotation}` : ``;
   }
 
   language(): Language {
