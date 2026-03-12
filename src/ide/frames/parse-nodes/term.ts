@@ -3,6 +3,7 @@ import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { IfExpr } from "./if-expr";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
 import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";
@@ -14,6 +15,7 @@ export class Term extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
+    this.alternatives.push(new IfExpr(this.file));
     this.alternatives.push(new TermSimpleWithOptIndex(this.file));
     this.alternatives.push(new TermChained(this.file));
     super.parseText(text);

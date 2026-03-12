@@ -16,17 +16,17 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  variable g2 set to if k.equals("") then g else g.withKey(k)
+  variable g2 set to if(k.equals(""), g, g.withKey(k))
   variable g3 set to moveSnake(g2)
   variable g4 set to eatAppleIfPoss(g3)
-  return if gameOver(g4) then g4.withIsOn(false) else g4
+  return if(gameOver(g4), g4.withIsOn(false), g4)
 end function
 
 function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
   variable b2 set to graphicsPut(b, g.apple.x, g.apple.y, red)
   variable b3 set to graphicsPut(b2, g.head.x, g.head.y, green)
   variable tail set to g.body[0]
-  variable tailColour set to if tail.equals(g.priorTail) then green else white
+  variable tailColour set to if(tail.equals(g.priorTail), green, white)
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 end function
 
@@ -43,15 +43,15 @@ function moveSnake(g as Game) returns Game
   variable k set to g.key
   variable x set to g.head.x
   variable y set to g.head.y
-  variable newX set to if k.equals("a") then x - 1 else if k.equals("d") then x + 1 else x
-  variable newY set to if k.equals("w") then y - 1 else if k.equals("s") then y + 1 else y
+  variable newX set to if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
+  variable newY set to if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
   return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
   variable tail set to g.body[0]
   variable moveTail set to g.body.subList(1, g.body.length())
-  return if headOverApple(g) then g.withNewApple() else g.withPriorTail(tail).withBody(moveTail)
+  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 end function
 
 function headOverApple(g as Game) returns Boolean
@@ -106,7 +106,7 @@ class Game
     variable rnd3 set to y_rnd3.item_1
     variable apple2 set to new Square(x, y)
     variable g2 set to withApple(apple2).withRnd(rnd3)
-    return if g2.body.contains(apple2) then g2.withNewApple() else g2
+    return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
   function withHead(value as Square) returns Game

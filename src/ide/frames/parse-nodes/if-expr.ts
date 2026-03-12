@@ -1,10 +1,11 @@
-import { elseKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
+import { ifKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { CommaNode } from "./comma-node";
 import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
-import { Space } from "./parse-node-helpers";
-import { SpaceNode } from "./space-node";
+import { PunctuationNode } from "./punctuation-node";
 
 export class IfExpr extends AbstractSequence {
   condition: ExprNode | undefined;
@@ -14,20 +15,17 @@ export class IfExpr extends AbstractSequence {
   parseText(text: string): void {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(this.file, ifKeyword));
-      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
       this.condition = new ExprNode(this.file);
       this.condition.setSyntaxCompletionWhenEmpty("<i>condition </i>");
       this.addElement(this.condition);
-      this.addElement(new SpaceNode(this.file, Space.required));
-      this.addElement(new KeywordNode(this.file, thenKeyword));
-      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new CommaNode(this.file));
       this.whenTrue = new ExprNode(this.file);
       this.addElement(this.whenTrue);
-      this.addElement(new SpaceNode(this.file, Space.required));
-      this.addElement(new KeywordNode(this.file, elseKeyword));
-      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new CommaNode(this.file));
       this.whenFalse = new ExprNode(this.file);
       this.addElement(this.whenFalse);
+      this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
       super.parseText(text);
     }
   }
@@ -39,6 +37,6 @@ export class IfExpr extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `<el-kw>${ifKeyword} </el-kw>${this.condition?.renderAsHtml()}<el-kw> ${thenKeyword} </el-kw>${this.whenTrue?.renderAsHtml()}<el-kw> ${elseKeyword} </el-kw>${this.whenFalse?.renderAsHtml()}`;
+    return `<el-method>${ifKeyword}</el-method>(${this.condition?.renderAsHtml()}, ${this.whenTrue?.renderAsHtml()}, ${this.whenFalse?.renderAsHtml()})`;
   }
 }

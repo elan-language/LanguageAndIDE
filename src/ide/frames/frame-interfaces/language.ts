@@ -1,3 +1,10 @@
+import { LitStringField } from "../parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
+import { NewInstance } from "../parse-nodes/new-instance";
+import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { PropertyRef } from "../parse-nodes/property-ref";
+import { TypeGenericNode } from "../parse-nodes/type-generic-node";
+import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
@@ -18,13 +25,22 @@ export interface Language {
 
   renderBottomAsHtml(frame: Frame): string;
 
-  renderNodeAsHtml(node: ParseNode): string;
-
   completionWhenEmpty(node: ParseNode): string;
 
-  parseText(node: ParseNode, text: string): boolean;
-
   getFields(node: Frame): Field[];
+
+  addNodesForNewInstance(node: NewInstance): void;
+  addNodesForParamDef(node: ParamDefNode): void;
+  addNodesForTypeGeneric(node: TypeGenericNode): void;
+  addNodesForTypeTuple(node: TypeTupleNode): void;
+
+  paramDefAsHtml(node: ParamDefNode): string;
+  typeGenericAsHtml(node: TypeGenericNode): string;
+  propertyRefAsHtml(node: PropertyRef): string;
+  newInstanceAsHtml(node: NewInstance): string;
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
+  litStringFieldAsHtml(node: LitStringField): string;
+  typeTupleAsHtml(node: TypeTupleNode): string;
 
   MOD: string;
   EQUAL: string;

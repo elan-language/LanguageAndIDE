@@ -19,12 +19,13 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
-
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { LitStringField } from "./parse-nodes/lit-string-field";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -35,6 +36,7 @@ import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -89,7 +91,8 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)<el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} <el-type>Exception</el-type> ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
+      //Catch e As DivideByZeroException
+      html = `<el-kw>${this.CATCH}</el-kw> ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -112,7 +115,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} <el-type>Exception</el-type> </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.NEW} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
@@ -171,10 +174,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof Each) {
-      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
-    } else if (frame instanceof For) {
-      html = `<el-kw>${this.NEXT} ${frame.variable.renderAsHtml()}</el-kw>`;
+    } else if (frame instanceof Each || frame instanceof For) {
+      html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalFunction) {
@@ -260,7 +261,7 @@ export class LanguageVB extends LanguageAbstract {
   TRUE: string = "True";
   FALSE: string = "False";
 
-  parseParamDef(node: ParamDefNode, text: string): boolean {
+  addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
@@ -275,7 +276,6 @@ export class LanguageVB extends LanguageAbstract {
       ]),
     );
     node.addElement(node.type);
-    return text ? true : true;
   }
 
   paramDefAsHtml(node: ParamDefNode): string {
@@ -286,14 +286,13 @@ export class LanguageVB extends LanguageAbstract {
     return `<i>name</i> ${this.AS} <i>Type</i>`;
   }
 
-  override parseNewInstance(node: NewInstance, _text: string): boolean {
+  addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));
     node.addElement(new SpaceNode(node.file, Space.required));
-    node.addCommonElements();
-    return true;
+    this.addCommonElementsForNewInstance(node);
   }
 
-  parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+  addNodesForTypeGeneric(node: TypeGenericNode) {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
@@ -304,9 +303,8 @@ export class LanguageVB extends LanguageAbstract {
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-    return text ? true : true;
   }
-  // IMPORTANT: 'of' should be 'Of' (defined below) - same problem as 'New'
+
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
@@ -317,6 +315,21 @@ export class LanguageVB extends LanguageAbstract {
 
   newInstanceAsHtml(node: NewInstance): string {
     return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
+  }
+
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
+  }
+  litStringFieldAsHtml(node: LitStringField): string {
+    return this.default_litStringFieldAsHtml(node);
+  }
+
+  addNodesForTypeTuple(node: TypeTupleNode): void {
+    this.addCommonElementsForTypeTuple(node);
+  }
+
+  typeTupleAsHtml(node: TypeTupleNode): string {
+    return this.default_typeTupleAsHtml(node);
   }
 
   reservedWords: Set<string> = new Set<string>([

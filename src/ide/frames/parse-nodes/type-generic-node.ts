@@ -1,15 +1,9 @@
-import { ofKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
-import { GT, LT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
-import { KeywordNode } from "./keyword-node";
-import { concreteAndAbstractTypes, Space } from "./parse-node-helpers";
-import { PunctuationNode } from "./punctuation-node";
-import { SpaceNode } from "./space-node";
+import { concreteAndAbstractTypes } from "./parse-node-helpers";
 import { TypeNameQualifiedNode } from "./type-name-qualified-node";
-import { TypeNode } from "./type-node";
 
 export class TypeGenericNode extends AbstractSequence {
   qualifiedName: TypeNameQualifiedNode | undefined;
@@ -23,20 +17,8 @@ export class TypeGenericNode extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.remainingText = text;
-    if (text.length > 0) {
-      if (!this.file.language().parseText(this, text)) {
-        this.qualifiedName = new TypeNameQualifiedNode(this.file, this.tokenTypes);
-        const typeConstr = () => new TypeNode(this.file, this.concreteAndAbstract);
-        this.genericTypes = new CSV(this.file, typeConstr, 1);
-
-        this.addElement(this.qualifiedName!);
-        this.addElement(new PunctuationNode(this.file, LT));
-        this.addElement(new KeywordNode(this.file, ofKeyword));
-        this.addElement(new SpaceNode(this.file, Space.required));
-        this.addElement(this.genericTypes);
-        this.addElement(new PunctuationNode(this.file, GT));
-      }
+    if (text.trim().length > 0) {
+      this.file.language().addNodesForTypeGeneric(this);
       super.parseText(text);
     }
   }
@@ -49,7 +31,7 @@ export class TypeGenericNode extends AbstractSequence {
     }
   }
 
-  renderAsHtml() {
-    return this.delegateHtmlToLanguage();
+  renderAsHtml(): string {
+    return this.isValid() ? this.file.language().typeGenericAsHtml(this) : this.matchedText;
   }
 }

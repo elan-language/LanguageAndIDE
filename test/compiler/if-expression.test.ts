@@ -12,17 +12,17 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("If Statement", () => {
+suite("if Expression", () => {
   test("Pass_1", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(if true then 1 else 2)
-  call printNoLine(if false then 3 else 4)
-  call printNoLine(if true then if true then "A" else "B" else if true then "C" else "D")
-  call printNoLine(if true then if false then "A" else "B" else if true then "C" else "D")
-  call printNoLine(if false then if true then "A" else "B" else if true then "C" else "D")
-  call printNoLine(if false then if true then "A" else "B" else if false then "C" else "D")
+  call printNoLine(if(true, 1, 2))
+  call printNoLine(if(false, 3, 4))
+  call printNoLine(if(true, if(true, "A", "B"), if(true, "C", "D")))
+  call printNoLine(if(true, if(false, "A", "B"), if(true, "C", "D")))
+  call printNoLine(if(false, if(true, "A", "B"), if(true, "C", "D")))
+  call printNoLine(if(false, if(true, "A", "B"), if(false, "C", "D")))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

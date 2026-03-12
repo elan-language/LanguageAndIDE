@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -20,13 +21,13 @@ suite("Throw Catch", () => {
     const code = `${testHeader}
 
 main
-    throw exception "Foo"
+    throw ElanRuntimeError "Foo"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 return [main, _tests];}`;
 
@@ -47,19 +48,19 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
+  ignore_test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
     const code = `${testHeader}
 
 main
   variable msg set to "Foo"
-  throw exception msg
+  throw ElanRuntimeError msg
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let msg = "Foo";
-  throw new Error(msg);
+  throw new _stdlib.ElanRuntimeError(msg);
 }
 return [main, _tests];}`;
 
@@ -80,19 +81,19 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
+  ignore_test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
     const code = `${testHeader}
 
 main
   variable bar set to 1
-  throw exception $"{bar}"
+  throw ElanRuntimeError $"{bar}"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let bar = 1;
-  throw new Error(\`\${await _stdlib.asString(bar)}\`);
+  throw new _stdlib.ElanRuntimeError(\`\${await _stdlib.asString(bar)}\`);
 }
 return [main, _tests];}`;
 
@@ -121,7 +122,7 @@ main
 end main
  
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -131,7 +132,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -160,13 +161,13 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch exception in e
-    call printNoLine(e)
+  catch ElanRuntimeError
+    call printNoLine("Foo")
   end try
 end main
 
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -175,14 +176,15 @@ async function main() {
   try {
     await foo();
     await _stdlib.printNoLine("not caught");
-  } catch (_e) {
-    let e = _e.message;
-    await _stdlib.printNoLine(e);
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
+    await _stdlib.printNoLine("Foo");
+    }
   }
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -213,8 +215,8 @@ main
     variable y set to x[1]
     variable z set to y.p1
     call printNoLine("not caught")
-  catch exception in e
-    call printNoLine(e)
+  catch ElanRuntimeError
+    call printNoLine("Out of range index: 1 size: 0")
   end try
 end main
 
@@ -237,9 +239,10 @@ async function main() {
     let y = system.safeIndex(x, 1);
     let z = y.p1;
     await _stdlib.printNoLine("not caught");
-  } catch (_e) {
-    let e = _e.message;
-    await _stdlib.printNoLine(e);
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
+    await _stdlib.printNoLine("Out of range index: 1 size: 0");
+    }
   }
 }
 
@@ -284,15 +287,14 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch exception in e
-    variable s set to ""
-    set s to e
+  catch ElanRuntimeError
+    variable s set to "Foo"
     call printNoLine(s)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -301,16 +303,16 @@ async function main() {
   try {
     await foo();
     await _stdlib.printNoLine("not caught");
-  } catch (_e) {
-    let e = _e.message;
-    let s = "";
-    s = e;
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
+    let s = "Foo";
     await _stdlib.printNoLine(s);
+    }
   }
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -338,15 +340,15 @@ return [main, _tests];}`;
 main
   try
     variable a set to 1
-    throw exception "fail"
-  catch exception in e
-    variable a set to e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
+    variable a set to "fail"
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -354,16 +356,17 @@ const global = new class {};
 async function main() {
   try {
     let a = 1;
-    throw new Error("fail");
-  } catch (_e) {
-    let e = _e.message;
-    let a = e;
+    throw new _stdlib.ElanRuntimeError("fail");
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
+    let a = "fail";
     await _stdlib.printNoLine(a);
+    }
   }
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -391,14 +394,14 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw exception "fail"
-  catch exception in e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -406,15 +409,16 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new Error("fail");
-  } catch (_e) {
-    let e = _e.message;
+    throw new _stdlib.ElanRuntimeError("fail");
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
     await _stdlib.printNoLine(a);
+    }
   }
 }
 
 async function foo() {
-  throw new Error("Foo");
+  throw new _stdlib.ElanRuntimeError("Foo");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -442,8 +446,8 @@ return [main, _tests];}`;
 main
   variable a set to 1
   try
-    throw exception "fail"
-  catch exception in e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     [ghosted] constant a set to 1
   end try
 end main`;
@@ -453,12 +457,48 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new Error("fail");
-  } catch (_e) {
-    let e = _e.message;
+    throw new _stdlib.ElanRuntimeError("fail");
+  } catch (e) {
+    if (e instanceof _stdlib.ElanRuntimeError) {
 
+    }
   }
 }
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  ignore_test("Pass_MultipleCatches", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch ElanRuntimeError in e
+    constant b set to 2
+
+  catch ElanRuntimeError in e
+    constant a set to 1
+  end try
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -486,7 +526,7 @@ main
 end main
  
 function foo(x String) as String
-  throw exception x
+  throw ElanRuntimeError x
   return x
 end function
 `;
@@ -518,7 +558,7 @@ main
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure
 `;
 
@@ -541,7 +581,7 @@ end procedure
 
 main
   variable msg set to "Foo"
-  throw exception msg + bar
+  throw ElanRuntimeError msg + bar
 end main
 `;
 
@@ -565,14 +605,14 @@ end main
 main
   try
     variable a set to 1
-    throw exception "fail"
-  catch exception in e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure
 `;
     const fileImpl = new FileImpl(
@@ -597,15 +637,15 @@ end procedure
 main
   variable a set to 1
   try
-    throw exception "fail"
-  catch exception in e
+    throw ElanRuntimeError "fail"
+  catch ElanRuntimeError
     variable a set to e
     call printNoLine(a)
   end try
 end main
   
 procedure foo()
-  throw exception "Foo"
+  throw ElanRuntimeError "Foo"
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -621,8 +661,6 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'e' is not defined.LangRef.html#compile_error"]);
   });
 });

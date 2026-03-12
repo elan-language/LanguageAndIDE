@@ -32,9 +32,4 @@ export class InheritanceNode extends AbstractSequence {
       ? new Set<KeywordCompletion>([KeywordCompletion.create(inheritsKeyword)])
       : super.symbolCompletion_keywords();
   }
-
-  override renderAsHtml(): string {
-    const languageSpecific = this.file.language().renderNodeAsHtml(this);
-    return languageSpecific.length > 0 ? languageSpecific : super.renderAsHtml();
-  }
 }

@@ -5,7 +5,7 @@ main
 end main
 
 function factorial(n as Int) returns Int
-  return (if n > 1 then n*factorial(n - 1) else 1)
+  return (if(n > 1, n*factorial(n - 1), 1))
 end function
 
 test test_factorial

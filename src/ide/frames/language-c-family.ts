@@ -83,7 +83,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type> ${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -101,7 +101,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} <el-type>Exception</el-type> </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.NEW}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
@@ -209,7 +209,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   TRUE: string = "true";
   FALSE: string = "false";
 
-  common_parseParamDef(node: ParamDefNode, text: string): boolean {
+  c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
       node.file,
       new Set<TokenType>([
@@ -222,36 +222,34 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     node.addElement(new SpaceNode(node.file, Space.required));
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
-    return text ? true : true;
   }
-  common_paramDefAsHtml(node: ParamDefNode): string {
+
+  c_langs_paramDefAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }
 
-  common_paramDefCompletion(_node: ParamDefNode): string {
+  c_langs_paramDefCompletion(_node: ParamDefNode): string {
     return `<i>Type</i> <i>name</i>`;
   }
 
-  common_parseTypeGeneric(node: TypeGenericNode, text: string): boolean {
+  c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
-
     node.addElement(node.qualifiedName!);
     node.addElement(new PunctuationNode(node.file, LT));
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, GT));
-    return text ? true : true;
   }
-  common_typeGenericAsHtml(node: TypeGenericNode): string {
+  c_langs_typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 
-  common_propertyRefAsHtml(node: PropertyRef): string {
+  c_langs_propertyRefAsHtml(node: PropertyRef): string {
     return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
-  common_newInstanceAsHtml(node: NewInstance): string {
+  c_langs_newInstanceAsHtml(node: NewInstance): string {
     return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 }

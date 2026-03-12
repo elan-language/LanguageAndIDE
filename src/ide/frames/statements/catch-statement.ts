@@ -1,4 +1,5 @@
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/elan-keywords";
+import { catchKeyword } from "../../../compiler/elan-keywords";
+import { ExceptionTypeField } from "../fields/exception-type-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -10,11 +11,15 @@ export class CatchStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
+  exceptionType: ExceptionTypeField;
+
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
+    this.exceptionType = new ExceptionTypeField(this);
+    this.exceptionType.setPlaceholder(`ElanRuntimeError`);
     this.ghostable = false;
   }
 
@@ -52,16 +57,15 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     return this.getParent().indent();
   }
 
-  keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
-
   renderAsElanSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsElanSource()}`;
+    return `${this.indent()}${catchKeyword} ${this.exceptionType.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove(this.keywords);
-    this.variable.parseFrom(source);
+    source.remove(catchKeyword);
+    source.remove(" ");
+    this.exceptionType.parseFrom(source);
     source.removeNewLine();
   }
   override isGhosted(): boolean {

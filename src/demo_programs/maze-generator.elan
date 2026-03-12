@@ -10,7 +10,7 @@ main
     constant existing set to getValue(p, blocks)
     constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
-      constant colour set to if setTo is 1 then white else black
+      constant colour set to if(setTo is 1, white, black)
       set blocks[p.x][p.y] to colour
     end if
   end for
@@ -29,7 +29,7 @@ procedure saveAsFile(name as String, b as List<of List<of Int>>)
     variable line set to ""
     for col from 0 to 39 + 1 step 1
       constant colour set to b[col][row]
-      constant symbol set to if colour is white then " " else "X"
+      constant symbol set to if(colour is white, " ", "X")
       set line to line + symbol
     end for
     call file.writeLine(line)
@@ -77,13 +77,13 @@ function getValue(p as Point, b as List<of List<of Int>>) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
     constant colour set to b[p.x][p.y]
-    set result to if colour is black then 0 else 1
+    set result to if(colour is black, 0, 1)
   end if
   return result
 end function
 
 function flip01(v as Int) returns Int
-  return if v is 0 then 1 else 0
+  return if(v is 0, 1, 0)
 end function
 
 test test_flip01

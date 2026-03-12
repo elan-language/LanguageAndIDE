@@ -38,7 +38,7 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 
-// flag to update test file
+// flag to update test files
 const updateTestFiles = false;
 
 export async function assertEffectOfActionNew(

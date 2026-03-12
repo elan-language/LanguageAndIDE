@@ -14,13 +14,11 @@ export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
-export const exceptionKeyword = "exception";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const interfaceKeyword = "interface";
 export const isKeyword = "is";
@@ -81,13 +79,11 @@ const elanKeywords: string[] = [
   elseKeyword,
   endKeyword,
   enumKeyword,
-  exceptionKeyword,
   forKeyword,
   fromKeyword,
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  inKeyword,
   inheritsKeyword,
   interfaceKeyword,
   isKeyword,

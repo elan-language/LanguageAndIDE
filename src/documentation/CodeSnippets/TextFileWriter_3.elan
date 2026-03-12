@@ -8,8 +8,8 @@ main
   end for
   try
     call file.saveAndClose()
-  catch ElanRuntimeError
-    call print("Save cancelled")
+  catch ElanRuntimeException
+    call print("File save cancelled")
   end try
   # snipTo
 end main

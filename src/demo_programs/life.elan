@@ -31,28 +31,28 @@ end function
 function north(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
-  constant y2 set to if y is 0 then 29 else y - 1
+  constant y2 set to if(y is 0, 29, y - 1)
   return (x, y2)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
-  constant y2 set to if y is 29 then 0 else y + 1
+  constant y2 set to if(y is 29, 0, y + 1)
   return (x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
-  constant x2 set to if x is 39 then 0 else x + 1
+  constant x2 set to if(x is 39, 0, x + 1)
   return (x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
   constant x set to cell.item_0
   constant y set to cell.item_1
-  constant x2 set to if x is 0 then 39 else x - 1
+  constant x2 set to if(x is 0, 39, x - 1)
   return (x2, y)
 end function
 

@@ -1,11 +1,7 @@
-import { asKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
-import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierDef } from "./identifier-def";
-import { KeywordNode } from "./keyword-node";
-import { Space } from "./parse-node-helpers";
-import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
@@ -19,22 +15,7 @@ export class ParamDefNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      if (!this.file.language().parseText(this, text)) {
-        this.name = new IdentifierDef(this.file);
-        this.addElement(this.name);
-        this.addElement(new SpaceNode(this.file, Space.required));
-        this.addElement(new KeywordNode(this.file, asKeyword));
-        this.addElement(new SpaceNode(this.file, Space.required));
-        this.type = new TypeNode(
-          this.file,
-          new Set<TokenType>([
-            TokenType.type_concrete,
-            TokenType.type_abstract,
-            TokenType.type_notInheritable,
-          ]),
-        );
-        this.addElement(this.type);
-      }
+      this.file.language().addNodesForParamDef(this);
       super.parseText(text);
     }
   }
@@ -45,7 +26,7 @@ export class ParamDefNode extends AbstractSequence {
       : super.symbolCompletion_keywords();
   }
 
-  renderAsHtml() {
-    return this.delegateHtmlToLanguage();
+  renderAsHtml(): string {
+    return this.isValid() ? this.file.language().paramDefAsHtml(this) : this.matchedText;
   }
 }
