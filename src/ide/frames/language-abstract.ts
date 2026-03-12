@@ -24,7 +24,7 @@ import { ConstantStatement } from "./statements/constant-statement";
 import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
-import { OPEN_BRACKET, CLOSE_BRACKET } from "./symbols";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -58,28 +58,6 @@ export abstract class LanguageAbstract implements Language {
   abstract renderTopAsHtml(frame: Frame): string;
 
   abstract renderBottomAsHtml(frame: Frame): string;
-
-  renderNodeAsHtml(node: ParseNode): string {
-    let html = "";
-    if (node.matchedText.length > 0) {
-      if (node instanceof ParamDefNode) {
-        html = this.paramDefAsHtml(node);
-      } else if (node instanceof TypeGenericNode) {
-        html = this.typeGenericAsHtml(node);
-      } else if (node instanceof PropertyRef) {
-        html = this.propertyRefAsHtml(node);
-      } else if (node instanceof LitStringInterpolated) {
-        html = this.litStringInterpolatedAsHtml(node);
-      } else if (node instanceof LitStringField) {
-        html = this.litStringFieldAsHtml(node);
-      } else if (node instanceof TypeTupleNode) {
-        html = this.typeTupleAsHtml(node);
-      } else if (node instanceof NewInstance) {
-        html = this.newInstanceAsHtml(node);
-      }
-    }
-    return html;
-  }
 
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;

@@ -21,7 +21,7 @@ export class NewInstance extends AbstractSequence {
       : super.symbolCompletion_keywords();
   }
 
-  renderAsHtml() {
-    return this.delegateHtmlToLanguage();
+  renderAsHtml(): string {
+    return this.isValid() ? this.file.language().newInstanceAsHtml(this) : this.matchedText;
   }
 }

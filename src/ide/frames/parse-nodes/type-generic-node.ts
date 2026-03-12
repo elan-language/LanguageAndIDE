@@ -31,7 +31,7 @@ export class TypeGenericNode extends AbstractSequence {
     }
   }
 
-  renderAsHtml() {
-    return this.delegateHtmlToLanguage();
+  renderAsHtml(): string {
+    return this.isValid() ? this.file.language().typeGenericAsHtml(this) : this.matchedText;
   }
 }
