@@ -15,20 +15,16 @@ export class ForToField extends ExpressionField {
 
   resetText() {
     if (!!this.rootNode) {
-      //TODO - handle increment/decrement to value
       const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
-      if (text !== this.text) {
+      const revised = this.revisedToText(text);
+      if (revised !== this.text) {
         this.setFieldToKnownValidText(text);
+        this.inclusiveTo = this.forLoop.getParent().language().inclusiveToField;
       }
     }
   }
 
-  override renderAsHtml(): string {
-    //TODO
-    return super.renderAsHtml();
-  }
-
-  revisedToText(): string {
+  revisedToText(existing: string): string {
     const negativeStep = (this.forLoop.step.getRootNode() as StepNode).minus!.matchedNode;
     let inc = 0;
     const targetInclusiveTo = this.forLoop.getParent().language().inclusiveToField;
@@ -37,7 +33,6 @@ export class ForToField extends ExpressionField {
     } else if (!this.inclusiveTo && targetInclusiveTo) {
       inc = negativeStep ? -1 : 1;
     }
-    const existing = this.forLoop.to.renderAsElanSource();
     let revised = "";
     if (inc === 1) {
       if (existing.endsWith(" - 1")) {
