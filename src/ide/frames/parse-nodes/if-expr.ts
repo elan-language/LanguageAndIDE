@@ -37,6 +37,6 @@ export class IfExpr extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `<el-kw>${ifKeyword}</el-kw>(${this.condition?.renderAsHtml()}, ${this.whenTrue?.renderAsHtml()}, ${this.whenFalse?.renderAsHtml()})`;
+    return `<el-method>${ifKeyword}</el-method>(${this.condition?.renderAsHtml()}, ${this.whenTrue?.renderAsHtml()}, ${this.whenFalse?.renderAsHtml()})`;
   }
 }

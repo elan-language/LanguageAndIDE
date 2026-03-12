@@ -153,7 +153,7 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\collatz.java`,
     );
   });
-  ignore_test("Wordle Demo", async () => {
+  test("Wordle Demo", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `${__dirname}\\files\\wordle-demo.elan`,
       ``,

@@ -275,14 +275,14 @@ static void test_possibleAnswersAfterAttempt() {
 }
 
 static string drawGrid(List<List<string>> grid) { // function
-  var html = $"{style} ";
+  var html = $"<style>{style}</style> <grid>";
   for (int row = 0; row < 5 + 1; row = row + 1) {
     html = html + "<word>"; // set
     for (int col = 0; col < 4 + 1; col = col + 1) {
       const String entry = grid[col][row];
-      const String ch = if entry.length() > 0 then entry[0] else "";
-      const String mark = if entry.length() > 1 then entry.subString(1, entry.length()) else "";
-      html = html + $"{mark}'>{ch}"; // set
+      const String ch = if(entry.length() > 0, entry[0], "");
+      const String mark = if(entry.length() > 1, entry.subString(1, entry.length()), "");
+      html = html + $"<ch class='_{mark}'>{ch}</ch>"; // set
     }
     html = html + "</word>"; // set
   }
@@ -295,7 +295,7 @@ static string drawKeyboard(Dictionary<string, string> used) { // function
     if (k.equals("-")) {
       html = html + "</div><div>"; // set
     } else {
-      html = html + $"{used[k]}'>{k}"; // set
+      html = html + $"<key class='_{used[k]}'>{k}</key>"; // set
     }
   }
   return html + "<key></key></div></keyboard>";
