@@ -5,8 +5,8 @@ import { For } from "../statements/for";
 import { ExpressionField } from "./expression-field";
 
 export class ForToField extends ExpressionField {
-  forLoop: For;
-  private inclusiveTo: boolean = false;
+  private forLoop: For;
+  inclusiveTo: boolean = false;
 
   constructor(holder: Frame, readUntil = /\r?\n/) {
     super(holder, readUntil);
@@ -15,25 +15,26 @@ export class ForToField extends ExpressionField {
 
   resetText() {
     if (!!this.rootNode) {
-      const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
-      const revised = this.revisedToText(text);
+      const originalText = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
+      const revised = this.revisedToText(originalText);
       if (revised !== this.text) {
-        this.setFieldToKnownValidText(text);
+        this.setFieldToKnownValidText(revised);
         this.inclusiveTo = this.forLoop.getParent().language().inclusiveToField;
       }
     }
   }
 
   revisedToText(existing: string): string {
-    const negativeStep = (this.forLoop.step.getRootNode() as StepNode).minus!.matchedNode;
+    const step = this.forLoop.step.getRootNode() as StepNode;
+    const negativeStep = step.minus!.matchedText === "-";
     let inc = 0;
     const targetInclusiveTo = this.forLoop.getParent().language().inclusiveToField;
     if (this.inclusiveTo && !targetInclusiveTo) {
-      inc = negativeStep ? 1 : -1;
-    } else if (!this.inclusiveTo && targetInclusiveTo) {
       inc = negativeStep ? -1 : 1;
+    } else if (!this.inclusiveTo && targetInclusiveTo) {
+      inc = negativeStep ? 1 : -1;
     }
-    let revised = "";
+    let revised = existing;
     if (inc === 1) {
       if (existing.endsWith(" - 1")) {
         revised = existing.substring(0, existing.length - 5);

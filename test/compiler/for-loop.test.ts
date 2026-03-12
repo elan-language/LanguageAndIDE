@@ -28,7 +28,7 @@ suite("For Loop", () => {
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  for i from 1 to 10 step 1
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -38,7 +38,7 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10 + 1;
+  const _tofor6 = 10;
   for (let i = 1; i < _tofor6; i = i + 1) {
     tot = tot + i;
   }
@@ -60,12 +60,12 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "55");
+    await assertObjectCodeExecutes(fileImpl, "45");
     const pythonCode = `${testPythonHeader}
 
 def main(): None:
   tot = 0 # variable
-  for i in range(1, 10 + 1, 1):
+  for i in range(1, 10, 1):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i < 10 + 1; i = i + 1) {
+  for (int i = 1; i < 10; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i < 10 + 1; i = i + 1) {
+  for (int i = 1; i < 10; i = i + 1) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -96,7 +96,93 @@ static void main() {
 
 Sub main()
   Dim tot = 0 ' variable
-  For i = 1 To 10 + 1 - 1 Step 1
+  For i = 1 To 10 - 1 Step 1
+    tot = tot + i ' set
+  Next i
+  printNoLine(tot) ' call
+End Sub
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
+    await assertExportedVBis(fileImpl, vbCode);
+  });
+
+  test("Pass_negativeStep", async () => {
+    const code = `${testHeader}
+
+main
+  variable tot set to 0
+  for i from 10 to 2 step -1
+    set tot to tot + i
+  end for
+  call printNoLine(tot)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let tot = 0;
+  const _tofor6 = 2;
+  for (let i = 10; i > _tofor6; i = i - 1) {
+    tot = tot + i;
+  }
+  await _stdlib.printNoLine(tot);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "52");
+    const pythonCode = `${testPythonHeader}
+
+def main(): None:
+  tot = 0 # variable
+  for i in range(10, 2, -1):
+    tot = tot + i # set
+  printNoLine(tot) # call
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  var tot = 0;
+  for (int i = 10; i > 2; i = i + -1) {
+    tot = tot + i; // set
+  }
+  printNoLine(tot); // call
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  var tot = 0;
+  for (int i = 10; i > 2; i = i + -1) {
+    tot = tot + i; // set
+  }
+  printNoLine(tot); // call
+}
+`;
+
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim tot = 0 ' variable
+  For i = 10 To 2 + 1 Step -1
     tot = tot + i ' set
   Next i
   printNoLine(tot) ' call
@@ -189,46 +275,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "25");
-  });
-
-  test("Pass_negativeStep", async () => {
-    const code = `${testHeader}
-
-main
-  variable tot set to 0
-  for i from 10 to 2 step -1
-    set tot to tot + i
-  end for
-  call printNoLine(tot)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let tot = 0;
-  const _tofor6 = 2;
-  for (let i = 10; i > _tofor6; i = i - 1) {
-    tot = tot + i;
-  }
-  await _stdlib.printNoLine(tot);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "52");
   });
 
   test("Pass_innerLoop", async () => {
