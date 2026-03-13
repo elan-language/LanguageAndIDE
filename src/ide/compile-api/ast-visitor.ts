@@ -172,9 +172,9 @@ import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
 import { ConstantStatement } from "../frames/statements/constant-statement";
-import { Each } from "../frames/statements/each";
 import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
+import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
@@ -521,7 +521,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof Each) {
+  if (node instanceof For) {
     const eachAsn = new EachAsn(node.getHtmlId(), scope);
     eachAsn.breakpointStatus = node.breakpointStatus;
     eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;

@@ -36,9 +36,9 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
@@ -120,7 +120,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `TODO`;
-    } else if (frame instanceof Each) {
+    } else if (frame instanceof For) {
       html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;

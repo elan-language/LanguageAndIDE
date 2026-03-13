@@ -41,9 +41,9 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { ConstantStatement } from "./statements/constant-statement";
-import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
@@ -136,7 +136,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF} </el-kw><el-punc>(</el-punc><el-kw>${this.SELF}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
-    } else if (frame instanceof Each) {
+    } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = ``;

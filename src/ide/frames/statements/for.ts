@@ -9,7 +9,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class Each extends FrameWithStatements implements Statement {
+export class For extends FrameWithStatements implements Statement {
   isStatement = true;
   variable: IdentifierField;
   iter: ExpressionField;
