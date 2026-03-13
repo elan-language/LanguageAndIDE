@@ -38,8 +38,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_itereach6 = [..._stdlib.range(1, 11)];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.range(1, 11)];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  forfor (i in range(1, 11)) {
+  foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  forfor (i in range(1, 11)) {
+  foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -153,8 +153,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_itereach6 = [..._stdlib.rangeInSteps(1, 11, 2)];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.rangeInSteps(1, 11, 2)];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -193,8 +193,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_itereach6 = [..._stdlib.rangeInSteps(10, 3, (-1))];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.rangeInSteps(10, 3, (-1))];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -235,10 +235,10 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_itereach6 = [..._stdlib.range(1, 4)];
-  for (const i of elan_itereach6) {
-    const elan_itereach10 = [..._stdlib.range(1, 5)];
-    for (const j of elan_itereach10) {
+  const elan_iterfor6 = [..._stdlib.range(1, 4)];
+  for (const i of elan_iterfor6) {
+    const elan_iterfor10 = [..._stdlib.range(1, 5)];
+    for (const j of elan_iterfor10) {
       tot = tot + 1;
     }
   }
@@ -281,8 +281,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  const elan_itereach12 = [..._stdlib.rangeInSteps(lower, upper + 1, 2)];
-  for (const i of elan_itereach12) {
+  const elan_iterfor12 = [..._stdlib.rangeInSteps(lower, upper + 1, 2)];
+  for (const i of elan_iterfor12) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -328,8 +328,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const elan_itereach13 = [..._stdlib.range(0, 11)];
-  for (const i of elan_itereach13) {
+  const elan_iterfor13 = [..._stdlib.range(0, 11)];
+  for (const i of elan_iterfor13) {
     arr.put(i, 1);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
@@ -368,8 +368,8 @@ end main`;
 const global = new class {};
 async function main() {
   let limit = 10;
-  const elan_itereach6 = [..._stdlib.range(1, limit + 1)];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.range(1, limit + 1)];
+  for (const i of elan_iterfor6) {
     await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }

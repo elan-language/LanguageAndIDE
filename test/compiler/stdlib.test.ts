@@ -773,8 +773,8 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  const elan_itereach6 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor6) {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
@@ -827,8 +827,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const elan_itereach15 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_itereach15) {
+  const elan_iterfor15 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor15) {
     let t = rnd.nextInt(0, 1);
     val = t[0];
     rnd = t[1];
@@ -882,15 +882,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  const elan_itereach12 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_itereach12) {
+  const elan_iterfor12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor12) {
     let t = rnd.nextInt(3, 5);
     val = t[0];
     rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const elan_itereach28 = [..._stdlib.range(0, 7)];
-  for (const i of elan_itereach28) {
+  const elan_iterfor28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterfor28) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -944,15 +944,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  const elan_itereach12 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_itereach12) {
+  const elan_iterfor12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor12) {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  const elan_itereach28 = [..._stdlib.range(0, 7)];
-  for (const i of elan_itereach28) {
+  const elan_iterfor28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterfor28) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -2228,11 +2228,11 @@ end main
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const elan_itereach6 = [..._stdlib.range(0, 40)];
-  for (const i of elan_itereach6) {
+  const elan_iterfor6 = [..._stdlib.range(0, 40)];
+  for (const i of elan_iterfor6) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const elan_itereach13 = [..._stdlib.range(0, 30)];
-    for (const j of elan_itereach13) {
+    const elan_iterfor13 = [..._stdlib.range(0, 30)];
+    for (const j of elan_iterfor13) {
       sa.append(_stdlib.white);
     }
     b.append(sa);
