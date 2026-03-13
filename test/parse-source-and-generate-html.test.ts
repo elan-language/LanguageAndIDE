@@ -163,4 +163,14 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\wordle-demo.java`,
     );
   });
+  test("Life", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\life.elan`,
+      ``,
+      `${__dirname}\\files\\life.py`,
+      `${__dirname}\\files\\life.vb`,
+      `${__dirname}\\files\\life.cs`,
+      `${__dirname}\\files\\life.java`,
+    );
+  });
 });
