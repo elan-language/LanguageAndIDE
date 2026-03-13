@@ -18,7 +18,6 @@ import { CommentStatement } from "../src/ide/frames/statements/comment-statement
 import { Each } from "../src/ide/frames/statements/each";
 import { Elif } from "../src/ide/frames/statements/elif";
 import { Else } from "../src/ide/frames/statements/else";
-import { For } from "../src/ide/frames/statements/for";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
@@ -26,6 +25,7 @@ import { Throw } from "../src/ide/frames/statements/throw";
 import { TryStatement } from "../src/ide/frames/statements/try";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { While } from "../src/ide/frames/statements/while";
+
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
@@ -89,12 +89,6 @@ export function T03_mainWithAllStatements(): FileImpl {
   const w = new While(m);
   w.condition.setFieldToKnownValidText("newGame");
   m.addChildBefore(w, ssm);
-  const for1 = new For(m);
-  m.addChildBefore(for1, ssm);
-  for1.variable.setFieldToKnownValidText("i");
-  for1.from.setFieldToKnownValidText("1");
-  for1.to.setFieldToKnownValidText("10");
-
   const ea = new Each(m);
   ea.variable.setFieldToKnownValidText("letter");
   ea.iter.setFieldToKnownValidText(`"Charlie Duke"`);
@@ -122,7 +116,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(tr, ssm);
   f.updateAllParseStatus();
   return f;
-}
+} 
 
 export function SelectMainById(f: FileImpl) {
   f.getById("main1").select(true, false);

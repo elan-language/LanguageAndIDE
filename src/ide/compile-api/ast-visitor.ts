@@ -68,7 +68,6 @@ import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-
 import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
-import { ForAsn } from "../../compiler/syntax-nodes/statements/for-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { LocalConstantAsn } from "../../compiler/syntax-nodes/statements/local-constant-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
@@ -159,7 +158,6 @@ import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
 import { Sequence } from "../frames/parse-nodes/sequence";
 import { SetToClause } from "../frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../frames/parse-nodes/space-node";
-import { StepNode } from "../frames/parse-nodes/step-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
@@ -177,7 +175,6 @@ import { ConstantStatement } from "../frames/statements/constant-statement";
 import { Each } from "../frames/statements/each";
 import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
-import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
@@ -611,22 +608,6 @@ export function transform(
     return throwAsn;
   }
 
-  if (node instanceof For) {
-    const forAsn = new ForAsn(node.getHtmlId(), scope);
-    forAsn.breakpointStatus = node.breakpointStatus;
-    forAsn.variable = transform(node.variable, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
-    forAsn.from = transform(node.from, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
-    forAsn.to = transform(node.to, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
-    forAsn.step = transform(node.step, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
-
-    forAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), forAsn)) as AstNode[];
-
-    return forAsn;
-  }
-
   if (node instanceof AssertStatement) {
     const assertAsn = new AssertAsn(node.getHtmlId(), scope);
     assertAsn.breakpointStatus = node.breakpointStatus;
@@ -670,15 +651,6 @@ export function transform(
 
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
-  }
-
-  if (node instanceof StepNode) {
-    if (node.minus!.matchedNode) {
-      const value = transform(node.value, fieldId, scope) as AstNode;
-      return new UnaryExprAsn("-", value, fieldId, scope);
-    } else {
-      return new LiteralIntAsn(node.value!.matchedText, fieldId);
-    }
   }
 
   if (node instanceof UnaryExpression) {

@@ -8,7 +8,6 @@ export interface StatementFactory {
   newEach(parent: Parent): Frame;
   newElif(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
-  newFor(parent: Parent): Frame;
   newIf(parent: Parent): Frame;
   newConstantStatement(parent: Parent): Frame;
   newSet(parent: Parent): Frame;

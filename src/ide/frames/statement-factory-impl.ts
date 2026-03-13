@@ -9,7 +9,6 @@ import { ConstantStatement } from "./statements/constant-statement";
 import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
-import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
@@ -35,9 +34,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newElse(parent: Parent): Frame {
     return new Else(parent);
-  }
-  public newFor(parent: Parent): Frame {
-    return new For(parent);
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);

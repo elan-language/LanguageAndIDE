@@ -44,7 +44,6 @@ import { ConstantStatement } from "./statements/constant-statement";
 import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
-import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
@@ -141,8 +140,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = ``;
-    } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw><el-method>range</el-method><el-punc>(</el-punc>${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()}<el-punc>):</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.SELF}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
