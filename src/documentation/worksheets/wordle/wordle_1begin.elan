@@ -62,7 +62,7 @@ end procedure
 procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
-  for i in range(0, 4 + 1)
+  for i in range(0, 5)
     variable letter set to grid[i, attemptNo]
     variable mark set to marks[i]
     call grid.put(i, attemptNo, letter + mark)
@@ -83,7 +83,7 @@ end function
 
 function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
   variable guessWord set to ""
-  for i in range(0, 4 + 1)
+  for i in range(0, 5)
     set guessWord to guessWord + grid[i, attemptNo]
   end for
   return guessWord
@@ -91,9 +91,9 @@ end function
 
 function drawGrid(grid as Array2D<of String>) returns String
   variable html set to $"<style>{styleSheet}</style> <grid>"
-  for row in range(0, 5 + 1)
+  for row in range(0, 6)
     set html to html + "<word>"
-    for col in range(0, 4 + 1)
+    for col in range(0, 5)
       variable entry set to grid[col, row]
       variable ch set to if(entry.length() > 0, entry[0], "")
       variable mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
