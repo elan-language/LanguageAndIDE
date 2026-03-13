@@ -224,11 +224,11 @@ export class StdLib {
 
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
   range(@elanIntType() start: number, @elanIntType() end: number): List<number> {
-    return this.rangeWithStep(start, end, 1);
+    return this.rangeInSteps(start, end, 1);
   }
 
   @elanFunction(["start", "end", "step"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
-  rangeWithStep(
+  rangeInSteps(
     @elanIntType() start: number,
     @elanIntType() end: number,
     @elanIntType() step: number,
