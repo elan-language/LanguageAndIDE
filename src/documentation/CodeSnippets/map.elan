@@ -12,15 +12,15 @@ end main
 function reverseStringsInList(l as List<of String>) returns List<of String>
   variable lReversed set to new List<of String>()
   variable sl set to 0
-  each s in l
+  for s in l
     set lReversed to lReversed.withAppend(reverseString(s))
-  end each
+  end for
   return lReversed
 end function
 
 function reverseString(s as String) returns String
   variable stringReversed set to ""
-  for i from 0 to s.length() - 1 + 1 step 1
+  for i in range(0, s.length())
     set stringReversed to s[i] + stringReversed
   end for
   return stringReversed

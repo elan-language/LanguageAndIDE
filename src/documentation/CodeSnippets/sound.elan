@@ -5,11 +5,11 @@ main
   variable scaleL set to scale.length()
   variable quaver set to 250
   variable volume set to 1.5
-  for i from 0 to scaleL - 1 + 1 step 1
+  for i in range(0, scaleL)
     call tone(quaver, scale[i], volume)
   end for
   call pause(1000)
-  for i from 0 to scaleL - 1 + 1 step 1
+  for i in range(0, scaleL)
     call tone(quaver, scale[scaleL - 1 - i], volume)
   end for
 end main

@@ -3,7 +3,7 @@
 main
   # snipFrom
   variable file set to createFileForWriting("squares.txt")
-  for i from 1 to (100 + 1) step 1
+  for i in range(1, (101))
     call file.writeLine($"{i*i}")
   end for
   try

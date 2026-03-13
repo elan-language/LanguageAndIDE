@@ -4,7 +4,7 @@ main
   variable array2D set to new List<of List<of Float>>()
   variable x set to new List<of Float>()
   call x.initialise(100, 0.0)
-  for i from 0 to 99 + 1 step 1
+  for i in range(0, 100)
     call array2D[i].initialise(50, x)
   end for
 end main
