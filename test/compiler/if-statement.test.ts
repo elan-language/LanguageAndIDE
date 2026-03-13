@@ -663,9 +663,9 @@ main
     call printNoLine("")
   elif a is 2 then
     variable b set to a
-    for i from 0 to 5 + 1 step 1
+    each i in range(0, 6)
       set b to b + i
-    end for
+    end each
     call printNoLine(b)
   end if
 end main`;

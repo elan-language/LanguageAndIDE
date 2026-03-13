@@ -2485,14 +2485,14 @@ end main`;
     const code = `${testHeader}
 
 main
-  for i from 1 to 1000 + 1 step 1
+  each i in range(1, 1001)
     variable pacesThisAttempt set to 0
     while true
       set pacesThisAttempt to pacesThisAttempt + 1
     end while
     variable totalPaces set to 0
     set totalPaces to totalPaces + pacesThisAttempt
-  end for
+  end each
 end main`;
 
     const fileImpl = new FileImpl(

@@ -9,9 +9,9 @@ main
   while newGame
 
   end while
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
 
-  end for
+  end each
   each letter in "Charlie Duke"
 
   end each

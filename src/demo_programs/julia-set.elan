@@ -20,16 +20,16 @@ end main
 
 function allpoints(p as Coords) returns List<of VectorGraphic>
   variable vg2 set to new List<of VectorGraphic>()
-  for xp from 0 to width + 1 step 1
-    for yp from 0 to height + 1 step 1
+  each xp in range(0, width + 1)
+    each yp in range(0, height + 1)
       # scale and centre
       constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point
       constant col set to if(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
       variable rect set to (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25)
       set vg2 to vg2.withAppend(rect)
-    end for
-  end for
+    end each
+  end each
   return vg2
 end function
 

@@ -44,9 +44,10 @@ export class For extends FrameWithStatements implements Statement {
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsElanSource()} from ${this.from.renderAsElanSource()} to ${this.to.renderAsElanSource()} step ${this.step.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in rangeInSteps(${this.from.renderAsElanSource()}, ${this.to.renderAsElanSource()}, ${this.step.renderAsElanSource()}\r)
+
 ${this.renderChildrenAsElanSource()}\r
-${this.indent()}end for`;
+${this.indent()}end each`;
   }
 
   parseTop(source: CodeSource): void {
@@ -60,6 +61,6 @@ ${this.indent()}end for`;
     this.step.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end for");
+    return this.parseStandardEnding(source, "end each");
   }
 }

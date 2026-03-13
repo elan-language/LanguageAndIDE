@@ -113,10 +113,10 @@ end main
 
 procedure foo()
   variable li set to [1,2,3,4,5]
-  for i from 0 to 4 + 1 step 1
+  each i in range(0,5)
     variable temp set to li[i]
     call printNoLine(temp)
-  end for
+  end each
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -162,11 +162,11 @@ end main
 
 procedure foo()
   variable li set to [1,2,3,4,5]
-  for i from 0 to 3 + 1 step 1
+  each i in range(0, 4)
     constant temp set to li[i]
     set li to li.withPut(i, li[i + 1])
     set li to li.withPut(i + 1, temp)
-  end for
+  end each
   call printNoLine(li)
 end procedure`;
 

@@ -305,9 +305,9 @@ end class`;
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 

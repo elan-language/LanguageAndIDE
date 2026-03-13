@@ -760,10 +760,10 @@ return [main, _tests];}`;
 
 main
   variable results set to [0, 0]
-  for i from 1 to 10000 + 1 step 1
+  each i in range(1, 10001)
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
-  end for
+  end each
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
   call printNoLine(results[0] + results[1])
@@ -809,12 +809,12 @@ main
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
-  for i from 1 to 10000 + 1 step 1
+  each i in range(1, 10001)
     variable t set to rnd.nextInt(0, 1)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
-  end for
+  end each
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
   call printNoLine(results[0] + results[1])
@@ -863,17 +863,17 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable val set to 0
-  for i from 1 to 10000 + 1 step 1
+  each i in range(1, 10001)
     variable t set to rnd.nextInt(3, 5)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
-  end for
-  for i from 0 to 6 + 1 step 1
+  end each
+  each i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
-  end for
+  end each
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -921,17 +921,17 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable dice set to 0
-  for i from 1 to 10000 + 1 step 1
+  each i in range(1, 10001)
     variable t set to rollDice(rnd)
     set dice to t.item_0
     set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
-  end for
-  for i from 0 to 6 + 1 step 1
+  end each
+  each i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
-  end for
+  end each
 end main
 
 function rollDice(rnd as Random) returns (Int, Random)
@@ -2213,13 +2213,13 @@ return [main, _tests];}`;
 
 main
   variable b set to new List<of List<of Int>>()
-  for i from 0 to 39 + 1 step 1
+  each i in range(0, 40)
     variable sa set to new List<of Int>()
-    for j from 0 to 29 + 1 step 1
+    each j in range(0, 30)
       call sa.append(white)
-    end for
+    end each
     call b.append(sa)
-  end for
+  end each
   set b to createBlockGraphics(white)
 end main
 `;
@@ -2228,10 +2228,10 @@ end main
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const _tofor6 = 39 + 1;
+  const _tofor6 = 40;
   for (let i = 0; i < _tofor6; i = i + 1) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const _tofor15 = 29 + 1;
+    const _tofor15 = 30;
     for (let j = 0; j < _tofor15; j = j + 1) {
       sa.append(_stdlib.white);
     }

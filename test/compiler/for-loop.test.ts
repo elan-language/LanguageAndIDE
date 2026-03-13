@@ -28,9 +28,9 @@ suite("For Loop", () => {
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -65,7 +65,7 @@ return [main, _tests];}`;
 
 def main(): None:
   tot = 0 # variable
-  for i in range(1, 10 + 1, 1):
+  each i in range(1, 11, 1):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -115,9 +115,9 @@ End Sub
 main
   variable tot set to 0
   variable i set to 0
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -156,9 +156,9 @@ return [main, _tests];}`;
 
 main
 variable tot set to 0
-for i from 1 to 10 + 1 step 2
+each i in rangeInSteps(1, 11, 2)
   set tot to tot + i
-end for
+end each
 call printNoLine(tot)
 end main`;
 
@@ -196,9 +196,9 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 10 to 2 step -1
+  each i in rangeInSteps(10, 2, -1)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -236,11 +236,11 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 1 to 3 + 1 step 1
-    for j from 1 to 4 + 1 step 1
+  each i in range(1, 4)
+    each j in range(1, 5)
       set tot to tot + 1
-    end for
-  end for
+    end each
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -282,9 +282,9 @@ main
   variable lower set to 1
   variable upper set to 10
   variable tot set to 0
-  for i from lower to upper + 1 step 2
+  each i in rangeInSteps(lower, upper + 1, 2)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -327,9 +327,9 @@ main
 end main
 
 procedure foo(arr as List<of Int>)
-  for i from 0 to 10 + 1 step 1
+  each i in range(0, 11)
     call arr.put(i, 1)
-  end for
+  end each
   call printNoLine(arr[0])
 end procedure`;
 
@@ -371,10 +371,10 @@ return [main, _tests];}`;
 
 main
   variable limit set to 10
-  for i from 1 to limit + 1 step 1
+  each i in range(1, limit + 1)
     call printNoLine($"{i}")
     set limit to limit + 1
-  end for
+  end each
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -412,9 +412,9 @@ return [main, _tests];}`;
 main
   variable tot set to 0
   variable i set to ""
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main`;
 
@@ -439,9 +439,9 @@ end main`;
 
 main
   variable tot set to 0.0
-  for i from 1.5 to 10.1 + 1 step 1.0
+  each i in range(1.5, 11.1).0
     set tot to tot + i
-  end for
+  end each
   call printNoLine(tot)
 end main
 `;
@@ -465,9 +465,9 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set i to 10
-  end for
+  end each
 end main
 `;
 
@@ -493,9 +493,9 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     set tot to 10
-  end for
+  end each
   call printNoLine(i)
 end main
 `;
@@ -520,9 +520,9 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 3 + 1 step 1
-    for j from 1 to 4 + 1 step 1  set tot to tot + 1
-    end for
+  each i in range(1, 4)
+    each j in range(1, 5)  set tot to tot + 1
+    end each
 end main
 `;
 
@@ -569,9 +569,9 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1  set tot to tot + i
+  each i in range(1, 11)  set tot to tot + i
     break
-  end for
+  end each
 end main
 `;
 
@@ -594,9 +594,9 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1  set tot to tot + i
+  each i in range(1, 11)  set tot to tot + i
     continue
-  end for
+  end each
 end main
 `;
 
@@ -619,9 +619,9 @@ end main
 
 main
   variable ids set to 10
-  for id from id to 11 + 1 step 1
+  each id in range(id, 12)
     call printNoLine(id)
-  end for
+  end each
   call printNoLine(ids)
 end main`;
 
@@ -645,9 +645,9 @@ end main`;
 
 main
   variable ids set to 10
-  for id from 0 to id + 1 step 1
+  each id in range(0, id + 1)
     call printNoLine(id)
-  end for
+  end each
   call printNoLine(ids)
 end main`;
 

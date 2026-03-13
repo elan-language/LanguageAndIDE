@@ -12,9 +12,9 @@ end class
 
 [ghosted] # ghosted comment
 [ghosted] main
-  for i from 1 to 10 + 1 step 1
+  each i in range(1, 11)
     call print(i)
-  end for
+  end each
 end main
 
 function square(i as Int) returns Int
