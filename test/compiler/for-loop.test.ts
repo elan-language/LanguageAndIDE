@@ -534,7 +534,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10  set tot to tot + i
+  foreach i in range(1, 11)
   next i
 end main
 `;
