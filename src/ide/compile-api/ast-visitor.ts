@@ -146,6 +146,7 @@ import { LitStringInterpolatedEmpty } from "../frames/parse-nodes/lit-string-int
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
 import { LitStringPlainText } from "../frames/parse-nodes/lit-string-plain-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
+import { MethodNameUse } from "../frames/parse-nodes/method-name-use";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { OptionalNode } from "../frames/parse-nodes/optional-node";
@@ -743,7 +744,7 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, false, scope);
   }
 
-  if (node instanceof IdentifierUse) {
+  if (node instanceof IdentifierUse || node instanceof MethodNameUse) {
     // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||
