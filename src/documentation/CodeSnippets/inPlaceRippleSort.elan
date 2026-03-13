@@ -12,7 +12,7 @@ procedure inPlaceRippleSort(out arr as List<of Int>)
   variable lastComp set to arr.length() - 2
   while changes
     set changes to false
-    for i from 0 to lastComp + 1 step 1
+    for i in range(0, lastComp + 1)
       if arr[i] > arr[i + 1] then
         variable temp set to arr[i]
         call arr.put(i, arr[i + 1])

@@ -5,7 +5,7 @@ main
   call t.placeAt(-50, 30)
   call t.turn(90)
   call t.show()
-  for i from 1 to 3 + 1 step 1
+  for i in range(1, 4)
     call drawSide(side, t)
     call t.turn(120)
   end for

@@ -46,8 +46,8 @@ end main
 
 procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of List<of Int>>, initial as Boolean)
   variable colours set to getColours()
-  for j from 0 to gH - 1 + 1 step 1
-    for i from 0 to gW - 1 + 1 step 1
+  for j in range(0, gH)
+    for i in range(0, gW)
       if initial then
         set podge[i][j] to colours[randomInt(0, (colours.length()) - 1)]
         [ghosted] call podge.put(1, 1, 0x1a001a)
@@ -91,7 +91,7 @@ function newColour(neighbourColours as List<of Int>, nowColour as Int) returns I
   variable nInfected set to 0
   variable nIll set to 0
   variable sumStates set to colours.indexOf(nowColour)
-  each colour in neighbourColours
+   for colour in neighbourColours
     set sumStates to sumStates + colours.indexOf(colour)
     if colour < healthy then
       set nInfected to nInfected + 1
@@ -99,7 +99,7 @@ function newColour(neighbourColours as List<of Int>, nowColour as Int) returns I
         set nIll to nIll + 1
       end if
     end if
-  end each
+  end for
   return updateColour(nowColour, sumStates, nInfected, nIll)
 end function
 

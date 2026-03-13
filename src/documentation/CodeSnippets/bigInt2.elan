@@ -2,7 +2,7 @@
 
 main
   # snipFrom
-  for n from 50 to 72 + 1 step 1
+  for n in range(50, 73)
     variable s set to lambda n as Int => n.asString().length()
     variable np set to power(2, n).floor()
     call printTab(s(n), $"{n}")

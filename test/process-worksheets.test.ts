@@ -24,8 +24,8 @@ suite("process worksheets", () => {
 
   test("process file", async () => {
     const code = `procedure fillRandom(grid as List<of List<of Int>>)
-  for col from 0 to 39 + 1 step 1
-    for row from 0 to 29 + 1 step 1
+  for col in range(0, 40)
+    for row in range(0, 30)
       variable cell set to if(random() > 0.5, black, white)
       set grid[col][row] to cell
     end for
@@ -38,8 +38,8 @@ end procedure`;
   });
 
   test("process statement", async () => {
-    const code = `for col from 0 to 39 + 1 step 1
-  for row from 0 to 29 + 1 step 1
+    const code = `for col in range(0, 40)
+  for row in range(0, 30)
     variable cell set to if(random() > 0.5, black, white)
     set grid[col][row] to cell
   end for
@@ -264,13 +264,13 @@ end constructor`;
             function markAttempt(attempt as String, target as String) returns String
             variable mark set to "00000"
             variable unused set to something
-            for n from 0 to 4 + 1 step 1
+            for n in range(0, 5)
               if attempt[n] is unused[n] then
                 set mark to setChar(mark, n, "2")
                 set unused to something
               end if
             end for
-            for n from 0 to 4 + 1 step 1
+            for n in range(0, 5)
               if (mark[n] isnt "2") and unused.contains(attempt[n]) then
                 set mark to setChar(mark, n, "1")
                 set unused to something

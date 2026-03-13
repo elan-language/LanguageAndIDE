@@ -9,7 +9,6 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
-export const eachKeyword = "each";
 export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";
@@ -19,6 +18,7 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
+export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const interfaceKeyword = "interface";
 export const isKeyword = "is";
@@ -74,7 +74,6 @@ const elanKeywords: string[] = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  eachKeyword,
   elifKeyword,
   elseKeyword,
   endKeyword,
@@ -84,6 +83,7 @@ const elanKeywords: string[] = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
+  inKeyword,
   inheritsKeyword,
   interfaceKeyword,
   isKeyword,

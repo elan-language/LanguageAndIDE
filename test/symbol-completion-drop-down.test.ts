@@ -155,7 +155,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 78);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 79);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1994,7 +1994,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to sequence(1,4)
+  variable a set to range(1,5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2013,7 +2013,7 @@ end main`;
       ["maxBy", "maxBy", "maxBy("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "sequence(1,4).ma", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,5).ma", expected);
   });
 
   ignore_test("Pass_callProperty", async () => {
@@ -2485,7 +2485,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  for i from 1 to 1000 + 1 step 1
+  for i in range(1, 1001)
     variable pacesThisAttempt set to 0
     while true
       set pacesThisAttempt to pacesThisAttempt + 1
@@ -2511,7 +2511,7 @@ end main`;
       ["totalPaces", "totalPaces", "totalPaces"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr20", "totalPaces + pac", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr21", "totalPaces + pac", expected);
   });
 
   test("Pass_tuple", async () => {

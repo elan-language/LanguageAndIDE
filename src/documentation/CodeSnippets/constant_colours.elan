@@ -7,8 +7,8 @@ main
   variable l set to rainbow.length()
   variable h set to 0
   variable grid set to createBlockGraphics(black)
-  for c from 0 to 40 step 1
-    for r from 0 to 30 step 1
+  for c in range(0, 40)
+    for r in range(0, 30)
       set grid[c][r] to rainbow[r mod l]
     end for
   end for

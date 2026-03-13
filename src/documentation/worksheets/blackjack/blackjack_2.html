@@ -72,14 +72,14 @@ procedure playOneRound(game as Game)
   call game.newRound()
   call display(game)
   variable dealer set to game.dealer
-  each player in game.players
+  for player in game.players
     call player.startTurn()
     call display(game)
     while player.status is Status.active
       call player.nextAction(dealer.faceCard)
       call display(game)
     end while
-  end each
+  end for
   call dealer.play()
   call display(game)
   while dealer.status is Status.active
@@ -174,9 +174,9 @@ end function
 function htmlForGame(game as Game) returns String
   variable html set to "&lt;div class='game'&gt;"
   set html to html + htmlForPlayer(game.dealer)
-  each player in game.players
+  for player in game.players
     set html to html + htmlForPlayer(player)
-  end each
+  end for
   set html to html + $"&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
   return html + "&lt;/div&gt;"
 end function
@@ -185,11 +185,11 @@ function htmlForPlayer(player as Player) returns String
   variable html set to "&lt;div class='player'&gt;"
   set html to html + $"&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
   set html to html + "&lt;div class='hand'&gt;"
-  each card in player.cards
+  for card in player.cards
     variable suit set to card.suit
     variable rank set to card.rank
     set html to html + htmlForCard(card)
-  end each
+  end for
   return html + "&lt;/div&gt;&lt;/div&gt;"
 end function
 
@@ -206,13 +206,13 @@ function htmlForCard(card as Card) returns String
     variable u set to htmlForSpot("u", rank)
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
-    each location in gridForRank(rank)
+    for location in gridForRank(rank)
       if location.equals("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
       end if
-    end each
+    end for
     set html to html + $"{u}{v}{grid}"
   end if
   return html + "&lt;/div&gt;"
@@ -235,16 +235,16 @@ class Game
 
   procedure newRound()
     call this.dealer.newHand()
-    each player in this.players
+    for player in this.players
       call player.newHand()
-    end each
+    end for
   end procedure
 
   procedure updatePoints()
-    each player in this.players
+    for player in this.players
       variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
       call global.updatePoints(this.dealer, player, playerOutcome)
-    end each
+    end for
   end procedure
 
   procedure addPlayer(player as Player)

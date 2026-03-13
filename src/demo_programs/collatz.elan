@@ -23,7 +23,7 @@ main
       call p.append(x)
       # draw what we have got so far, scaled to the canvas
       variable vg set to new List<of VectorGraphic>()
-      for i from 0 to p.length() - 2 + 1 step 1
+      for i in range(0, p.length() - 1)
         set vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
       end for
       call displayVectorGraphics(vg)

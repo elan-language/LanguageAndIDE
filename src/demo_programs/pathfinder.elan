@@ -41,8 +41,8 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
 end procedure
 
 procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, nodes as List<of Node>, start as Point, dest as Point)
-  for x from 0 to 39 + 1 step 1
-    for y from 1 to 29 + 1 step 1
+  for x in range(0, 40)
+    for y in range(1, 30)
       variable p set to new Point(x, y)
       if p.equals(start) then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
@@ -59,9 +59,9 @@ end procedure
 
 function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
   variable gr set to createBlockGraphics(white)
-  each rock in rocks
+   for rock in rocks
     set gr to withPut(gr, rock.x, rock.y, black)
-  end each
+  end for
   set gr to withPut(gr, start.x, start.y, green)
   set gr to withPut(gr, dest.x, dest.y, red)
   return gr
@@ -77,9 +77,9 @@ end function
 
 function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
   variable graphics set to gr
-  each p in route
+   for p in route
     set graphics to withPut(graphics, p.x, p.y, orange)
-  end each
+  end for
   variable start set to route[0]
   variable dest set to route[route.length() - 1]
   set graphics to withPut(graphics, start.x, start.y, green)
@@ -116,11 +116,11 @@ class Solver
     set this.alg to alg
     set this.current to new Node(this.start, 0, infinity)
     set this.running to true
-    each node in this.nodes
+     for node in this.nodes
       call node.setDistanceFromStart(infinity)
       call node.setVia(emptyPoint())
       call node.setVisited(false)
-    end each
+    end for
   end procedure
 
   procedure visitNextPoint()
@@ -136,26 +136,26 @@ class Solver
   procedure updateNeighbours()
     variable distToCurrent set to this.current.distFromStart
     variable currentPoint set to this.current.point
-    each neighbour in currentNeighbours()
+     for neighbour in currentNeighbours()
       variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
         call neighbour.setVia(currentPoint)
         call neighbour.setDistanceFromStart(distViaCurrent)
       end if
-    end each
+    end for
   end procedure
 
   function currentNeighbours() returns List<of Node>
     variable currentNode set to this.current
     variable currentPoint set to currentNode.point
     variable neighbours set to new List<of Node>()
-    each p in currentPoint.neighbouringPoints()
+     for p in currentPoint.neighbouringPoints()
       variable node set to getNodeFor(p)
       variable point set to node.point
       if not point.isEmpty then
         set neighbours to neighbours.withAppend(node)
       end if
-    end each
+    end for
     return neighbours
   end function
 
@@ -172,13 +172,13 @@ class Solver
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to emptyNode()
     variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
-    each nd in possibilities
+     for nd in possibilities
       variable cost set to calculateCost(nd)
       if cost < lowestCostSoFar then
         set lowestCostSoFar to cost
         set lowestCostNode to nd
       end if
-    end each
+    end for
     return lowestCostNode
   end function
 

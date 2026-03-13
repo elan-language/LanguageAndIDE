@@ -62,8 +62,8 @@ suite("Reserved Words", () => {
     testNodeParse(new MethodNameUse(f), "_x", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameUse(f), "_", ParseStatus.invalid, "", "", "", "");
     testNodeParse(new MethodNameUse(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "def", ParseStatus.valid, "", "", "", ""); // because no following text; should be a compile error, though
-    testNodeParse(new MethodNameUse(f), "def()", ParseStatus.invalid, "", "def()", "", "");
+    testNodeParse(new MethodNameUse(f), "def", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameUse(f), "def()", ParseStatus.valid, "def", "()", "", ""); // keywords are no longer disallowed in method name USE - though won't compile
   });
   test("TypeNameDef", () => {
     testNodeParse(new TypeNameDef(f), "X", ParseStatus.valid, "", "", "", "");

@@ -305,7 +305,7 @@ end class`;
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -327,7 +327,7 @@ end main`;
       asDebugSymbol("tot", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set12", expected);
+    await assertDebugBreakPoint(fileImpl, "set10", expected);
   });
 
   test("Pass_InEachLoop", async () => {
@@ -336,10 +336,10 @@ end main`;
 main
   variable a set to [7,8,9]
   variable n set to 0
-  each x in a
+   for x in a
     variable z set to 101
     set n to n + x
-  end each
+  end for
   call printNoLine(n)
 end main`;
 

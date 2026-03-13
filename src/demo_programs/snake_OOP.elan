@@ -62,11 +62,11 @@ class Snake
 
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
-    each seg in this.body
+     for seg in this.body
       if (seg.equals(sq)) then
         set result to true
       end if
-    end each
+    end for
     return result
   end function
 

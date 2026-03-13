@@ -4,7 +4,7 @@ main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   variable dice set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set dice, rnd to rollDice(rnd)
     call print(dice)
   end for
