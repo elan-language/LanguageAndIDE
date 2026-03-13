@@ -1,17 +1,30 @@
-# c7b310c629662a53f9fb4cafc7de2480d08bb8ec5535b5d8c57c70fc6e5fa862 Elan 2.0.0-alpha guest default_profile valid
+# 23a731bbd34c6e8a3dd111b8c9e7427221e407de4616f112a668448c8ec5da5f Elan 2.0.0-alpha guest default_profile valid
 
-class Square
+interface Polygon
+
+end interface
+
+abstract class Rectangle inherits Polygon
+
+end class
+
+class Square inherits Rectangle
+  property x as Int
+
+  property y as Int
+
   constructor(x as Int, y as Int)
     set this.x to x
     set this.y to y
   end constructor
 
-  private property x as Int
-
-  private property y as Int
+  function asString() returns String
+    return $"{this.x},{this.y}"
+  end function
 
 end class
 
 main
   variable tail set to new Square(20, 15)
+  call print(tail)
 end main

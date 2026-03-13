@@ -1,6 +1,7 @@
-# 2a4dc05751c9e99cc0b28537b34193893d568ebf61dc8903f231f8f32ae46d53 Elan 2.0.0-alpha guest default_profile valid
+# 5d01ad33bacdf96a6217b7aa8b165fd560180ffef7ae7b2815d02d815cc389a8 Elan 2.0.0-alpha guest default_profile valid
 
 main
+  # snipFrom
   variable scale set to [262, 294, 330, 349, 392, 440, 494, 523]
   variable scaleL set to scale.length()
   variable quaver set to 250
@@ -12,4 +13,5 @@ main
   for i in range(0, scaleL)
     call tone(quaver, scale[scaleL - 1 - i], volume)
   end for
+  # snipTo
 end main
