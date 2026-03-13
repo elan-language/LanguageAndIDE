@@ -25,7 +25,7 @@ Sub main()
       p.append(x) ' call
       ' draw what we have got so far, scaled to the canvas
       Dim vg = New List(Of VectorGraphic)() ' variable
-      For i = 0 To p.length() - 2 + 1 - 1 Step 1
+      For Each i In range(0, p.length() - 1)
         vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' set
       Next i
       displayVectorGraphics(vg) ' call

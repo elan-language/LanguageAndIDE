@@ -246,7 +246,7 @@ export class StdLib {
           "Loop will not terminate when start < end start with negative step",
         );
       }
-      for (let i = start; i >= end; i = i + step) {
+      for (let i = start; i > end; i = i + step) {
         seq.push(i);
       }
     }

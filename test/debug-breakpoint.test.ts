@@ -327,7 +327,7 @@ end main`;
       asDebugSymbol("tot", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set12", expected);
+    await assertDebugBreakPoint(fileImpl, "set10", expected);
   });
 
   test("Pass_InEachLoop", async () => {

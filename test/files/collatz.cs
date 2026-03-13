@@ -25,7 +25,7 @@ static void main() {
       p.append(x); // call
       // draw what we have got so far, scaled to the canvas
       var vg = new List<VectorGraphic>();
-      for (int i = 0; i < p.length() - 2 + 1; i = i + 1) {
+      foreach (i in range(0, p.length() - 1)) {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // set
       }
       displayVectorGraphics(vg); // call

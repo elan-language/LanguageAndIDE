@@ -127,8 +127,8 @@ async function main() {
 
 async function foo() {
   let li = system.list([1, 2, 3, 4, 5]);
-  const _tofor13 = 4 + 1;
-  for (let i = 0; i < _tofor13; i = i + 1) {
+  const elan_itereach13 = [..._stdlib.range(0, 5)];
+  for (const i of elan_itereach13) {
     let temp = system.safeIndex(li, i);
     await _stdlib.printNoLine(temp);
   }
@@ -178,8 +178,8 @@ async function main() {
 
 async function foo() {
   let li = system.list([1, 2, 3, 4, 5]);
-  const _tofor13 = 3 + 1;
-  for (let i = 0; i < _tofor13; i = i + 1) {
+  const elan_itereach13 = [..._stdlib.range(0, 4)];
+  for (const i of elan_itereach13) {
     const temp = system.safeIndex(li, i);
     li = li.withPut(i, system.safeIndex(li, i + 1));
     li = li.withPut(i + 1, temp);

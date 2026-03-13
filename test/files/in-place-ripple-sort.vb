@@ -12,7 +12,7 @@ Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure
   Dim lastComp = li.length() - 2 ' variable
   While hasChanged = True
     hasChanged = False ' set
-    For i = 0 To lastComp + 1 - 1 Step 1
+    For Each i In range(0, lastComp + 1)
       If li[i] > li[i + 1] Then
         Dim temp = li[i] ' variable
         li.put(i, li[i + 1]) ' call

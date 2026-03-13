@@ -486,7 +486,7 @@ main
   variable a set to [7, 8, 9]
   each x in a
     call printNoLine(x)
-  end each
+  end
   call printNoLine(x)
 end main
 `;

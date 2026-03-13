@@ -2511,7 +2511,7 @@ end main`;
       ["totalPaces", "totalPaces", "totalPaces"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr20", "totalPaces + pac", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr21", "totalPaces + pac", expected);
   });
 
   test("Pass_tuple", async () => {

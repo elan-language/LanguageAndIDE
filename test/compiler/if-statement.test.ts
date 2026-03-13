@@ -678,8 +678,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const _tofor17 = 5 + 1;
-    for (let i = 0; i < _tofor17; i = i + 1) {
+    const elan_itereach17 = [..._stdlib.range(0, 6)];
+    for (const i of elan_itereach17) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);

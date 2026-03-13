@@ -3,7 +3,7 @@
 Sub main()
   Dim bubbles = New List(Of CircleVG)() ' variable
   ' create 20 small bubbles at the bottom
-  For i = 1 To 20 + 1 - 1 Step 1
+  For Each i In range(1, 21)
     Dim b = (New CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white) ' variable
     bubbles.append(b) ' call
   Next i

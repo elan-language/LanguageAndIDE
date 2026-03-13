@@ -52,9 +52,9 @@ def playGame() -> None: # procedure
     print("Well done!") # call
 
 def initialiseGrid(grid: list[list[str]]) -> None: # procedure
-  for i in range(0, 4 + 1, 1):
+  for i in range(0, 5):
     sa = list[str]() # variable
-    for j in range(0, 5 + 1, 1):
+    for j in range(0, 6):
       sa.append("") # call
     grid.append(sa) # call
 
@@ -82,7 +82,7 @@ def enterAttempt(attemptNo: int, grid: list[list[str]], used: Dictionary[str, st
 def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: AsRef[bool], used: Dictionary[str, str]) -> None: # procedure
   attempt = getWord(attemptNo, grid) # variable
   marks = markAttempt(attempt, target) # variable
-  for i in range(0, 4 + 1, 1):
+  for i in range(0, 5):
     letter = grid[i][attemptNo] # variable
     mark = marks[i] # variable
     grid[i][attemptNo] = letter + mark # set
@@ -100,7 +100,7 @@ def playReverseGame() -> None: # procedure
   possible = allValidAnswers.split(" ") # variable
   attempt = "ARISE" # variable
   while (attemptNo < 6) and (not solved):
-    for i in range(0, 4 + 1, 1):
+    for i in range(0, 5):
       grid[i][attemptNo] = attempt[i] # set
     displayHtml(drawGrid(grid)) # call
     mark = "" # variable
@@ -155,7 +155,7 @@ def analyse() -> None: # procedure
     outcomes.put(attempts, outcomes[attempts] + 1) # call
   success = 0 # variable
   weightedSum = 0 # variable
-  for i in range(1, 6 + 1, 1):
+  for i in range(1, 7):
     success = success + outcomes[i] # set
     weightedSum = weightedSum + (i*outcomes[i]) # set
   clearPrintedText() # call
@@ -174,7 +174,7 @@ def  test_isUCLetter()-> None:
 
 def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
   guessWord = "" # variable
-  for i in range(0, 4 + 1, 1):
+  for i in range(0, 5):
     guessWord = guessWord + grid[i][attemptNo] # set
   return guessWord
 
@@ -188,11 +188,11 @@ def  test_setChar()-> None:
 def markAttempt(attempt: str, target: str) -> str: # function
   mark = "00000" # variable
   unused = target # variable
-  for n in range(0, 4 + 1, 1):
+  for n in range(0, 5):
     if attempt[n].equals(unused[n]):
       mark = setChar(mark, n, "2") # set
       unused = setChar(unused, n, " ") # set
-  for n in range(0, 4 + 1, 1):
+  for n in range(0, 5):
     if (not mark[n].equals("2")) and unused.contains(attempt[n]):
       mark = setChar(mark, n, "1") # set
       unused = setChar(unused, unused.indexOf(attempt[n]), " ") # set
@@ -228,9 +228,9 @@ def  test_possibleAnswersAfterAttempt()-> None:
 
 def drawGrid(grid: list[list[str]]) -> str: # function
   html = f"<style>{style}</style> <grid>" # variable
-  for row in range(0, 5 + 1, 1):
+  for row in range(0, 6):
     html = html + "<word>" # set
-    for col in range(0, 4 + 1, 1):
+    for col in range(0, 5):
       entry = grid[col][row] # constant
       ch = if(entry.length() > 0, entry[0], "") # constant
       mark = if(entry.length() > 1, entry.subString(1, entry.length()), "") # constant
