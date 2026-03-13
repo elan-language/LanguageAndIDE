@@ -11,7 +11,7 @@ main
   variable paces set to 0
   call t.hide()
   call circle(t, 50)
-  for count from 1 to 20 + 1 step 1
+  for count in range(1, 20 + 1)
     call t.placeAt(0, 0)
     variable colour set to randomInt(red, blue)
     call t.penColour(colour)
@@ -28,7 +28,7 @@ end main
 procedure circle(t as Turtle, radius as Int)
   variable segment set to radius*pi*2/360
   call t.placeAt(-radius, 0)
-  for count from 1 to 360 + 1 step 1
+  for count in range(1, 360 + 1)
     call t.move(segment)
     call t.turn(1)
   end for

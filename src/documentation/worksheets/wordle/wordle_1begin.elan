@@ -14,9 +14,9 @@ procedure playGame()
   call clearAllDisplays()
   variable grid set to new Array2D<of String>(5, 6, "")
   variable used set to new Dictionary<of String, String>()
-  each letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     call used.put(letter, " ")
-  end each
+  end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
   variable target set to allValidTargetWords.split(" ")[randomInt(0, 2308)]
   variable attemptNo set to 0
@@ -62,7 +62,7 @@ end procedure
 procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as String, solvedRef as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
-  for i from 0 to 4 + 1 step 1
+  for i in range(0, 4 + 1)
     variable letter set to grid[i, attemptNo]
     variable mark set to marks[i]
     call grid.put(i, attemptNo, letter + mark)
@@ -83,7 +83,7 @@ end function
 
 function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
   variable guessWord set to ""
-  for i from 0 to 4 + 1 step 1
+  for i in range(0, 4 + 1)
     set guessWord to guessWord + grid[i, attemptNo]
   end for
   return guessWord
@@ -91,9 +91,9 @@ end function
 
 function drawGrid(grid as Array2D<of String>) returns String
   variable html set to $"<style>{styleSheet}</style> <grid>"
-  for row from 0 to 5 + 1 step 1
+  for row in range(0, 5 + 1)
     set html to html + "<word>"
-    for col from 0 to 4 + 1 step 1
+    for col in range(0, 4 + 1)
       variable entry set to grid[col, row]
       variable ch set to if(entry.length() > 0, entry[0], "")
       variable mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
@@ -106,13 +106,13 @@ end function
 
 function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
-  each k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
+  for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
     if k.equals("-") then
       set html to html + "</div><div>"
     else
       set html to html + $"<key class='_{used[k]}'>{k}</key>"
     end if
-  end each
+  end for
   return html + "<key></key></div></keyboard>"
 end function
 
