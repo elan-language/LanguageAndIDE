@@ -982,7 +982,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Set's members, enclosed in curly braces</td>
+  <td>a string that is a comma+space-separated list of the Set's members, enclosed in brackets</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -2230,14 +2230,14 @@ By this means features such as simple SVG animation can be defined.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an interpolated field.</p>
+    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="LibRef.html#InterpolatedString">interpolated field.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
 the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
 <el-code-block source="Html_2.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>$"{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
 
 <p>will produce:</p>
@@ -2245,17 +2245,17 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <p>The &lt;style&gt; string is displayed for editing like this:</p>
 <el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="&quot;&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;&quot;" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
 <p>But by inserting <el-lit>\n</el-lit> newlines thus:</p>
 <el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="98" data-cursorend="98" size="97" style="width: 98ch" value="'&lt;style&gt;\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n&lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="98" data-cursorend="98" size="97" style="width: 98ch" value="&quot;&lt;style&gt;\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n&lt;/style&gt;&quot;" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
 <p>the string can be shown folded and indented when not being edited: </p>
 <el-code-block source="Html_4.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>"</el-txt></el-field></el-statement>
 </el-code-block>
 
 <h2 id="displayImageURL">Displaying images from URLs</h2>
@@ -2265,7 +2265,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <el-code-block source="Html_4.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
  <h5 class="no-TOC">Notes</h5>
@@ -2277,7 +2277,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
  <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition: and then call the <el-method>displayVectorGraphics</el-method> method on it, thus:
 <el-code-block source="imageVG.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>('<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>')<el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>400</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>200</el-lit>, <br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>Shark</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>("<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>")<el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>400</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>200</el-lit>, <br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>Shark</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call11" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args13" class="optional ok" tabindex="-1"><el-txt>[<el-id>pic</el-id>]</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
  <h5 class="no-TOC">Notes</h5>
@@ -2289,7 +2289,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
  <li>put the URL into an <el-kw>image</el-kw> definition:
 
 <el-code-block source="image_1.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="108" data-cursorend="108" size="107" style="width: 108ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to &quot;Shark&quot;" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="108" data-cursorend="108" size="107" style="width: 108ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to &quot;Shark&quot;" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
 <div id="image"></div><p>On moving the editing focus away from the <el-kw>image</el-kw> field, the instruction shows a thumbnail of the image in the code.</p>
@@ -2298,7 +2298,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <el-code-block source="image_2.elan">
 <el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"><el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>304</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>139</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"><el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>304</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>139</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok" id="call13" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>vg</el-id>.<el-method><el-method>append</el-method></el-method></el-txt></el-field>(<el-field id="args15" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok" id="call16" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args18" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id>.<el-method>asHtml</el-method>()</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
@@ -2327,22 +2327,24 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; An example that plays a C major scale first ascending then descending:</p>
 <el-code-block source="sound.elan">
-</el-code-block>
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="let12" tabindex="-1"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="for15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok multiline" id="for27" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok" id="call33" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args35" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+</el-punc></el-punc></el-top>
+<el-statement class="ok" id="call33" tabindex="-1"><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args35" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
+</el-code-block>
 <hr>
 </div></div>
 
@@ -2998,7 +3000,7 @@ variables to be evaluated before printing are put within curly braces, and the s
 </el-class>
 <main class="ok multiline" id="main8" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-<el-statement class="ok" id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Pupil</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let10" tabindex="-1"><el-kw>variable </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Pupil</el-type>&gt;()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>passes</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id>.<el-method>filter</el-method>(<el-id>passedMathsTest</el-id>)</el-txt></el-field></el-statement>
 <el-kw>end main</el-kw>
 </main>
