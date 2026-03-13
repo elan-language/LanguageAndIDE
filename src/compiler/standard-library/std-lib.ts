@@ -222,8 +222,13 @@ export class StdLib {
     return s.indexOf(item);
   }
 
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
+  range(@elanIntType() start: number, @elanIntType() end: number): List<number> {
+    return this.rangeWithStep(start, end, 1);
+  }
+
   @elanFunction(["start", "end", "step"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
-  sequence(
+  rangeWithStep(
     @elanIntType() start: number,
     @elanIntType() end: number,
     @elanIntType() step: number,
@@ -232,7 +237,7 @@ export class StdLib {
     if (step === 0) {
       throw new ElanRuntimeError("value for step cannot be zero");
     } else if (step > 0) {
-      for (let i = start; i <= end; i = i + step) {
+      for (let i = start; i < end; i = i + step) {
         seq.push(i);
       }
     } else if (step < 0) {

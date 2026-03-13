@@ -341,7 +341,7 @@ export class LanguagePython extends LanguageAbstract {
     `complex`,
     `list`,
     `tuple`,
-    `range`,
+    //`range`, because range is a stdLib function which performs the same role.
     `dict`,
     `set`,
     `frozenset`,

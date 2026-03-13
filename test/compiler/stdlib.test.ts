@@ -1859,17 +1859,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Pass_sequence", async () => {
+  test("Pass_range", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 5, 1))
+  call printNoLine(range(1, 6))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 5, 1));
+  await _stdlib.printNoLine(_stdlib.range(1, 6));
 }
 return [main, _tests];}`;
 
@@ -1889,17 +1889,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4, 5]");
   });
-  test("Pass_sequence_EmptyIfEnd<Start", async () => {
+  test("Pass_range_EmptyIfEnd<Start", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(5, 1, 1))
+  call printNoLine(range(5, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(5, 1, 1));
+  await _stdlib.printNoLine(_stdlib.range(5, 0));
 }
 return [main, _tests];}`;
 
@@ -1919,19 +1919,19 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
-  test("Pass_sequenceWithStep", async () => {
+  test("Pass_rangeWithStep", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, 2))
-  call printNoLine(sequence(5, -4, -2))
+  call printNoLine(rangeWithStep(1, 7, 2))
+  call printNoLine(rangeWithStep(5, -4, -2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 2));
-  await _stdlib.printNoLine(_stdlib.sequence(5, (-4), (-2)));
+  await _stdlib.printNoLine(_stdlib.rangeWithStep(1, 7, 2));
+  await _stdlib.printNoLine(_stdlib.rangeWithStep(5, (-4), (-2)));
 }
 return [main, _tests];}`;
 
@@ -1951,17 +1951,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[1, 3, 5][5, 3, 1, -1, -3]");
   });
-  test("Pass_sequenceWithStepError1", async () => {
+  test("Pass_rangeWithStepError1", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, 0))
+  call printNoLine(rangeWithStep(1, 7, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 0));
+  await _stdlib.printNoLine(_stdlib.rangeWithStep(1, 7, 0));
 }
 return [main, _tests];}`;
 
@@ -1981,17 +1981,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeDoesNotExecute(fileImpl, "value for step cannot be zero");
   });
-  test("Pass_sequenceWithStepError2", async () => {
+  test("Pass_rangeWithStepError2", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, -1))
+  call printNoLine(rangeWithStep(1, 7, -1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, (-1)));
+  await _stdlib.printNoLine(_stdlib.rangeWithStep(1, 7, (-1)));
 }
 return [main, _tests];}`;
 
@@ -2014,17 +2014,17 @@ return [main, _tests];}`;
       "Loop will not terminate when start < end start with negative step",
     );
   });
-  test("Pass_sequenceWithStepError3", async () => {
+  test("Pass_rangeWithStepError3", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(6, 1, 2))
+  call printNoLine(rangeWithStep(6, 2, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(6, 1, 2));
+  await _stdlib.printNoLine(_stdlib.rangeWithStep(6, 2, 2));
 }
 return [main, _tests];}`;
 
