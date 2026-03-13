@@ -21,9 +21,9 @@ suite("Each Loop", () => {
 main
   variable a set to [7,8,9]
   variable n set to 0
-  each x in a
+   for x in a
       set n to n + x
-  end each
+  end for
   call printNoLine(n)
 end main`;
 
@@ -63,9 +63,9 @@ return [main, _tests];}`;
 main
   variable a set to [7,8,9]
   variable n set to 0
-  each x in a
+   for x in a
     set n to n + x
-  end each
+  end for
   call printNoLine(n)
 end main`;
 
@@ -104,9 +104,9 @@ return [main, _tests];}`;
 
 main
   variable a set to "hello"
-  each x in a
+   for x in a
     call printNoLine(x)
-  end each
+  end for
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -141,11 +141,11 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  each x in "12"
-    each y in "34"
+   for x in "12"
+     for y in "34"
       call printNoLine($"{x}{y}")
-    end each
-  end each
+    end for
+  end for
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -182,9 +182,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  each x in fruit()
+   for x in fruit()
     call printNoLine(x)
-  end each
+  end for
 end main
 
 function fruit() returns List<of String>
@@ -229,8 +229,8 @@ return [main, _tests];}`;
 
 main
   variable ints set to [1, 2, 3]
-  each i1 in ints
-  end each
+   for i1 in ints
+  end for
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -266,10 +266,10 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  each item in a
+   for item in a
     call a.append(item)
     call printNoLine(item)
-  end each
+  end for
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -305,8 +305,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  each i1 in ints
-  end each
+   for i1 in ints
+  end for
 end main`;
 
     const fileImpl = new FileImpl(
@@ -343,9 +343,9 @@ class Bar
   end function
 
   procedure display()
-    each item in li
+     for item in li
       call printNoLine(item)
-    end each
+    end for
   end procedure
 end class`;
 
@@ -371,9 +371,9 @@ end class`;
 main
   variable a set to [7, 8, 9]
   variable x set to "hello"
-  each x in a
+   for x in a
     call printNoLine(x)
-  end each
+  end for
   call printNoLine(x)
 end main
 `;
@@ -400,9 +400,9 @@ end main
 
 main
   variable a set to [7, 8, 9]
-  each x in a
+   for x in a
     call printNoLine(x)
-  end each
+  end for
   call printNoLine(x)
 end main
 `;
@@ -428,9 +428,9 @@ end main
 main
   variable a set to [7, 8, 9]
   variable xx set to "hello"
-  each xX in a
+   for xX in a
     call printNoLine(x)
-  end each
+  end for
   call printNoLine(x)
 end main
 `;
@@ -457,9 +457,9 @@ end main
 
 main
   variable ids set to [7, 8, 9]
-  each id in id
+   for id in id
     call printNoLine(id)
-  end each
+  end for
   call printNoLine(ids)
 end main
 `;
@@ -484,7 +484,7 @@ end main
 
 main
   variable a set to [7, 8, 9]
-  each x in a
+   for x in a
     call printNoLine(x)
   end
   call printNoLine(x)
@@ -510,9 +510,9 @@ end main
 
 main
   variable y set to 10
-  each x in y
+   for x in y
     call printNoLine(x)
-  end each
+  end for
 end main
 `;
 
@@ -538,10 +538,10 @@ end main
 
 main
   variable s set to "hello"
-  each ch in s
+   for ch in s
     call printNoLine(ch)
     set s to "fred"
-  end each
+  end for
 end main
 `;
 
@@ -579,10 +579,10 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 2, 3, 4, 5]
-  each x in a
+   for x in a
     set a to a.withAppend(x)
     call printNoLine(x)
-  end each
+  end for
 end main
 `;
 
@@ -620,10 +620,10 @@ return [main, _tests];}`;
 
 main
   constant s set to "hello"
-  each ch in s
+   for ch in s
     call printNoLine(ch)
     set s to "fred"
-  end each
+  end for
 end main
 `;
 
@@ -648,9 +648,9 @@ end main
     const code = `${testHeader}
 
 main
-  each x in a
+   for x in a
     variable b set to x.z
-  end each
+  end for
 end main
 `;
 

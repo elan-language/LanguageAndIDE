@@ -128,7 +128,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {

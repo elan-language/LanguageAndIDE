@@ -760,10 +760,10 @@ return [main, _tests];}`;
 
 main
   variable results set to [0, 0]
-  each i in range(1, 10001)
+  for i in range(1, 10001)
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
-  end each
+  end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
   call printNoLine(results[0] + results[1])
@@ -809,12 +809,12 @@ main
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
-  each i in range(1, 10001)
+  for i in range(1, 10001)
     variable t set to rnd.nextInt(0, 1)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
-  end each
+  end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
   call printNoLine(results[0] + results[1])
@@ -863,17 +863,17 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable val set to 0
-  each i in range(1, 10001)
+  for i in range(1, 10001)
     variable t set to rnd.nextInt(3, 5)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
-  end each
-  each i in range(0, 7)
+  end for
+  for i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
-  end each
+  end for
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -921,17 +921,17 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable dice set to 0
-  each i in range(1, 10001)
+  for i in range(1, 10001)
     variable t set to rollDice(rnd)
     set dice to t.item_0
     set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
-  end each
-  each i in range(0, 7)
+  end for
+  for i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
-  end each
+  end for
 end main
 
 function rollDice(rnd as Random) returns (Int, Random)
@@ -2213,13 +2213,13 @@ return [main, _tests];}`;
 
 main
   variable b set to new List<of List<of Int>>()
-  each i in range(0, 40)
+  for i in range(0, 40)
     variable sa set to new List<of Int>()
-    each j in range(0, 30)
+    for j in range(0, 30)
       call sa.append(white)
-    end each
+    end for
     call b.append(sa)
-  end each
+  end for
   set b to createBlockGraphics(white)
 end main
 `;

@@ -26,14 +26,14 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCatch(parent: Parent): Frame {
     return new CatchStatement(parent);
   }
-  public newEach(parent: Parent): Frame {
-    return new For(parent);
-  }
   public newElif(parent: Parent): Frame {
     return new Elif(parent);
   }
   public newElse(parent: Parent): Frame {
     return new Else(parent);
+  }
+  public newFor(parent: Parent): Frame {
+    return new For(parent);
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);

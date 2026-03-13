@@ -16,10 +16,10 @@ suite("Loop Variable", () => {
     const code = `${testHeader}
 
 procedure removeLetters(wordAsPlayed as String)
-  each letter in wordAsPlayed
+   for letter in wordAsPlayed
     variable x set to letter
     call removeLetter(x)
-  end each
+  end for
 end procedure
 
 procedure removeLetter(l as String)
@@ -69,9 +69,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 procedure removeLetters(wordAsPlayed as String)
-  each letter in wordAsPlayed
+   for letter in wordAsPlayed
     call removeLetter(letter)
-  end each
+  end for
 end procedure
 
 procedure removeLetter(l as String)

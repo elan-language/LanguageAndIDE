@@ -3,7 +3,7 @@
 main
   variable blocks set to createBlockGraphics(black)
   set blocks to createStart(blocks)
-  each i in range(0, displayWidth + 1)
+  for i in range(0, displayWidth + 1)
     constant x set to randomInt(0, 39)
     constant y set to randomInt(0, 29)
     variable p set to new Point(x, y)
@@ -13,7 +13,7 @@ main
       constant colour set to if(setTo is 1, white, black)
       set blocks[p.x][p.y] to colour
     end if
-  end each
+  end for
   call displayBlocks(blocks)
   constant name set to inputString("File name to save: ")
   if not name.equals("x") then
@@ -25,37 +25,37 @@ constant displayWidth set to 150
 
 procedure saveAsFile(name as String, b as List<of List<of Int>>)
   variable file set to createFileForWriting(name)
-  each row in range(0, 30)
+  for row in range(0, 30)
     variable line set to ""
-    each col in range(0, 40)
+    for col in range(0, 40)
       constant colour set to b[col][row]
       constant symbol set to if(colour is white, " ", "X")
       set line to line + symbol
-    end each
+    end for
     call file.writeLine(line)
-  end each
+  end for
   call file.saveAndClose()
 end procedure
 
 function createStart(b as List<of List<of Int>>) returns List<of List<of Int>>
   variable b2 set to b
-  each i in rangeInSteps(0, 16, 2)
+  for i in rangeInSteps(0, 16, 2)
     set b2 to addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i)
-  end each
+  end for
   return b2
 end function
 
 function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, width as Int, depth as Int) returns List<of List<of Int>>
   constant paint set to white
   variable b2 set to b
-  each x in range(startX, startX + width + 1)
+  for x in range(startX, startX + width + 1)
     set b2 to withPut(b2, x, startY, paint)
     set b2 to withPut(b2, x, startY + depth, paint)
-  end each
-  each y in range(startY, startY + depth + 1)
+  end for
+  for y in range(startY, startY + depth + 1)
     set b2 to withPut(b2, startX, y, paint)
     set b2 to withPut(b2, startX + width, y, paint)
-  end each
+  end for
   return b2
 end function
 

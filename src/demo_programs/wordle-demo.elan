@@ -40,9 +40,9 @@ procedure playGame()
   variable grid set to new List<of List<of String>>()
   call initialiseGrid(grid)
   variable used set to new Dictionary<of String, String>()
-  each letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     call used.put(letter, " ")
-  end each
+  end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
   constant target set to allValidAnswers.split(" ")[randomInt(0, 2308)]
   variable attemptNo set to 0
@@ -61,13 +61,13 @@ procedure playGame()
 end procedure
 
 procedure initialiseGrid(grid as List<of List<of String>>)
-  each i in range(0, 5)
+  for i in range(0, 5)
     variable sa set to new List<of String>()
-    each j in range(0, 6)
+    for j in range(0, 6)
       call sa.append("")
-    end each
+    end for
     call grid.append(sa)
-  end each
+  end for
 end procedure
 
 procedure enterAttempt(attemptNo as Int, grid as List<of List<of String>>, used as Dictionary<of String, String>)
@@ -98,14 +98,14 @@ end procedure
 procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, target as String, solved as AsRef<of Boolean>, used as Dictionary<of String, String>)
   variable attempt set to getWord(attemptNo, grid)
   variable marks set to markAttempt(attempt, target)
-  each i in range(0, 5)
+  for i in range(0, 5)
     variable letter set to grid[i][attemptNo]
     variable mark set to marks[i]
     set grid[i][attemptNo] to letter + mark
     if mark.isAfter(used[letter]) then
       call used.put(letter, mark)
     end if
-  end each
+  end for
   if marks.equals("22222") then
     call solved.set(true)
   end if
@@ -120,9 +120,9 @@ procedure playReverseGame()
   variable possible set to allValidAnswers.split(" ")
   variable attempt set to "ARISE"
   while (attemptNo < 6) and (not solved)
-    each i in range(0, 5)
+    for i in range(0, 5)
       set grid[i][attemptNo] to attempt[i]
-    end each
+    end for
     call displayHtml(drawGrid(grid))
     variable mark set to ""
     variable markRef set to new AsRef<of String>(mark)
@@ -170,7 +170,7 @@ end procedure
 procedure analyse()
   variable outcomes set to new List<of Int>()
   call outcomes.initialise(10, 0)
-  each word in allValidAnswers.split(" ")
+   for word in allValidAnswers.split(" ")
     variable possible set to allValidAnswers.split(" ")
     variable mark set to ""
     variable attempt set to "RAISE"
@@ -182,13 +182,13 @@ procedure analyse()
       set attempt to possible[0]
     end while
     call outcomes.put(attempts, outcomes[attempts] + 1)
-  end each
+  end for
   variable success set to 0
   variable weightedSum set to 0
-  each i in range(1, 7)
+  for i in range(1, 7)
     set success to success + outcomes[i]
     set weightedSum to weightedSum + (i*outcomes[i])
-  end each
+  end for
   call clearPrintedText()
   call print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.")
 end procedure
@@ -208,9 +208,9 @@ end test
 
 function getWord(attemptNo as Int, grid as List<of List<of String>>) returns String
   variable guessWord set to ""
-  each i in range(0, 5)
+  for i in range(0, 5)
     set guessWord to guessWord + grid[i][attemptNo]
-  end each
+  end for
   return guessWord
 end function
 
@@ -226,18 +226,18 @@ end test
 function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   variable unused set to target
-  each n in range(0, 5)
+  for n in range(0, 5)
     if attempt[n].equals(unused[n]) then
       set mark to setChar(mark, n, "2")
       set unused to setChar(unused, n, " ")
     end if
-  end each
-  each n in range(0, 5)
+  end for
+  for n in range(0, 5)
     if (not mark[n].equals("2")) and unused.contains(attempt[n]) then
       set mark to setChar(mark, n, "1")
       set unused to setChar(unused, unused.indexOf(attempt[n]), " ")
     end if
-  end each
+  end for
   return mark
 end function
 
@@ -256,12 +256,12 @@ end test
 
 function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
   variable newPossible set to new List<of String>()
-  each word in possible
+   for word in possible
     constant markForWord set to markAttempt(attempt, word)
     if markForWord.equals(mark) then
       set newPossible to newPossible.withAppend(word)
     end if
-  end each
+  end for
   return newPossible
 end function
 
@@ -276,28 +276,28 @@ end test
 
 function drawGrid(grid as List<of List<of String>>) returns String
   variable html set to $"<style>{style}</style> <grid>"
-  each row in range(0, 6)
+  for row in range(0, 6)
     set html to html + "<word>"
-    each col in range(0, 5)
+    for col in range(0, 5)
       constant entry set to grid[col][row]
       constant ch set to if(entry.length() > 0, entry[0], "")
       constant mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
       set html to html + $"<ch class='_{mark}'>{ch}</ch>"
-    end each
+    end for
     set html to html + "</word>"
-  end each
+  end for
   return html + "</grid>"
 end function
 
 function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
-  each k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
+   for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
     if k.equals("-") then
       set html to html + "</div><div>"
     else
       set html to html + $"<key class='_{used[k]}'>{k}</key>"
     end if
-  end each
+  end for
   return html + "<key></key></div></keyboard>"
 end function
 

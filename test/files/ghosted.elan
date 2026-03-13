@@ -1,4 +1,4 @@
-# fa87df8463b42d301ea5b75b08f2f1875ddf8d26439ebfde7bcf425764a4d104 Elan 2.0.0-alpha guest default_profile valid
+# 0eb4003c2f41ad4984fc326da57e7f0879dfa1b372f9c77a3947e571678d7d24 Elan 2.0.0-alpha guest default_profile valid
 
 [ghosted] constant k set to 3
 
@@ -12,9 +12,9 @@ end class
 
 [ghosted] # ghosted comment
 [ghosted] main
-  each i in range(1, 11)
+  for i in range(1, 11)
     call print(i)
-  end each
+  end for
 end main
 
 function square(i as Int) returns Int

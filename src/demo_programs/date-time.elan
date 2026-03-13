@@ -57,11 +57,11 @@ function dayInYear(year as Int, unixDays as Int) returns Int
     # discount previous nominal years
     set dayNumber to dayNumber - 365*(year - unixYear)
     # discount previous leap days
-    each y in range(unixYear, year)
+    for y in range(unixYear, year)
       if leap(y) then
         set dayNumber to dayNumber - 1
       end if
-    end each
+    end for
   end if
   return dayNumber
 end function
@@ -97,9 +97,9 @@ function startDaysList(year as Int, startDays as List<of Int>) returns List<of I
   # alter month start days if leap year
   variable startDaysL set to getStartDays()
   if leap(year) then
-    each m in range(2, 13)
+    for m in range(2, 13)
       set startDaysL to startDaysL.withPut(m, startDaysL[m] + 1)
-    end each
+    end for
   end if
   return startDaysL
 end function

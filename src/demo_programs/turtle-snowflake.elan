@@ -4,10 +4,10 @@ main
   variable t set to new Turtle()
   call t.placeAt(-50, 30)
   call t.turn(90)
-  each i in range(1, 4)
+  for i in range(1, 4)
     call drawSide(side, t)
     call t.turn(120)
-  end each
+  end for
 end main
 
 procedure drawSide(length as Float, t as Turtle)

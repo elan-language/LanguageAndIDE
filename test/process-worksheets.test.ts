@@ -24,12 +24,12 @@ suite("process worksheets", () => {
 
   test("process file", async () => {
     const code = `procedure fillRandom(grid as List<of List<of Int>>)
-  each col in range(0, 40)
-    each row in range(0, 30)
+  for col in range(0, 40)
+    for row in range(0, 30)
       variable cell set to if(random() > 0.5, black, white)
       set grid[col][row] to cell
-    end each
-  end each
+    end for
+  end for
 end procedure`;
 
     const actual = await processInnerCode(code);
@@ -38,12 +38,12 @@ end procedure`;
   });
 
   test("process statement", async () => {
-    const code = `each col in range(0, 40)
-  each row in range(0, 30)
+    const code = `for col in range(0, 40)
+  for row in range(0, 30)
     variable cell set to if(random() > 0.5, black, white)
     set grid[col][row] to cell
-  end each
-end each`;
+  end for
+end for`;
 
     const actual = await processInnerCode(code);
 
@@ -264,18 +264,18 @@ end constructor`;
             function markAttempt(attempt as String, target as String) returns String
             variable mark set to "00000"
             variable unused set to something
-            each n in range(0, 5)
+            for n in range(0, 5)
               if attempt[n] is unused[n] then
                 set mark to setChar(mark, n, "2")
                 set unused to something
               end if
-            end each
-            each n in range(0, 5)
+            end for
+            for n in range(0, 5)
               if (mark[n] isnt "2") and unused.contains(attempt[n]) then
                 set mark to setChar(mark, n, "1")
                 set unused to something
               end if
-            end each
+            end for
             return mark
         end function
 `;

@@ -305,9 +305,9 @@ end class`;
 
 main
   variable tot set to 0
-  each i in range(1, 11)
+  for i in range(1, 11)
     set tot to tot + i
-  end each
+  end for
   call printNoLine(tot)
 end main`;
 
@@ -336,10 +336,10 @@ end main`;
 main
   variable a set to [7,8,9]
   variable n set to 0
-  each x in a
+   for x in a
     variable z set to 101
     set n to n + x
-  end each
+  end for
   call printNoLine(n)
 end main`;
 

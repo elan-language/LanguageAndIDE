@@ -1,4 +1,4 @@
-import { eachKeyword } from "../../../compiler/elan-keywords";
+import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
 
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
@@ -21,7 +21,7 @@ export class For extends FrameWithStatements implements Statement {
     this.iter.setPlaceholder("<i>source</i>");
   }
   initialKeywords(): string {
-    return eachKeyword;
+    return forKeyword;
   }
 
   getFieldsDefaultImpl(): Field[] {
@@ -29,28 +29,28 @@ export class For extends FrameWithStatements implements Statement {
   }
 
   getIdPrefix(): string {
-    return "each";
+    return "for";
   }
 
   frameSpecificAnnotation(): string {
-    return "each";
+    return "for";
   }
 
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${forKeyword} ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
-${this.indent()}end each`;
+${this.indent()}${endKeyword} ${forKeyword}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("each ");
+    source.remove(`${forKeyword} `);
     this.variable.parseFrom(source);
-    source.remove(" in ");
+    source.remove(` ${inKeyword} `);
     this.iter.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end each");
+    return this.parseStandardEnding(source, `${endKeyword} ${forKeyword}`);
   }
 }

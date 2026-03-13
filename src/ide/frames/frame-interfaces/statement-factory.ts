@@ -5,9 +5,9 @@ export interface StatementFactory {
   newAssert(parent: Parent): Frame;
   newCall(parent: Parent): Frame;
   newCatch(parent: Parent): Frame;
-  newEach(parent: Parent): Frame;
   newElif(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
+  newFor(parent: Parent): Frame;
   newIf(parent: Parent): Frame;
   newConstantStatement(parent: Parent): Frame;
   newSet(parent: Parent): Frame;
