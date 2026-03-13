@@ -1,36 +1,31 @@
-import { forKeyword } from "../../../compiler/elan-keywords";
+import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
+
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { StepField } from "../fields/step-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class For extends FrameWithStatements implements Statement {
-  isStatement: boolean = true;
+  isStatement = true;
   variable: IdentifierField;
-  from: ExpressionField;
-  to: ExpressionField;
-  step: StepField;
-  constructor(parent: Parent) {
+  iter: ExpressionField;
+  constructor(parent: File | Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("<i>counterName</i>");
-    this.from = new ExpressionField(this, / to /);
-    this.from.setPlaceholder("<i>inclusive first value</i>");
-    this.to = new ExpressionField(this, / step /);
-    this.to.setPlaceholder("<i>exclusive final value</i>");
-    this.step = new StepField(this);
+    this.variable.setPlaceholder("<i>elementName</i>");
+    this.iter = new ExpressionField(this);
+    this.iter.setPlaceholder("<i>source</i>");
   }
-
   initialKeywords(): string {
     return forKeyword;
   }
 
   getFieldsDefaultImpl(): Field[] {
-    return [this.variable, this.from, this.to, this.step];
+    return [this.variable, this.iter];
   }
 
   getIdPrefix(): string {
@@ -38,28 +33,24 @@ export class For extends FrameWithStatements implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "";
+    return "for";
   }
 
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsElanSource()} from ${this.from.renderAsElanSource()} to ${this.to.renderAsElanSource()} step ${this.step.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${forKeyword} ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
-${this.indent()}end for`;
+${this.indent()}${endKeyword} ${forKeyword}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("for ");
+    source.remove(`${forKeyword} `);
     this.variable.parseFrom(source);
-    source.remove(" from ");
-    this.from.parseFrom(source);
-    source.remove(" to ");
-    this.to.parseFrom(source);
-    source.remove(" step ");
-    this.step.parseFrom(source);
+    source.remove(` ${inKeyword} `);
+    this.iter.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end for");
+    return this.parseStandardEnding(source, `${endKeyword} ${forKeyword}`);
   }
 }

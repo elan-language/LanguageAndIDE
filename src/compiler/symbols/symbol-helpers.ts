@@ -27,7 +27,6 @@ import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-defin
 import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
-import { ForAsn } from "../syntax-nodes/statements/for-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { ListName } from "./elan-type-names";
@@ -163,7 +162,7 @@ export function isTuple(s: Scope): s is TupleAsn {
 }
 
 export function isDefinitionScope(s: Scope): boolean {
-  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
+  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn;
 }
 
 export function isValueType(type: SymbolType): boolean {

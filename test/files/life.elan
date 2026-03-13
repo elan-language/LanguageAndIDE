@@ -1,4 +1,4 @@
-# 07ef999228e7c7e3bf1c73b9268dd8489295ffad850e6edda316a58fcac3b349 Elan 2.0.0-alpha guest default_profile valid
+# 304fd3bda50bb6aa0eae7606aaa32aca1f6844ec0fbcb9ca041b2387a58359b1 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -79,7 +79,7 @@ end function
 
 function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   variable count set to 0
-   for cell in neighbourCells(x, y)
+  for cell in neighbourCells(x, y)
     constant cx set to cell.item_0
     constant cy set to cell.item_1
     if grid[cx][cy] is black then

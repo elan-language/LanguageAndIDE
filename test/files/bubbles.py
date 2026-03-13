@@ -3,7 +3,7 @@
 def main(): None:
   bubbles = list[CircleVG]() # variable
   # create 20 small bubbles at the bottom
-  for i in range(1, 20 + 1, 1):
+  for i in range(1, 21):
     b = (CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white) # variable
     bubbles.append(b) # call
   while True:

@@ -663,7 +663,7 @@ main
     call printNoLine("")
   elif a is 2 then
     variable b set to a
-    for i from 0 to 5 + 1 step 1
+    for i in range(0, 6)
       set b to b + i
     end for
     call printNoLine(b)
@@ -678,8 +678,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const _tofor17 = 5 + 1;
-    for (let i = 0; i < _tofor17; i = i + 1) {
+    const elan_iterfor17 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterfor17) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);

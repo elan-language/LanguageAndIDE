@@ -1,8 +1,4 @@
-import {
-  abstractClassKeywords,
-  endKeyword,
-  interfaceKeyword,
-} from "../../../compiler/elan-keywords";
+import { endKeyword, interfaceKeyword } from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
@@ -17,7 +13,7 @@ export class InterfaceFrame extends ClassFrame {
   }
 
   initialKeywords(): string {
-    return abstractClassKeywords;
+    return interfaceKeyword;
   }
 
   doesInherit(): boolean {

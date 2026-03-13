@@ -1,14 +1,13 @@
 import { refKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { IdentifierUse } from "./identifier-use";
 import { KeywordNode } from "./keyword-node";
 import { MethodNameUse } from "./method-name-use";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
 export class FunctionRefNode extends AbstractSequence {
-  name: IdentifierUse | undefined;
+  name: MethodNameUse | undefined;
 
   parseText(text: string): void {
     if (text.trim().length > 0) {

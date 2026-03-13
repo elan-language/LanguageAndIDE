@@ -3,7 +3,6 @@ import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
-import { IdentifierUse } from "./identifier-use";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
 import { PropertyRef } from "./property-ref";
@@ -11,7 +10,7 @@ import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: Alternatives | undefined;
-  procName: IdentifierUse | undefined;
+  procName: MethodNameUse | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_regular,

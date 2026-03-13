@@ -55,14 +55,14 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable done set to false
   variable nx set to 0.0
   variable ny set to 0.0
-  each pp in allPs
+   for pp in allPs
     set cumuprob to cumuprob + pp[6]
     if (not done) and (r < cumuprob) then
       set nx to x*pp[0] + y*pp[1] + pp[4]
       set ny to x*pp[2] + y*pp[3] + pp[5]
       set done to true
     end if
-  end each
+  end for
   return (nx, ny)
 end function
 

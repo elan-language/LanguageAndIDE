@@ -760,7 +760,7 @@ return [main, _tests];}`;
 
 main
   variable results set to [0, 0]
-  for i from 1 to 10000 + 1 step 1
+  for i in range(1, 10001)
     variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
   end for
@@ -773,8 +773,8 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  const _tofor6 = 10000 + 1;
-  for (let i = 1; i < _tofor6; i = i + 1) {
+  const elan_iterfor6 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor6) {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
@@ -809,7 +809,7 @@ main
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
-  for i from 1 to 10000 + 1 step 1
+  for i in range(1, 10001)
     variable t set to rnd.nextInt(0, 1)
     set val to t.item_0
     set rnd to t.item_1
@@ -827,8 +827,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const _tofor15 = 10000 + 1;
-  for (let i = 1; i < _tofor15; i = i + 1) {
+  const elan_iterfor15 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor15) {
     let t = rnd.nextInt(0, 1);
     val = t[0];
     rnd = t[1];
@@ -863,13 +863,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable val set to 0
-  for i from 1 to 10000 + 1 step 1
+  for i in range(1, 10001)
     variable t set to rnd.nextInt(3, 5)
     set val to t.item_0
     set rnd to t.item_1
     call results.put(val, results[val] + 1)
   end for
-  for i from 0 to 6 + 1 step 1
+  for i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -882,15 +882,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  const _tofor12 = 10000 + 1;
-  for (let i = 1; i < _tofor12; i = i + 1) {
+  const elan_iterfor12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor12) {
     let t = rnd.nextInt(3, 5);
     val = t[0];
     rnd = t[1];
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const _tofor30 = 6 + 1;
-  for (let i = 0; i < _tofor30; i = i + 1) {
+  const elan_iterfor28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterfor28) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -921,13 +921,13 @@ main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
   variable rnd set to new Random()
   variable dice set to 0
-  for i from 1 to 10000 + 1 step 1
+  for i in range(1, 10001)
     variable t set to rollDice(rnd)
     set dice to t.item_0
     set rnd to t.item_1
     call results.put(dice, results[dice] + 1)
   end for
-  for i from 0 to 6 + 1 step 1
+  for i in range(0, 7)
     variable r set to results[i]
     call printNoLine(r)
     call printNoLine(", ")
@@ -944,15 +944,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  const _tofor12 = 10000 + 1;
-  for (let i = 1; i < _tofor12; i = i + 1) {
+  const elan_iterfor12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterfor12) {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  const _tofor30 = 6 + 1;
-  for (let i = 0; i < _tofor30; i = i + 1) {
+  const elan_iterfor28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterfor28) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -1859,17 +1859,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Pass_sequence", async () => {
+  test("Pass_range", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 5, 1))
+  call printNoLine(range(1, 6))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 5, 1));
+  await _stdlib.printNoLine(_stdlib.range(1, 6));
 }
 return [main, _tests];}`;
 
@@ -1889,17 +1889,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4, 5]");
   });
-  test("Pass_sequence_EmptyIfEnd<Start", async () => {
+  test("Pass_range_EmptyIfEnd<Start", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(5, 1, 1))
+  call printNoLine(range(5, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(5, 1, 1));
+  await _stdlib.printNoLine(_stdlib.range(5, 0));
 }
 return [main, _tests];}`;
 
@@ -1919,19 +1919,19 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
-  test("Pass_sequenceWithStep", async () => {
+  test("Pass_rangeInSteps", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, 2))
-  call printNoLine(sequence(5, -4, -2))
+  call printNoLine(rangeInSteps(1, 7, 2))
+  call printNoLine(rangeInSteps(5, -4, -2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 2));
-  await _stdlib.printNoLine(_stdlib.sequence(5, (-4), (-2)));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, 2));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(5, (-4), (-2)));
 }
 return [main, _tests];}`;
 
@@ -1951,17 +1951,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[1, 3, 5][5, 3, 1, -1, -3]");
   });
-  test("Pass_sequenceWithStepError1", async () => {
+  test("Pass_rangeInStepsError1", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, 0))
+  call printNoLine(rangeInSteps(1, 7, 0))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, 0));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, 0));
 }
 return [main, _tests];}`;
 
@@ -1981,17 +1981,17 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeDoesNotExecute(fileImpl, "value for step cannot be zero");
   });
-  test("Pass_sequenceWithStepError2", async () => {
+  test("Pass_rangeInStepsError2", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(1, 6, -1))
+  call printNoLine(rangeInSteps(1, 7, -1))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(1, 6, (-1)));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, (-1)));
 }
 return [main, _tests];}`;
 
@@ -2014,17 +2014,17 @@ return [main, _tests];}`;
       "Loop will not terminate when start < end start with negative step",
     );
   });
-  test("Pass_sequenceWithStepError3", async () => {
+  test("Pass_rangeInStepsError3", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(sequence(6, 1, 2))
+  call printNoLine(rangeInSteps(6, 2, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.sequence(6, 1, 2));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(6, 2, 2));
 }
 return [main, _tests];}`;
 
@@ -2213,9 +2213,9 @@ return [main, _tests];}`;
 
 main
   variable b set to new List<of List<of Int>>()
-  for i from 0 to 39 + 1 step 1
+  for i in range(0, 40)
     variable sa set to new List<of Int>()
-    for j from 0 to 29 + 1 step 1
+    for j in range(0, 30)
       call sa.append(white)
     end for
     call b.append(sa)
@@ -2228,11 +2228,11 @@ end main
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const _tofor6 = 39 + 1;
-  for (let i = 0; i < _tofor6; i = i + 1) {
+  const elan_iterfor6 = [..._stdlib.range(0, 40)];
+  for (const i of elan_iterfor6) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const _tofor15 = 29 + 1;
-    for (let j = 0; j < _tofor15; j = j + 1) {
+    const elan_iterfor13 = [..._stdlib.range(0, 30)];
+    for (const j of elan_iterfor13) {
       sa.append(_stdlib.white);
     }
     b.append(sa);

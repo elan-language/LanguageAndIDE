@@ -4,17 +4,17 @@ main
   # snipFrom
   variable names set to ["Tom", "Dick", "Harriet"]
   call print(names[0])
-  each n in names
+  for n in names
     call print(n)
-  end each
+  end for
   # snipTo
   call print(reverse("Harriet"))
 end main
 
 function reverse(s as String) returns String
   variable sReturn set to ""
-  each ch in s
+  for ch in s
     set sReturn to ch + sReturn
-  end each
+  end for
   return sReturn
 end function

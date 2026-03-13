@@ -3,7 +3,7 @@
 main
   variable bubbles set to new List<of CircleVG>()
   # create 20 small bubbles at the bottom
-  for i from 1 to 20 + 1 step 1
+  for i in range(1, 21)
     variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randomInt(0, white))
     call bubbles.append(b)
   end for
@@ -13,7 +13,7 @@ main
 end main
 
 procedure moveGrowBurst(bubbles as List<of CircleVG>)
-  each b in bubbles
+   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
       call b.setRadius(0)
@@ -23,7 +23,7 @@ procedure moveGrowBurst(bubbles as List<of CircleVG>)
       call b.setCentreY(b.centreY - 1)
       call b.setRadius(b.radius + 0.2)
     end if
-  end each
+  end for
   call displayVectorGraphics(bubbles)
   call pause(50)
 end procedure

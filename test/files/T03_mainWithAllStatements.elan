@@ -1,4 +1,4 @@
-# efdf84eef5a798d4dfcf83870d0dbc722e38d8310b7e954722d602b94690bdec Elan 2.0.0-alpha guest default_profile valid
+# f4aace14bad531b52784d9ea63b96365dbce07df75d038b73799add6b9f69691 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable a set to 3
@@ -9,12 +9,12 @@ main
   while newGame
 
   end while
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
 
   end for
-  each letter in "Charlie Duke"
+  for letter in "Charlie Duke"
 
-  end each
+  end for
   if y > 4 then
 
   end if

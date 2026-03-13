@@ -12,7 +12,7 @@ procedure inPlaceRippleSort(li as List<of Int>)
   variable lastComp set to li.length() - 2
   while hasChanged is true
     set hasChanged to false
-    for i from 0 to lastComp + 1 step 1
+    for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
         call li.put(i, li[i + 1])

@@ -61,9 +61,9 @@ Sub playGame() ' procedure
 End Sub
 
 Sub initialiseGrid(grid As List(Of List(Of String))) ' procedure
-  For i = 0 To 4 + 1 - 1 Step 1
+  For Each i In range(0, 5)
     Dim sa = New List(Of String)() ' variable
-    For j = 0 To 5 + 1 - 1 Step 1
+    For Each j In range(0, 6)
       sa.append("") ' call
     Next j
     grid.append(sa) ' call
@@ -98,7 +98,7 @@ End Sub
 Sub colourAttempt(attemptNo As Integer, grid As List(Of List(Of String)), target As String, solved As AsRef(Of Boolean), used As Dictionary(Of String, String)) ' procedure
   Dim attempt = getWord(attemptNo, grid) ' variable
   Dim marks = markAttempt(attempt, target) ' variable
-  For i = 0 To 4 + 1 - 1 Step 1
+  For Each i In range(0, 5)
     Dim letter = grid[i][attemptNo] ' variable
     Dim mark = marks[i] ' variable
     grid[i][attemptNo] = letter + mark ' set
@@ -120,7 +120,7 @@ Sub playReverseGame() ' procedure
   Dim possible = allValidAnswers.split(" ") ' variable
   Dim attempt = "ARISE" ' variable
   While (attemptNo < 6) And (Not solved)
-    For i = 0 To 4 + 1 - 1 Step 1
+    For Each i In range(0, 5)
       grid[i][attemptNo] = attempt[i] ' set
     Next i
     displayHtml(drawGrid(grid)) ' call
@@ -185,7 +185,7 @@ Sub analyse() ' procedure
   Next word
   Dim success = 0 ' variable
   Dim weightedSum = 0 ' variable
-  For i = 1 To 6 + 1 - 1 Step 1
+  For Each i In range(1, 7)
     success = success + outcomes[i] ' set
     weightedSum = weightedSum + (i*outcomes[i]) ' set
   Next i
@@ -208,7 +208,7 @@ End Sub
 
 Function getWord(attemptNo As Integer, grid As List(Of List(Of String))) As String
   Dim guessWord = "" ' variable
-  For i = 0 To 4 + 1 - 1 Step 1
+  For Each i In range(0, 5)
     guessWord = guessWord + grid[i][attemptNo] ' set
   Next i
   Return guessWord
@@ -226,13 +226,13 @@ End Sub
 Function markAttempt(attempt As String, target As String) As String
   Dim mark = "00000" ' variable
   Dim unused = target ' variable
-  For n = 0 To 4 + 1 - 1 Step 1
+  For Each n In range(0, 5)
     If attempt[n].equals(unused[n]) Then
       mark = setChar(mark, n, "2") ' set
       unused = setChar(unused, n, " ") ' set
     End If
   Next n
-  For n = 0 To 4 + 1 - 1 Step 1
+  For Each n In range(0, 5)
     If (Not mark[n].equals("2")) And unused.contains(attempt[n]) Then
       mark = setChar(mark, n, "1") ' set
       unused = setChar(unused, unused.indexOf(attempt[n]), " ") ' set
@@ -276,9 +276,9 @@ End Sub
 
 Function drawGrid(grid As List(Of List(Of String))) As String
   Dim html = $"<style>{style}</style> <grid>" ' variable
-  For row = 0 To 5 + 1 - 1 Step 1
+  For Each row In range(0, 6)
     html = html + "<word>" ' set
-    For col = 0 To 4 + 1 - 1 Step 1
+    For Each col In range(0, 5)
       Const entry = grid[col][row]
       Const ch = if(entry.length() > 0, entry[0], "")
       Const mark = if(entry.length() > 1, entry.subString(1, entry.length()), "")

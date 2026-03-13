@@ -28,7 +28,7 @@ suite("For Loop", () => {
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -38,8 +38,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10 + 1;
-  for (let i = 1; i < _tofor6; i = i + 1) {
+  const elan_iterfor6 = [..._stdlib.range(1, 11)];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -65,7 +65,7 @@ return [main, _tests];}`;
 
 def main(): None:
   tot = 0 # variable
-  for i in range(1, 10 + 1, 1):
+  for i in range(1, 11):
     tot = tot + i # set
   printNoLine(tot) # call
 `;
@@ -74,7 +74,7 @@ def main(): None:
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i < 10 + 1; i = i + 1) {
+  foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -85,7 +85,7 @@ static void main() {
 
 static void main() {
   var tot = 0;
-  for (int i = 1; i < 10 + 1; i = i + 1) {
+  foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
   printNoLine(tot); // call
@@ -96,7 +96,7 @@ static void main() {
 
 Sub main()
   Dim tot = 0 ' variable
-  For i = 1 To 10 + 1 - 1 Step 1
+  For Each i In range(1, 11)
     tot = tot + i ' set
   Next i
   printNoLine(tot) ' call
@@ -109,30 +109,17 @@ End Sub
     await assertExportedVBis(fileImpl, vbCode);
   });
 
-  test("Pass_reuseVariable", async () => {
+  test("Pass_cannotReuseVariable", async () => {
     const code = `${testHeader}
 
 main
   variable tot set to 0
   variable i set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let tot = 0;
-  let i = 0;
-  const _tofor9 = 10 + 1;
-  for (i = 1; i < _tofor9; i = i + 1) {
-    tot = tot + i;
-  }
-  await _stdlib.printNoLine(tot);
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -146,9 +133,9 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "55");
+    assertDoesNotCompile(fileImpl, [
+      `The identifier 'i' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error`,
+    ]);
   });
 
   test("Pass_withStep", async () => {
@@ -156,7 +143,7 @@ return [main, _tests];}`;
 
 main
 variable tot set to 0
-for i from 1 to 10 + 1 step 2
+for i in rangeInSteps(1, 11, 2)
   set tot to tot + i
 end for
 call printNoLine(tot)
@@ -166,8 +153,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 10 + 1;
-  for (let i = 1; i < _tofor6; i = i + 2) {
+  const elan_iterfor6 = [..._stdlib.rangeInSteps(1, 11, 2)];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -196,7 +183,7 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 10 to 2 step -1
+  for i in rangeInSteps(10, 3, -1)
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -206,8 +193,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 2;
-  for (let i = 10; i > _tofor6; i = i - 1) {
+  const elan_iterfor6 = [..._stdlib.rangeInSteps(10, 3, (-1))];
+  for (const i of elan_iterfor6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -228,7 +215,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "52");
+    await assertObjectCodeExecutes(fileImpl, "49");
   });
 
   test("Pass_innerLoop", async () => {
@@ -236,8 +223,8 @@ return [main, _tests];}`;
 
 main
   variable tot set to 0
-  for i from 1 to 3 + 1 step 1
-    for j from 1 to 4 + 1 step 1
+  for i in range(1, 4)
+    for j in range(1, 5)
       set tot to tot + 1
     end for
   end for
@@ -248,10 +235,10 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  const _tofor6 = 3 + 1;
-  for (let i = 1; i < _tofor6; i = i + 1) {
-    const _tofor12 = 4 + 1;
-    for (let j = 1; j < _tofor12; j = j + 1) {
+  const elan_iterfor6 = [..._stdlib.range(1, 4)];
+  for (const i of elan_iterfor6) {
+    const elan_iterfor10 = [..._stdlib.range(1, 5)];
+    for (const j of elan_iterfor10) {
       tot = tot + 1;
     }
   }
@@ -282,7 +269,7 @@ main
   variable lower set to 1
   variable upper set to 10
   variable tot set to 0
-  for i from lower to upper + 1 step 2
+  for i in rangeInSteps(lower, upper + 1, 2)
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -294,8 +281,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  const _tofor12 = upper + 1;
-  for (let i = lower; i < _tofor12; i = i + 2) {
+  const elan_iterfor12 = [..._stdlib.rangeInSteps(lower, upper + 1, 2)];
+  for (const i of elan_iterfor12) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -327,7 +314,7 @@ main
 end main
 
 procedure foo(arr as List<of Int>)
-  for i from 0 to 10 + 1 step 1
+  for i in range(0, 11)
     call arr.put(i, 1)
   end for
   call printNoLine(arr[0])
@@ -341,8 +328,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const _tofor13 = 10 + 1;
-  for (let i = 0; i < _tofor13; i = i + 1) {
+  const elan_iterfor13 = [..._stdlib.range(0, 11)];
+  for (const i of elan_iterfor13) {
     arr.put(i, 1);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
@@ -371,7 +358,7 @@ return [main, _tests];}`;
 
 main
   variable limit set to 10
-  for i from 1 to limit + 1 step 1
+  for i in range(1, limit + 1)
     call printNoLine($"{i}")
     set limit to limit + 1
   end for
@@ -381,8 +368,8 @@ end main`;
 const global = new class {};
 async function main() {
   let limit = 10;
-  const _tofor6 = limit + 1;
-  for (let i = 1; i < _tofor6; i = i + 1) {
+  const elan_iterfor6 = [..._stdlib.range(1, limit + 1)];
+  for (const i of elan_iterfor6) {
     await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }
@@ -406,13 +393,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12345678910");
   });
 
-  test("Fail_reuseVariableWrongType", async () => {
+  test("Fail_reuseVariableDifferentType", async () => {
     const code = `${testHeader}
 
 main
   variable tot set to 0
   variable i set to ""
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -431,7 +418,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Int.LangRef.html#TypeCompileError"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'i' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_useOfFloat", async () => {
@@ -439,7 +428,7 @@ end main`;
 
 main
   variable tot set to 0.0
-  for i from 1.5 to 10.1 + 1 step 1.0
+  for i in range(1.5, 11.1).0
     set tot to tot + i
   end for
   call printNoLine(tot)
@@ -465,7 +454,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set i to 10
   end for
 end main
@@ -493,7 +482,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1
+  for i in range(1, 11)
     set tot to 10
   end for
   call printNoLine(i)
@@ -520,8 +509,8 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 3 + 1 step 1
-    for j from 1 to 4 + 1 step 1  set tot to tot + 1
+  for i in range(1, 4)
+    for j in range(1, 5)  set tot to tot + 1
     end for
 end main
 `;
@@ -545,7 +534,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10  set tot to tot + i
+  forfor i in range(1, 11)
   next i
 end main
 `;
@@ -569,7 +558,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1  set tot to tot + i
+  for i in range(1, 11)  set tot to tot + i
     break
   end for
 end main
@@ -594,7 +583,7 @@ end main
 
 main
   variable tot set to 0
-  for i from 1 to 10 + 1 step 1  set tot to tot + i
+  for i in range(1, 11)  set tot to tot + i
     continue
   end for
 end main
@@ -619,7 +608,7 @@ end main
 
 main
   variable ids set to 10
-  for id from id to 11 + 1 step 1
+  for id in range(id, 12)
     call printNoLine(id)
   end for
   call printNoLine(ids)
@@ -645,7 +634,7 @@ end main`;
 
 main
   variable ids set to 10
-  for id from 0 to id + 1 step 1
+  for id in range(0, id + 1)
     call printNoLine(id)
   end for
   call printNoLine(ids)

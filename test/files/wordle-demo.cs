@@ -61,9 +61,9 @@ static void playGame() { // procedure
 }
 
 static void initialiseGrid(List<List<string>> grid) { // procedure
-  for (int i = 0; i < 4 + 1; i = i + 1) {
+  foreach (i in range(0, 5)) {
     var sa = new List<string>();
-    for (int j = 0; j < 5 + 1; j = j + 1) {
+    foreach (j in range(0, 6)) {
       sa.append(""); // call
     }
     grid.append(sa); // call
@@ -98,7 +98,7 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
 static void colourAttempt(int attemptNo, List<List<string>> grid, string target, AsRef<bool> solved, Dictionary<string, string> used) { // procedure
   var attempt = getWord(attemptNo, grid);
   var marks = markAttempt(attempt, target);
-  for (int i = 0; i < 4 + 1; i = i + 1) {
+  foreach (i in range(0, 5)) {
     var letter = grid[i][attemptNo];
     var mark = marks[i];
     grid[i][attemptNo] = letter + mark; // set
@@ -120,7 +120,7 @@ static void playReverseGame() { // procedure
   var possible = allValidAnswers.split(" ");
   var attempt = "ARISE";
   while ((attemptNo < 6) && (!solved)) {
-    for (int i = 0; i < 4 + 1; i = i + 1) {
+    foreach (i in range(0, 5)) {
       grid[i][attemptNo] = attempt[i]; // set
     }
     displayHtml(drawGrid(grid)); // call
@@ -185,7 +185,7 @@ static void analyse() { // procedure
   }
   var success = 0;
   var weightedSum = 0;
-  for (int i = 1; i < 6 + 1; i = i + 1) {
+  foreach (i in range(1, 7)) {
     success = success + outcomes[i]; // set
     weightedSum = weightedSum + (i*outcomes[i]); // set
   }
@@ -208,7 +208,7 @@ static void test_isUCLetter() {
 
 static string getWord(int attemptNo, List<List<string>> grid) { // function
   var guessWord = "";
-  for (int i = 0; i < 4 + 1; i = i + 1) {
+  foreach (i in range(0, 5)) {
     guessWord = guessWord + grid[i][attemptNo]; // set
   }
   return guessWord;
@@ -226,13 +226,13 @@ static void test_setChar() {
 static string markAttempt(string attempt, string target) { // function
   var mark = "00000";
   var unused = target;
-  for (int n = 0; n < 4 + 1; n = n + 1) {
+  foreach (n in range(0, 5)) {
     if (attempt[n].equals(unused[n])) {
       mark = setChar(mark, n, "2"); // set
       unused = setChar(unused, n, " "); // set
     }
   }
-  for (int n = 0; n < 4 + 1; n = n + 1) {
+  foreach (n in range(0, 5)) {
     if ((!mark[n].equals("2")) && unused.contains(attempt[n])) {
       mark = setChar(mark, n, "1"); // set
       unused = setChar(unused, unused.indexOf(attempt[n]), " "); // set
@@ -276,9 +276,9 @@ static void test_possibleAnswersAfterAttempt() {
 
 static string drawGrid(List<List<string>> grid) { // function
   var html = $"<style>{style}</style> <grid>";
-  for (int row = 0; row < 5 + 1; row = row + 1) {
+  foreach (row in range(0, 6)) {
     html = html + "<word>"; // set
-    for (int col = 0; col < 4 + 1; col = col + 1) {
+    foreach (col in range(0, 5)) {
       const String entry = grid[col][row];
       const String ch = if(entry.length() > 0, entry[0], "");
       const String mark = if(entry.length() > 1, entry.subString(1, entry.length()), "");

@@ -16,9 +16,9 @@ end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
   call sequence.append(randomInt(1, 4))
-  each move in sequence
+  for move in sequence
     call displayMove(move, interval)
-  end each
+  end for
 end procedure
 
 procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)

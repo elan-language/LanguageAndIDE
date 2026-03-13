@@ -32,7 +32,6 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
-import { StepNode } from "./parse-nodes/step-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -42,7 +41,6 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { ConstantStatement } from "./statements/constant-statement";
-import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
@@ -136,12 +134,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof Each) {
-      html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
-      const negativeStep = (frame.step.getRootNode() as StepNode).minus!.matchedNode;
-      const op = negativeStep ? "+" : "-";
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()} ${op} <el-lit>1</el-lit><el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
+      html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
@@ -174,7 +168,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof Each || frame instanceof For) {
+    } else if (frame instanceof For) {
       html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
