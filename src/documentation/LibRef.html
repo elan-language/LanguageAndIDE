@@ -73,6 +73,12 @@ are passed around in a running program:</p>
   <td><el-type>Int</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if integer and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Int">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td><el-type>Int</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if integer and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
 </table>
 
@@ -156,6 +162,12 @@ in the range:</li>
   <td><el-type>Float</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if floating point number and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Float">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td><el-type>Float</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if floating point number and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr>
   <td><el-method>floor</el-method></td>
   <td><el-type>Float</el-type></td>
@@ -219,10 +231,14 @@ in the range:</li>
   <td><el-type>Boolean</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the truth value and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Boolean">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the truth value and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
  </table>
-
-
 
 <h1 id="ReferenceTypes">Reference data Types</h1>
 
@@ -323,6 +339,12 @@ in the range:</li>
   <td><el-type>String</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the string and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_String">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the string and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="contains_String">
   <td><el-method>contains</el-method></td>
   <td><el-type>String</el-type></td>
@@ -681,6 +703,12 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_List">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
   <td><el-type>List</el-type></td>
@@ -883,6 +911,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>Dictionary</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if dictionary and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Dictionary">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if dictionary and argument differ <br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="hasKey_Dictionary">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -916,7 +950,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr>
 </table>
 
-<h2 id="SetType">HashSet</h2>
+<h2 id="HashSet">HashSet</h2>
 <p>A <el-type>HashSet</el-type> (usually referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a Set member may appear only once.
  If a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</p>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
@@ -1001,6 +1035,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if Set and argument Set are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Set">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>HashSet</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if Set and argument Set differ<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="intersection">
   <td><el-method>intersection</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -1066,12 +1106,25 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
+ </tr><tr id="asString_Stack">
+  <td><el-method>asString</el-method></td>
+  <td><el-type>Stack</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
+   the last item pushed being the first in the String</td>
  </tr><tr id="equals_Stack">
   <td><el-method>equals</el-method></td>
   <td><el-type>Stack</el-type></td>
   <td><el-type>Stack</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if stack and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Stack">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Stack</el-type></td>
+  <td><el-type>Stack</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if stack and argument differ<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="push">
   <td><el-method>push</el-method></td>
   <td><el-type>Stack</el-type></td>
@@ -1096,13 +1149,6 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of items in the Stack</td>
- </tr><tr id="asString_Stack">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Stack</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
-   the last item pushed being the first in the String</td>
  </tr>
 </table>
 
@@ -1114,12 +1160,25 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
- </tr><tr id="equals_Queue">
+ </tr><tr id="asString_Queue">
+  <td><el-method>asString</el-method></td>
+  <td><el-type>Queue</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
+   the first item enqueued being the first in the String</td>
+</tr><tr id="equals_Queue">
   <td><el-method>equals</el-method></td>
   <td><el-type>Queue</el-type></td>
   <td><el-type>Queue</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if queue and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Queue">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Queue</el-type></td>
+  <td><el-type>Queue</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if queue and argument differ<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="enqueue">
   <td><el-method>enqueue</el-method></td>
   <td><el-type>Queue</el-type></td>
@@ -1144,14 +1203,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of items in the Queue</td>
- </tr><tr id="asString_Queue">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Queue</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
-   the first item enqueued being the first in the String</td>
-</tr>
+ </tr>
 </table>
 
 <div class="accordion">
@@ -1284,20 +1336,49 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><el-code>Tuple</el-code></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Types, item values and order all equal those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="notEqualTo_Tuple">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-code>Tuple</el-code></td>
+  <td><el-code>Tuple</el-code></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr>
 </table>
 
-<h1 id="CommonDotMethods">Common dot methods</h1>
+<h1 id="CommonMethods">Common methods</h1>
+<p>Although these methods are described in earlier sections under each Type, the tables list those which are applicable to several Types.</p>
 
-<h2>Dot methods that work on more than one Type</h2>
-<p>Although all applicable methods are described in earlier sections under each Type, this table lists those which are applicable to several Types.</p>
+<h2 id="CommonProcedureMethods">Comon procedure methods</h2>
+<p>These methods are applicable to both <el-type>List</el-type> and <el-type>Dictionary</el-type>:</p>
+
+<table>
+ <tr>
+  <th>Procedure method</th>
+  <th colspan="2">Reference Type</th>
+ </tr><tr><!---->
+  <td></td>
+  <td><a href="#List"><el-type>List</el-type></a></td>
+  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
+ </tr><tr><!---->
+  <td id="put"><el-method>put</el-method></td>
+  <td><a href="#put_List">&#x2714;</a></td>
+  <td><a href="#put_Dictionary">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td id="removeAt"><el-method>removeAt</el-method></td>
+  <td><a href="#removeAt_List">&#x2714;</a></td>
+  <td><a href="#removeAt_Dictionary">&#x2714;</a></td>
+ </tr>
+</table>
+
+<h2 id="CommonDotMethods">Common dot methods</h2>
 <p>Click on a Type to go to the Type's dot methods, or on the tick <el-code>&#x2714;</el-code> to go to the specific method on that Type.</p>
 
-<table >
+<table>
  <tr>
-  <th>Method</th>
+  <th>Dot method</th>
   <th colspan="3"> Value Type</th>
   <th colspan="6">Reference Type</th>
+  <th>Tuple</th>
  </tr><tr><!---->
   <td></td>
   <td><a href="#Int"><el-type>Int</el-type></a></td>
@@ -1306,9 +1387,10 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#String"><el-type>String</el-type></a></td>
   <td><a href="#List"><el-type>List</el-type></a></td>
   <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
-  <td><a href="#SetType"><el-type>HashSet</el-type></a></td>
+  <td><a href="#HashSet"><el-type>HashSet</el-type></a></td>
   <td><a href="#Stack"><el-type>Stack</el-type></a></td>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
+  <td></td>
  </tr><tr><!---->
   <td id="asString"><el-method>asString</el-method></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
@@ -1320,6 +1402,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#asString_Set">&#x2714;</a></td>
   <td><a href="#asString_Stack">&#x2714;</a></td>
   <td><a href="#asString_Queue">&#x2714;</a></td>
+  <td><a href="#asString_Tuple">&#x2714;</a></td>
  </tr><tr><!---->
   <td id="contains"><el-method>contains</el-method></td>
   <td></td>
@@ -1329,6 +1412,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#contains_List">&#x2714;</a></td>
   <td>see notes</td>
   <td><a href="#contains_Set">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
  </tr><tr><!---->
@@ -1342,6 +1426,19 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#equals_Set">&#x2714;</a></td>
   <td><a href="#equals_Stack">&#x2714;</a></td>
   <td><a href="#equals_Queue">&#x2714;</a></td>
+  <td><a href="#equals_Tuple">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
+  <td><a href="#notEqualTo_Int">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Float">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Boolean">&#x2714;</a></td>
+  <td><a href="#notEqualTo_String">&#x2714;</a></td>
+  <td><a href="#notEqualTo_List">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Dictionary">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Set">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Stack">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Queue">&#x2714;</a></td>
+  <td><a href="#notEqualTo_Tuple">&#x2714;</a></td>
  </tr><tr><!---->
   <td id="indexOf"><el-method>indexOf</el-method></td>
   <td></td>
@@ -1349,6 +1446,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td></td>
   <td><a href="#indexOf_String">&#x2714;</a></td>
   <td><a href="#indexOf_List">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1364,6 +1462,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#length_Set">&#x2714;</a></td>
   <td><a href="#length_Stack">&#x2714;</a></td>
   <td><a href="#length_Queue">&#x2714;</a></td>
+  <td></td>
  </tr><tr><!---->
   <td id="peek"><el-method>peek</el-method></td>
   <td></td>
@@ -1375,6 +1474,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td></td>
   <td><a href="#peek_Stack">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
+  <td></td>
  </tr><tr><!---->
   <td id="withPut"><el-method>withPut</el-method></td>
   <td></td>
@@ -1386,6 +1486,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="withRemoveAt"><el-method>withRemoveAt</el-method></td>
   <td></td>
@@ -1394,6 +1495,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td></td>
   <td><a href="#withRemoveAt_List">&#x2714;</a></td>
   <td><a href="#withRemoveAt_Dictionary">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
