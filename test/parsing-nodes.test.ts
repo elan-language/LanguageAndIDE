@@ -2157,9 +2157,21 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       '$"{a} plus {b} equals {a + b}"',
       "",
-      "", // should be '$"{a} plus {b} equals {a + b}"' but currently missing spaces
+      '$"{a} plus {b} equals {a + b}"',
       '<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>%<el-lit> plus </el-lit>%<el-lit> equals </el-lit>%</el-lit>", <el-id>a</el-id>, <el-id>b</el-id>, <el-id>a</el-id> + <el-id>b</el-id>)',
       'String.format("% plus % equals %", a, b, a + b)',
+    );
+  });
+  test("LitStringInterpolated", () => {
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"{a} plus {b} equals {a + b}"`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
     );
   });
   test("LitStringInterpolatedJava2", () => {

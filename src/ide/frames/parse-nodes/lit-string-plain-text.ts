@@ -21,6 +21,11 @@ export class LitStringPlainText extends AbstractParseNode {
     return this.isValid() ? contents : this.matchedText;
   }
 
+  override renderAsElanSource(): string {
+    return this.matchedText;
+  }
+
+
   override renderAsExport(): string {
     return this.matchedText;
   }
