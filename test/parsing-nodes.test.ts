@@ -26,6 +26,7 @@ import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedJava } from "../src/ide/frames/parse-nodes/lit-string-interpolated-java";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
 import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
@@ -2147,6 +2148,18 @@ suite("Parsing Nodes", () => {
       "",
       "(<el-type>int</el-type>, <el-type>String</el-type>)",
       "(int, String)",
+    );
+  });
+  test("LitStringInterpolatedJava", () => {
+    testNodeParse(
+      new LitStringInterpolatedJava(f),
+      `String.format("% plus % equals %", a, b, a + b)`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      "", // should be '$"{a} plus {b} equals {a + b}"' but currently missing spaces
+      "", //'<el-type>String</el-type>.<el-method>format</el-method>("% plus % equals %", a, b, a + b)',
+      'String.format("% plus % equals %", a, b, a + b)',
     );
   });
 });
