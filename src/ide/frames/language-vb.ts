@@ -24,7 +24,6 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -314,8 +313,8 @@ export class LanguageVB extends LanguageAbstract {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+    return this.default_standardiseInterpolatedString(node, text);
   }
 
   addNodesForTypeTuple(node: TypeTupleNode): void {

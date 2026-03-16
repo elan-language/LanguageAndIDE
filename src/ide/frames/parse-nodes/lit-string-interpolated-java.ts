@@ -16,7 +16,6 @@ import { Sequence } from "./sequence";
 
 // Used to parse for Java, then renderAsElan - which (text) is then parsed again the standard method.
 export class LitStringInterpolatedJava extends LitStringInterpolated {
-
   override parseText(text: string): void {
     const java = new Sequence(this.file, []);
     const numFields = text.split("%").length - 1; // if 0 occurrences then parseStatus.error

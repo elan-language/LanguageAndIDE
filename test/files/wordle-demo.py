@@ -1,12 +1,12 @@
 # Python with Elan 2.0.0-alpha
 
-+allWords = "AAHED ZYMIC" # constant
+allWords = "AAHED ZYMIC" # constant
 
-+allValidAnswers = "ABACK ZONAL" # constant
+allValidAnswers = "ABACK ZONAL" # constant
 
 def main(): None:
   while True:
-    choice = inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4) # constant
+    choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4) # constant
     clearAllDisplays() # call
     executeOption(choice) # call
     pressAnyKeyToContinue(True) # call
@@ -159,7 +159,10 @@ def analyse() -> None: # procedure
     success = success + outcomes[i] # set
     weightedSum = weightedSum + (i*outcomes[i]) # set
   clearPrintedText() # call
-  print(f"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.") # call
+  solved = (success/2309.0*100).floor() # constant
+  avg = divAsFloat(weightedSum, success).round(2) # constant
+  pc = "%" # constant
+  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") # call
 
 def isUCLetter(k: str) -> bool: # function
   unicode = k.asUnicode() # constant
@@ -247,4 +250,4 @@ def drawKeyboard(used: Dictionary[str, str]) -> str: # function
       html = html + f"<key class='_{used[k]}'>{k}</key>" # set
   return html + "<key></key></div></keyboard>"
 
-+style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant
+style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant

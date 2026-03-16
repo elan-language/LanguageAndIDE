@@ -41,6 +41,4 @@ export class CSV extends AbstractSequence {
     }
     return comp;
   }
-
-
 }
