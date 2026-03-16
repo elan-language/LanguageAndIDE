@@ -712,13 +712,12 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
  Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
 <p>A global constant is defined by a literal of an immutable value Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type> or
  <el-type>String</el-type>.</p>
- <p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-kw>variable</el-kw>. See <a href="#constant_structure">Constant data structure</a>.</p>
+<p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-kw>variable</el-kw>. See <a href="#constant_structure">Constant data structure</a>.</p>
 <p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
 <p>A global constant can be defined by reference to a previously defined global constant or to a system constant,
  but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
 <p>Examples of literal definitions of the valid Types of global constant:</p>
-
 
 <el-const class="ok multiline" id="const4" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>maxHits</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text6" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field> &mdash; an <el-type>Int</el-type> value</el-const>
 <el-const class="ok multiline" id="const53" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident54" class="ok" tabindex="-1"><el-txt><el-id>turquoise</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text55" class="ok" tabindex="-1"><el-txt><el-lit>0x00ced1</el-lit></el-txt></el-field> &mdash;  a hexadecimal <el-type>Int</el-type> value</el-const>
@@ -726,6 +725,22 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <el-const class="ok multiline" id="const3" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>speedOfLight</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text5" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>299792</el-lit>.458</el-lit></el-txt></el-field> &mdash;  a <el-type>Float</el-type> value</el-const>
 <el-const class="ok multiline" id="const13" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>gameOver</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> &mdash;  a <el-type>Boolean</el-type> value</el-const>
 <el-const class="ok multiline" id="const7" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>warningMsg</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text9" class="ok" tabindex="-1"><el-txt>"<el-lit>Limit reached</el-lit>"</el-txt></el-field> &mdash;  a <el-type>String</el-type> value</el-const>
+</el-code-block>
+
+<h3 class="no-TOC" id="constant_structure">Constant data structures</h3>
+<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
+whose return value is put into a variable.</p>
+<p>This example defines a list of colours in an indexable variable:</p>
+
+<el-code-block source="constant_colours.elan">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params36" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type37" class="ok" tabindex="-1"><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return38" tabindex="-1"><el-kw>return </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt>[<el-lit>0x9400D3</el-lit>, <el-lit>0x4B0082</el-lit>, <el-lit>0x0000CD</el-lit>, <el-lit>0x008000</el-lit>, <el-lit>0xFFFF00</el-lit>, <el-lit>0xFFA500</el-lit>, <el-lit>0xFF0000</el-lit>]</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+<br><br>
+<el-statement id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rainbow</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method>()</el-txt></el-field></el-statement>
+<el-func class="ok multiline" id="func33" tabindex="-1">
 </el-code-block>
 
 <h2 id="enum"><el-kw>enum</el-kw></h2>
@@ -949,7 +964,7 @@ the correct Type must be provided. For example, if the Class <el-type>Square</el
 <p>then it may be instantiated like this:</p>
 
 <el-code>
-<el-statement id="let44" tabindex="0"><el-kw>let </el-kw><el-field id="var45" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-lit>20</el-lit>, <el-lit>15</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement id="let44" tabindex="0"><el-kw>variable </el-kw><el-field id="var45" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-lit>20</el-lit>, <el-lit>15</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code>
 
 <div id="statement"></div>
@@ -1025,22 +1040,9 @@ which is the mechanism for running unit tests during program development, not du
 <p>Like a <el-kw>variable</el-kw>, a <el-kw>constant</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw> instruction.</p>
 <p>It is recommended that you always use <el-kw>constant</el-kw> in preference to <el-kw>variable</el-kw>, unless you need to be able to re-assign its value.</p>
 <p>You can define a <el-kw>constant</el-kw> in a loop, so that the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
-
-<h3 class="no-TOC" id="constant_structure">Constant data structures</h3>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
-whose return value is put into a variable.</p>
-<p>This example defines a list of colours in an indexable variable:</p>
+whose return value is put into a variable. See <a href="#constant_structure">Constant data structures</a>.</p>
 
-<el-code-block source="constant_colours.elan">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params36" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type37" class="ok" tabindex="-1"><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="return38" tabindex="-1"><el-kw>return </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt>[<el-lit>0x9400D3</el-lit>, <el-lit>0x4B0082</el-lit>, <el-lit>0x0000CD</el-lit>, <el-lit>0x008000</el-lit>, <el-lit>0xFFFF00</el-lit>, <el-lit>0xFFA500</el-lit>, <el-lit>0xFF0000</el-lit>]</el-txt></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-<br><br>
-<el-statement id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rainbow</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method>()</el-txt></el-field></el-statement>
-<el-func class="ok multiline" id="func33" tabindex="-1">
-</el-code-block>
 
 <h2 id="each"><el-kw>each</el-kw></h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
@@ -1287,7 +1289,7 @@ instruction declares and initalises a mutable named valued. The name defined mus
 <tr><th>Type</th><th>Example of literal</th></tr>
 <tr><td><a href="LibRef.html#Int">Int</a></td><td><el-code>3</el-code></td></tr>
 <tr><td><a href="LibRef.html#Float">Float</a></td><td><el-code>2.0</el-code></td></tr>
-<tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-code>true</el-code></td></tr>
+<tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-id>true</el-id></td></tr>
 <tr><td><a href="LibRef.html#String">String</a></td><td><el-code>"Hello"</el-code></td></tr>
 <tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><el-code>(3, "banana")</el-code></td></tr>
 <tr><td><a href="LibRef.html#List">List</a></td><td><el-code>["lemon", "lime", "orange"]</el-code></td></tr>
@@ -1341,10 +1343,10 @@ then an empty string or list is returned.</p>
 
 <p>Arithmetic operators can be applied to <el-type>Float</el-type> or <el-type>Int</el-type> arguments. The result may be a <el-type>Float</el-type> or an <el-type>Int</el-type> depending on the arguments.</p>
 <p>For the <el-code> + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
-<p>For the <el-code> / </el-code> operator, the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p>For the <el-code> / </el-code> operator, at least one of the values must be a <el-type>Float</el-type>, and the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="mod"> The operator <el-kw>mod</el-kw> is applied  only to <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
 <pre>
-    <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
+    <el-code>2/3.0</el-code>         &#x27f6;  <el-code>0.666..</el-code>
     <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
     <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
     <el-code>2 &minus; 3</el-code>         &#x27f6;  <el-code>&minus;6</el-code>
@@ -1352,9 +1354,9 @@ then an empty string or list is returned.</p>
 </pre>
 <p>For integer division, either use method <el-method>floor</el-method> on a <el-type>Float</el-type> result, or use method <el-method>divAsInt</el-method> (which returns an <el-type>Int</el-type>):</p>
 <pre>
-    <el-code>(11/3).floor()</el-code>      &#x27f6;  <el-code>3</el-code>
-    <el-code>(-11/3).floor()</el-code>     &#x27f6; <el-code>&minus;4</el-code>
-    <el-code>divAsInt(11,3)</el-code>  &#x27f6; <el-code>3</el-code>
+    <el-code>(11/3.0).floor()</el-code>       &#x27f6;  <el-code>3</el-code>
+    <el-code>(-11/3.0).floor()</el-code>     &#x27f6; <el-code>&minus;4</el-code>
+    <el-code>divAsInt(11,3)</el-code>            &#x27f6; <el-code>3</el-code>
 </pre>
 <p>Note that rounding is always down.</p> 
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
@@ -1469,24 +1471,24 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-code-block source="liveNeighbours.elan">
 <el-func class="ok multiline" id="func3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>liveNeighbours</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>cells</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let10" tabindex="0"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>neighbours</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-method>neighbourCells</el-method>(<el-id>c</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let13" tabindex="0"><el-kw>let </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>live</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-id>neighbours</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>i</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>cells</el-id>[<el-id>i</el-id>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let10" tabindex="0"><el-kw>variable </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>neighbours</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-method>neighbourCells</el-method>(<el-id>c</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let13" tabindex="0"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="0"><el-txt><el-id>live</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-id>neighbours</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>i</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>cells</el-id>[<el-id>i</el-id>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-id>live</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-kw>end function</el-kw> </el-func>
 </el-code-block>
 
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
 
-<p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.</p>
-<ul>
- <li>The conditions are Boolean values or expressions.</li>
- <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
- <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
- <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
- <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate fields.
- On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> instruction,
- though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
- <li>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even if it is enclosed in brackets.</li>
+<p>The <el-kw>if</el-kw> expression has two forms, both of which return a value:</p>
+<ol>
+ <li>Similar syntax to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.
+  <ul>
+   <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
+   <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+<li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+  </ul>
+ <li>A simpler structure that distinguishes only two possibilities, with the format:<br><el-code><el-kw>if</el-kw>(<el-type>Boolean</el-type> expression, return value if <el-id>true</el-id>, return value if <el-id>false</el-id>)</el-code>.</ol>
+<p>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even when enclosed in brackets.</p>
 </ul>
 
 <div class="accordion">
@@ -1509,6 +1511,30 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>elif </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-kw>if</el-kw> expression in a <el-kw>call</el-kw> <el-method>print</el-method>:</p>
+<el-code-block source="if_exp_3.elan">
+<el-main class="ok multiline" id="main0" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="let40" tabindex="-1"><el-kw>constant </el-kw><el-field id="var41" class="ok" tabindex="-1"><el-txt><el-id>p</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="-1"><el-txt><el-method>unicode</el-method>(<el-lit>0x03c0</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call77" tabindex="-1"><el-kw>call </el-kw><el-field id="ident78" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args79" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id>, <el-lit>3</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call81" tabindex="-1"><el-kw>call </el-kw><el-field id="ident82" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args83" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id>, <el-lit>4</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
+
+<el-proc class="ok multiline" id="proc65" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident67" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params68" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>v</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field><el-punc>)</el-punc>
+</el-top>
+<el-statement class="ok" id="call69" tabindex="-1"><el-kw>call </el-kw><el-field id="ident70" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args71" class="optional ok" tabindex="-1"><el-txt><el-method>if</el-method>(<el-id>pi</el-id> &gt; <el-id>v</el-id>, $"<el-lit>yes, </el-lit>{<el-id>p</el-id>}<el-lit> &gt; </el-lit>{<el-id>v</el-id>}", $"<el-lit>no, </el-lit>{<el-id>p</el-id>}<el-lit> &lt; </el-lit>{<el-id>v</el-id>}")</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+</el-code-block>
+<p>would print these lines to the display:</p>
+<pre><el-code>
+   yes, &#x03c0 > 3
+   no,&#x03c0 < 4 
+</el-code></pre>
+<hr>
 </div></div>
 
 <h2 id="new"><el-kw>new</el-kw></h2>
@@ -1526,9 +1552,9 @@ be followed by a <el-kw>with</el-kw> clause in order to specify any property val
 <el-code-block source="dealCard.elan">
 <el-func class="ok multiline" id="func302" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident304" class="ok" tabindex="-1"><el-txt><el-method>dealCard</el-method></el-txt></el-field>(<el-field id="params305" class="optional ok" tabindex="-1"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="-1"><el-txt><el-type>Card</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="let309" tabindex="-1"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="-1"><el-txt><el-id>number</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="-1"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let789" tabindex="-1"><el-kw>let </el-kw><el-field id="var790" class="ok" tabindex="-1"><el-txt><el-id>rank</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr791" class="ok" tabindex="-1"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let315" tabindex="-1"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="-1"><el-txt><el-id>suit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="-1"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let309" tabindex="-1"><el-kw>variable </el-kw><el-field id="var310" class="ok" tabindex="-1"><el-txt><el-id>number</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr311" class="ok" tabindex="-1"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let789" tabindex="-1"><el-kw>variable </el-kw><el-field id="var790" class="ok" tabindex="-1"><el-txt><el-id>rank</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr791" class="ok" tabindex="-1"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let315" tabindex="-1"><el-kw>variable </el-kw><el-field id="var316" class="ok" tabindex="-1"><el-txt><el-id>suit</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr317" class="ok" tabindex="-1"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt></el-field></el-statement>
 <el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>

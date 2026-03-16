@@ -951,15 +951,19 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </table>
 
 <h2 id="HashSet">HashSet</h2>
-<p>A <el-type>HashSet</el-type> (usually referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <el-type>List</el-type> with the important difference that the value of a Set member may appear only once.
- If a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</p>
+<p>A <el-type>HashSet</el-type> (also referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <el-type>List</el-type> with two important differences:</p>
+<ul>
+ <li>The value of a Set member may appear only once: if a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</p>
+</li>
+ <li>The values in a <el-type>HashSet</el-type> are not indexed: two Sets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
+ <li>There are no methods that modify an existing Set but several, e.g. <el-method>add</el-method> and <el-method>remove</el-method>,
+ return a new <el-type>HashSet</el-type> that is based on the original Set or Sets with specified differences.</li>
+</ul>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
-<p>For the same reason, a <el-type>HashSet</el-type> is an immutable data structure: there are no methods that modify an existing Set, but several (including <el-method>add</el-method>, <el-method>remove</el-method>)
- return a new Set that is based on the original Set or Sets, with specified differences.</p>
 <p>When creating a <el-type>HashSet</el-type>, the Type of its members must be specified in the form
- <el-code><el-type>HashSet</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty Set and when defining the Type of a parameter to be a <el-type>HashSet</el-type>.</p>
-<p>You can add members: individually with <el-method>add</el-method>, or multiple members with <el-method>addFromList</el-method>.</p>
-<p>You can create a new <el-type>HashSet</el-type> from an existing <el-type>List</el-type> by calling <el-method>asSet</el-method> on it.</p>
+ <el-code><el-type>HashSet</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>.</p>
+<p>You can add members: individually with <el-method>add</el-method>, or multiply with <el-method>addFromList</el-method>.
+And you can create a new <el-type>HashSet</el-type> from an existing <el-type>List</el-type> by calling <el-method>asSet</el-method> on it.</p>
 <p>Example of creating a Set from a literal List and changing its content:</p>
 
 <table class="tablePlain"><!--source="set.elan"-->                                                   
@@ -996,9 +1000,9 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr><tr id="add">
   <td><el-method>add</el-method></td>
   <td><el-type>HashSet</el-type></td>
-  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
+  <td>value<br>(of <el-type>HashSet</el-type> members' Type)</td>
   <td><el-type>HashSet</el-type></td>
-  <td>a new Set extended with the item, provided it differs from all the Set's current members</td>
+  <td>a new Set extended with the item, provided it differs from all of the Set's current members</td>
  </tr><tr id="addFromList">
   <td><el-method>addFromList</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -1020,7 +1024,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td><el-type>HashSet</el-type></td>
-  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
+  <td>value<br>(of <el-type>HashSet</el-type> members' Type)</td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the Set contains the item<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="difference">
@@ -1034,13 +1038,13 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>HashSet</el-type></td>
   <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if Set and argument Set are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><el-id>true</el-id> if Set and argument Set contain identical values<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="notEqualTo_Set">
   <td><el-method>notEqualTo</el-method></td>
   <td><el-type>HashSet</el-type></td>
   <td><el-type>HashSet</el-type></td>
   <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if Set and argument Set differ<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><el-id>true</el-id> if Set and argument Set differ in their values<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="intersection">
   <td><el-method>intersection</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -1074,7 +1078,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr><tr id="remove">
   <td><el-method>remove</el-method></td>
   <td><el-type>HashSet</el-type></td>
-  <td>value (of <el-type>HashSet</el-type> members' Type)</td>
+  <td>value<br>(of <el-type>HashSet</el-type> members' Type)</td>
   <td><el-type>HashSet</el-type></td>
   <td>a new Set with the argument item removed (if present)</td>
  </tr><tr id="union">
@@ -1128,7 +1132,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr><tr id="push">
   <td><el-method>push</el-method></td>
   <td><el-type>Stack</el-type></td>
-  <td>value (of <el-type>Stack</el-type> items' Type)</td>
+  <td>value<br>(of <el-type>Stack</el-type> items' Type)</td>
   <td><el-type>Stack</el-type></td>
   <td>the Stack with the value added to its top</td>
  </tr><tr id="pop">
@@ -1182,7 +1186,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
  </tr><tr id="enqueue">
   <td><el-method>enqueue</el-method></td>
   <td><el-type>Queue</el-type></td>
-  <td>value (of <el-type>Queue</el-type> items' Type)</td>
+  <td>value<br>(of <el-type>Queue</el-type> items' Type)</td>
   <td><el-type>Queue</el-type></td>
   <td>the Queue with the item added to the end of the Queue</td>
  </tr><tr id="dequeue">
@@ -1262,16 +1266,16 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <h2 id="Tuple">Tuple</h2>
 <p>A <el-code>Tuple</el-code> is not a value or data structure Type. Rather, it is a small <i>collection</i> of values
 of differing Types held together and referenced by a single identifier.</p>
-<p>It may be considered a lightweight alternative to defining a class for some specific purpose.</p>
+<p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
 <p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
 <p>A function may return a Tuple.</p>
 <p>A Tuple differs from a List in that:</p>
 <ul>
- <li>A Tuple may hold items of <i>different</i> Types</li>
+ <li>A Tuple may hold items of <i>different</i> Types.</li>
  <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
-  Once defined, Tuples are effectively read-only. Nor, unlike a <el-type>List</el-type>, can you copy a Tuple
+  Once defined, Tuples are effectively read-only.<br>Nor, unlike a <el-type>List</el-type>, can you copy a Tuple
   from an existing one with specified differences except by referencing each of its items (see below).</li>
 </ul>
 <p>Common uses include:</p>
@@ -1305,7 +1309,7 @@ of differing Types held together and referenced by a single identifier.</p>
  </tr>
 </table>
 
-<p>And where p1 and p2 represent points each with tuples containing two <el-type>Float</el-type> values, this function returns the distance between them:</p>
+<p>And where p1 and p2 represent points each with 2-Tuples containing two <el-type>Float</el-type> values, this function returns the distance between them:</p>
 <el-code-block source="tuples_func.elan">
 <el-func class="ok multiline" id="func15" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type19" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
@@ -2332,7 +2336,7 @@ By this means features such as simple SVG animation can be defined.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="LibRef.html#InterpolatedString">interpolated field.</p>
+    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="LibRef.html#InterpolatedString">interpolated field</a>.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
