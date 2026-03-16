@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
 <link rel="stylesheet" href="../ide/styles/colourScheme.css">
@@ -103,13 +103,13 @@ it provides a useful discipline in any code. Preferring immutable named values c
 <p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
 <ul>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
- <li><i>or</i> specified in the definition of:</li>
+ <li><i>or</i> specified in the definition of
  <ul>
   <li>data structures whose elements have a particular Type, e.g. <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
   <li><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
   <li><el-kw>return</el-kw> value of a function</li>
   <li><el-kw>property</el-kw> of an <el-kw>interface</el-kw> or <el-kw>class</el-kw></li>
- </ul>
+ </ul></li>
 </ul>
 
 <h2 id="Mutability">Mutability of named values</h2>
@@ -183,7 +183,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
    <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the first must be declared above the second.</li>
-   <li>An <el-kw>abstract class class</el-kw> must be declared above any <el-kw>class</el-kw> that inherits from it.</li>
+   <li>An <el-kw>abstract class</el-kw> must be declared above any <el-kw>class</el-kw> that inherits from it.</li>
   </ul>
 </ul>
 
@@ -506,7 +506,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <h2 id="class"><el-kw>class</el-kw></h2>
 
 <p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>.</p>
-<p>A class may have a constructor and procedure methods.</p>
+<p>A Class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
 <h3 class="no-TOC">Definition</h3>
@@ -520,7 +520,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident179" class="ok" tabindex="-1"><el-txt><el-method>newRandomPosition</el-method></el-txt></el-field>(<el-field id="params180" class="optional ok" tabindex="-1"><el-txt><el-id>snake</el-id> <el-kw>as</el-kw> <el-type>Snake</el-type></el-txt></el-field>)
 </el-top>
 <el-statement class="ok" id="var181" tabindex="-1"><el-kw>variable </el-kw><el-field id="var182" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr183" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="whilndex="-1">
+<el-statement class="ok multiline" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr186" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="let187" tabindex="-1"><el-kw>constant </el-kw><el-field id="var188" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr189" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
@@ -595,8 +595,8 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <el-top><el-kw>call </el-kw><el-field id="ident91" class="ok" tabindex="-1"><el-txt><el-id>apple</el-id>.<el-method><el-method>newRandomPosition</el-method></el-method></el-txt></el-field>(<el-field id="args92" class="optional ok" tabindex="-1"><el-txt><el-kw>this</el-kw></el-txt></el-field>)</el-top>
 </el-code-block>
 
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on Class <el-type>Apple</el-type> which needs to be passed an instance of class <el-type>Snake</el-type>.
-(<el-id>apple</el-id> is an instance of class <el-type>Apple</el-type>).</p>
+<p>Here, method <el-method>newRandomPosition</el-method> is defined on Class <el-type>Apple</el-type> which needs to be passed an instance of Class <el-type>Snake</el-type>.
+(<el-id>apple</el-id> is an instance of Class <el-type>Apple</el-type>).</p>
 
 <h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
 
@@ -606,7 +606,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any class that inherits from it.</li>
+  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any Class that inherits from it.</li>
   <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <el-code>class</el-code> inherits from may not contain duplicates of any <el-code>abstract</el-code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <el-code>interface</el-code>s inherited by the<el-code> interface</el-code>s and/or classes that need them.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-code>A</el-code> inherits from Type <el-code>B</el-code>, which inherits from Type <el-code> C</el-code>, which inherits from Type <el-code>A</el-code>.</li>
   <li>The various 'super-Types' (<el-kw>abstract class</el-kw> and <el-kw>interface</el-kw>) that a concrete <el-code>class</el-code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
@@ -795,7 +795,7 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
  <a href="#private"><el-kw>private procedure</el-kw></a>.
 </p>
 
-<p>This table shows which kinds of property, function, procedure and constructor are applicable to the various kinds of class.</p>
+<p>This table shows which kinds of property, function, procedure and constructor are applicable to the various kinds of Class.</p>
 <table class="tableType">
  <tr>
   <th></th>
@@ -908,7 +908,7 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the Class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
  This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
- If defined for a Class then, if an instance of the class is printed, function method <el-method>asString</el-method> will automatically be used.
+ If defined for a Class then, if an instance of the Class is printed, function method <el-method>asString</el-method> will automatically be used.
   Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
@@ -949,7 +949,7 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
  <li>initialise properties with fixed values</li>
  <li>define parameters which are used to initialise properties</li>
 </ul>
-<p>If a Class does define a constructor, and the constructor defines parameters, then when the class is instantiated (using <el-kw>new</el-kw>) the values of
+<p>If a Class does define a constructor, and the constructor defines parameters, then when the Class is instantiated (using <el-kw>new</el-kw>) the values of
 the correct Type must be provided. For example, if the Class <el-type>Square</el-type> has this constructor:</p>
 
 <el-code-block>
@@ -1405,7 +1405,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 </ul>
 <p>Note that in Elan equality testing is always 'equality by value'; there is no such thing as 'equality by reference'.</p>
 <p>If the items being compared are composite Types, the elements within them are compared sequentially to see if the objects are equal.  For example two distinct instances of the same Class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same elements in the same order.</p>
-<p>The compiler rejects any attempt to compare instances of different Classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property values).</p>
+<p>The compiler rejects any attempt to compare instances of different Classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract Class compare equal only if they are of the same Class (and have the same property values).</p>
 
 <h3 class="no-TOC">Numeric comparison</h3>
 <p>The numeric comparison operators are:</p>
@@ -1590,7 +1590,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  an argument into a method call.</p>
 
 <h3 id="ThisCompileError" class="no-TOC">Cannot use 'this' outside class context</h3>
- <p>The keyword <el-kw>this</el-kw> may only be used within an instance method on a class to refer to the current instance.</p>
+ <p>The keyword <el-kw>this</el-kw> may only be used within an instance method on a Class to refer to the current instance.</p>
 
 <h3 id="DeclaredAboveCompileError" class="no-TOC">Abstract Class ... must be declared before it is used</h3>
  <p>If a Class inherits from one or more abstract classes, then the latter must all have already been declared (defined) earlier in the code file.</p>
@@ -1637,8 +1637,8 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
 
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
- <p>A concrete Class may inherit from an abstract Class, and/or an interface, but not from another concrete class.
- In Elan, all Classes must be either abstract or 'final' &ndash; a final class being concrete and not-inheritable.</p>
+ <p>A concrete Class may inherit from an abstract Class, and/or an interface, but not from another concrete Class.
+ In Elan, all Classes must be either abstract or 'final' &ndash; a final Class being concrete and not-inheritable.</p>
 
 <h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
  <p>An interface may inherit from other interfaces, but not from any Class.</p>
@@ -1654,10 +1654,10 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  It may not be accessed by any code outside the Class hierarchy.</p>
 
 <h3 id="MustImplementCompileError" class="no-TOC">... must implement ...</h3>
- <p>If a concrete Class inherits from any abstract class or interface(s) it must implement all abstract methods defined in those Types.</p>
+ <p>If a concrete Class inherits from any abstract Class or interface(s) it must implement all abstract methods defined in those Types.</p>
 
 <h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
- <p>You cannot create an instance of any abstract Class or interface: only of a concrete class.</p>
+ <p>You cannot create an instance of any abstract Class or interface: only of a concrete Class.</p>
 
 <!--
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
