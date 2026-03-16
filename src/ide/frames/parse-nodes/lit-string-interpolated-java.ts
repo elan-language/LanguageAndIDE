@@ -16,27 +16,25 @@ import { Sequence } from "./sequence";
 
 // Used to parse for Java, then renderAsElan - which (text) is then parsed again the standard method.
 export class LitStringInterpolatedJava extends LitStringInterpolated {
-  str: LitStringOrdinary | undefined;
-  expressions: RegExMatchNode | undefined;
 
   override parseText(text: string): void {
     const java = new Sequence(this.file, []);
     const numFields = text.split("%").length - 1; // if 0 occurrences then parseStatus.error
     const f = this.file;
     java.addElement(new RegExMatchNode(f, /String\.format\(/));
-    this.str = new LitStringOrdinary(f);
-    java.addElement(this.str);
+    const str = new LitStringOrdinary(f);
+    java.addElement(str);
     java.addElement(new CommaNode(f));
-    this.expressions = new RegExMatchNode(f, /[^\)]*/); //Replace by a csv of exprNode, min numFields
-    java.addElement(this.expressions);
+    const csvExpr = new CSV(f, () => new ExprNode(f), numFields);
+    java.addElement(csvExpr);
     java.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
     java.parseText(text);
 
     if (java.status === ParseStatus.valid) {
-      let elan = `$${this.str.matchedText}`;
-      const contents = this.expressions.matchedText.split(", ");
+      let elan = `$${str.matchedText}`;
+      const contents = this.justTheExpressions(csvExpr);
       for (let i = 0; i < numFields; i++) {
-        elan = elan.replace("%", "{" + contents[i] + "}");
+        elan = elan.replace("%", "{" + contents[i].renderAsElanSource() + "}");
       }
       super.parseText(elan);
     } else {
@@ -69,7 +67,7 @@ export class LitStringInterpolatedJava extends LitStringInterpolated {
   justTheExpressions(csv: CSV): ExprNode[] {
     const contents: ExprNode[] = [];
     const first = csv.getElements()[0] as ExprNode;
-    const secondOnwards = (this.getElements()[1] as Multiple).getElements();
+    const secondOnwards = (csv.getElements()[1] as Multiple).getElements();
     contents.push(first);
     for (let i = 0; i < secondOnwards.length; i++) {
       const commaPlus = secondOnwards[i] as Sequence;
