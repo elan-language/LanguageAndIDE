@@ -1289,7 +1289,7 @@ instruction declares and initalises a mutable named valued. The name defined mus
 <tr><th>Type</th><th>Example of literal</th></tr>
 <tr><td><a href="LibRef.html#Int">Int</a></td><td><el-code>3</el-code></td></tr>
 <tr><td><a href="LibRef.html#Float">Float</a></td><td><el-code>2.0</el-code></td></tr>
-<tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-code>true</el-code></td></tr>
+<tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-id>true</el-id></td></tr>
 <tr><td><a href="LibRef.html#String">String</a></td><td><el-code>"Hello"</el-code></td></tr>
 <tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><el-code>(3, "banana")</el-code></td></tr>
 <tr><td><a href="LibRef.html#List">List</a></td><td><el-code>["lemon", "lime", "orange"]</el-code></td></tr>
@@ -1343,10 +1343,10 @@ then an empty string or list is returned.</p>
 
 <p>Arithmetic operators can be applied to <el-type>Float</el-type> or <el-type>Int</el-type> arguments. The result may be a <el-type>Float</el-type> or an <el-type>Int</el-type> depending on the arguments.</p>
 <p>For the <el-code> + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
-<p>For the <el-code> / </el-code> operator, the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p>For the <el-code> / </el-code> operator, at least one of the values must be a <el-type>Float</el-type>, and the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="mod"> The operator <el-kw>mod</el-kw> is applied  only to <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
 <pre>
-    <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
+    <el-code>2/3.0</el-code>         &#x27f6;  <el-code>0.666..</el-code>
     <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
     <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
     <el-code>2 &minus; 3</el-code>         &#x27f6;  <el-code>&minus;6</el-code>
@@ -1354,9 +1354,9 @@ then an empty string or list is returned.</p>
 </pre>
 <p>For integer division, either use method <el-method>floor</el-method> on a <el-type>Float</el-type> result, or use method <el-method>divAsInt</el-method> (which returns an <el-type>Int</el-type>):</p>
 <pre>
-    <el-code>(11/3).floor()</el-code>      &#x27f6;  <el-code>3</el-code>
-    <el-code>(-11/3).floor()</el-code>     &#x27f6; <el-code>&minus;4</el-code>
-    <el-code>divAsInt(11,3)</el-code>  &#x27f6; <el-code>3</el-code>
+    <el-code>(11/3.0).floor()</el-code>       &#x27f6;  <el-code>3</el-code>
+    <el-code>(-11/3.0).floor()</el-code>     &#x27f6; <el-code>&minus;4</el-code>
+    <el-code>divAsInt(11,3)</el-code>            &#x27f6; <el-code>3</el-code>
 </pre>
 <p>Note that rounding is always down.</p> 
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
@@ -1479,16 +1479,16 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
 
-<p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.</p>
-<ul>
- <li>The conditions are Boolean values or expressions.</li>
- <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
- <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
- <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
- <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate fields.
- On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> instruction,
- though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
- <li>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even if it is enclosed in brackets.</li>
+<p>The <el-kw>if</el-kw> expression has two forms, both of which return a value:</p>
+<ol>
+ <li>Similar syntax to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.
+  <ul>
+   <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
+   <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+<li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+  </ul>
+ <li>A simpler structure that distinguishes only two possibilities, with the format:<br><el-code><el-kw>if</el-kw>(<el-type>Boolean</el-type> expression, return value if <el-id>true</el-id>, return value if <el-id>false</el-id>)</el-code>.</ol>
+<p>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even when enclosed in brackets.</p>
 </ul>
 
 <div class="accordion">
@@ -1510,6 +1510,30 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-code-block source="wordle.solver.elan">
 <el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>elif </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-kw>if</el-kw> expression in a <el-kw>call</el-kw> <el-method>print</el-method>:</p>
+<el-code-block source="if_exp_3.elan">
+<el-main class="ok multiline" id="main0" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="let40" tabindex="-1"><el-kw>constant </el-kw><el-field id="var41" class="ok" tabindex="-1"><el-txt><el-id>p</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="-1"><el-txt><el-method>unicode</el-method>(<el-lit>0x03c0</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call77" tabindex="-1"><el-kw>call </el-kw><el-field id="ident78" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args79" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id>, <el-lit>3</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call81" tabindex="-1"><el-kw>call </el-kw><el-field id="ident82" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args83" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id>, <el-lit>4</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
+
+<el-proc class="ok multiline" id="proc65" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident67" class="ok" tabindex="-1"><el-txt><el-method>testPi</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params68" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>v</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field><el-punc>)</el-punc>
+</el-top>
+<el-statement class="ok" id="call69" tabindex="-1"><el-kw>call </el-kw><el-field id="ident70" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args71" class="optional ok" tabindex="-1"><el-txt><el-method>if</el-method>(<el-id>pi</el-id> &gt; <el-id>v</el-id>, $"<el-lit>yes, </el-lit>{<el-id>p</el-id>}<el-lit> &gt; </el-lit>{<el-id>v</el-id>}", $"<el-lit>no, </el-lit>{<el-id>p</el-id>}<el-lit> &lt; </el-lit>{<el-id>v</el-id>}")</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+</el-code-block>
+<p>would print these lines to the display:</p>
+<pre><el-code>
+   yes, &#x03c0 > 3
+   no,&#x03c0 < 4 
+</el-code></pre>
 <hr>
 </div></div>
 
