@@ -52,4 +52,4 @@ Function scy(pi As Integer, max As Integer) As Double
   Return 70 - divAsFloat((pi - 1)*65, (max - 1))
 End Function
 
-+Const grey = 0x808080
+Const grey = 0x808080

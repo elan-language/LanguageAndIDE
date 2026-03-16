@@ -23,7 +23,6 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -291,18 +290,18 @@ export class LanguageElan extends LanguageAbstract {
     return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
-  }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
-  }
-
   addNodesForTypeTuple(node: TypeTupleNode): void {
     this.addCommonElementsForTypeTuple(node);
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
+    return text; //If valid, it will already be in standard form
+  }
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
   }
 
   // Elan keywords followed by JavaScript keywords

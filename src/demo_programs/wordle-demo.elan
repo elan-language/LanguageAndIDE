@@ -6,7 +6,7 @@ constant allValidAnswers set to "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED
 
 main
   while true
-    constant choice set to inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4)
+    constant choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue(true)
@@ -40,7 +40,7 @@ procedure playGame()
   variable grid set to new List<of List<of String>>()
   call initialiseGrid(grid)
   variable used set to new Dictionary<of String, String>()
-   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     call used.put(letter, " ")
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -170,7 +170,7 @@ end procedure
 procedure analyse()
   variable outcomes set to new List<of Int>()
   call outcomes.initialise(10, 0)
-   for word in allValidAnswers.split(" ")
+  for word in allValidAnswers.split(" ")
     variable possible set to allValidAnswers.split(" ")
     variable mark set to ""
     variable attempt set to "RAISE"
@@ -190,7 +190,10 @@ procedure analyse()
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  call print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.")
+  constant solved set to (success/2309.0*100).floor()
+  constant avg set to divAsFloat(weightedSum, success).round(2)
+  constant pc set to "%"
+  call print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 end procedure
 
 function isUCLetter(k as String) returns Boolean
@@ -256,7 +259,7 @@ end test
 
 function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
   variable newPossible set to new List<of String>()
-   for word in possible
+  for word in possible
     constant markForWord set to markAttempt(attempt, word)
     if markForWord.equals(mark) then
       set newPossible to newPossible.withAppend(word)
@@ -291,7 +294,7 @@ end function
 
 function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
-   for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
+  for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
     if k.equals("-") then
       set html to html + "</div><div>"
     else

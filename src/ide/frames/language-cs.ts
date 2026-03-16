@@ -4,7 +4,6 @@ import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -96,9 +95,10 @@ export class LanguageCS extends LanguageCfamily {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+    return this.default_standardiseInterpolatedString(node, text);
   }
+
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
   }
