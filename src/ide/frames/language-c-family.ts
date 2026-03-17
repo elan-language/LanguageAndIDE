@@ -180,7 +180,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   OR = "||";
   NOT = "!";
 
-  COMMENT_MARKER = "//";
+  COMMENT_MARKER: string = "//";
   LIST_START: string = "[";
   LIST_END: string = "]";
 
