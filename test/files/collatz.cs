@@ -52,4 +52,4 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 }
 
-+const Int grey = 0x808080
+const Int grey = 0x808080

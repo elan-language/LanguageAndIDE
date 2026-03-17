@@ -7,7 +7,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -64,15 +63,10 @@ export abstract class LanguageAbstract implements Language {
   abstract propertyRefAsHtml(node: PropertyRef): string;
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
-  abstract litStringFieldAsHtml(node: LitStringField): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
-  }
-
-  default_litStringFieldAsHtml(node: LitStringField): string {
-    return `{${node.expr!.renderAsHtml()}}`;
   }
 
   default_typeTupleAsHtml(node: TypeTupleNode): string {
@@ -93,6 +87,11 @@ export abstract class LanguageAbstract implements Language {
   abstract addNodesForNewInstance(node: NewInstance): void;
   abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
   abstract addNodesForTypeTuple(node: TypeTupleNode): void;
+  abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+
+  default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
+    return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;
+  }
 
   protected addCommonElementsForNewInstance(node: NewInstance): void {
     node.type = new TypeSimpleOrGeneric(node.file, new Set<TokenType>([TokenType.type_concrete]));

@@ -17,6 +17,6 @@ export class LitStringField extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return this.isValid() ? this.file.language().litStringFieldAsHtml(this) : this.matchedText;
+    return `{${this.expr!.renderAsHtml()}}`;
   }
 }

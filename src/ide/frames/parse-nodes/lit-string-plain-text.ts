@@ -11,7 +11,7 @@ export class LitStringPlainText extends AbstractParseNode {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^[^"\{]+/);
+      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^[^%"\{]+/);
     }
   }
 
@@ -19,6 +19,10 @@ export class LitStringPlainText extends AbstractParseNode {
     const contents =
       this.matchedText.length > 0 ? `<el-lit>${escapeHtmlChars(this.matchedText)}</el-lit>` : ``;
     return this.isValid() ? contents : this.matchedText;
+  }
+
+  override renderAsElanSource(): string {
+    return this.matchedText;
   }
 
   override renderAsExport(): string {

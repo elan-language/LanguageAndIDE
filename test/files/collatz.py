@@ -44,4 +44,4 @@ def scx(i: int, p: list[int]) -> float: # function
 def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
 
-+grey = 0x808080 # constant
+grey = 0x808080 # constant

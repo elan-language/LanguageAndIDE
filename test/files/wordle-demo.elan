@@ -1,4 +1,4 @@
-# 8d472118aafe4734efb7b4d695d0bf4f94a85d40c5ed998df9ac9ab4b43b0bca Elan 2.0.0-alpha guest default_profile valid
+# 9e1aa1214ef1fdb0027f682880c66b4311ca0e371f878eab8b5bb2e3fd0224ee Elan 2.0.0-alpha guest default_profile valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -6,7 +6,7 @@ constant allValidAnswers set to "ABACK ZONAL"
 
 main
   while true
-    constant choice set to inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4)
+    constant choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue(true)
@@ -190,7 +190,10 @@ procedure analyse()
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  call print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.")
+  constant solved set to (success/2309.0*100).floor()
+  constant avg set to divAsFloat(weightedSum, success).round(2)
+  constant pc set to "%"
+  call print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 end procedure
 
 function isUCLetter(k as String) returns Boolean

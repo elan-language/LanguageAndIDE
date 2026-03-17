@@ -26,6 +26,7 @@ import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedJava } from "../src/ide/frames/parse-nodes/lit-string-interpolated-java";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
 import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
@@ -1432,9 +1433,9 @@ suite("Parsing Nodes", () => {
       new LitStringInterpolated(fileWithPython()),
       `f"<p>{2 + 3}</p>"`,
       ParseStatus.valid,
-      `f"<p>{2 + 3}</p>"`,
+      `$"<p>{2 + 3}</p>"`,
       "",
-      `f"<p>{2 + 3}</p>"`,
+      `$"<p>{2 + 3}</p>"`,
       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
       `f"<p>{2 + 3}</p>"`,
     );
@@ -2147,6 +2148,101 @@ suite("Parsing Nodes", () => {
       "",
       "(<el-type>int</el-type>, <el-type>String</el-type>)",
       "(int, String)",
+    );
+  });
+  test("LitStringInterpolated", () => {
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"{a} plus {b} equals {a + b}"`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+    );
+  });
+  test("CSV expression", () => {
+    return testNodeParse(
+      new CSV(fileWithJava(), () => new ExprNode(f), 3),
+      `a, b, a + b)`,
+      ParseStatus.valid,
+      "a, b, a + b",
+      ")",
+      "a, b, a + b",
+      "",
+      "a, b, a + b",
+    );
+  });
+  test("LitStringInterpolated_in_Java1", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("%", a)`,
+      ParseStatus.valid,
+      '$"{a}"',
+      "",
+      '$"{a}"',
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java2", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("%", 1)`,
+      ParseStatus.valid,
+      '$"{1}"',
+      "",
+      '$"{1}"',
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java3", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("% plus % equals %", a, b, a + b)`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+      '<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>%<el-lit> plus </el-lit>%<el-lit> equals </el-lit>%</el-lit>", <el-id>a</el-id>, <el-id>b</el-id>, <el-id>a</el-id> + <el-id>b</el-id>)',
+      'String.format("% plus % equals %", a, b, a + b)',
+    );
+  });
+  test("LitStringInterpolated_in_Java4", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("max %, % equals %", a, b, max(a, b))`,
+      ParseStatus.valid,
+      '$"max {a}, {b} equals {max(a, b)}"',
+      "",
+      '$"max {a}, {b} equals {max(a, b)}"',
+      "",
+      `String.format("max %, % equals %", a, b, max(a, b))`,
+    );
+  });
+  test("LitStringInterpolated_in_Java5", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("result % %", 50)`,
+      ParseStatus.invalid,
+      "",
+      `String.format("result % %", 50)`,
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java6", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("result % %", 50, percent)`,
+      ParseStatus.valid,
+      '$"result {50} {percent}"',
+      "",
+      "",
+      "",
+      'String.format("result % %", 50, percent)',
     );
   });
 });

@@ -28,7 +28,7 @@ are passed around in a running program:</p>
  any user-defined <el-kw>Class</el-kw>, <el-kw>Interface</el-kw> and </li>
 </ul>
 
-<h1 id="ValueTypes">Value data Types</h2>
+<h1 id="ValueTypes">Value data Types</h1>
 
 <h2 id="Int">Integer</h2>
 <p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
@@ -88,13 +88,14 @@ are passed around in a running program:</p>
 always be passed into a function or procedure that is expecting a <el-type>Float</el-type>.</li>
  <li>The <el-type>Int</el-type> type is <i>intended</i> to represent whole numbers
 in the range:</li>
-   <ul>
-    <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
-    <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
-    </ul>
+  <li><ul>
+   <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
+   <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
+  </ul></li>
  <li>If you go greater than the limit given above, the number will be accurate to approximately 17 decimal digits.
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
     in exponential (scientific) format, as shown in the example.</li>
+</ul>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
@@ -111,7 +112,6 @@ in the range:</li>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-
 <img src="images/bigIntegers.png" width="285" height="471">
 </ul>
 <hr>
@@ -272,33 +272,32 @@ in the range:</li>
 
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ($"<el-lit>Spanish introduces a question with </el-lit>{<el-method>unicode</el-method>(<el-lit>191</el-lit>)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with #191;</el-code></td>
+ <td><el-kw>call</el-kw> <el-method>print</el-method>
+ ($"<el-lit>Spanish introduces a question with </el-lit>{<el-method>unicode</el-method>(<el-lit>191</el-lit>)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with #191;</td>
 </tr><tr>
 </tr><tr>
-<td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ($"<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</el-code></td>
+<td><el-kw>call</el-kw> <el-method>print</el-method>
+ ($"<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</td>
 </tr>
 </table>
 
-<p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
-</ul>
+<p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields</a>).</p>
 
 <h3 class="no-TOC">Manipulating strings</h3>
 
 <p>Strings can be built from other strings by concatenation using the plus operator, for example:</p>
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>Hello </el-lit>" + "<el-lit>world</el-lit>")</td><td>&#x27f6;</td><td>Hello world</el-code></td>
+ <td><el-kw>call</el-kw> <el-method>print</el-method>
+ ("<el-lit>Hello </el-lit>" + "<el-lit>world</el-lit>")</td><td>&#x27f6;</td><td>Hello world</td>
 </tr>
 </table>
 
 <p>A newline may be inserted within a string with <el-lit>\n</el-lit>:
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>Hello\nworld</el-lit>")</td><td>&#x27f6;</td><td>Hello<br>world</el-code></td>
+ <td><el-kw>call</el-kw> <el-method>print</el-method>
+ ("<el-lit>Hello\nworld</el-lit>")</td><td>&#x27f6;</td><td>Hello<br>world</td>
 </tr>
 </table>
 
@@ -445,20 +444,20 @@ in the range:</li>
 <p>If <el-code>a</el-code> and <el-code>b</el-code> have values 3 and 17:</p> 
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>call</el-kw> <el-method>print</el-method>
- ($"{<el-id>a</el-id>} <el-lit>times</el-lit> {<el-id>b</el-id>} <el-lit>equals</el-lit> {<el-id>a</el-id>*<el-id>b</el-id>}")</td><td>&#x27f6;</td><td>3 times 17 equals 51</td></el-code>
+ <td><el-kw>call</el-kw> <el-method>print</el-method>
+ ($"{<el-id>a</el-id>} <el-lit>times</el-lit> {<el-id>b</el-id>} <el-lit>equals</el-lit> {<el-id>a</el-id>*<el-id>b</el-id>}")</td><td>&#x27f6;</td><td>3 times 17 equals 51</td>
 </tr>
 </table>
 
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">                                                   
 <tr>
- <td><el-code><el-kw>set </el-kw><el-id>message</el-id><el-kw> to $"</el-kw><el-lit>LANDED SAFELY AT SPEED </el-lit>{(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>{<el-id>fuel</el-id>.<el-method>floor</el-method>()}"<br>
- <el-code><el-kw>call </el-kw><el-method>print</el-method>(</el-code><el-id>message</el-id>)</td>
-</el-code></td>
+ <td><el-kw>set </el-kw><el-id>message</el-id><el-kw> to $"</el-kw><el-lit>LANDED SAFELY AT SPEED </el-lit>{(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>{<el-id>fuel</el-id>.<el-method>floor</el-method>()}"<br>
+ <el-kw>call </el-kw><el-method>print</el-method>(<el-id>message</el-id>)</td>
+</td><td>
  <td><br>&#x27f6;</td>
  <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
- </tr>
+</tr>
 </table>
 <p>And, for the area of a circle:</p>
 <table class="tablePlain">                                                   
@@ -512,7 +511,8 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
   <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
  </tr><tr>
-  <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td></tr>
+  <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
+ </tr><tr>
   <td>literal definition</td>
   <td><el-code>[2, 3, 5, 7, 11]</el-code></td>
   <td><el-code>["a":3, "b":5]</el-code></td>
@@ -567,7 +567,7 @@ with specified changes: that is why all such methods have names starting '<el-co
 <h2 id="List">List</h2>
 <p>The <el-type>List</el-type> Type defines a data structure containing <i>n</i> items of any single Type,
  including fundamental value Types, structure Types such as <el-type>List</el-type>,
- and also user-defined Types such as a class.</p>
+ and also user-defined Types such as a Class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>,</p>
 <p>A List is created empty, and is then initialised with items of the stated Type.</p>
 <p>A List's size can be dynamically changed.</p>
@@ -953,8 +953,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <h2 id="HashSet">HashSet</h2>
 <p>A <el-type>HashSet</el-type> (also referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <el-type>List</el-type> with two important differences:</p>
 <ul>
- <li>The value of a Set member may appear only once: if a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</p>
-</li>
+ <li>The value of a Set member may appear only once: if a member being added to a <el-type>HashSet</el-type> has the same value as an existing member in the Set then the Set remains the same as before.</li>
  <li>The values in a <el-type>HashSet</el-type> are not indexed: two Sets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
  <li>There are no methods that modify an existing Set but several, e.g. <el-method>add</el-method> and <el-method>remove</el-method>,
  return a new <el-type>HashSet</el-type> that is based on the original Set or Sets with specified differences.</li>
@@ -972,19 +971,23 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 <el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code><br></td>
 <td><br><br>&#x27f6;</td><td><br><br>3</td>
-</tr><tr></tr><tr>
+</tr><tr>
+</tr><tr>
 <td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
 <td><br>&#x27f6;</td><td><br>3</td>
-</tr><tr></tr><tr>
+</tr><tr>
+</tr><tr>
 <td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
 <td><br>&#x27f6;</td><td><br>2</td>
-</tr><tr></tr><tr>
+</tr><tr>
+</tr><tr>
 <td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br> 
 <el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
 <td><br>&#x27f6;</td><td><br>2</td>
-</tr><tr></tr><tr>
+</tr><tr>
+</tr><tr>
 <td><el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>)</el-code></td>
 <td>&#x27f6;</td><td>[5, 7]</td>
 </table>
@@ -1299,10 +1302,10 @@ of differing Types held together and referenced by a single identifier.</p>
 <tr>
  <td><el-code>
  <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt></el-field>(<el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt>)
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt>)<br>
+ <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt>)
  </el-code></td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
  <td><br>(3, apple, true)<br>3<br>apple<br>true</td>
@@ -1510,12 +1513,12 @@ of differing Types held together and referenced by a single identifier.</p>
 <ul>
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the IDE's display pane for debugging purposes.</li>
- <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
-  <p><el-code><el-kw>call </el-kw><el-method>print</el-method>(dict.keys().length()</el-code>) &#x27f6; 15</p>
+ <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
+  <el-code><el-kw>call </el-kw><el-method>print</el-method>(dict.keys().length()</el-code>) &#x27f6; 15</li>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> can be
-  done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:</li>
-  <p><el-code><el-kw>call </el-kw>(print dict.keys().contains(42)</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
-  <p><el-code><el-kw>call </el-kw>(print dict.values().contains("widget")</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></p>
+  done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
+  <el-code><el-kw>call </el-kw>(print dict.keys().contains(42)</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id><br>
+  <el-code><el-kw>call </el-kw>(print dict.values().contains("widget")</el-code>) &#x27f6; <el-id>true</el-id> or <el-id>false</el-id></li>
 </ul>
 
 <h1 id="Graphics">Graphics</h1>
@@ -1745,7 +1748,7 @@ Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the proper
 <p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (e.g. <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;) by using the <el-type>List</el-type> <el-method>append</el-method> method.</p>
 <p><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>..VG</el-code> shapes. You would use it if you wanted to define a <el-type>List</el-type> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
-<p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the class properties,
+<p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
 as shown in the table below.</p>
 <p>To supply your own values for the properties:
 <ul>
@@ -1887,7 +1890,7 @@ together with the procedure and function methods provided to alter their values 
   <td></td>
   <td>radius of circle</td>
   <td>10</td>
-  <td id-"setRadius"><el-method>setRadius</el-method></td>
+  <td id="setRadius"><el-method>setRadius</el-method></td>
   <td id="withRadius"><el-method>withRadius</el-method></td>
  </tr><tr>
   <td id="strokeColour"><el-id>strokeColour</el-id></td>
@@ -2004,7 +2007,7 @@ together with the procedure and function methods provided to alter their values 
 </div></div>
 
 <h3 class="no-TOC" id="RawVG"><el-type>RawVG</el-type></h3>
-<p>Strings containing raw SVG tags may be assembled and plotted directly using class <el-type>RawVG</el-type>.
+<p>Strings containing raw SVG tags may be assembled and plotted directly using Class <el-type>RawVG</el-type>.
 By this means features such as simple SVG animation can be defined.</p>
 <ul>
  <li>The raw SVG content should be enclosed in &quot; characters within which the SVG attribute values must be enclosed in single quotes.</li>
@@ -2012,7 +2015,7 @@ By this means features such as simple SVG animation can be defined.</p>
  <li>The raw SVG may define multiple shapes.</li>
  <li>Multiple instances of <el-type>RawVG</el-type> may be added to the collection to be displayed, along with instances of other SVG Types;
  hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
- <li>Method <el-method>withConent</el-method> is used to specify the property of class <el-type>RawVG</el-type> that must contain the SVG string.</li> 
+ <li>Method <el-method>withConent</el-method> is used to specify the property of Class <el-type>RawVG</el-type> that must contain the SVG string.</li> 
  <li>The example is of a simple animation in which the repetition defined in the SVG continues after the program has stopped,
   so you would then use the Clear button to blank the display.</li> 
 </ul>
@@ -2134,7 +2137,6 @@ By this means features such as simple SVG animation can be defined.</p>
 <el-statement class="ok" id="var21" tabindex="-1"><el-kw>variable </el-kw><el-field id="var22" class="ok" tabindex="-1"><el-txt><el-id>key2</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>getNumericKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="var25" tabindex="-1"><el-kw>variable </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>keyCap</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-method>getKeyWithModifier</el-method>().<el-id>item_0</el-id></el-txt></el-field></el-statement>
 <el-statement class="ok" id="var28" tabindex="-1"><el-kw>variable </el-kw><el-field id="var29" class="ok" tabindex="-1"><el-txt><el-id>keyMod</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-method>getKeyWithModifier</el-method>().<el-id>item_1</el-id></el-txt></el-field></el-statement>
-</el-statement>
 </el-code-block>
 <ul>
  <li>When any of these functions is called, the system <i>does not wait for a response</i>, but immediately returns a <el-type>String</el-type> or Tuple.</li>
@@ -2190,7 +2192,7 @@ By this means features such as simple SVG animation can be defined.</p>
 </table>
 
 <h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
-<p>The <el-type>TextFileReader</el-type> class is used to read text data from a file with type extension <el-code>.txt</el-code>.</p>
+<p>The <el-type>TextFileReader</el-type> Class is used to read text data from a file with type extension <el-code>.txt</el-code>.</p>
 <p>An instance is created by the system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2248,7 +2250,7 @@ By this means features such as simple SVG animation can be defined.</p>
 </ul>
 
 <h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
-<p>The <el-type>TextFileWriter</el-type> class is used to write textual data to a file.</p>
+<p>The <el-type>TextFileWriter</el-type> Class is used to write textual data to a file.</p>
 <p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2294,7 +2296,7 @@ By this means features such as simple SVG animation can be defined.</p>
 <li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
-<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-kw>try..catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a class provided by Elan for this purpose):</li>
+<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-kw>try..catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a Class provided by Elan for this purpose):</li>
 
 <el-code-block source="TextFileWriter_3.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt></el-field></el-statement>
@@ -2313,7 +2315,7 @@ By this means features such as simple SVG animation can be defined.</p>
 <el-kw>end try</el-kw>
 </el-statement>
 </el-code-block>
-<p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
+or you could make the code offer the user options: to save again, or to continue without saving.
 </ul>
 
 <h2 id="RenderHtml">Rendering Html in the display</h2>
@@ -2891,8 +2893,8 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
  <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
  <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
  <tr><td><el-code>bitAnd(p,q)</el-code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
- <tr><td><el-code>bitOr(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
- <tr><td><el-code>bitNot(p)</el-code></td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+ <tr><td><el-code>bitOr(p,q)</el-code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+ <tr><td><el-code>bitNot(p)</el-code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
  <tr><td><el-code>bitXor(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
 </table>
 <hr>
@@ -3132,7 +3134,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of class <el-type>Point</el-type>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of Class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of Class <el-type>Point</el-type>):</p>
 <el-code-block source="pathfinder.elan">
 <el-func class="ok multiline" id="func353" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident355" class="ok" tabindex="-1"><el-txt><el-method>getNodeFor</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params356" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type357" class="ok" tabindex="-1"><el-txt><el-type>Node</el-type></el-txt></el-field>
@@ -3217,7 +3219,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a <el-type>List</el-type> to their sum:</p>
-<el-code-block source source="sumFloat.elan">
+<el-code-block source="sumFloat.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.75</el-lit>, <el-lit><el-lit>0</el-lit>.29</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>sum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; (<el-id>sum</el-id> + <el-id>m</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>))</el-txt></el-field><el-punc>)</el-punc></el-statement>
 &nbsp;&nbsp;&#x27f6; 10.94

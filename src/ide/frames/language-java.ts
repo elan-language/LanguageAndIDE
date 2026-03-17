@@ -3,17 +3,29 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
 import { LanguageCfamily } from "./language-c-family";
+import { Alternatives } from "./parse-nodes/alternatives";
+import { CommaNode } from "./parse-nodes/comma-node";
+import { CSV } from "./parse-nodes/csv";
+import { ExprNode } from "./parse-nodes/expr-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
+import { LitStringPlainText } from "./parse-nodes/lit-string-plain-text";
+import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PropertyRef } from "./parse-nodes/property-ref";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RegExMatchNode } from "./parse-nodes/regex-match-node";
+import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { ConstantStatement } from "./statements/constant-statement";
+import { ParseStatus } from "./status-enums";
+import { CLOSE_BRACKET } from "./symbols";
 
 export class LanguageJava extends LanguageCfamily {
   static Instance: Language = new LanguageJava();
@@ -62,7 +74,7 @@ export class LanguageJava extends LanguageCfamily {
 
   public STRING_NAME: string = "String";
 
-  INTERPOLATED_STRING_PREFIX: string = ""; // Indicates that interpolated string is not recognised by Java
+  INTERPOLATED_STRING_PREFIX: string = ""; // No prefix because of custom processing
 
   addNodesForParamDef(node: ParamDefNode): void {
     this.c_langs_addNodesForParamDef(node);
@@ -87,11 +99,56 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {
-    return `"<el-lit>${node.segments!.renderAsHtml()}</el-lit>"`; //i.e. without any prefix
+    let definingString = "";
+    let csv = "";
+    node.segments!.getElements().forEach((element) => {
+      const seg = (element as Alternatives).bestMatch;
+      if (seg instanceof LitStringField) {
+        definingString += "%";
+        csv += `${seg.expr!.renderAsHtml()}, `;
+      } else if (seg instanceof LitStringPlainText) {
+        definingString += seg.renderAsHtml();
+      }
+    });
+    csv = csv.endsWith(", ") ? csv.substring(0, csv.length - 2) : csv;
+    return `<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>${definingString}</el-lit>", ${csv})`;
   }
 
-  litStringFieldAsHtml(_node: LitStringField) {
-    return `" + (${_node.expr?.renderAsExport()}).asString() + "`; // i.e. it turns an interpolated string into a sequence of appended strings
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+    const f = node.file;
+    const java = new Sequence(f, []);
+    const numFields = text.split("%").length - 1; // if 0 occurrences then parseStatus.error
+    java.addElement(new RegExMatchNode(f, /String\.format\(/));
+    const str = new LitStringOrdinary(f);
+    java.addElement(str);
+    java.addElement(new CommaNode(f));
+    const csvExpr = new CSV(f, () => new ExprNode(f), numFields);
+    java.addElement(csvExpr);
+    java.addElement(new PunctuationNode(f, CLOSE_BRACKET));
+    java.parseText(text);
+    let standardised = "";
+    if (java.status === ParseStatus.valid) {
+      let elan = `$${str.matchedText}`;
+      const contents = this.justTheExpressions(csvExpr);
+      for (let i = 0; i < numFields; i++) {
+        elan = elan.replace("%", "{" + contents[i].renderAsElanSource() + "}");
+      }
+      standardised = elan;
+    }
+    return standardised;
+  }
+
+  private justTheExpressions(csv: CSV): ExprNode[] {
+    const contents: ExprNode[] = [];
+    const first = csv.getElements()[0] as ExprNode;
+    const secondOnwards = (csv.getElements()[1] as Multiple).getElements();
+    contents.push(first);
+    for (let i = 0; i < secondOnwards.length; i++) {
+      const commaPlus = secondOnwards[i] as Sequence;
+      const contentNode = commaPlus.getElements()[1] as ExprNode;
+      contents.push(contentNode);
+    }
+    return contents;
   }
 
   addNodesForNewInstance(node: NewInstance): void {

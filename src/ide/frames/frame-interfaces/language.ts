@@ -1,4 +1,3 @@
-import { LitStringField } from "../parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -33,13 +32,13 @@ export interface Language {
   addNodesForParamDef(node: ParamDefNode): void;
   addNodesForTypeGeneric(node: TypeGenericNode): void;
   addNodesForTypeTuple(node: TypeTupleNode): void;
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   paramDefAsHtml(node: ParamDefNode): string;
   typeGenericAsHtml(node: TypeGenericNode): string;
   propertyRefAsHtml(node: PropertyRef): string;
   newInstanceAsHtml(node: NewInstance): string;
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
-  litStringFieldAsHtml(node: LitStringField): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
 
   MOD: string;

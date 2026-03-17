@@ -1,4 +1,6 @@
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
+import { ParseStatus } from "../status-enums";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -17,16 +19,22 @@ export class LitStringInterpolated extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const prefix = this.file.language().INTERPOLATED_STRING_PREFIX;
-      const field = () => new LitStringField(this.file);
-      const plainText = () => new LitStringPlainText(this.file);
-      const segment = () => new Alternatives(this.file, [field, plainText]);
-      this.segments = new Multiple(this.file, segment, 1);
-      this.addElement(new PunctuationNode(this.file, prefix));
-      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-      this.addElement(this.segments);
-      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-      super.parseText(text);
+      const lang = this.file.language();
+      const standardisedText = lang.standardiseInterpolatedString(this, text);
+      if (standardisedText.length > 0) {
+        const field = () => new LitStringField(this.file);
+        const plainText = () => new LitStringPlainText(this.file);
+        const segment = () => new Alternatives(this.file, [field, plainText]);
+        this.segments = new Multiple(this.file, segment, 1);
+        this.addElement(new PunctuationNode(this.file, "$"));
+        this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
+        this.addElement(this.segments);
+        this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
+        super.parseText(standardisedText);
+      } else {
+        this.status = ParseStatus.invalid;
+        this.remainingText = text;
+      }
     }
   }
 
@@ -34,5 +42,9 @@ export class LitStringInterpolated extends AbstractSequence {
     return this.isValid()
       ? this.file.language().litStringInterpolatedAsHtml(this)
       : this.matchedText;
+  }
+
+  renderAsExport(): string {
+    return removeHtmlTagsAndEscChars(this.renderAsHtml());
   }
 }
