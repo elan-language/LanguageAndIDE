@@ -168,7 +168,7 @@ def isUCLetter(k: str) -> bool: # function
   unicode = k.asUnicode() # constant
   return (k.length() == 1) and (unicode > 64) and (unicode < 91)
 
-def  test_isUCLetter()-> None:
+def test_isUCLetter(self) -> None:
   self.assertEqual(isUCLetter("A"), True) 
   self.assertEqual(isUCLetter("Z"), True) 
   self.assertEqual(isUCLetter("a"), False) 
@@ -184,7 +184,7 @@ def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
 def setChar(word: str, n: int, newChar: str) -> str: # function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 
-def  test_setChar()-> None:
+def test_setChar(self) -> None:
   self.assertEqual(setChar("ABCDE", 0, "_"), "_BCDE") 
   self.assertEqual(setChar("ABCDE", 4, "_"), "ABCD_") 
 
@@ -201,7 +201,7 @@ def markAttempt(attempt: str, target: str) -> str: # function
       unused = setChar(unused, unused.indexOf(attempt[n]), " ") # set
   return mark
 
-def  test_markAttempt()-> None:
+def test_markAttempt(self) -> None:
   self.assertEqual(markAttempt("ABCDE", "XXXXX"), "00000") 
   self.assertEqual(markAttempt("ABCDE", "BCDEA"), "11111") 
   self.assertEqual(markAttempt("ABCDE", "ABCDE"), "22222") 
@@ -221,7 +221,7 @@ def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) ->
       newPossible = newPossible.withAppend(word) # set
   return newPossible
 
-def  test_possibleAnswersAfterAttempt()-> None:
+def test_possibleAnswersAfterAttempt(self) -> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "20000"), ["ABCDE"]) 
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "10000"), ["BCDEA", "CDEAB", "DEABC", "EABCD"]) 

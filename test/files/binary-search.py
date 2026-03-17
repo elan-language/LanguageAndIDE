@@ -27,7 +27,7 @@ def binarySearch(li: list[str], item: str) -> bool: # function
       result = binarySearch(li.subList(mid + 1, li.length()), item) # set
   return result
 
-def  test_()-> None:
+def test_binarySearch(self) -> None:
   li1 = ["lemon", "lime", "orange"] # variable
   self.assertEqual(binarySearch(li1, "lemon"), True) 
   self.assertEqual(binarySearch(li1, "lime"), True) 

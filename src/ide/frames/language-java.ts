@@ -2,6 +2,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
+import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { Alternatives } from "./parse-nodes/alternatives";
 import { CommaNode } from "./parse-nodes/comma-node";
@@ -64,7 +65,13 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   renderTopAsHtml(frame: Frame): string {
-    return this.common_renderTopAsHtml(frame);
+    let html = "";
+    if (frame instanceof TestFrame) {
+      html = `@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
+    } else {
+      html = this.common_renderTopAsHtml(frame);
+    }
+    return html;
   }
 
   renderBottomAsHtml(frame: Frame): string {

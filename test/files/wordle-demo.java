@@ -201,7 +201,7 @@ static bool isUCLetter(String k) { // function
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }
 
-static void test_isUCLetter() {
+@Test static void test_isUCLetter() {
   assertEquals(true, isUCLetter("A") 
   assertEquals(true, isUCLetter("Z") 
   assertEquals(false, isUCLetter("a") 
@@ -221,7 +221,7 @@ static String setChar(String word, int n, String newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
 }
 
-static void test_setChar() {
+@Test static void test_setChar() {
   assertEquals("_BCDE", setChar("ABCDE", 0, "_") 
   assertEquals("ABCD_", setChar("ABCDE", 4, "_") 
 }
@@ -244,7 +244,7 @@ static String markAttempt(String attempt, String target) { // function
   return mark;
 }
 
-static void test_markAttempt() {
+@Test static void test_markAttempt() {
   assertEquals("00000", markAttempt("ABCDE", "XXXXX") 
   assertEquals("11111", markAttempt("ABCDE", "BCDEA") 
   assertEquals("22222", markAttempt("ABCDE", "ABCDE") 
@@ -268,7 +268,7 @@ static List<String> possibleAnswersAfterAttempt(List<String> possible, String at
   return newPossible;
 }
 
-static void test_possibleAnswersAfterAttempt() {
+@Test static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
   assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
   assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 

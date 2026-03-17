@@ -34,7 +34,7 @@ static bool binarySearch(List<string> li, string item) { // function
   return result;
 }
 
-static void test_() {
+[TestMethod] static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
   Assert.AreEqual(true, binarySearch(li1, "lemon") 
   Assert.AreEqual(true, binarySearch(li1, "lime") 

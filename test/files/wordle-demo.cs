@@ -201,7 +201,7 @@ static bool isUCLetter(string k) { // function
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }
 
-static void test_isUCLetter() {
+[TestMethod] static void test_isUCLetter() {
   Assert.AreEqual(true, isUCLetter("A") 
   Assert.AreEqual(true, isUCLetter("Z") 
   Assert.AreEqual(false, isUCLetter("a") 
@@ -221,7 +221,7 @@ static string setChar(string word, int n, string newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
 }
 
-static void test_setChar() {
+[TestMethod] static void test_setChar() {
   Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_") 
   Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_") 
 }
@@ -244,7 +244,7 @@ static string markAttempt(string attempt, string target) { // function
   return mark;
 }
 
-static void test_markAttempt() {
+[TestMethod] static void test_markAttempt() {
   Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX") 
   Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA") 
   Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE") 
@@ -268,7 +268,7 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
   return newPossible;
 }
 
-static void test_possibleAnswersAfterAttempt() {
+[TestMethod] static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
   Assert.AreEqual(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
   Assert.AreEqual(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 

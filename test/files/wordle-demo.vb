@@ -201,7 +201,7 @@ Function isUCLetter(k As String) As Boolean
   Return (k.length() = 1) And (unicode > 64) And (unicode < 91)
 End Function
 
-Sub test_isUCLetter
+<TestMethod> Sub test_isUCLetter()
   Assert.AreEqual(True, isUCLetter("A") 
   Assert.AreEqual(True, isUCLetter("Z") 
   Assert.AreEqual(False, isUCLetter("a") 
@@ -221,7 +221,7 @@ Function setChar(word As String, n As Integer, newChar As String) As String
   Return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 End Function
 
-Sub test_setChar
+<TestMethod> Sub test_setChar()
   Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_") 
   Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_") 
 End Sub
@@ -244,7 +244,7 @@ Function markAttempt(attempt As String, target As String) As String
   Return mark
 End Function
 
-Sub test_markAttempt
+<TestMethod> Sub test_markAttempt()
   Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX") 
   Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA") 
   Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE") 
@@ -268,7 +268,7 @@ Function possibleAnswersAfterAttempt(possible As List(Of String), attempt As Str
   Return newPossible
 End Function
 
-Sub test_possibleAnswersAfterAttempt
+<TestMethod> Sub test_possibleAnswersAfterAttempt()
   Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' variable
   Assert.AreEqual({"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
   Assert.AreEqual({"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 

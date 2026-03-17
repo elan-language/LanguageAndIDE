@@ -34,7 +34,7 @@ static bool binarySearch(List<String> li, String item) { // function
   return result;
 }
 
-static void test_() {
+@Test static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
   assertEquals(true, binarySearch(li1, "lemon") 
   assertEquals(true, binarySearch(li1, "lime") 

@@ -120,35 +120,35 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   gridRef.set(nextGen); // call
 }
 
-static void test_north() {
+@Test static void test_north() {
   assertEquals((3, 3), north((3, 4)) 
   assertEquals((39, 29), north((39, 0)) 
   assertEquals((0, 28), north((0, 29)) 
   assertEquals((39, 28), north((39, 29)) 
 }
 
-static void test_south() {
+@Test static void test_south() {
   assertEquals((3, 5), south((3, 4)) 
   assertEquals((39, 1), south((39, 0)) 
   assertEquals((0, 0), south((0, 29)) 
   assertEquals((39, 0), south((39, 29)) 
 }
 
-static void test_east() {
+@Test static void test_east() {
   assertEquals((11, 2), east((10, 2)) 
   assertEquals((0, 0), east((39, 0)) 
   assertEquals((1, 1), east((0, 1)) 
   assertEquals((0, 29), east((39, 29)) 
 }
 
-static void test_west() {
+@Test static void test_west() {
   assertEquals((2, 4), west((3, 4)) 
   assertEquals((38, 0), west((39, 0)) 
   assertEquals((39, 0), west((0, 0)) 
   assertEquals((39, 29), west((0, 29)) 
 }
 
-static void test_northEast() {
+@Test static void test_northEast() {
   assertEquals((4, 3), northEast((3, 4)) 
   assertEquals((1, 29), northEast((0, 0)) 
   assertEquals((0, 29), northEast((39, 0)) 
@@ -156,7 +156,7 @@ static void test_northEast() {
   assertEquals((0, 28), northEast((39, 29)) 
 }
 
-static void test_southEast() {
+@Test static void test_southEast() {
   assertEquals((4, 5), southEast((3, 4)) 
   assertEquals((1, 1), southEast((0, 0)) 
   assertEquals((0, 1), southEast((39, 0)) 
@@ -164,7 +164,7 @@ static void test_southEast() {
   assertEquals((0, 0), southEast((39, 29)) 
 }
 
-static void test_northWest() {
+@Test static void test_northWest() {
   assertEquals((2, 3), northWest((3, 4)) 
   assertEquals((39, 29), northWest((0, 0)) 
   assertEquals((38, 29), northWest((39, 0)) 
@@ -172,7 +172,7 @@ static void test_northWest() {
   assertEquals((38, 28), northWest((39, 29)) 
 }
 
-static void test_southWest() {
+@Test static void test_southWest() {
   assertEquals((2, 5), southWest((3, 4)) 
   assertEquals((39, 1), southWest((0, 0)) 
   assertEquals((38, 1), southWest((39, 0)) 
@@ -180,7 +180,7 @@ static void test_southWest() {
   assertEquals((38, 0), southWest((39, 29)) 
 }
 
-static void test_blackOrWhite() {
+@Test static void test_blackOrWhite() {
   assertEquals(black, blackOrWhite(0) 
   assertEquals(black, blackOrWhite(0.499) 
   assertEquals(black, blackOrWhite(0.5) 
@@ -188,11 +188,11 @@ static void test_blackOrWhite() {
   assertEquals(white, blackOrWhite(1) 
 }
 
-[ghosted] static void test_neighbourCells() {
+[ghosted] @Test static void test_neighbourCells() {
   assertEquals([(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5], neighbourCells(3, 4) 
 }
 
-static void test_willLive() {
+@Test static void test_willLive() {
   assertEquals(false, willLive(white, 0) 
   assertEquals(false, willLive(white, 1) 
   assertEquals(false, willLive(white, 2) 

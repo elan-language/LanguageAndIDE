@@ -150,7 +150,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof While) {

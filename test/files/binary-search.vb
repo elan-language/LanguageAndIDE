@@ -34,7 +34,7 @@ Function binarySearch(li As List(Of String), item As String) As Boolean
   Return result
 End Function
 
-Sub test_
+<TestMethod> Sub test_binarySearch()
   Dim li1 = {"lemon", "lime", "orange"} ' variable
   Assert.AreEqual(True, binarySearch(li1, "lemon") 
   Assert.AreEqual(True, binarySearch(li1, "lime") 
