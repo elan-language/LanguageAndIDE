@@ -7,7 +7,6 @@ import { ElanCompilerError } from "../../compiler/elan-compiler-error";
 import { globalKeyword, libraryKeyword, thisKeyword } from "../../compiler/elan-keywords";
 import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
-import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
@@ -756,13 +755,9 @@ export function transform(
 
   if (node instanceof ParamDefNode) {
     const id = node.name?.matchedText ?? "";
-    const type = transform(node.type, fieldId, scope);
+    const type = node.type ? transform(node.type, fieldId, scope)! : EmptyAsn.Instance;
 
-    if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, fieldId, scope);
-    }
-
-    return undefined;
+    return new ParamDefAsn(id, type, fieldId, scope);
   }
 
   if (node instanceof TypeGenericNode) {
