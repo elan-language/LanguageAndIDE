@@ -98,7 +98,7 @@ function startDaysList(year as Int, startDays as List<of Int>) returns List<of I
   variable startDaysL set to getStartDays()
   if leap(year) then
     for m in range(2, 13)
-      set startDaysL to startDaysL.withPut(m, startDaysL[m] + 1)
+      set startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
     end for
   end if
   return startDaysL

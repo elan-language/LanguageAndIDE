@@ -130,7 +130,7 @@ export class Dictionary<T1, T2> {
   }
 
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(Dictionary))
-  withPut(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+  withSet(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);

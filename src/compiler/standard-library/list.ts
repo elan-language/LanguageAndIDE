@@ -304,7 +304,7 @@ export class List<T1> {
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  withSet(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.newList(withPutHelper(this.contents, index, value));
   }
 

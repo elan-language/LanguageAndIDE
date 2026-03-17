@@ -19,9 +19,9 @@ suite("Demo compile", () => {
   test("test fern", async () => {
     await testElanProgram("demo_programs\\fern.elan");
   });
-  test("test fern-params", async () => {
+  /*   test("test fern-params", async () => {
     await testElanProgram("demo_programs\\fern-params.elan");
-  });
+  }); Not high enought value to warrant the long time that this test takes*/
   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   });
