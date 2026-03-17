@@ -234,6 +234,8 @@ export class LanguageElan extends LanguageAbstract {
 
   TRUE: string = "true";
   FALSE: string = "false";
+  BINARY_PREFIX: string = "0b";
+  HEX_PREFIX: string = "0x";
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));

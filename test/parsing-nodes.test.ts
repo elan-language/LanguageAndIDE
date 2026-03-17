@@ -26,7 +26,6 @@ import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
 import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
-import { LitStringInterpolatedJava } from "../src/ide/frames/parse-nodes/lit-string-interpolated-java";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
 import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
@@ -223,30 +222,65 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
     testNodeParse(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
     testNodeParse(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
-    testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, " 123", "a", "123", "");
+    testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, "123", "a", "123", "");
     testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
-    //Hex & binary
+  });
+
+  test("LitInt_HexAndBinary", () => {
     testNodeParse(
       new LitInt(f),
       "0xfa3c",
       ParseStatus.valid,
+      "fa3c",
+      "",
       "0xfa3c",
-      "",
-      "",
       "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
     );
-    testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
+    testNodeParse(
+      new ExprNode(f),
+      "0xfffe",
+      ParseStatus.valid,
+      "0xfffe",
+      "",
+      "0xfffe",
+      "<el-lit>0xfffe</el-lit>",
+      "0xfffe",
+    );
+    testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "fa3", "g", "0xfa3", "");
+    testNodeParse(new LitInt(f), "&Hfa3", ParseStatus.invalid, "", "&Hfa3", "", ""); //VB format in El
+    testNodeParse(
+      new LitInt(fileWithVB()),
+      "&Hfa3",
+      ParseStatus.valid,
+      "fa3",
+      "",
+      "0xfa3",
+      "<el-lit>&Hfa3</el-lit>",
+      "&Hfa3",
+    ); //VB format in VB
     testNodeParse(
       new LitInt(f),
       "0b01101",
       ParseStatus.valid,
+      "01101",
+      "",
       "0b01101",
-      "",
-      "",
       "<el-lit>0b01101</el-lit>",
     );
-    testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
+    testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0110", "2", "0b0110", "");
+    testNodeParse(new LitInt(f), "&B0110", ParseStatus.invalid, "", "&B0110", "", ""); //VB syntax
+    testNodeParse(
+      new LitInt(fileWithVB()),
+      "&B0110",
+      ParseStatus.valid,
+      "0110",
+      "",
+      "0b0110",
+      "<el-lit>&B0110</el-lit>",
+      "&B0110",
+    ); //VB syntax
   });
   test("LitFloat", () => {
     testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");

@@ -669,7 +669,7 @@ export function transform(
   }
 
   if (node instanceof LitInt) {
-    return new LiteralIntAsn(node.matchedText, fieldId);
+    return new LiteralIntAsn(node.matchedText, node.isBinary, node.isHex, fieldId);
   }
 
   if (node instanceof LitBoolean) {
