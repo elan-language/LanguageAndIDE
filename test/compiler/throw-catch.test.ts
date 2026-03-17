@@ -161,7 +161,7 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeError
+  catch ElanException
     call printNoLine("Foo")
   end try
 end main
@@ -177,7 +177,7 @@ async function main() {
     await foo();
     await _stdlib.printNoLine("not caught");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
     await _stdlib.printNoLine("Foo");
     }
   }
@@ -215,7 +215,7 @@ main
     variable y set to x[1]
     variable z set to y.p1
     call printNoLine("not caught")
-  catch ElanRuntimeError
+  catch ElanException
     call printNoLine("Out of range index: 1 size: 0")
   end try
 end main
@@ -240,7 +240,7 @@ async function main() {
     let z = y.p1;
     await _stdlib.printNoLine("not caught");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
     await _stdlib.printNoLine("Out of range index: 1 size: 0");
     }
   }
@@ -280,6 +280,71 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Out of range index: 1 size: 0");
   });
 
+  test("Pass_CatchUserException", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    throw FooException "foo"
+  catch FooException
+    call printNoLine("Foo Caught")
+  end try
+end main
+
+class FooException inherits ElanException
+  constructor(msg as String)
+  end constructor
+
+  function asString() returns String
+    return "Foo"
+  end function
+ 
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  try {
+    throw new FooException("foo");
+  } catch (e) {
+    if (e instanceof FooException) {
+    await _stdlib.printNoLine("Foo Caught");
+    }
+  }
+}
+
+class FooException extends ElanException {
+  static emptyInstance() { return system.emptyClass(FooException, []);};
+
+  async _initialise(msg) {
+
+    return this;
+  }
+
+  async asString() {
+    return "Foo";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Out of range index: 1 size: 0");
+  });
+
   test("Pass_UseException", async () => {
     const code = `${testHeader}
 
@@ -287,7 +352,7 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeError
+  catch ElanException
     variable s set to "Foo"
     call printNoLine(s)
   end try
@@ -304,7 +369,7 @@ async function main() {
     await foo();
     await _stdlib.printNoLine("not caught");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
     let s = "Foo";
     await _stdlib.printNoLine(s);
     }
@@ -341,7 +406,7 @@ main
   try
     variable a set to 1
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch ElanException
     variable a set to "fail"
     call printNoLine(a)
   end try
@@ -358,7 +423,7 @@ async function main() {
     let a = 1;
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
     let a = "fail";
     await _stdlib.printNoLine(a);
     }
@@ -395,7 +460,7 @@ main
   variable a set to 1
   try
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch ElanException
     call printNoLine(a)
   end try
 end main
@@ -411,7 +476,7 @@ async function main() {
   try {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
     await _stdlib.printNoLine(a);
     }
   }
@@ -447,7 +512,7 @@ main
   variable a set to 1
   try
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch ElanException
     [ghosted] constant a set to 1
   end try
 end main`;
@@ -459,7 +524,7 @@ async function main() {
   try {
     throw new _stdlib.ElanRuntimeError("fail");
   } catch (e) {
-    if (e instanceof _stdlib.ElanRuntimeError) {
+    if (e instanceof _stdlib.ElanException) {
 
     }
   }

@@ -4,6 +4,7 @@ export interface TypeOptions {
   isIndexable: boolean;
   isDoubleIndexable: boolean;
   isIterable: boolean;
+  isException: boolean;
 }
 
 export const noTypeOptions: TypeOptions = {
@@ -29,6 +30,7 @@ export function getTypeOptions(): TypeOptions {
     isIndexable: false,
     isDoubleIndexable: false,
     isIterable: false,
+    isException: false,
   };
 }
 

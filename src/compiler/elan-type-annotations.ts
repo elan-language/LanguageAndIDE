@@ -701,6 +701,7 @@ export enum ClassOption {
   record,
   list,
   dictionary,
+  exception
 }
 
 // isExtension, isPure, isASync, retType
@@ -758,6 +759,10 @@ function mapClassOption(options: ClassOption): TypeOptions {
       return opt;
     case ClassOption.dictionary:
       opt.isIndexable = true;
+      return opt;
+    case ClassOption.exception:
+      opt.isAbstract = true;
+      opt.isException = true;
       return opt;
   }
 }

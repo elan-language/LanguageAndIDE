@@ -1,8 +1,9 @@
 import { ClassOption, elanClass, ElanString } from "../elan-type-annotations";
 import { System } from "../system";
+import { ElanException } from "./elan-exception";
 
 @elanClass(ClassOption.concrete, [], ["message"], [ElanString])
-export class ElanRuntimeError extends Error {
+export class ElanRuntimeError extends ElanException {
   static emptyInstance() {
     return new ElanRuntimeError("");
   }

@@ -42,6 +42,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { ElanException } from "./elan-exception";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -104,6 +105,9 @@ export class StdLib {
 
   @elanClassExport(Maybe)
   Maybe = Maybe;
+
+  @elanClassExport(ElanException)
+  ElanException = ElanException;
 
   @elanClassExport(ElanRuntimeError)
   ElanRuntimeError = ElanRuntimeError;
