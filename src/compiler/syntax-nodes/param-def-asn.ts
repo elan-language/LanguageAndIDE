@@ -3,14 +3,16 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getGlobalScope, match, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode } from "./ast-helpers";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
-    private readonly type: AstIdNode,
+    private readonly type: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -23,8 +25,10 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     // compile type to catch any errors
     this.type.compile();
 
+    const typeId = isAstIdNode(this.type) ? this.type.id : "";
+
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    mustBeKnownSymbolType(this.symbolType(), this.type.id, this.compileErrors, this.fieldId);
+    mustBeKnownSymbolType(this.symbolType(), typeId, this.compileErrors, this.fieldId);
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.id}`;
   }
