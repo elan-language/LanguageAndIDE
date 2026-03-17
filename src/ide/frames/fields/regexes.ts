@@ -9,6 +9,9 @@ export class Regexes {
   static readonly identifier = /^\s*(([a-z][a-zA-Z0-9_]*)|(_[a-zA-Z0-9_]+))/;
   static readonly literalInt = /^\s*[0-9]+/;
   static readonly negatableLitInt = /^\s*-?((0b[0-1]+)|(0x[0-9a-fA-F]+)|([0-9]+))/;
+  static readonly negatableBase10Number = /^\s*-?[0-9]+/;
+  static readonly hexNumber = /[0-9a-fA-F]+/;
+  static readonly binaryNumber = /[0-1]+/;
   static readonly negatableLitFloat = /^\s*-?[0-9]+\.[0-9]+((e|E)-?[0-9]+)?/;
   static readonly charValue = /[^']/;
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;

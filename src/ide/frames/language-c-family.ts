@@ -197,6 +197,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   TRUE: string = "true";
   FALSE: string = "false";
+  BINARY_PREFIX: string = "0b";
+  HEX_PREFIX: string = "0x";
 
   c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(

@@ -253,6 +253,8 @@ export class LanguageVB extends LanguageAbstract {
 
   TRUE: string = "True";
   FALSE: string = "False";
+  BINARY_PREFIX: string = "&B";
+  HEX_PREFIX: string = "&H";
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);

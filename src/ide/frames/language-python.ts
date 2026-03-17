@@ -208,6 +208,8 @@ export class LanguagePython extends LanguageAbstract {
 
   TRUE: string = "True";
   FALSE: string = "False";
+  BINARY_PREFIX: string = "0b";
+  HEX_PREFIX: string = "0x";
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
