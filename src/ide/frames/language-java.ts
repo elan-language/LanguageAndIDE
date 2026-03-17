@@ -2,6 +2,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
+import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { Alternatives } from "./parse-nodes/alternatives";
 import { CommaNode } from "./parse-nodes/comma-node";
@@ -23,6 +24,7 @@ import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
+import { AssertStatement } from "./statements/assert-statement";
 import { ConstantStatement } from "./statements/constant-statement";
 import { ParseStatus } from "./status-enums";
 import { CLOSE_BRACKET } from "./symbols";
@@ -48,18 +50,28 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
-    let html = this.common_renderSingleLineAsHtml(frame);
-    if (frame instanceof ConstantGlobal) {
+    let html = "";
+    if (frame instanceof AssertStatement) {
+      html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()}`;
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+    } else {
+      html = this.common_renderSingleLineAsHtml(frame);
     }
     return html;
   }
 
   renderTopAsHtml(frame: Frame): string {
-    return this.common_renderTopAsHtml(frame);
+    let html = "";
+    if (frame instanceof TestFrame) {
+      html = `@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
+    } else {
+      html = this.common_renderTopAsHtml(frame);
+    }
+    return html;
   }
 
   renderBottomAsHtml(frame: Frame): string {

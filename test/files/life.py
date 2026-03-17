@@ -94,84 +94,84 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
       nextGen[x][y] = colour # set
   gridRef.set(nextGen) # call
 
-def  test_north()-> None:
-  assert north((3, 4)) is (3, 3) 
-  assert north((39, 0)) is (39, 29) 
-  assert north((0, 29)) is (0, 28) 
-  assert north((39, 29)) is (39, 28) 
+def test_north(self) -> None:
+  self.assertEqual(north((3, 4)), (3, 3)) 
+  self.assertEqual(north((39, 0)), (39, 29)) 
+  self.assertEqual(north((0, 29)), (0, 28)) 
+  self.assertEqual(north((39, 29)), (39, 28)) 
 
-def  test_south()-> None:
-  assert south((3, 4)) is (3, 5) 
-  assert south((39, 0)) is (39, 1) 
-  assert south((0, 29)) is (0, 0) 
-  assert south((39, 29)) is (39, 0) 
+def test_south(self) -> None:
+  self.assertEqual(south((3, 4)), (3, 5)) 
+  self.assertEqual(south((39, 0)), (39, 1)) 
+  self.assertEqual(south((0, 29)), (0, 0)) 
+  self.assertEqual(south((39, 29)), (39, 0)) 
 
-def  test_east()-> None:
-  assert east((10, 2)) is (11, 2) 
-  assert east((39, 0)) is (0, 0) 
-  assert east((0, 1)) is (1, 1) 
-  assert east((39, 29)) is (0, 29) 
+def test_east(self) -> None:
+  self.assertEqual(east((10, 2)), (11, 2)) 
+  self.assertEqual(east((39, 0)), (0, 0)) 
+  self.assertEqual(east((0, 1)), (1, 1)) 
+  self.assertEqual(east((39, 29)), (0, 29)) 
 
-def  test_west()-> None:
-  assert west((3, 4)) is (2, 4) 
-  assert west((39, 0)) is (38, 0) 
-  assert west((0, 0)) is (39, 0) 
-  assert west((0, 29)) is (39, 29) 
+def test_west(self) -> None:
+  self.assertEqual(west((3, 4)), (2, 4)) 
+  self.assertEqual(west((39, 0)), (38, 0)) 
+  self.assertEqual(west((0, 0)), (39, 0)) 
+  self.assertEqual(west((0, 29)), (39, 29)) 
 
-def  test_northEast()-> None:
-  assert northEast((3, 4)) is (4, 3) 
-  assert northEast((0, 0)) is (1, 29) 
-  assert northEast((39, 0)) is (0, 29) 
-  assert northEast((0, 29)) is (1, 28) 
-  assert northEast((39, 29)) is (0, 28) 
+def test_northEast(self) -> None:
+  self.assertEqual(northEast((3, 4)), (4, 3)) 
+  self.assertEqual(northEast((0, 0)), (1, 29)) 
+  self.assertEqual(northEast((39, 0)), (0, 29)) 
+  self.assertEqual(northEast((0, 29)), (1, 28)) 
+  self.assertEqual(northEast((39, 29)), (0, 28)) 
 
-def  test_southEast()-> None:
-  assert southEast((3, 4)) is (4, 5) 
-  assert southEast((0, 0)) is (1, 1) 
-  assert southEast((39, 0)) is (0, 1) 
-  assert southEast((0, 29)) is (1, 0) 
-  assert southEast((39, 29)) is (0, 0) 
+def test_southEast(self) -> None:
+  self.assertEqual(southEast((3, 4)), (4, 5)) 
+  self.assertEqual(southEast((0, 0)), (1, 1)) 
+  self.assertEqual(southEast((39, 0)), (0, 1)) 
+  self.assertEqual(southEast((0, 29)), (1, 0)) 
+  self.assertEqual(southEast((39, 29)), (0, 0)) 
 
-def  test_northWest()-> None:
-  assert northWest((3, 4)) is (2, 3) 
-  assert northWest((0, 0)) is (39, 29) 
-  assert northWest((39, 0)) is (38, 29) 
-  assert northWest((0, 29)) is (39, 28) 
-  assert northWest((39, 29)) is (38, 28) 
+def test_northWest(self) -> None:
+  self.assertEqual(northWest((3, 4)), (2, 3)) 
+  self.assertEqual(northWest((0, 0)), (39, 29)) 
+  self.assertEqual(northWest((39, 0)), (38, 29)) 
+  self.assertEqual(northWest((0, 29)), (39, 28)) 
+  self.assertEqual(northWest((39, 29)), (38, 28)) 
 
-def  test_southWest()-> None:
-  assert southWest((3, 4)) is (2, 5) 
-  assert southWest((0, 0)) is (39, 1) 
-  assert southWest((39, 0)) is (38, 1) 
-  assert southWest((0, 29)) is (39, 0) 
-  assert southWest((39, 29)) is (38, 0) 
+def test_southWest(self) -> None:
+  self.assertEqual(southWest((3, 4)), (2, 5)) 
+  self.assertEqual(southWest((0, 0)), (39, 1)) 
+  self.assertEqual(southWest((39, 0)), (38, 1)) 
+  self.assertEqual(southWest((0, 29)), (39, 0)) 
+  self.assertEqual(southWest((39, 29)), (38, 0)) 
 
-def  test_blackOrWhite()-> None:
-  assert blackOrWhite(0) is black 
-  assert blackOrWhite(0.499) is black 
-  assert blackOrWhite(0.5) is black 
-  assert blackOrWhite(0.501) is white 
-  assert blackOrWhite(1) is white 
+def test_blackOrWhite(self) -> None:
+  self.assertEqual(blackOrWhite(0), black) 
+  self.assertEqual(blackOrWhite(0.499), black) 
+  self.assertEqual(blackOrWhite(0.5), black) 
+  self.assertEqual(blackOrWhite(0.501), white) 
+  self.assertEqual(blackOrWhite(1), white) 
 
-[ghosted] def  test_neighbourCells()-> None:
-  assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5] 
+[ghosted] def test_neighbourCells(self) -> None:
+  self.assertEqual(neighbourCells(3, 4), [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]) 
 
-def  test_willLive()-> None:
-  assert willLive(white, 0) is False 
-  assert willLive(white, 1) is False 
-  assert willLive(white, 2) is False 
-  assert willLive(white, 3) is True 
-  assert willLive(white, 4) is False 
-  assert willLive(white, 5) is False 
-  assert willLive(white, 6) is False 
-  assert willLive(white, 7) is False 
-  assert willLive(white, 8) is False 
-  assert willLive(black, 0) is False 
-  assert willLive(black, 1) is False 
-  assert willLive(black, 2) is True 
-  assert willLive(black, 3) is True 
-  assert willLive(black, 4) is False 
-  assert willLive(black, 5) is False 
-  assert willLive(black, 6) is False 
-  assert willLive(black, 7) is False 
-  assert willLive(black, 8) is False 
+def test_willLive(self) -> None:
+  self.assertEqual(willLive(white, 0), False) 
+  self.assertEqual(willLive(white, 1), False) 
+  self.assertEqual(willLive(white, 2), False) 
+  self.assertEqual(willLive(white, 3), True) 
+  self.assertEqual(willLive(white, 4), False) 
+  self.assertEqual(willLive(white, 5), False) 
+  self.assertEqual(willLive(white, 6), False) 
+  self.assertEqual(willLive(white, 7), False) 
+  self.assertEqual(willLive(white, 8), False) 
+  self.assertEqual(willLive(black, 0), False) 
+  self.assertEqual(willLive(black, 1), False) 
+  self.assertEqual(willLive(black, 2), True) 
+  self.assertEqual(willLive(black, 3), True) 
+  self.assertEqual(willLive(black, 4), False) 
+  self.assertEqual(willLive(black, 5), False) 
+  self.assertEqual(willLive(black, 6), False) 
+  self.assertEqual(willLive(black, 7), False) 
+  self.assertEqual(willLive(black, 8), False) 

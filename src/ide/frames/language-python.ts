@@ -94,7 +94,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof AbstractProperty) {
       html = `TBD`;
     } else if (frame instanceof AssertStatement) {
-      html = `<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
+      html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
@@ -156,7 +156,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.DEF} </el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method>(<el-kw>self</el-kw>) -> <el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof While) {

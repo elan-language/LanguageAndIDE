@@ -1,4 +1,4 @@
-# 5f09b22433e8b93ce41db1e77550f345b7ef5006b06472bac6fa5b87f4ae2a3b Elan 2.0.0-alpha guest default_profile valid
+# 771bed869c712a23f12daee2ad2f5276fc483707c80700271fb347bba220fa3b Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -34,7 +34,7 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
   return result
 end function
 
-test test_
+test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
