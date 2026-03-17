@@ -329,7 +329,7 @@ return [main, _tests];}`;
 
 main
   variable ed set to ["one":1, "two":2]
-  set ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withPut(x, 1))
+  set ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withSet(x, 1))
   call printNoLine(ed)
 end main
 
@@ -341,7 +341,7 @@ end function`;
 const global = new class {};
 async function main() {
   let ed = system.dictionary([["one", 1], ["two", 2]]);
-  ed = (await (await global.source()).reduce(ed, async (d, x) => d.withPut(x, 1)));
+  ed = (await (await global.source()).reduce(ed, async (d, x) => d.withSet(x, 1)));
   await _stdlib.printNoLine(ed);
 }
 

@@ -164,8 +164,8 @@ procedure foo()
   variable li set to [1,2,3,4,5]
   for i in range(0, 4)
     constant temp set to li[i]
-    set li to li.withPut(i, li[i + 1])
-    set li to li.withPut(i + 1, temp)
+    set li to li.withSet(i, li[i + 1])
+    set li to li.withSet(i + 1, temp)
   end for
   call printNoLine(li)
 end procedure`;
@@ -181,8 +181,8 @@ async function foo() {
   const elan_iterfor13 = [..._stdlib.range(0, 4)];
   for (const i of elan_iterfor13) {
     const temp = system.safeIndex(li, i);
-    li = li.withPut(i, system.safeIndex(li, i + 1));
-    li = li.withPut(i + 1, temp);
+    li = li.withSet(i, system.safeIndex(li, i + 1));
+    li = li.withSet(i + 1, temp);
   }
   await _stdlib.printNoLine(li);
 }

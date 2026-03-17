@@ -60,7 +60,7 @@ function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, 
 end function
 
 function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
+  return graphics.withSet(x, graphics[x].withSet(y, colour))
 end function
 
 # colour: 0 for black, 1 for white

@@ -783,8 +783,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPut", "*", "*"],
       ["withRemoveAt", "*", "*"],
+      ["withSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
@@ -870,8 +870,8 @@ end main`;
       ["keys", "*", "*"],
       ["notEqualTo", "*", "*"],
       ["values", "*", "*"],
-      ["withPut", "*", "*"],
       ["withRemoveAt", "*", "*"],
+      ["withSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);

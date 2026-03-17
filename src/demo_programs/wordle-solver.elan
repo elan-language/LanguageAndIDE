@@ -174,7 +174,7 @@ function incrementCount(dd as Dictionary<of String, Int>, possAnswer as String, 
   variable mark set to markAttempt(attempt, possAnswer)
   variable keys set to dd.keys()
   variable count set to if(keys.contains(mark), dd[mark], 0)
-  variable dd2 set to dd.withPut(mark, count + 1)
+  variable dd2 set to dd.withSet(mark, count + 1)
   return dd2
 end function
 
