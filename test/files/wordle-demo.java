@@ -75,7 +75,7 @@ static void enterAttempt(int attemptNo, List<List<String>> grid, Dictionary<Stri
   var word = "";
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
-    if () {
+    if ((k.equals("BACKSPACE")) && (chNo > 0)) {
       chNo = chNo - 1; // set
       grid[chNo][attemptNo] = ""; // set
       word = word; // set
@@ -84,7 +84,7 @@ static void enterAttempt(int attemptNo, List<List<String>> grid, Dictionary<Stri
       grid[chNo][attemptNo] = k; // set
       chNo = chNo + 1; // set
       word = word + k; // set
-    } else if ((chNo == 5)) {
+    } else if ((chNo == 5) && (k.equals("ENTER"))) {
       if (allWords.contains(word)) {
         chNo = chNo + 1; // set
       } else {
@@ -149,17 +149,17 @@ static void enterMark(int attemptNo, List<List<String>> grid, AsRef<String> mark
   var chNo = 0;
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
-    if () {
+    if ((k.equals("BACKSPACE")) && (chNo > 0)) {
       chNo = chNo - 1; // set
       var entry = grid[chNo][attemptNo];
       grid[chNo][attemptNo] = entry[0]; // set
       mark = mark.subString(0, chNo); // set
-    } else if ((chNo < 5)) {
+    } else if ((chNo < 5) && "012".contains(k)) {
       var ch = grid[chNo][attemptNo];
       grid[chNo][attemptNo] = ch + k; // set
       chNo = chNo + 1; // set
       mark = mark + k; // set
-    } else if ((chNo == 5)) {
+    } else if ((chNo == 5) && (k.equals("ENTER"))) {
       chNo = chNo + 1; // set
     }
     displayHtml(drawGrid(grid)); // call
@@ -175,7 +175,7 @@ static void analyse() { // procedure
     var mark = "";
     var attempt = "RAISE";
     var attempts = 0;
-    while () {
+    while ((!mark.equals("22222"))) {
       attempts = attempts + 1; // set
       mark = markAttempt(attempt, word); // set
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
@@ -202,11 +202,11 @@ static bool isUCLetter(String k) { // function
 }
 
 static void test_isUCLetter() {
-  assert isUCLetter("A") is true 
-  assert isUCLetter("Z") is true 
-  assert isUCLetter("a") is false 
-  assert isUCLetter("1") is false 
-  assert isUCLetter(" ") is false 
+  assertEquals(true, isUCLetter("A") 
+  assertEquals(true, isUCLetter("Z") 
+  assertEquals(false, isUCLetter("a") 
+  assertEquals(false, isUCLetter("1") 
+  assertEquals(false, isUCLetter(" ") 
 }
 
 static String getWord(int attemptNo, List<List<String>> grid) { // function
@@ -222,8 +222,8 @@ static String setChar(String word, int n, String newChar) { // function
 }
 
 static void test_setChar() {
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+  assertEquals("_BCDE", setChar("ABCDE", 0, "_") 
+  assertEquals("ABCD_", setChar("ABCDE", 4, "_") 
 }
 
 static String markAttempt(String attempt, String target) { // function
@@ -236,7 +236,7 @@ static String markAttempt(String attempt, String target) { // function
     }
   }
   foreach (n in range(0, 5)) {
-    if () {
+    if ((!mark[n].equals("2")) && unused.contains(attempt[n])) {
       mark = setChar(mark, n, "1"); // set
       unused = setChar(unused, unused.indexOf(attempt[n]), " "); // set
     }
@@ -245,16 +245,16 @@ static String markAttempt(String attempt, String target) { // function
 }
 
 static void test_markAttempt() {
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+  assertEquals("00000", markAttempt("ABCDE", "XXXXX") 
+  assertEquals("11111", markAttempt("ABCDE", "BCDEA") 
+  assertEquals("22222", markAttempt("ABCDE", "ABCDE") 
+  assertEquals("02000", markAttempt("SAINT", "LADLE") 
+  assertEquals("01111", markAttempt("IDEAL", "LADLE") 
+  assertEquals("10020", markAttempt("CABAL", "RECAP") 
+  assertEquals("01100", markAttempt("COLON", "GLORY") 
+  assertEquals("10120", markAttempt("AORTA", "RATTY") 
+  assertEquals("11020", markAttempt("RATTY", "AORTA") 
+  assertEquals("02012", markAttempt("FAIRY", "RATTY") 
 }
 
 static List<String> possibleAnswersAfterAttempt(List<String> possible, String attempt, String mark) { // function
@@ -270,11 +270,11 @@ static List<String> possibleAnswersAfterAttempt(List<String> possible, String at
 
 static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"] 
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"] 
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
+  assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
+  assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 
+  assertEquals(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010") 
+  assertEquals(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") 
+  assertEquals(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") 
 }
 
 static String drawGrid(List<List<String>> grid) { // function

@@ -29,16 +29,16 @@ def binarySearch(li: list[str], item: str) -> bool: # function
 
 def  test_()-> None:
   li1 = ["lemon", "lime", "orange"] # variable
-  assert binarySearch(li1, "lemon") is True 
-  assert binarySearch(li1, "lime") is True 
-  assert binarySearch(li1, "orange") is True 
-  assert binarySearch(li1, "pear") is False 
+  self.assertEqual(binarySearch(li1, "lemon"), True) 
+  self.assertEqual(binarySearch(li1, "lime"), True) 
+  self.assertEqual(binarySearch(li1, "orange"), True) 
+  self.assertEqual(binarySearch(li1, "pear"), False) 
   li2 = ["lemon", "orange"] # variable
-  assert binarySearch(li2, "lemon") is True 
-  assert binarySearch(li2, "orange") is True 
-  assert binarySearch(li2, "pear") is False 
+  self.assertEqual(binarySearch(li2, "lemon"), True) 
+  self.assertEqual(binarySearch(li2, "orange"), True) 
+  self.assertEqual(binarySearch(li2, "pear"), False) 
   li3 = ["lemon"] # variable
-  assert binarySearch(li3, "lemon") is True 
-  assert binarySearch(li3, "lime") is False 
+  self.assertEqual(binarySearch(li3, "lemon"), True) 
+  self.assertEqual(binarySearch(li3, "lime"), False) 
   li4 = list[str]() # variable
-  assert binarySearch(li4, "pear") is False 
+  self.assertEqual(binarySearch(li4, "pear"), False) 

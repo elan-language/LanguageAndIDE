@@ -169,11 +169,11 @@ def isUCLetter(k: str) -> bool: # function
   return (k.length() == 1) and (unicode > 64) and (unicode < 91)
 
 def  test_isUCLetter()-> None:
-  assert isUCLetter("A") is True 
-  assert isUCLetter("Z") is True 
-  assert isUCLetter("a") is False 
-  assert isUCLetter("1") is False 
-  assert isUCLetter(" ") is False 
+  self.assertEqual(isUCLetter("A"), True) 
+  self.assertEqual(isUCLetter("Z"), True) 
+  self.assertEqual(isUCLetter("a"), False) 
+  self.assertEqual(isUCLetter("1"), False) 
+  self.assertEqual(isUCLetter(" "), False) 
 
 def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
   guessWord = "" # variable
@@ -185,8 +185,8 @@ def setChar(word: str, n: int, newChar: str) -> str: # function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 
 def  test_setChar()-> None:
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+  self.assertEqual(setChar("ABCDE", 0, "_"), "_BCDE") 
+  self.assertEqual(setChar("ABCDE", 4, "_"), "ABCD_") 
 
 def markAttempt(attempt: str, target: str) -> str: # function
   mark = "00000" # variable
@@ -202,16 +202,16 @@ def markAttempt(attempt: str, target: str) -> str: # function
   return mark
 
 def  test_markAttempt()-> None:
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+  self.assertEqual(markAttempt("ABCDE", "XXXXX"), "00000") 
+  self.assertEqual(markAttempt("ABCDE", "BCDEA"), "11111") 
+  self.assertEqual(markAttempt("ABCDE", "ABCDE"), "22222") 
+  self.assertEqual(markAttempt("SAINT", "LADLE"), "02000") 
+  self.assertEqual(markAttempt("IDEAL", "LADLE"), "01111") 
+  self.assertEqual(markAttempt("CABAL", "RECAP"), "10020") 
+  self.assertEqual(markAttempt("COLON", "GLORY"), "01100") 
+  self.assertEqual(markAttempt("AORTA", "RATTY"), "10120") 
+  self.assertEqual(markAttempt("RATTY", "AORTA"), "11020") 
+  self.assertEqual(markAttempt("FAIRY", "RATTY"), "02012") 
 
 def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) -> list[str]: # function
   newPossible = list[str]() # variable
@@ -223,11 +223,11 @@ def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) ->
 
 def  test_possibleAnswersAfterAttempt()-> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"] 
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"] 
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "20000"), ["ABCDE"]) 
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "10000"), ["BCDEA", "CDEAB", "DEABC", "EABCD"]) 
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXBX", "10010"), ["BCDEA", "CDEAB", "EABCD"]) 
+  self.assertEqual(possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"), ["RATTY"]) 
+  self.assertEqual(possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"), ["RASPY", "RATTY"]) 
 
 def drawGrid(grid: list[list[str]]) -> str: # function
   html = f"<style>{style}</style> <grid>" # variable

@@ -36,17 +36,17 @@ End Function
 
 Sub test_
   Dim li1 = {"lemon", "lime", "orange"} ' variable
-  assert binarySearch(li1, "lemon") is True 
-  assert binarySearch(li1, "lime") is True 
-  assert binarySearch(li1, "orange") is True 
-  assert binarySearch(li1, "pear") is False 
+  Assert.AreEqual(True, binarySearch(li1, "lemon") 
+  Assert.AreEqual(True, binarySearch(li1, "lime") 
+  Assert.AreEqual(True, binarySearch(li1, "orange") 
+  Assert.AreEqual(False, binarySearch(li1, "pear") 
   Dim li2 = {"lemon", "orange"} ' variable
-  assert binarySearch(li2, "lemon") is True 
-  assert binarySearch(li2, "orange") is True 
-  assert binarySearch(li2, "pear") is False 
+  Assert.AreEqual(True, binarySearch(li2, "lemon") 
+  Assert.AreEqual(True, binarySearch(li2, "orange") 
+  Assert.AreEqual(False, binarySearch(li2, "pear") 
   Dim li3 = {"lemon"} ' variable
-  assert binarySearch(li3, "lemon") is True 
-  assert binarySearch(li3, "lime") is False 
+  Assert.AreEqual(True, binarySearch(li3, "lemon") 
+  Assert.AreEqual(False, binarySearch(li3, "lime") 
   Dim li4 = New List(Of String)() ' variable
-  assert binarySearch(li4, "pear") is False 
+  Assert.AreEqual(False, binarySearch(li4, "pear") 
 End Sub

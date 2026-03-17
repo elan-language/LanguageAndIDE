@@ -121,94 +121,94 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
 End Sub
 
 Sub test_north
-  assert north((3, 4)) is (3, 3) 
-  assert north((39, 0)) is (39, 29) 
-  assert north((0, 29)) is (0, 28) 
-  assert north((39, 29)) is (39, 28) 
+  Assert.AreEqual((3, 3), north((3, 4)) 
+  Assert.AreEqual((39, 29), north((39, 0)) 
+  Assert.AreEqual((0, 28), north((0, 29)) 
+  Assert.AreEqual((39, 28), north((39, 29)) 
 End Sub
 
 Sub test_south
-  assert south((3, 4)) is (3, 5) 
-  assert south((39, 0)) is (39, 1) 
-  assert south((0, 29)) is (0, 0) 
-  assert south((39, 29)) is (39, 0) 
+  Assert.AreEqual((3, 5), south((3, 4)) 
+  Assert.AreEqual((39, 1), south((39, 0)) 
+  Assert.AreEqual((0, 0), south((0, 29)) 
+  Assert.AreEqual((39, 0), south((39, 29)) 
 End Sub
 
 Sub test_east
-  assert east((10, 2)) is (11, 2) 
-  assert east((39, 0)) is (0, 0) 
-  assert east((0, 1)) is (1, 1) 
-  assert east((39, 29)) is (0, 29) 
+  Assert.AreEqual((11, 2), east((10, 2)) 
+  Assert.AreEqual((0, 0), east((39, 0)) 
+  Assert.AreEqual((1, 1), east((0, 1)) 
+  Assert.AreEqual((0, 29), east((39, 29)) 
 End Sub
 
 Sub test_west
-  assert west((3, 4)) is (2, 4) 
-  assert west((39, 0)) is (38, 0) 
-  assert west((0, 0)) is (39, 0) 
-  assert west((0, 29)) is (39, 29) 
+  Assert.AreEqual((2, 4), west((3, 4)) 
+  Assert.AreEqual((38, 0), west((39, 0)) 
+  Assert.AreEqual((39, 0), west((0, 0)) 
+  Assert.AreEqual((39, 29), west((0, 29)) 
 End Sub
 
 Sub test_northEast
-  assert northEast((3, 4)) is (4, 3) 
-  assert northEast((0, 0)) is (1, 29) 
-  assert northEast((39, 0)) is (0, 29) 
-  assert northEast((0, 29)) is (1, 28) 
-  assert northEast((39, 29)) is (0, 28) 
+  Assert.AreEqual((4, 3), northEast((3, 4)) 
+  Assert.AreEqual((1, 29), northEast((0, 0)) 
+  Assert.AreEqual((0, 29), northEast((39, 0)) 
+  Assert.AreEqual((1, 28), northEast((0, 29)) 
+  Assert.AreEqual((0, 28), northEast((39, 29)) 
 End Sub
 
 Sub test_southEast
-  assert southEast((3, 4)) is (4, 5) 
-  assert southEast((0, 0)) is (1, 1) 
-  assert southEast((39, 0)) is (0, 1) 
-  assert southEast((0, 29)) is (1, 0) 
-  assert southEast((39, 29)) is (0, 0) 
+  Assert.AreEqual((4, 5), southEast((3, 4)) 
+  Assert.AreEqual((1, 1), southEast((0, 0)) 
+  Assert.AreEqual((0, 1), southEast((39, 0)) 
+  Assert.AreEqual((1, 0), southEast((0, 29)) 
+  Assert.AreEqual((0, 0), southEast((39, 29)) 
 End Sub
 
 Sub test_northWest
-  assert northWest((3, 4)) is (2, 3) 
-  assert northWest((0, 0)) is (39, 29) 
-  assert northWest((39, 0)) is (38, 29) 
-  assert northWest((0, 29)) is (39, 28) 
-  assert northWest((39, 29)) is (38, 28) 
+  Assert.AreEqual((2, 3), northWest((3, 4)) 
+  Assert.AreEqual((39, 29), northWest((0, 0)) 
+  Assert.AreEqual((38, 29), northWest((39, 0)) 
+  Assert.AreEqual((39, 28), northWest((0, 29)) 
+  Assert.AreEqual((38, 28), northWest((39, 29)) 
 End Sub
 
 Sub test_southWest
-  assert southWest((3, 4)) is (2, 5) 
-  assert southWest((0, 0)) is (39, 1) 
-  assert southWest((39, 0)) is (38, 1) 
-  assert southWest((0, 29)) is (39, 0) 
-  assert southWest((39, 29)) is (38, 0) 
+  Assert.AreEqual((2, 5), southWest((3, 4)) 
+  Assert.AreEqual((39, 1), southWest((0, 0)) 
+  Assert.AreEqual((38, 1), southWest((39, 0)) 
+  Assert.AreEqual((39, 0), southWest((0, 29)) 
+  Assert.AreEqual((38, 0), southWest((39, 29)) 
 End Sub
 
 Sub test_blackOrWhite
-  assert blackOrWhite(0) is black 
-  assert blackOrWhite(0.499) is black 
-  assert blackOrWhite(0.5) is black 
-  assert blackOrWhite(0.501) is white 
-  assert blackOrWhite(1) is white 
+  Assert.AreEqual(black, blackOrWhite(0) 
+  Assert.AreEqual(black, blackOrWhite(0.499) 
+  Assert.AreEqual(black, blackOrWhite(0.5) 
+  Assert.AreEqual(white, blackOrWhite(0.501) 
+  Assert.AreEqual(white, blackOrWhite(1) 
 End Sub
 
 [ghosted] Sub test_neighbourCells
-  assert neighbourCells(3, 4) is {(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5} 
+  Assert.AreEqual({(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5}, neighbourCells(3, 4) 
 End Sub
 
 Sub test_willLive
-  assert willLive(white, 0) is False 
-  assert willLive(white, 1) is False 
-  assert willLive(white, 2) is False 
-  assert willLive(white, 3) is True 
-  assert willLive(white, 4) is False 
-  assert willLive(white, 5) is False 
-  assert willLive(white, 6) is False 
-  assert willLive(white, 7) is False 
-  assert willLive(white, 8) is False 
-  assert willLive(black, 0) is False 
-  assert willLive(black, 1) is False 
-  assert willLive(black, 2) is True 
-  assert willLive(black, 3) is True 
-  assert willLive(black, 4) is False 
-  assert willLive(black, 5) is False 
-  assert willLive(black, 6) is False 
-  assert willLive(black, 7) is False 
-  assert willLive(black, 8) is False 
+  Assert.AreEqual(False, willLive(white, 0) 
+  Assert.AreEqual(False, willLive(white, 1) 
+  Assert.AreEqual(False, willLive(white, 2) 
+  Assert.AreEqual(True, willLive(white, 3) 
+  Assert.AreEqual(False, willLive(white, 4) 
+  Assert.AreEqual(False, willLive(white, 5) 
+  Assert.AreEqual(False, willLive(white, 6) 
+  Assert.AreEqual(False, willLive(white, 7) 
+  Assert.AreEqual(False, willLive(white, 8) 
+  Assert.AreEqual(False, willLive(black, 0) 
+  Assert.AreEqual(False, willLive(black, 1) 
+  Assert.AreEqual(True, willLive(black, 2) 
+  Assert.AreEqual(True, willLive(black, 3) 
+  Assert.AreEqual(False, willLive(black, 4) 
+  Assert.AreEqual(False, willLive(black, 5) 
+  Assert.AreEqual(False, willLive(black, 6) 
+  Assert.AreEqual(False, willLive(black, 7) 
+  Assert.AreEqual(False, willLive(black, 8) 
 End Sub
