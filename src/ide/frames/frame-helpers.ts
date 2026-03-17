@@ -130,8 +130,11 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   let msg = "";
   let link = "";
   let help = "";
+  let compileErrors: CompileError[] = [];
 
-  const compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
+  if (loc.readParseStatus() === ParseStatus.valid) {
+    compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
+  }
   const n = compileErrors.length;
   if (n > 0) {
     const first = compileErrors[0];
