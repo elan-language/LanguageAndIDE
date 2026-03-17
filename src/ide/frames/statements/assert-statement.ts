@@ -120,6 +120,6 @@ export class AssertStatement extends SingleLineFrame implements Statement {
 
   renderAsHtml(): string {
     // special case because of need to incorporate test message
-    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-top>${this.language().renderSingleLineAsHtml(this)}</el-top>${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 }
