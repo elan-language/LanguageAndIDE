@@ -5,12 +5,16 @@ import { AbstractAstNode } from "./abstract-ast-node";
 export class LiteralIntAsn extends AbstractAstNode implements AstNode {
   constructor(
     rawValue: string,
+    isBinary: boolean,
+    isHex: boolean,
     public readonly fieldId: string,
   ) {
     super();
     const trimmed = rawValue.trim();
-    if (trimmed.startsWith("0b")) {
-      this.value = parseInt(trimmed.substring(2), 2);
+    if (isBinary) {
+      this.value = parseInt(trimmed, 2);
+    } else if (isHex) {
+      this.value = parseInt(trimmed, 16);
     } else {
       this.value = parseInt(trimmed);
     }

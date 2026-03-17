@@ -421,4 +421,42 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Infinity");
   });
+  test("Pass_HexAndBinaryLiterals", async () => {
+    const code = `${testHeader}
+
+main
+  variable h set to 0xfffe
+  variable b set to 0b111011
+  call printNoLine(h)
+  call printNoLine(" ")
+  call printNoLine(b)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let h = 65534;
+  let b = 59;
+  await _stdlib.printNoLine(h);
+  await _stdlib.printNoLine(" ");
+  await _stdlib.printNoLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "65534 59");
+  });
 });
