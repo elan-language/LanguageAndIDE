@@ -41,7 +41,7 @@ static void playGame() { // procedure
   initialiseGrid(grid); // call
   var used = new Dictionary<string, string>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-    used.put(letter, " "); // call
+    used[letter] = " "; // set
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
   const String target = allValidAnswers.split(" ")[randomInt(0, 2308)];
@@ -103,7 +103,7 @@ static void colourAttempt(int attemptNo, List<List<string>> grid, string target,
     var mark = marks[i];
     grid[i][attemptNo] = letter + mark; // set
     if (mark.isAfter(used[letter])) {
-      used.put(letter, mark); // call
+      used[letter] = mark; // set
     }
   }
   if (marks.equals("22222")) {
@@ -181,7 +181,7 @@ static void analyse() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
       attempt = possible[0]; // set
     }
-    outcomes.put(attempts, outcomes[attempts] + 1); // call
+    outcomes[attempts] = outcomes[attempts] + 1; // set
   }
   var success = 0;
   var weightedSum = 0;

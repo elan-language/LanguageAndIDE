@@ -1,3 +1,4 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -12,6 +13,7 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
+  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
@@ -90,6 +92,7 @@ export class List<T1> {
     return this;
   }
 
+  @elanDeprecated(Deprecation.methodRemoved, 1, 9, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
   @elanProcedure(["index", "value"])
   put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);
@@ -301,7 +304,7 @@ export class List<T1> {
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  withSet(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.newList(withPutHelper(this.contents, index, value));
   }
 

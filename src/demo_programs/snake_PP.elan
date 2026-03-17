@@ -52,8 +52,8 @@ end procedure
 procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
   variable changePosition set to true
   while changePosition
-    call apple.put(0, randomInt(0, 39))
-    call apple.put(1, randomInt(0, 29))
+    set apple[0] to randomInt(0, 39)
+    set apple[1] to randomInt(0, 29)
     if not body.contains(apple) then
       set changePosition to false
     end if

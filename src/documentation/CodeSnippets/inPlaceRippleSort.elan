@@ -15,8 +15,8 @@ procedure inPlaceRippleSort(out arr as List<of Int>)
     for i in range(0, lastComp + 1)
       if arr[i] > arr[i + 1] then
         variable temp set to arr[i]
-        call arr.put(i, arr[i + 1])
-        call arr.put(i + 1, temp)
+        set arr[i] to arr[i + 1]
+        set arr[i + 1] to temp
         set change to true
       end if
     end for

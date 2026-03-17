@@ -1038,8 +1038,8 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.withPut("b", 4)
-  variable c set to b.withPut("d", 2)
+  variable b set to a.withSet("b", 4)
+  variable c set to b.withSet("d", 2)
   call printNoLine(a)
   call printNoLine(c)
 end main`;
@@ -1048,8 +1048,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withPut("b", 4);
-  let c = b.withPut("d", 2);
+  let b = a.withSet("b", 4);
+  let c = b.withSet("d", 2);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(c);
 }

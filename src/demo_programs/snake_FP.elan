@@ -32,7 +32,7 @@ end function
 
 # Temporary solution pending creation of withPut as an extension method to ListOfList
 function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
+  return graphics.withSet(x, graphics[x].withSet(y, colour))
 end function
 
 function score(g as Game) returns Int
