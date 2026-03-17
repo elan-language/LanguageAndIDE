@@ -5,9 +5,9 @@ static void main() {
   var x = 20;
   var y = 15;
   while (true) {
-    blocks.put(x, y, red); // call
+    blocks[x][y] = red; // set
     displayBlocks(blocks); // call
-    blocks.put(x, y, black); // call
+    blocks[x][y] = black; // set
     var direction = randomInt(0, 3);
     if (direction == 0) {
       x = minInt([x + 1, 39]); // set
