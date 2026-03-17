@@ -18,6 +18,7 @@ export class StringType implements GenericSymbolType {
       isIndexable: true,
       isDoubleIndexable: false,
       isIterable: true,
+      isException: false,
     };
   }
 

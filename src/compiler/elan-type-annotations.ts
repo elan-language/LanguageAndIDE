@@ -304,7 +304,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
 
     const classTypeDef = new StdLibClass(
       className,
-      classMetadata.typeOptions.isAbstract,
+      !classMetadata.typeOptions.isException,
       classMetadata.typeOptions,
       [],
       [],
@@ -701,7 +701,7 @@ export enum ClassOption {
   record,
   list,
   dictionary,
-  exception
+  exception,
 }
 
 // isExtension, isPure, isASync, retType

@@ -1,6 +1,6 @@
 import { ClassOption, elanClass, ElanString } from "../elan-type-annotations";
 
-@elanClass(ClassOption.abstract, [], ["message"], [ElanString])
+@elanClass(ClassOption.exception, [], ["message"], [ElanString])
 export class ElanException extends Error {
   static emptyInstance() {
     return new ElanException("");
