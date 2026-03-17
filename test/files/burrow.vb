@@ -5,9 +5,9 @@ Sub main()
   Dim x = 20 ' variable
   Dim y = 15 ' variable
   While True
-    blocks.put(x, y, red) ' call
+    blocks[x][y] = red ' set
     displayBlocks(blocks) ' call
-    blocks.put(x, y, black) ' call
+    blocks[x][y] = black ' set
     Dim direction = randomInt(0, 3) ' variable
     If direction = 0 Then
       x = minInt({x + 1, 39}) ' set

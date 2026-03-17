@@ -1,4 +1,4 @@
-# 9e1aa1214ef1fdb0027f682880c66b4311ca0e371f878eab8b5bb2e3fd0224ee Elan 2.0.0-alpha guest default_profile valid
+# f5c9268b4b98ba084347b15ff17e3ee2b6f9cbc05dd4808eb61a5742f7e17ace Elan 2.0.0-alpha guest default_profile valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -41,7 +41,7 @@ procedure playGame()
   call initialiseGrid(grid)
   variable used set to new Dictionary<of String, String>()
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    call used.put(letter, " ")
+    set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
   constant target set to allValidAnswers.split(" ")[randomInt(0, 2308)]
@@ -103,7 +103,7 @@ procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, targ
     variable mark set to marks[i]
     set grid[i][attemptNo] to letter + mark
     if mark.isAfter(used[letter]) then
-      call used.put(letter, mark)
+      set used[letter] to mark
     end if
   end for
   if marks.equals("22222") then
@@ -181,7 +181,7 @@ procedure analyse()
       set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
       set attempt to possible[0]
     end while
-    call outcomes.put(attempts, outcomes[attempts] + 1)
+    set outcomes[attempts] to outcomes[attempts] + 1
   end for
   variable success set to 0
   variable weightedSum set to 0

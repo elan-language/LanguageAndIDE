@@ -5,9 +5,9 @@ def main(): None:
   x = 20 # variable
   y = 15 # variable
   while True:
-    blocks.put(x, y, red) # call
+    blocks[x][y] = red # set
     displayBlocks(blocks) # call
-    blocks.put(x, y, black) # call
+    blocks[x][y] = black # set
     direction = randomInt(0, 3) # variable
     if direction == 0:
       x = minInt([x + 1, 39]) # set

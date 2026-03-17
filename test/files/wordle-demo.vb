@@ -41,7 +41,7 @@ Sub playGame() ' procedure
   initialiseGrid(grid) ' call
   Dim used = New Dictionary(Of String, String)() ' variable
   For Each letter In "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    used.put(letter, " ") ' call
+    used[letter] = " " ' set
   Next letter
   displayHtml(drawGrid(grid) + drawKeyboard(used)) ' call
   Const target = allValidAnswers.split(" ")[randomInt(0, 2308)]
@@ -103,7 +103,7 @@ Sub colourAttempt(attemptNo As Integer, grid As List(Of List(Of String)), target
     Dim mark = marks[i] ' variable
     grid[i][attemptNo] = letter + mark ' set
     If mark.isAfter(used[letter]) Then
-      used.put(letter, mark) ' call
+      used[letter] = mark ' set
     End If
   Next i
   If marks.equals("22222") Then
@@ -181,7 +181,7 @@ Sub analyse() ' procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' set
       attempt = possible[0] ' set
     End While
-    outcomes.put(attempts, outcomes[attempts] + 1) ' call
+    outcomes[attempts] = outcomes[attempts] + 1 ' set
   Next word
   Dim success = 0 ' variable
   Dim weightedSum = 0 ' variable

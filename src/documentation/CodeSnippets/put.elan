@@ -4,7 +4,7 @@ main
   # snipFrom
   variable a4 set to new List<of Int>()
   call a4.initialise(4, 0)
-  call a4.put(2, 5)
+  set a4[2] to 5
   # snipTo
   call print(a4)
 end main

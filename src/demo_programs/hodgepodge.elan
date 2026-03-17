@@ -50,7 +50,7 @@ procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of 
     for i in range(0, gW)
       if initial then
         set podge[i][j] to colours[randomInt(0, (colours.length()) - 1)]
-        [ghosted] call podge.put(1, 1, 0x1a001a)
+        [ghosted] set podge[1][1] to 0x1a001a
       else
         set podge[i][j] to newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j])
       end if

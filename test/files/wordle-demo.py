@@ -36,7 +36,7 @@ def playGame() -> None: # procedure
   initialiseGrid(grid) # call
   used = Dictionary[str, str]() # variable
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-    used.put(letter, " ") # call
+    used[letter] = " " # set
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
   target = allValidAnswers.split(" ")[randomInt(0, 2308)] # constant
   attemptNo = 0 # variable
@@ -87,7 +87,7 @@ def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: As
     mark = marks[i] # variable
     grid[i][attemptNo] = letter + mark # set
     if mark.isAfter(used[letter]):
-      used.put(letter, mark) # call
+      used[letter] = mark # set
   if marks.equals("22222"):
     solved.set(True) # call
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
@@ -152,7 +152,7 @@ def analyse() -> None: # procedure
       mark = markAttempt(attempt, word) # set
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) # set
       attempt = possible[0] # set
-    outcomes.put(attempts, outcomes[attempts] + 1) # call
+    outcomes[attempts] = outcomes[attempts] + 1 # set
   success = 0 # variable
   weightedSum = 0 # variable
   for i in range(1, 7):

@@ -15,8 +15,8 @@ static void inPlaceRippleSort(List<int> li) { // procedure
     foreach (i in range(0, lastComp + 1)) {
       if (li[i] > li[i + 1]) {
         var temp = li[i];
-        li.put(i, li[i + 1]); // call
-        li.put(i + 1, temp); // call
+        li[i] = li[i + 1]; // set
+        li[i + 1] = temp; // set
         hasChanged = true; // set
       }
     }
