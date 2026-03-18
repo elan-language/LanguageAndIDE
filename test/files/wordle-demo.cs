@@ -44,7 +44,7 @@ static void playGame() { // procedure
     used[letter] = " "; // set
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
-  const String target = allValidAnswers.split(" ")[randomInt(0, 2308)];
+  const String target = allValidAnswers.split(" ")[randint(0, 2308)];
   var attemptNo = 0;
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {

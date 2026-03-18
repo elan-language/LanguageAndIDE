@@ -44,7 +44,7 @@ Sub playGame() ' procedure
     used[letter] = " " ' set
   Next letter
   displayHtml(drawGrid(grid) + drawKeyboard(used)) ' call
-  Const target = allValidAnswers.split(" ")[randomInt(0, 2308)]
+  Const target = allValidAnswers.split(" ")[randint(0, 2308)]
   Dim attemptNo = 0 ' variable
   Dim solved = False ' variable
   While (attemptNo < 6) And (Not solved)

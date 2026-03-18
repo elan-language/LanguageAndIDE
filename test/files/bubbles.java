@@ -4,7 +4,7 @@ static void main() {
   var bubbles = new List<CircleVG>();
   // create 20 small bubbles at the bottom
   foreach (i in range(1, 21)) {
-    var b = (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white);
+    var b = (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randint(0), white);
     bubbles.append(b); // call
   }
   while (true) {

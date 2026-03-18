@@ -482,13 +482,13 @@
         <div class="hint" id="hint6b">Hint 1: expression to generate the random number</div>
         <div class="content" id="hint6bcontent">
           <el-code-block>
-            <el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)
+            <el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)
           </el-code-block>
         </div>
         <div class="hint" id="hint6c">Hint2: the complete changed instruction</div>
         <div class="content" id="hint6ccontent">
           <el-code-block>
-            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
       </li>
@@ -511,7 +511,7 @@
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
               <el-statement class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
               <el-kw>end for</el-kw>
               </el-statement>
               <el-statement class="ok multiline">
@@ -538,7 +538,7 @@
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
               <el-statement class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
               <el-kw>end for</el-kw>
               </el-statement>
               <el-statement class="ok multiline">
@@ -595,7 +595,7 @@
           <el-code-block>
             <el-proc class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>simonsTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
               <el-statement class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>

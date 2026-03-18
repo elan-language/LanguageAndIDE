@@ -413,7 +413,7 @@
           <el-code-block>
             <el-proc class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>simonsTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
               <el-statement class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>

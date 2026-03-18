@@ -392,7 +392,7 @@ export class StdLib {
   }
 
   @elanFunction(["low", "high"], FunctionOptions.impure, ElanInt)
-  randomInt(@elanIntType() low: number, @elanIntType() high: number): number {
+  randint(@elanIntType() low: number, @elanIntType() high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
@@ -595,7 +595,6 @@ export class StdLib {
   exp(x: number): number {
     return Math.exp(x);
   }
-  // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
   @elanFunction(["number"])
   logE(x: number): number {

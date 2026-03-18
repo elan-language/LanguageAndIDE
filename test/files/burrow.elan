@@ -1,4 +1,4 @@
-# 433efcc5abc529d3e134df71ce1fa383d1fb1d35cc604b1f49f5fe427d2aecd7 Elan 2.0.0-alpha guest default_profile valid
+# 75f897e600eb0b74a6955e2fe636fed537d07c1f41d6f632af82f033787377f1 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(white)
@@ -8,7 +8,7 @@ main
     set blocks[x][y] to red
     call displayBlocks(blocks)
     set blocks[x][y] to black
-    variable direction set to randomInt(0, 3)
+    variable direction set to randint(0, 3)
     if direction is 0 then
       set x to minInt([x + 1, 39])
     elif direction is 1 then

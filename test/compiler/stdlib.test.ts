@@ -743,7 +743,7 @@ return [main, _tests];}`;
 main
   variable results set to [0, 0]
   for i in range(1, 10001)
-    variable r set to randomInt(0, 1)
+    variable r set to randint(0, 1)
     call results.put(r, results[r] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -757,7 +757,7 @@ async function main() {
   let results = system.list([0, 0]);
   const elan_iterfor6 = [..._stdlib.range(1, 10001)];
   for (const i of elan_iterfor6) {
-    let r = _stdlib.randomInt(0, 1);
+    let r = _stdlib.randint(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);

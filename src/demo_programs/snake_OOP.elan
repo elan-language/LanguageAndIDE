@@ -102,8 +102,8 @@ class Apple
   procedure newRandomPosition(snake as Snake)
     variable changePosition set to true
     while changePosition
-      constant ranX set to randomInt(0, 39)
-      constant ranY set to randomInt(0, 29)
+      constant ranX set to randint(0, 39)
+      constant ranY set to randint(0, 29)
       set this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
         set changePosition to false

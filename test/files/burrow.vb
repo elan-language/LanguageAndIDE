@@ -8,7 +8,7 @@ Sub main()
     blocks[x][y] = red ' set
     displayBlocks(blocks) ' call
     blocks[x][y] = black ' set
-    Dim direction = randomInt(0, 3) ' variable
+    Dim direction = randint(0, 3) ' variable
     If direction = 0 Then
       x = minInt({x + 1, 39}) ' set
     ElseIf direction = 1 Then

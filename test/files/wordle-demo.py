@@ -38,7 +38,7 @@ def playGame() -> None: # procedure
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
     used[letter] = " " # set
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
-  target = allValidAnswers.split(" ")[randomInt(0, 2308)] # constant
+  target = allValidAnswers.split(" ")[randint(0, 2308)] # constant
   attemptNo = 0 # variable
   solved = False # variable
   while (attemptNo < 6) and (not solved):

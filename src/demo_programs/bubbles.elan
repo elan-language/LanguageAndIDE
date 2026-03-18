@@ -4,7 +4,7 @@ main
   variable bubbles set to new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i in range(1, 21)
-    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randomInt(0, white))
+    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white))
     call bubbles.append(b)
   end for
   while true

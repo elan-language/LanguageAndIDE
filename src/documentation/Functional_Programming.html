@@ -82,10 +82,10 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
     and/or by defining recursive functions. Similarly, 'selection' is achieved by using  'if expressions' rather than using 'if statements`.</li>
     <li>Random numbers pose a special challenge to functional programming. There are two options:
         <ul>
-            <li><i>Generate</i> random numbers using the standard <el-code><el-method>randomInt</el-method>, <el-method>randomInt</el-method></el-code> system methods but only within
+            <li><i>Generate</i> random numbers using the standard <el-code><el-method>randint</el-method>, <el-method>randint</el-method></el-code> system methods but only within
             the main routine or procedures - passing the generated number(s) into the functions that need them as
             <el-code><el-type>Int</el-type></el-code> or <el-code><el-type>Float</el-type></el-code> values. These methods cannot be used
-            within functions because calling <el-code><el-method>randomInt</el-method></el-code> changes the state of the random number generator
+            within functions because calling <el-code><el-method>randint</el-method></el-code> changes the state of the random number generator
                 held, invisibly, within the system - in other words the methods have side effects.
         </li>
             <li>Use the library type <el-code><el-type>Random</el-type></el-code> and its methods. These may be safely passed into a function,

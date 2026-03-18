@@ -8,7 +8,7 @@ static void main() {
     blocks[x][y] = red; // set
     displayBlocks(blocks); // call
     blocks[x][y] = black; // set
-    var direction = randomInt(0, 3);
+    var direction = randint(0, 3);
     if (direction == 0) {
       x = minInt([x + 1, 39]); // set
     } else if (direction == 1) {

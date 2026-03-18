@@ -44,7 +44,7 @@ procedure playGame()
     set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  constant target set to allValidAnswers.split(" ")[randomInt(0, 2308)]
+  constant target set to allValidAnswers.split(" ")[randint(0, 2308)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)

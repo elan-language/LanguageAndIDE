@@ -8,7 +8,7 @@ def main(): None:
     blocks[x][y] = red # set
     displayBlocks(blocks) # call
     blocks[x][y] = black # set
-    direction = randomInt(0, 3) # variable
+    direction = randint(0, 3) # variable
     if direction == 0:
       x = minInt([x + 1, 39]) # set
     elif direction == 1:

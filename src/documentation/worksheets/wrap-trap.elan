@@ -32,7 +32,7 @@ constant directions set to "wasd"
 
 procedure compTurn(out dir as String)
   variable i set to directions.indexOf(dir)
-  variable rnd set to randomInt(-1, 1)
+  variable rnd set to randint(-1, 1)
   variable i2 set to (i + rnd) mod 4
   set dir to directions[i2]
 end procedure

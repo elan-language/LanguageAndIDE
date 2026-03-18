@@ -1,4 +1,4 @@
-# f5c9268b4b98ba084347b15ff17e3ee2b6f9cbc05dd4808eb61a5742f7e17ace Elan 2.0.0-alpha guest default_profile valid
+# 5e26bc86890e055e6548a3566125dd3ce842ec170e2c5febb4a5efd2e62a9330 Elan 2.0.0-alpha guest default_profile valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -44,7 +44,7 @@ procedure playGame()
     set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  constant target set to allValidAnswers.split(" ")[randomInt(0, 2308)]
+  constant target set to allValidAnswers.split(" ")[randint(0, 2308)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)

@@ -15,7 +15,7 @@ main
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
-  call sequence.append(randomInt(1, 4))
+  call sequence.append(randint(1, 4))
   for move in sequence
     call displayMove(move, interval)
   end for
