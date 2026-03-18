@@ -349,23 +349,13 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
-  maxFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
+  @elanFunction(["listOfNumbers"], FunctionOptions.pure, ElanT1)
+  max(@elanClassType(List, [ElanT1]) source: List<number>): number {
     return Math.max(...source);
   }
 
-  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
-  maxInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
-    return Math.max(...source);
-  }
-
-  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
-  minFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
-    return Math.min(...source);
-  }
-
-  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
-  minInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+  @elanFunction(["listOfNumbers"], FunctionOptions.pure, ElanT1)
+  min(@elanClassType(List, [ElanT1]) source: List<number>): number {
     return Math.min(...source);
   }
 

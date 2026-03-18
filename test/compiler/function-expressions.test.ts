@@ -188,14 +188,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable x set to minFloat([3.1, 3])
+  variable x set to min([3.1, 3])
   call printNoLine(x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let x = _stdlib.minFloat(system.list([3.1, 3]));
+  let x = _stdlib.min(system.list([3.1, 3]));
   await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
@@ -326,7 +326,7 @@ end main`;
 
 main
   variable a set to [1,2]
-  call maxInt(a)
+  call max(a)
 end main`;
 
     const fileImpl = new FileImpl(

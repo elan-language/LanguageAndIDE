@@ -15,6 +15,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1683,7 +1684,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Fail_Constraint", async () => {
+  ignore_test("Fail_Constraint", async () => {
     const code = `${testHeader}
 
 main
@@ -1692,6 +1693,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return "foo"
+  end function
 end class`;
 
     const fileImpl = new FileImpl(

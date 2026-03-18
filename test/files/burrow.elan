@@ -1,4 +1,4 @@
-# 75f897e600eb0b74a6955e2fe636fed537d07c1f41d6f632af82f033787377f1 Elan 2.0.0-alpha guest default_profile valid
+# cfdfaf2de0b067e0089c568f22781eb9c7e64b0416aa02cdd0ba3d407e4be373 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to createBlockGraphics(white)
@@ -10,13 +10,13 @@ main
     set blocks[x][y] to black
     variable direction set to randint(0, 3)
     if direction is 0 then
-      set x to minInt([x + 1, 39])
+      set x to min([x + 1, 39])
     elif direction is 1 then
-      set x to maxInt([x - 1, 0])
+      set x to max([x - 1, 0])
     elif direction is 2 then
-      set y to minInt([y + 1, 29])
+      set y to min([y + 1, 29])
     elif direction is 3 then
-      set y to maxInt([y - 1, 0])
+      set y to max([y - 1, 0])
     end if
   end while
 end main

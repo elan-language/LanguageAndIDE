@@ -744,29 +744,17 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td><el-type>List</el-type></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
- </tr><tr id="maxFloat">
-  <td><el-method>maxFloat</el-method></td>
+ </tr><tr id="max">
+  <td><el-method>max</el-method></td>
   <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td><el-type>Float</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> or <el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>the maximum value found in the List</td>
- </tr><tr id="minFloat">
-  <td><el-method>minFloat</el-method></td>
+ </tr><tr id="min">
+  <td><el-method>min</el-method></td>
   <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td><el-type>Float</el-type></td>
-  <td>the minimum value found in the List</td>
- </tr><tr id="maxInt">
-  <td><el-method>maxInt</el-method></td>
-  <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td><el-type>Int</el-type></td>
-  <td>the maximum value found in the List</td>
- </tr><tr id="minInt">
-  <td><el-method>minInt</el-method></td>
-  <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td><el-type>Int</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> or <el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
@@ -3265,10 +3253,8 @@ use <el-method>reduce</el-method> on a <el-type>List</el-type> of words (created
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <el-type>List</el-type>.
 They take a function as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the function.</p>
 <p>For simply finding the maximum or minimum value in a <el-type>List</el-type>, you can use
-<a href="#maxFloat"><el-method>maxFloat</el-method></a>,
-<a href="#minFloat"><el-method>minFloat</el-method></a>,
-<a href="#maxInt"><el-method>maxInt</el-method></a> or
-<a href="#minInt"><el-method>minInt</el-method></a>.</p>
+<a href="#max"><el-method>max</el-method></a>,
+<a href="#min"><el-method>min</el-method></a>.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>

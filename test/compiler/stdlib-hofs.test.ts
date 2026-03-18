@@ -506,19 +506,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test("Pass_minInt", async () => {
+  test("Pass_min", async () => {
     const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(minInt(source))
+  call printNoLine(min(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await _stdlib.printNoLine(_stdlib.minInt(source));
+  await _stdlib.printNoLine(_stdlib.min(source));
 }
 return [main, _tests];}`;
 
@@ -544,14 +544,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(minFloat(source))
+  call printNoLine(min(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await _stdlib.printNoLine(_stdlib.minFloat(source));
+  await _stdlib.printNoLine(_stdlib.min(source));
 }
 return [main, _tests];}`;
 
@@ -572,19 +572,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_maxInt", async () => {
+  test("Pass_max", async () => {
     const code = `${testHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(maxInt(source))
+  call printNoLine(max(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await _stdlib.printNoLine(_stdlib.maxInt(source));
+  await _stdlib.printNoLine(_stdlib.max(source));
 }
 return [main, _tests];}`;
 
@@ -610,14 +610,14 @@ return [main, _tests];}`;
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(maxFloat(source))
+  call printNoLine(max(source))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await _stdlib.printNoLine(_stdlib.maxFloat(source));
+  await _stdlib.printNoLine(_stdlib.max(source));
 }
 return [main, _tests];}`;
 
@@ -638,30 +638,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "37");
   });
 
-  test("Fail_minIntAppliedToFloatList", async () => {
-    const code = `${testHeader}
-
-main
-  variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(minInt(source))
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of Float>.LangRef.html#compile_error",
-    ]);
-  });
   test("Pass_minByList", async () => {
     const code = `${testHeader}
 
@@ -828,12 +804,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_MaxOnNonNumeric", async () => {
+  test("Pass_MaxOnNonNumeric", async () => {
     const code = `${testHeader}
 
 main
   variable source set to ["apple", "orange", "pair"]
-  call printNoLine(maxInt(source))
+  call printNoLine(max(source))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -845,12 +821,21 @@ end main`;
       false,
       true,
     );
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list(["apple", "orange", "pair"]);
+  await _stdlib.printNoLine(_stdlib.max(source));
+}
+return [main, _tests];}`;
+
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of String>.LangRef.html#compile_error",
-    ]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "NaN");
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
