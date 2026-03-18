@@ -124,7 +124,7 @@ export class CallAsn extends BreakpointAsn {
         );
 
         // do after parameters checked
-        checkForDeprecation(procSymbolType, currentScope, this.compileErrors, this.fieldId);
+        checkForDeprecation(procSymbolType, this, this.compileErrors, this.fieldId);
         isAsync = procSymbolType.isAsync;
       }
 
