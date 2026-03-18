@@ -14,6 +14,10 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
+<!--<p class="noteBox">
+NOTE: This documentation is a work in progress and is not yet fully descriptive of Elan v.2
+</p>-->
+
 <h1 id="namedValue">Named values</h1>
 
 <p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
@@ -27,7 +31,7 @@
 <p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
 it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
 <p>Both kinds of named value must be initialised with either literals or expressions.</p>
-<p>Loop counter variables, however, may be defined implicitly in <a href="#each"><el-kw>each</el-kw></a> and <a href="#for"><el-kw>for</el-kw></a> instructions.</p>
+<p>Loop counter variables, however, may be defined implicitly in a <a href="#for"><el-kw>for</el-kw></a> instruction.</p>
 
 <h2 id="Type">Types</h2>
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
@@ -105,7 +109,7 @@ it provides a useful discipline in any code. Preferring immutable named values c
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
  <li><i>or</i> specified in the definition of
  <ul>
-  <li>data structures whose elements have a particular Type, e.g. <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
+  <li>data structures whose items have a particular Type, e.g. <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
   <li><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
   <li><el-kw>return</el-kw> value of a function</li>
   <li><el-kw>property</el-kw> of an <el-kw>interface</el-kw> or <el-kw>class</el-kw></li>
@@ -974,7 +978,6 @@ the correct Type must be provided. For example, if the Class <el-type>Square</el
  <a href="#assert"><el-kw>assert</el-kw></a>,
  <a href="#call"><el-kw>call</el-kw></a>,
  <a href="#call"><el-kw>constant</el-kw></a>,
- <a href="#each"><el-kw>each</el-kw></a>,
  <a href="#for"><el-kw>for</el-kw></a>,
  <a href="#if"><el-kw>if</el-kw></a>,
  <a href="#set"><el-kw>set</el-kw></a>,
@@ -1043,7 +1046,7 @@ which is the mechanism for running unit tests during program development, not du
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
 whose return value is put into a variable. See <a href="#constant_structure">Constant data structures</a>.</p>
 
-
+<!--
 <h2 id="each"><el-kw>each</el-kw></h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
 <p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
@@ -1089,6 +1092,7 @@ whose return value is put into a variable. See <a href="#constant_structure">Con
 So even if the subject value is changed in any way within the <el-kw>each</el-kw> loop, this will not affect the items it refers to and  processes.</p>
 </div></div>
 <hr>
+-->
 
 <h2 id="for"><el-kw>for</el-kw></h2>
 <div id="to"></div>
@@ -1300,8 +1304,9 @@ instruction declares and initalises a mutable named valued. The name defined mus
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
 <p>If a named value is of an indexable Type (<el-type>String</el-type> or <el-type>List</el-type>), then you can refer to a contiguous subset (or range) of its values
- using methods <el-method>subString</el-method> and <el-method>subList</el-method>.</p>
-<p>If the index values in a range are equal, or the second is smaller than the first,
+ using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
+<p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <el-code>(<el-id>i</el-id>, <el-id>j</el-id> + <el-lit>1</el-lit>)</el-code>.</p> 
+<p>If the two index values of a range are equal, or the second is smaller than the first,
 then an empty string or list is returned.</p>
 <p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
 <a href="LibRef.html#put_List"><el-method>put</el-method></a>.</p>
@@ -1404,7 +1409,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <li>Where a binary operator is expected, as soon as you type <el-code>is</el-code> the editor will automatically insert a space after it. To enter <el-code>isnt</el-code> you need to delete the space (using the Backspace key) and then type <el-code>nt</el-code>.</li>
 </ul>
 <p>Note that in Elan equality testing is always 'equality by value'; there is no such thing as 'equality by reference'.</p>
-<p>If the items being compared are composite Types, the elements within them are compared sequentially to see if the objects are equal.  For example two distinct instances of the same Class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same elements in the same order.</p>
+<p>If the items being compared are composite Types, the items within them are compared sequentially to see if the objects are equal.  For example two distinct instances of the same Class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same itemss in the same order.</p>
 <p>The compiler rejects any attempt to compare instances of different Classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract Class compare equal only if they are of the same Class (and have the same property values).</p>
 
 <h3 class="no-TOC">Numeric comparison</h3>
@@ -1633,9 +1638,9 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
  <p>The Type specified after the <el-kw>call</el-kw> keyword cannot be instantiated. Either the Type is inapplicable,
  or it is an <el-kw>abstract class</el-kw> or <el-kw>interface</el-kw>.</p>
-
+<!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
-
+-->
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
  <p>A concrete Class may inherit from an abstract Class, and/or an interface, but not from another concrete Class.
  In Elan, all Classes must be either abstract or 'final' &ndash; a final Class being concrete and not-inheritable.</p>
