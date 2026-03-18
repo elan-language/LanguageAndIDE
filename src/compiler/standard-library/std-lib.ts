@@ -470,7 +470,7 @@ export class StdLib {
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
-  async inputString(prompt: string): Promise<string> {
+  async input(prompt: string): Promise<string> {
     await this.prompt(prompt);
     return await this.system.input();
   }
@@ -481,7 +481,7 @@ export class StdLib {
     @elanIntType() minLength: number,
     @elanIntType() maxLength: number,
   ): Promise<string> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     if (s.length < minLength) {
       await this.prompt(`minimum length ${minLength} characters`);
@@ -498,7 +498,7 @@ export class StdLib {
     prompt: string,
     @elanClassType(List, [ElanString]) options: List<string>,
   ): Promise<string> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     if (options.contains(s)) {
       return s;
@@ -510,7 +510,7 @@ export class StdLib {
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanInt)
   async inputInt(prompt: string): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsInt(s);
 
     if (b && i.toString() === s) {
@@ -527,7 +527,7 @@ export class StdLib {
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsInt(s);
 
     if (b && i.toString() === s && i >= min && i <= max) {
@@ -541,7 +541,7 @@ export class StdLib {
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanFloat)
   async inputFloat(prompt: string): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsFloat(s);
 
     if (b) {
@@ -554,7 +554,7 @@ export class StdLib {
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanFloat)
   async inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     const [b, i] = this.parseAsFloat(s);
     if (b && i >= min && i <= max) {

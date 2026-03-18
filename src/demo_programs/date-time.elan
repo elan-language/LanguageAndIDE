@@ -3,7 +3,7 @@
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    set reply to inputString("RETURN for time now or Unix time (positive integer) or Q to quit")
+    set reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       call printDate(divAsInt(clock(), 1000))
     else

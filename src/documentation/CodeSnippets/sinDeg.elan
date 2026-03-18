@@ -3,6 +3,6 @@
 main
   call print(sin(radians(30)))
   variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30), 2)
-  variable name set to inputString("Your name")
+  variable name set to input("Your name")
   call print(name.upperCase())
 end main

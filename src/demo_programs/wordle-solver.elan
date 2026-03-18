@@ -13,7 +13,7 @@ main
   variable mark set to ""
   variable attempt set to "RAISE"
   while not mark.equals("*****")
-    set mark to inputString("" + attempt)
+    set mark to input("" + attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     set attempt to bestAttempt(possible)
   end while

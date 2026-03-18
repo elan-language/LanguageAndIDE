@@ -4,7 +4,7 @@ main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable done set to false
   while not done
-    variable wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
+    variable wanted set to input("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
       set done to true
     else
