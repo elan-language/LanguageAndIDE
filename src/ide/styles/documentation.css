@@ -1,8 +1,7 @@
 * {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
-p { margin-top:0; margin-bottom:0; line-height:inherit; }                          
-
+p { margin-top:0; margin-bottom:0; line-height:inherit; }
 
 h1,h2,h3,h4
    { color: var(--docHeading); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
@@ -103,7 +102,7 @@ el-doc  { font-size:10pt;
   { text-indent:-17pt; margin-left:74.5pt; line-height:1.33; } */
 
 /* Special note box */
-p.noteBox { font-size:10pt; color:darkred; box-sizing:content-box; padding:5px; border:3px double; width:50%; }
+p.noteBox { font-size:10pt; color:darkred; box-sizing:content-box; padding:5px; border:3px double; }
 
 /* IDE buttons */
 .ibutton {
