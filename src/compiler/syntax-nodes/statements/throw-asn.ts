@@ -1,5 +1,7 @@
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
+import { mustBeException } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { BreakpointAsn } from "../breakpoint-asn";
 
@@ -19,6 +21,10 @@ export class ThrowAsn extends BreakpointAsn {
     const type = this.scope.resolveSymbol(this.type, false, this);
     const scope = type.symbolScope === SymbolScope.stdlib ? "_stdlib." : "";
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw new ${scope}${type.symbolId}(${this.msg.compile()});`;
+    mustBeException(type, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw system.initialise(await new ${scope}${type.symbolId}()._initialise(${this.msg.compile()}));`;
   }
 }

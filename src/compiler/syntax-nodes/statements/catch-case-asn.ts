@@ -1,6 +1,8 @@
+import { mustBeException } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
@@ -14,18 +16,6 @@ export class CatchCaseAsn extends BreakpointAsn {
     super(fieldId, scope);
   }
 
-  // get symbolId() {
-  //   return getId(this.variable);
-  // }
-
-  // symbolType(): SymbolType {
-  //   return StringType.Instance;
-  // }
-
-  // get symbolScope() {
-  //   return SymbolScope.parameter;
-  // }
-
   getCurrentScope(): Scope {
     return this.compileScope ?? this;
   }
@@ -35,6 +25,10 @@ export class CatchCaseAsn extends BreakpointAsn {
 
     const type = this.scope.resolveSymbol(this.type, false, this);
     const scope = type.symbolScope === SymbolScope.stdlib ? "_stdlib." : "";
+
+    mustBeException(type, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}if (e instanceof ${scope}${type.symbolId}) {
 ${compileNodes(this.compileChildren)}
@@ -58,9 +52,6 @@ ${this.indent()}}`;
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    // if (match(getId(this.variable), id, caseSensitive)) {
-    //   return this;
-    // }
     return (
       getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
       this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
@@ -69,14 +60,6 @@ ${this.indent()}}`;
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-    // const v = getId(this.variable);
-    // const counter = {
-    //   symbolId: v,
-    //   symbolType: () => StringType.Instance,
-    //   symbolScope: SymbolScope.parameter,
-    // };
-
-    // matches = matches.concat(symbolMatches(id, all, [counter]));
 
     return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
   }

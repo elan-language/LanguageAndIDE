@@ -877,6 +877,18 @@ export function mustBeCompatibleDefinitionNode(
   }
 }
 
+export function mustBeException(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbol.symbolId !== "ElanRuntimeError" && symbol.symbolId !== "ElanUserError") {
+    compileErrors.push(
+      new SyntaxCompileError(`Can only throw or catch ElanUserError or ElanRuntimeError`, location),
+    );
+  }
+}
+
 export function mustConformToCopyOfThisBoilerPlate(
   lhs: AstNode,
   rhs: AstNode,

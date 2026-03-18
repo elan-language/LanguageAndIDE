@@ -21,13 +21,13 @@ suite("Throw Catch", () => {
     const code = `${testHeader}
 
 main
-    throw ElanRuntimeError "Foo"
+  throw ElanRuntimeError "Foo"
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
 }
 return [main, _tests];}`;
 
@@ -60,7 +60,7 @@ end main`;
 const global = new class {};
 async function main() {
   let msg = "Foo";
-  throw new _stdlib.ElanRuntimeError(msg);
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise(msg));
 }
 return [main, _tests];}`;
 
@@ -132,7 +132,7 @@ async function main() {
 }
 
 async function foo() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -180,11 +180,69 @@ async function main() {
     if (e instanceof _stdlib.ElanRuntimeError) {
     await _stdlib.printNoLine("Foo");
     }
+    else {
+      throw e;
+    }
   }
 }
 
 async function foo() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Foo");
+  });
+
+  test("Pass_CatchUserException", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    call foo()
+    call printNoLine("not caught")
+  catch ElanUserError
+    call printNoLine("Foo")
+  end try
+end main
+
+procedure foo()
+  throw ElanUserError "Foo"
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  try {
+    await foo();
+    await _stdlib.printNoLine("not caught");
+  } catch (e) {
+    if (e instanceof _stdlib.ElanUserError) {
+    await _stdlib.printNoLine("Foo");
+    }
+    else {
+      throw e;
+    }
+  }
+}
+
+async function foo() {
+  throw system.initialise(await new _stdlib.ElanUserError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -242,6 +300,9 @@ async function main() {
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
     await _stdlib.printNoLine("Out of range index: 1 size: 0");
+    }
+    else {
+      throw e;
     }
   }
 }
@@ -308,11 +369,14 @@ async function main() {
     let s = "Foo";
     await _stdlib.printNoLine(s);
     }
+    else {
+      throw e;
+    }
   }
 }
 
 async function foo() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -356,17 +420,20 @@ const global = new class {};
 async function main() {
   try {
     let a = 1;
-    throw new _stdlib.ElanRuntimeError("fail");
+    throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
     let a = "fail";
     await _stdlib.printNoLine(a);
     }
+    else {
+      throw e;
+    }
   }
 }
 
 async function foo() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -409,16 +476,19 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new _stdlib.ElanRuntimeError("fail");
+    throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
     await _stdlib.printNoLine(a);
+    }
+    else {
+      throw e;
     }
   }
 }
 
 async function foo() {
-  throw new _stdlib.ElanRuntimeError("Foo");
+  throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -457,10 +527,13 @@ const global = new class {};
 async function main() {
   let a = 1;
   try {
-    throw new _stdlib.ElanRuntimeError("fail");
+    throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
 
+    }
+    else {
+      throw e;
     }
   }
 }
@@ -662,5 +735,108 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'e' is not defined.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_ThrowWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    throw FooException "fail"
+  catch ElanRuntimeError
+    call printNoLine("")
+  end try
+end main
+  
+class FooException
+  constructor()
+  end constructor
+
+  function asString() returns String
+    return "Foo"
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only throw or catch ElanUserError or ElanRuntimeErrorLangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_CatchWrongType2", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    throw ElanUserError "fail"
+  catch ElanRuntimeError
+    call printNoLine("caught")
+  end try
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeDoesNotExecute(fileImpl, "a");
+  });
+
+  test("Fail_CatchWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    throw ElanUserError "fail"
+  catch FooException
+    call printNoLine("")
+  end try
+end main
+  
+class FooException
+  constructor()
+  end constructor
+
+  function asString() returns String
+    return "Foo"
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Can only throw or catch ElanUserError or ElanRuntimeErrorLangRef.html#compile_error",
+    ]);
   });
 });
