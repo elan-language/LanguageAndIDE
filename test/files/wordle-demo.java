@@ -202,11 +202,11 @@ static bool isUCLetter(String k) { // function
 }
 
 @Test static void test_isUCLetter() {
-  assertEquals(true, isUCLetter("A") 
-  assertEquals(true, isUCLetter("Z") 
-  assertEquals(false, isUCLetter("a") 
-  assertEquals(false, isUCLetter("1") 
-  assertEquals(false, isUCLetter(" ") 
+  assertEquals(true, isUCLetter("A"))
+  assertEquals(true, isUCLetter("Z"))
+  assertEquals(false, isUCLetter("a"))
+  assertEquals(false, isUCLetter("1"))
+  assertEquals(false, isUCLetter(" "))
 }
 
 static String getWord(int attemptNo, List<List<String>> grid) { // function
@@ -222,8 +222,8 @@ static String setChar(String word, int n, String newChar) { // function
 }
 
 @Test static void test_setChar() {
-  assertEquals("_BCDE", setChar("ABCDE", 0, "_") 
-  assertEquals("ABCD_", setChar("ABCDE", 4, "_") 
+  assertEquals("_BCDE", setChar("ABCDE", 0, "_"))
+  assertEquals("ABCD_", setChar("ABCDE", 4, "_"))
 }
 
 static String markAttempt(String attempt, String target) { // function
@@ -245,16 +245,16 @@ static String markAttempt(String attempt, String target) { // function
 }
 
 @Test static void test_markAttempt() {
-  assertEquals("00000", markAttempt("ABCDE", "XXXXX") 
-  assertEquals("11111", markAttempt("ABCDE", "BCDEA") 
-  assertEquals("22222", markAttempt("ABCDE", "ABCDE") 
-  assertEquals("02000", markAttempt("SAINT", "LADLE") 
-  assertEquals("01111", markAttempt("IDEAL", "LADLE") 
-  assertEquals("10020", markAttempt("CABAL", "RECAP") 
-  assertEquals("01100", markAttempt("COLON", "GLORY") 
-  assertEquals("10120", markAttempt("AORTA", "RATTY") 
-  assertEquals("11020", markAttempt("RATTY", "AORTA") 
-  assertEquals("02012", markAttempt("FAIRY", "RATTY") 
+  assertEquals("00000", markAttempt("ABCDE", "XXXXX"))
+  assertEquals("11111", markAttempt("ABCDE", "BCDEA"))
+  assertEquals("22222", markAttempt("ABCDE", "ABCDE"))
+  assertEquals("02000", markAttempt("SAINT", "LADLE"))
+  assertEquals("01111", markAttempt("IDEAL", "LADLE"))
+  assertEquals("10020", markAttempt("CABAL", "RECAP"))
+  assertEquals("01100", markAttempt("COLON", "GLORY"))
+  assertEquals("10120", markAttempt("AORTA", "RATTY"))
+  assertEquals("11020", markAttempt("RATTY", "AORTA"))
+  assertEquals("02012", markAttempt("FAIRY", "RATTY"))
 }
 
 static List<String> possibleAnswersAfterAttempt(List<String> possible, String attempt, String mark) { // function
@@ -270,11 +270,11 @@ static List<String> possibleAnswersAfterAttempt(List<String> possible, String at
 
 @Test static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
-  assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 
-  assertEquals(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010") 
-  assertEquals(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") 
-  assertEquals(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") 
+  assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  assertEquals(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  assertEquals(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"))
+  assertEquals(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"))
 }
 
 static String drawGrid(List<List<String>> grid) { // function

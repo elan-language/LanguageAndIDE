@@ -36,17 +36,17 @@ static bool binarySearch(List<String> li, String item) { // function
 
 @Test static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
-  assertEquals(true, binarySearch(li1, "lemon") 
-  assertEquals(true, binarySearch(li1, "lime") 
-  assertEquals(true, binarySearch(li1, "orange") 
-  assertEquals(false, binarySearch(li1, "pear") 
+  assertEquals(true, binarySearch(li1, "lemon"))
+  assertEquals(true, binarySearch(li1, "lime"))
+  assertEquals(true, binarySearch(li1, "orange"))
+  assertEquals(false, binarySearch(li1, "pear"))
   var li2 = ["lemon", "orange"];
-  assertEquals(true, binarySearch(li2, "lemon") 
-  assertEquals(true, binarySearch(li2, "orange") 
-  assertEquals(false, binarySearch(li2, "pear") 
+  assertEquals(true, binarySearch(li2, "lemon"))
+  assertEquals(true, binarySearch(li2, "orange"))
+  assertEquals(false, binarySearch(li2, "pear"))
   var li3 = ["lemon"];
-  assertEquals(true, binarySearch(li3, "lemon") 
-  assertEquals(false, binarySearch(li3, "lime") 
+  assertEquals(true, binarySearch(li3, "lemon"))
+  assertEquals(false, binarySearch(li3, "lime"))
   var li4 = new List<String>();
-  assertEquals(false, binarySearch(li4, "pear") 
+  assertEquals(false, binarySearch(li4, "pear"))
 }
