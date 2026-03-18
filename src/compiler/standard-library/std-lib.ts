@@ -571,49 +571,24 @@ export class StdLib {
     return Math.abs(x);
   }
 
-  // Returns the absolute value of the input.
-
   @elanFunction(["value"])
   acos(x: number): number {
     return Math.acos(x);
-  }
-  // Returns the arccosine of the input.
-
-  @elanFunction(["value"])
-  acosDeg(n: number): number {
-    return this.degrees(this.acos(n));
   }
 
   @elanFunction(["value"])
   asin(x: number): number {
     return Math.asin(x);
   }
-  // Returns the arcsine of the input.
-
-  @elanFunction(["value"])
-  asinDeg(n: number): number {
-    return this.degrees(this.asin(n));
-  }
 
   @elanFunction(["value"])
   atan(x: number): number {
     return Math.atan(x);
   }
-  // Returns the arctangent of the input.
-
-  @elanFunction(["value"])
-  atanDeg(n: number): number {
-    return this.degrees(this.atan(n));
-  }
 
   @elanFunction(["radians"])
   cos(x: number): number {
     return Math.cos(x);
-  }
-
-  @elanFunction(["degrees"])
-  cosDeg(n: number): number {
-    return this.cos(this.radians(n));
   }
 
   @elanFunction(["x"])
@@ -645,12 +620,6 @@ export class StdLib {
   sin(x: number): number {
     return Math.sin(x);
   }
-  // Returns the sine of the input.
-
-  @elanFunction(["degrees"])
-  sinDeg(n: number): number {
-    return this.sin(this.radians(n));
-  }
 
   @elanFunction(["number"])
   sqrt(x: number): number {
@@ -661,12 +630,6 @@ export class StdLib {
   @elanFunction(["radians"])
   tan(x: number): number {
     return Math.tan(x);
-  }
-  // Returns the tangent of the input.
-
-  @elanFunction(["degrees"])
-  tanDeg(n: number): number {
-    return this.tan(this.radians(n));
   }
 
   @elanFunction(["degrees"])

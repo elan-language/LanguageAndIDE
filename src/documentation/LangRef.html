@@ -1440,10 +1440,12 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
-<el-statement class="ok" id="call3" tabindex="-1"><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field>)</el-statement>
+main
+  call print(sin(radians(30)))
+  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30), 2)
+  variable name set to inputString("Your name")
+  call print(name.upperCase())
+end main
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>

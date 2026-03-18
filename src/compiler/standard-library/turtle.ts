@@ -141,8 +141,9 @@ export class Turtle extends GraphicsBase {
   }
 
   private getDestination(distance: number): [number, number] {
-    const newX = this.x + distance * this.stdlib.sinDeg(this.heading);
-    const newY = this.y + distance * this.stdlib.cosDeg(this.heading);
+    const head = this.stdlib.radians(this.heading);
+    const newX = this.x + distance * this.stdlib.sin(head);
+    const newY = this.y + distance * this.stdlib.cos(head);
     return [newX, newY];
   }
 

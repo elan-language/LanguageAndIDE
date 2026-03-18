@@ -671,12 +671,6 @@ test maths
   assert sin(pi/6).round(2) is 0.5
   assert sqrt(2).round(3) is 1.414
   assert tan(pi/4).round(2) is 1
-  assert sinDeg(30).round(2) is 0.5
-  assert asinDeg(0.5).round(2) is 30
-  assert cosDeg(60).round(2) is 0.5
-  assert acosDeg(0.5).round(2) is 60
-  assert tanDeg(45).round(2) is 1
-  assert atanDeg(1).round(2) is 45
   assert radians(90).round(2) is 1.57
   assert degrees(1).round(0) is 57
 end test`;
@@ -697,14 +691,8 @@ _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "Float"], [0.5, "Float"], "assert34", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "Float"], [1.414, "Float"], "assert37", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "Float"], [1, "Int"], "assert40", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sinDeg(30), 2), "Float"], [0.5, "Float"], "assert43", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), "Float"], [30, "Int"], "assert46", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cosDeg(60), 2), "Float"], [0.5, "Float"], "assert49", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acosDeg(0.5), 2), "Float"], [60, "Int"], "assert52", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tanDeg(45), 2), "Float"], [1, "Int"], "assert55", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atanDeg(1), 2), "Float"], [45, "Int"], "assert58", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "assert61", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "assert64", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "assert46", _stdlib, false));
 }]);
 
 async function main() {
@@ -743,14 +731,8 @@ return [main, _tests];}`;
           new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert34"),
           new AssertOutcome(TestStatus.pass, "1.414", "1.414", "assert37"),
           new AssertOutcome(TestStatus.pass, "1", "1", "assert40"),
-          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert43"),
-          new AssertOutcome(TestStatus.pass, "30", "30", "assert46"),
-          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert49"),
-          new AssertOutcome(TestStatus.pass, "60", "60", "assert52"),
-          new AssertOutcome(TestStatus.pass, "1", "1", "assert55"),
-          new AssertOutcome(TestStatus.pass, "45", "45", "assert58"),
-          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "assert61"),
-          new AssertOutcome(TestStatus.pass, "57", "57", "assert64"),
+          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "assert43"),
+          new AssertOutcome(TestStatus.pass, "57", "57", "assert46"),
         ],
       ],
     ]);
