@@ -24,7 +24,7 @@ main
 end main
 
 function square(x as Float) returns Float
-  return power(x, 2)
+  return pow(x, 2)
 end function
 
 test test_square
@@ -42,7 +42,7 @@ async function main() {
 }
 
 async function square(x) {
-  return _stdlib.power(x, 2);
+  return _stdlib.pow(x, 2);
 }
 global["square"] = square;
 
@@ -400,7 +400,7 @@ main
 end main
 
 function square(x as Float) returns Float
-  return power(x, 2)
+  return pow(x, 2)
 end function
 
 test test_square
@@ -416,7 +416,7 @@ async function main() {
 }
 
 async function square(x) {
-  return _stdlib.power(x, 2);
+  return _stdlib.pow(x, 2);
 }
 global["square"] = square;
 
@@ -843,7 +843,7 @@ main
 end main
 
 function square(x as Float) returns Float
-  return power(x, 2)
+  return pow(x, 2)
 end function
 
 test test_square
@@ -869,7 +869,7 @@ async function main() {
 }
 
 async function square(x) {
-  return _stdlib.power(x, 2);
+  return _stdlib.pow(x, 2);
 }
 global["square"] = square;
 
@@ -920,7 +920,7 @@ main
 end main
 
 function square(x as Float) returns Float
-  return power(x, 2)
+  return pow(x, 2)
 end function
 
 test test_squareTest
@@ -952,7 +952,7 @@ main
 end main
 
 function square(x as Float) returns Float
-  return power(x, 2)
+  return pow(x, 2)
 end function
 
 test test_squareTest

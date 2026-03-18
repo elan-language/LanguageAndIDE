@@ -10,7 +10,7 @@ end main
 
 # snipFrom
 function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
-  return sqrt(power(p2.item_0 - p1.item_0, 2) + power(p2.item_1 - p1.item_1, 2))
+  return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
 end function
 
 # snipTo

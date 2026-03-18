@@ -7,8 +7,8 @@ main
   call printTab(20, "Cube\n")
   for i in range(1, 11)
     call printTab(0, i.asString())
-    call printTab(10, $"{power(i, 2)}")
-    call printTab(20, $"{power(i, 3)}\n")
+    call printTab(10, $"{pow(i, 2)}")
+    call printTab(20, $"{pow(i, 3)}\n")
   end for
   # snipTo
 end main

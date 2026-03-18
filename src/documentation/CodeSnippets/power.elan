@@ -2,5 +2,5 @@
 
 main
   variable n set to 10
-  set n to power(n, 5)
+  set n to pow(n, 5)
 end main

@@ -279,7 +279,7 @@ class Point
   end constructor
 
   function minDistTo(p as Point) returns Float
-    return sqrt(power((p.x - this.x), 2) + power((p.y - this.y), 2))
+    return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean

@@ -28,6 +28,7 @@ import { AsRef } from "./as-ref";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { ElanRuntimeError } from "./elan-runtime-error";
+import { ElanUserError } from "./elan-user-error";
 import { HashSet } from "./hash-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
@@ -42,7 +43,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { ElanUserError } from "./elan-user-error";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -318,7 +318,7 @@ export class StdLib {
   }
 
   @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
-  power(n1: number, n2: number) {
+  pow(n1: number, n2: number) {
     return Math.pow(n1, n2);
   }
 
