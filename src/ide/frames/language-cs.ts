@@ -156,7 +156,6 @@ export class LanguageCS extends LanguageCfamily {
     `is`,
     `lock`,
     `long`,
-    ``,
     `namespace`,
     `new`,
     `null`,

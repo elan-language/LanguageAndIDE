@@ -220,7 +220,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Bar"
   end function
 end class
@@ -250,7 +250,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Bar";
   }
 
@@ -294,7 +294,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Bar"
   end function
 end class
@@ -324,7 +324,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Bar";
   }
 

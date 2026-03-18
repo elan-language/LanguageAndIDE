@@ -9,7 +9,7 @@ main
   for i in range(0, scaleL)
     call tone(quaver, scale[i], volume)
   end for
-  call pause(1000)
+  call sleep(1)
   for i in range(0, scaleL)
     call tone(quaver, scale[scaleL - 1 - i], volume)
   end for

@@ -3,8 +3,8 @@
 main
   # snipFrom
   for n in range(50, 73)
-    variable s set to lambda n as Int => n.asString().length()
-    variable np set to power(2, n).floor()
+    variable s set to lambda n as Int => n.toString().length()
+    variable np set to pow(2, n).floor()
     call printTab(s(n), $"{n}")
     call printTab(30 - s(np), $"{np}\n")
   end for

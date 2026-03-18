@@ -34,7 +34,7 @@ class Foo
     procedure setP1(value as Float)
         set this.p1 to value
     end procedure
-    function asString() returns String
+    function toString() returns String
          return ""
     end function
 end class`;
@@ -62,7 +62,7 @@ class Foo {
     this.p1 = value;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -105,7 +105,7 @@ class Foo
       call printNoLine(this.p1)
   end procedure
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -132,7 +132,7 @@ class Foo {
     await _stdlib.printNoLine(this.p1);
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -183,7 +183,7 @@ class Foo
         set this.p1 to this.p1 + 1
     end procedure
 
-    function asString() returns String
+    function toString() returns String
          return ""
     end function
 
@@ -200,7 +200,7 @@ class Bar
         set this.p1 to this.p1 + 1
     end procedure
 
-    function asString() returns String
+    function toString() returns String
          return ""
     end function
 
@@ -235,7 +235,7 @@ class Foo {
     this.p1 = this.p1 + 1;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -255,7 +255,7 @@ class Bar {
     this.p1 = this.p1 + 1;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -291,7 +291,7 @@ class Foo
   constructor()
       set this.p1 to 5
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -301,7 +301,7 @@ class Foo
     call printNoLine(p1)
   end procedure
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -334,14 +334,14 @@ class Foo
   constructor()
       set this.p1 to 5
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
 
   property p2 as String
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -374,7 +374,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -409,7 +409,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -441,7 +441,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -473,7 +473,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -505,7 +505,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -540,7 +540,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -630,7 +630,7 @@ end procedure`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   procedure foo(foo as Int)
@@ -662,7 +662,7 @@ end class`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   procedure foo(a as Int, foo as Int)

@@ -100,7 +100,7 @@ end procedure
 procedure display(game as Game)
   variable html set to $"&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
   call displayHtml(html)
-  call pause(1500)
+  call sleep(1.5)
 end procedure
 
 procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
@@ -708,7 +708,7 @@ constant styleSheet set to ':root {    background-color: darkgreen;    padding-l
     <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-id>let</el-id></el-code> instruction
       and note that this features two editable fields.</li>
     <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
-    using the auto-completions to help <el-code><el-method>inputString</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
+    using the auto-completions to help <el-code><el-method>input</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
     <p>What message do you see within the code editor?</p>
 <textarea class="question" id="question10-0" placeholder="input is required"></textarea>
     <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>

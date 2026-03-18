@@ -4,6 +4,6 @@ main
   variable probability set to random()
   call print(probability)
   for i in range(1, 11)
-    call print(randomInt(1, 6))
+    call print(randint(1, 6))
   end for
 end main

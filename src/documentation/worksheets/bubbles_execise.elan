@@ -8,8 +8,8 @@
 # 3. Within the loop create a new CircleVG named 'c' using a 'let' statement,
 #    adding a 'with' clause that sets these initial values for c: 
 #    centreX set to i*5 + 2, centreY set to 75, radius set to 1, 
-#    fillColour set to transparent.withFillColour(randomInt(black), white)
-#    Note that randomInt(0, white) creates a random number somewhere within the
+#    fillColour set to transparent.withFillColour(randint(black), white)
+#    Note that randint(0, white) creates a random number somewhere within the
 #    full 24-bit colour space from black (0x000000) to white (0xFFFFFF)
 # 4. After creating 'c', still within the loop, append 'c' to the 'bubbles' list by
 #    calling the 'append' dot-method on bubbles.
@@ -39,7 +39,7 @@
 main
   variable bubbles set to new List<of CircleVG>()
   for i in range(1, 21)
-    variable c set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(1).withFillColour(transparent).withFillColour(randomInt(black), white)
+    variable c set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(1).withFillColour(transparent).withFillColour(randint(black), white)
     call bubbles.append(c)
   end for
   while true
@@ -53,6 +53,6 @@ main
       end if
     end for
     call displayVectorGraphics(bubbles)
-    call pause(50)
+    call sleep_ms(50)
   end while
 end main

@@ -365,7 +365,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to 2.1 + 3.4
-  set a to b.asString()
+  set a to b.toString()
   call printNoLine(a)
 end main`;
 
@@ -374,7 +374,7 @@ const global = new class {};
 async function main() {
   let a = "abcde";
   let b = 2.1 + 3.4;
-  a = (await _stdlib.asString(b));
+  a = (await _stdlib.toString(b));
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -411,7 +411,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = 4;
-  let c = \`\${await _stdlib.asString(a)} x \${await _stdlib.asString(b)} = \${await _stdlib.asString(a * b)}\`;
+  let c = \`\${await _stdlib.toString(a)} x \${await _stdlib.toString(b)} = \${await _stdlib.toString(a * b)}\`;
   await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;

@@ -64,4 +64,8 @@ export class Maybe<T1> {
   withClear(): Maybe<T1> {
     return new Maybe<T1>();
   }
+
+  async toString() {
+    return `a Maybe`;
+  }
 }

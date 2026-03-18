@@ -51,7 +51,7 @@ class Bar inherits Foo
         return this.p1 * this.p2
     end function
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -111,7 +111,7 @@ class Bar extends Foo {
     return this.p1 * this.p2;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -157,7 +157,7 @@ class Yon inherits Bar
         set this.p1 to 3
         set this.p2 to "apple"
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
     property p1 as Float
@@ -209,7 +209,7 @@ class Yon extends Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -262,7 +262,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -298,7 +298,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -345,7 +345,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Bar"
   end function
   property p1 as Int
@@ -382,7 +382,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Bar";
   }
 
@@ -428,7 +428,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -464,7 +464,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -519,7 +519,7 @@ class Bar inherits Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -559,7 +559,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -624,7 +624,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -681,7 +681,7 @@ class Bar extends Yon {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -749,7 +749,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -806,7 +806,7 @@ class Bar extends Yon {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -855,7 +855,7 @@ class Bar inherits Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -887,7 +887,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -938,7 +938,7 @@ class Bar inherits Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -979,7 +979,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1031,7 +1031,7 @@ class Bar inherits Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -1073,7 +1073,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1129,7 +1129,7 @@ class Bar inherits Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -1172,7 +1172,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1230,7 +1230,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1269,7 +1269,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1322,7 +1322,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1362,7 +1362,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1415,7 +1415,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1455,7 +1455,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1508,7 +1508,7 @@ class Bar inherits Foo, Yon
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1552,7 +1552,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1603,7 +1603,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1647,7 +1647,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1698,7 +1698,7 @@ class Bar inherits Foo, Yon
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1742,7 +1742,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1778,7 +1778,7 @@ class Foo
     constructor()
     end constructor
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class
@@ -1825,13 +1825,13 @@ class Bar inherits Foo
     constructor()
       set this.p1 to 3
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
     property p1 as Float
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -1865,7 +1865,7 @@ end main
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1878,7 +1878,7 @@ end class
 class Bar inherits Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1921,7 +1921,7 @@ class Bar inherits Foo
     constructor()
       set this.p1 to 3
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1935,7 +1935,7 @@ class Bar inherits Foo
       return ""
     end function
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -1980,7 +1980,7 @@ class Bar inherits Foo
         set this.p1 to 3
         set this.p2 to 4
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
     property p1 as Float
@@ -1994,7 +1994,7 @@ class Bar inherits Foo
         return this.p1 * this.p2
     end function
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -2110,7 +2110,7 @@ end interface
 class Qux inherits Bar, Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2162,7 +2162,7 @@ class Qux {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -2284,7 +2284,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2333,7 +2333,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2378,7 +2378,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2422,7 +2422,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2462,7 +2462,7 @@ end main
 class Bar inherits Foo
     constructor()  
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
     
@@ -2714,7 +2714,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2756,7 +2756,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2799,7 +2799,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2842,7 +2842,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2879,7 +2879,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2917,7 +2917,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int
@@ -2961,7 +2961,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3003,7 +3003,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3046,7 +3046,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3089,7 +3089,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3126,7 +3126,7 @@ end class
 class Bar inherits Yon
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3165,7 +3165,7 @@ class Bar inherits Yon
   constructor()
     set this.p1 to ""
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as String
@@ -3194,7 +3194,7 @@ end class`;
 class Bar inherits VectorGraphic
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3225,7 +3225,7 @@ end class`;
 class Bar inherits BaseVg
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -3268,7 +3268,7 @@ class Yon inherits Foo, Bar
         set this.p1 to 3
         set this.p2 to "apple"
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
     property p1 as Float
@@ -3321,7 +3321,7 @@ class Bar inherits Yon
         set this.p1 to 3
         set this.p2 to 4
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
     property p1 as Float
@@ -3335,7 +3335,7 @@ class Bar inherits Yon
         return this.p1 * this.p2
     end function
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -3398,7 +3398,7 @@ class Bar inherits Foo, Yon
         return this.p1 * this.p2
     end function
 
-    function asString() returns String 
+    function toString() returns String 
         return ""
     end function
 end class`;
@@ -3558,7 +3558,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property p1 as Int

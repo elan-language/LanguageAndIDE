@@ -18,7 +18,7 @@ export class ElanRuntimeError extends Error {
     super(err instanceof Error ? err.message : err);
   }
 
-  asString() {
+  toString() {
     return this.message ?? "a ElanRuntimeError";
   }
 

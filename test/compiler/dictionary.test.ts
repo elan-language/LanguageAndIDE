@@ -1144,9 +1144,9 @@ async function main() {
   let s42 = "42";
   di.put(i42, 99);
   ds.put(s42, 98);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di.hasKey(i42))} \${await _stdlib.toString(system.safeIndex(di, i42))} \${await _stdlib.toString(ds.hasKey(s42))} \${await _stdlib.toString(system.safeIndex(ds, s42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di)} \${await _stdlib.toString(ds)}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di.keys())} \${await _stdlib.toString(di.keys().contains(42))}\`);
 }
 return [main, _tests];}`;
 

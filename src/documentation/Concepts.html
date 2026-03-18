@@ -138,9 +138,9 @@ You can create your own types as <a href="LangRef.html#class">class</a>es, <a hr
 
 <h2 id="DotMethods">Dot method</h2>
 <p>There are many functions and procedures which belong to system-defined types or user-defined classes, and operate on an instance of that type or class.</p>
-<p>For example the function <el-method>asString</el-method> can be invoked on an object instance <el-id>molePosition</el-id> like this:</p>
-<el-statement><el-code>if k is molePosition.asString() then</el-code></el-statement>
-<p>In this case, the variable <el-id>molePosition</el-id> is of type <el-type>Int</el-type>, and the Elan library provides the method <el-method>asString</el-method>.</p>
+<p>For example the function <el-method>toString</el-method> can be invoked on an object instance <el-id>molePosition</el-id> like this:</p>
+<el-statement><el-code>if k is molePosition.toString() then</el-code></el-statement>
+<p>In this case, the variable <el-id>molePosition</el-id> is of type <el-type>Int</el-type>, and the Elan library provides the method <el-method>toString</el-method>.</p>
 <p>A procedure may be invoked like this:</p>
 <el-statement><el-code>call holes.put(molePosition, "*")</el-code></el-statement>
 <p>The variable <el-id>holes</el-id> is of type <el-type>Array&lt;of String&gt;</el-type>, and the Elan library provides the method <a href="LibRef.html#put_Array"><el-method>put</el-method></a> for changing one element of an Array.</p>

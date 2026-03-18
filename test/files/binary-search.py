@@ -4,7 +4,7 @@ def main(): None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable
   done = False # variable
   while not done:
-    wanted = inputString("What type of fruit do you want ('x' to exit)? ") # variable
+    wanted = input("What type of fruit do you want ('x' to exit)? ") # variable
     if wanted.equals("x"):
       done = True # set
     else:

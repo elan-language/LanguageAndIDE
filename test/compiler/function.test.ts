@@ -296,14 +296,14 @@ main
 end main
 
 function foo(bar as Bar) returns String
-    return bar.asString()
+    return bar.toString()
 end function
 
 class Bar
     constructor()
     end constructor
 
-    function asString() returns String
+    function toString() returns String
         return "bar"
     end function
 
@@ -317,7 +317,7 @@ async function main() {
 }
 
 async function foo(bar) {
-  return (await bar.asString());
+  return (await bar.toString());
 }
 global["foo"] = foo;
 
@@ -329,7 +329,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "bar";
   }
 
@@ -362,13 +362,13 @@ main
 end main
 
 function foo(bar as library.List<of Int>) returns String
-    return bar.asString()
+    return bar.toString()
 end function
 
 class List
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1003,7 +1003,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 end class
@@ -1742,7 +1742,7 @@ main
 end main
 
 function foo(bar as library.List<of Int>) returns String
-    return bar.asString()
+    return bar.toString()
 end function
 
 class List

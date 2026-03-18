@@ -19,13 +19,13 @@ class Foo
     constructor(p_1 as Int)
         set p_1 to this.p1
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
     property p1 as Int
 
-    function asString() returns String
+    function toString() returns String
         return ""
     end function
 
@@ -55,11 +55,11 @@ class Foo
     constructor(a as List<of Float>)
         call a.put(0, 4)
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
-    function asString() returns String
+    function toString() returns String
         return ""
     end function
 end class`;
@@ -85,7 +85,7 @@ class Foo
     constructor()
         set p1 to 4
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -116,7 +116,7 @@ end class`;
 class Foo
     constructor(out a as Int)
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

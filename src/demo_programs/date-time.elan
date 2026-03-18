@@ -3,7 +3,7 @@
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    set reply to inputString("RETURN for time now or Unix time (positive integer) or Q to quit")
+    set reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       call printDate(divAsInt(clock(), 1000))
     else
@@ -23,15 +23,15 @@ procedure printDate(unixSecs as Int)
   constant days set to dt.item_3
   constant year set to dt.item_4
   constant weekday set to dt.item_5
-  constant h set to pad("L", z2, hour.asString())
-  constant m set to pad("L", z2, minute.asString())
-  constant s set to pad("L", z2, second.asString())
+  constant h set to pad("L", z2, hour.toString())
+  constant m set to pad("L", z2, minute.toString())
+  constant s set to pad("L", z2, second.toString())
   variable startDays set to getStartDays()
   variable startDaysL set to startDaysList(year, startDays)
   variable month_day set to monthDay(startDaysL, (days mod startDays[12]))
   constant month set to month_day.item_0
   constant day set to month_day.item_1
-  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.asString()) + s1 + getMonthName(month) + s1 + $"{year}" + s1 + h + co + m + co + s + " UTC")
+  call print(getWeekdayName(weekday) + cs + pad("L", z2, day.toString()) + s1 + getMonthName(month) + s1 + $"{year}" + s1 + h + co + m + co + s + " UTC")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)

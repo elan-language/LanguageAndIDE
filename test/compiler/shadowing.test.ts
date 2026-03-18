@@ -179,7 +179,7 @@ end function
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -211,7 +211,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -244,24 +244,24 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  call f.pause(1)
-  call pause(1)
-  call global.pause(1)
-  call library.pause(1)
+  call f.sleep_ms(1)
+  call sleep_ms(1)
+  call global.sleep_ms(1)
+  call library.sleep_ms(1)
 end main
 
-procedure pause(x as Float)
+procedure sleep_ms(x as Float)
     call printNoLine(111)
 end procedure
 
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
-    procedure pause(x as Float)
+    procedure sleep_ms(x as Float)
       call printNoLine(222)
     end procedure
 end class`;
@@ -270,16 +270,16 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await f.pause(1);
-  await pause(1);
-  await global.pause(1);
-  await _stdlib.pause(1);
+  await f.sleep_ms(1);
+  await sleep_ms(1);
+  await global.sleep_ms(1);
+  await _stdlib.sleep_ms(1);
 }
 
-async function pause(x) {
+async function sleep_ms(x) {
   await _stdlib.printNoLine(111);
 }
-global["pause"] = pause;
+global["sleep_ms"] = sleep_ms;
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
@@ -289,11 +289,11 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
-  async pause(x) {
+  async sleep_ms(x) {
     await _stdlib.printNoLine(222);
   }
 

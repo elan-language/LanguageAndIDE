@@ -8,7 +8,7 @@ Sub main()
     Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable
     nextGeneration(gridRef) ' call
     grid = gridRef.value() ' set
-    pause(50) ' call
+    sleep_ms(50) ' call
   End While
 End Sub
 

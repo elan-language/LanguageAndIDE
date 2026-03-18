@@ -8,15 +8,15 @@ static void main() {
     blocks[x][y] = red; // set
     displayBlocks(blocks); // call
     blocks[x][y] = black; // set
-    var direction = randomInt(0, 3);
+    var direction = randint(0, 3);
     if (direction == 0) {
-      x = minInt([x + 1, 39]); // set
+      x = min([x + 1, 39]); // set
     } else if (direction == 1) {
-      x = maxInt([x - 1, 0]); // set
+      x = max([x - 1, 0]); // set
     } else if (direction == 2) {
-      y = minInt([y + 1, 29]); // set
+      y = min([y + 1, 29]); // set
     } else if (direction == 3) {
-      y = maxInt([y - 1, 0]); // set
+      y = max([y - 1, 0]); // set
     }
   }
 }

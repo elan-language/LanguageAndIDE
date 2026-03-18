@@ -30,7 +30,7 @@ class Foo
 
   property p1 as Float
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -53,7 +53,7 @@ class Foo {
 
   p1 = 0;
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -100,7 +100,7 @@ class Foo
         return doubled(this)
     end function
 
-    function asString() returns String
+    function toString() returns String
         return ""
     end function
 
@@ -132,7 +132,7 @@ class Foo {
     return (await global.doubled(this));
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -168,7 +168,7 @@ class Foo
   constructor()
     set this.p1 to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -195,7 +195,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -237,7 +237,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Foo"
   end function
   procedure bar()
@@ -260,7 +260,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Foo";
   }
 
@@ -299,7 +299,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -338,13 +338,13 @@ class Foo
     constructor(p1 as Float)
         set this.p to p1
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
     property p1 as Float
 
-    function asString() returns String
+    function toString() returns String
         return ""
     end function
 
@@ -377,13 +377,13 @@ class Foo
     constructor(p1 as Float)
         set p1 to p1
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
     property p1 as Float
 
-    function asString() returns String
+    function toString() returns String
         return ""
     end function
 

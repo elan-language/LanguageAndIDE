@@ -4,13 +4,13 @@ main
   # original quotes
   call displayHtml("<h1 style='color: blue;'>A heading</h1><p>some text</p>")
   # 
-  call pause(1000)
+  call sleep(1)
   call clearHtml()
   # 
   # swap quotes: call print(works, displayHtml() doesn't)
   call displayHtml('<h1 style="color: blue;">A heading</h1><p>some text</p>')
   # 
-  call pause(1000)
+  call sleep(1)
   call clearHtml()
   # 
   variable s set to '<h1 style="color: blue;">A heading</h1><p>some text</p>'

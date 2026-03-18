@@ -26,7 +26,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
     call displayBlocks(gr2)
-    call pause(0)
+    call sleep_ms(0)
   end while
   if solver.getLastVisited().equals(destination) then
     variable rl set to solver.getRouteAndLength()
@@ -95,7 +95,7 @@ class Solver
     set this.current to new Node(emptyPoint(), 0, 0)
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -252,8 +252,8 @@ class Node
     set this.via to p
   end procedure
 
-  function asString() returns String
-    return $"[{this.point.asString()} {this.visited} {this.distFromStart}]"
+  function toString() returns String
+    return $"[{this.point.toString()} {this.visited} {this.distFromStart}]"
   end function
 
 end class
@@ -279,7 +279,7 @@ class Point
   end constructor
 
   function minDistTo(p as Point) returns Float
-    return sqrt(power((p.x - this.x), 2) + power((p.y - this.y), 2))
+    return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
@@ -291,7 +291,7 @@ class Point
     return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
   end function
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.x},{this.y}"
   end function
 

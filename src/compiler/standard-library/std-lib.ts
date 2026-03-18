@@ -28,6 +28,7 @@ import { AsRef } from "./as-ref";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { ElanRuntimeError } from "./elan-runtime-error";
+import { ElanUserError } from "./elan-user-error";
 import { HashSet } from "./hash-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
@@ -42,7 +43,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { ElanUserError } from "./elan-user-error";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -136,7 +136,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureAsyncExtension, ElanString)
-  async asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
+  async toString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
     if (v === undefined || v === null) {
       throw new ElanRuntimeError(`Out of range error`);
     }
@@ -162,7 +162,7 @@ export class StdLib {
       const items: string[] = [];
 
       for (const i of v) {
-        const s = await this.asString(i);
+        const s = await this.toString(i);
         items.push(s);
       }
       if (items.length < 2) {
@@ -175,8 +175,8 @@ export class StdLib {
       return `(${items.join(", ")})`;
     }
 
-    if (typeof v === "object" && "asString" in v) {
-      return await (v.asString as () => Promise<string>)();
+    if (typeof v === "object" && "toString" in v) {
+      return await (v.toString as unknown as () => Promise<string>)();
     }
 
     if (typeof v === "object") {
@@ -318,7 +318,7 @@ export class StdLib {
   }
 
   @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
-  power(n1: number, n2: number) {
+  pow(n1: number, n2: number) {
     return Math.pow(n1, n2);
   }
 
@@ -349,23 +349,13 @@ export class StdLib {
     return n > fl ? fl + 1 : fl;
   }
 
-  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
-  maxFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
+  @elanFunction(["listOfNumbers"], FunctionOptions.pure, ElanT1)
+  max(@elanClassType(List, [ElanT1]) source: List<number>): number {
     return Math.max(...source);
   }
 
-  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
-  maxInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
-    return Math.max(...source);
-  }
-
-  @elanFunction(["listOfFloat"], FunctionOptions.pure, ElanFloat)
-  minFloat(@elanClassType(List, [ElanFloat]) source: List<number>): number {
-    return Math.min(...source);
-  }
-
-  @elanFunction(["listOfInt"], FunctionOptions.pure, ElanInt)
-  minInt(@elanClassType(List, [ElanInt]) source: List<number>): number {
+  @elanFunction(["listOfNumbers"], FunctionOptions.pure, ElanT1)
+  min(@elanClassType(List, [ElanT1]) source: List<number>): number {
     return Math.min(...source);
   }
 
@@ -374,8 +364,15 @@ export class StdLib {
     return source.includes(item);
   }
 
+  @elanProcedure(["seconds"], ProcedureOptions.async)
+  sleep(@elanFloatType() s: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), s * 1000);
+    });
+  }
+
   @elanProcedure(["milliseconds"], ProcedureOptions.async)
-  pause(@elanIntType() ms: number): Promise<void> {
+  sleep_ms(@elanIntType() ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });
@@ -392,7 +389,7 @@ export class StdLib {
   }
 
   @elanFunction(["low", "high"], FunctionOptions.impure, ElanInt)
-  randomInt(@elanIntType() low: number, @elanIntType() high: number): number {
+  randint(@elanIntType() low: number, @elanIntType() high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
@@ -421,19 +418,19 @@ export class StdLib {
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async print(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(`${await this.system.asString(s)}\n`);
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
   }
 
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async printNoLine(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(await this.system.asString(s));
+    await this.system.elanInputOutput.print(await this.system.toString(s));
   }
 
   @elanProcedure(["position", "any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async printTab(@elanIntType() position: number, @elanAnyType() s: any) {
-    await this.system.elanInputOutput.printTab(position, await this.system.asString(s));
+    await this.system.elanInputOutput.printTab(position, await this.system.toString(s));
   }
 
   @elanProcedure([], ProcedureOptions.async)
@@ -470,7 +467,7 @@ export class StdLib {
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
-  async inputString(prompt: string): Promise<string> {
+  async input(prompt: string): Promise<string> {
     await this.prompt(prompt);
     return await this.system.input();
   }
@@ -481,7 +478,7 @@ export class StdLib {
     @elanIntType() minLength: number,
     @elanIntType() maxLength: number,
   ): Promise<string> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     if (s.length < minLength) {
       await this.prompt(`minimum length ${minLength} characters`);
@@ -498,19 +495,19 @@ export class StdLib {
     prompt: string,
     @elanClassType(List, [ElanString]) options: List<string>,
   ): Promise<string> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     if (options.contains(s)) {
       return s;
     }
-    const valid = await options.asString();
+    const valid = await options.toString();
     await this.prompt(`response must be one of ${valid}`);
     return await this.inputStringFromOptions(prompt, options);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanInt)
   async inputInt(prompt: string): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsInt(s);
 
     if (b && i.toString() === s) {
@@ -527,7 +524,7 @@ export class StdLib {
     @elanIntType() min: number,
     @elanIntType() max: number,
   ): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsInt(s);
 
     if (b && i.toString() === s && i >= min && i <= max) {
@@ -541,7 +538,7 @@ export class StdLib {
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanFloat)
   async inputFloat(prompt: string): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
     const [b, i] = this.parseAsFloat(s);
 
     if (b) {
@@ -554,7 +551,7 @@ export class StdLib {
 
   @elanFunction(["prompt", "minValue", "maxValue"], FunctionOptions.impureAsync, ElanFloat)
   async inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
-    const s = await this.inputString(prompt);
+    const s = await this.input(prompt);
 
     const [b, i] = this.parseAsFloat(s);
     if (b && i >= min && i <= max) {
@@ -571,39 +568,19 @@ export class StdLib {
     return Math.abs(x);
   }
 
-  // Returns the absolute value of the input.
-
   @elanFunction(["value"])
   acos(x: number): number {
     return Math.acos(x);
-  }
-  // Returns the arccosine of the input.
-
-  @elanFunction(["value"])
-  acosDeg(n: number): number {
-    return this.radToDeg(this.acos(n));
   }
 
   @elanFunction(["value"])
   asin(x: number): number {
     return Math.asin(x);
   }
-  // Returns the arcsine of the input.
-
-  @elanFunction(["value"])
-  asinDeg(n: number): number {
-    return this.radToDeg(this.asin(n));
-  }
 
   @elanFunction(["value"])
   atan(x: number): number {
     return Math.atan(x);
-  }
-  // Returns the arctangent of the input.
-
-  @elanFunction(["value"])
-  atanDeg(n: number): number {
-    return this.radToDeg(this.atan(n));
   }
 
   @elanFunction(["radians"])
@@ -611,16 +588,10 @@ export class StdLib {
     return Math.cos(x);
   }
 
-  @elanFunction(["degrees"])
-  cosDeg(n: number): number {
-    return this.cos(this.degToRad(n));
-  }
-
   @elanFunction(["x"])
   exp(x: number): number {
     return Math.exp(x);
   }
-  // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
 
   @elanFunction(["number"])
   logE(x: number): number {
@@ -645,12 +616,6 @@ export class StdLib {
   sin(x: number): number {
     return Math.sin(x);
   }
-  // Returns the sine of the input.
-
-  @elanFunction(["degrees"])
-  sinDeg(n: number): number {
-    return this.sin(this.degToRad(n));
-  }
 
   @elanFunction(["number"])
   sqrt(x: number): number {
@@ -662,20 +627,14 @@ export class StdLib {
   tan(x: number): number {
     return Math.tan(x);
   }
-  // Returns the tangent of the input.
 
   @elanFunction(["degrees"])
-  tanDeg(n: number): number {
-    return this.tan(this.degToRad(n));
-  }
-
-  @elanFunction(["degrees"])
-  degToRad(d: number): number {
+  radians(d: number): number {
     return (d * this.pi) / 180;
   }
 
   @elanFunction(["radians"])
-  radToDeg(r: number): number {
+  degrees(r: number): number {
     return (r / this.pi) * 180;
   }
 

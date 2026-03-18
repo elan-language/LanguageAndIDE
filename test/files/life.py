@@ -8,7 +8,7 @@ def main(): None:
     gridRef = AsRef[list[list[int]]](grid) # variable
     nextGeneration(gridRef) # call
     grid = gridRef.value() # set
-    pause(50) # call
+    sleep_ms(50) # call
 
 def fillRandom(grid: list[list[int]]) -> None: # procedure
   for col in range(0, 40):

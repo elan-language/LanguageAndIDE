@@ -4,8 +4,8 @@ main
   # snipFrom
   variable tab set to 10
   for i in range(1, tab)
-    variable j set to power(9, i).floor()
-    variable f set to (lambda j as Int => j.asString().length())
+    variable j set to pow(9, i).floor()
+    variable f set to (lambda j as Int => j.toString().length())
     call printTab(tab - f(j), $"{j}\n")
   end for
   # snipTo

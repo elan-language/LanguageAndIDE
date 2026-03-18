@@ -4,8 +4,8 @@ main
   variable blocks set to createBlockGraphics(black)
   set blocks to createStart(blocks)
   for i in range(0, displayWidth + 1)
-    constant x set to randomInt(0, 39)
-    constant y set to randomInt(0, 29)
+    constant x set to randint(0, 39)
+    constant y set to randint(0, 29)
     variable p set to new Point(x, y)
     constant existing set to getValue(p, blocks)
     constant setTo set to (random() + 0.7).floor()
@@ -15,7 +15,7 @@ main
     end if
   end for
   call displayBlocks(blocks)
-  constant name set to inputString("File name to save: ")
+  constant name set to input("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if
@@ -124,7 +124,7 @@ class Point
     set this.y to y
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

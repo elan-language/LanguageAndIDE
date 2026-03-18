@@ -1,4 +1,4 @@
-# b27e46e4060b0ae74392ea2ed3ac962a9f83e704422caa3d03afe6a1ec9f7b73 Elan 2.0.0-alpha guest default_profile valid
+# 019c612b150d79d3b75561a8799c9f6dab54288fafbbaa9be49a9488e2bf18a3 Elan 2.0.0-alpha guest default_profile valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -28,7 +28,7 @@ main
       end for
       call displayVectorGraphics(vg)
       call print(x)
-      call pause(100)
+      call sleep_ms(100)
     end while
   end while
   call print("Finished")

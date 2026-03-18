@@ -28,7 +28,7 @@ main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable exit set to false
   while exit is false
-    variable wanted set to inputString("What type of fruit do you want ("x" to exit)? ")
+    variable wanted set to input("What type of fruit do you want ("x" to exit)? ")
     if wanted isnt "x" then
       variable result set to binarySearch(fruit, wanted)
       if result then

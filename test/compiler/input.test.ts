@@ -18,14 +18,14 @@ suite("Input", () => {
     const code = `${testHeader}
 
 main
-  variable a set to inputString("")
+  variable a set to input("")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (await _stdlib.inputString(""));
+  let a = (await _stdlib.input(""));
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -51,14 +51,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to inputString("Your name")
+  variable a set to input("Your name")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (await _stdlib.inputString("Your name"));
+  let a = (await _stdlib.input("Your name"));
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 main
   variable a set to "value"
   variable b set to "value1"
-  set a to inputString("")
+  set a to input("")
   set b to a
   call printNoLine(b)
 end main`;
@@ -166,7 +166,7 @@ const global = new class {};
 async function main() {
   let a = "value";
   let b = "value1";
-  a = (await _stdlib.inputString(""));
+  a = (await _stdlib.input(""));
   b = a;
   await _stdlib.printNoLine(b);
 }
@@ -426,14 +426,14 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to "Hello " + inputString("")
+  variable a set to "Hello " + input("")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = "Hello " + (await _stdlib.inputString(""));
+  let a = "Hello " + (await _stdlib.input(""));
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;

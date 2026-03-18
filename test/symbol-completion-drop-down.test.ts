@@ -155,7 +155,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 79);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 71);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -219,7 +219,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -257,7 +257,7 @@ class Foo
   constructor()
     set a to 0
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -290,7 +290,7 @@ end class`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -329,7 +329,7 @@ end class`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -480,7 +480,7 @@ end main`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -567,7 +567,7 @@ end main`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -864,11 +864,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
       ["values", "*", "*"],
       ["withRemoveAt", "*", "*"],
       ["withSet", "*", "*"],
@@ -888,7 +888,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -933,7 +933,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -975,7 +975,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1021,7 +1021,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1067,7 +1067,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1108,7 +1108,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1153,7 +1153,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1195,7 +1195,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1233,7 +1233,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1275,7 +1275,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1302,10 +1302,10 @@ end test`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["ff", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text31", "gr.", expected);
@@ -1526,7 +1526,7 @@ end function
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1554,12 +1554,12 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1579,7 +1579,7 @@ end function
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1607,12 +1607,12 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1662,7 +1662,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["ceiling", "*", "*"],
       ["equals", "*", "*"],
       ["floor", "*", "*"],
@@ -1670,6 +1669,7 @@ end main`;
       ["isNaN", "*", "*"],
       ["notEqualTo", "*", "*"],
       ["round", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
@@ -1880,7 +1880,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2463,7 +2463,7 @@ end main`;
 
 main
   variable aaa set to 10
-  call pause(aaa)
+  call sleep_ms(aaa)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2745,9 +2745,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
       ["equals", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(

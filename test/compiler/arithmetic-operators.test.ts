@@ -325,13 +325,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(power(3, 3))
+  call printNoLine(pow(3, 3))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.power(3, 3));
+  await _stdlib.printNoLine(_stdlib.pow(3, 3));
 }
 return [main, _tests];}`;
 
@@ -358,10 +358,10 @@ return [main, _tests];}`;
 main
   variable a set to 1.0
   variable b set to 1.1
-  set a to power(2, 2)
-  set b to power(2, 2)
-  set b to power(2, 0.5)
-  set b to power(0.5, 2)
+  set a to pow(2, 2)
+  set b to pow(2, 2)
+  set b to pow(2, 0.5)
+  set b to pow(0.5, 2)
   call printNoLine(a)
   call printNoLine(b)
 end main`;
@@ -371,10 +371,10 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = 1.1;
-  a = _stdlib.power(2, 2);
-  b = _stdlib.power(2, 2);
-  b = _stdlib.power(2, 0.5);
-  b = _stdlib.power(0.5, 2);
+  a = _stdlib.pow(2, 2);
+  b = _stdlib.pow(2, 2);
+  b = _stdlib.pow(2, 0.5);
+  b = _stdlib.pow(0.5, 2);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
 }
@@ -509,7 +509,7 @@ end main
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
    
@@ -685,7 +685,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to power(2, 0.5)
+  set x to pow(2, 0.5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -711,7 +711,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to power(0.5, 2)
+  set x to pow(0.5, 2)
 end main`;
 
     const fileImpl = new FileImpl(

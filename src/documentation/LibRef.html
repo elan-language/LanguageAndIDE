@@ -66,7 +66,7 @@ are passed around in a running program:</p>
   <td><el-type>String</el-type></td>
   <td>string of binary digits representing the argument's integer value</td>
  </tr><tr id="asString_Int">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -104,13 +104,13 @@ in the range:</li>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the pow of 50 through 72, and its output is shown below:</p>
 <el-code-block source="bigInt2.elan">
 <el-statement class="ok multiline" id="for3" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-method>s</el-method>(<el-id>n</el-id>), $"<el-lit></el-lit>{<el-id>n</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), $"<el-lit></el-lit>{<el-id>np</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
@@ -149,7 +149,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Float">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Float</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -224,7 +224,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Boolean">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Boolean</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -318,7 +318,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_String">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -688,7 +688,7 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td><el-type>HashSet</el-type></td>
   <td>a new Set containing all the <i>unique</i> items in the List</td>
  </tr><tr id="asString_List">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>List</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -744,29 +744,17 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td><el-type>List</el-type></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
- </tr><tr id="maxFloat">
-  <td><el-method>maxFloat</el-method></td>
+ </tr><tr id="max">
+  <td><el-method>max</el-method></td>
   <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td><el-type>Float</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> or <el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>the maximum value found in the List</td>
- </tr><tr id="minFloat">
-  <td><el-method>minFloat</el-method></td>
+ </tr><tr id="min">
+  <td><el-method>min</el-method></td>
   <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td><el-type>Float</el-type></td>
-  <td>the minimum value found in the List</td>
- </tr><tr id="maxInt">
-  <td><el-method>maxInt</el-method></td>
-  <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td><el-type>Int</el-type></td>
-  <td>the maximum value found in the List</td>
- </tr><tr id="minInt">
-  <td><el-method>minInt</el-method></td>
-  <td>(not a dot method)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td><el-type>Int</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> or <el-type>List</el-type>&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
@@ -904,7 +892,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Dictionary">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1023,7 +1011,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td><el-type>List</el-type></td>
   <td>a List containing the Set's members as List items</td>
  </tr><tr id="asString_Set">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1118,7 +1106,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>return<br>Types</th>
   <th>returns</th>
  </tr><tr id="asString_Stack">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Stack</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1172,7 +1160,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>return<br>Types</th>
   <th>returns</th>
  </tr><tr id="asString_Queue">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Queue</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1321,7 +1309,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <el-func class="ok multiline" id="func15" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>distanceBetween</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type19" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="return20" tabindex="-1"><el-kw>return </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>, <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return20" tabindex="-1"><el-kw>return </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-method>pow</el-method>(<el-id>p2</el-id>.<el-id>item_0</el-id> - <el-id>p1</el-id>.<el-id>item_0</el-id>, <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-id>p2</el-id>.<el-id>item_1</el-id> - <el-id>p1</el-id>.<el-id>item_1</el-id>, <el-lit>2</el-lit>))</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -1336,7 +1324,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Tuple">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-code>Tuple</el-code></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1403,7 +1391,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
   <td></td>
  </tr><tr><!---->
-  <td id="asString"><el-method>asString</el-method></td>
+  <td id="toString"><el-method>toString</el-method></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
   <td><a href="#asString_Float">&#x2714;</a></td>
   <td><a href="#asString_Boolean">&#x2714;</a></td>
@@ -1515,7 +1503,7 @@ of differing Types held together and referenced by a single identifier.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
+ <li>The method <el-method>toString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
   <el-code><el-kw>call </el-kw><el-method>print</el-method>(dict.keys().length()</el-code>) &#x27f6; 15</li>
@@ -1538,9 +1526,9 @@ of differing Types held together and referenced by a single identifier.</p>
 <el-statement class="ok multiline" id="while6" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>y</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>colour</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-id>white</el-id> - <el-lit>1</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>randint</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>y</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>randint</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>colour</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-method>randint</el-method>(<el-lit>0</el-lit>, <el-id>white</el-id> - <el-lit>1</el-lit>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="set45" tabindex="-1"><el-kw>set </el-kw><el-field id="ident46" class="ok" tabindex="-1"><el-txt><el-id>grid</el-id>[<el-id>x</el-id>][<el-id>y</el-id>]</el-txt></el-field><el-kw> to </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-id>colour</el-id></el-txt></el-field></el-statement>
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>displayBlocks</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>grid</el-id></el-txt></el-field>)</el-statement>
 <el-kw>end while</el-kw>
@@ -1680,7 +1668,7 @@ So the top left corner of the display is at (-100,75).</p>
 </el-punc></el-punc></el-top>
 <el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>turn</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>90</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>move</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-lit>80</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>500</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>500</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -1999,10 +1987,10 @@ together with the procedure and function methods provided to alter their values 
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>circ</el-id>.<el-method><el-method>setFillColour</el-method></el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>red</el-id></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call27" tabindex="-1"><el-kw>call </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args29" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call27" tabindex="-1"><el-kw>call </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field id="args29" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call30" tabindex="-1"><el-kw>call </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-id>circ</el-id>.<el-method><el-method>setFillColour</el-method></el-method></el-txt></el-field>(<el-field id="args32" class="optional ok" tabindex="-1"><el-txt><el-id>green</el-id></el-txt></el-field>)</el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
@@ -2081,8 +2069,8 @@ By this means features such as simple SVG animation can be defined.</p>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <el-code>"-1"</el-code></td>
- </tr><tr id="inputString">
-  <td><el-method>inputString</el-method></td>
+ </tr><tr id="input">
+  <td><el-method>input</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
   <td>prints the string as a prompt, and returns the typed input when Enter is pressed</td>
@@ -2449,7 +2437,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok multiline" id="for27" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
@@ -2464,7 +2452,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <h2 id="Random"><el-type>Random</el-type></h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
-<p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
+<p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randint()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
 <p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
 
@@ -2729,11 +2717,7 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 <tr id="acos"><td><el-method>acos</el-method></td><td><el-type>Float</el-type></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
 <tr id="asin"><td><el-method>asin</el-method></td><td><el-type>Float</el-type></td><td></td><td>arcsine of the input</td><td>radians</td></tr>
 <tr id="atan"><td><el-method>atan</el-method></td><td><el-type>Float</el-type></td><td></td><td>arctangent of the input</td><td>radians</td></tr>
-<tr id="acosDeg"><td><el-method>acosDeg</el-method></td><td><el-type>Float</el-type></td><td></td><td>arccosine of the input</td><td>degrees</td></tr>
-<tr id="asinDeg"><td><el-method>asinDeg</el-method></td><td><el-type>Float</el-type></td><td></td><td>arcsine of the input</td><td>degrees</td></tr>
-<tr id="atanDeg"><td><el-method>atanDeg</el-method></td><td><el-type>Float</el-type></td><td></td><td>arctangent of the input</td><td>degrees</td></tr>
 <tr id="cos"><td><el-method>cos</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>cosine of the input</td><td></td></tr>
-<tr id="cosDeg"><td><el-method>cosDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>cosine of the input</td><td></td></tr>
 <tr id="divAsFloat"><td><el-method>divAsFloat</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value divided by second input value</td><td></td></tr>
 <tr id="divAsInt"><td><el-method>divAsInt</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value divided by second input value<br>and result rounded down to integer</td><td></td></tr>
 <tr>
@@ -2746,14 +2730,12 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 <tr id="logE"><td><el-method>logE</el-method></td><td><el-type>Float</el-type></td><td></td><td>natural logarithm of the input</td><td></td></tr>
 <tr id="log10"><td><el-method>log10</el-method></td><td><el-type>Float</el-type></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
 <tr id="log2"><td><el-method>log2</el-method></td><td><el-type>Float</el-type></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
-<tr id="power"><td><el-method>power</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value raised to the power<br>of the second input value</td><td></td></tr>
+<tr id="pow"><td><el-method>pow</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value raised to the pow<br>of the second input value</td><td></td></tr>
 <tr id="sin"><td><el-method>sin</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>sine of the input</td><td></td></tr>
-<tr id="sinDeg"><td><el-method>sinDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>sine of the input</td><td></td></tr>
 <tr id="sqrt"><td><el-method>sqrt</el-method></td><td><el-type>Float</el-type></td><td></td><td>positive square root of the input</td><td></td></tr>
 <tr id="tan"><td><el-method>tan</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>tangent of the input</td><td></td></tr>
-<tr id="tanDeg"><td><el-method>tanDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
-<tr id="degToRad"><td><el-method>degToRad</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
-<tr id="radToDeg"><td><el-method>radToDeg</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr>
+<tr id="radians"><td><el-method>radians</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
+<tr id="degrees"><td><el-method>degrees</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr>
 </table>
 
 <p>Examples of some maths functions and constants being tested:</p>
@@ -2763,7 +2745,7 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 </el-top>
 <el-statement class="ok" id="assert4" tabindex="-1"><el-kw>assert </el-kw><el-field id="text5" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.141592653589793</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-method>abs</el-method>(-<el-lit><el-lit>3</el-lit>.7</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.7</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-lit>2</el-lit>, <el-lit>10</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>1024</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>2</el-lit>, <el-lit>10</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>1024</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert51" tabindex="-1"><el-kw>assert </el-kw><el-field id="text52" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr53" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.414</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-method>asin</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>0</el-lit>.524</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-method>acos</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.047</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
@@ -2847,12 +2829,12 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
   <td><el-method>bitShiftL</el-method></td>
   <td><el-type>Int, Int</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>integer bit shifted to the left by the value of the second argument,<br>i.e. multiplied by 2 to the power of the second argument</td>
+  <td>integer bit shifted to the left by the value of the second argument,<br>i.e. multiplied by 2 to the pow of the second argument</td>
  </tr><tr id="bitShiftR">
   <td><el-method>bitShiftR</el-method></td>
   <td><el-type>Int, Int</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the power of the second argument</td>
+  <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the pow of the second argument</td>
  </tr>
 </table>
 
@@ -2920,11 +2902,16 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 <p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
 <table class="tableMethod">
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th>
- </tr><tr id="pause">
-  <td><el-method>pause</el-method></td>
+ </tr><tr id="sleep">
+  <td><el-method>sleep</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(1000)</el-code> delays execution for one second</td>
+  <td>pauses the execution of a program for the specified number of seconds,<br> e.g. for a game <el-code>sleep(1.5)</el-code> delays execution for 1.5 seconds</td>
+</tr><tr id="sleep_ms">
+  <td><el-method>sleep_ms</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td>(none)</td>
+  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. <el-code>sleep(1)</el-code> delays execution for one millisecond</td>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
@@ -3011,9 +2998,9 @@ variables to be evaluated before printing are put within curly braces, and the s
 <el-statement class="ok multiline" id="for14" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
-<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
-<el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args25" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit>, $"<el-lit></el-lit>{<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>2</el-lit>)}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
-<el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args28" class="optional ok" tabindex="-1"><el-txt><el-lit>20</el-lit>, $"<el-lit></el-lit>{<el-method>power</el-method>(<el-id>i</el-id>, <el-lit>3</el-lit>)}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>toString</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args25" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit>, $"<el-lit></el-lit>{<el-method>pow</el-method>(<el-id>i</el-id>, <el-lit>2</el-lit>)}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args28" class="optional ok" tabindex="-1"><el-txt><el-lit>20</el-lit>, $"<el-lit></el-lit>{<el-method>pow</el-method>(<el-id>i</el-id>, <el-lit>3</el-lit>)}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -3025,8 +3012,8 @@ variables to be evaluated before printing are put within curly braces, and the s
 <el-statement class="ok multiline" id="for8" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr12" class="ok" tabindex="-1"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>) + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
-<el-statement class="ok" id="var14" tabindex="-1"><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-lit>9</el-lit>, <el-id>i</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var17" tabindex="-1"><el-kw>variable </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>(<el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>())</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var14" tabindex="-1"><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>9</el-lit>, <el-id>i</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var17" tabindex="-1"><el-kw>variable </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>(<el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>())</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), $"<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
@@ -3072,8 +3059,8 @@ variables to be evaluated before printing are put within curly braces, and the s
   <td>(none)</td>
   <td><el-type>Float</el-type></td>
   <td>returns a random number in the range [0..1]<br>Not usable from a function: see note</td>
- </tr><tr id="randomInt">
-  <td><el-method>randomInt</el-method></td>
+ </tr><tr id="randint">
+  <td><el-method>randint</el-method></td>
   <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>returns a random number in the (inclusive) range between the two arguments<br>Not usable from a function: see note</td>
@@ -3081,7 +3068,7 @@ variables to be evaluated before printing are put within curly braces, and the s
 </table>
 
 <h4 class="no-TOC">Note</h4><ul>
- <li>Methods <el-method>random</el-method> and <el-method>randomInt</el-method> cannot be used in a function because
+ <li>Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a function because
  of their dependence on external factors, i.e. they are subject to side effects.
  To obtain random numbers within a function, use Type <a href="#Random"><el-type>Random</el-type></a>.</li></ul>
 
@@ -3161,7 +3148,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To cube each integer value in a list:</p>
 <el-code-block source="map.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>power</el-method>(<el-id>n</el-id>, <el-lit>3</el-lit>))</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>pow</el-method>(<el-id>n</el-id>, <el-lit>3</el-lit>))</el-txt></el-field>)</el-statement>
 &nbsp;&nbsp;&#x27f6; [1, 8, 27, 64, 125]
 </el-code-block>
 
@@ -3266,10 +3253,8 @@ use <el-method>reduce</el-method> on a <el-type>List</el-type> of words (created
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <el-type>List</el-type>.
 They take a function as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the function.</p>
 <p>For simply finding the maximum or minimum value in a <el-type>List</el-type>, you can use
-<a href="#maxFloat"><el-method>maxFloat</el-method></a>,
-<a href="#minFloat"><el-method>minFloat</el-method></a>,
-<a href="#maxInt"><el-method>maxInt</el-method></a> or
-<a href="#minInt"><el-method>minInt</el-method></a>.</p>
+<a href="#max"><el-method>max</el-method></a>,
+<a href="#min"><el-method>min</el-method></a>.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>

@@ -30,7 +30,7 @@ Sub main()
       Next i
       displayVectorGraphics(vg) ' call
       print(x) ' call
-      pause(100) ' call
+      sleep_ms(100) ' call
     End While
   End While
   print("Finished") ' call

@@ -1,10 +1,10 @@
-# 3a735ddd3658ddf124997ccdfab0351b0f2d6f256e9459fed81945c7f12181ae Elan 2.0.0-alpha guest default_profile valid
+# 1bff882a7e37cafd3f762b186d0465c393d3908c31d6956e9754e102bf8eca2c Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable bubbles set to new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i in range(1, 21)
-    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randomInt(0), white)
+    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randint(0), white)
     call bubbles.append(b)
   end for
   while true
@@ -25,5 +25,5 @@ procedure moveGrowBurst(bubbles as List<of CircleVG>)
     end if
   end for
   call displayVectorGraphics(bubbles)
-  call pause(50)
+  call sleep_ms(50)
 end procedure

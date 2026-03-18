@@ -75,7 +75,7 @@
 <p>Random numbers may be created by calling one of these two standard methods:</p>
 <ul>
 <li><el-code>random() returns</el-code>s a <el-code>Float</el-code> in the range 0 &#8230; 1</li>
-<li><el-code>randomInt(min, max) returns</el-code>s an <el-code>Int</el-code> in the range <el-code>min</el-code> to <el-code>max</el-code> inclusive</li>
+<li><el-code>randint(min, max) returns</el-code>s an <el-code>Int</el-code> in the range <el-code>min</el-code> to <el-code>max</el-code> inclusive</li>
 </ul>
 <p>For example:</p>
 <el-code-block source="random.elan">
@@ -85,7 +85,7 @@
 <el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>probability</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
 <el-statement class="ok multiline" id="for10" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-top>
-<el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
+<el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-method>randint</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 <el-kw>end main</el-kw>

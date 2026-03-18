@@ -25,7 +25,7 @@ main
     else
       call body.removeAt(0)
     end if
-    call pause(150)
+    call sleep_ms(150)
   end while
   call print($"Game Over! Score: {body.length() - 1}")
 end main
@@ -52,8 +52,8 @@ end procedure
 procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
   variable changePosition set to true
   while changePosition
-    set apple[0] to randomInt(0, 39)
-    set apple[1] to randomInt(0, 29)
+    set apple[0] to randint(0, 39)
+    set apple[1] to randint(0, 29)
     if not body.contains(apple) then
       set changePosition to false
     end if
