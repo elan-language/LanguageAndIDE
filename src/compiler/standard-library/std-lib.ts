@@ -136,7 +136,7 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.pureAsyncExtension, ElanString)
-  async asString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
+  async toString<T1>(@elanGenericParamT1Type() v: T1 | T1[] | undefined): Promise<string> {
     if (v === undefined || v === null) {
       throw new ElanRuntimeError(`Out of range error`);
     }
@@ -162,7 +162,7 @@ export class StdLib {
       const items: string[] = [];
 
       for (const i of v) {
-        const s = await this.asString(i);
+        const s = await this.toString(i);
         items.push(s);
       }
       if (items.length < 2) {
@@ -175,8 +175,8 @@ export class StdLib {
       return `(${items.join(", ")})`;
     }
 
-    if (typeof v === "object" && "asString" in v) {
-      return await (v.asString as () => Promise<string>)();
+    if (typeof v === "object" && "toString" in v) {
+      return await (v.toString as unknown as () => Promise<string>)();
     }
 
     if (typeof v === "object") {
@@ -428,19 +428,19 @@ export class StdLib {
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async print(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(`${await this.system.asString(s)}\n`);
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
   }
 
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async printNoLine(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(await this.system.asString(s));
+    await this.system.elanInputOutput.print(await this.system.toString(s));
   }
 
   @elanProcedure(["position", "any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async printTab(@elanIntType() position: number, @elanAnyType() s: any) {
-    await this.system.elanInputOutput.printTab(position, await this.system.asString(s));
+    await this.system.elanInputOutput.printTab(position, await this.system.toString(s));
   }
 
   @elanProcedure([], ProcedureOptions.async)
@@ -510,7 +510,7 @@ export class StdLib {
     if (options.contains(s)) {
       return s;
     }
-    const valid = await options.asString();
+    const valid = await options.toString();
     await this.prompt(`response must be one of ${valid}`);
     return await this.inputStringFromOptions(prompt, options);
   }

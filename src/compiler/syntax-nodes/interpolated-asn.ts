@@ -11,7 +11,7 @@ export class InterpolatedAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    return `\${await _stdlib.asString(${this.body.compile()})}`;
+    return `\${await _stdlib.toString(${this.body.compile()})}`;
   }
 
   symbolType() {

@@ -560,7 +560,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <h3 class="no-TOC" id="UsingAClass">Using a Class</h3>
 <p>A Class is instantiated using the keyword <el-kw>class</el-kw> followed by the Class name, and optional <el-kw>inherits</el-kw> to refer to a <el-kw>class</el-kw> or <el-kw>abstract class</el-kw> defined above in the program.</p>
 <p>The Class name must have an initial capital letter because it functions as a new Type.</p>
-<p>This example shows the definition of a Class that includes its <el-kw>constructor</el-kw>, <el-kw>property</el-kw> definitions and an example of the required <el-method>asString</el-method> method:</p>
+<p>This example shows the definition of a Class that includes its <el-kw>constructor</el-kw>, <el-kw>property</el-kw> definitions and an example of the required <el-method>toString</el-method> method:</p>
 
 <el-code-block source="constructor.elan">
 <el-class class="ok multiline" id="class1" tabindex="-1">
@@ -575,7 +575,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <el-kw>end constructor</el-kw>
 </el-constructor>
 <el-func class="ok multiline" id="func26" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>asString</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params29" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type30" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>toString</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params29" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type30" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="return31" tabindex="-1"><el-kw>return </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt>$"{<el-kw>this</el-kw>.<el-id>x</el-id>}<el-lit>,</el-lit>{<el-kw>this</el-kw>.<el-id>y</el-id>}"</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
@@ -841,7 +841,7 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
-  <td>method <el-method>asString</el-method> must be defined</td>
+  <td>method <el-method>toString</el-method> must be defined</td>
  </tr><tr>
   <td><a href="#procedure_method"><el-kw>procedure</el-kw> method</a></td>
   <td></td>
@@ -911,9 +911,9 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the Class as though it were a variable or parameter.</li>
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the Class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
  This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
-<li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
- If defined for a Class then, if an instance of the Class is printed, function method <el-method>asString</el-method> will automatically be used.
-  Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
+ If defined for a Class then, if an instance of the Class is printed, function method <el-method>toString</el-method> will automatically be used.
+  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
 <h2 id="procedure_method"><el-kw>procedure</el-kw> method</h2>
@@ -1674,7 +1674,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 -->
 
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
- <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>asString</el-method>, may be called on a named
+ <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toString</el-method>, may be called on a named
  value or an expression only using <a href="#dotSyntax">dot syntax</a>.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>

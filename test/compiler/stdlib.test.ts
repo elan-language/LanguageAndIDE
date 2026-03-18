@@ -1129,7 +1129,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 end class
@@ -1158,7 +1158,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1338,7 +1338,7 @@ end main
 class Point
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Point"
   end function
 end class`;
@@ -1359,7 +1359,7 @@ class Point {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Point";
   }
 
@@ -2065,10 +2065,10 @@ return [main, _tests];}`;
 class List
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
-  function asString() returns String
+  function toString() returns String
     return "MyList"
   end function
 

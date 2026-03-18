@@ -505,7 +505,7 @@ class Foo
       call this.p1.length(2)
     end procedure
 
-    function asString() returns String
+    function toString() returns String
       return ""
     end function
 
@@ -522,7 +522,7 @@ class Bar
       call printNoLine(this.p1 + plus)
     end procedure
 
-    function asString() returns String
+    function toString() returns String
       return ""
     end function
 
@@ -555,7 +555,7 @@ class Foo {
     await this.p1.length(2);
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -575,7 +575,7 @@ class Bar {
     await _stdlib.printNoLine(this.p1 + plus);
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -780,7 +780,7 @@ end procedure
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -812,7 +812,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -858,7 +858,7 @@ class Foo
   constructor()
     set this.ff to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -887,7 +887,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

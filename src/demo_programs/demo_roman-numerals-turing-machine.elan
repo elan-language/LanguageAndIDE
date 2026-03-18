@@ -9,7 +9,7 @@ main
   variable tm set to new TuringMachine(initState, haltState)
   call addRulesForRomanNumeralsInto(tm)
   constant dec set to inputIntBetween("Enter a year:", 1, 3999)
-  call tm.setTape(dec.asString())
+  call tm.setTape(dec.toString())
   variable steps set to 0
   while not tm.isHalted()
     variable rule set to tm.findMatchingRule()
@@ -20,7 +20,7 @@ main
     call printTab(tm.headPosition - 1, "^")
     call print($"Step: {steps}")
     call print($"State: {tm.currentState}")
-    call print($"Rule applied: {rule.asString()}")
+    call print($"Rule applied: {rule.toString()}")
     call sleep_ms(40)
   end while
   call print($"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
@@ -40,7 +40,7 @@ class TuringMachine
     set this.headPosition to 0
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -124,7 +124,7 @@ class Rule
     set this.move to move
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{this.move}"
   end function
 

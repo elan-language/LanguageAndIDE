@@ -6,7 +6,7 @@ main
   call printTab(10, "Square")
   call printTab(20, "Cube\n")
   for i in range(1, 11)
-    call printTab(0, i.asString())
+    call printTab(0, i.toString())
     call printTab(10, $"{pow(i, 2)}")
     call printTab(20, $"{pow(i, 3)}\n")
   end for

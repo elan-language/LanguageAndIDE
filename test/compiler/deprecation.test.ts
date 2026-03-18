@@ -32,7 +32,7 @@ export class DeprecatedClass {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -47,7 +47,7 @@ export class DeprecatedClass1 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

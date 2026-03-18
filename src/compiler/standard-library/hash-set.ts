@@ -125,8 +125,8 @@ export class HashSet<T1> {
   }
 
   @elanFunction([], FunctionOptions.pureAsync, ElanString)
-  async asString(): Promise<string> {
+  async toString(): Promise<string> {
     const list = this.system.initialise(new List(Array.from(this.contents)));
-    return await this.stdlib.asString(list);
+    return await this.stdlib.toString(list);
   }
 }

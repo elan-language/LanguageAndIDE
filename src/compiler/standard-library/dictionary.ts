@@ -76,21 +76,11 @@ export class Dictionary<T1, T2> {
     return this.contents.has(rk);
   }
 
-  async asString() {
-    const items: string[] = [];
-    for (const k of this.contents.keys()) {
-      const kStr = await this.system!.asString(k);
-      const vStr = await this.system!.asString(this.contents.get(k));
-      items.push(`${kStr}:${vStr}`);
-    }
-    return `[${items.join(", ")}]`;
-  }
-
   async asCloneableObject() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dict = {} as any;
     for (const k of this.contents.keys()) {
-      const kStr = await this.system!.asString(k);
+      const kStr = await this.system!.toString(k);
       const v = await this.system?.asCloneableObject(this.contents.get(k));
       dict[kStr] = v;
     }
@@ -135,5 +125,15 @@ export class Dictionary<T1, T2> {
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);
     return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
+
+  async toString() {
+    const items: string[] = [];
+    for (const k of this.contents.keys()) {
+      const kStr = await this.system!.toString(k);
+      const vStr = await this.system!.toString(this.contents.get(k));
+      items.push(`${kStr}:${vStr}`);
+    }
+    return `[${items.join(", ")}]`;
   }
 }

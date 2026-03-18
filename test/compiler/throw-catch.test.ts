@@ -93,7 +93,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bar = 1;
-  throw new _stdlib.ElanRuntimeError(\`\${await _stdlib.asString(bar)}\`);
+  throw new _stdlib.ElanRuntimeError(\`\${await _stdlib.toString(bar)}\`);
 }
 return [main, _tests];}`;
 
@@ -281,7 +281,7 @@ end main
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -315,7 +315,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -752,7 +752,7 @@ class FooException
   constructor()
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return "Foo"
   end function
 end class`;
@@ -817,7 +817,7 @@ class FooException
   constructor()
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return "Foo"
   end function
 end class`;

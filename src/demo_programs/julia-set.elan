@@ -62,7 +62,7 @@ class Coords
     set this.jy to 0.521
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

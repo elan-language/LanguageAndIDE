@@ -36,7 +36,7 @@ class Game
 
     property previousScores as List<of Int>
 
-    function asString() returns String
+    function toString() returns String
         return "A game"
     end function
 
@@ -49,7 +49,7 @@ class Player
 
     property name as String
 
-    function asString() returns String
+    function toString() returns String
         return this.name
     end function
 
@@ -92,7 +92,7 @@ class Game {
 
   previousScores = system.initialise(_stdlib.List.emptyInstance());
 
-  async asString() {
+  async toString() {
     return "A game";
   }
 
@@ -108,7 +108,7 @@ class Player {
 
   name = "";
 
-  async asString() {
+  async toString() {
     return this.name;
   }
 
@@ -146,7 +146,7 @@ class Foo
       set this.p2 to 1
       set this.p1 to this.p2
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -171,7 +171,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -234,7 +234,7 @@ class Game
     property ff as Func<of String, String => Int>
     property r as RegExp
 
-    function asString() returns String
+    function toString() returns String
         return "A game"
     end function
 
@@ -285,7 +285,7 @@ class Game {
 
   r = system.emptyRegExp();
 
-  async asString() {
+  async toString() {
     return "A game";
   }
 
@@ -329,7 +329,7 @@ class Player
   constructor()
     set this.g to new Game()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -356,7 +356,7 @@ class Game
     property t as (Int, String, List<of Int>)
     property r as RegExp
 
-    function asString() returns String
+    function toString() returns String
         return "A game"
     end function
 
@@ -385,7 +385,7 @@ class Player {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -429,7 +429,7 @@ class Game {
 
   r = system.emptyRegExp();
 
-  async asString() {
+  async toString() {
     return "A game";
   }
 
@@ -471,7 +471,7 @@ class Game
   property p1 as Player
   property previousGame as Maybe<of Game>
 
-  function asString() returns String
+  function toString() returns String
     return "A game"
   end function
 
@@ -484,7 +484,7 @@ class Player
 
   property name as String
 
-  function asString() returns String
+  function toString() returns String
     return this.name
   end function
 
@@ -523,7 +523,7 @@ class Game {
     this.elan_previousGame = previousGame;
   }
 
-  async asString() {
+  async toString() {
     return "A game";
   }
 
@@ -539,7 +539,7 @@ class Player {
 
   name = "";
 
-  async asString() {
+  async toString() {
     return this.name;
   }
 
@@ -581,7 +581,7 @@ class Game
   property p1 as Maybe<of Player>
   property p2 as Maybe<of Player>
 
-  function asString() returns String
+  function toString() returns String
     return "A game"
   end function
 
@@ -625,7 +625,7 @@ class Game {
     this.elan_p2 = p2;
   }
 
-  async asString() {
+  async toString() {
     return "A game";
   }
 
@@ -675,7 +675,7 @@ class Game
   constructor()
     set this.p1 to [1,2,3]
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -704,7 +704,7 @@ class Game {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -747,7 +747,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   procedure pp()
@@ -760,7 +760,7 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -786,7 +786,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -804,7 +804,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -850,7 +850,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -883,7 +883,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -917,7 +917,7 @@ class Foo
   constructor()
     set this.p1 to p2
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -955,7 +955,7 @@ class Foo
     set this.p2 to [0]
     set this.p1 to p2[0]
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -992,7 +992,7 @@ class Foo
   constructor()
     set this.p2 to new List<of Int>()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1035,7 +1035,7 @@ class Foo
   constructor()
     set this.p2 to new List<of Int>()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1077,7 +1077,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1091,7 +1091,7 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1130,7 +1130,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1144,7 +1144,7 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1186,7 +1186,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   procedure pp()
@@ -1199,7 +1199,7 @@ class Bar
   constructor()
     set this.p1 to new Foo()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1236,12 +1236,12 @@ end class`;
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
   procedure p()
-    variable a set to this.asString()
+    variable a set to this.toString()
   end procedure
 
 end class`;
@@ -1273,7 +1273,7 @@ end function
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1308,7 +1308,7 @@ constant aa set to 1
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

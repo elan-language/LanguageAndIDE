@@ -18,7 +18,7 @@ class Square inherits Rectangle
     set this.y to y
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.x},{this.y}"
   end function
 

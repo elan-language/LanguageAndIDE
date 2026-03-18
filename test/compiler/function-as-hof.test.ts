@@ -281,7 +281,7 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to ref f
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -309,7 +309,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -636,7 +636,7 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to f
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -664,7 +664,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

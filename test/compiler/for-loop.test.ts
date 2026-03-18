@@ -370,7 +370,7 @@ async function main() {
   let limit = 10;
   const elan_iterfor6 = [..._stdlib.range(1, limit + 1)];
   for (const i of elan_iterfor6) {
-    await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
+    await _stdlib.printNoLine(\`\${await _stdlib.toString(i)}\`);
     limit = limit + 1;
   }
 }

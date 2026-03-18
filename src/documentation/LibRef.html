@@ -66,7 +66,7 @@ are passed around in a running program:</p>
   <td><el-type>String</el-type></td>
   <td>string of binary digits representing the argument's integer value</td>
  </tr><tr id="asString_Int">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -109,7 +109,7 @@ in the range:</li>
 <el-statement class="ok multiline" id="for3" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-method>s</el-method>(<el-id>n</el-id>), $"<el-lit></el-lit>{<el-id>n</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), $"<el-lit></el-lit>{<el-id>np</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
@@ -149,7 +149,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Float">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Float</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -224,7 +224,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Boolean">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Boolean</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -318,7 +318,7 @@ in the range:</li>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_String">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -688,7 +688,7 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td><el-type>HashSet</el-type></td>
   <td>a new Set containing all the <i>unique</i> items in the List</td>
  </tr><tr id="asString_List">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>List</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -904,7 +904,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Dictionary">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1023,7 +1023,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td><el-type>List</el-type></td>
   <td>a List containing the Set's members as List items</td>
  </tr><tr id="asString_Set">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>HashSet</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1118,7 +1118,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>return<br>Types</th>
   <th>returns</th>
  </tr><tr id="asString_Stack">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Stack</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1172,7 +1172,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>return<br>Types</th>
   <th>returns</th>
  </tr><tr id="asString_Queue">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-type>Queue</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1336,7 +1336,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asString_Tuple">
-  <td><el-method>asString</el-method></td>
+  <td><el-method>toString</el-method></td>
   <td><el-code>Tuple</el-code></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
@@ -1403,7 +1403,7 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
   <td></td>
  </tr><tr><!---->
-  <td id="asString"><el-method>asString</el-method></td>
+  <td id="toString"><el-method>toString</el-method></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
   <td><a href="#asString_Float">&#x2714;</a></td>
   <td><a href="#asString_Boolean">&#x2714;</a></td>
@@ -1515,7 +1515,7 @@ of differing Types held together and referenced by a single identifier.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
+ <li>The method <el-method>toString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
   <el-code><el-kw>call </el-kw><el-method>print</el-method>(dict.keys().length()</el-code>) &#x27f6; 15</li>
@@ -3010,7 +3010,7 @@ variables to be evaluated before printing are put within curly braces, and the s
 <el-statement class="ok multiline" id="for14" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
-<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>toString</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call23" tabindex="-1"><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args25" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit>, $"<el-lit></el-lit>{<el-method>pow</el-method>(<el-id>i</el-id>, <el-lit>2</el-lit>)}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call26" tabindex="-1"><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args28" class="optional ok" tabindex="-1"><el-txt><el-lit>20</el-lit>, $"<el-lit></el-lit>{<el-method>pow</el-method>(<el-id>i</el-id>, <el-lit>3</el-lit>)}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
@@ -3025,7 +3025,7 @@ variables to be evaluated before printing are put within curly braces, and the s
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr12" class="ok" tabindex="-1"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>) + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
 <el-statement class="ok" id="var14" tabindex="-1"><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>9</el-lit>, <el-id>i</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var17" tabindex="-1"><el-kw>variable </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>(<el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>())</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var17" tabindex="-1"><el-kw>variable </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>(<el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>())</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), $"<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>

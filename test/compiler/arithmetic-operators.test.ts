@@ -509,7 +509,7 @@ end main
 class Foo
     constructor()
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
    

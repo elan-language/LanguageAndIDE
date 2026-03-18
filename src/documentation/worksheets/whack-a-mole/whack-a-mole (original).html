@@ -256,17 +256,17 @@
             So, immediately after the instruction just created, add an <el-kw>if</el-kw> instruction, with the condition:
 
             <el-code-block>
-                <el-txt><el-id>k</el-id><el-kw> is </el-kw><el-id>molePosition</el-id>.<el-method>asString</el-method>()</el-txt>
+                <el-txt><el-id>k</el-id><el-kw> is </el-kw><el-id>molePosition</el-id>.<el-method>toString</el-method>()</el-txt>
             </el-code-block>
 
             noting that whereas <el-id>k</el-id> is a <i>string</i>, <el-id>molePosition</el-id> is an <i>integer</i> and
 
-            the two cannot be compared directly. Adding <el-code>.<el-method>asString</el-method>()</el-code> returns a string representation
+            the two cannot be compared directly. Adding <el-code>.<el-method>toString</el-method>()</el-code> returns a string representation
             of that integer &ndash; in other words it is <i>effectively</i> converting <el-lit>7</el-lit> to <el-code>"<el-lit>7</el-lit>"</el-code> &ndash; so
             that it can be directly compared to the string <el-id>k</el-id>.</li>
-            <li>Try removing the <el-code>.<el-method>asString</el-method>()</el-code> and wait a couple of seconds to see
+            <li>Try removing the <el-code>.<el-method>toString</el-method>()</el-code> and wait a couple of seconds to see
             the compile error. Take note of what the error message says so that if you see this again in future you
-            will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>asString</el-method>()</el-code> -
+            will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>toString</el-method>()</el-code> -
             you don't need to type it again, you can just press <b>Ctrl+z</b> (undo).
             </li>
             <li>Now within the body of the <el-kw>if</el-kw> instruction add:

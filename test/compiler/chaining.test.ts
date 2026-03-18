@@ -97,7 +97,7 @@ class Foo
   constructor()
     set this.a to [1]
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -120,7 +120,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -160,7 +160,7 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -171,7 +171,7 @@ class Bar
   constructor()
     set this.y to new Yon()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -182,7 +182,7 @@ class Yon
   constructor()
     set this.z to 2
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -206,7 +206,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -228,7 +228,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -250,7 +250,7 @@ class Yon {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -290,7 +290,7 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -300,7 +300,7 @@ end class
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -326,7 +326,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -348,7 +348,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -390,7 +390,7 @@ class Foo
   constructor()
     set this.b to new Bar()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -400,7 +400,7 @@ end class
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -426,7 +426,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -448,7 +448,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -517,7 +517,7 @@ return [main, _tests];}`;
 main 
   variable aStringVar set to "abcdexefg"
   variable s set to ""
-  set s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").asString()
+  set s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString()
   call printNoLine(s)
 end main`;
 
@@ -526,7 +526,7 @@ const global = new class {};
 async function main() {
   let aStringVar = "abcdexefg";
   let s = "";
-  s = (await _stdlib.asString(_stdlib.indexOf(_stdlib.subString(_stdlib.subString(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
+  s = (await _stdlib.toString(_stdlib.indexOf(_stdlib.subString(_stdlib.subString(_stdlib.upperCase(aStringVar), 1, 7), 2, 6), "X")));
   await _stdlib.printNoLine(s);
 }
 return [main, _tests];}`;
@@ -560,7 +560,7 @@ class Bar
   constructor()
     set this.strArr to ["apple", "orange", "pair"]
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -584,7 +584,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -622,7 +622,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -649,7 +649,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -691,7 +691,7 @@ class Bar
   constructor()
     set this.foo to new Foo()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -702,7 +702,7 @@ end class
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -729,7 +729,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -751,7 +751,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -886,7 +886,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -898,7 +898,7 @@ end class
 class Bar
    constructor()
    end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

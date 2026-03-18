@@ -232,15 +232,6 @@ export class List<T1> {
     return this.safeSlice(index1, index2);
   }
 
-  async asString() {
-    const items: string[] = [];
-    for (const i of this.contents) {
-      const s = await this.system!.asString(i);
-      items.push(s);
-    }
-    return `[${items.join(", ")}]`;
-  }
-
   safeIndex(index: number) {
     const r = this.contents[index];
 
@@ -332,7 +323,7 @@ export class List<T1> {
   async join(separator: string): Promise<string> {
     const asStrings: string[] = await mapHelper(
       this.contents,
-      async (i) => await this.system!.asString(i),
+      async (i) => await this.system!.toString(i),
     );
     return asStrings.join(separator);
   }
@@ -340,5 +331,14 @@ export class List<T1> {
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
   asSet() {
     return this.system!.listAsSet(this);
+  }
+
+  async toString() {
+    const items: string[] = [];
+    for (const i of this.contents) {
+      const s = await this.system!.toString(i);
+      items.push(s);
+    }
+    return `[${items.join(", ")}]`;
   }
 }

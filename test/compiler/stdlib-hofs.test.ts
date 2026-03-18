@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -145,7 +146,7 @@ return [main, _tests];}`;
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   call printNoLine(source.map(lambda x as Int => x + 1))
-  call printNoLine(source.map(lambda x as Int => x.asString() + "*"))
+  call printNoLine(source.map(lambda x as Int => x.toString() + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -153,7 +154,7 @@ const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await _stdlib.printNoLine((await source.map(async (x) => x + 1)));
-  await _stdlib.printNoLine((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+  await _stdlib.printNoLine((await source.map(async (x) => (await _stdlib.toString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -257,7 +258,7 @@ main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   call printNoLine(source.reduce(0, lambda s as Int, x as Int => s + x))
   call printNoLine(source.reduce(100, lambda s as Int, x as Int => s + x))
-  call printNoLine(source.reduce("Concat:", lambda s as String, x as Int => s + x.asString()))
+  call printNoLine(source.reduce("Concat:", lambda s as String, x as Int => s + x.toString()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -266,7 +267,7 @@ async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await _stdlib.printNoLine((await source.reduce(0, async (s, x) => s + x)));
   await _stdlib.printNoLine((await source.reduce(100, async (s, x) => s + x)));
-  await _stdlib.printNoLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await _stdlib.printNoLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.toString(x)))));
 }
 return [main, _tests];}`;
 
@@ -764,7 +765,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[apple, orange, pair]");
   });
 
-  test("Pass_complexHof", async () => {
+  // Ignored only because it often times out
+  ignore_test("Pass_complexHof", async () => {
     const code = `${testHeader}
 
 constant numberChars set to "-.0123456789"

@@ -84,7 +84,7 @@ export class ConcreteClassAsn extends ClassAsn {
       const st = m.symbolType();
 
       return (
-        m.symbolId === "asString" &&
+        m.symbolId === "toString" &&
         st instanceof FunctionType &&
         st.parameterTypes.length === 0 &&
         st.returnType === StringType.Instance

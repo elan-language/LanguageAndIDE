@@ -62,10 +62,10 @@ export class Queue<T1> {
     return this.system!.tuple([item, newQueue]) as [typeof ElanT1, typeof Queue];
   }
 
-  async asString() {
+  async toString() {
     const items: string[] = [];
     for (const i of this.contents) {
-      const s = await this.system!.asString(i);
+      const s = await this.system!.toString(i);
       items.push(s);
     }
     return `[${items.join(", ")}]`;

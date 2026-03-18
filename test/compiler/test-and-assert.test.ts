@@ -265,7 +265,7 @@ class Foo
   constructor()
     set this.p1 to 10
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -293,7 +293,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -337,7 +337,7 @@ class Foo
   constructor()
     set this.p1 to 10
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -365,7 +365,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -627,7 +627,7 @@ class Foo
   constructor(b as Int)
     set this.bar to b
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Foo"
   end function
 
@@ -680,7 +680,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Foo";
   }
 

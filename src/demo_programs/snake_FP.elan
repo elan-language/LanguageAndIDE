@@ -93,7 +93,7 @@ class Game
     set this.rnd to rnd
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -175,7 +175,7 @@ class Square
     return copyOfThis
   end function
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.x}, {this.y}"
   end function
 

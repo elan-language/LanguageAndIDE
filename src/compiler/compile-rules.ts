@@ -472,7 +472,7 @@ export function mustHaveConstructor(compileErrors: CompileError[], location: str
 export function mustHaveAsString(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "Concrete class must have an 'asString' function taking no parameters and returning a String.",
+      "Concrete class must have a 'toString' function taking no parameters and returning a String.",
       location,
     ),
   );

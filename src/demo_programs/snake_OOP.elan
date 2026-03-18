@@ -25,7 +25,7 @@ class Snake
     set this.priorTail to tail
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -93,7 +93,7 @@ class Apple
     set this.location to new Square(0, 0)
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -123,7 +123,7 @@ class Square
     set this.y to y
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

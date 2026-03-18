@@ -1527,7 +1527,7 @@ suite("Parsing Nodes", () => {
   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(f), `12.3.asString()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
   //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
   // });
