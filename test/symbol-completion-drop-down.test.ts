@@ -1723,6 +1723,7 @@ end main`;
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
       ["ElanRuntimeError", "*", "*"],
+      ["ElanUserError", "*", "*"],
       ["Float", "*", "*"],
       ["HashSet", "*", "*"],
       ["ImageVG", "*", "*"],
