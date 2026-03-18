@@ -202,11 +202,11 @@ static bool isUCLetter(string k) { // function
 }
 
 [TestMethod] static void test_isUCLetter() {
-  Assert.AreEqual(true, isUCLetter("A") 
-  Assert.AreEqual(true, isUCLetter("Z") 
-  Assert.AreEqual(false, isUCLetter("a") 
-  Assert.AreEqual(false, isUCLetter("1") 
-  Assert.AreEqual(false, isUCLetter(" ") 
+  Assert.AreEqual(true, isUCLetter("A"))
+  Assert.AreEqual(true, isUCLetter("Z"))
+  Assert.AreEqual(false, isUCLetter("a"))
+  Assert.AreEqual(false, isUCLetter("1"))
+  Assert.AreEqual(false, isUCLetter(" "))
 }
 
 static string getWord(int attemptNo, List<List<string>> grid) { // function
@@ -222,8 +222,8 @@ static string setChar(string word, int n, string newChar) { // function
 }
 
 [TestMethod] static void test_setChar() {
-  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_") 
-  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_") 
+  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_"))
+  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_"))
 }
 
 static string markAttempt(string attempt, string target) { // function
@@ -245,16 +245,16 @@ static string markAttempt(string attempt, string target) { // function
 }
 
 [TestMethod] static void test_markAttempt() {
-  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX") 
-  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA") 
-  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE") 
-  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE") 
-  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE") 
-  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP") 
-  Assert.AreEqual("01100", markAttempt("COLON", "GLORY") 
-  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY") 
-  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA") 
-  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY") 
+  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX"))
+  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA"))
+  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE"))
+  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE"))
+  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE"))
+  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP"))
+  Assert.AreEqual("01100", markAttempt("COLON", "GLORY"))
+  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY"))
+  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA"))
+  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY"))
 }
 
 static List<string> possibleAnswersAfterAttempt(List<string> possible, string attempt, string mark) { // function
@@ -270,11 +270,11 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
 
 [TestMethod] static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  Assert.AreEqual(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
-  Assert.AreEqual(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 
-  Assert.AreEqual(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010") 
-  Assert.AreEqual(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") 
-  Assert.AreEqual(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") 
+  Assert.AreEqual(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  Assert.AreEqual(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  Assert.AreEqual(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  Assert.AreEqual(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"))
+  Assert.AreEqual(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"))
 }
 
 static string drawGrid(List<List<string>> grid) { // function

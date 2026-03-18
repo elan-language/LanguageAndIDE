@@ -14,7 +14,7 @@ import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
   helper_compileStatusAsDisplayStatus,
-  helper_parseStatusAsDisplayStatus,
+  helper_parseStatusAsDisplayColour,
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
@@ -439,11 +439,11 @@ export class FileImpl implements File {
 
   getParseStatusLabel(): string {
     const status = this.readParseStatus();
-    return status === ParseStatus.default ? "" : ParseStatus[status];
+    return status === ParseStatus.default ? "" : status === ParseStatus.valid ? "valid" : "invalid";
   }
 
   getParseStatusColour(): string {
-    return DisplayColour[helper_parseStatusAsDisplayStatus(this._parseStatus)];
+    return DisplayColour[helper_parseStatusAsDisplayColour(this._parseStatus)];
   }
 
   setTestStatus(s: TestStatus) {
@@ -509,7 +509,7 @@ export class FileImpl implements File {
   }
   getCompileStatusColour(): string {
     let status = DisplayColour.none;
-    const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
+    const parseStatus = helper_parseStatusAsDisplayColour(this.readParseStatus());
     if (parseStatus === DisplayColour.ok) {
       status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }

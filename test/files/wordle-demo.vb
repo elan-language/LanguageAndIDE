@@ -202,11 +202,11 @@ Function isUCLetter(k As String) As Boolean
 End Function
 
 <TestMethod> Sub test_isUCLetter()
-  Assert.AreEqual(True, isUCLetter("A") 
-  Assert.AreEqual(True, isUCLetter("Z") 
-  Assert.AreEqual(False, isUCLetter("a") 
-  Assert.AreEqual(False, isUCLetter("1") 
-  Assert.AreEqual(False, isUCLetter(" ") 
+  Assert.AreEqual(True, isUCLetter("A"))
+  Assert.AreEqual(True, isUCLetter("Z"))
+  Assert.AreEqual(False, isUCLetter("a"))
+  Assert.AreEqual(False, isUCLetter("1"))
+  Assert.AreEqual(False, isUCLetter(" "))
 End Sub
 
 Function getWord(attemptNo As Integer, grid As List(Of List(Of String))) As String
@@ -222,8 +222,8 @@ Function setChar(word As String, n As Integer, newChar As String) As String
 End Function
 
 <TestMethod> Sub test_setChar()
-  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_") 
-  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_") 
+  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_"))
+  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_"))
 End Sub
 
 Function markAttempt(attempt As String, target As String) As String
@@ -245,16 +245,16 @@ Function markAttempt(attempt As String, target As String) As String
 End Function
 
 <TestMethod> Sub test_markAttempt()
-  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX") 
-  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA") 
-  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE") 
-  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE") 
-  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE") 
-  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP") 
-  Assert.AreEqual("01100", markAttempt("COLON", "GLORY") 
-  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY") 
-  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA") 
-  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY") 
+  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX"))
+  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA"))
+  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE"))
+  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE"))
+  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE"))
+  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP"))
+  Assert.AreEqual("01100", markAttempt("COLON", "GLORY"))
+  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY"))
+  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA"))
+  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY"))
 End Sub
 
 Function possibleAnswersAfterAttempt(possible As List(Of String), attempt As String, mark As String) As List(Of String)
@@ -270,11 +270,11 @@ End Function
 
 <TestMethod> Sub test_possibleAnswersAfterAttempt()
   Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' variable
-  Assert.AreEqual({"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "20000") 
-  Assert.AreEqual({"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "10000") 
-  Assert.AreEqual({"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "10010") 
-  Assert.AreEqual({"RATTY"}, possibleAnswersAfterAttempt({"RATTY"}, "AORTA", "10120") 
-  Assert.AreEqual({"RASPY", "RATTY"}, possibleAnswersAfterAttempt({"FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"}, "FAIRY", "02012") 
+  Assert.AreEqual({"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  Assert.AreEqual({"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  Assert.AreEqual({"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  Assert.AreEqual({"RATTY"}, possibleAnswersAfterAttempt({"RATTY"}, "AORTA", "10120"))
+  Assert.AreEqual({"RASPY", "RATTY"}, possibleAnswersAfterAttempt({"FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"}, "FAIRY", "02012"))
 End Sub
 
 Function drawGrid(grid As List(Of List(Of String))) As String

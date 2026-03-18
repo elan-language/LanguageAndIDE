@@ -225,7 +225,7 @@ el-field el-txt {
     background-color: var(--panelBackground);
 }
 el-field.error *, el-field.error input  {
-    background-color: var(--error);
+    background-color: var(--warning);
 }
 el-field.warning *, el-field.warning input {
     background-color: var(--warning);

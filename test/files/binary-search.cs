@@ -36,17 +36,17 @@ static bool binarySearch(List<string> li, string item) { // function
 
 [TestMethod] static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
-  Assert.AreEqual(true, binarySearch(li1, "lemon") 
-  Assert.AreEqual(true, binarySearch(li1, "lime") 
-  Assert.AreEqual(true, binarySearch(li1, "orange") 
-  Assert.AreEqual(false, binarySearch(li1, "pear") 
+  Assert.AreEqual(true, binarySearch(li1, "lemon"))
+  Assert.AreEqual(true, binarySearch(li1, "lime"))
+  Assert.AreEqual(true, binarySearch(li1, "orange"))
+  Assert.AreEqual(false, binarySearch(li1, "pear"))
   var li2 = ["lemon", "orange"];
-  Assert.AreEqual(true, binarySearch(li2, "lemon") 
-  Assert.AreEqual(true, binarySearch(li2, "orange") 
-  Assert.AreEqual(false, binarySearch(li2, "pear") 
+  Assert.AreEqual(true, binarySearch(li2, "lemon"))
+  Assert.AreEqual(true, binarySearch(li2, "orange"))
+  Assert.AreEqual(false, binarySearch(li2, "pear"))
   var li3 = ["lemon"];
-  Assert.AreEqual(true, binarySearch(li3, "lemon") 
-  Assert.AreEqual(false, binarySearch(li3, "lime") 
+  Assert.AreEqual(true, binarySearch(li3, "lemon"))
+  Assert.AreEqual(false, binarySearch(li3, "lime"))
   var li4 = new List<string>();
-  Assert.AreEqual(false, binarySearch(li4, "pear") 
+  Assert.AreEqual(false, binarySearch(li4, "pear"))
 }

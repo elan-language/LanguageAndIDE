@@ -115,7 +115,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   testMsgAsHtml(): string {
     const cls = this.getCls(this.outcome);
     const msg = escapeHtmlChars(this.getMessage(this.outcome));
-    return ` <el-msg class="${cls}">${msg}</el-msg>`;
+    return `<el-msg class="${cls}"> ${msg}</el-msg>`;
   }
 
   renderAsHtml(): string {
