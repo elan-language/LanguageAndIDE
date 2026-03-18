@@ -712,8 +712,7 @@ export abstract class AbstractField implements Selectable, Field {
       const cls = this.isSelected()
         ? DisplayColour[DisplayColour.warning]
         : DisplayColour[DisplayColour.error];
-      const fromNode: string = this.rootNode!.message;
-      const msg = fromNode === "" ? " Invalid." : fromNode;
+      const msg = this.rootNode!.message;
       message = `<el-msg class="${cls}">${msg}${this.helpAsHtml()}</el-msg>`;
     } else {
       message = helper_compileMsgAsHtmlNew(this.getFile(), this);

@@ -189,7 +189,7 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
 }
 
 export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayColour {
-  let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
+  let status = helper_parseStatusAsDisplayColour(loc.readParseStatus());
   if (status === DisplayColour.ok) {
     const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
     if (compile !== DisplayColour.none) {
@@ -200,14 +200,14 @@ export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): Displa
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColour {
+export function helper_parseStatusAsDisplayColour(ps: ParseStatus): DisplayColour {
   let overall = DisplayColour.none;
   if (ps === ParseStatus.valid) {
     overall = DisplayColour.ok;
   } else if (ps === ParseStatus.incomplete) {
     overall = DisplayColour.warning;
   } else if (ps === ParseStatus.invalid) {
-    overall = DisplayColour.error;
+    overall = DisplayColour.warning;
   }
   return overall;
 }
