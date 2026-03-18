@@ -567,43 +567,47 @@ with specified changes: that is why all such methods have names starting '<el-co
 <h2 id="List">List</h2>
 <p>The <el-type>List</el-type> Type defines a data structure containing <i>n</i> items of any single Type,
  including fundamental value Types, structure Types such as <el-type>List</el-type>,
- and also user-defined Types such as a Class.</p>
-<p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>,</p>
-<p>A List is created empty, and is then initialised with items of the stated Type.</p>
-<p>A List's size can be dynamically changed.</p>
+ and user-defined Types such as a Class.</p>
+<p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
+<p>A List is created empty, and is then initialised with items of the stated Type using procedure <a href="#initialise"><el-method>initialise</el-method></a>.</p>
+<p>The item at index <el-id>ix</el-id> in List <el-id>myList</el-id> can then be changed using a <el-kw>set</el-kw> instruction and a valid index value in square brackets:<br>
+<el-code><el-kw>set</el-kw> <el-id>myList</el-id>[<el-id>ix</el-id>] <el-kw>to</el-kw> <el-lit>5</el-lit></el-code> 
+<p>A List's size can be dynamically changed using the procedure methods listed below.</p>
 
 <div id="tail"></div>
 <h3 class="no-TOC" id="deconstructList">Deconstructing a List</h3>
-<p>A <el-type>List</el-type> may be split (deconstructed) into
- new named values in a similar way to deconstructing a <a href="#deconstructTuple">Tuple</a>, but in this case:</p>
+<p>A <el-type>List</el-type> may be split (deconstructed) into new named values using indexes and
+ the methods <el-method>head</el-method>, <el-method>tail</el-method> and <el-method>subList</el-method>:</p>
 <ul>
- <li>Deconstruction is into just two named values separated by a colon</li>
- <li>The first item in the list (the head) is assigned to the first named value.</li>
- <li>The remainder of the list (the tail) is assigned to the second named value.  If the original list contains only one item, the tail will be an empty List.</li>
- <li>Like deconstructing a Tuple, you can use an underscore <el-code>_</el-code> instead of one of the named values in order to discard either the head or the tail.</li>
+ <li>To extract the first item in a List:<br>
+ <el-kw>variable</el-kw> <el-id>headItem</el-id> <el-kw>set to</el-kw> <el-id>myList</el-id>[<el-lit>0</el-lit>]<br>
+ or<br>
+ <el-kw>set</el-kw> <el-id>heatItem</el-id> <el-kw>to</el-kw> <el-id>myList</el-id><el-method>.head</el-method>()</el-kw>
+ </li><li>To form a new List of all but the first item in a List:<br>
+ <el-kw>variable</el-kw>  <el-id>tailList</el-id> <el-kw>set to</el-kw> <el-id>myList</el-id><el-method>.tail</el-method>()</el-kw><br>
+ If the original list contains only one item, the new List will be the empty List.
+ </li><li>To get some other portion of a List, use the method <el-method>subList</el-method>:<br>
+ <el-kw>set</el-kw> <el-id>shortList</el-id> <el-kw>to</el-kw> <el-id>myList</el-id><el-method>.subList</el-method>(<el-lit>1</el-lit>,<el-lit>5</el-lit>)</el-kw>
+</li>
 </ul>
-<p><el-code>variable x:xs set to myList</el-code><br>
-<el-code>set h:t to myList</el-code><br>
-<el-code>set h:myList to myList</el-code></p>
-<p>Discarding either the head or tail:</p>
-<p><el-code>variable _:tail set to myList</el-code><br>
-<el-code>variable head:_ set to myList</el-code></p>
+<p>In all these cases the items indexed must exist, else a runtime error will stop the program.</p>
 
 <h3 class="no-TOC" id="ListsOfLists">Lists of lists</h3>
 <h4 class="no-TOC">Two dimensional arrays</h4>
-<p>To create a 2D array that holds a value in every cell, you can define a list of lists like this:</p>
-<el-code>variable a2d set to new List&lt;of List&lt;of Int&gt;&gt;()</el-code>
-<p>You then refer to an individual cell (x,y) by its two coorinates in square brackets: a2d[x][y]</p>
-<p>.. to set the value of the item at (x,y)</p>
-<p>.. to retrieve the value of the item at (x,y)</p>
+<p>To create a 2D array that holds a value of a single Type in every cell, you can define a list of lists like this:</p>
+<el-code><el-kw>variable</el-kw> <el-id>a2d</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;&gt;()</el-code>
+<p>The item at index <el-id>ix</el-id>,<el-id>iy</el-id> in a 2D array can be accessed and changed
+ using its two coordinates in square brackets:<br>
+<el-code><el-kw>variable</el-kw> <el-id>it</el-id> <el-kw>set to</el-kw>  <el-id>a2d</el-id>[<el-id>ix</el-id>][<el-id>iy</el-id>]</el-code><br>
+<el-code><el-kw>set</el-kw> <el-id>a2d</el-id>[<el-id>ix</el-id>][<el-id>iy</el-id>] <el-kw>to</el-kw> 7</el-code> 
 
-<p>This approach is used for the fixed 2D array used in <a href="#BlockGraphics">Block graphics</a> described below.
-In this case, x refers to the columns in the display, and y to the rows.</p>
+<p>This approach is used for the fixed 2D array used in <a href="#BlockGraphics">Block graphics</a>.
+In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the rows.</p>
 
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can define, for example:</p>
-<el-code>variable a3d set to new List&lt;of List&lt;of List&lt;of Float&gt;&gt;&gt;()</el-code>
-<p>and refer to a cell using three indexes.</p>
+<el-code><el-kw>variable</el-kw> <el-id>a3d</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;of <el-type>List</el-type>&lt;of List&lt;of <el-type>Float</el-type>&gt;&gt;&gt;()</el-code>
+<p>and refer to a cell using three indexes in square brackets.</p>
 <p>In principle arrays of higher dimension can be defined.</p>
 
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a <el-type>List</el-type></h3>
@@ -647,11 +651,6 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type></td>
   <td><el-type>List</el-type></td>
   <td>the argument List is added to the start of the List</td>
- </tr><tr id="put_List">
-  <td><el-method>put</el-method></td>
-  <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type>,<br>value of <el-type>List</el-type> items' Type</td>
-  <td>replace the item at the given index with the new value</td>
  </tr><tr id="removeAll">
   <td><el-method>removeAll</el-method></td>
   <td><el-type>List</el-type></td>
@@ -703,12 +702,6 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="notEqualTo_List">
-  <td><el-method>notEqualTo</el-method></td>
-  <td><el-type>List</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
   <td><el-type>List</el-type></td>
@@ -721,7 +714,7 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type> items' Type</td>
-  <td>the first item of the List</td>
+  <td>the first item of the List (i.e. index = 0, which must exist)</td>
  </tr><tr id="indexOf_List">
   <td><el-method>indexOf</el-method></td>
   <td><el-type>List</el-type></td>
@@ -785,6 +778,12 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type> items' Type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
+ </tr><tr id="notEqualTo_List">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>List</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
   <td><el-type>List</el-type></td>
@@ -808,7 +807,13 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <i>m</i> indexes the first item of the list required (counting from 0) and<br>
   <i>n</i> indexes the item <i>after</i> the last item required (exclusive index)<br>
   if <i>m</i> &ge; <i>n</i> the result is the empty list  
-  </td><tr id="withAppend">
+  </td><tr id="tail">
+  <td><el-method>tail</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td>(none)</td>
+  <td><el-type>List</el-type> items' Type</td>
+  <td>all items except the first item in the List (i.e. index = 1..n, which must exist)</td>
+ </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td><el-type>List</el-type></td>
   <td>item of <el-type>List</el-type> items' Type</td>
@@ -838,8 +843,8 @@ In this case, x refers to the columns in the display, and y to the rows.</p>
   <td><el-type>List</el-type> of same Type</td>
   <td><el-type>List</el-type></td>
   <td>a new List lengthened by prepending the given List</td>
- </tr><tr id="withPut_List">
-  <td><el-method>withPut</el-method></td>
+ </tr><tr id="withSet_List">
+  <td><el-method>withSet</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type>,<br>value of <el-type>List</el-type> items' Type</td>
   <td><el-type>List</el-type></td>
@@ -871,18 +876,13 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 <p>The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>.
  The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
 
-<h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a <el-type>Dictionary</el-type></h3>
+<h3 class="no-TOC" id="Dictionary_procedures">Procedure method on a <el-type>Dictionary</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
   <th>on<br>Type</th>
   <th>argument<br>Types</th>
   <th>action</th>
- </tr><tr id="put_Dictionary">
-  <td><el-method>put</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>key's Type, value's Type</td>
-  <td>replace the value at an existing key, or add a <i>key:value</i> pair</td>
  </tr><tr id="removeAt_Dictionary">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -911,12 +911,6 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>Dictionary</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if dictionary and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="notEqualTo_Dictionary">
-  <td><el-method>notEqualTo</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if dictionary and argument differ <br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="hasKey_Dictionary">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -929,14 +923,20 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>a List containing the keys</td>
-</tr><tr id="values_Dictionary">
+</tr><tr id="notEqualTo_Dictionary">
+  <td><el-method>notEqualTo</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if dictionary and argument differ <br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="values_Dictionary">
   <td><el-method>values</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>a List containing the values</td>
-</tr><tr id="withPut_Dictionary">
-  <td><el-method>withPut</el-method></td>
+</tr><tr id="withSet_Dictionary">
+  <td><el-method>witSet</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>item of <el-type>Dictionary key's Type</el-type>,<br>item of <el-type>Dictionary value's Type</el-type></td>
   <td><el-type>Dictionary</el-type></td>
@@ -1483,13 +1483,13 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#peek_Queue">&#x2714;</a></td>
   <td></td>
  </tr><tr><!---->
-  <td id="withPut"><el-method>withPut</el-method></td>
+  <td id="withSet"><el-method>withSet</el-method></td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withPut_List">&#x2714;</a></td>
-  <td><a href="#withPut_Dictionary">&#x2714;</a></td>
+  <td><a href="#withSet_List">&#x2714;</a></td>
+  <td><a href="#withSet_Dictionary">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -3093,7 +3093,7 @@ variables to be evaluated before printing are put within curly braces, and the s
 <a href="#minBy"><el-method>minBy</el-method></a> and
 <a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
 
-<h2 id="ref">Passing a function as a reference</h2>
+<h2 id="AsRef">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
  This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the name of a function.
  It is also possible to use references to functions not in the context of HoFs.</p>

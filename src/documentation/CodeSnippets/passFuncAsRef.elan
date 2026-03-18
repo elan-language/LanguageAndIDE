@@ -1,13 +1,21 @@
-# 44e5778cf3bacc2e85fdb9c726f7983041bc8435a9b55a034da6292192c6e0e3 Elan 2.0.0-alpha guest default_profile valid
+# 16977ff0da1e17244746d8dea22ae41b6c7a7c71258f8ce77cae9d916d1294e7 Elan 2.0.0-alpha guest default_profile valid
 
 class Pupil
+  constructor()
+
+  end constructor
+
+  function asString() returns String
+    return "Pupil"
+  end function
+
   property mathsPercent as Int
 
 end class
 
 main
   variable allPupils set to new List<of Pupil>()
-  variable passes set to allPupils.filter(ref passedMathsTest)
+  variable passes set to allPupils.filter(passedMathsTest)
 end main
 
 function passedMathsTest(p as Pupil) returns Boolean

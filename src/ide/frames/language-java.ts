@@ -52,7 +52,7 @@ export class LanguageJava extends LanguageCfamily {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = "";
     if (frame instanceof AssertStatement) {
-      html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()}`;
+      html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;

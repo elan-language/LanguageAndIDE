@@ -336,4 +336,8 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     return map;
   }
+
+  protected getCommentMarker() {
+    return this.getFile().language().COMMENT_MARKER;
+  }
 }

@@ -49,13 +49,13 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
       [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
       [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
-      [commentMarker, (_parent: Parent) => this.class.createComment()],
+      [this.getCommentMarker(), (_parent: Parent) => this.class.createComment()],
     ];
     return options;
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.class_members.includes(keyword);
+    return this.profile.class_members.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
