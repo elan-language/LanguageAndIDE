@@ -199,7 +199,7 @@
             instead of over-writing it. We can fix this with a <el-kw>call</el-kw> to the <el-method>clearPrintedText</el-method>
             procedure (which requires no arguments between the brackets). Add this as the <i>last instruction within the</i> <el-kw>while</el-kw> loop -
             after the <el-kw>end each</el-kw>.</li>
-            <li>Also, we need to slow things down by calling the <el-method>pause</el-method> procedure, which requires the length
+            <li>Also, we need to slow things down by calling the <el-method>sleep_ms</el-method> procedure, which requires the length
                 of pause to be specified as an argument (i.e. between the brackets after the procedure name). The length
                 is specified in <i>milliseconds</i> so use a value of <el-lit>2000</el-lit> to start with.
                 This can be reduced later to say 1000 (one second) to make the game more challenging once you
@@ -219,7 +219,7 @@
     <div class="step" id="step6">
         <h3>Iteration 6 &ndash; Read a keypress dynamically and whack the mole if the digit matches</h3>
         <ul>
-            <li>Calling the <el-method>pause</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
+            <li>Calling the <el-method>sleep_ms</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
             a pause we can't do anything else. Doing things in parallel is <i>possible</i> in programming, but the techniques are more complex.
             What we need instead is to create a loop that monitors for a keypress by the user, but &ndash; whether or not a keypress is
         detected &ndash; will exit the loop after one second, so that the mole can be moved again.</li>

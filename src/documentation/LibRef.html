@@ -1680,7 +1680,7 @@ So the top left corner of the display is at (-100,75).</p>
 </el-punc></el-punc></el-top>
 <el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>turn</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>90</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>move</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-lit>80</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>500</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>500</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -1999,10 +1999,10 @@ together with the procedure and function methods provided to alter their values 
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>circ</el-id>.<el-method><el-method>setFillColour</el-method></el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>red</el-id></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call27" tabindex="-1"><el-kw>call </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args29" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call27" tabindex="-1"><el-kw>call </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field id="args29" class="optional ok" tabindex="-1"><el-txt><el-lit>700</el-lit></el-txt></el-field>)</el-statement>
 <el-statement class="ok" id="call30" tabindex="-1"><el-kw>call </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-id>circ</el-id>.<el-method><el-method>setFillColour</el-method></el-method></el-txt></el-field>(<el-field id="args32" class="optional ok" tabindex="-1"><el-txt><el-id>green</el-id></el-txt></el-field>)</el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
@@ -2449,7 +2449,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field><el-punc>)</el-punc></el-statement>
 <el-statement class="ok multiline" id="for27" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
 </el-punc></el-punc></el-top>
@@ -2914,11 +2914,16 @@ Parameters <el-id>start</el-id> and <el-id>end</el-id> are <i>inclusive</i> valu
 <p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
 <table class="tableMethod">
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th>
- </tr><tr id="pause">
-  <td><el-method>pause</el-method></td>
+ </tr><tr id="sleep">
+  <td><el-method>sleep</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(1000)</el-code> delays execution for one second</td>
+  <td>pauses the execution of a program for the specified number of seconds,<br> e.g. for a game <el-code>sleep(1.5)</el-code> delays execution for 1.5 seconds</td>
+</tr><tr id="sleep_ms">
+  <td><el-method>sleep_ms</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td>(none)</td>
+  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. <el-code>sleep(1)</el-code> delays execution for one millisecond</td>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>

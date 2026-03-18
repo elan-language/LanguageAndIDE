@@ -26,7 +26,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
     call displayBlocks(gr2)
-    call pause(0)
+    call sleep_ms(0)
   end while
   if solver.getLastVisited().equals(destination) then
     variable rl set to solver.getRouteAndLength()

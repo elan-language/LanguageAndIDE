@@ -116,7 +116,7 @@ class Coords
         # another key may have been pressed
         set k to getKey()
       end while
-      call pause(10)
+      call sleep_ms(10)
     end while
   end procedure
 

@@ -9,7 +9,7 @@ main
   while game.isOn
     set blocks to updateGraphics(game, blocks)
     call displayBlocks(blocks)
-    call pause(150)
+    call sleep_ms(150)
     set game to clockTick(game, getKey())
   end while
   call print($"Game Over! Score: {score(game)}")

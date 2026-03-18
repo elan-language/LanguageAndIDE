@@ -53,6 +53,6 @@ main
       end if
     end for
     call displayVectorGraphics(bubbles)
-    call pause(50)
+    call sleep_ms(50)
   end while
 end main

@@ -8,7 +8,7 @@ static void main() {
     var gridRef = new AsRef<List<List<int>>>(grid);
     nextGeneration(gridRef); // call
     grid = gridRef.value(); // set
-    pause(50); // call
+    sleep_ms(50); // call
   }
 }
 

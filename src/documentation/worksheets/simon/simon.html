@@ -263,7 +263,7 @@
         and uses <el-id>sequence</el-id> as the <i>source</i>.</li>
         <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop.
         Your code should now parse and compile correctly again.</li>
-        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to <el-method>pause</el-method> for a full second -
+        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to <el-method>sleep_ms</el-method> for a full second -
           otherwise things will happen too quickly to see.</li>
         <li>Run the program. What is it doing?</li>
           <textarea class="question" id="input4a"></textarea>
@@ -307,7 +307,7 @@
                 <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
                 <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end procedure</el-kw>
             </el-proc>
           </el-code-block>
@@ -320,7 +320,7 @@
           <el-id>move</el-id> by a comma. This will initially give you an error because the definition of the <el-kw>procedure </el-kw><el-method>displayMove</el-method>
           currently expects only one parameter. So, within that procedure definition, define a second parameter, separated from the first
           by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
-          instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
+          instead of the literal number currently given as an argument to <el-method>sleep_ms</el-method>. Run the program to check that
           it still works the same way.
         <div class="hint" id="hint4c" data-hint="">Hint 1: Show the abbreviated instructions</div>
         <div class="content" id="hint4ccontent">
@@ -367,7 +367,7 @@
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit><el-id>interval</el-id></el-lit></el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit><el-id>interval</el-id></el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end procedure</el-kw>
             </el-proc>
           </el-code-block>
@@ -375,14 +375,14 @@
         </li>
         <li>You might have noticed that where the sequence has the same move twice in succession, this just displays as a one longer
           move - which will be confusing, especially if the game speeds up. To fix this we should clear the display
-          after each move and add a <i>shorter</i> pause. So after the <i>existing</i> <el-id>pause</el-id> instruction within <el-method>displayMove</el-method>
+          after each move and add a <i>shorter</i> pause. So after the <i>existing</i> <el-method>sleep_ms</el-method> instruction within <el-method>displayMove</el-method>
           add a call to <el-method>clearVectorGraphics</el-method> and follow this by a fixed pause of 1/10th of a second. Run again
           and check that any repeated moves are now distinct.
           <div class="hint" id="hint4e" data-hint="">Hint: Show the new instructions</el-method></div>
         <div class="content" id="hint4econtent">
             <el-code-block>
               <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
             </el-code-block>
           </div>
           <div class="hint" id="hint4f" data-hint="">Hint: Show the whole procedure</el-method></div>
@@ -393,9 +393,9 @@
                 <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
                 <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-kw>end procedure</el-kw>
                 </el-proc>
             </el-code-block>
@@ -411,7 +411,7 @@
     <h3>Iteration 5: Add sound</h3>
 
     <ul>
-      <li>Edit <i>both</i> fields of the instruction <el-code><el-kw>call </el-kw><el-method>pause</el-method>(<el-id>interval</el-id>)</el-code> so that it reads
+      <li>Edit <i>both</i> fields of the instruction <el-code><el-kw>call </el-kw><el-method>sleep_ms</el-method>(<el-id>interval</el-id>)</el-code> so that it reads
         <el-code-block>
           <el-kw>call </el-kw><el-method>tone</el-method>(<el-id>interval</el-id>, <el-lit>256</el-lit>, <el-lit>0.1</el-lit>)
         </el-code-block>
@@ -453,7 +453,7 @@
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id>, <el-id>tones</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>], <el-lit><el-lit>0</el-lit>.1</el-lit></el-txt></el-field>)</el-top></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
           <el-kw>end procedure</el-kw>
         </el-proc>
       </el-code-block>
@@ -626,7 +626,7 @@
               <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end for</el-kw>
               </el-statement>
               <el-kw>end main</el-kw>
@@ -720,7 +720,7 @@
           <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
           <el-kw>end for</el-kw>
           </el-statement>
@@ -882,7 +882,7 @@
         <div class="content" id="hint10acontent">
           <el-code-block>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
       </li>
@@ -923,11 +923,11 @@
                 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field></el-top>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-kw>end while</el-kw>
                 </el-statement>
                 <el-kw>end main</el-kw>

@@ -28,7 +28,7 @@ main
       end for
       call displayVectorGraphics(vg)
       call print(x)
-      call pause(100)
+      call sleep_ms(100)
     end while
   end while
   call print("Finished")

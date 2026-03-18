@@ -28,7 +28,7 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
     call t.move(corner)
     call t.turn(-45*turnI)
     call t.move(side)
-    call pause(p)
+    call sleep_ms(p)
   end for
   call t.penUp()
   call t.hide()

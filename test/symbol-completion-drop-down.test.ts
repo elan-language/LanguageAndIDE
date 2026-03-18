@@ -2463,7 +2463,7 @@ end main`;
 
 main
   variable aaa set to 10
-  call pause(aaa)
+  call sleep_ms(aaa)
 end main`;
 
     const fileImpl = new FileImpl(

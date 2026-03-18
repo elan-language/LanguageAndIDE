@@ -10,7 +10,7 @@ main
     call snake.updateBlocks(blocks)
     call apple.updateBlocks(blocks)
     call displayBlocks(blocks)
-    call pause(150)
+    call sleep_ms(150)
     call snake.clockTick(getKey(), apple)
   end while
   call print($"Game Over! Score: {snake.score()}")

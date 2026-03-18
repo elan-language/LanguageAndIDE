@@ -180,14 +180,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call pause(1)
+  call sleep_ms(1)
   call printNoLine(1)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.pause(1);
+  await _stdlib.sleep_ms(1);
   await _stdlib.printNoLine(1);
 }
 return [main, _tests];}`;

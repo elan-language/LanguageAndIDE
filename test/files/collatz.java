@@ -30,7 +30,7 @@ static void main() {
       }
       displayVectorGraphics(vg); // call
       print(x); // call
-      pause(100); // call
+      sleep_ms(100); // call
     }
   }
   print("Finished"); // call

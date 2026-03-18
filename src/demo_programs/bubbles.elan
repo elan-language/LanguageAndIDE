@@ -25,5 +25,5 @@ procedure moveGrowBurst(bubbles as List<of CircleVG>)
     end if
   end for
   call displayVectorGraphics(bubbles)
-  call pause(50)
+  call sleep_ms(50)
 end procedure

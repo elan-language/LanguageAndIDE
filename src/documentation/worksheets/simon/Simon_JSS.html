@@ -270,7 +270,7 @@
         and uses <el-id>sequence</el-id> as the <i>source</i>.</li>
         <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop.
         Your code should now parse and compile correctly again.</li>
-        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to <el-method>pause</el-method> for a full second -
+        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to <el-method>sleep_ms</el-method> for a full second -
           otherwise things will happen too quickly to see.</li>
         <li>Run the program. What is it doing?</li>
           <textarea class="question" id="input4a" spellcheck="false" data-ms-editor="true"></textarea>
@@ -290,7 +290,7 @@
 		  that procedure definition, define a second parameter, separated from the first
           by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
 		  <!-- JSS: too many intervals identifiers? We've got interval as the main variable, then as the parameter name. I think students see this and think Why?  -->
-          instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
+          instead of the literal number currently given as an argument to <el-method>sleep_ms</el-method>. Run the program to check that
           it still works the same way.
         <div class="hint" id="hint4c" data-hint="">Hint 1: Show the abbreviated instructions</div>
         <div class="content" id="hint4ccontent"></div>
@@ -299,7 +299,7 @@
         </li>
         <li>You might have noticed that where the sequence has the same move twice in succession, this just displays as a one longer
           move - which will be confusing, especially if the game speeds up. To fix this we should clear the display
-          after each move and add a <i>shorter</i> pause. So after the <i>existing</i> <el-id>pause</el-id> instruction within <el-method>displayMove</el-method>
+          after each move and add a <i>shorter</i> pause. So after the <i>existing</i> <el-method>sleep_ms</el-method> instruction within <el-method>displayMove</el-method>
           add a call to <el-method>clearVectorGraphics</el-method> and follow this by a fixed pause of 1/10th of a second. Run again
           and check that any repeated moves are now distinct.
           <div class="hint" id="hint4e" data-hint="">Hint: Show the new instructions</div>
@@ -590,7 +590,7 @@
         </li>
         <li>Within the <el-method>playersTurn</el-method> procedure, delete the instruction <el-code><el-kw>print</el-kw> "<el-lit>Wrong!</el-lit>"</el-code> and
         replace it with one that sets the value of <el-id>ok</el-id> to false.
-		<!-- JSS: hint has no pause(2000) but set ok to false -->
+		<!-- JSS: hint has no sleep_ms(2000) but set ok to false -->
         <div class="hint" id="hint10b2" data-hint="">Hint: the whole revised procedure</div>
         <div class="content" id="hint10b2content"></div>
         </li>

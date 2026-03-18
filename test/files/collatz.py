@@ -27,7 +27,7 @@ def main(): None:
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # set
       displayVectorGraphics(vg) # call
       print(x) # call
-      pause(100) # call
+      sleep_ms(100) # call
   print("Finished") # call
 
 # scale x. &nbsp;We pass in p just to get its length

@@ -6,10 +6,10 @@ main
   call vg.append(circ)
   while true
     call displayVectorGraphics(vg)
-    call pause(700)
+    call sleep_ms(700)
     call circ.setFillColour(red)
     call displayVectorGraphics(vg)
-    call pause(700)
+    call sleep_ms(700)
     call circ.setFillColour(green)
   end while
 end main

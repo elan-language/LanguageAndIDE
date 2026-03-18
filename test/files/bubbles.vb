@@ -25,5 +25,5 @@ Sub moveGrowBurst(bubbles As List(Of CircleVG)) ' procedure
     End If
   Next b
   displayVectorGraphics(bubbles) ' call
-  pause(50) ' call
+  sleep_ms(50) ' call
 End Sub

@@ -374,8 +374,15 @@ export class StdLib {
     return source.includes(item);
   }
 
+  @elanProcedure(["seconds"], ProcedureOptions.async)
+  sleep(@elanFloatType() s: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), s * 1000);
+    });
+  }
+
   @elanProcedure(["milliseconds"], ProcedureOptions.async)
-  pause(@elanIntType() ms: number): Promise<void> {
+  sleep_ms(@elanIntType() ms: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => resolve(), ms);
     });

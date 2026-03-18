@@ -20,4 +20,4 @@ def moveGrowBurst(bubbles: list[CircleVG]) -> None: # procedure
       b.setCentreY(b.centreY - 1) # call
       b.setRadius(b.radius + 0.2) # call
   displayVectorGraphics(bubbles) # call
-  pause(50) # call
+  sleep_ms(50) # call

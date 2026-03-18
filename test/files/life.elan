@@ -1,4 +1,4 @@
-# 304fd3bda50bb6aa0eae7606aaa32aca1f6844ec0fbcb9ca041b2387a58359b1 Elan 2.0.0-alpha guest default_profile valid
+# 4e254737d8412e91d11b00748559cfc9b53dc729f965fe7e7ab71bd70ce1ff1f Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -8,7 +8,7 @@ main
     variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
     call nextGeneration(gridRef)
     set grid to gridRef.value()
-    call pause(50)
+    call sleep_ms(50)
   end while
 end main
 

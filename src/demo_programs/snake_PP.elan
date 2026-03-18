@@ -25,7 +25,7 @@ main
     else
       call body.removeAt(0)
     end if
-    call pause(150)
+    call sleep_ms(150)
   end while
   call print($"Game Over! Score: {body.length() - 1}")
 end main

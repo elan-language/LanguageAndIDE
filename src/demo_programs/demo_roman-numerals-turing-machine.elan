@@ -21,7 +21,7 @@ main
     call print($"Step: {steps}")
     call print($"State: {tm.currentState}")
     call print($"Rule applied: {rule.asString()}")
-    call pause(40)
+    call sleep_ms(40)
   end while
   call print($"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
 end main

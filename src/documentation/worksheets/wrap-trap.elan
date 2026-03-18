@@ -8,7 +8,7 @@ main
   variable grid set to new Array2D<of Int>(40, 30, white)
   for i in range(1, 1001)
     call displayBlocks(grid)
-    call pause(500)
+    call sleep_ms(500)
   end for
 end main
 

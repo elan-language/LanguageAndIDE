@@ -43,7 +43,7 @@ end procedure
 procedure display(game as Game)
   variable html set to $"<style>{styleSheet}</style>{htmlForGame(game)}"
   call displayHtml(html)
-  call pause(1500)
+  call sleep(1.5)
 end procedure
 
 procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)

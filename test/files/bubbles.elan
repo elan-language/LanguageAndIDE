@@ -1,4 +1,4 @@
-# e7237e150c3655ab040ee21d5f4cce9468d173742157e4a2a376beba455b0086 Elan 2.0.0-alpha guest default_profile valid
+# 1bff882a7e37cafd3f762b186d0465c393d3908c31d6956e9754e102bf8eca2c Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable bubbles set to new List<of CircleVG>()
@@ -25,5 +25,5 @@ procedure moveGrowBurst(bubbles as List<of CircleVG>)
     end if
   end for
   call displayVectorGraphics(bubbles)
-  call pause(50)
+  call sleep_ms(50)
 end procedure

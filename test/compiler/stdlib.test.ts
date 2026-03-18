@@ -78,7 +78,7 @@ return [main, _tests];}`;
 
 main
   call printNoLine(1)
-  call pause(100)
+  call sleep_ms(100)
   call printNoLine(2)
 end main`;
 
@@ -86,7 +86,7 @@ end main`;
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine(1);
-  await _stdlib.pause(100);
+  await _stdlib.sleep_ms(100);
   await _stdlib.printNoLine(2);
 }
 return [main, _tests];}`;
@@ -113,7 +113,7 @@ return [main, _tests];}`;
 
 main
   variable a set to clock()
-  call pause(100)
+  call sleep_ms(100)
   variable b set to clock()
   call printNoLine(b > a)
 end main`;
@@ -122,7 +122,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.clock();
-  await _stdlib.pause(100);
+  await _stdlib.sleep_ms(100);
   let b = _stdlib.clock();
   await _stdlib.printNoLine(b > a);
 }
