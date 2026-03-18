@@ -581,7 +581,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   acosDeg(n: number): number {
-    return this.radToDeg(this.acos(n));
+    return this.degrees(this.acos(n));
   }
 
   @elanFunction(["value"])
@@ -592,7 +592,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   asinDeg(n: number): number {
-    return this.radToDeg(this.asin(n));
+    return this.degrees(this.asin(n));
   }
 
   @elanFunction(["value"])
@@ -603,7 +603,7 @@ export class StdLib {
 
   @elanFunction(["value"])
   atanDeg(n: number): number {
-    return this.radToDeg(this.atan(n));
+    return this.degrees(this.atan(n));
   }
 
   @elanFunction(["radians"])
@@ -613,7 +613,7 @@ export class StdLib {
 
   @elanFunction(["degrees"])
   cosDeg(n: number): number {
-    return this.cos(this.degToRad(n));
+    return this.cos(this.radians(n));
   }
 
   @elanFunction(["x"])
@@ -649,7 +649,7 @@ export class StdLib {
 
   @elanFunction(["degrees"])
   sinDeg(n: number): number {
-    return this.sin(this.degToRad(n));
+    return this.sin(this.radians(n));
   }
 
   @elanFunction(["number"])
@@ -666,16 +666,16 @@ export class StdLib {
 
   @elanFunction(["degrees"])
   tanDeg(n: number): number {
-    return this.tan(this.degToRad(n));
+    return this.tan(this.radians(n));
   }
 
   @elanFunction(["degrees"])
-  degToRad(d: number): number {
+  radians(d: number): number {
     return (d * this.pi) / 180;
   }
 
   @elanFunction(["radians"])
-  radToDeg(r: number): number {
+  degrees(r: number): number {
     return (r / this.pi) * 180;
   }
 

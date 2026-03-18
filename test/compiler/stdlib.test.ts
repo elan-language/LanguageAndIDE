@@ -677,8 +677,8 @@ test maths
   assert acosDeg(0.5).round(2) is 60
   assert tanDeg(45).round(2) is 1
   assert atanDeg(1).round(2) is 45
-  assert degToRad(90).round(2) is 1.57
-  assert radToDeg(1).round(0) is 57
+  assert radians(90).round(2) is 1.57
+  assert degrees(1).round(0) is 57
 end test`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -703,8 +703,8 @@ _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acosDeg(0.5), 2), "Float"], [60, "Int"], "assert52", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tanDeg(45), 2), "Float"], [1, "Int"], "assert55", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atanDeg(1), 2), "Float"], [45, "Int"], "assert58", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degToRad(90), 2), "Float"], [1.57, "Float"], "assert61", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radToDeg(1), 0), "Float"], [57, "Int"], "assert64", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "assert61", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "assert64", _stdlib, false));
 }]);
 
 async function main() {
