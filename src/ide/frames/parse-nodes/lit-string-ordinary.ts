@@ -1,18 +1,17 @@
-import { escapeHtmlChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { LitStringText } from "./lit-string-text";
 import { PunctuationNode } from "./punctuation-node";
-import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringOrdinary extends AbstractSequence {
   constructor(file: File) {
     super(file);
-    this.contents = new RegExMatchNode(this.file, /^[^"]*/);
+    this.contents = new LitStringText(this.file, /^[^"]*/);
     this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
   }
 
-  private contents: RegExMatchNode;
+  private contents: LitStringText;
 
   parseText(text: string): void {
     if (text.length > 0) {
@@ -21,15 +20,5 @@ export class LitStringOrdinary extends AbstractSequence {
       this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
       super.parseText(text);
     }
-  }
-  renderAsHtml(): string {
-    const text = this.contents.matchedText;
-    const contents =
-      text.length > 0 ? `<el-lit>${escapeHtmlChars(this.contents.renderAsHtml())}</el-lit>` : ``;
-    return this.isValid() ? `"${contents}"` : this.contents.matchedText;
-  }
-
-  override renderAsExport(): string {
-    return this.isValid() ? `"${this.contents.matchedText}"` : this.matchedText;
   }
 }

@@ -20,14 +20,15 @@ import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
+import { ListNode } from "../src/ide/frames/parse-nodes/list-node";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
-import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedInsert } from "../src/ide/frames/parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
-import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
+import { LitStringText } from "../src/ide/frames/parse-nodes/lit-string-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -1342,10 +1343,26 @@ suite("Parsing Nodes", () => {
     );
   });
   test("String Interpolation", () => {
-    testNodeParse(new LitStringField(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParse(new LitStringField(f), "{x + 1}", ParseStatus.valid, "{x + 1}", "", "", "");
-    testNodeParse(new LitStringField(f), "{x", ParseStatus.incomplete, "{x", "", "", "");
-    testNodeParse(new LitStringField(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+    testNodeParse(new LitStringInterpolatedInsert(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(
+      new LitStringInterpolatedInsert(f),
+      "{x + 1}",
+      ParseStatus.valid,
+      "{x + 1}",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new LitStringInterpolatedInsert(f),
+      "{x",
+      ParseStatus.incomplete,
+      "{x",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(new LitStringInterpolatedInsert(f), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
     testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
@@ -1403,7 +1420,7 @@ suite("Parsing Nodes", () => {
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     testNodeParse(
-      new LitStringPlainText(f),
+      new LitStringText(f, /^[^"]*/),
       `<p>`,
       ParseStatus.valid,
       `<p>`,
@@ -2277,6 +2294,54 @@ suite("Parsing Nodes", () => {
       "",
       "",
       'String.format("result % %", 50, percent)',
+    );
+  });
+  test("List", () => {
+    testNodeParse(
+      new ListNode(f, () => new LitInt(f)),
+      `[1, 2, 3]`,
+      ParseStatus.valid,
+      `[1, 2, 3]`,
+      "",
+      `[1, 2, 3]`,
+      `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
+      `[1, 2, 3]`,
+    );
+  });
+  test("List incomplete", () => {
+    testNodeParse(
+      new ListNode(f, () => new LitInt(f)),
+      `[`,
+      ParseStatus.incomplete,
+      `[`,
+      "",
+      `[`,
+      "[",
+      `[`,
+    );
+  });
+  test("List incomplete VB", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{`,
+      ParseStatus.incomplete,
+      `{`,
+      "",
+      ``,
+      "{",
+      `{`,
+    );
+  });
+  test("LitStringOrdinary VB", () => {
+    testNodeParse(
+      new LitStringOrdinary(fileWithVB()),
+      `"`,
+      ParseStatus.incomplete,
+      `"`,
+      "",
+      `"`,
+      `"`,
+      '"',
     );
   });
 });

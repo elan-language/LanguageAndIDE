@@ -37,6 +37,8 @@ export class ListNode extends AbstractSequence {
 
   override renderAsHtml(): string {
     const lang = this.file.language();
-    return `${lang.LIST_START}${this.csv?.renderAsHtml()}${lang.LIST_END}`;
+    return this.isValid()
+      ? `${lang.LIST_START}${this.csv?.renderAsHtml()}${lang.LIST_END}`
+      : this.matchedText;
   }
 }

@@ -9,10 +9,10 @@ import { CommaNode } from "./parse-nodes/comma-node";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
-import { LitStringPlainText } from "./parse-nodes/lit-string-plain-text";
+import { LitStringText } from "./parse-nodes/lit-string-text";
 import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -115,10 +115,10 @@ export class LanguageJava extends LanguageCfamily {
     let csv = "";
     node.segments!.getElements().forEach((element) => {
       const seg = (element as Alternatives).bestMatch;
-      if (seg instanceof LitStringField) {
+      if (seg instanceof LitStringInterpolatedInsert) {
         definingString += "%";
         csv += `${seg.expr!.renderAsHtml()}, `;
-      } else if (seg instanceof LitStringPlainText) {
+      } else if (seg instanceof LitStringText) {
         definingString += seg.renderAsHtml();
       }
     });
