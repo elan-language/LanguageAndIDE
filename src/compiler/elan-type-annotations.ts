@@ -328,7 +328,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     }
 
     // cache classTypeDef
-    StdLibClassCache.set(stdlibClassUniqueId(className, this.ofTypes), classTypeDef);
+    // StdLibClassCache.set(stdlibClassUniqueId(className, this.ofTypes), classTypeDef);
 
     return classTypeDef;
   }
