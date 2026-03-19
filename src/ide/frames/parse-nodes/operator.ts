@@ -50,7 +50,7 @@ export class Operator extends AbstractParseNode {
     const open = kw ? "<el-kw>" : "";
     const close = kw ? "</el-kw>" : "";
     const space = closePacked ? "" : " ";
-    return `${open}${space}${text}${space}${close}`;
+    return this.isValid() ? `${open}${space}${text}${space}${close}` : this.matchedText;
   }
 
   renderAsExport(): string {
