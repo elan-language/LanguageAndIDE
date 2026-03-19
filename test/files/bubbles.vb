@@ -4,7 +4,7 @@ Sub main()
   Dim bubbles = New List(Of CircleVG)() ' variable
   ' create 20 small bubbles at the bottom
   For Each i In range(1, 21)
-    Dim b = (New CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withFillColour(randint(0), white) ' variable
+    Dim b = (New CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) ' variable
     bubbles.append(b) ' call
   Next i
   While True
@@ -25,5 +25,5 @@ Sub moveGrowBurst(bubbles As List(Of CircleVG)) ' procedure
     End If
   Next b
   displayVectorGraphics(bubbles) ' call
-  sleep_ms(50) ' call
+  sleep_ms(5) ' call
 End Sub
