@@ -2442,6 +2442,44 @@ suite("Parsing Nodes", () => {
       `a As Integer, b A`,
     );
   });
+
+  test("LitBoolean", () => {
+    testNodeParse(
+      new ParamListNode(f),
+      `true`,
+      ParseStatus.incomplete,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean - case insensitive", () => {
+    testNodeParse(
+      new ParamListNode(f),
+      `True`,
+      ParseStatus.incomplete,
+      `True`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+
+  test("LitBoolean - case insensitive VB", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `true`,
+      ParseStatus.incomplete,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>True</el-kw>",
+      `True`,
+    );
+  });
 });
 
 class test_seq1 extends AbstractSequence {
