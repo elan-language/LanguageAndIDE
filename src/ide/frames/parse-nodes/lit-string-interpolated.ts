@@ -45,6 +45,6 @@ export class LitStringInterpolated extends AbstractSequence {
   }
 
   renderAsExport(): string {
-    return removeHtmlTagsAndEscChars(this.renderAsHtml());
+    return this.isValid() ? removeHtmlTagsAndEscChars(this.renderAsHtml()) : this.matchedText;
   }
 }

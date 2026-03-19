@@ -17,6 +17,6 @@ export class TypeTupleNode extends AbstractSequence {
   }
 
   override renderAsExport(): string {
-    return super.renderAsExport(); //TEMP - for debugging
+    return this.isValid() ? super.renderAsExport() : this.matchedText;
   }
 }
