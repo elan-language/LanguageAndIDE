@@ -328,6 +328,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
     }
 
     // cache classTypeDef
+    // remove caching as key is inadequate and non constrained types are overwriting constrained types
+    // if this causes a noticeable slowdown will have to replace cacahing with more sophisticated key
     // StdLibClassCache.set(stdlibClassUniqueId(className, this.ofTypes), classTypeDef);
 
     return classTypeDef;
