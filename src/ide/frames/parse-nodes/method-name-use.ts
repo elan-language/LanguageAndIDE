@@ -40,6 +40,6 @@ export class MethodNameUse extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-method>${this.renderAsElanSource()}</el-method>`;
+    return `<el-method>${this.matchedText.trim()}</el-method>`;
   }
 }

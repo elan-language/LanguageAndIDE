@@ -27,7 +27,9 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
+    return this.isValid()
+      ? `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`
+      : this.matchedText;
   }
 
   renderAsElanSource(): string {

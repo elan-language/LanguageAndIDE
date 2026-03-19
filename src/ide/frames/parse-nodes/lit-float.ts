@@ -31,7 +31,7 @@ export class LitFloat extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<el-lit>${super.renderAsHtml()}</el-lit>`;
+    return this.isValid() ? `<el-lit>${super.renderAsHtml()}</el-lit>` : this.matchedText;
   }
   compile(): string {
     return this.matchedText.toUpperCase();

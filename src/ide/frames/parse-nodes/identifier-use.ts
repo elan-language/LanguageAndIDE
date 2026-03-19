@@ -48,6 +48,6 @@ export class IdentifierUse extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-id>${this.renderAsElanSource()}</el-id>`;
+    return this.isValid() ? `<el-id>${this.renderAsElanSource()}</el-id>` : this.matchedText;
   }
 }

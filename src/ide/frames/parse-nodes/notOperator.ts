@@ -47,7 +47,7 @@ export class NotOperator extends AbstractParseNode {
 
   renderAsHtml(): string {
     let html = this.matchedText;
-    if (this.status === ParseStatus.valid) {
+    if (this.isValid()) {
       const langOp = this.langOp(this.file.language());
       const kw = this.notIsKeyword();
       const open = kw ? "<el-kw>" : "";
