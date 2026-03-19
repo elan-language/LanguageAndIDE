@@ -58,8 +58,6 @@ export class NotOperator extends AbstractParseNode {
   }
 
   renderAsExport(): string {
-    return this.status === ParseStatus.valid
-      ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}`
-      : this.matchedText;
+    return this.isValid() ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}` : this.matchedText;
   }
 }

@@ -732,7 +732,9 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsExport(): string {
-    return removeHtmlTagsAndEscChars(this.textAsHtml());
+    return this.readParseStatus() === ParseStatus.valid
+      ? removeHtmlTagsAndEscChars(this.textAsHtml())
+      : this.rootNode!.matchedText;
   }
 
   indent(): string {
