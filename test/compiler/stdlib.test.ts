@@ -1693,7 +1693,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Fail_Constraint", async () => {
+  test("Fail_Constraint", async () => {
     const code = `${testHeader}
 
 main
