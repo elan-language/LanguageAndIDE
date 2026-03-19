@@ -35,6 +35,7 @@ import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
 import { NewInstance } from "../src/ide/frames/parse-nodes/new-instance";
 import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
+import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
 import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
 import { Qualifier } from "../src/ide/frames/parse-nodes/qualifier";
@@ -48,6 +49,7 @@ import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
 import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
@@ -2342,6 +2344,102 @@ suite("Parsing Nodes", () => {
       `"`,
       `"`,
       '"',
+    );
+  });
+  test("ParamDef VB", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithVB()),
+      `a As Integer`,
+      ParseStatus.valid,
+      `a As Integer`,
+      "",
+      `a as Int`,
+      "<el-id>a</el-id><el-kw> As </el-kw><el-type>Integer</el-type>",
+      `a As Integer`,
+    );
+  });
+  test("ParamDef VB incomplete", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithVB()),
+      `a A`,
+      ParseStatus.incomplete,
+      `a A`,
+      "",
+      `a A`,
+      "a A",
+      `a A`,
+    );
+  });
+  test("Type VB", () => {
+    testNodeParse(
+      new TypeNode(fileWithVB()),
+      `Integer`,
+      ParseStatus.valid,
+      `Integer`,
+      "",
+      `Int`,
+      "<el-type>Integer</el-type>",
+      `Integer`,
+    );
+  });
+  test("Type VB2", () => {
+    testNodeParse(
+      new TypeNode(fileWithVB()),
+      `Inte`,
+      ParseStatus.valid,
+      `Inte`,
+      "",
+      ``,
+      "<el-type>Inte</el-type>",
+      `Inte`,
+    );
+  });
+  test("Type incomplete Elan", () => {
+    testNodeParse(
+      new TypeNameUse(f),
+      `Inte`,
+      ParseStatus.valid,
+      `Inte`,
+      "",
+      `Inte`,
+      "<el-type>Inte</el-type>",
+      `Inte`,
+    );
+  });
+  test("ParamList VB", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b As Integer`,
+      ParseStatus.valid,
+      `a As Integer, b As Integer`,
+      "",
+      `a as Int, b as Int`,
+      "",
+      `a As Integer, b As Integer`,
+    );
+  });
+  test("ParamList VB incomplete", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b`,
+      ParseStatus.incomplete,
+      `a As Integer, b`,
+      "",
+      `a as Int, b`,
+      "",
+      `a As Integer, b`,
+    );
+  });
+  test("ParamList VB incomplete 2", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b A`,
+      ParseStatus.incomplete,
+      `a As Integer, b A`,
+      "",
+      `a as Int, b A`,
+      "",
+      `a As Integer, b A`,
     );
   });
 });
