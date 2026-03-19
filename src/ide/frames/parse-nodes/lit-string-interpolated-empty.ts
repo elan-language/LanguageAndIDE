@@ -20,6 +20,6 @@ export class LitStringInterpolatedEmpty extends AbstractSequence {
   }
   renderAsHtml(): string {
     const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
-    return `${langPrefix}""`;
+    return this.isValid() ? `${langPrefix}""` : this.matchedText;
   }
 }

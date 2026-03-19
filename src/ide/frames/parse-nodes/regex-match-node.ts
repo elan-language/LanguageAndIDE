@@ -1,6 +1,6 @@
+import { File } from "../frame-interfaces/file";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
-import { File } from "../frame-interfaces/file";
 
 export class RegExMatchNode extends AbstractParseNode {
   regx: RegExp;

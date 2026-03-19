@@ -4,8 +4,8 @@ import { ParseStatus } from "../status-enums";
 import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { LitStringField } from "./lit-string-field";
-import { LitStringPlainText } from "./lit-string-plain-text";
+import { LitStringInterpolatedInsert } from "./lit-string-interpolated-insert";
+import { LitStringText } from "./lit-string-text";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
 
@@ -22,8 +22,8 @@ export class LitStringInterpolated extends AbstractSequence {
       const lang = this.file.language();
       const standardisedText = lang.standardiseInterpolatedString(this, text);
       if (standardisedText.length > 0) {
-        const field = () => new LitStringField(this.file);
-        const plainText = () => new LitStringPlainText(this.file);
+        const field = () => new LitStringInterpolatedInsert(this.file);
+        const plainText = () => new LitStringText(this.file, /^[^%"\{]+/);
         const segment = () => new Alternatives(this.file, [field, plainText]);
         this.segments = new Multiple(this.file, segment, 1);
         this.addElement(new PunctuationNode(this.file, "$"));

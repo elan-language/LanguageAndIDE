@@ -138,11 +138,11 @@ import { LitBoolean } from "../frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../frames/parse-nodes/lit-float";
 import { LitInt } from "../frames/parse-nodes/lit-int";
 import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
-import { LitStringField } from "../frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../frames/parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedEmpty } from "../frames/parse-nodes/lit-string-interpolated-empty";
+import { LitStringInterpolatedInsert } from "../frames/parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
-import { LitStringPlainText } from "../frames/parse-nodes/lit-string-plain-text";
+import { LitStringText } from "../frames/parse-nodes/lit-string-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { MethodNameUse } from "../frames/parse-nodes/method-name-use";
 import { Multiple } from "../frames/parse-nodes/multiple";
@@ -957,7 +957,7 @@ export function transform(
     return new KvpAsn(key, value, fieldId);
   }
 
-  if (node instanceof LitStringField) {
+  if (node instanceof LitStringInterpolatedInsert) {
     const value = transform(node.expr, fieldId, scope)!;
 
     return new InterpolatedAsn(value, fieldId);
@@ -967,7 +967,7 @@ export function transform(
     return new CommentAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof LitStringPlainText) {
+  if (node instanceof LitStringText) {
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 
