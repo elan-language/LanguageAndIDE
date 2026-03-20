@@ -16,7 +16,7 @@ export class MethodNameUse extends AbstractParseNode {
     super(file);
     this.tokenTypes = tokenTypes;
     this.contextGenerator = contextGenerator;
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i>");
+    this.completionWhenEmpty = "<i>name</i>";
   }
 
   parseText(text: string): void {

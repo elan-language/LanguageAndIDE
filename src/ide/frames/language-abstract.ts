@@ -1,7 +1,6 @@
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
@@ -72,16 +71,6 @@ export abstract class LanguageAbstract implements Language {
   default_typeTupleAsHtml(node: TypeTupleNode): string {
     return `(${node.types?.renderAsHtml()})`;
   }
-
-  completionWhenEmpty(node: ParseNode): string {
-    let result = "";
-    if (node instanceof ParamDefNode) {
-      result = this.paramDefCompletion(node);
-    }
-    return result; //TODO
-  }
-
-  abstract paramDefCompletion(node: ParamDefNode): string;
 
   abstract addNodesForParamDef(node: ParamDefNode): void;
   abstract addNodesForNewInstance(node: NewInstance): void;

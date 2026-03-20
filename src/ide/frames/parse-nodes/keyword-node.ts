@@ -12,7 +12,7 @@ export class KeywordNode extends FixedTextNode {
     super(file, keyword);
     this.spaceAfter = spaceAfter;
     this.dotAfter = dotAfter;
-    this.completionWhenEmpty = this.getCompletionFromLangOr(keyword);
+    this.completionWhenEmpty = keyword;
   }
 
   parseText(text: string): void {

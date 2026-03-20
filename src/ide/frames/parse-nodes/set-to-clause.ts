@@ -16,7 +16,7 @@ export class SetToClause extends AbstractSequence {
   constructor(file: File, context: () => string) {
     super(file);
     this.context = context;
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i> set to <i>expression</i>");
+    this.completionWhenEmpty = "<i>name</i> set to <i>expression</i>";
   }
 
   parseText(text: string): void {

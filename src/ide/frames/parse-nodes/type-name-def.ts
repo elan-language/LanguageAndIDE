@@ -20,7 +20,7 @@ export class TypeNameDef extends AbstractParseNode {
     ]),
   ) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>Type</i>");
+    this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
 

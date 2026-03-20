@@ -7,7 +7,7 @@ import { RegExMatchNode } from "./regex-match-node";
 export class LitInt extends RegExMatchNode {
   constructor(file: File) {
     super(file, Regexes.negatableLitInt);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>integer value </i>");
+    this.completionWhenEmpty = "<i>integer value </i>";
   }
 
   parseText(text: string) {

@@ -6,7 +6,7 @@ import { KeywordNode } from "./keyword-node";
 export class Qualifier extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {

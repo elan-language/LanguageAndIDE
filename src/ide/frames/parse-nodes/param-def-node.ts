@@ -11,7 +11,7 @@ export class ParamDefNode extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i> as <i>Type</i>");
+    this.completionWhenEmpty = "<i>name</i> as <i>Type</i>";
   }
 
   parseText(text: string): void {

@@ -13,7 +13,7 @@ export class BinaryExpression extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
+    this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {

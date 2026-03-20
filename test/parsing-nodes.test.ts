@@ -21,6 +21,7 @@ import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
 import { ListNode } from "../src/ide/frames/parse-nodes/list-node";
+import { LitBoolean } from "../src/ide/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
@@ -2440,6 +2441,43 @@ suite("Parsing Nodes", () => {
       `a as Int, b A`,
       "",
       `a As Integer, b A`,
+    );
+  });
+
+  test("LitBoolean", () => {
+    testNodeParse(
+      new LitBoolean(f),
+      `true`,
+      ParseStatus.valid,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean - case insensitive", () => {
+    testNodeParse(
+      new LitBoolean(f),
+      `True`,
+      ParseStatus.valid,
+      `True`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean - case insensitive VB", () => {
+    testNodeParse(
+      new LitBoolean(fileWithVB()),
+      `true`,
+      ParseStatus.valid,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>True</el-kw>",
+      `True`,
     );
   });
 });
