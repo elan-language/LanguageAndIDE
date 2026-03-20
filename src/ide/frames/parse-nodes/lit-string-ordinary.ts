@@ -8,7 +8,7 @@ export class LitStringOrdinary extends AbstractSequence {
   constructor(file: File) {
     super(file);
     this.contents = new LitStringText(this.file, /^[^"]*/);
-    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
+    this.completionWhenEmpty = `"string"`;
   }
 
   private contents: LitStringText;

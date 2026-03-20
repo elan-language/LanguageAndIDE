@@ -95,10 +95,6 @@ export class LanguageJava extends LanguageCfamily {
     return this.c_langs_paramDefAsHtml(node);
   }
 
-  paramDefCompletion(node: ParamDefNode): string {
-    return this.c_langs_paramDefCompletion(node);
-  }
-
   addNodesForTypeGeneric(node: TypeGenericNode): void {
     this.c_langs_addNodesForTypeGeneric(node);
   }

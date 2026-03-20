@@ -14,7 +14,7 @@ export class LitStringInterpolated extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
+    this.completionWhenEmpty = `"string"`;
   }
 
   parseText(text: string): void {

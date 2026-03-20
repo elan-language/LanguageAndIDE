@@ -6,7 +6,6 @@ import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
-import { ParseNode } from "./parse-node";
 
 export interface Language {
   languageClass: string;
@@ -23,8 +22,6 @@ export interface Language {
   renderTopAsHtml(frame: Frame): string;
 
   renderBottomAsHtml(frame: Frame): string;
-
-  completionWhenEmpty(node: ParseNode): string;
 
   getFields(node: Frame): Field[];
 

@@ -231,10 +231,6 @@ export class LanguagePython extends LanguageAbstract {
     return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
   }
 
-  paramDefCompletion(_node: ParamDefNode): string {
-    return `<i>name</i>: <i>Type</i>`;
-  }
-
   newInstanceAsHtml(node: NewInstance): string {
     return node.status === ParseStatus.valid
       ? `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`

@@ -10,7 +10,7 @@ import { LitString } from "./lit-string";
 export class LitValueNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {

@@ -21,6 +21,7 @@ import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
 import { ListNode } from "../src/ide/frames/parse-nodes/list-node";
+import { LitBoolean } from "../src/ide/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
@@ -2445,9 +2446,9 @@ suite("Parsing Nodes", () => {
 
   test("LitBoolean", () => {
     testNodeParse(
-      new ParamListNode(f),
+      new LitBoolean(f),
       `true`,
-      ParseStatus.incomplete,
+      ParseStatus.valid,
       `true`,
       "",
       `true`,
@@ -2457,9 +2458,9 @@ suite("Parsing Nodes", () => {
   });
   test("LitBoolean - case insensitive", () => {
     testNodeParse(
-      new ParamListNode(f),
+      new LitBoolean(f),
       `True`,
-      ParseStatus.incomplete,
+      ParseStatus.valid,
       `True`,
       "",
       `true`,
@@ -2467,12 +2468,11 @@ suite("Parsing Nodes", () => {
       `true`,
     );
   });
-
   test("LitBoolean - case insensitive VB", () => {
     testNodeParse(
-      new ParamListNode(fileWithVB()),
+      new LitBoolean(fileWithVB()),
       `true`,
-      ParseStatus.incomplete,
+      ParseStatus.valid,
       `true`,
       "",
       `true`,

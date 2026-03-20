@@ -13,7 +13,7 @@ import { VariableStatement } from "../src/ide/frames/statements/variable-stateme
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
-import { key, tab } from "./testHelpers";
+import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
@@ -128,6 +128,28 @@ suite("Editing Fields Tests", () => {
     assert.equal(t.text, "");
     assert.equal(t.getCompletion(), "<i>Type</i>");
     assert.equal(t.cursorPos, 0);
+  });
+
+  test("Entry of text with formatting Python", () => {
+    const f = new GlobalFunction(fileWithPython());
+    const t = f.returnType;
+    t.processKey(key("F"));
+    t.processKey(key("["));
+    assert.equal(t.getCompletion(), "<i>Type</i>]");
+  });
+  test("Entry of text with formatting VB", () => {
+    const f = new GlobalFunction(fileWithVB());
+    const t = f.returnType;
+    t.processKey(key("F"));
+    t.processKey(key("("));
+    assert.equal(t.getCompletion(), "Of <i>Type</i>)");
+  });
+  test("Entry of text with formatting C#", () => {
+    const f = new GlobalFunction(fileWithCS());
+    const t = f.returnType;
+    t.processKey(key("F"));
+    t.processKey(key("<"));
+    assert.equal(t.getCompletion(), "<i>Type</i>>");
   });
 
   test("Entry of text with formatting 3", () => {

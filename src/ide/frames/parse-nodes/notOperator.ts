@@ -12,7 +12,7 @@ export class NotOperator extends AbstractParseNode {
   constructor(file: File, langOp?: (lang: Language) => string) {
     super(file);
     this.langOp = langOp ? langOp : (lang) => (lang ? this.elanOp : this.elanOp);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {

@@ -5,7 +5,7 @@ import { RegExMatchNode } from "./regex-match-node";
 export class TypeSpecificFuncNode extends RegExMatchNode {
   constructor(file: File) {
     super(file, /^\s*Func/);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>Func</i>");
+    this.completionWhenEmpty = "<i>Func</i>";
   }
   renderAsHtml(): string {
     return `<el-type>${this.renderAsElanSource()}</el-type>`;
