@@ -217,10 +217,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
   }
 
-  c_langs_paramDefCompletion(_node: ParamDefNode): string {
-    return `<i>Type</i> <i>name</i>`;
-  }
-
   c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
     node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);

@@ -278,10 +278,6 @@ export class LanguageElan extends LanguageAbstract {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
   }
 
-  paramDefCompletion(_node: ParamDefNode): string {
-    return ``; //i.e. use default specified in the node
-  }
-
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }

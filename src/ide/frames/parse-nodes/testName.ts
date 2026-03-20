@@ -1,14 +1,14 @@
-import { ReservedWords } from "../../../compiler/reserved-words";
-import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierUse extends AbstractParseNode {
+export class TestName extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
+
+  private prefix = "test_";
 
   constructor(
     file: File,
@@ -18,25 +18,26 @@ export class IdentifierUse extends AbstractParseNode {
     super(file);
     this.tokenTypes = tokenTypes;
     this.contextGenerator = contextGenerator;
-    this.completionWhenEmpty = "<i>name</i>";
   }
 
   parseText(text: string): void {
-    this.remainingText = text;
-    if (text.length > 0) {
+    if (text.length === 0 || this.prefix.startsWith(text)) {
+      text = this.prefix;
+      this.status = ParseStatus.incomplete;
+      this.matchedText = text;
+      this.remainingText = "";
+    } else {
+      if (!text.startsWith(this.prefix)) {
+        text = this.prefix + text;
+      }
       [this.status, this.matchedText, this.remainingText] = matchRegEx(
         text.trimStart(),
-        Regexes.identifier,
+        /test_[a-zA-Z0-9_]+/,
       );
     }
+
     if (this.isValid() && this.remainingText.length > 0) {
-      if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
-        this.status = ParseStatus.invalid;
-        this.matchedText = "";
-        this.remainingText = text;
-      } else {
-        this._done = true;
-      }
+      this._done = true;
     }
   }
   symbolCompletion_tokenTypes(): Set<TokenType> {
@@ -48,6 +49,6 @@ export class IdentifierUse extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return this.isValid() ? `<el-id>${this.matchedText.trim()}</el-id>` : this.matchedText;
+    return this.isValid() ? `<el-method>${this.matchedText.trim()}</el-method>` : this.matchedText;
   }
 }

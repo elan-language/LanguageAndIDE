@@ -96,33 +96,33 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
-      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()}:`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()} = ${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof Else) {
-      html = `<el-kw>${this.ELSE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.NONE}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
-      html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}<el-punc>("</el-punc>${frame.text.renderAsHtml()}<el-punc>")</el-punc>`;
+      html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}("${frame.text.renderAsHtml()}")`;
     } else if (frame instanceof VariableStatement) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     }
     return html;
   }
@@ -134,33 +134,33 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.DEF} </el-kw><el-punc>(</el-punc><el-kw>${this.SELF}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
+      html = `<el-kw>${this.DEF} </el-kw>(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}:<el-kw>none</el-kw>`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.SELF}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.SELF}: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> <el-punc><el-kw>${this.NONE}</el-kw></el-punc><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>(): <el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>(): <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.SELF}</el-kw><el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method>(<el-kw>self</el-kw>) -> <el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsHtml()}</el-method>(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}:`;
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.TRY}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
     }
     return html;
   }

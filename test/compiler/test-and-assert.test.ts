@@ -1111,11 +1111,11 @@ end test
   test("Fail_DuplicateTestName2", async () => {
     const code = `${testHeader}
 
-procedure proc()
+procedure test_proc()
  
 end procedure
 
-test proc
+test test_proc
 
 end test
 `;
@@ -1132,15 +1132,17 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'proc' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'test_proc' not unique in scope.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateTestName3", async () => {
     const code = `${testHeader}
 
-constant cc set to 1
+constant test_cc set to 1
 
-test cc
+test test_cc
 
 end test
 `;
@@ -1157,6 +1159,8 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'cc' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'test_cc' not unique in scope.LangRef.html#compile_error",
+    ]);
   });
 });
