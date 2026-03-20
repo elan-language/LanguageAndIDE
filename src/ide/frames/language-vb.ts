@@ -277,10 +277,6 @@ export class LanguageVB extends LanguageAbstract {
     return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
   }
 
-  paramDefCompletion(_node: ParamDefNode): string {
-    return `<i>name</i> ${this.AS} <i>Type</i>`;
-  }
-
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));
     node.addElement(new SpaceNode(node.file, Space.required));

@@ -159,6 +159,7 @@ import { SetToClause } from "../frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../frames/parse-nodes/space-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
+import { TestName } from "../frames/parse-nodes/testName";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
@@ -715,7 +716,7 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, false, scope);
   }
 
-  if (node instanceof IdentifierUse || node instanceof MethodNameUse) {
+  if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
     // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||
