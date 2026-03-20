@@ -211,6 +211,8 @@ export class LanguagePython extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
+  START_OF_GENERIC: string = "[";
+
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);

@@ -141,6 +141,8 @@ export abstract class LanguageAbstract implements Language {
   abstract BINARY_PREFIX: string;
   abstract HEX_PREFIX: string;
 
+  abstract START_OF_GENERIC: string;
+
   protected spaced(text: string): string {
     return ` ${text} `;
   }

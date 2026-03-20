@@ -256,6 +256,8 @@ export class LanguageVB extends LanguageAbstract {
   BINARY_PREFIX: string = "&B";
   HEX_PREFIX: string = "&H";
 
+  START_OF_GENERIC: string = `(${this.OF} `;
+
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);

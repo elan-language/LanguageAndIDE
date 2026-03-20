@@ -1719,33 +1719,9 @@ suite("Parsing Nodes", () => {
       "",
       `"a" + "b"`,
     );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3+`,
-      ParseStatus.incomplete,
-      "3+",
-      "",
-      "3 + ",
-      "<el-lit>3</el-lit> + ",
-    );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3 +`,
-      ParseStatus.incomplete,
-      "3 +",
-      "",
-      "3 + ",
-      "<el-lit>3</el-lit> + ",
-    );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3 `,
-      ParseStatus.incomplete,
-      "3 ",
-      "",
-      "3 ",
-      "<el-lit>3</el-lit> ",
-    );
+    testNodeParse(new BinaryExpression(f), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3+");
+    testNodeParse(new BinaryExpression(f), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 +");
+    testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
     testNodeParse(
       new BinaryExpression(f),
       `3+4`,

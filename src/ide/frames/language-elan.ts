@@ -237,6 +237,8 @@ export class LanguageElan extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
+  START_OF_GENERIC: string = `<${this.OF} `;
+
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));
     node.addElement(new SpaceNode(node.file, Space.required));
