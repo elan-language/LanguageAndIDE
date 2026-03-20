@@ -15,11 +15,13 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { KeywordCompletion } from "./symbol-completion-helpers";
+import { File } from "./frame-interfaces/file";
 
 export class SymbolWrapper {
   constructor(
     private readonly wrapped: ElanSymbol | KeywordCompletion,
     private readonly scope: Scope,
+    private readonly file: File,
   ) {
     if (wrapped instanceof KeywordCompletion) {
       this.name = wrapped.keyword;
@@ -87,7 +89,8 @@ export class SymbolWrapper {
     const symbol = this.wrapped as ElanSymbol;
 
     if (isGenericClass(symbol)) {
-      return `${this.name}<of `;
+      const lang = this.file.language();
+      return `${this.name}${lang.START_OF_GENERIC}`;
     }
 
     if (isFunction(symbol)) {

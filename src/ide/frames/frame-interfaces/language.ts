@@ -62,6 +62,8 @@ export interface Language {
   BINARY_PREFIX: string;
   HEX_PREFIX: string;
 
+  START_OF_GENERIC: string;
+
   // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
   reservedWords: Set<string>;
 }
