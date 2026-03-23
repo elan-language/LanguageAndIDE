@@ -8,7 +8,7 @@ import { Field } from "./field";
 import { Frame } from "./frame";
 
 export interface Language {
-  languageClass: string;
+  languageHtmlClass: string;
   languageFullName: string;
   defaultFileExtension: string;
   defaultMimeType: string;

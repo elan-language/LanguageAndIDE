@@ -249,6 +249,19 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
+async function assertStartsWith(f: FileImpl, fld: AbstractField, startsWith: [string, string, string][]) {
+  await f.renderAsHtml();
+  const symbols = fld.allPossibleSymbolCompletions;
+
+  
+  for (let i = 0; i < startsWith.length; i++) {
+    const s = symbols[i];
+    const e = startsWith[i] as [string, string, string];
+
+    assert.strictEqual(s.name, e[0]);
+  }
+}
+
 async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.allPossibleSymbolCompletions;
@@ -414,6 +427,29 @@ export async function assertSymbolCompletionWithString(
   }
 
   await doAsserts(f, fld, expected);
+}
+
+export async function assertSymbolCompletionMenuStartsWith(
+  f: FileImpl,
+  id: string,
+  text: string,
+  expected: [string, string, string][],
+): Promise<void> {
+  assertParses(f);
+  const fld = f.getById(id) as AbstractField;
+
+  assert.notStrictEqual(fld, undefined, `${id} not found`);
+
+  fld.text = "";
+
+  fld.select();
+  fld.cursorPos = 0;
+
+  for (const c of text) {
+    fld.processKey(getEvent(c));
+  }
+
+  assertStartsWith(f,fld, expected);
 }
 
 export async function readAsDOM(f: File) {

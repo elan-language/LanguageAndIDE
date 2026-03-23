@@ -728,8 +728,6 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
-    // TODO: 1. 'replace("<of", "&lt;of")` looks too specific - should be 'escapeHtml ?`
-    // 2. Make this inclusion conditional on cursor at RH end. (Can't do in 'getCompletion' as that is overridden)
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
@@ -870,13 +868,16 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
       const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
-      const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
-        .sort(this.orderSymbol);
+      if (this.getFile().language().languageFullName === "Elan") {
+        const keywords = Array.from(spec.keywords)
+          .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
+          .sort(this.orderSymbol);
+        this.allPossibleSymbolCompletions = keywords;
+      }
       const symbols = this.matchingSymbolsForId(spec).map(
         (s) => new SymbolWrapper(s, scope!, this.getFile()),
       );
-      this.allPossibleSymbolCompletions = keywords.concat(symbols);
+      this.allPossibleSymbolCompletions = this.allPossibleSymbolCompletions.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }
     this.showingSymbolCompletion = !!popupAsHtml;
