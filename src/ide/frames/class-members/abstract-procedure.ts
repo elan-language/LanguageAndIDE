@@ -23,7 +23,7 @@ export class AbstractProcedure extends SingleLineFrame {
   initialKeywords(): string {
     return abstractProcedureKeywords;
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.params];
   }
 

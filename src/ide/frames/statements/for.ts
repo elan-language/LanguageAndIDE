@@ -24,7 +24,7 @@ export class For extends FrameWithStatements implements Statement {
     return forKeyword;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.variable, this.iter];
   }
 

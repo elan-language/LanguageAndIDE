@@ -29,7 +29,7 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
   initialKeywords(): string {
     return enumKeyword;
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.values];
   }
   getIdPrefix(): string {

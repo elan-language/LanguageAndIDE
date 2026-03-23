@@ -25,7 +25,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return procedureKeyword;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.params];
   }
 

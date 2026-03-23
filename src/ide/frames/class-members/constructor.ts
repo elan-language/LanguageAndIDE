@@ -20,7 +20,7 @@ export class Constructor extends FrameWithStatements {
     return constructorKeyword;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.params];
   }
 
