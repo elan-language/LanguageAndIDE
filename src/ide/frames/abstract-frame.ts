@@ -110,12 +110,7 @@ export abstract class AbstractFrame implements Frame {
     //Does nothing - for sub-classes to override as needed
   }
 
-  getFields(): Field[] {
-    const fieldsFromLang = this.language().getFields(this);
-    return fieldsFromLang.length > 0 ? fieldsFromLang : this.getFieldsDefaultImpl();
-  }
-
-  abstract getFieldsDefaultImpl(): Field[];
+  abstract getFields(): Field[];
 
   getFirstPeerFrame(): Frame {
     return this.getParent().getFirstChild();

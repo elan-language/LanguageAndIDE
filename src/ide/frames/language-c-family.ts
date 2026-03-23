@@ -30,6 +30,7 @@ import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
+import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
@@ -143,12 +144,12 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
-  common_getFields(frame: Frame): Field[] {
-    let fields: Field[] = [];
-    if (frame instanceof FunctionFrame) {
-      fields = [frame.returnType, frame.name, frame.params];
-    }
-    return fields;
+  common_functionFrameFields(frame: FunctionFrame): Field[] {
+    return [frame.returnType, frame.name, frame.params];
+  }
+
+  common_assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.expected, frame.actual];
   }
 
   protected ABSTRACT = "abstract";

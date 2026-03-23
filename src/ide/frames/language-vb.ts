@@ -13,6 +13,7 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -193,10 +194,6 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
-  }
-
   private ABSTRACT = "abstract";
   private AS = "As";
   private CATCH = "Catch";
@@ -323,6 +320,13 @@ export class LanguageVB extends LanguageAbstract {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.default_functionFrameFields(frame);
+  }
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.expected, frame.actual];
   }
 
   reservedWords: Set<string> = new Set<string>([
