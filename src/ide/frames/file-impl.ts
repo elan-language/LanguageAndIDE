@@ -689,8 +689,8 @@ export class FileImpl implements File {
 
       const language = await this.validateHeader(source.getRemainingCode());
 
-      if (source.isMatch(this._language.COMMENT_MARKER)) {
-        source.removeRegEx(this._language.commentRegex(), false);
+      if (source.isMatch(LanguageElan.Instance.COMMENT_MARKER)) {
+        source.removeRegEx(LanguageElan.Instance.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
@@ -775,7 +775,7 @@ export class FileImpl implements File {
   }
 
   validateHeaderComment(tokens: string[]) {
-    if (tokens[0] !== this._language.COMMENT_MARKER) {
+    if (tokens[0] !== LanguageElan.Instance.COMMENT_MARKER) {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
   }
