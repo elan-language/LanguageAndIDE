@@ -1,4 +1,5 @@
 import { asKeyword } from "../../../compiler/elan-keywords";
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
@@ -38,6 +39,7 @@ export class ParamDefNode extends AbstractSequence {
   }
 
   override renderAsExport(): string {
-    return this.isValid() ? super.renderAsExport() : this.matchedText;
+    const lang = this.file.language();
+    return this.isValid() ? removeHtmlTagsAndEscChars(lang.paramDefAsHtml(this)) : this.matchedText;
   }
 }
