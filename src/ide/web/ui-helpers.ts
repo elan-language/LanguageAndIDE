@@ -378,9 +378,18 @@ export function handleClickDropDownButton(event: Event) {
     }
   }
 
-  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
-  firstitem.focus();
+  const toSelect = button.textContent;
+  let toFocus: HTMLElement | undefined;
+  const items = menu.querySelectorAll(".menu-item") as NodeListOf<HTMLElement>;
 
+  for (const i of items) {
+    if (i.textContent === toSelect) {
+      toFocus = i;
+    }
+  }
+
+  toFocus = toFocus || (menu.querySelector(".menu-item") as HTMLElement);
+  toFocus.focus();
   event.stopPropagation();
 }
 
