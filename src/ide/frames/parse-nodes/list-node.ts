@@ -41,4 +41,11 @@ export class ListNode extends AbstractSequence {
       ? `${lang.LIST_START}${this.csv?.renderAsHtml()}${lang.LIST_END}`
       : this.matchedText;
   }
+
+  override renderAsExport(): string {
+    const lang = this.file.language();
+    return this.isValid()
+      ? `${lang.LIST_START}${this.csv?.renderAsExport()}${lang.LIST_END}`
+      : this.matchedText;
+  }
 }
