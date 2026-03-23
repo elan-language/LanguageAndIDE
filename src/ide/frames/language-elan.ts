@@ -65,7 +65,7 @@ export class LanguageElan extends LanguageAbstract {
     return /# [^\r\n]*/;
   }
   languageHtmlClass = "elan";
-  languageFullName: string = "Elan";
+  languageFullName: string = "Reference Lang";
   defaultFileExtension: string = "elan";
   defaultMimeType: string = "text/plain";
 
