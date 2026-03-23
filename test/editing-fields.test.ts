@@ -37,8 +37,8 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.cursorPos, 2);
     assert.equal(expr.getCompletion(), "<i>operator </i><i>value or expression</i>");
     expr.processKey(key("+"));
-    assert.equal(expr.text, "3 + ");
-    assert.equal(expr.cursorPos, 4);
+    assert.equal(expr.text, "3 +");
+    assert.equal(expr.cursorPos, 3);
     assert.equal(expr.getCompletion(), "<i>value or expression</i>");
     expr.processKey(key("4"));
     assert.equal(expr.text, "3 + 4");
