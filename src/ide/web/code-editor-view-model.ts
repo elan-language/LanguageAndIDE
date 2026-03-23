@@ -490,6 +490,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     try {
       await this.parseFrom(code);
       this.fileName = fileName || this.defaultFileName;
+      vm.setDisplayLanguage(this.getLanguage());
       await this.refreshAndDisplay(vm, tr, true, false);
     } catch (e) {
       await vm.showError(e as Error, fileName || this.defaultFileName, true);
