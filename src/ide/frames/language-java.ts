@@ -32,7 +32,7 @@ import { CLOSE_BRACKET } from "./symbols";
 export class LanguageJava extends LanguageCfamily {
   static Instance: Language = new LanguageJava();
 
-  languageClass = "java";
+  languageHtmlClass = "java";
   languageFullName: string = "Java";
   defaultFileExtension: string = "java";
   defaultMimeType: string = "text/plain";

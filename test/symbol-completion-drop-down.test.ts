@@ -4,7 +4,12 @@ import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
+import {
+  assertAutocompletes,
+  assertSymbolCompletionMenuStartsWith,
+  assertSymbolCompletionWithString,
+  fileWithPython,
+} from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
@@ -114,7 +119,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "no", expected);
   });
 
-  test("Pass_Keywords", async () => {
+  test("Pass_space", async () => {
     const code = `${testHeader}
 
 main
@@ -2794,5 +2799,49 @@ end procedure`;
       "new Foo(), lambda aFoo as Foo => aF",
       expected,
     );
+  });
+  test("Pass_keywordsShownWhenElan", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to w
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["if", "if", "if "],
+      ["lambda", "lambda", "lambda "],
+      ["new", "new", "new "],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
+  });
+  test("Pass_keywordsNotShownWhenNotElan", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to w
+end main`;
+
+    const fileImpl = fileWithPython();
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["abs", "abs", "abs("],
+      ["acos", "acos", "acos("],
+      ["asin", "asin", "asin("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
   });
 });
