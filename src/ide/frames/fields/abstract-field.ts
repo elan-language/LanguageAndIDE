@@ -728,6 +728,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
+    // TODO: 1. 'replace("<of", "&lt;of")` looks too specific - should be 'escapeHtml ?`
+    // 2. Make this inclusion conditional on cursor at RH end. (Can't do in 'getCompletion' as that is overridden)
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
