@@ -24,7 +24,7 @@ export class LanguageCS extends LanguageCfamily {
 
   static Instance: Language = new LanguageCS();
 
-  languageClass = "cs";
+  languageHtmlClass = "cs";
   languageFullName: string = "C#";
   defaultFileExtension: string = "cs";
   defaultMimeType: string = "text/plain";

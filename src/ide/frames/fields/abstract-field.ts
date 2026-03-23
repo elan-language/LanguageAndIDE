@@ -868,13 +868,16 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
       const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
-      const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
-        .sort(this.orderSymbol);
+      if (this.getFile().language().languageFullName === "Elan") {
+        const keywords = Array.from(spec.keywords)
+          .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
+          .sort(this.orderSymbol);
+        this.allPossibleSymbolCompletions = keywords;
+      }
       const symbols = this.matchingSymbolsForId(spec).map(
         (s) => new SymbolWrapper(s, scope!, this.getFile()),
       );
-      this.allPossibleSymbolCompletions = keywords.concat(symbols);
+      this.allPossibleSymbolCompletions = this.allPossibleSymbolCompletions.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }
     this.showingSymbolCompletion = !!popupAsHtml;
