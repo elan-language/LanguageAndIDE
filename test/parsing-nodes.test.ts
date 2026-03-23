@@ -2311,6 +2311,30 @@ suite("Parsing Nodes", () => {
       `{`,
     );
   });
+  test("List incomplete VB 2", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{1, 2`,
+      ParseStatus.incomplete,
+      `{1, 2`,
+      "",
+      `{1, 2`,
+      `{1, 2`,
+      `{1, 2`,
+    );
+  });
+  test("List complete VB", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{1, 2, 3}`,
+      ParseStatus.valid,
+      `{1, 2, 3}`,
+      "",
+      `[1, 2, 3]`,
+      "{<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}",
+      `{1, 2, 3}`,
+    );
+  });
   test("LitStringOrdinary VB", () => {
     testNodeParse(
       new LitStringOrdinary(fileWithVB()),

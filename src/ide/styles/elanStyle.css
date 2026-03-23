@@ -72,8 +72,8 @@ el-regex {
     color: var(--string);
 }
 
-/* Header & comments (also test description) */
-el-comment, el-comment *, el-comment el-field el-txt, el-test el-top el-field el-txt  {
+/* Header & comments */
+el-comment, el-comment *, el-comment el-field el-txt {
     color: var(--comment);
 }
 
