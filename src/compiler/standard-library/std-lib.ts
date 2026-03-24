@@ -446,8 +446,8 @@ export class StdLib {
     await this.clearHtml();
   }
 
-  @elanFunction(["size", "initialValue"], FunctionOptions.pureAsync, ElanClass(List))
-  async createList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
+  @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
+  createList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(`Can only create List with simple value`);
     }
