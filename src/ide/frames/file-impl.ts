@@ -694,6 +694,7 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
+      this._language = LanguageElan.Instance;
       this.parseBodyFrom(source);
       this.setLanguageFromHeader(language);
     } catch (e) {
