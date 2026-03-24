@@ -27,7 +27,7 @@ export class Throw extends SingleLineFrame implements Statement {
     this.text.parseFrom(source);
     source.removeNewLine();
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.type, this.text];
   }
   getIdPrefix(): string {

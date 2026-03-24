@@ -7,12 +7,14 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -62,7 +64,7 @@ export class LanguageElan extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
-  languageClass = "elan";
+  languageHtmlClass = "elan";
   languageFullName: string = "Elan";
   defaultFileExtension: string = "elan";
   defaultMimeType: string = "text/plain";
@@ -302,6 +304,14 @@ export class LanguageElan extends LanguageAbstract {
   }
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.default_functionFrameFields(frame);
+  }
+
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return this.default_assertStatementFields(frame);
   }
 
   // Elan keywords followed by JavaScript keywords

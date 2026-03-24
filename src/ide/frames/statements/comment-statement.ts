@@ -28,7 +28,7 @@ export class CommentStatement extends SingleLineFrame implements Statement {
     source.removeNewLine();
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.text];
   }
 

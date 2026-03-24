@@ -36,6 +36,12 @@ export class BinaryExpression extends AbstractSequence {
     return `${this.lhs?.renderAsElanSource()}${this.op!.renderAsElanSource()}${this.rhs?.renderAsElanSource()}`;
   }
 
+  renderAsExport(): string {
+    return this.isValid()
+      ? `${this.lhs?.renderAsExport()}${this.op!.renderAsExport()}${this.rhs?.renderAsExport()}`
+      : this.matchedText;
+  }
+
   symbolCompletion_tokenTypes(): Set<TokenType> {
     if (this.getElements().length === 0) {
       return new Set<TokenType>(allIdsAndMethods);

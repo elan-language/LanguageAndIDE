@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
@@ -64,7 +65,7 @@ export class LanguagePython extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
-  languageClass = "python";
+  languageHtmlClass = "python";
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";
@@ -293,6 +294,14 @@ export class LanguagePython extends LanguageAbstract {
 
   override typeTupleAsHtml(node: TypeTupleNode): string {
     return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.default_functionFrameFields(frame);
+  }
+
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return this.default_assertStatementFields(frame);
   }
 
   reservedWords: Set<string> = new Set<string>([

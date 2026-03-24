@@ -20,7 +20,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return ifKeyword;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.condition];
   }
   getIdPrefix(): string {

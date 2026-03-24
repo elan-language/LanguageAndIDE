@@ -62,7 +62,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   initialKeywords(): string {
     return testKeyword;
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.testName];
   }
 

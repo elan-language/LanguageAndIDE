@@ -38,7 +38,7 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
     this.pushClass(true, "multiline");
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.value];
   }
 

@@ -29,7 +29,7 @@ export class SetStatement extends SingleLineFrame implements Statement {
     this.expr.parseFrom(source);
     source.removeNewLine();
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.assignable, this.expr];
   }
 

@@ -23,6 +23,7 @@ import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
+import { AssertStatement } from "./statements/assert-statement";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -30,7 +31,7 @@ export abstract class LanguageAbstract implements Language {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
-  languageClass = "python";
+  languageHtmlClass = "python";
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";
@@ -113,8 +114,25 @@ export abstract class LanguageAbstract implements Language {
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
   }
 
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
+  getFields(frame: Frame): Field[] {
+    let fields: Field[] = [];
+    if (frame instanceof FunctionFrame) {
+      fields = this.functionFrameFields(frame);
+    } else if (frame instanceof AssertStatement) {
+      fields = this.assertStatementFields(frame);
+    }
+    return fields;
+  }
+
+  abstract functionFrameFields(frame: FunctionFrame): Field[];
+
+  default_functionFrameFields(frame: FunctionFrame): Field[] {
+    return [frame.name, frame.params, frame.returnType];
+  }
+
+  abstract assertStatementFields(frame: AssertStatement): Field[];
+  default_assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.actual, frame.expected];
   }
 
   abstract MOD: string;

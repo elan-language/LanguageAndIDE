@@ -2,6 +2,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
+import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -23,7 +24,7 @@ export class LanguageCS extends LanguageCfamily {
 
   static Instance: Language = new LanguageCS();
 
-  languageClass = "cs";
+  languageHtmlClass = "cs";
   languageFullName: string = "C#";
   defaultFileExtension: string = "cs";
   defaultMimeType: string = "text/plain";
@@ -61,10 +62,6 @@ export class LanguageCS extends LanguageCfamily {
 
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);
-  }
-
-  getFields(frame: Frame): Field[] {
-    return this.common_getFields(frame);
   }
 
   addNodesForParamDef(node: ParamDefNode): void {
@@ -109,6 +106,14 @@ export class LanguageCS extends LanguageCfamily {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.common_functionFrameFields(frame);
+  }
+
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return this.common_assertStatementFields(frame);
   }
 
   reservedWords: Set<string> = new Set<string>([

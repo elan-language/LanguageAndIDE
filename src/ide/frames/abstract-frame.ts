@@ -110,12 +110,7 @@ export abstract class AbstractFrame implements Frame {
     //Does nothing - for sub-classes to override as needed
   }
 
-  getFields(): Field[] {
-    const fieldsFromLang = this.language().getFields(this);
-    return fieldsFromLang.length > 0 ? fieldsFromLang : this.getFieldsDefaultImpl();
-  }
-
-  abstract getFieldsDefaultImpl(): Field[];
+  abstract getFields(): Field[];
 
   getFirstPeerFrame(): Frame {
     return this.getParent().getFirstChild();
@@ -841,7 +836,7 @@ export abstract class AbstractFrame implements Frame {
       "copy for internal use <span class='kb'>Ctrl+c</span>",
       this.copySelected,
     ]);
-    if (!(this.language().languageFullName === "Elan")) {
+    if (!(this.language().languageHtmlClass === "elan")) {
       map.set("copyExport", ["copy for export", this.exportSelected]);
     }
     if (!this.isGhosted() && this.isGhostable()) {
