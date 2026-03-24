@@ -511,9 +511,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     const rawCode = await f.text();
     this.recreateFile(vm, false, LanguageElan.Instance);
     this.fileName = fileName;
-    fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
-    await this.changeLanguage(language, vm, tr);
+    fm.reset();
+    await this.changeLanguage(language, vm, tr, true);
   }
 
   showCode() {
@@ -707,8 +707,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     event.stopPropagation();
   }
 
-  async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner) {
-    if (this.file?.setLanguage(l)) {
+  async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
+    if (this.file?.setLanguage(l) || always) {
       vm.setDisplayLanguage(l);
       await this.refreshAndDisplay(vm, tr, true, false);
     }
