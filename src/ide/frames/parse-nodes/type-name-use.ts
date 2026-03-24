@@ -69,7 +69,6 @@ export class TypeNameUse extends AbstractParseNode {
           this.message = `matches a reserved word.`;
         }
       }
-
     }
   }
   renderAsHtml(): string {
