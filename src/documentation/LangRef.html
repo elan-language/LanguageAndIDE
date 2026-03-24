@@ -29,11 +29,22 @@ NOTE: This documentation is a work in progress and is not yet fully descriptive 
  There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
 </ul>                                                                                                             
 <p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
-it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
-<p>Both kinds of named value must be initialised with either literals or expressions.</p>
+it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication, assist in the modularisation of code and reduce errors.</p>
+<p>Both kinds of named value must be initialised with literals, expressions or initialisation <el-method>methods</el-method>.</p>
 <p>Loop counter variables, however, may be defined implicitly in a <a href="#for"><el-kw>for</el-kw></a> instruction.</p>
 
-<h2 id="Type">Types</h2>
+<h2 id="Type">Data Types</h2>
+
+<p>There are two fundamentally different kinds of data Type, differing by how their values
+are passed around in a running program:</p>
+<ul>
+ <li><b>Value Types</b> that contain a single value, and are passed around directly:<br>
+ <el-type>Integer</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type></li>  
+ <li><b>Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <el-type>String</el-type>, <el-type>List</el-type>, etc. as well as
+ any user-defined Type such as <el-kw>Abstract class</el-kw>, <el-kw>Class</el-kw> and <el-kw>Interface</el-kw>.</li>
+</ul>
+
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
@@ -1175,7 +1186,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
 <p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
- which defines an explanatory string. An example:</p>
+ which defines an explanatory string. For example:</p>
 <el-code-block source="throw.elan">
 <el-statement class="ok multiline" id="if18" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>value</el-id> &gt; <el-id>maximum</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
@@ -1191,7 +1202,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 <el-code>A Runtime error occurred in the Elan code</el-code><br>
 <el-code>Error: proportion exceeds 100%</el-code>
 </p>
-<p>This example that puts current values into the exception message string:</p>
+<p>This example interpolates current values into the exception message string:</p>
 <el-code-block source="throw.elan">
 <el-statement class="ok multiline" id="if41" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
@@ -1200,7 +1211,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 </el-statement>
 </el-code-block>
 
-<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a> statement,
+<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a>instruction,
 where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, and continue as appropriate.</p>
 
 <div id="catch"></div>
@@ -1440,12 +1451,10 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
-main
-  call print(sin(radians(30)))
-  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30), 2)
-  variable name set to input("Your name")
-  call print(name.upperCase())
-end main
+<el-statement class="ok" id="call3" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sin</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>))</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-method>sin</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>)), <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-method>cos</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>)), <el-lit>2</el-lit>)</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>input</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>

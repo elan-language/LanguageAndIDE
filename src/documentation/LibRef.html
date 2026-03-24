@@ -18,20 +18,6 @@
 NOTE: This documentation is a work in progress and is not yet fully descriptive of Elan v.2
 </p>-->
 
-<h1>Fundamentals</h1>
-
-<h2 id="DataTypes">Data Types</h2>
-
-<p>There are two fundamentally different kinds of data Type, differing by how their values
-are passed around in a running program:</p>
-<ul>
- <li><b>Value Types</b> that contain a single value, and are passed around directly:<br>
- <el-type>Integer</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type></li>  
- <li><b>Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
- <el-type>String</el-type>, <el-type>List</el-type>, <el-type>HashSet</el-type>, <el-type>Stack</el-type>, <el-type>Queue</el-type>, as well as
- any user-defined <el-kw>Class</el-kw>, <el-kw>Interface</el-kw> and </li>
-</ul>
-
 <h1 id="ValueTypes">Value data Types</h1>
 
 <h2 id="Int">Integer</h2>
@@ -65,12 +51,6 @@ are passed around in a running program:</p>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>string of binary digits representing the argument's integer value</td>
- </tr><tr id="asString_Int">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Int</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string of decimal digits representing the argument's integer value</td>
  </tr><tr id="equals_Int">
   <td><el-method>equals</el-method></td>
   <td><el-type>Int</el-type></td>
@@ -83,6 +63,12 @@ are passed around in a running program:</p>
   <td><el-type>Int</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if integer and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="toString_Int">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a string of decimal digits representing the argument's integer value</td>
  </tr>
 </table>
 
@@ -104,16 +90,17 @@ in the range:</li>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the pow of 50 through 72, and its output is shown below:</p>
-<el-code-block source="bigInt2.elan">
-<el-statement class="ok multiline" id="for3" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-punc>&lt;<el-punc> <el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
-</el-punc></el-punc></el-top>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-method>s</el-method>(<el-id>n</el-id>), $"<el-lit></el-lit>{<el-id>n</el-id>}<el-lit></el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
-<el-statement class="ok" id="call18" tabindex="-1"><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), $"<el-lit></el-lit>{<el-id>np</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
+<el-code-block source="bigInt.elan">
+<el-statement class="ok multiline" id="for5" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>50</el-lit>, <el-lit>73</el-lit>)</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var9" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-lit>2</el-lit>, <el-id>n</el-id>).<el-method>floor</el-method>()</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-method>s</el-method>(<el-id>n</el-id>), $"{<el-id>n</el-id>}"</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args20" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), $"{<el-id>np</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 <el-kw>end for</el-kw>
+</el-statement>
 </el-statement>
 </el-code-block>
 <img src="images/bigIntegers.png" width="285" height="471">
@@ -148,12 +135,6 @@ in the range:</li>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_Float">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Float</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string representing the argument's floating point value</td>
  </tr><tr>
   <td><el-method>ceiling</el-method></td>
   <td><el-type>Float</el-type></td>
@@ -184,6 +165,12 @@ in the range:</li>
   <td><el-type>Int</el-type></td>
   <td><el-type>Float</el-type></td>
   <td>the value rounded to the number of decimal places specified in the argument</td>
+ </tr><tr id="toString_Float">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a string representing the argument's floating point value</td>
  </tr>
 </table>
 
@@ -223,12 +210,6 @@ in the range:</li>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_Boolean">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Boolean</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>String "true" if <el-id>true</el-id>,<br>"false" if <el-id>false</el-id></td>
  </tr><tr id="equals_Boolean">
   <td><el-method>equals</el-method></td>
   <td><el-type>Boolean</el-type></td>
@@ -241,6 +222,12 @@ in the range:</li>
   <td><el-type>Boolean</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the truth value and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="toString_Boolean">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Boolean</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>String "true" if <el-id>true</el-id>,<br>"false" if <el-id>false</el-id></td>
  </tr>
  </table>
 
@@ -317,12 +304,10 @@ in the range:</li>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_String">
-  <td><el-method>toString</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td> the string itself</td>
+  <td><el-type>RegExp</el-type></td>
+  <td>a new string that is a a converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
  </tr><tr id="asUnicode">
   <td><el-method>asUnicode</el-method></td>
   <td><el-type>String</el-type></td>
@@ -330,12 +315,12 @@ in the range:</li>
   <td><el-type>Int</el-type></td>
   <td>the Unicode value of the <i>first</i> character of the string<br>
    (To convert a Unicode value into a string, use function <a href="#unicode"><el-method>unicode</el-method></a>)</td>
- </tr><tr id="asRegExp">
-  <td><el-method>asRegExp</el-method></td>
+ </tr><tr id="contains_String">
+  <td><el-method>contains</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td><el-type>RegExp</el-type></td>
-  <td>a new string that is a a converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if the string contains the substring specified as the argument<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="equals_String">
   <td><el-method>equals</el-method></td>
   <td><el-type>String</el-type></td>
@@ -348,12 +333,6 @@ in the range:</li>
   <td><el-type>String</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if the string and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="contains_String">
-  <td><el-method>contains</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>(none)</td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-id>true</el-id> if the string contains the substring specified as the argument<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="indexOf_String">
   <td><el-method>indexOf</el-method></td>
   <td><el-type>String</el-type></td>
@@ -425,6 +404,12 @@ in the range:</li>
   <i>n</i> indexes the character <i>after</i> the last character required (exclusive index)<br>
   if <i>m</i> &ge; <i>n</i> the result is the empty string  
   </td>
+ </tr><tr id="toString_String">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td> the string itself</td>
  </tr><tr id="trim">
   <td><el-method>trim</el-method></td>
   <td><el-type>String</el-type></td>
@@ -687,12 +672,6 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td>(none)</td>
   <td><el-type>HashSet</el-type></td>
   <td>a new Set containing all the <i>unique</i> items in the List</td>
- </tr><tr id="asString_List">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>List</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the List's items, enclosed in square brackets</td>
  </tr><tr id="contains_List">
   <td><el-method>contains</el-method></td>
   <td><el-type>List</el-type></td>
@@ -805,6 +784,12 @@ In this case, <i>x</i> refers to the columns in the display, and <i>y</i> to the
   <td>(none)</td>
   <td><el-type>List</el-type> items' Type</td>
   <td>all items except the first item in the List (i.e. index = 1..n, which must exist)</td>
+ </tr><tr id="toString_List">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a String that is a comma+space-separated list of the List's items, enclosed in square brackets</td>
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td><el-type>List</el-type></td>
@@ -891,12 +876,6 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_Dictionary">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Dictionary's <i>key:value</i> pairs, enclosed in square brackets</td>
  </tr><tr id="equals_Dictionary">
   <td><el-method>equals</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -921,6 +900,12 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td><el-type>Dictionary</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if dictionary and argument differ <br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="toString_Dictionary">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a string that is a comma+space-separated list of the Dictionary's <i>key:value</i> pairs, enclosed in square brackets</td>
  </tr><tr id="values_Dictionary">
   <td><el-method>values</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -1010,12 +995,6 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>a List containing the Set's members as List items</td>
- </tr><tr id="asString_Set">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>HashSet</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Set's members, enclosed in brackets</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -1076,6 +1055,12 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td>value<br>(of <el-type>HashSet</el-type> members' Type)</td>
   <td><el-type>HashSet</el-type></td>
   <td>a new Set with the argument item removed (if present)</td>
+ </tr><tr id="toString_Set">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>HashSet</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a string that is a comma+space-separated list of the Set's members, enclosed in brackets</td>
  </tr><tr id="union">
   <td><el-method>union</el-method></td>
   <td><el-type>HashSet</el-type></td>
@@ -1105,13 +1090,6 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
- </tr><tr id="asString_Stack">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Stack</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
-   the last item pushed being the first in the String</td>
  </tr><tr id="equals_Stack">
   <td><el-method>equals</el-method></td>
   <td><el-type>Stack</el-type></td>
@@ -1148,6 +1126,13 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of items in the Stack</td>
+ </tr><tr id="toString_Stack">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Stack</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
+   the last item pushed being the first in the String</td>
  </tr>
 </table>
 
@@ -1159,14 +1144,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <th>argument<br>Types</th>
   <th>return<br>Types</th>
   <th>returns</th>
- </tr><tr id="asString_Queue">
-  <td><el-method>toString</el-method></td>
-  <td><el-type>Queue</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
-   the first item enqueued being the first in the String</td>
-</tr><tr id="equals_Queue">
+ </tr><tr id="equals_Queue">
   <td><el-method>equals</el-method></td>
   <td><el-type>Queue</el-type></td>
   <td><el-type>Queue</el-type></td>
@@ -1202,7 +1180,14 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of items in the Queue</td>
- </tr>
+ </tr><tr id="toString_Queue">
+  <td><el-method>toString</el-method></td>
+  <td><el-type>Queue</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
+   the first item enqueued being the first in the String</td>
+</tr>
 </table>
 
 <div class="accordion">
@@ -1323,12 +1308,6 @@ of differing Types held together and referenced by a single identifier.</p>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_Tuple">
-  <td><el-method>toString</el-method></td>
-  <td><el-code>Tuple</el-code></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>String containing Tuple's items surrounded by brackets</td>
  </tr><tr id="equals_Tuple">
   <td><el-method>equals</el-method></td>
   <td><el-code>Tuple</el-code></td>
@@ -1341,6 +1320,12 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><el-code>Tuple</el-code></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-id>true</el-id> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="toString_Tuple">
+  <td><el-method>toString</el-method></td>
+  <td><el-code>Tuple</el-code></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>String containing Tuple's items surrounded by brackets</td>
  </tr>
 </table>
 
@@ -1390,18 +1375,6 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#Stack"><el-type>Stack</el-type></a></td>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
   <td></td>
- </tr><tr><!---->
-  <td id="toString"><el-method>toString</el-method></td>
-  <td><a href="#asString_Int">&#x2714;</a></td>
-  <td><a href="#asString_Float">&#x2714;</a></td>
-  <td><a href="#asString_Boolean">&#x2714;</a></td>
-  <td><a href="#asString_String">&#x2714;</a></td>
-  <td><a href="#asString_List">&#x2714;</a></td>
-  <td><a href="#asString_Dictionary">&#x2714;</a></td>
-  <td><a href="#asString_Set">&#x2714;</a></td>
-  <td><a href="#asString_Stack">&#x2714;</a></td>
-  <td><a href="#asString_Queue">&#x2714;</a></td>
-  <td><a href="#asString_Tuple">&#x2714;</a></td>
  </tr><tr><!---->
   <td id="contains"><el-method>contains</el-method></td>
   <td></td>
@@ -1474,6 +1447,18 @@ of differing Types held together and referenced by a single identifier.</p>
   <td><a href="#peek_Stack">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
   <td></td>
+ </tr><tr><!---->
+  <td id="toString"><el-method>toString</el-method></td>
+  <td><a href="#toString_Int">&#x2714;</a></td>
+  <td><a href="#toString_Float">&#x2714;</a></td>
+  <td><a href="#toString_Boolean">&#x2714;</a></td>
+  <td><a href="#toString_String">&#x2714;</a></td>
+  <td><a href="#toString_List">&#x2714;</a></td>
+  <td><a href="#toString_Dictionary">&#x2714;</a></td>
+  <td><a href="#toString_Set">&#x2714;</a></td>
+  <td><a href="#toString_Stack">&#x2714;</a></td>
+  <td><a href="#toString_Queue">&#x2714;</a></td>
+  <td><a href="#toString_Tuple">&#x2714;</a></td>
  </tr><tr><!---->
   <td id="withSet"><el-method>withSet</el-method></td>
   <td></td>
@@ -2343,37 +2328,21 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <p>will produce:</p>
 <img src="images/Html_2.png" width="275" height="200">
 
-<p>The &lt;style&gt; string is displayed for editing like this:</p>
-<el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="&quot;&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;&quot;" tabindex="-1"></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>But by inserting <el-lit>\n</el-lit> newlines thus:</p>
-<el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="98" data-cursorend="98" size="97" style="width: 98ch" value="&quot;&lt;style&gt;\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n&lt;/style&gt;&quot;" tabindex="-1"></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>the string can be shown folded and indented when not being edited: </p>
-<el-code-block source="Html_4.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>"</el-txt></el-field></el-statement>
-</el-code-block>
-
 <h2 id="displayImageURL">Displaying images from URLs</h2>
 
 <p>An image that can be retrieved with an http or https URL may be sent to the display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
-<el-code-block source="Html_4.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-code-block source="Html_3.elan">
+<el-statement class="ok" id="var3" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call7" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args9" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 </el-code-block>
  <h5 class="no-TOC">Notes</h5>
   <ul>
    <li>The usual <b>&lt;img&gt;</b> tag attributes are respected, though <el-id>alt</el-id> does not give the expected tooltip when hovering over the image,
    and <el-id>title</el-id> is only a descriptive comment.</li>
-   <li>The attributes can be shown listed vertically by inserting <el-lit>\n</el-lit> to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>.</li>
-  </ul>
+ </ul>
 
  <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition: and then call the <el-method>displayVectorGraphics</el-method> method on it, thus:
 <el-code-block source="imageVG.elan">
@@ -2730,10 +2699,11 @@ They all return a value of Type <el-type>Float</el-type>, except for <el-method>
 <tr id="logE"><td><el-method>logE</el-method></td><td><el-type>Float</el-type></td><td></td><td>natural logarithm of the input</td><td></td></tr>
 <tr id="log10"><td><el-method>log10</el-method></td><td><el-type>Float</el-type></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
 <tr id="log2"><td><el-method>log2</el-method></td><td><el-type>Float</el-type></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
-<tr id="pow"><td><el-method>pow</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value raised to the pow<br>of the second input value</td><td></td></tr>
+<tr id="pow"><td><el-method>pow</el-method></td><td><el-type>Float</el-type>, <el-type>Float</el-type></td><td></td><td>first input value raised to the power<br>of the second input value</td><td></td></tr>
 <tr id="sin"><td><el-method>sin</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>sine of the input</td><td></td></tr>
 <tr id="sqrt"><td><el-method>sqrt</el-method></td><td><el-type>Float</el-type></td><td></td><td>positive square root of the input</td><td></td></tr>
 <tr id="tan"><td><el-method>tan</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>tangent of the input</td><td></td></tr>
+<tr id="tanDeg"><td><el-method>tanDeg</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
 <tr id="radians"><td><el-method>radians</el-method></td><td><el-type>Float</el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
 <tr id="degrees"><td><el-method>degrees</el-method></td><td><el-type>Float</el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr>
 </table>
