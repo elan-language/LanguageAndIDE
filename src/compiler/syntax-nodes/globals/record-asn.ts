@@ -16,6 +16,8 @@ export class RecordAsn extends ClassAsn {
     this.isRecord = true;
   }
 
+  symbolIsType = true;
+
   ofTypes: SymbolType[] = [];
 
   deprecated: Deprecated | undefined = undefined;

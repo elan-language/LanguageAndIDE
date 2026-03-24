@@ -3,7 +3,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
 import { Definition } from "../compiler-interfaces/definition";
-import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { ElanSymbol, ElanSymbolByLanguage } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { GlobalConstant } from "../compiler-interfaces/global-constant";
 import { Member } from "../compiler-interfaces/member";
@@ -210,8 +210,8 @@ export function isSystemFunction(s: ElanSymbol): boolean {
   return false;
 }
 
-export function isTypeName(s?: ElanSymbol): boolean {
-  return firstCharIsUpper(s?.symbolId ?? "");
+export function isTypeSymbol(s?: ElanSymbol): boolean {
+  return s?.symbolIsType || false;
 }
 
 export function isAbstractClass(s?: ElanSymbol): boolean {
@@ -223,15 +223,15 @@ export function isNotInheritableClass(s?: ElanSymbol): boolean {
 }
 
 export function isConcreteTypeName(s?: ElanSymbol): boolean {
-  return isTypeName(s) && !isAbstractClass(s);
+  return isTypeSymbol(s) && !isAbstractClass(s);
 }
 
 export function isAbstractTypeName(s?: ElanSymbol): boolean {
-  return isTypeName(s) && isAbstractClass(s) && !isNotInheritableClass(s);
+  return isTypeSymbol(s) && isAbstractClass(s) && !isNotInheritableClass(s);
 }
 
 export function isNotInheritableTypeName(s?: ElanSymbol): boolean {
-  return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
+  return isTypeSymbol(s) && isAbstractClass(s) && isNotInheritableClass(s);
 }
 
 export function isId(f: ElanSymbol): boolean {
@@ -599,4 +599,8 @@ export function allPropertiesInScope(scope: Scope): ElanSymbol[] {
 
 export function match(id1: string, id2: string, caseSensitive: boolean) {
   return caseSensitive ? id1 === id2 : id1.toUpperCase() === id2.toUpperCase();
+}
+
+export function isByLanguageSymbol(s: ElanSymbol): s is ElanSymbolByLanguage {
+  return s && "toLanguage" in s;
 }

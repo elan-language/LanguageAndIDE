@@ -28,6 +28,8 @@ export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
   isAbstract = false;
   private = false;
 
+  symbolIsType: boolean = false;
+
   params: AstNode = EmptyAsn.Instance;
 
   getClass(): Class {

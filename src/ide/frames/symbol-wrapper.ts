@@ -12,11 +12,11 @@ import {
   isNotInheritableClass,
   isProcedure,
   isProperty,
-  isTypeName,
+  isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { KeywordCompletion } from "./symbol-completion-helpers";
 import { File } from "./frame-interfaces/file";
+import { KeywordCompletion } from "./symbol-completion-helpers";
 
 export class SymbolWrapper {
   constructor(
@@ -51,7 +51,7 @@ export class SymbolWrapper {
       return `${thisKeyword}.${symbol.symbolId}`;
     }
 
-    if (isTypeName(symbol)) {
+    if (isTypeSymbol(symbol)) {
       return this.langSpecificTypeName(this.name);
     }
 
@@ -113,7 +113,7 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isTypeName(symbol)) {
+    if (isTypeSymbol(symbol)) {
       let toInsert = this.langSpecificTypeName(this.name);
       if (isGenericClass(symbol)) {
         const lang = this.file.language();

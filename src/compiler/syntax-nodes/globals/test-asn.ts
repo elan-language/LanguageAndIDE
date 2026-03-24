@@ -18,6 +18,8 @@ export class TestAsn extends CompoundAsn implements AstNode, ElanSymbol {
     this.symbolId = name;
   }
 
+  symbolIsType: boolean = false;
+
   symbolId: string;
 
   symbolType(): SymbolType {

@@ -879,6 +879,8 @@ export abstract class AbstractField implements Selectable, Field {
           .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
           .sort(this.orderSymbol);
         this.allPossibleSymbolCompletions = keywords;
+      } else {
+        this.allPossibleSymbolCompletions = [];
       }
       const symbols = this.matchingSymbolsForId(spec).map(
         (s) => new SymbolWrapper(s, scope!, this.getFile()),

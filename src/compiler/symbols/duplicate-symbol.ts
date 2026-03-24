@@ -16,4 +16,8 @@ export class DuplicateSymbol implements ElanSymbol {
   }
 
   name = "Duplicate Symbol";
+
+  get symbolIsType() {
+    return this.duplicates[0].symbolIsType;
+  }
 }

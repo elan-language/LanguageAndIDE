@@ -16,6 +16,7 @@ export class DefinitionAdapter implements Definition {
     const ids = getDeconstructionIds(adapted.symbolId);
     this.symbolId = ids[index];
     this.symbolScope = adapted.symbolScope;
+    this.symbolIsType = adapted.symbolIsType;
   }
 
   isLocalConstant() {
@@ -31,4 +32,6 @@ export class DefinitionAdapter implements Definition {
     return this.adapted.symbolType();
   }
   symbolScope: SymbolScope;
+
+  symbolIsType: boolean;
 }

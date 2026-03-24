@@ -11,6 +11,8 @@ export class ProcedureMethodAsn extends ProcedureAsn {
 
   isAbstract = false;
 
+  symbolIsType: boolean = false;
+
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

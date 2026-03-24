@@ -19,6 +19,8 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     super();
   }
 
+  symbolIsType: boolean = false;
+
   compile(): string {
     this.compileErrors = [];
 

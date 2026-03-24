@@ -9,6 +9,7 @@ export class UnknownSymbol implements ElanSymbol {
   symbolId = "";
   symbolType = () => UnknownType.Instance;
   symbolScope = SymbolScope.unknown;
+  symbolIsType: boolean = false;
 
   name = "Unknown Symbol";
 }

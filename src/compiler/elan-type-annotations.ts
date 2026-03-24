@@ -792,12 +792,14 @@ export function getSymbol(
       private: false,
       isAbstract: false,
       getClass: () => cls,
+      symbolIsType: false,
     } as ElanSymbol;
   } else {
     symbol = {
       symbolId: id,
       symbolType: () => st,
       symbolScope: ss,
+      symbolIsType: false,
     } as ElanSymbol;
   }
 
