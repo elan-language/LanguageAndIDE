@@ -1,19 +1,5 @@
-# 4a24654da6e582e1909f623506bf8ac168c8d279266d9ae187606deb9d983335 Elan 2.0.0-alpha guest default_profile valid
+# ff91b5879e5d62c10cf708791091b305fc9cc11b9da779368f37ec385780a047 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
-  # original quotes
   call displayHtml("<h1 style='color: blue;'>A heading</h1><p>some text</p>")
-  # 
-  call pause(1000)
-  call clearHtml()
-  # 
-  # swap quotes: call print(works, displayHtml() doesn't)
-  call displayHtml('<h1 style="color: blue;">A heading</h1><p>some text</p>')
-  # 
-  call pause(1000)
-  call clearHtml()
-  # 
-  variable s set to '<h1 style="color: blue;">A heading</h1><p>some text</p>'
-  call print(s)
-  call displayHtml(s)
 end main

@@ -29,11 +29,22 @@ NOTE: This documentation is a work in progress and is not yet fully descriptive 
  There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
 </ul>                                                                                                             
 <p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
-it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
-<p>Both kinds of named value must be initialised with either literals or expressions.</p>
+it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication, assist in the modularisation of code and reduce errors.</p>
+<p>Both kinds of named value must be initialised with literals, expressions or initialisation <el-method>methods</el-method>.</p>
 <p>Loop counter variables, however, may be defined implicitly in a <a href="#for"><el-kw>for</el-kw></a> instruction.</p>
 
-<h2 id="Type">Types</h2>
+<h2 id="Type">Data Types</h2>
+
+<p>There are two fundamentally different kinds of data Type, differing by how their values
+are passed around in a running program:</p>
+<ul>
+ <li><b>Value Types</b> that contain a single value, and are passed around directly:<br>
+ <el-type>Integer</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type></li>  
+ <li><b>Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <el-type>String</el-type>, <el-type>List</el-type>, etc. as well as
+ any user-defined Type such as <el-kw>Abstract class</el-kw>, <el-kw>Class</el-kw> and <el-kw>Interface</el-kw>.</li>
+</ul>
+
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
@@ -292,7 +303,7 @@ and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
 <el-func class="ok multiline" id="func1" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>foo</el-method></el-txt></el-field>(<el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Bool</el-type></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>power</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) &lt; <el-method>power</el-method>(<el-id>b</el-id>, <el-id>a</el-id>)<el-kw> then </el-kw><el-id>true</el-id><el-kw> else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>pow</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) &lt; <el-method>pow</el-method>(<el-id>b</el-id>, <el-id>a</el-id>)<el-kw> then </el-kw><el-id>true</el-id><el-kw> else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -560,7 +571,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <h3 class="no-TOC" id="UsingAClass">Using a Class</h3>
 <p>A Class is instantiated using the keyword <el-kw>class</el-kw> followed by the Class name, and optional <el-kw>inherits</el-kw> to refer to a <el-kw>class</el-kw> or <el-kw>abstract class</el-kw> defined above in the program.</p>
 <p>The Class name must have an initial capital letter because it functions as a new Type.</p>
-<p>This example shows the definition of a Class that includes its <el-kw>constructor</el-kw>, <el-kw>property</el-kw> definitions and an example of the required <el-method>asString</el-method> method:</p>
+<p>This example shows the definition of a Class that includes its <el-kw>constructor</el-kw>, <el-kw>property</el-kw> definitions and an example of the required <el-method>toString</el-method> method:</p>
 
 <el-code-block source="constructor.elan">
 <el-class class="ok multiline" id="class1" tabindex="-1">
@@ -575,7 +586,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <el-kw>end constructor</el-kw>
 </el-constructor>
 <el-func class="ok multiline" id="func26" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>asString</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params29" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type30" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>toString</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params29" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type30" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
 </el-top>
 <el-statement class="ok" id="return31" tabindex="-1"><el-kw>return </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt>$"{<el-kw>this</el-kw>.<el-id>x</el-id>}<el-lit>,</el-lit>{<el-kw>this</el-kw>.<el-id>y</el-id>}"</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
@@ -841,7 +852,7 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
-  <td>method <el-method>asString</el-method> must be defined</td>
+  <td>method <el-method>toString</el-method> must be defined</td>
  </tr><tr>
   <td><a href="#procedure_method"><el-kw>procedure</el-kw> method</a></td>
   <td></td>
@@ -911,9 +922,9 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the Class as though it were a variable or parameter.</li>
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the Class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
  This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
-<li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
- If defined for a Class then, if an instance of the Class is printed, function method <el-method>asString</el-method> will automatically be used.
-  Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
+ If defined for a Class then, if an instance of the Class is printed, function method <el-method>toString</el-method> will automatically be used.
+  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
 <h2 id="procedure_method"><el-kw>procedure</el-kw> method</h2>
@@ -1175,7 +1186,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
 <p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
- which defines an explanatory string. An example:</p>
+ which defines an explanatory string. For example:</p>
 <el-code-block source="throw.elan">
 <el-statement class="ok multiline" id="if18" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>value</el-id> &gt; <el-id>maximum</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
@@ -1191,7 +1202,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 <el-code>A Runtime error occurred in the Elan code</el-code><br>
 <el-code>Error: proportion exceeds 100%</el-code>
 </p>
-<p>This example that puts current values into the exception message string:</p>
+<p>This example interpolates current values into the exception message string:</p>
 <el-code-block source="throw.elan">
 <el-statement class="ok multiline" id="if41" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
@@ -1200,7 +1211,7 @@ and may be defined by literals, integer named values or expressions that evaluat
 </el-statement>
 </el-code-block>
 
-<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a> statement,
+<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a>instruction,
 where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, and continue as appropriate.</p>
 
 <div id="catch"></div>
@@ -1441,7 +1452,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
 <el-statement class="ok" id="call3" tabindex="-1"><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>power</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>power</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field>)</el-statement>
 </el-code-block>
@@ -1672,7 +1683,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 -->
 
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
- <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>asString</el-method>, may be called on a named
+ <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toring</el-method>, may be called on a named
  value or an expression only using <a href="#dotSyntax">dot syntax</a>.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>

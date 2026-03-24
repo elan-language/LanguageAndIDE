@@ -1,5 +1,8 @@
-# da9b31f1a83287bb98383a49d310f43e390f49cdeebb4aeb87c4db82479b0e7d Elan 2.0.0-alpha guest default_profile valid
+# 7f76bbe04bd99620f32c7f4771c3d2924a19b8f2f2d19cfadaf07242a875d652 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
-  variable style set to '<style>\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n</style>'
+  # snipFrom
+  variable pic set to "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'>"
+  call displayHtml(pic)
+  # snipTo
 end main
