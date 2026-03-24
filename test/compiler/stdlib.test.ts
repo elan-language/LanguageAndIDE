@@ -16,7 +16,6 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -2254,6 +2253,72 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
+  });
+  test("Pass_createList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createList(5, "a")
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = (await _stdlib.createList(5, "a"));
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a, a, a, a, a]");
+  });
+  test("Pass_createListOfLists", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createListOfLists(3, 2, 5)
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = (await _stdlib.createListOfLists(3, 2, 5));
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[[5, 5], [5, 5], [5, 5]]");
   });
   test("Pass_allLibraryTypeNamesValid", async () => {
     const code = `${testHeader}
