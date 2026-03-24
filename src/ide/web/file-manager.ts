@@ -45,13 +45,12 @@ export class FileManager {
     editingField: boolean,
     vm: IIDEViewModel,
   ) {
-    let code = "";
     const newFieldId = editingField ? field?.id : undefined;
     const parseStatus = cvm.readParseStatus();
 
     if (parseStatus === ParseStatus.valid || parseStatus === ParseStatus.incomplete) {
       // save to local store
-
+      const code = await cvm.renderAsSource();
       if (this.undoRedoHash !== cvm.currentHash && !this.undoRedoing) {
         if (this.nextFileIndex !== -1 && this.nextFileIndex > this.currentFileIndex) {
           const trimedIds = this.undoRedoFiles.slice(this.nextFileIndex);
@@ -61,7 +60,7 @@ export class FileManager {
             localStorage.removeItem(id);
           }
         }
-        code = await cvm.renderAsSource();
+
         const timestamp = Date.now();
         const overWriteLastEntry = newFieldId === this.currentFieldId;
         const id = overWriteLastEntry
@@ -89,7 +88,6 @@ export class FileManager {
       }
 
       // autosave if setup
-      code = code || (await cvm.renderAsSource());
       await this.autoSave(code, cvm, vm);
     }
 
