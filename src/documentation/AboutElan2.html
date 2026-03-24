@@ -129,7 +129,7 @@
         <ul>
             <li>Two <i>integers</i> may not be divided using '/'. You use the <el-method>divAsInt</el-method> or <el-method>divAsFloat</el-method> depending on the result you need.</li>
             <li>The equality operator may be used <i>only for numeric or Boolean Types</i>.
-                To test equality of strings, and all other Types, you must use the <el-method>equals</el-method> or <el-method>isNotEqual</el-method> function./li>
+                To test equality of strings, and all other Types, you must use the <el-method>equals</el-method> or <el-method>notEqualTo</el-method> function.</li>
             <li>The 'power' operator '^' is not recognised for any language, You use the <el-method>pow</el-method> function instead.</li>
         </ul>
     </li>
@@ -143,7 +143,7 @@
     <li>Exceptions/errors. You cannot access the exception <i>instance</i> within a <el-code>catch</el-code> clause(s).
     </li>
 
-    <li>Tuples. Items are accessed by e.g. <code>myTuple.item_0</code>, <code>myTuple.item_1/</code>. They may
+    <li>Tuples. Items are accessed by e.g. <code>myTuple.item_0</code>, <code>myTuple.item_1</code>. They may
     not be accessed by index, nor is 'tuple deconstruction' (into separate variables) supported.</li>
 
     <li>Passing by reference is possible only within a <i>procedure</i> and to do this you use the <el-type>Ref</el-type> Type
