@@ -1,8 +1,10 @@
-# 7aa99302f37ac41ec3d05146b7f5faab79430770940a163ddb5b77514892e23c Elan 2.0.0-alpha guest default_profile valid
+# 974583d145ecb6c4aa2ff26310a22a05c8de9413cb52fedb8f82531b6a38e8a4 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
+  # snipFrom
   call print(sin(radians(30)))
-  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30), 2)
+  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
   variable name set to input("Your name")
   call print(name.upperCase())
+  # snipTo
 end main
