@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha
+// Java with Elan 2.0.0-alpha1
 
 static void main() {
   var grid = createBlockGraphics(white);

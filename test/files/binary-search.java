@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha
+// Java with Elan 2.0.0-alpha1
 
 static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];

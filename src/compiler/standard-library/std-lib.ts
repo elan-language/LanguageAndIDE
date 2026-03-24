@@ -461,6 +461,28 @@ export class StdLib {
     return this.system.initialise(new List<T1>(toInit));
   }
 
+  @elanFunction(["colour"], FunctionOptions.pureAsync, ElanClass(List, [ElanClass(List, [ElanT1])]))
+  async createListOfLists<T1>(
+    @elanIntType() x: number,
+    @elanIntType() y: number,
+    @elanGenericParamT1Type() value: T1,
+  ) {
+    if (!this.isValueType(value)) {
+      throw new ElanRuntimeError(`Can only create List of Lists with simple value`);
+    }
+
+    const listOfList = this.system.initialise(await new List<List<T1>>()._initialise());
+
+    for (let i = 0; i < x; i++) {
+      const subArr = this.system.initialise(await new List<T1>()._initialise());
+      for (let j = 0; j < y; j++) {
+        subArr.append(value);
+      }
+      listOfList.append(subArr);
+    }
+    return listOfList;
+  }
+
   //Input functions
   private async prompt(prompt: string) {
     await this.print(prompt);
