@@ -223,7 +223,7 @@ export function transform(
   }
 
   if (node instanceof FileImpl) {
-    const astRoot = new FileAsn(node.libraryScope, node.getVersion());
+    const astRoot = new FileAsn(node.libraryScope, node.getVersion(), node.language());
 
     astRoot.children = node
       .getChildren()

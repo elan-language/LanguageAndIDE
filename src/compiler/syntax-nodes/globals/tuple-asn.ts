@@ -31,6 +31,7 @@ export class TupleAsn implements Scope {
       symbolType: () => t,
       symbolScope: SymbolScope.member,
       isProperty: true,
+      symbolIsType: true,
     };
   }
 

@@ -25,6 +25,8 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     super(fieldId, scope);
   }
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   expr: AstNode = EmptyAsn.Instance;
 

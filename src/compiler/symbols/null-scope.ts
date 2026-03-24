@@ -28,6 +28,7 @@ export class NullScope implements Scope {
   symbolId = "";
   symbolType = () => UnknownType.Instance;
   symbolScope = SymbolScope.unknown;
+  symbolIsType: boolean = false;
 
   static Instance: Scope = new NullScope();
 }

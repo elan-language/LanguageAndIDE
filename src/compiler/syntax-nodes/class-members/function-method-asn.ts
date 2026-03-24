@@ -16,6 +16,8 @@ export class FunctionMethodAsn extends FunctionAsn {
 
   isAbstract = false;
 
+  symbolIsType: boolean = false;
+
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

@@ -7,8 +7,14 @@ import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { DuplicateSymbol } from "../../compiler/symbols/duplicate-symbol";
 import { elanSymbols } from "../../compiler/symbols/elan-symbols";
 import { NullScope } from "../../compiler/symbols/null-scope";
-import { isSymbol, match, symbolMatches } from "../../compiler/symbols/symbol-helpers";
+import {
+  isByLanguageSymbol,
+  isSymbol,
+  match,
+  symbolMatches,
+} from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -21,8 +27,9 @@ import { TestAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   constructor(
-    private scope: Scope,
-    private version: Semver,
+    private readonly scope: Scope,
+    private readonly version: Semver,
+    private readonly language: Language,
   ) {
     super();
   }
@@ -99,8 +106,12 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return this.scope;
   }
 
+  byLanguage(ss: ElanSymbol[]): ElanSymbol[] {
+    return ss.map((s) => (isByLanguageSymbol(s) ? s.toLanguage(this.language) : s));
+  }
+
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const languageMatches = symbolMatches(id, all, elanSymbols);
+    const languageMatches = symbolMatches(id, all, this.byLanguage(elanSymbols));
     const libMatches = this.scope.symbolMatches(id, all, this);
     const globalSymbols = this.children.filter((c) => isSymbol(c));
     const matches = symbolMatches(id, all, globalSymbols);
