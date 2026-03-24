@@ -2387,10 +2387,10 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new TypeNode(fileWithVB()),
       `Inte`,
-      ParseStatus.valid,
+      ParseStatus.incomplete,
       `Inte`,
       "",
-      ``,
+      `Inte`,
       "<el-type>Inte</el-type>",
       `Inte`,
     );
@@ -2400,11 +2400,11 @@ suite("Parsing Nodes", () => {
       new TypeNameUse(f),
       `Inte`,
       ParseStatus.valid,
-      `Inte`,
-      "",
-      `Inte`,
-      "<el-type>Inte</el-type>",
-      `Inte`,
+      `Int`,
+      "e",
+      `Int`,
+      "<el-type>Int</el-type>",
+      `Int`,
     );
   });
   test("ParamList VB", () => {
@@ -2478,6 +2478,29 @@ suite("Parsing Nodes", () => {
       `true`,
       "<el-kw>True</el-kw>",
       `True`,
+    );
+  });
+  test("Expr - i in type C#  - #2737", () => {
+    testNodeParse(
+      new TypeNameUse(fileWithCS()),
+      `i`,
+      ParseStatus.incomplete,
+      `i`,
+      "",
+      `i`,
+      "<el-type>i</el-type>",
+      `i`,
+    );
+    testNodeParse(new TypeNameUse(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
+    testNodeParse(
+      new TypeNameUse(fileWithCS()),
+      `int`,
+      ParseStatus.valid,
+      `int`,
+      "",
+      `Int`,
+      "<el-type>int</el-type>",
+      `int`,
     );
   });
 });
