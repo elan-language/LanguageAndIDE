@@ -121,8 +121,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.containsMain();
   }
 
-  renderAsHtml() {
-    return this.file!.renderAsHtml();
+  async renderAsHtml() {
+    return await this.file!.renderAsHtml();
   }
 
   removeAllSelectorsThatCanBe() {
@@ -702,7 +702,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       msg.selection = [start, end];
     }
 
-    this.handleKeyAndRender(msg, vm, tr);
+    await this.handleKeyAndRender(msg, vm, tr);
     event.preventDefault();
     event.stopPropagation();
   }
@@ -732,12 +732,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     for (const frame of frames) {
       const id = frame.id;
 
-      frame.addEventListener("keydown", (event: Event) => {
+      frame.addEventListener("keydown", async (event: Event) => {
         const ke = event as KeyboardEvent;
-        this.handleEditorEvent(vm, tr, fm, event, "key", "frame", getModKey(ke), id, ke.key);
+        await this.handleEditorEvent(vm, tr, fm, event, "key", "frame", getModKey(ke), id, ke.key);
       });
 
-      frame.addEventListener("click", (event) => {
+      frame.addEventListener("click", async (event) => {
         const pe = event as PointerEvent;
         const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
         const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
@@ -747,7 +747,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
             ? undefined
             : [selectionStart, selectionEnd ?? selectionStart];
 
-        this.handleEditorEvent(
+        await this.handleEditorEvent(
           vm,
           tr,
           fm,
@@ -761,12 +761,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
         );
       });
 
-      frame.addEventListener("mousedown", (event) => {
+      frame.addEventListener("mousedown", async (event) => {
         // mousedown rather than click as click does not seem to pick up shift/ctrl click
         const me = event as MouseEvent;
         if (me.button === 0 && me.shiftKey) {
           // left button only
-          this.handleEditorEvent(vm, tr, fm, event, "click", "frame", getModKey(me), id);
+          await this.handleEditorEvent(vm, tr, fm, event, "click", "frame", getModKey(me), id);
         }
       });
 
@@ -774,14 +774,14 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
         event.preventDefault();
       });
 
-      frame.addEventListener("dblclick", (event) => {
+      frame.addEventListener("dblclick", async (event) => {
         const ke = event as KeyboardEvent;
-        this.handleEditorEvent(vm, tr, fm, event, "dblclick", "frame", getModKey(ke), id);
+        await this.handleEditorEvent(vm, tr, fm, event, "dblclick", "frame", getModKey(ke), id);
       });
 
-      frame.addEventListener("contextmenu", (event) => {
+      frame.addEventListener("contextmenu", async (event) => {
         const mk = { control: false, shift: false, alt: false };
-        this.handleEditorEvent(vm, tr, fm, event, "contextmenu", "frame", mk, id);
+        await this.handleEditorEvent(vm, tr, fm, event, "contextmenu", "frame", mk, id);
         event.preventDefault();
       });
     }
@@ -827,7 +827,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
           const id = tgt.dataset.id;
           const func = tgt.dataset.func;
           const txt = await navigator.clipboard.readText();
-          this.handleEditorEvent(
+          await this.handleEditorEvent(
             vm,
             tr,
             fm,
@@ -899,12 +899,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       const items = document.querySelectorAll(".autocomplete-item");
 
       for (const item of items) {
-        item.addEventListener("click", (event) => {
+        item.addEventListener("click", async (event) => {
           const ke = event as PointerEvent;
           const tgt = ke.target as HTMLDivElement;
           const id = tgt.dataset.id;
 
-          this.handleEditorEvent(
+          await this.handleEditorEvent(
             vm,
             tr,
             fm,
@@ -924,13 +924,13 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
 
       if (ellipsis.length === 1) {
-        ellipsis[0].addEventListener("click", (event) => {
+        ellipsis[0].addEventListener("click", async (event) => {
           const ke = event as PointerEvent;
           const tgt = ke.target as HTMLDivElement;
           const id = tgt.dataset.id;
           const selected = tgt.dataset.selected;
 
-          this.handleEditorEvent(
+          await this.handleEditorEvent(
             vm,
             tr,
             fm,
