@@ -3,7 +3,7 @@
 test test_maths
   assert pi is 3.141592653589793
   assert abs(-3.7) is 3.7
-  assert power(2, 10) is 1024
+  assert pow(2, 10) is 1024
   assert sqrt(2).round(3) is 1.414
   assert asin(0.5).round(3) is 0.524
   assert acos(0.5).round(3) is 1.047

@@ -11,6 +11,7 @@ import {
   assertExportedVBis,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testCSHeader,
@@ -349,7 +350,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
@@ -370,7 +373,7 @@ async function main() {
   let limit = 10;
   const elan_iterfor6 = [..._stdlib.range(1, limit + 1)];
   for (const i of elan_iterfor6) {
-    await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
+    await _stdlib.printNoLine(\`\${await _stdlib.toString(i)}\`);
     limit = limit + 1;
   }
 }

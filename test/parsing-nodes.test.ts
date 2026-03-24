@@ -20,20 +20,23 @@ import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
+import { ListNode } from "../src/ide/frames/parse-nodes/list-node";
+import { LitBoolean } from "../src/ide/frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
-import { LitStringField } from "../src/ide/frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedInsert } from "../src/ide/frames/parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
-import { LitStringPlainText } from "../src/ide/frames/parse-nodes/lit-string-plain-text";
+import { LitStringText } from "../src/ide/frames/parse-nodes/lit-string-text";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
 import { NewInstance } from "../src/ide/frames/parse-nodes/new-instance";
 import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
+import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
 import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
 import { Qualifier } from "../src/ide/frames/parse-nodes/qualifier";
@@ -47,6 +50,7 @@ import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
 import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
@@ -222,30 +226,65 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
     testNodeParse(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
     testNodeParse(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
-    testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, " 123", "a", "123", "");
+    testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, "123", "a", "123", "");
     testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
-    //Hex & binary
+  });
+
+  test("LitInt_HexAndBinary", () => {
     testNodeParse(
       new LitInt(f),
       "0xfa3c",
       ParseStatus.valid,
+      "fa3c",
+      "",
       "0xfa3c",
-      "",
-      "",
       "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
     );
-    testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
+    testNodeParse(
+      new ExprNode(f),
+      "0xfffe",
+      ParseStatus.valid,
+      "0xfffe",
+      "",
+      "0xfffe",
+      "<el-lit>0xfffe</el-lit>",
+      "0xfffe",
+    );
+    testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "fa3", "g", "0xfa3", "");
+    testNodeParse(new LitInt(f), "&Hfa3", ParseStatus.invalid, "", "&Hfa3", "", ""); //VB format in El
+    testNodeParse(
+      new LitInt(fileWithVB()),
+      "&Hfa3",
+      ParseStatus.valid,
+      "fa3",
+      "",
+      "0xfa3",
+      "<el-lit>&Hfa3</el-lit>",
+      "&Hfa3",
+    ); //VB format in VB
     testNodeParse(
       new LitInt(f),
       "0b01101",
       ParseStatus.valid,
+      "01101",
+      "",
       "0b01101",
-      "",
-      "",
       "<el-lit>0b01101</el-lit>",
     );
-    testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
+    testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0110", "2", "0b0110", "");
+    testNodeParse(new LitInt(f), "&B0110", ParseStatus.invalid, "", "&B0110", "", ""); //VB syntax
+    testNodeParse(
+      new LitInt(fileWithVB()),
+      "&B0110",
+      ParseStatus.valid,
+      "0110",
+      "",
+      "0b0110",
+      "<el-lit>&B0110</el-lit>",
+      "&B0110",
+    ); //VB syntax
   });
   test("LitFloat", () => {
     testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");
@@ -1307,10 +1346,26 @@ suite("Parsing Nodes", () => {
     );
   });
   test("String Interpolation", () => {
-    testNodeParse(new LitStringField(f), ``, ParseStatus.empty, "", "", "", "");
-    testNodeParse(new LitStringField(f), "{x + 1}", ParseStatus.valid, "{x + 1}", "", "", "");
-    testNodeParse(new LitStringField(f), "{x", ParseStatus.incomplete, "{x", "", "", "");
-    testNodeParse(new LitStringField(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+    testNodeParse(new LitStringInterpolatedInsert(f), ``, ParseStatus.empty, "", "", "", "");
+    testNodeParse(
+      new LitStringInterpolatedInsert(f),
+      "{x + 1}",
+      ParseStatus.valid,
+      "{x + 1}",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new LitStringInterpolatedInsert(f),
+      "{x",
+      ParseStatus.incomplete,
+      "{x",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(new LitStringInterpolatedInsert(f), "{}", ParseStatus.invalid, "", "{}", "", "");
   });
   test("LitString", () => {
     testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
@@ -1368,7 +1423,7 @@ suite("Parsing Nodes", () => {
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     testNodeParse(
-      new LitStringPlainText(f),
+      new LitStringText(f, /^[^"]*/),
       `<p>`,
       ParseStatus.valid,
       `<p>`,
@@ -1432,9 +1487,9 @@ suite("Parsing Nodes", () => {
       new LitStringInterpolated(fileWithPython()),
       `f"<p>{2 + 3}</p>"`,
       ParseStatus.valid,
-      `f"<p>{2 + 3}</p>"`,
+      `$"<p>{2 + 3}</p>"`,
       "",
-      `f"<p>{2 + 3}</p>"`,
+      `$"<p>{2 + 3}</p>"`,
       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
       `f"<p>{2 + 3}</p>"`,
     );
@@ -1492,7 +1547,7 @@ suite("Parsing Nodes", () => {
   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
-  //   testNodeParse(new MethodCallNode(f), `12.3.asString()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
   //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
   //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
   // });
@@ -1664,33 +1719,9 @@ suite("Parsing Nodes", () => {
       "",
       `"a" + "b"`,
     );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3+`,
-      ParseStatus.incomplete,
-      "3+",
-      "",
-      "3 + ",
-      "<el-lit>3</el-lit> + ",
-    );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3 +`,
-      ParseStatus.incomplete,
-      "3 +",
-      "",
-      "3 + ",
-      "<el-lit>3</el-lit> + ",
-    );
-    testNodeParse(
-      new BinaryExpression(f),
-      `3 `,
-      ParseStatus.incomplete,
-      "3 ",
-      "",
-      "3 ",
-      "<el-lit>3</el-lit> ",
-    );
+    testNodeParse(new BinaryExpression(f), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3+");
+    testNodeParse(new BinaryExpression(f), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 +");
+    testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
     testNodeParse(
       new BinaryExpression(f),
       `3+4`,
@@ -2147,6 +2178,329 @@ suite("Parsing Nodes", () => {
       "",
       "(<el-type>int</el-type>, <el-type>String</el-type>)",
       "(int, String)",
+    );
+  });
+  test("LitStringInterpolated", () => {
+    testNodeParse(
+      new LitStringInterpolated(f),
+      `$"{a} plus {b} equals {a + b}"`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+    );
+  });
+  test("CSV expression", () => {
+    return testNodeParse(
+      new CSV(fileWithJava(), () => new ExprNode(f), 3),
+      `a, b, a + b)`,
+      ParseStatus.valid,
+      "a, b, a + b",
+      ")",
+      "a, b, a + b",
+      "",
+      "a, b, a + b",
+    );
+  });
+  test("LitStringInterpolated_in_Java1", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("%", a)`,
+      ParseStatus.valid,
+      '$"{a}"',
+      "",
+      '$"{a}"',
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java2", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("%", 1)`,
+      ParseStatus.valid,
+      '$"{1}"',
+      "",
+      '$"{1}"',
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java3", () => {
+    return testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("% plus % equals %", a, b, a + b)`,
+      ParseStatus.valid,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{a} plus {b} equals {a + b}"',
+      '<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>%<el-lit> plus </el-lit>%<el-lit> equals </el-lit>%</el-lit>", <el-id>a</el-id>, <el-id>b</el-id>, <el-id>a</el-id> + <el-id>b</el-id>)',
+      'String.format("% plus % equals %", a, b, a + b)',
+    );
+  });
+  test("LitStringInterpolated_in_Java4", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("max %, % equals %", a, b, max(a, b))`,
+      ParseStatus.valid,
+      '$"max {a}, {b} equals {max(a, b)}"',
+      "",
+      '$"max {a}, {b} equals {max(a, b)}"',
+      "",
+      `String.format("max %, % equals %", a, b, max(a, b))`,
+    );
+  });
+  test("LitStringInterpolated_in_Java5", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("result % %", 50)`,
+      ParseStatus.invalid,
+      "",
+      `String.format("result % %", 50)`,
+      "",
+      "",
+    );
+  });
+  test("LitStringInterpolated_in_Java6", () => {
+    testNodeParse(
+      new LitStringInterpolated(fileWithJava()),
+      `String.format("result % %", 50, percent)`,
+      ParseStatus.valid,
+      '$"result {50} {percent}"',
+      "",
+      "",
+      "",
+      'String.format("result % %", 50, percent)',
+    );
+  });
+  test("List", () => {
+    testNodeParse(
+      new ListNode(f, () => new LitInt(f)),
+      `[1, 2, 3]`,
+      ParseStatus.valid,
+      `[1, 2, 3]`,
+      "",
+      `[1, 2, 3]`,
+      `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
+      `[1, 2, 3]`,
+    );
+  });
+  test("List incomplete", () => {
+    testNodeParse(
+      new ListNode(f, () => new LitInt(f)),
+      `[`,
+      ParseStatus.incomplete,
+      `[`,
+      "",
+      `[`,
+      "[",
+      `[`,
+    );
+  });
+  test("List incomplete VB", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{`,
+      ParseStatus.incomplete,
+      `{`,
+      "",
+      ``,
+      "{",
+      `{`,
+    );
+  });
+  test("List incomplete VB 2", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{1, 2`,
+      ParseStatus.incomplete,
+      `{1, 2`,
+      "",
+      `{1, 2`,
+      `{1, 2`,
+      `{1, 2`,
+    );
+  });
+  test("List complete VB", () => {
+    testNodeParse(
+      new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+      `{1, 2, 3}`,
+      ParseStatus.valid,
+      `{1, 2, 3}`,
+      "",
+      `[1, 2, 3]`,
+      "{<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}",
+      `{1, 2, 3}`,
+    );
+  });
+  test("LitStringOrdinary VB", () => {
+    testNodeParse(
+      new LitStringOrdinary(fileWithVB()),
+      `"`,
+      ParseStatus.incomplete,
+      `"`,
+      "",
+      `"`,
+      `"`,
+      '"',
+    );
+  });
+  test("ParamDef VB", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithVB()),
+      `a As Integer`,
+      ParseStatus.valid,
+      `a As Integer`,
+      "",
+      `a as Int`,
+      "<el-id>a</el-id><el-kw> As </el-kw><el-type>Integer</el-type>",
+      `a As Integer`,
+    );
+  });
+  test("ParamDef VB incomplete", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithVB()),
+      `a A`,
+      ParseStatus.incomplete,
+      `a A`,
+      "",
+      `a A`,
+      "a A",
+      `a A`,
+    );
+  });
+  test("Type VB", () => {
+    testNodeParse(
+      new TypeNode(fileWithVB()),
+      `Integer`,
+      ParseStatus.valid,
+      `Integer`,
+      "",
+      `Int`,
+      "<el-type>Integer</el-type>",
+      `Integer`,
+    );
+  });
+  test("Type VB2", () => {
+    testNodeParse(
+      new TypeNode(fileWithVB()),
+      `Inte`,
+      ParseStatus.incomplete,
+      `Inte`,
+      "",
+      `Inte`,
+      "<el-type>Inte</el-type>",
+      `Inte`,
+    );
+  });
+  test("Type incomplete Elan", () => {
+    testNodeParse(
+      new TypeNameUse(f),
+      `Inte`,
+      ParseStatus.valid,
+      `Int`,
+      "e",
+      `Int`,
+      "<el-type>Int</el-type>",
+      `Int`,
+    );
+  });
+  test("ParamList VB", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b As Integer`,
+      ParseStatus.valid,
+      `a As Integer, b As Integer`,
+      "",
+      `a as Int, b as Int`,
+      "",
+      `a As Integer, b As Integer`,
+    );
+  });
+  test("ParamList VB incomplete", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b`,
+      ParseStatus.incomplete,
+      `a As Integer, b`,
+      "",
+      `a as Int, b`,
+      "",
+      `a As Integer, b`,
+    );
+  });
+  test("ParamList VB incomplete 2", () => {
+    testNodeParse(
+      new ParamListNode(fileWithVB()),
+      `a As Integer, b A`,
+      ParseStatus.incomplete,
+      `a As Integer, b A`,
+      "",
+      `a as Int, b A`,
+      "",
+      `a As Integer, b A`,
+    );
+  });
+
+  test("LitBoolean", () => {
+    testNodeParse(
+      new LitBoolean(f),
+      `true`,
+      ParseStatus.valid,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean - case insensitive", () => {
+    testNodeParse(
+      new LitBoolean(f),
+      `True`,
+      ParseStatus.valid,
+      `True`,
+      "",
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean - case insensitive VB", () => {
+    testNodeParse(
+      new LitBoolean(fileWithVB()),
+      `true`,
+      ParseStatus.valid,
+      `true`,
+      "",
+      `true`,
+      "<el-kw>True</el-kw>",
+      `True`,
+    );
+  });
+  test("Expr - i in type C#  - #2737", () => {
+    testNodeParse(
+      new TypeNameUse(fileWithCS()),
+      `i`,
+      ParseStatus.incomplete,
+      `i`,
+      "",
+      `i`,
+      "<el-type>i</el-type>",
+      `i`,
+    );
+    testNodeParse(new TypeNameUse(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
+    testNodeParse(
+      new TypeNameUse(fileWithCS()),
+      `int`,
+      ParseStatus.valid,
+      `int`,
+      "",
+      `Int`,
+      "<el-type>int</el-type>",
+      `int`,
     );
   });
 });

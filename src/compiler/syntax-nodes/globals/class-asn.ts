@@ -46,6 +46,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+  symbolIsType: boolean = true;
 
   name: AstNode = EmptyAsn.Instance;
   inheritance: AstNode = EmptyAsn.Instance;

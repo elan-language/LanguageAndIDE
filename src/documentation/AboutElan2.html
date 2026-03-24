@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>Elan 2.0-alpha1 - READ THIS FIRST</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
+    <link href="../ide/styles/documentation.css" rel="stylesheet">
+    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+    <link href="favicon.ico" rel="icon">
+</head>
+<body>
+
+<H1>Elan 2.0</H1>
+<ul>
+    <li>Applies the technology and philosophy of Elan to coding in Python, VB, C#, and Java</li>
+    <li>Can convert code instantly between these languages</li>
+    <li>Code in all languages is saved as an .elan file, in a language neutral format - called 'Reference Language'. 
+        Only .elan files may be loaded - 
+        though after loading they will then automatically translated into the target language, 
+        which is saved in the 'header comment' in the file.</li>
+    <li>You may 'export' code (via the File menu) as, for example, a .py file, for loading into a different IDE.
+        Note that the exported code may still be using Elan library methods or types. 
+        However, we will - before the full 2.0 release- be making a version of the Elan library available
+         as native .py, .vb, .cs, and .java code to facilitate running a program written in Elan within another IDE.</li>
+    </li> As well as writing code directly in Python, VB, C#, or Java, 
+    you may write and run code directly in the Reference Language.</li>
+    <li>In all the target languages Elan deliberately imposes restrictions on coding patterns 
+        that would not necessarily be imposed writing in that language on another IDE. 
+    These restrictions are of two distinct forms:</li>
+    <ul>
+        <li>Enforcement of the <a href="#commandments">10 commandments of good programming</a></li>
+        <li><a href="#code_restrictions">Restrictions that ensure 100% compatibility when code is translated</a></li>
+    </ul>
+</ul>    
+
+<h2>2.0.0-alpha1 - limitations and known issues</h2>
+
+<ul>
+    <li>Alpha1 supports <i>procedural programming only</i>. 
+        OOP will be added in `alpha2` and Functional Programming (FP) in `alpha3`.</li>
+    <li>Auto-completion is neither complete, nor completely consistent:
+        it might not show some expected items, and might show some that aren't applicable - but you can always
+        just type the names that you want, in full.</li>
+    <li>The online documentation (help) is work in progress. 
+        Generally it has been kept up to date with changes to Elan, but some areas are incomplete.
+     Before we get to full release, the online help system will be such that whichever language you are working on,
+     the online documentation will automatically show all code examples <i>in that language</i>.</li>
+    <li>Worksheets have been <i>temporarily</i> removed, pending updates. 
+        When restored, they will automatically present in the same language that you have selected for the editor.</li>
+</ul>
+
+<h2>The Elan 2 IDE</h2>
+<ul>
+    <li>is completely free</li>
+    <li>runs within a browser, meaning that there is no install required, nor any registration. It <i>may</i>
+    be installed on a school server, or just saved as a web-page on the desktop, such that it may
+    be used without Internet access.</li>
+    <li>has a powerful 'frame-based editor' that:
+        <ul>
+            <li>reduces the need typing</li>
+            <li>eliminates the possibility of many forms of syntax error</li>
+            <li>provides a common language of kinds of instruction e.g. 'variable', 'constant', 'set', 'procedure', 'function', </li>
+        </ul>
+    </li>
+    <li>has a built-in library that works identically in all languages</li>
+    <li>provides 4 kinds of graphics: Turtle, Block, Vector, and Html - that work identically in all languages</li>
+    <li>has a simple, but powerful, debugger</li>
+    <li>Offers integrated documentation - linked directly from the code</li>
+    <li>Supports integrated worksheets</li>
+    <li>Is guaranteed '100% AI-free`</li>
+    <li>Deliberately prevents pasting in .py, .vb, .cs, or .java, code from external source</li>
+</ul>  
+
+<h2 id="commandments">The 10 commandments of good programming</h2>
+
+<p>There are many more than 10 widely-recognised principles of good programming practice. These 10
+    have been singled out because the designers of Elan believe that anyone learning to program
+    should never learn to break any of them in the first place, 
+    and that they should ideally be <i>enforced</i> by the programming language.
+    Elan 1.0 was the first language, designed for education, that enforced all 10. 
+    Elan 2.0 enforces them, through its Code Editor, when writing Python, VB.NET, C#, or Java.
+<ol>
+    <li>Thou shalt not define any global variable</li>
+    <li>Thou shalt not change any constant</li>
+    <li>Thou shalt not change the type of any variable</li>
+    <li>Thou shalt not create any null reference</li>
+    <li>Thou shalt not break out of any loop</li>
+    <li>Thou shalt not exit any method before the end</li>
+    <li>Thou shalt not create any impure function</li>
+    <li>Thou shalt not access any private member</li>
+    <li>Thou shalt not inherit from any concrete class</li>
+    <li>Thou shalt not override any concrete method</li>
+</ol>
+
+<p>The nature and rationale for each of these commandments will be more fully explained in future documentation.</p>
+
+<h2 id="code_restrictions">Coding restrictions designed to guarantee portability</h2>
+
+<p>These restrictions exist to ensure that all code generated within the Elan IDE may be automatically
+    translated with 100% correctness from any supported language into any other.</p>
+<p>It is not necessary to <i>know</i> these rules, because there is either no mechanism to break them or
+    you will receive a clear message if you do. Each of these restrictions exists to prevent 
+    use of coding features that are supported in some languages, 
+    but have no equivalent syntax in at least one other.
+    The surprising thing, we suggest, is how <i>few</i> such restrictions are necessary.
+</p>
+<ul>
+    <li>Loops
+        <ul>
+            <li>The 'for each' syntax is used even for a traditional 'for' loop, by means of the <el-method>range</el-method>.</li>
+            <li>A 'repeat...until' loop must be implemented using the 'while' loop syntax</li>
+        </ul>
+    </li>
+    <li>Literal strings
+        <ul>
+            <li>are always bounded by double quotes: "apple"</li>
+            <li>'interpolated strings' use the syntax specific to each language (for Java that is the <code>String.format</code> method).</code></li>
+        </ul>
+    </li>
+    <li>Identifiers
+        <ul>
+            <li>are case sensitive, but you cannot have two - in the same scope - that differ <i>only</i> by case.</li>
+            <li>may not conflict with reserved words <i>for any of the languages</i>. In such a case you
+                may just extend the identifier e.g. using <code>next_</code> instead of <code>next</code>.</li>
+        </ul>
+    </li>
+    <li>Operators
+        <ul>
+            <li>Two <i>integers</i> may not be divided using '/' – use the <el-method>divAsInt</el-method> or <el-method>divAsFloat</el-method> depending on the result you need.</li>
+            <li>The equality operator may be used <i>only for numeric or Boolean types</i>.
+                To test equality of strings, and all other types, you must use the .<el-method>equals</el-method> function./li>
+            <li>The 'power' operator is not recognised for any language: use the <el-method>pow</el-method> function instead.</li>
+        </ul>
+    </li>
+    <li>Indexing
+        <ul>
+            <li>A 2D arrays implemented as a list of lists, and accessed with double index e.g. [3][4], 
+                but it may be initialised (like an an array) using any of: <el-method>createList</el-method>, <el-method>createListOfLists</el-method>, or <el-method>createBlockGraphics</el-method>
+            <li>An index value cannot be negative
+        </li>
+    </li>
+
+    <li>Exceptions/errors. You cannot access the exception <i>instance</i> within a <el-code>catch</el-code> clause(s).
+    </li>
+
+    <li>Tuples. Items are accessed by e.g. <code>myTuple.item_0</code>, <code>myTuple.item_1/</code>. They may
+    not be accessed by index, nor is 'tuple deconstruction' (into separate variables) supported.</li>
+
+    <li>Passing by reference is possible only within a <i>procedure</i> and to do this you use the <el-type>Ref</el-type> type
+    which acts like a wrapper around the instance of interest.</li>
+</ul>
+
+
+    

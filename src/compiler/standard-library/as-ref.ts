@@ -35,4 +35,8 @@ export class AsRef<T1> {
   set(@elanGenericParamT1Type() item: T1): void {
     this._value = item;
   }
+
+  async toString() {
+    return `a Reference`;
+  }
 }

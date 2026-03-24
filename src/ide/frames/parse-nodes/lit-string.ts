@@ -7,7 +7,7 @@ import { LitStringOrdinary } from "./lit-string-ordinary";
 export class LitString extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
+    this.completionWhenEmpty = `"string"`;
   }
 
   parseText(text: string): void {

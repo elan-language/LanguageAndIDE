@@ -130,8 +130,11 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   let msg = "";
   let link = "";
   let help = "";
+  let compileErrors: CompileError[] = [];
 
-  const compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
+  if (loc.readParseStatus() === ParseStatus.valid) {
+    compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
+  }
   const n = compileErrors.length;
   if (n > 0) {
     const first = compileErrors[0];
@@ -186,7 +189,7 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
 }
 
 export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayColour {
-  let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
+  let status = helper_parseStatusAsDisplayColour(loc.readParseStatus());
   if (status === DisplayColour.ok) {
     const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
     if (compile !== DisplayColour.none) {
@@ -197,14 +200,14 @@ export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): Displa
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColour {
+export function helper_parseStatusAsDisplayColour(ps: ParseStatus): DisplayColour {
   let overall = DisplayColour.none;
   if (ps === ParseStatus.valid) {
     overall = DisplayColour.ok;
   } else if (ps === ParseStatus.incomplete) {
     overall = DisplayColour.warning;
   } else if (ps === ParseStatus.invalid) {
-    overall = DisplayColour.error;
+    overall = DisplayColour.warning;
   }
   return overall;
 }
@@ -340,6 +343,7 @@ export function removeHtmlTagsAndEscChars(html: string): string {
   result = result.replace(/<el-msg.*?<\/el-msg>/gm, "");
   result = result.replace(/<el-help.*?<\/el-help>/gm, "");
   result = result.replace(/<el-fr>.*?<\/el-fr>/gm, "");
+  result = result.replace(/<el-expand>.*?<\/el-expand>/gm, "");
   while (result.match(/<[[a-z\/][^>]*>/gm)) {
     result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
   }

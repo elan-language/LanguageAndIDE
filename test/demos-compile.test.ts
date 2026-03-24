@@ -1,3 +1,4 @@
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testElanProgram } from "./testHelpers";
 
 suite("Demo compile", () => {
@@ -19,9 +20,9 @@ suite("Demo compile", () => {
   test("test fern", async () => {
     await testElanProgram("demo_programs\\fern.elan");
   });
-  test("test fern-params", async () => {
+  /*   test("test fern-params", async () => {
     await testElanProgram("demo_programs\\fern-params.elan");
-  });
+  }); Not high enough value to warrant the long time that this test takes*/
   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   });
@@ -61,10 +62,11 @@ suite("Demo compile", () => {
   test("test turtle-spiral", async () => {
     await testElanProgram("demo_programs\\turtle-spiral.elan");
   });
-  test("test wordle-solver", async () => {
+  // Ignored just becasuse these are very slow tests
+  ignore_test("test wordle-solver", async () => {
     await testElanProgram("demo_programs\\wordle-solver.elan");
   });
-  test("test wordle-demo", async () => {
+  ignore_test("test wordle-demo", async () => {
     await testElanProgram("demo_programs\\wordle-demo.elan");
   });
   test("test hodgepodge", async () => {

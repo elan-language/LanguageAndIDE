@@ -1,3 +1,5 @@
+import { asKeyword } from "../../../compiler/elan-keywords";
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
@@ -10,7 +12,7 @@ export class ParamDefNode extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i> as <i>Type</i>");
+    this.completionWhenEmpty = "<i>name</i> as <i>Type</i>";
   }
 
   parseText(text: string): void {
@@ -28,5 +30,16 @@ export class ParamDefNode extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid() ? this.file.language().paramDefAsHtml(this) : this.matchedText;
+  }
+
+  renderAsElanSource() {
+    return this.isValid()
+      ? `${this.name?.renderAsElanSource()} ${asKeyword} ${this.type?.renderAsElanSource()}`
+      : this.matchedText;
+  }
+
+  override renderAsExport(): string {
+    const lang = this.file.language();
+    return this.isValid() ? removeHtmlTagsAndEscChars(lang.paramDefAsHtml(this)) : this.matchedText;
   }
 }

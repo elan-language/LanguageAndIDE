@@ -35,7 +35,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -84,7 +84,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -144,7 +144,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 end class`;
@@ -180,7 +180,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -228,7 +228,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 end class`;
@@ -262,7 +262,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -308,7 +308,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -346,7 +346,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -400,7 +400,7 @@ class Bar inherits Foo2
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -457,7 +457,7 @@ class Bar extends Foo2 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -517,7 +517,7 @@ class Bar inherits Foo2
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -574,7 +574,7 @@ class Bar extends Foo2 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -636,7 +636,7 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -692,7 +692,7 @@ class Bar extends Foo2 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -752,7 +752,7 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -808,7 +808,7 @@ class Bar extends Foo2 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -861,7 +861,7 @@ class Bar
   constructor()
     set this.foo to new Maybe<of Foo>()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -905,7 +905,7 @@ class Bar {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1128,7 +1128,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1176,7 +1176,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1221,7 +1221,7 @@ class Bar inherits Foo
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1268,7 +1268,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1318,7 +1318,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1521,7 +1521,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   property prop1 as Int
@@ -1571,7 +1571,7 @@ end class
 class Bar inherits Foo2
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1629,7 +1629,7 @@ class Bar inherits Foo, Foo1, Foo2
   constructor()
     set this.prop to 3
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

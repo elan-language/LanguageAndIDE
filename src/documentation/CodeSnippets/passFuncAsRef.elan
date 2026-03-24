@@ -5,7 +5,7 @@ class Pupil
 
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return "Pupil"
   end function
 

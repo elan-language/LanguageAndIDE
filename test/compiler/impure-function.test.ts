@@ -20,15 +20,15 @@ suite("Impure Function", () => {
 
 main
   variable k set to getKey()
-  variable r set to randomInt(1, 6)
-  set r to randomInt(1, 6) * 10
-  call bar(randomInt(1,6))
+  variable r set to randint(1, 6)
+  set r to randint(1, 6) * 10
+  call bar(randint(1,6))
 end main
 
 procedure foo()
   variable k set to getKey()
-  variable r set to randomInt(1, 6)
-  set r to randomInt(1, 6) * 10
+  variable r set to randint(1, 6)
+  set r to randint(1, 6) * 10
 end procedure
 
 procedure bar(x as Int)
@@ -39,15 +39,15 @@ end procedure
 const global = new class {};
 async function main() {
   let k = (await _stdlib.getKey());
-  let r = _stdlib.randomInt(1, 6);
-  r = _stdlib.randomInt(1, 6) * 10;
-  await bar(_stdlib.randomInt(1, 6));
+  let r = _stdlib.randint(1, 6);
+  r = _stdlib.randint(1, 6) * 10;
+  await bar(_stdlib.randint(1, 6));
 }
 
 async function foo() {
   let k = (await _stdlib.getKey());
-  let r = _stdlib.randomInt(1, 6);
-  r = _stdlib.randomInt(1, 6) * 10;
+  let r = _stdlib.randint(1, 6);
+  r = _stdlib.randint(1, 6) * 10;
 }
 global["foo"] = foo;
 
@@ -168,7 +168,7 @@ main
 end main
 
 function square(z as Int) returns Int
-  variable x set to randomInt(1,6)
+  variable x set to randint(1,6)
   return x * x
 end function
 `;

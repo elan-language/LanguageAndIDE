@@ -6,7 +6,7 @@ import { PunctuationNode } from "./punctuation-node";
 export class LitStringInterpolatedEmpty extends AbstractSequence {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr(`"string"`);
+    this.completionWhenEmpty = `"string"`;
   }
 
   parseText(text: string): void {
@@ -20,6 +20,6 @@ export class LitStringInterpolatedEmpty extends AbstractSequence {
   }
   renderAsHtml(): string {
     const langPrefix = this.file.language().INTERPOLATED_STRING_PREFIX;
-    return `${langPrefix}""`;
+    return this.isValid() ? `${langPrefix}""` : this.matchedText;
   }
 }

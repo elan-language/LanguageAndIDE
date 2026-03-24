@@ -18,7 +18,7 @@ export class IdentifierUse extends AbstractParseNode {
     super(file);
     this.tokenTypes = tokenTypes;
     this.contextGenerator = contextGenerator;
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>name</i>");
+    this.completionWhenEmpty = "<i>name</i>";
   }
 
   parseText(text: string): void {
@@ -48,6 +48,6 @@ export class IdentifierUse extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-id>${this.renderAsElanSource()}</el-id>`;
+    return this.isValid() ? `<el-id>${this.matchedText.trim()}</el-id>` : this.matchedText;
   }
 }

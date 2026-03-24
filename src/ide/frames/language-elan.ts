@@ -7,12 +7,14 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -23,7 +25,6 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -63,7 +64,7 @@ export class LanguageElan extends LanguageAbstract {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
-  languageClass = "elan";
+  languageHtmlClass = "elan";
   languageFullName: string = "Elan";
   defaultFileExtension: string = "elan";
   defaultMimeType: string = "text/plain";
@@ -235,6 +236,10 @@ export class LanguageElan extends LanguageAbstract {
 
   TRUE: string = "true";
   FALSE: string = "false";
+  BINARY_PREFIX: string = "0b";
+  HEX_PREFIX: string = "0x";
+
+  START_OF_GENERIC: string = `<${this.OF} `;
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW));
@@ -275,10 +280,6 @@ export class LanguageElan extends LanguageAbstract {
     return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
   }
 
-  paramDefCompletion(_node: ParamDefNode): string {
-    return ``; //i.e. use default specified in the node
-  }
-
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }
@@ -291,18 +292,26 @@ export class LanguageElan extends LanguageAbstract {
     return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
-  }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
-  }
-
   addNodesForTypeTuple(node: TypeTupleNode): void {
     this.addCommonElementsForTypeTuple(node);
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
+    return text; //If valid, it will already be in standard form
+  }
+  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
+    return this.default_litStringInterpolatedAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.default_functionFrameFields(frame);
+  }
+
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return this.default_assertStatementFields(frame);
   }
 
   // Elan keywords followed by JavaScript keywords

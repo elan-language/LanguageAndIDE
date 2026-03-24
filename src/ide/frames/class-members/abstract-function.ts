@@ -33,7 +33,7 @@ export class AbstractFunction extends SingleLineFrame {
   initialKeywords(): string {
     return abstractFunctionKeywords;
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.params, this.returnType];
   }
 

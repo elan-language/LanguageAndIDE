@@ -1,12 +1,12 @@
-# Python with Elan 2.0.0-alpha
+# Python with Elan 2.0.0-alpha1
 
-+allWords = "AAHED ZYMIC" # constant
+allWords = "AAHED ZYMIC" # constant
 
-+allValidAnswers = "ABACK ZONAL" # constant
+allValidAnswers = "ABACK ZONAL" # constant
 
 def main(): None:
   while True:
-    choice = inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4) # constant
+    choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4) # constant
     clearAllDisplays() # call
     executeOption(choice) # call
     pressAnyKeyToContinue(True) # call
@@ -36,9 +36,9 @@ def playGame() -> None: # procedure
   initialiseGrid(grid) # call
   used = Dictionary[str, str]() # variable
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-    used.put(letter, " ") # call
+    used[letter] = " " # set
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
-  target = allValidAnswers.split(" ")[randomInt(0, 2308)] # constant
+  target = allValidAnswers.split(" ")[randint(0, 2308)] # constant
   attemptNo = 0 # variable
   solved = False # variable
   while (attemptNo < 6) and (not solved):
@@ -87,7 +87,7 @@ def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: As
     mark = marks[i] # variable
     grid[i][attemptNo] = letter + mark # set
     if mark.isAfter(used[letter]):
-      used.put(letter, mark) # call
+      used[letter] = mark # set
   if marks.equals("22222"):
     solved.set(True) # call
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
@@ -152,25 +152,28 @@ def analyse() -> None: # procedure
       mark = markAttempt(attempt, word) # set
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) # set
       attempt = possible[0] # set
-    outcomes.put(attempts, outcomes[attempts] + 1) # call
+    outcomes[attempts] = outcomes[attempts] + 1 # set
   success = 0 # variable
   weightedSum = 0 # variable
   for i in range(1, 7):
     success = success + outcomes[i] # set
     weightedSum = weightedSum + (i*outcomes[i]) # set
   clearPrintedText() # call
-  print(f"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.") # call
+  solved = (success/2309.0*100).floor() # constant
+  avg = divAsFloat(weightedSum, success).round(2) # constant
+  pc = "%" # constant
+  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") # call
 
 def isUCLetter(k: str) -> bool: # function
   unicode = k.asUnicode() # constant
   return (k.length() == 1) and (unicode > 64) and (unicode < 91)
 
-def  test_isUCLetter()-> None:
-  assert isUCLetter("A") is True 
-  assert isUCLetter("Z") is True 
-  assert isUCLetter("a") is False 
-  assert isUCLetter("1") is False 
-  assert isUCLetter(" ") is False 
+def test_isUCLetter(self) -> None:
+  self.assertEqual(isUCLetter("A"), True)
+  self.assertEqual(isUCLetter("Z"), True)
+  self.assertEqual(isUCLetter("a"), False)
+  self.assertEqual(isUCLetter("1"), False)
+  self.assertEqual(isUCLetter(" "), False)
 
 def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
   guessWord = "" # variable
@@ -181,9 +184,9 @@ def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
 def setChar(word: str, n: int, newChar: str) -> str: # function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 
-def  test_setChar()-> None:
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+def test_setChar(self) -> None:
+  self.assertEqual(setChar("ABCDE", 0, "_"), "_BCDE")
+  self.assertEqual(setChar("ABCDE", 4, "_"), "ABCD_")
 
 def markAttempt(attempt: str, target: str) -> str: # function
   mark = "00000" # variable
@@ -198,17 +201,17 @@ def markAttempt(attempt: str, target: str) -> str: # function
       unused = setChar(unused, unused.indexOf(attempt[n]), " ") # set
   return mark
 
-def  test_markAttempt()-> None:
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+def test_markAttempt(self) -> None:
+  self.assertEqual(markAttempt("ABCDE", "XXXXX"), "00000")
+  self.assertEqual(markAttempt("ABCDE", "BCDEA"), "11111")
+  self.assertEqual(markAttempt("ABCDE", "ABCDE"), "22222")
+  self.assertEqual(markAttempt("SAINT", "LADLE"), "02000")
+  self.assertEqual(markAttempt("IDEAL", "LADLE"), "01111")
+  self.assertEqual(markAttempt("CABAL", "RECAP"), "10020")
+  self.assertEqual(markAttempt("COLON", "GLORY"), "01100")
+  self.assertEqual(markAttempt("AORTA", "RATTY"), "10120")
+  self.assertEqual(markAttempt("RATTY", "AORTA"), "11020")
+  self.assertEqual(markAttempt("FAIRY", "RATTY"), "02012")
 
 def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) -> list[str]: # function
   newPossible = list[str]() # variable
@@ -218,13 +221,13 @@ def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) ->
       newPossible = newPossible.withAppend(word) # set
   return newPossible
 
-def  test_possibleAnswersAfterAttempt()-> None:
+def test_possibleAnswersAfterAttempt(self) -> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"] 
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"] 
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "20000"), ["ABCDE"])
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "10000"), ["BCDEA", "CDEAB", "DEABC", "EABCD"])
+  self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXBX", "10010"), ["BCDEA", "CDEAB", "EABCD"])
+  self.assertEqual(possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"), ["RATTY"])
+  self.assertEqual(possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"), ["RASPY", "RATTY"])
 
 def drawGrid(grid: list[list[str]]) -> str: # function
   html = f"<style>{style}</style> <grid>" # variable
@@ -247,4 +250,4 @@ def drawKeyboard(used: Dictionary[str, str]) -> str: # function
       html = html + f"<key class='_{used[k]}'>{k}</key>" # set
   return html + "<key></key></div></keyboard>"
 
-+style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant
+style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant

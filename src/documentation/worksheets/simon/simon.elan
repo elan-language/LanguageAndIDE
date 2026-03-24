@@ -7,7 +7,7 @@ main
   while ok
     call simonsTurn(sequence, interval)
     call clearVectorGraphics()
-    call pause(1000)
+    call sleep(1)
     call playersTurn(sequence, interval, ok)
     call clearVectorGraphics()
   end while
@@ -15,7 +15,7 @@ main
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
-  call sequence.append(randomInt(1, 4))
+  call sequence.append(randint(1, 4))
   for move in sequence
     call displayMove(move, interval)
   end for
@@ -46,5 +46,5 @@ procedure displayMove(move as Int, interval as Int)
   call displayVectorGraphics([circle])
   call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()
-  call pause(100)
+  call sleep_ms(100)
 end procedure

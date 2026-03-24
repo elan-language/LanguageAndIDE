@@ -38,7 +38,9 @@ export class MethodCallNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `${this.name!.renderAsHtml()}(${this.args!.renderAsHtml()})`;
+    return this.isValid()
+      ? `${this.name!.renderAsHtml()}(${this.args!.renderAsHtml()})`
+      : this.matchedText;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

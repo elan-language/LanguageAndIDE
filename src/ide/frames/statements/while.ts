@@ -16,7 +16,7 @@ export class While extends FrameWithStatements {
   initialKeywords(): string {
     return whileKeyword;
   }
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.condition];
   }
 

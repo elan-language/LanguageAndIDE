@@ -2,9 +2,10 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ConstantGlobal } from "./globals/constant-global";
+import { FunctionFrame } from "./globals/function-frame";
+import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -13,6 +14,7 @@ import { PropertyRef } from "./parse-nodes/property-ref";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
+import { AssertStatement } from "./statements/assert-statement";
 import { ConstantStatement } from "./statements/constant-statement";
 
 export class LanguageCS extends LanguageCfamily {
@@ -22,7 +24,7 @@ export class LanguageCS extends LanguageCfamily {
 
   static Instance: Language = new LanguageCS();
 
-  languageClass = "cs";
+  languageHtmlClass = "cs";
   languageFullName: string = "C#";
   defaultFileExtension: string = "cs";
   defaultMimeType: string = "text/plain";
@@ -32,12 +34,16 @@ export class LanguageCS extends LanguageCfamily {
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
-    let html = this.common_renderSingleLineAsHtml(frame);
-    if (frame instanceof ConstantGlobal) {
+    let html = "";
+    if (frame instanceof AssertStatement) {
+      html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+    } else {
+      html = this.common_renderSingleLineAsHtml(frame);
     }
     return html;
   }
@@ -45,15 +51,17 @@ export class LanguageCS extends LanguageCfamily {
   INTERPOLATED_STRING_PREFIX: string = "$";
 
   renderTopAsHtml(frame: Frame): string {
-    return this.common_renderTopAsHtml(frame);
+    let html = "";
+    if (frame instanceof TestFrame) {
+      html = `[<el-type>TestMethod</el-type>] <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
+    } else {
+      html = this.common_renderTopAsHtml(frame);
+    }
+    return html;
   }
 
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);
-  }
-
-  getFields(frame: Frame): Field[] {
-    return this.common_getFields(frame);
   }
 
   addNodesForParamDef(node: ParamDefNode): void {
@@ -61,10 +69,6 @@ export class LanguageCS extends LanguageCfamily {
   }
   paramDefAsHtml(node: ParamDefNode): string {
     return this.c_langs_paramDefAsHtml(node);
-  }
-
-  paramDefCompletion(node: ParamDefNode): string {
-    return this.c_langs_paramDefCompletion(node);
   }
 
   addNodesForTypeGeneric(node: TypeGenericNode): void {
@@ -96,11 +100,20 @@ export class LanguageCS extends LanguageCfamily {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+    return this.default_standardiseInterpolatedString(node, text);
   }
+
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.common_functionFrameFields(frame);
+  }
+
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return this.common_assertStatementFields(frame);
   }
 
   reservedWords: Set<string> = new Set<string>([
@@ -144,7 +157,6 @@ export class LanguageCS extends LanguageCfamily {
     `is`,
     `lock`,
     `long`,
-    ``,
     `namespace`,
     `new`,
     `null`,

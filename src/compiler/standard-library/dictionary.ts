@@ -1,8 +1,10 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
   elanClass,
   ElanClass,
+  elanDeprecated,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -49,6 +51,7 @@ export class Dictionary<T1, T2> {
     this.contents.delete(rk);
   }
 
+  @elanDeprecated(Deprecation.methodRemoved, 1, 9, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
   @elanProcedure(["key", "value"])
   put(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
@@ -73,21 +76,11 @@ export class Dictionary<T1, T2> {
     return this.contents.has(rk);
   }
 
-  async asString() {
-    const items: string[] = [];
-    for (const k of this.contents.keys()) {
-      const kStr = await this.system!.asString(k);
-      const vStr = await this.system!.asString(this.contents.get(k));
-      items.push(`${kStr}:${vStr}`);
-    }
-    return `[${items.join(", ")}]`;
-  }
-
   async asCloneableObject() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dict = {} as any;
     for (const k of this.contents.keys()) {
-      const kStr = await this.system!.asString(k);
+      const kStr = await this.system!.toString(k);
       const v = await this.system?.asCloneableObject(this.contents.get(k));
       dict[kStr] = v;
     }
@@ -127,10 +120,20 @@ export class Dictionary<T1, T2> {
   }
 
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(Dictionary))
-  withPut(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+  withSet(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);
     return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
+
+  async toString() {
+    const items: string[] = [];
+    for (const k of this.contents.keys()) {
+      const kStr = await this.system!.toString(k);
+      const vStr = await this.system!.toString(this.contents.get(k));
+      items.push(`${kStr}:${vStr}`);
+    }
+    return `[${items.join(", ")}]`;
   }
 }

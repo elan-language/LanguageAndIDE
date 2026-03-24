@@ -292,7 +292,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = \`Eat more \${await _stdlib.asString(Fruit.apple)}s!\`;
+  let a = \`Eat more \${await _stdlib.toString(Fruit.apple)}s!\`;
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;

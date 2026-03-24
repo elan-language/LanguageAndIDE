@@ -334,7 +334,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "[2, 2, 3]");
   });
 
@@ -438,7 +440,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
@@ -1112,6 +1116,8 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
       "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1269,8 +1275,8 @@ end main
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withPut(1, "TWO")
-    variable b set to a.withPut(0, "ONE")
+    set a to a.withSet(1, "TWO")
+    variable b set to a.withSet(0, "ONE")
     call printNoLine(a)
     call printNoLine(b)
 end main`;
@@ -1279,8 +1285,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = a.withPut(1, "TWO");
-  let b = a.withPut(0, "ONE");
+  a = a.withSet(1, "TWO");
+  let b = a.withSet(0, "ONE");
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
 }
@@ -1308,7 +1314,7 @@ return [main, _tests];}`;
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withPut(3, "THREE")
+    set a to a.withSet(3, "THREE")
     call printNoLine(a)
 end main`;
 
@@ -1316,7 +1322,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  a = a.withPut(3, "THREE");
+  a = a.withSet(3, "THREE");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -2178,7 +2184,7 @@ end main`;
 
 main
     variable a set to ["one", "two", "three"]
-    variable b set to a.withPut(3, "THREE")
+    variable b set to a.withSet(3, "THREE")
     call printNoLine(b)
 end main`;
 
@@ -2186,7 +2192,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list(["one", "two", "three"]);
-  let b = a.withPut(3, "THREE");
+  let b = a.withSet(3, "THREE");
   await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;

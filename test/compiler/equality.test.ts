@@ -39,7 +39,7 @@ class Foo
         set this.p1 to v
     end procedure
 
-    function asString() returns String
+    function toString() returns String
       return $"{this.p1} {this.p2}"
     end function
 end class`;
@@ -72,8 +72,8 @@ class Foo {
     this.p1 = v;
   }
 
-  async asString() {
-    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
+  async toString() {
+    return \`\${await _stdlib.toString(this.p1)} \${await _stdlib.toString(this.p2)}\`;
   }
 
 }
@@ -122,7 +122,7 @@ class Foo
     set this.p1 to v
   end procedure
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.p1} {this.p2}"
   end function
 end class`;
@@ -156,8 +156,8 @@ class Foo {
     this.p1 = v;
   }
 
-  async asString() {
-    return \`\${await _stdlib.asString(this.p1)} \${await _stdlib.asString(this.p2)}\`;
+  async toString() {
+    return \`\${await _stdlib.toString(this.p1)} \${await _stdlib.toString(this.p2)}\`;
   }
 
 }
@@ -191,7 +191,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -238,7 +238,7 @@ class Foo
   constructor(p as Int)
     set this.p to p
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -285,7 +285,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -325,7 +325,7 @@ class Foo
   constructor(p as Int)
     set this.p to p
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -366,7 +366,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

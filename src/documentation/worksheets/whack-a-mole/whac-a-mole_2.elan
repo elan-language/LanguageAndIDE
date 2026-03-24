@@ -6,8 +6,8 @@ main
     variable holes set to new List<of Hole>()
     call holes.intialise(10, Hole.vacant)
     variable hole set to Hole.vacant
-    variable holeNumber set to randomInt(0, 9)
-    call holes.put(holeNumber, Hole.mole)
+    variable holeNumber set to randint(0, 9)
+    set holes[holeNumber] to Hole.mole
     variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
     variable stop set to clock() + 1000
@@ -42,7 +42,7 @@ end function
 function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   variable core set to ""
   for i in range(0, holes.length())
-    set core to core + htmlForHole(holes[i], i.asString())
+    set core to core + htmlForHole(holes[i], i.toString())
   end for
   return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function

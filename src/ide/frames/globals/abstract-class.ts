@@ -18,7 +18,7 @@ export class AbstractClass extends ClassFrame {
     return this.inheritance.text !== "";
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.inheritance];
   }
 

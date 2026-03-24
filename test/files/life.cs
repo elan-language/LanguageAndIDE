@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha
+// C# with Elan 2.0.0-alpha1
 
 static void main() {
   var grid = createBlockGraphics(white);
@@ -8,7 +8,7 @@ static void main() {
     var gridRef = new AsRef<List<List<int>>>(grid);
     nextGeneration(gridRef); // call
     grid = gridRef.value(); // set
-    pause(50); // call
+    sleep_ms(50); // call
   }
 }
 
@@ -120,95 +120,95 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   gridRef.set(nextGen); // call
 }
 
-static void test_north() {
-  assert north((3, 4)) is (3, 3) 
-  assert north((39, 0)) is (39, 29) 
-  assert north((0, 29)) is (0, 28) 
-  assert north((39, 29)) is (39, 28) 
+[TestMethod] static void test_north() {
+  Assert.AreEqual((3, 3), north((3, 4)))
+  Assert.AreEqual((39, 29), north((39, 0)))
+  Assert.AreEqual((0, 28), north((0, 29)))
+  Assert.AreEqual((39, 28), north((39, 29)))
 }
 
-static void test_south() {
-  assert south((3, 4)) is (3, 5) 
-  assert south((39, 0)) is (39, 1) 
-  assert south((0, 29)) is (0, 0) 
-  assert south((39, 29)) is (39, 0) 
+[TestMethod] static void test_south() {
+  Assert.AreEqual((3, 5), south((3, 4)))
+  Assert.AreEqual((39, 1), south((39, 0)))
+  Assert.AreEqual((0, 0), south((0, 29)))
+  Assert.AreEqual((39, 0), south((39, 29)))
 }
 
-static void test_east() {
-  assert east((10, 2)) is (11, 2) 
-  assert east((39, 0)) is (0, 0) 
-  assert east((0, 1)) is (1, 1) 
-  assert east((39, 29)) is (0, 29) 
+[TestMethod] static void test_east() {
+  Assert.AreEqual((11, 2), east((10, 2)))
+  Assert.AreEqual((0, 0), east((39, 0)))
+  Assert.AreEqual((1, 1), east((0, 1)))
+  Assert.AreEqual((0, 29), east((39, 29)))
 }
 
-static void test_west() {
-  assert west((3, 4)) is (2, 4) 
-  assert west((39, 0)) is (38, 0) 
-  assert west((0, 0)) is (39, 0) 
-  assert west((0, 29)) is (39, 29) 
+[TestMethod] static void test_west() {
+  Assert.AreEqual((2, 4), west((3, 4)))
+  Assert.AreEqual((38, 0), west((39, 0)))
+  Assert.AreEqual((39, 0), west((0, 0)))
+  Assert.AreEqual((39, 29), west((0, 29)))
 }
 
-static void test_northEast() {
-  assert northEast((3, 4)) is (4, 3) 
-  assert northEast((0, 0)) is (1, 29) 
-  assert northEast((39, 0)) is (0, 29) 
-  assert northEast((0, 29)) is (1, 28) 
-  assert northEast((39, 29)) is (0, 28) 
+[TestMethod] static void test_northEast() {
+  Assert.AreEqual((4, 3), northEast((3, 4)))
+  Assert.AreEqual((1, 29), northEast((0, 0)))
+  Assert.AreEqual((0, 29), northEast((39, 0)))
+  Assert.AreEqual((1, 28), northEast((0, 29)))
+  Assert.AreEqual((0, 28), northEast((39, 29)))
 }
 
-static void test_southEast() {
-  assert southEast((3, 4)) is (4, 5) 
-  assert southEast((0, 0)) is (1, 1) 
-  assert southEast((39, 0)) is (0, 1) 
-  assert southEast((0, 29)) is (1, 0) 
-  assert southEast((39, 29)) is (0, 0) 
+[TestMethod] static void test_southEast() {
+  Assert.AreEqual((4, 5), southEast((3, 4)))
+  Assert.AreEqual((1, 1), southEast((0, 0)))
+  Assert.AreEqual((0, 1), southEast((39, 0)))
+  Assert.AreEqual((1, 0), southEast((0, 29)))
+  Assert.AreEqual((0, 0), southEast((39, 29)))
 }
 
-static void test_northWest() {
-  assert northWest((3, 4)) is (2, 3) 
-  assert northWest((0, 0)) is (39, 29) 
-  assert northWest((39, 0)) is (38, 29) 
-  assert northWest((0, 29)) is (39, 28) 
-  assert northWest((39, 29)) is (38, 28) 
+[TestMethod] static void test_northWest() {
+  Assert.AreEqual((2, 3), northWest((3, 4)))
+  Assert.AreEqual((39, 29), northWest((0, 0)))
+  Assert.AreEqual((38, 29), northWest((39, 0)))
+  Assert.AreEqual((39, 28), northWest((0, 29)))
+  Assert.AreEqual((38, 28), northWest((39, 29)))
 }
 
-static void test_southWest() {
-  assert southWest((3, 4)) is (2, 5) 
-  assert southWest((0, 0)) is (39, 1) 
-  assert southWest((39, 0)) is (38, 1) 
-  assert southWest((0, 29)) is (39, 0) 
-  assert southWest((39, 29)) is (38, 0) 
+[TestMethod] static void test_southWest() {
+  Assert.AreEqual((2, 5), southWest((3, 4)))
+  Assert.AreEqual((39, 1), southWest((0, 0)))
+  Assert.AreEqual((38, 1), southWest((39, 0)))
+  Assert.AreEqual((39, 0), southWest((0, 29)))
+  Assert.AreEqual((38, 0), southWest((39, 29)))
 }
 
-static void test_blackOrWhite() {
-  assert blackOrWhite(0) is black 
-  assert blackOrWhite(0.499) is black 
-  assert blackOrWhite(0.5) is black 
-  assert blackOrWhite(0.501) is white 
-  assert blackOrWhite(1) is white 
+[TestMethod] static void test_blackOrWhite() {
+  Assert.AreEqual(black, blackOrWhite(0))
+  Assert.AreEqual(black, blackOrWhite(0.499))
+  Assert.AreEqual(black, blackOrWhite(0.5))
+  Assert.AreEqual(white, blackOrWhite(0.501))
+  Assert.AreEqual(white, blackOrWhite(1))
 }
 
-[ghosted] static void test_neighbourCells() {
-  assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5] 
+[ghosted] [TestMethod] static void test_neighbourCells() {
+  Assert.AreEqual([(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5], neighbourCells(3, 4))
 }
 
-static void test_willLive() {
-  assert willLive(white, 0) is false 
-  assert willLive(white, 1) is false 
-  assert willLive(white, 2) is false 
-  assert willLive(white, 3) is true 
-  assert willLive(white, 4) is false 
-  assert willLive(white, 5) is false 
-  assert willLive(white, 6) is false 
-  assert willLive(white, 7) is false 
-  assert willLive(white, 8) is false 
-  assert willLive(black, 0) is false 
-  assert willLive(black, 1) is false 
-  assert willLive(black, 2) is true 
-  assert willLive(black, 3) is true 
-  assert willLive(black, 4) is false 
-  assert willLive(black, 5) is false 
-  assert willLive(black, 6) is false 
-  assert willLive(black, 7) is false 
-  assert willLive(black, 8) is false 
+[TestMethod] static void test_willLive() {
+  Assert.AreEqual(false, willLive(white, 0))
+  Assert.AreEqual(false, willLive(white, 1))
+  Assert.AreEqual(false, willLive(white, 2))
+  Assert.AreEqual(true, willLive(white, 3))
+  Assert.AreEqual(false, willLive(white, 4))
+  Assert.AreEqual(false, willLive(white, 5))
+  Assert.AreEqual(false, willLive(white, 6))
+  Assert.AreEqual(false, willLive(white, 7))
+  Assert.AreEqual(false, willLive(white, 8))
+  Assert.AreEqual(false, willLive(black, 0))
+  Assert.AreEqual(false, willLive(black, 1))
+  Assert.AreEqual(true, willLive(black, 2))
+  Assert.AreEqual(true, willLive(black, 3))
+  Assert.AreEqual(false, willLive(black, 4))
+  Assert.AreEqual(false, willLive(black, 5))
+  Assert.AreEqual(false, willLive(black, 6))
+  Assert.AreEqual(false, willLive(black, 7))
+  Assert.AreEqual(false, willLive(black, 8))
 }

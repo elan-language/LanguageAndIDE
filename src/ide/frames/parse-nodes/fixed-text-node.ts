@@ -8,7 +8,7 @@ export abstract class FixedTextNode extends AbstractParseNode {
   constructor(file: File, fixedText: string) {
     super(file);
     this.fixedText = fixedText;
-    this.completionWhenEmpty = this.getCompletionFromLangOr(fixedText);
+    this.completionWhenEmpty = fixedText;
   }
 
   protected getErrorMessage(): string {

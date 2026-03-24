@@ -152,10 +152,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return [];
   }
 
-  getFieldsDefaultImpl(): Field[] {
-    return [];
-  }
-
   getIdPrefix(): string {
     return "select";
   }
@@ -335,5 +331,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     map.set("paste", ["paste <span class='kb'>Ctrl+v</span>", this.paste]);
 
     return map;
+  }
+
+  protected getCommentMarker() {
+    return this.getFile().language().COMMENT_MARKER;
   }
 }

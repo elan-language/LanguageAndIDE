@@ -194,7 +194,7 @@ class Foo
   constructor()
     set this.p1 to lambda x as Int => 0
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -222,7 +222,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -511,7 +511,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x.asString())
+  call printModified(4, lambda x as Int => x.toString())
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)

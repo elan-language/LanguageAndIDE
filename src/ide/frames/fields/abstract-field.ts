@@ -712,8 +712,7 @@ export abstract class AbstractField implements Selectable, Field {
       const cls = this.isSelected()
         ? DisplayColour[DisplayColour.warning]
         : DisplayColour[DisplayColour.error];
-      const fromNode: string = this.rootNode!.message;
-      const msg = fromNode === "" ? " Invalid." : fromNode;
+      const msg = this.rootNode!.message;
       message = `<el-msg class="${cls}">${msg}${this.helpAsHtml()}</el-msg>`;
     } else {
       message = helper_compileMsgAsHtmlNew(this.getFile(), this);
@@ -729,11 +728,19 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    let completion = "";
+    if (this.cursorPos === this.text.length) {
+      //i.e. show completion only if cursor at RH limit
+      const content = this.getCompletion().replace("<of", "&lt;of");
+      completion = `<el-compl>${content}</el-compl>`;
+    }
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   renderAsExport(): string {
-    return removeHtmlTagsAndEscChars(this.textAsHtml());
+    return this.readParseStatus() === ParseStatus.valid
+      ? removeHtmlTagsAndEscChars(this.textAsHtml())
+      : this.rootNode!.matchedText;
   }
 
   indent(): string {
@@ -867,11 +874,18 @@ export abstract class AbstractField implements Selectable, Field {
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
       const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
-      const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, scope!))
-        .sort(this.orderSymbol);
-      const symbols = this.matchingSymbolsForId(spec).map((s) => new SymbolWrapper(s, scope!));
-      this.allPossibleSymbolCompletions = keywords.concat(symbols);
+      if (this.getFile().language().languageFullName === "Elan") {
+        const keywords = Array.from(spec.keywords)
+          .map((k) => new SymbolWrapper(k, scope!, this.getFile()))
+          .sort(this.orderSymbol);
+        this.allPossibleSymbolCompletions = keywords;
+      } else {
+        this.allPossibleSymbolCompletions = [];
+      }
+      const symbols = this.matchingSymbolsForId(spec).map(
+        (s) => new SymbolWrapper(s, scope!, this.getFile()),
+      );
+      this.allPossibleSymbolCompletions = this.allPossibleSymbolCompletions.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }
     this.showingSymbolCompletion = !!popupAsHtml;

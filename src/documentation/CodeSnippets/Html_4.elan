@@ -4,7 +4,7 @@ main
   variable pic set to "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'\nwidth='400' height='200'\ntitle='shark' alt='shark'>"
   call displayHtml(pic)
   call print("\n\npic")
-  call pause(2000)
+  call sleep(2)
   call clearHtml()
   # swap quotes: not working in 1.4.0
   variable pic2 set to '<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg" \n width="400" height="200" \n title="shark" alt="shark">'

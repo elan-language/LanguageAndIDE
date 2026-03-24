@@ -17,6 +17,8 @@ export class CatchAsn extends BreakpointAsn {
 
   variable: AstNode = EmptyAsn.Instance;
 
+  symbolIsType: boolean = false;
+
   get symbolId() {
     return getId(this.variable);
   }
@@ -40,7 +42,10 @@ export class CatchAsn extends BreakpointAsn {
   compile(): string {
     this.compileErrors = [];
     return `${this.parentIndent()}} catch (e) {\r
-${compileNodes(this.compileChildren)}`;
+${compileNodes(this.compileChildren)}
+${this.parentIndent()}  else {
+${this.parentIndent()}    throw e;
+${this.parentIndent()}  }`;
   }
 
   compileChildren: AstNode[] = [];
@@ -76,6 +81,7 @@ ${compileNodes(this.compileChildren)}`;
       symbolId: v,
       symbolType: () => StringType.Instance,
       symbolScope: SymbolScope.parameter,
+      symbolIsType: false,
     };
 
     matches = matches.concat(symbolMatches(id, all, [counter]));

@@ -13,7 +13,7 @@ export class BinaryExpression extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>expression</i>");
+    this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {
@@ -27,11 +27,19 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
+    return this.isValid()
+      ? `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`
+      : this.matchedText;
   }
 
   renderAsElanSource(): string {
     return `${this.lhs?.renderAsElanSource()}${this.op!.renderAsElanSource()}${this.rhs?.renderAsElanSource()}`;
+  }
+
+  renderAsExport(): string {
+    return this.isValid()
+      ? `${this.lhs?.renderAsExport()}${this.op!.renderAsExport()}${this.rhs?.renderAsExport()}`
+      : this.matchedText;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

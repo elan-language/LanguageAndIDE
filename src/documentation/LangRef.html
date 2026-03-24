@@ -538,8 +538,8 @@ the overall test status will show the status of only the unghosted tests (green 
 <el-statement class="ok multiline" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr186" class="ok" tabindex="-1"><el-txt><el-id>changePosition</el-id></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="let187" tabindex="-1"><el-kw>constant </el-kw><el-field id="var188" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr189" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let190" tabindex="-1"><el-kw>constant </el-kw><el-field id="var191" class="ok" tabindex="-1"><el-txt><el-id>ranY</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr192" class="ok" tabindex="-1"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let187" tabindex="-1"><el-kw>constant </el-kw><el-field id="var188" class="ok" tabindex="-1"><el-txt><el-id>ranX</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr189" class="ok" tabindex="-1"><el-txt><el-method>randint</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let190" tabindex="-1"><el-kw>constant </el-kw><el-field id="var191" class="ok" tabindex="-1"><el-txt><el-id>ranY</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr192" class="ok" tabindex="-1"><el-txt><el-method>randint</el-method>(<el-lit>0</el-lit>, <el-lit>29</el-lit>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="set193" tabindex="-1"><el-kw>set </el-kw><el-field id="ident194" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>location</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr195" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-id>ranX</el-id>, <el-id>ranY</el-id>)</el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="if196" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr198" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>snake</el-id>.<el-method>bodyCovers</el-method>(<el-kw>property</el-kw>.<el-id>location</el-id>)</el-txt></el-field><el-kw> then</el-kw>
@@ -1016,7 +1016,7 @@ which is the mechanism for running unit tests during program development, not du
 <li>a procedure method that belongs to the same Class as the procedure that you are calling from</li>
   <el-statement><el-kw>call</el-kw> <el-method>updateNeighbours</el-method>()</el-statement>
 <li>a procedure provided by the standard library</li>
-  <el-statement><el-kw>call</el-kw> <el-method>pause</el-method>(<el-lit>2000</el-lit>)</el-statement>
+  <el-statement><el-kw>call</el-kw> <el-method>sleep_ms</el-method>(<el-lit>2000</el-lit>)</el-statement>
 <li>a procedure method on an object of a Type provided by the standard library</li>
   <el-statement><el-kw>call</el-kw> <el-id>vg</el-id>.<el-method>append</el-method>(<el-id>rect</el-id>)</el-statement>
   <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
@@ -1451,10 +1451,10 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
-<el-statement class="ok" id="call3" tabindex="-1"><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-method>sinDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-method>cosDeg</el-method>(<el-lit>30</el-lit>), <el-lit>2</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call12" tabindex="-1"><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args14" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call3" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args5" class="optional ok" tabindex="-1"><el-txt><el-method>sin</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>))</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="var6" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-method>pow</el-method>(<el-method>sin</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>)), <el-lit>2</el-lit>) + <el-method>pow</el-method>(<el-method>cos</el-method>(<el-method>radians</el-method>(<el-lit>30</el-lit>)), <el-lit>2</el-lit>)</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var12" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-method>input</el-method>("<el-lit>Your name</el-lit>")</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call15" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
@@ -1683,7 +1683,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 -->
 
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
- <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toring</el-method>, may be called on a named
+ <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toString</el-method>, may be called on a named
  value or an expression only using <a href="#dotSyntax">dot syntax</a>.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>

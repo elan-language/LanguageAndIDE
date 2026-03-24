@@ -1,3 +1,4 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -12,6 +13,7 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
+  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
@@ -90,6 +92,7 @@ export class List<T1> {
     return this;
   }
 
+  @elanDeprecated(Deprecation.methodRemoved, 1, 9, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
   @elanProcedure(["index", "value"])
   put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
     this.system!.safeListSet(this.contents, index, value);
@@ -229,15 +232,6 @@ export class List<T1> {
     return this.safeSlice(index1, index2);
   }
 
-  async asString() {
-    const items: string[] = [];
-    for (const i of this.contents) {
-      const s = await this.system!.asString(i);
-      items.push(s);
-    }
-    return `[${items.join(", ")}]`;
-  }
-
   safeIndex(index: number) {
     const r = this.contents[index];
 
@@ -301,7 +295,7 @@ export class List<T1> {
   }
 
   @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
-  withPut(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
+  withSet(@elanIntType() index: number, @elanGenericParamT1Type() value: T1): List<T1> {
     return this.newList(withPutHelper(this.contents, index, value));
   }
 
@@ -329,7 +323,7 @@ export class List<T1> {
   async join(separator: string): Promise<string> {
     const asStrings: string[] = await mapHelper(
       this.contents,
-      async (i) => await this.system!.asString(i),
+      async (i) => await this.system!.toString(i),
     );
     return asStrings.join(separator);
   }
@@ -337,5 +331,14 @@ export class List<T1> {
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
   asSet() {
     return this.system!.listAsSet(this);
+  }
+
+  async toString() {
+    const items: string[] = [];
+    for (const i of this.contents) {
+      const s = await this.system!.toString(i);
+      items.push(s);
+    }
+    return `[${items.join(", ")}]`;
   }
 }

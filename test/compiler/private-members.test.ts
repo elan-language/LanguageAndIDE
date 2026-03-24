@@ -32,7 +32,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() returns String
+    function toString() returns String
          return this.p2
     end function
 
@@ -58,7 +58,7 @@ class Foo {
 
   p2 = "";
 
-  async asString() {
+  async toString() {
     return this.p2;
   }
 
@@ -94,7 +94,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -126,7 +126,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -171,7 +171,7 @@ end main
 class Foo
   constructor()  
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
   
@@ -200,7 +200,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -245,7 +245,7 @@ class Foo
         set this.p1 to 5
         set this.p2 to "Apple"
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -253,7 +253,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() returns String
+    function toString() returns String
          return ""
     end function
 
@@ -292,7 +292,7 @@ class Foo inherits Bar
     constructor()
       set this.p1 to 5
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -327,7 +327,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -367,7 +367,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -409,7 +409,7 @@ class Foo
         set this.p1 to 5
         set this.p2 to "Apple"
     end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -417,7 +417,7 @@ class Foo
 
     private property p2 as String
 
-    function asString() returns String
+    function toString() returns String
          return ""
     end function
 
@@ -451,7 +451,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

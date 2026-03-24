@@ -142,7 +142,7 @@ export class ImageVG extends VectorGraphic {
     return `<img src='${this.url}' width='${this.width}' height='${this.height}' title='${this.title}' alt='${this.alt}'>`;
   }
 
-  asString(): string {
+  toString(): string {
     return `an ImageVG`;
   }
 }

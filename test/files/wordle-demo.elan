@@ -1,4 +1,4 @@
-# 8d472118aafe4734efb7b4d695d0bf4f94a85d40c5ed998df9ac9ab4b43b0bca Elan 2.0.0-alpha guest default_profile valid
+# 5e26bc86890e055e6548a3566125dd3ce842ec170e2c5febb4a5efd2e62a9330 Elan 2.0.0-alpha guest default_profile valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -6,7 +6,7 @@ constant allValidAnswers set to "ABACK ZONAL"
 
 main
   while true
-    constant choice set to inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4)
+    constant choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue(true)
@@ -41,10 +41,10 @@ procedure playGame()
   call initialiseGrid(grid)
   variable used set to new Dictionary<of String, String>()
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    call used.put(letter, " ")
+    set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  constant target set to allValidAnswers.split(" ")[randomInt(0, 2308)]
+  constant target set to allValidAnswers.split(" ")[randint(0, 2308)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)
@@ -103,7 +103,7 @@ procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, targ
     variable mark set to marks[i]
     set grid[i][attemptNo] to letter + mark
     if mark.isAfter(used[letter]) then
-      call used.put(letter, mark)
+      set used[letter] to mark
     end if
   end for
   if marks.equals("22222") then
@@ -181,7 +181,7 @@ procedure analyse()
       set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
       set attempt to possible[0]
     end while
-    call outcomes.put(attempts, outcomes[attempts] + 1)
+    set outcomes[attempts] to outcomes[attempts] + 1
   end for
   variable success set to 0
   variable weightedSum set to 0
@@ -190,7 +190,10 @@ procedure analyse()
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  call print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.")
+  constant solved set to (success/2309.0*100).floor()
+  constant avg set to divAsFloat(weightedSum, success).round(2)
+  constant pc set to "%"
+  call print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 end procedure
 
 function isUCLetter(k as String) returns Boolean

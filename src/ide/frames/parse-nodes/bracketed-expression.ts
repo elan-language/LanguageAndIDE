@@ -11,7 +11,7 @@ export class BracketedExpression extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {

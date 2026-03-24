@@ -27,7 +27,7 @@ class Foo
   constructor()
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return "Hello World!"
   end function
 end class`;
@@ -47,7 +47,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "Hello World!";
   }
 

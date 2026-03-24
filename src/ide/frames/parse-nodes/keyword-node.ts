@@ -12,7 +12,7 @@ export class KeywordNode extends FixedTextNode {
     super(file, keyword);
     this.spaceAfter = spaceAfter;
     this.dotAfter = dotAfter;
-    this.completionWhenEmpty = this.getCompletionFromLangOr(keyword);
+    this.completionWhenEmpty = keyword;
   }
 
   parseText(text: string): void {
@@ -50,7 +50,7 @@ export class KeywordNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return `<el-kw>${this.renderAsElanSource()}</el-kw>`;
+    return `<el-kw>${this.matchedText.trim()}</el-kw>`;
   }
   renderAsElanSource(): string {
     return this.matchedText.trim();

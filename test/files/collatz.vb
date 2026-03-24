@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha
+' VB.NET with Elan 2.0.0-alpha1
 
 ' A program to investigate the Collatz Conjecture
 
@@ -30,7 +30,7 @@ Sub main()
       Next i
       displayVectorGraphics(vg) ' call
       print(x) ' call
-      pause(100) ' call
+      sleep_ms(100) ' call
     End While
   End While
   print("Finished") ' call
@@ -52,4 +52,4 @@ Function scy(pi As Integer, max As Integer) As Double
   Return 70 - divAsFloat((pi - 1)*65, (max - 1))
 End Function
 
-+Const grey = 0x808080
+Const grey = &H808080

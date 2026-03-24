@@ -19,7 +19,9 @@ export class FunctionRefNode extends AbstractSequence {
     }
   }
   renderAsHtml(): string {
-    return `<el-kw>${refKeyword}</el-kw> <el-method>${this.name!.renderAsHtml()}</el-method>`;
+    return this.isValid()
+      ? `<el-kw>${refKeyword}</el-kw> <el-method>${this.name!.renderAsHtml()}</el-method>`
+      : this.matchedText;
   }
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {

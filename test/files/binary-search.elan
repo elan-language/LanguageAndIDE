@@ -1,10 +1,10 @@
-# 5f09b22433e8b93ce41db1e77550f345b7ef5006b06472bac6fa5b87f4ae2a3b Elan 2.0.0-alpha guest default_profile valid
+# 465527d612f114fb99f87c46f2720f935196a4e9fc3275e3a0514772dceb015d Elan 2.0.0-alpha1 guest default_profile valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable done set to false
   while not done
-    variable wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
+    variable wanted set to input("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
       set done to true
     else
@@ -34,7 +34,7 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
   return result
 end function
 
-test test_
+test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true

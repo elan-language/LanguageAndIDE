@@ -3,7 +3,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class LitStringField extends AbstractSequence {
+export class LitStringInterpolatedInsert extends AbstractSequence {
   expr: ExprNode | undefined;
 
   parseText(text: string): void {
@@ -15,8 +15,5 @@ export class LitStringField extends AbstractSequence {
       this.addElement(new PunctuationNode(this.file, CLOSE_BRACE));
       super.parseText(text);
     }
-  }
-  renderAsHtml(): string {
-    return this.isValid() ? this.file.language().litStringFieldAsHtml(this) : this.matchedText;
   }
 }

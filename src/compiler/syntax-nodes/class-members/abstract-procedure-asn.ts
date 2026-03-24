@@ -20,6 +20,8 @@ export class AbstractProcedureAsn extends BreakpointAsn implements Member, ElanS
     super(fieldId, scope);
   }
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   params: AstNode = EmptyAsn.Instance;
 

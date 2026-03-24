@@ -10,7 +10,7 @@ main
     call snake.updateBlocks(blocks)
     call apple.updateBlocks(blocks)
     call displayBlocks(blocks)
-    call pause(150)
+    call sleep_ms(150)
     call snake.clockTick(getKey(), apple)
   end while
   call print($"Game Over! Score: {snake.score()}")
@@ -25,7 +25,7 @@ class Snake
     set this.priorTail to tail
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -93,7 +93,7 @@ class Apple
     set this.location to new Square(0, 0)
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -102,8 +102,8 @@ class Apple
   procedure newRandomPosition(snake as Snake)
     variable changePosition set to true
     while changePosition
-      constant ranX set to randomInt(0, 39)
-      constant ranY set to randomInt(0, 29)
+      constant ranX set to randint(0, 39)
+      constant ranY set to randint(0, 29)
       set this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
         set changePosition to false
@@ -123,7 +123,7 @@ class Square
     set this.y to y
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

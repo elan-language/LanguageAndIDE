@@ -50,6 +50,7 @@ ${this.indent()}}`;
         symbolId: id,
         symbolType: () => st,
         symbolScope: SymbolScope.counter,
+        symbolIsType: false,
       };
     }
 
@@ -67,6 +68,7 @@ ${this.indent()}}`;
         return isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
       },
       symbolScope: SymbolScope.counter,
+      symbolIsType: false,
     };
 
     return matches.concat(symbolMatches(id, all, [counter]));

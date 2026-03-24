@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-alpha
+# Python with Elan 2.0.0-alpha1
 
 def main(): None:
   li = [7, 1, 0, 4, 8, 3, 6] # variable
@@ -14,7 +14,7 @@ def inPlaceRippleSort(li: list[int]) -> None: # procedure
     for i in range(0, lastComp + 1):
       if li[i] > li[i + 1]:
         temp = li[i] # variable
-        li.put(i, li[i + 1]) # call
-        li.put(i + 1, temp) # call
+        li[i] = li[i + 1] # set
+        li[i + 1] = temp # set
         hasChanged = True # set
     lastComp = lastComp - 1 # set

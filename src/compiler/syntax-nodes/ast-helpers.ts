@@ -255,6 +255,7 @@ export function generateType(
       type.parameterTypes.map((t) => generateType(t, matches, depth)),
       type.isExtension,
       type.isAsync,
+      type.deprecated,
     );
   }
 

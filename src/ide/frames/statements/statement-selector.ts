@@ -2,7 +2,6 @@ import {
   assertKeyword,
   callKeyword,
   catchKeyword,
-  commentMarker,
   constantKeyword,
   elifKeyword,
   elseKeyword,
@@ -47,13 +46,12 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
       [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
-      ["comment", (parent: Parent) => this.factory.newComment(parent)],
-      [commentMarker, (parent: Parent) => this.factory.newComment(parent)],
+      [this.getCommentMarker(), (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 
-  profileAllows(keyword: string): boolean {
-    return keyword !== commentMarker;
+  profileAllows(_keyword: string): boolean {
+    return true;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

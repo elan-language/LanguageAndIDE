@@ -1,13 +1,11 @@
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { ParseNode } from "./frame-interfaces/parse-node";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -25,6 +23,7 @@ import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
+import { AssertStatement } from "./statements/assert-statement";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -32,7 +31,7 @@ export abstract class LanguageAbstract implements Language {
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
   }
-  languageClass = "python";
+  languageHtmlClass = "python";
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";
@@ -64,35 +63,25 @@ export abstract class LanguageAbstract implements Language {
   abstract propertyRefAsHtml(node: PropertyRef): string;
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
-  abstract litStringFieldAsHtml(node: LitStringField): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
   }
 
-  default_litStringFieldAsHtml(node: LitStringField): string {
-    return `{${node.expr!.renderAsHtml()}}`;
-  }
-
   default_typeTupleAsHtml(node: TypeTupleNode): string {
     return `(${node.types?.renderAsHtml()})`;
   }
-
-  completionWhenEmpty(node: ParseNode): string {
-    let result = "";
-    if (node instanceof ParamDefNode) {
-      result = this.paramDefCompletion(node);
-    }
-    return result; //TODO
-  }
-
-  abstract paramDefCompletion(node: ParamDefNode): string;
 
   abstract addNodesForParamDef(node: ParamDefNode): void;
   abstract addNodesForNewInstance(node: NewInstance): void;
   abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
   abstract addNodesForTypeTuple(node: TypeTupleNode): void;
+  abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+
+  default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
+    return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;
+  }
 
   protected addCommonElementsForNewInstance(node: NewInstance): void {
     node.type = new TypeSimpleOrGeneric(node.file, new Set<TokenType>([TokenType.type_concrete]));
@@ -125,8 +114,25 @@ export abstract class LanguageAbstract implements Language {
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
   }
 
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
+  getFields(frame: Frame): Field[] {
+    let fields: Field[] = [];
+    if (frame instanceof FunctionFrame) {
+      fields = this.functionFrameFields(frame);
+    } else if (frame instanceof AssertStatement) {
+      fields = this.assertStatementFields(frame);
+    }
+    return fields;
+  }
+
+  abstract functionFrameFields(frame: FunctionFrame): Field[];
+
+  default_functionFrameFields(frame: FunctionFrame): Field[] {
+    return [frame.name, frame.params, frame.returnType];
+  }
+
+  abstract assertStatementFields(frame: AssertStatement): Field[];
+  default_assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.actual, frame.expected];
   }
 
   abstract MOD: string;
@@ -150,6 +156,10 @@ export abstract class LanguageAbstract implements Language {
 
   abstract TRUE: string;
   abstract FALSE: string;
+  abstract BINARY_PREFIX: string;
+  abstract HEX_PREFIX: string;
+
+  abstract START_OF_GENERIC: string;
 
   protected spaced(text: string): string {
     return ` ${text} `;

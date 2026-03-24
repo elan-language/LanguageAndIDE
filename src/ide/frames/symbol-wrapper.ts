@@ -12,14 +12,17 @@ import {
   isNotInheritableClass,
   isProcedure,
   isProperty,
+  isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import { File } from "./frame-interfaces/file";
 import { KeywordCompletion } from "./symbol-completion-helpers";
 
 export class SymbolWrapper {
   constructor(
     private readonly wrapped: ElanSymbol | KeywordCompletion,
     private readonly scope: Scope,
+    private readonly file: File,
   ) {
     if (wrapped instanceof KeywordCompletion) {
       this.name = wrapped.keyword;
@@ -35,6 +38,9 @@ export class SymbolWrapper {
   name: string;
 
   get displayName() {
+    if (this.name === "") {
+      return this.name;
+    }
     if (this.isKeyword) {
       return this.name;
     }
@@ -45,7 +51,28 @@ export class SymbolWrapper {
       return `${thisKeyword}.${symbol.symbolId}`;
     }
 
+    if (isTypeSymbol(symbol)) {
+      return this.langSpecificTypeName(this.name);
+    }
+
     return this.name;
+  }
+
+  langSpecificTypeName(elanName: string): string {
+    const lang = this.file.language();
+    let name = elanName;
+    if (name === "Int") {
+      name = lang.INT_NAME;
+    } else if (name === "Float") {
+      name = lang.FLOAT_NAME;
+    } else if (name === "Boolean") {
+      name = lang.BOOL_NAME;
+    } else if (name === "String") {
+      name = lang.STRING_NAME;
+    } else if (name === "List") {
+      name = lang.LIST_NAME;
+    }
+    return name;
   }
 
   get class() {
@@ -86,8 +113,13 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isGenericClass(symbol)) {
-      return `${this.name}<of `;
+    if (isTypeSymbol(symbol)) {
+      let toInsert = this.langSpecificTypeName(this.name);
+      if (isGenericClass(symbol)) {
+        const lang = this.file.language();
+        toInsert += lang.START_OF_GENERIC;
+      }
+      return toInsert;
     }
 
     if (isFunction(symbol)) {

@@ -13,6 +13,7 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -24,7 +25,6 @@ import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
-import { LitStringField } from "./parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -64,7 +64,7 @@ export class LanguageVB extends LanguageAbstract {
   commentRegex(): RegExp {
     return /' [^\r\n]*/;
   }
-  languageClass = "vb";
+  languageHtmlClass = "vb";
   languageFullName: string = "VB.NET";
   defaultFileExtension: string = "vb";
   defaultMimeType: string = "text/plain";
@@ -85,7 +85,7 @@ export class LanguageVB extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
+      html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)<el-punc>`;
     } else if (frame instanceof CatchStatement) {
@@ -151,7 +151,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof While) {
@@ -192,10 +192,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.WHILE}</el-kw>`;
     }
     return html;
-  }
-
-  getFields(node: Frame): Field[] {
-    return node ? [] : [];
   }
 
   private ABSTRACT = "abstract";
@@ -254,6 +250,10 @@ export class LanguageVB extends LanguageAbstract {
 
   TRUE: string = "True";
   FALSE: string = "False";
+  BINARY_PREFIX: string = "&B";
+  HEX_PREFIX: string = "&H";
+
+  START_OF_GENERIC: string = `(${this.OF} `;
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
@@ -274,10 +274,6 @@ export class LanguageVB extends LanguageAbstract {
 
   paramDefAsHtml(node: ParamDefNode): string {
     return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
-  }
-
-  paramDefCompletion(_node: ParamDefNode): string {
-    return `<i>name</i> ${this.AS} <i>Type</i>`;
   }
 
   addNodesForNewInstance(node: NewInstance): void {
@@ -314,8 +310,8 @@ export class LanguageVB extends LanguageAbstract {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
-  litStringFieldAsHtml(node: LitStringField): string {
-    return this.default_litStringFieldAsHtml(node);
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+    return this.default_standardiseInterpolatedString(node, text);
   }
 
   addNodesForTypeTuple(node: TypeTupleNode): void {
@@ -324,6 +320,13 @@ export class LanguageVB extends LanguageAbstract {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  functionFrameFields(frame: FunctionFrame): Field[] {
+    return this.default_functionFrameFields(frame);
+  }
+  assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.expected, frame.actual];
   }
 
   reservedWords: Set<string> = new Set<string>([

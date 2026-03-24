@@ -19,7 +19,7 @@ import { TupleNode } from "./tuple-node";
 export class ExprNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>value or expression</i>");
+    this.completionWhenEmpty = "<i>value or expression</i>";
   }
 
   parseText(text: string): void {

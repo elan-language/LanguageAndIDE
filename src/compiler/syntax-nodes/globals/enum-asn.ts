@@ -14,6 +14,8 @@ export class EnumAsn extends BreakpointAsn implements ElanSymbol {
     super(fieldId, scope);
   }
 
+  symbolIsType: boolean = true;
+
   get symbolId() {
     return getId(this.name);
   }

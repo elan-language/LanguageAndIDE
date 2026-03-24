@@ -4,7 +4,12 @@ import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
+import {
+  assertAutocompletes,
+  assertSymbolCompletionMenuStartsWith,
+  assertSymbolCompletionWithString,
+  fileWithPython,
+} from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {
@@ -114,7 +119,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "no", expected);
   });
 
-  test("Pass_Keywords", async () => {
+  test("Pass_space", async () => {
     const code = `${testHeader}
 
 main
@@ -155,7 +160,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 79);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 72);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -219,7 +224,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -257,7 +262,7 @@ class Foo
   constructor()
     set a to 0
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -290,7 +295,7 @@ end class`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -329,7 +334,7 @@ end class`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -480,7 +485,7 @@ end main`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -567,7 +572,7 @@ end main`;
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -783,8 +788,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["withPut", "*", "*"],
       ["withRemoveAt", "*", "*"],
+      ["withSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
@@ -864,14 +869,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["hasKey", "*", "*"],
       ["keys", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
       ["values", "*", "*"],
-      ["withPut", "*", "*"],
       ["withRemoveAt", "*", "*"],
+      ["withSet", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
@@ -888,7 +893,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -933,7 +938,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -975,7 +980,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1021,7 +1026,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1067,7 +1072,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1108,7 +1113,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1153,7 +1158,7 @@ class Foo
   constructor()
 
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1195,7 +1200,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1233,7 +1238,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1275,7 +1280,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1302,10 +1307,10 @@ end test`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["ff", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text31", "gr.", expected);
@@ -1526,7 +1531,7 @@ end function
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1554,12 +1559,12 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
@@ -1579,7 +1584,7 @@ end function
 class Bar
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -1607,12 +1612,12 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["equals", "*", "*"],
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
       ["notEqualTo", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1662,7 +1667,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "*", "*"],
       ["ceiling", "*", "*"],
       ["equals", "*", "*"],
       ["floor", "*", "*"],
@@ -1670,6 +1674,7 @@ end main`;
       ["isNaN", "*", "*"],
       ["notEqualTo", "*", "*"],
       ["round", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
@@ -1723,6 +1728,7 @@ end main`;
       ["CircleVG", "*", "*"],
       ["Dictionary", "*", "*"],
       ["ElanRuntimeError", "*", "*"],
+      ["ElanUserError", "*", "*"],
       ["Float", "*", "*"],
       ["HashSet", "*", "*"],
       ["ImageVG", "*", "*"],
@@ -1879,7 +1885,7 @@ end main
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -2462,7 +2468,7 @@ end main`;
 
 main
   variable aaa set to 10
-  call pause(aaa)
+  call sleep_ms(aaa)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2744,9 +2750,9 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
       ["equals", "*", "*"],
+      ["toString", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
@@ -2793,5 +2799,49 @@ end procedure`;
       "new Foo(), lambda aFoo as Foo => aF",
       expected,
     );
+  });
+  test("Pass_keywordsShownWhenElan", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to w
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["if", "if", "if "],
+      ["lambda", "lambda", "lambda "],
+      ["new", "new", "new "],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
+  });
+  test("Pass_keywordsNotShownWhenNotElan", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to w
+end main`;
+
+    const fileImpl = fileWithPython();
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["abs", "abs", "abs("],
+      ["acos", "acos", "acos("],
+      ["asin", "asin", "asin("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
   });
 });

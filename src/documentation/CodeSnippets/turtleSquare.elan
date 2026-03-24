@@ -8,7 +8,7 @@ main
   for i in range(1, 5)
     call t.turn(90)
     call t.move(80)
-    call pause(500)
+    call sleep(0.5)
   end for
   # snipTo
 end main

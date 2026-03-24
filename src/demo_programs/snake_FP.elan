@@ -9,7 +9,7 @@ main
   while game.isOn
     set blocks to updateGraphics(game, blocks)
     call displayBlocks(blocks)
-    call pause(150)
+    call sleep_ms(150)
     set game to clockTick(game, getKey())
   end while
   call print($"Game Over! Score: {score(game)}")
@@ -32,7 +32,7 @@ end function
 
 # Temporary solution pending creation of withPut as an extension method to ListOfList
 function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
+  return graphics.withSet(x, graphics[x].withSet(y, colour))
 end function
 
 function score(g as Game) returns Int
@@ -93,7 +93,7 @@ class Game
     set this.rnd to rnd
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -175,7 +175,7 @@ class Square
     return copyOfThis
   end function
 
-  function asString() returns String
+  function toString() returns String
     return $"{this.x}, {this.y}"
   end function
 

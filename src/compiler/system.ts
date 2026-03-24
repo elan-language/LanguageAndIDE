@@ -170,7 +170,7 @@ export class System {
   }
 
   async print(s: any) {
-    const ss = await this._stdlib.asString(s);
+    const ss = await this._stdlib.toString(s);
     await this.elanInputOutput.print(ss);
   }
 
@@ -239,7 +239,7 @@ export class System {
     actual: [() => Promise<any>, string],
     expected: [any, string],
     htmlId: string,
-    stdlib: { asString: (a: any) => Promise<string> },
+    stdlib: { toString: (a: any) => Promise<string> },
     ignored: boolean,
   ) {
     if (ignored) {
@@ -298,7 +298,7 @@ export class System {
     actualSt: string,
     expectedSt: string,
     htmlId: string,
-    stdlib: { asString: (a: any) => Promise<string> },
+    stdlib: { toString: (a: any) => Promise<string> },
   ) {
     let testStatus = TestStatus.pass;
 
@@ -312,8 +312,8 @@ export class System {
       return this.doAssertJavascriptString(actual, expected, htmlId);
     }
 
-    const expectedValue = `${await stdlib.asString(expected)}`;
-    let actualValue = `${await stdlib.asString(actual)}`;
+    const expectedValue = `${await stdlib.toString(expected)}`;
+    let actualValue = `${await stdlib.toString(actual)}`;
 
     if (!this.equals(actual, expected)) {
       testStatus = TestStatus.fail;
@@ -329,7 +329,7 @@ export class System {
   }
 
   unhandledExpression(v: any) {
-    const s = this._stdlib.asString(v);
+    const s = this._stdlib.toString(v);
     throw new ElanRuntimeError(`'${s}' not covered in switch statement`);
   }
 
@@ -460,8 +460,8 @@ export class System {
     return [-1, -1];
   }
 
-  async asString(a: any) {
-    return await this._stdlib.asString(a);
+  async toString(a: any) {
+    return await this._stdlib.toString(a);
   }
 
   async breakPoint(

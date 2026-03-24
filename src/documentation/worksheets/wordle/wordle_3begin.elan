@@ -11,10 +11,10 @@ procedure playGame()
   variable grid set to new Array2D<of String>(5, 6, "")
   variable used set to new Dictionary<of String, String>()
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    call used.put(letter, " ")
+    set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  variable target set to allValidTargetWords.split(" ")[randomInt(0, 2308)]
+  variable target set to allValidTargetWords.split(" ")[randint(0, 2308)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)
@@ -37,11 +37,11 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
     variable k set to waitForKey().upperCase()
     if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
-      call grid.put(chNo, attemptNo, "")
+      set grid[chNo][attemptNo] to ""
       set word to word[0..chNo]
       call clearPrintedText()
     elif (chNo < 5) and isUCLetter(k) then
-      call grid.put(chNo, attemptNo, k)
+      set grid[chNo][attemptNo] to k
       set chNo to chNo + 1
       set word to word + k
     elif (chNo is 5) and (k.equals("ENTER")) then
@@ -61,9 +61,9 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
   for i in range(0, 5)
     variable letter set to grid[i, attemptNo]
     variable mark set to marks[i]
-    call grid.put(i, attemptNo, letter + mark)
+    set grid[i][attemptNo] to letter + mark
     if mark.isAfter(used[letter]) then
-      call used.put(letter, mark)
+      set used[letter] to mark
     end if
   end for
   if marks.equals("22222") then
@@ -81,11 +81,11 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as AsR
     if (k.equals("BACKSPACE")) and (chNo > 0) then
       set chNo to chNo - 1
       variable entry set to grid[chNo, attemptNo]
-      call grid.put(chNo, attemptNo, entry[0])
+      set grid[chNo][attemptNo] to entry[0]
       set mark to mark.subString(0, chNo)
     elif (chNo < 5) and "012".contains(k) then
       variable ch set to grid[chNo, attemptNo]
-      call grid.put(chNo, attemptNo, ch + k)
+      set grid[chNo][attemptNo] to ch + k
       set chNo to chNo + 1
       set mark to mark + k
     elif (chNo is 5) and (k.equals("ENTER")) then
@@ -98,7 +98,7 @@ end procedure
 
 procedure putAttemptIntoGrid(attempt as String, position as Int, grid as Array2D<of String>)
   for i in range(0, 5)
-    call grid.put(i, position, attempt[i])
+    set grid[i][position] to attempt[i]
   end for
   call displayHtml(drawGrid(grid))
 end procedure

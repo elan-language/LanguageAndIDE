@@ -1,12 +1,12 @@
-// Java with Elan 2.0.0-alpha
+// Java with Elan 2.0.0-alpha1
 
-+final String allWords = "AAHED ZYMIC" // constant
+final String allWords = "AAHED ZYMIC" // constant
 
-+final String allValidAnswers = "ABACK ZONAL" // constant
+final String allValidAnswers = "ABACK ZONAL" // constant
 
 static void main() {
   while (true) {
-    final Int choice = inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4); // constant
+    final Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4); // constant
     clearAllDisplays(); // call
     executeOption(choice); // call
     pressAnyKeyToContinue(true); // call
@@ -27,11 +27,11 @@ static void executeOption(int choice) { // procedure
   } else {
     final String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase(); // constant
     if (allValidAnswers.contains(word)) {
-      print("" + (word).asString() + " is a valid answer"); // call
+      print(String.format("% is a valid answer", word)); // call
     } else if (allWords.contains(word)) {
-      print("" + (word).asString() + " is not a valid answer, but is a valid guess word"); // call
+      print(String.format("% is not a valid answer, but is a valid guess word", word)); // call
     } else {
-      print("" + (word).asString() + " is not a recognised word"); // call
+      print(String.format("% is not a recognised word", word)); // call
     }
   }
 }
@@ -41,10 +41,10 @@ static void playGame() { // procedure
   initialiseGrid(grid); // call
   var used = new Dictionary<String, String>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-    used.put(letter, " "); // call
+    used[letter] = " "; // set
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
-  final String target = allValidAnswers.split(" ")[randomInt(0, 2308)]; // constant
+  final String target = allValidAnswers.split(" ")[randint(0, 2308)]; // constant
   var attemptNo = 0;
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {
@@ -103,7 +103,7 @@ static void colourAttempt(int attemptNo, List<List<String>> grid, String target,
     var mark = marks[i];
     grid[i][attemptNo] = letter + mark; // set
     if (mark.isAfter(used[letter])) {
-      used.put(letter, mark); // call
+      used[letter] = mark; // set
     }
   }
   if (marks.equals("22222")) {
@@ -181,7 +181,7 @@ static void analyse() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
       attempt = possible[0]; // set
     }
-    outcomes.put(attempts, outcomes[attempts] + 1); // call
+    outcomes[attempts] = outcomes[attempts] + 1; // set
   }
   var success = 0;
   var weightedSum = 0;
@@ -190,7 +190,10 @@ static void analyse() { // procedure
     weightedSum = weightedSum + (i*outcomes[i]); // set
   }
   clearPrintedText(); // call
-  print("For all 2309 possible answers,the current reverse-game algorithmsolved " + ((success/2309.0*100).floor()).asString() + "% within 6 attempts,with an average of " + (divAsFloat(weightedSum, success).round(2)).asString() + " attempts."); // call
+  final Int solved = (success/2309.0*100).floor(); // constant
+  final Float avg = divAsFloat(weightedSum, success).round(2); // constant
+  final String pc = "%"; // constant
+  print(String.format("For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved %% within 6 attempts,\nwith an average of % attempts.", solved, pc, avg)); // call
 }
 
 static bool isUCLetter(String k) { // function
@@ -198,12 +201,12 @@ static bool isUCLetter(String k) { // function
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }
 
-static void test_isUCLetter() {
-  assert isUCLetter("A") is true 
-  assert isUCLetter("Z") is true 
-  assert isUCLetter("a") is false 
-  assert isUCLetter("1") is false 
-  assert isUCLetter(" ") is false 
+@Test static void test_isUCLetter() {
+  assertEquals(true, isUCLetter("A"))
+  assertEquals(true, isUCLetter("Z"))
+  assertEquals(false, isUCLetter("a"))
+  assertEquals(false, isUCLetter("1"))
+  assertEquals(false, isUCLetter(" "))
 }
 
 static String getWord(int attemptNo, List<List<String>> grid) { // function
@@ -218,9 +221,9 @@ static String setChar(String word, int n, String newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
 }
 
-static void test_setChar() {
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+@Test static void test_setChar() {
+  assertEquals("_BCDE", setChar("ABCDE", 0, "_"))
+  assertEquals("ABCD_", setChar("ABCDE", 4, "_"))
 }
 
 static String markAttempt(String attempt, String target) { // function
@@ -241,17 +244,17 @@ static String markAttempt(String attempt, String target) { // function
   return mark;
 }
 
-static void test_markAttempt() {
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+@Test static void test_markAttempt() {
+  assertEquals("00000", markAttempt("ABCDE", "XXXXX"))
+  assertEquals("11111", markAttempt("ABCDE", "BCDEA"))
+  assertEquals("22222", markAttempt("ABCDE", "ABCDE"))
+  assertEquals("02000", markAttempt("SAINT", "LADLE"))
+  assertEquals("01111", markAttempt("IDEAL", "LADLE"))
+  assertEquals("10020", markAttempt("CABAL", "RECAP"))
+  assertEquals("01100", markAttempt("COLON", "GLORY"))
+  assertEquals("10120", markAttempt("AORTA", "RATTY"))
+  assertEquals("11020", markAttempt("RATTY", "AORTA"))
+  assertEquals("02012", markAttempt("FAIRY", "RATTY"))
 }
 
 static List<String> possibleAnswersAfterAttempt(List<String> possible, String attempt, String mark) { // function
@@ -265,24 +268,24 @@ static List<String> possibleAnswersAfterAttempt(List<String> possible, String at
   return newPossible;
 }
 
-static void test_possibleAnswersAfterAttempt() {
+@Test static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"] 
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"] 
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
+  assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  assertEquals(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  assertEquals(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"))
+  assertEquals(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"))
 }
 
 static String drawGrid(List<List<String>> grid) { // function
-  var html = "<style>" + (style).asString() + "</style> <grid>";
+  var html = String.format("<style>%</style> <grid>", style);
   foreach (row in range(0, 6)) {
     html = html + "<word>"; // set
     foreach (col in range(0, 5)) {
       final String entry = grid[col][row]; // constant
       final String ch = if(entry.length() > 0, entry[0], ""); // constant
       final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
-      html = html + "<ch class='_" + (mark).asString() + "'>" + (ch).asString() + "</ch>"; // set
+      html = html + String.format("<ch class='_%'>%</ch>", mark, ch); // set
     }
     html = html + "</word>"; // set
   }
@@ -295,10 +298,10 @@ static String drawKeyboard(Dictionary<String, String> used) { // function
     if (k.equals("-")) {
       html = html + "</div><div>"; // set
     } else {
-      html = html + "<key class='_" + (used[k]).asString() + "'>" + (k).asString() + "</key>"; // set
+      html = html + String.format("<key class='_%'>%</key>", used[k], k); // set
     }
   }
   return html + "<key></key></div></keyboard>";
 }
 
-+final String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" // constant
+final String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" // constant

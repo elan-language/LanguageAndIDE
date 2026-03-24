@@ -472,7 +472,7 @@ export function mustHaveConstructor(compileErrors: CompileError[], location: str
 export function mustHaveAsString(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "Concrete class must have an 'asString' function taking no parameters and returning a String.",
+      "Concrete class must have a 'toString' function taking no parameters and returning a String.",
       location,
     ),
   );
@@ -873,6 +873,18 @@ export function mustBeCompatibleDefinitionNode(
   if (isConstant && !isValueType(rst)) {
     compileErrors.push(
       new SyntaxCompileError(`Can only assign a value type to a constant`, location),
+    );
+  }
+}
+
+export function mustBeException(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbol.symbolId !== "ElanRuntimeError" && symbol.symbolId !== "ElanUserError") {
+    compileErrors.push(
+      new SyntaxCompileError(`Can only throw or catch ElanUserError or ElanRuntimeError`, location),
     );
   }
 }

@@ -1,10 +1,10 @@
-# Python with Elan 2.0.0-alpha
+# Python with Elan 2.0.0-alpha1
 
 def main(): None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable
   done = False # variable
   while not done:
-    wanted = inputString("What type of fruit do you want ('x' to exit)? ") # variable
+    wanted = input("What type of fruit do you want ('x' to exit)? ") # variable
     if wanted.equals("x"):
       done = True # set
     else:
@@ -27,18 +27,18 @@ def binarySearch(li: list[str], item: str) -> bool: # function
       result = binarySearch(li.subList(mid + 1, li.length()), item) # set
   return result
 
-def  test_()-> None:
+def test_binarySearch(self) -> None:
   li1 = ["lemon", "lime", "orange"] # variable
-  assert binarySearch(li1, "lemon") is True 
-  assert binarySearch(li1, "lime") is True 
-  assert binarySearch(li1, "orange") is True 
-  assert binarySearch(li1, "pear") is False 
+  self.assertEqual(binarySearch(li1, "lemon"), True)
+  self.assertEqual(binarySearch(li1, "lime"), True)
+  self.assertEqual(binarySearch(li1, "orange"), True)
+  self.assertEqual(binarySearch(li1, "pear"), False)
   li2 = ["lemon", "orange"] # variable
-  assert binarySearch(li2, "lemon") is True 
-  assert binarySearch(li2, "orange") is True 
-  assert binarySearch(li2, "pear") is False 
+  self.assertEqual(binarySearch(li2, "lemon"), True)
+  self.assertEqual(binarySearch(li2, "orange"), True)
+  self.assertEqual(binarySearch(li2, "pear"), False)
   li3 = ["lemon"] # variable
-  assert binarySearch(li3, "lemon") is True 
-  assert binarySearch(li3, "lime") is False 
+  self.assertEqual(binarySearch(li3, "lemon"), True)
+  self.assertEqual(binarySearch(li3, "lime"), False)
   li4 = list[str]() # variable
-  assert binarySearch(li4, "pear") is False 
+  self.assertEqual(binarySearch(li4, "pear"), False)

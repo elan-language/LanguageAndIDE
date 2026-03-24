@@ -12,6 +12,7 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   ignore_test,
@@ -180,14 +181,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call pause(1)
+  call sleep_ms(1)
   call printNoLine(1)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.pause(1);
+  await _stdlib.sleep_ms(1);
   await _stdlib.printNoLine(1);
 }
 return [main, _tests];}`;
@@ -295,7 +296,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "[5, 3]");
   });
 
@@ -505,7 +508,7 @@ class Foo
       call this.p1.length(2)
     end procedure
 
-    function asString() returns String
+    function toString() returns String
       return ""
     end function
 
@@ -522,7 +525,7 @@ class Bar
       call printNoLine(this.p1 + plus)
     end procedure
 
-    function asString() returns String
+    function toString() returns String
       return ""
     end function
 
@@ -555,7 +558,7 @@ class Foo {
     await this.p1.length(2);
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -575,7 +578,7 @@ class Bar {
     await _stdlib.printNoLine(this.p1 + plus);
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -780,7 +783,7 @@ end procedure
 class Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -812,7 +815,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -858,7 +861,7 @@ class Foo
   constructor()
     set this.ff to 1
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -887,7 +890,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

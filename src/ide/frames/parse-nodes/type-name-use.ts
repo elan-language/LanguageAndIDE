@@ -20,48 +20,52 @@ export class TypeNameUse extends AbstractParseNode {
     ]),
   ) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("<i>Type</i>");
+    this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
 
-  private langInt = RegExp(`^\\s*${this.file.language().INT_NAME}`);
-  private langFloat = RegExp(`^\\s*${this.file.language().FLOAT_NAME}`);
-  private langBool = RegExp(`^\\s*${this.file.language().BOOL_NAME}`);
-  private langString = RegExp(`^\\s*${this.file.language().STRING_NAME}`);
-  private langList = RegExp(`^\\s*${this.file.language().LIST_NAME}`);
+  private attemptToMatchStandardType(text: string, langName: string, elanName: string) {
+    if (text.startsWith(langName)) {
+      this.status = ParseStatus.valid;
+      this.matchedText = langName;
+      this.remainingText = text.substring(langName.length);
+      this.elanTypeName = elanName;
+    } else if (text.length === 0 || langName.startsWith(text)) {
+      this.status = ParseStatus.incomplete;
+      this.matchedText = text;
+      this.remainingText = "";
+      this.elanTypeName = text;
+    } else {
+      this.status = ParseStatus.invalid;
+    }
+  }
 
   parseText(text: string): void {
     this.remainingText = text;
+    const lang = this.file.language();
     if (text.length > 0) {
-      [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langInt);
-      this.elanTypeName = "Int";
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langFloat);
-        this.elanTypeName = "Float";
+      this.attemptToMatchStandardType(text, lang.INT_NAME, "Int");
+      if (this.status === ParseStatus.invalid) {
+        this.attemptToMatchStandardType(text, lang.FLOAT_NAME, "Float");
       }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langBool);
-        this.elanTypeName = "Boolean";
+      if (this.status === ParseStatus.invalid) {
+        this.attemptToMatchStandardType(text, lang.BOOL_NAME, "Boolean");
       }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langString);
-        this.elanTypeName = "String";
+      if (this.status === ParseStatus.invalid) {
+        this.attemptToMatchStandardType(text, lang.STRING_NAME, "String");
       }
-      if (this.status !== ParseStatus.valid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.langList);
-        this.elanTypeName = "List";
+      if (this.status === ParseStatus.invalid) {
+        this.attemptToMatchStandardType(text, lang.LIST_NAME, "List");
       }
-      if (this.status !== ParseStatus.valid) {
+      if (this.status === ParseStatus.invalid) {
         [this.status, this.matchedText, this.remainingText] = matchRegEx(
           text,
           Regexes.typeSimpleName,
         );
         this.elanTypeName = this.matchedText;
-        if (
-          this.status === ParseStatus.valid &&
-          ReservedWords.Instance.matchesIgnoringCase(this.matchedText)
-        ) {
+        if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
           this.status = ParseStatus.invalid;
+          this.matchedText = "";
           this.message = `matches a reserved word.`;
         }
       }
@@ -69,6 +73,10 @@ export class TypeNameUse extends AbstractParseNode {
   }
   renderAsHtml(): string {
     return `<el-type>${this.renderAsExport()}</el-type>`;
+  }
+
+  renderAsElanSource(): string {
+    return this.elanTypeName;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

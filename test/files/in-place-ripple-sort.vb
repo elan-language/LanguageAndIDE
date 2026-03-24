@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha
+' VB.NET with Elan 2.0.0-alpha1
 
 Sub main()
   Dim li = {7, 1, 0, 4, 8, 3, 6} ' variable
@@ -15,8 +15,8 @@ Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure
     For Each i In range(0, lastComp + 1)
       If li[i] > li[i + 1] Then
         Dim temp = li[i] ' variable
-        li.put(i, li[i + 1]) ' call
-        li.put(i + 1, temp) ' call
+        li[i] = li[i + 1] ' set
+        li[i + 1] = temp ' set
         hasChanged = True ' set
       End If
     Next i

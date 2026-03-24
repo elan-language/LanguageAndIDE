@@ -155,7 +155,7 @@ async function main() {
   for (const x of elan_iterfor3) {
     const elan_iterfor7 = [..."34"];
     for (const y of elan_iterfor7) {
-      await _stdlib.printNoLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
+      await _stdlib.printNoLine(\`\${await _stdlib.toString(x)}\${await _stdlib.toString(y)}\`);
     }
   }
 }
@@ -338,7 +338,7 @@ class Bar
   constructor(li as List<of Int>)
     set this.l to li
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 

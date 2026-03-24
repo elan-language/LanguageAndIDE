@@ -1,10 +1,10 @@
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 import { OptionalNode } from "./optional-node";
 import { Sequence } from "./sequence";
-import { File } from "../frame-interfaces/file";
 
 //A list of comma-separated values of a specified type, but with no list delimiters
 export class CSV extends AbstractSequence {

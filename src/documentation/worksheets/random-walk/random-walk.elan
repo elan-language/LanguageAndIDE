@@ -13,10 +13,10 @@ main
   call circle(t, 50)
   for count in range(1, 21)
     call t.placeAt(0, 0)
-    variable colour set to randomInt(red, blue)
+    variable colour set to randint(red, blue)
     call t.penColour(colour)
-    while sqrt(power(t.x, 2) + power(t.y, 2)) < 50
-      variable angle set to randomInt(-90, 90)
+    while sqrt(pow(t.x, 2) + pow(t.y, 2)) < 50
+      variable angle set to randint(-90, 90)
       call t.turn(angle)
       call t.move(5)
       set paces to paces + 1

@@ -380,7 +380,7 @@ return [main, _tests];}`;
   // const global = new class {};
   // async function main() {
   //   let a = "";
-  //   let b = \`\${await _stdlib.asString(a)}\\` + eval('console.warn(\\`fred\\`)') + \\`\`;
+  //   let b = \`\${await _stdlib.toString(a)}\\` + eval('console.warn(\\`fred\\`)') + \\`\`;
   // }
   // return [main, _tests];}";
 

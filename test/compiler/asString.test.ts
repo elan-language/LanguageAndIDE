@@ -13,20 +13,20 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("asString", () => {
+suite("toString", () => {
   test("Pass_SimpleExtension", async () => {
     const code = `${testHeader}
 
 main
   variable f set to 1
-  call printNoLine(f.asString())
+  call printNoLine(f.toString())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let f = 1;
-  await _stdlib.printNoLine((await _stdlib.asString(f)));
+  await _stdlib.printNoLine((await _stdlib.toString(f)));
 }
 return [main, _tests];}`;
 
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable s set to f.asString()
+  variable s set to f.toString()
   call printNoLine(s)
 end main
 
@@ -78,7 +78,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Concrete class must have an 'asString' function taking no parameters and returning a String.LangRef.html#compile_error",
+      "Concrete class must have a 'toString' function taking no parameters and returning a String.LangRef.html#compile_error",
     ]);
   });
 
@@ -88,7 +88,7 @@ end class`;
 main
   variable f set to new Foo()
   variable p set to f.p1
-  variable s set to p.asString()
+  variable s set to p.toString()
   call printNoLine(s)
 end main
 
@@ -96,7 +96,7 @@ class Foo
   constructor()
     set this.p1 to new Maybe<of Foo>()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -108,7 +108,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let p = f.p1;
-  let s = (await _stdlib.asString(p));
+  let s = (await _stdlib.toString(p));
   await _stdlib.printNoLine(s);
 }
 
@@ -120,7 +120,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -158,9 +158,9 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  variable s1 set to f.asString()
+  variable s1 set to f.toString()
   variable p set to f.p1
-  variable s2 set to p.asString()
+  variable s2 set to p.toString()
   call printNoLine(s1)
   call printNoLine(s2)
 end main
@@ -172,8 +172,8 @@ class Foo
 
   property p1 as Maybe<of Foo>
 
-  function asString() returns String
-     return "Custom asString"
+  function toString() returns String
+     return "Custom toString"
   end function 
 end class`;
 
@@ -181,9 +181,9 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let s1 = (await f.asString());
+  let s1 = (await f.toString());
   let p = f.p1;
-  let s2 = (await _stdlib.asString(p));
+  let s2 = (await _stdlib.toString(p));
   await _stdlib.printNoLine(s1);
   await _stdlib.printNoLine(s2);
 }
@@ -204,8 +204,8 @@ class Foo {
     this.elan_p1 = p1;
   }
 
-  async asString() {
-    return "Custom asString";
+  async toString() {
+    return "Custom toString";
   }
 
 }
@@ -225,7 +225,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Custom asStringa Maybe");
+    await assertObjectCodeExecutes(fileImpl, "Custom toStringa Maybe");
   });
 
   test("Pass_AsStringMayBeCalled", async () => {
@@ -233,7 +233,7 @@ return [main, _tests];}`;
 
 main
     variable f set to new Foo()
-    variable s set to f.asString()
+    variable s set to f.toString()
     call printNoLine(s)
 end main
 
@@ -247,7 +247,7 @@ class Foo
 
     property p2 as String
 
-    function asString() returns String
+    function toString() returns String
          return this.p2
     end function
 
@@ -257,7 +257,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  let s = (await f.asString());
+  let s = (await f.toString());
   await _stdlib.printNoLine(s);
 }
 
@@ -274,7 +274,7 @@ class Foo {
 
   p2 = "";
 
-  async asString() {
+  async toString() {
     return this.p2;
   }
 
@@ -316,7 +316,7 @@ class Foo
 
     property p2 as String
 
-    function asString() returns String
+    function toString() returns String
          return this.p2
     end function
 
@@ -342,7 +342,7 @@ class Foo {
 
   p2 = "";
 
-  async asString() {
+  async toString() {
     return this.p2;
   }
 
@@ -371,13 +371,13 @@ return [main, _tests];}`;
 
 main
     variable l set to [1,2,3]
-    variable sl set to l.asString()
+    variable sl set to l.toString()
     call printNoLine(sl)
     variable a set to [1,2,3]
-    variable sa set to a.asString()
+    variable sa set to a.toString()
     call printNoLine(sa)
     variable d set to ["a":1, "b":3, "z":10]
-    variable sd set to d.asString()
+    variable sd set to d.toString()
     call printNoLine(sd)
 end main`;
 
@@ -385,13 +385,13 @@ end main`;
 const global = new class {};
 async function main() {
   let l = system.list([1, 2, 3]);
-  let sl = (await _stdlib.asString(l));
+  let sl = (await _stdlib.toString(l));
   await _stdlib.printNoLine(sl);
   let a = system.list([1, 2, 3]);
-  let sa = (await _stdlib.asString(a));
+  let sa = (await _stdlib.toString(a));
   await _stdlib.printNoLine(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let sd = (await _stdlib.asString(d));
+  let sd = (await _stdlib.toString(d));
   await _stdlib.printNoLine(sd);
 }
 return [main, _tests];}`;

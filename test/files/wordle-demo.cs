@@ -1,12 +1,12 @@
-// C# with Elan 2.0.0-alpha
+// C# with Elan 2.0.0-alpha1
 
-+const String allWords = "AAHED ZYMIC"
+const String allWords = "AAHED ZYMIC"
 
-+const String allValidAnswers = "ABACK ZONAL"
+const String allValidAnswers = "ABACK ZONAL"
 
 static void main() {
   while (true) {
-    const Int choice = inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4);
+    const Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4);
     clearAllDisplays(); // call
     executeOption(choice); // call
     pressAnyKeyToContinue(true); // call
@@ -41,10 +41,10 @@ static void playGame() { // procedure
   initialiseGrid(grid); // call
   var used = new Dictionary<string, string>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-    used.put(letter, " "); // call
+    used[letter] = " "; // set
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
-  const String target = allValidAnswers.split(" ")[randomInt(0, 2308)];
+  const String target = allValidAnswers.split(" ")[randint(0, 2308)];
   var attemptNo = 0;
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {
@@ -103,7 +103,7 @@ static void colourAttempt(int attemptNo, List<List<string>> grid, string target,
     var mark = marks[i];
     grid[i][attemptNo] = letter + mark; // set
     if (mark.isAfter(used[letter])) {
-      used.put(letter, mark); // call
+      used[letter] = mark; // set
     }
   }
   if (marks.equals("22222")) {
@@ -181,7 +181,7 @@ static void analyse() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
       attempt = possible[0]; // set
     }
-    outcomes.put(attempts, outcomes[attempts] + 1); // call
+    outcomes[attempts] = outcomes[attempts] + 1; // set
   }
   var success = 0;
   var weightedSum = 0;
@@ -190,7 +190,10 @@ static void analyse() { // procedure
     weightedSum = weightedSum + (i*outcomes[i]); // set
   }
   clearPrintedText(); // call
-  print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts."); // call
+  const Int solved = (success/2309.0*100).floor();
+  const Float avg = divAsFloat(weightedSum, success).round(2);
+  const String pc = "%";
+  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts."); // call
 }
 
 static bool isUCLetter(string k) { // function
@@ -198,12 +201,12 @@ static bool isUCLetter(string k) { // function
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }
 
-static void test_isUCLetter() {
-  assert isUCLetter("A") is true 
-  assert isUCLetter("Z") is true 
-  assert isUCLetter("a") is false 
-  assert isUCLetter("1") is false 
-  assert isUCLetter(" ") is false 
+[TestMethod] static void test_isUCLetter() {
+  Assert.AreEqual(true, isUCLetter("A"))
+  Assert.AreEqual(true, isUCLetter("Z"))
+  Assert.AreEqual(false, isUCLetter("a"))
+  Assert.AreEqual(false, isUCLetter("1"))
+  Assert.AreEqual(false, isUCLetter(" "))
 }
 
 static string getWord(int attemptNo, List<List<string>> grid) { // function
@@ -218,9 +221,9 @@ static string setChar(string word, int n, string newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
 }
 
-static void test_setChar() {
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+[TestMethod] static void test_setChar() {
+  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_"))
+  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_"))
 }
 
 static string markAttempt(string attempt, string target) { // function
@@ -241,17 +244,17 @@ static string markAttempt(string attempt, string target) { // function
   return mark;
 }
 
-static void test_markAttempt() {
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+[TestMethod] static void test_markAttempt() {
+  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX"))
+  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA"))
+  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE"))
+  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE"))
+  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE"))
+  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP"))
+  Assert.AreEqual("01100", markAttempt("COLON", "GLORY"))
+  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY"))
+  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA"))
+  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY"))
 }
 
 static List<string> possibleAnswersAfterAttempt(List<string> possible, string attempt, string mark) { // function
@@ -265,13 +268,13 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
   return newPossible;
 }
 
-static void test_possibleAnswersAfterAttempt() {
+[TestMethod] static void test_possibleAnswersAfterAttempt() {
   var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"] 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"] 
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"] 
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"] 
+  Assert.AreEqual(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  Assert.AreEqual(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  Assert.AreEqual(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  Assert.AreEqual(["RATTY"], possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120"))
+  Assert.AreEqual(["RASPY", "RATTY"], possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"))
 }
 
 static string drawGrid(List<List<string>> grid) { // function
@@ -301,4 +304,4 @@ static string drawKeyboard(Dictionary<string, string> used) { // function
   return html + "<key></key></div></keyboard>";
 }
 
-+const String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}"
+const String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}"

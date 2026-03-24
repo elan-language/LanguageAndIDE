@@ -19,6 +19,8 @@ export class PropertyInstanceRef extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `${this.qualifier.renderAsHtml()}.${this.name.renderAsHtml()}`;
+    return this.isValid()
+      ? `${this.qualifier.renderAsHtml()}.${this.name.renderAsHtml()}`
+      : this.matchedText;
   }
 }

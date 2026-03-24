@@ -1,7 +1,7 @@
+import { File } from "../frame-interfaces/file";
 import { CSV } from "./csv";
 import { ParamDefNode } from "./param-def-node";
 import { removeUnmatchedClosingBracket } from "./parse-node-helpers";
-import { File } from "../frame-interfaces/file";
 
 export class ParamListNode extends CSV {
   constructor(file: File) {
@@ -11,5 +11,17 @@ export class ParamListNode extends CSV {
   parseText(text: string): void {
     text = removeUnmatchedClosingBracket(text);
     super.parseText(text);
+  }
+
+  override renderAsHtml(): string {
+    return this.isValid() ? super.renderAsHtml() : this.matchedText;
+  }
+
+  override renderAsExport(): string {
+    return this.isValid() ? super.renderAsExport() : this.matchedText;
+  }
+
+  override renderAsElanSource(): string {
+    return super.renderAsElanSource();
   }
 }

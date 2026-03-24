@@ -14,6 +14,8 @@ export class AbstractClassAsn extends ClassAsn {
     this.isAbstract = true;
   }
 
+  symbolIsType = true;
+
   ofTypes: SymbolType[] = [];
 
   deprecated: Deprecated | undefined = undefined;

@@ -1,7 +1,6 @@
 import {
   abstractKeyword,
   classKeyword,
-  commentMarker,
   constantKeyword,
   enumKeyword,
   functionKeyword,
@@ -42,13 +41,12 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
-      ["comment", (_parent: Parent) => this.file.createGlobalComment()],
-      [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
+      [this.getCommentMarker(), (_parent: Parent) => this.file.createGlobalComment()],
     ];
   }
 
-  profileAllows(keyword: string): boolean {
-    return keyword !== commentMarker; //TODO: should have comment marker instead of comment, but symbol obtained from current language
+  profileAllows(_keyword: string): boolean {
+    return true;
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {

@@ -78,7 +78,7 @@
   <hint>Hint HINTNUMBER: the expression to which 'attempt' needs to be set</hint>
   <content>
     <codeblock>
-      possible[randomInt(0, possible.length() - 1)]
+      possible[randint(0, possible.length() - 1)]
     </codeblock>
   </content>
   <hint>Hint HINTNUMBER: the whole, modified, procedure</hint>
@@ -92,7 +92,7 @@
         set solved to true
       else
         set attemptNo to attemptNo + 1
-        set attempt to possible[randomInt(0, possible.length() - 1)]
+        set attempt to possible[randint(0, possible.length() - 1)]
       end if
     end while
     </codeblock>
@@ -245,7 +245,7 @@
           else
             set attemptNo to attemptNo + 1
             set possible to possibleTargetsAfterAttempt(possible, attempt, mark)
-            set attempt to possible[randomInt(0, possible.length() - 1)]
+            set attempt to possible[randint(0, possible.length() - 1)]
           end if
         end while
       end procedure
@@ -280,7 +280,7 @@
   <ul>
     <li><i>Delete</i> the following instruction (we'll replace it with something else, lower down):
     <codeblock>
-      set attempt to possible[randomInt(0, possible.length() - 1)]
+      set attempt to possible[randint(0, possible.length() - 1)]
     </codeblock></li>
     <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.

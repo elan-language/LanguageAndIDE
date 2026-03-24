@@ -332,7 +332,7 @@ class Foo
   constructor()
     set this.p to new List<of Int>()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -355,7 +355,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

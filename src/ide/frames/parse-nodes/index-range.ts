@@ -21,6 +21,8 @@ export class IndexRange extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `${this.fromIndex?.renderAsHtml()}:${this.toIndex?.renderAsHtml()}`;
+    return this.isValid()
+      ? `${this.fromIndex?.renderAsHtml()}:${this.toIndex?.renderAsHtml()}`
+      : this.matchedText;
   }
 }

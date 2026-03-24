@@ -19,6 +19,8 @@ export class GlobalConstantAsn extends BreakpointAsn implements AstNode, GlobalC
 
   isGlobalConstant = true;
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   value: AstNode = EmptyAsn.Instance;
 

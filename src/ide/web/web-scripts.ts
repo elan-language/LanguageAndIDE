@@ -700,10 +700,11 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   setDisplayLanguage(l: Language) {
-    languageButton.textContent = l.languageFullName;
     if (l instanceof LanguageElan) {
+      languageButton.textContent = "Reference Language";
       exportButton.setAttribute("hidden", "");
     } else {
+      languageButton.textContent = l.languageFullName;
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
@@ -712,9 +713,9 @@ class IDEViewModel implements IIDEViewModel {
     codeContainer.classList.remove("cs");
     codeContainer.classList.remove("vb");
     codeContainer.classList.remove("java");
-    codeContainer.classList.add(l.languageClass);
+    codeContainer.classList.add(l.languageHtmlClass);
 
-    this.tvm.setWorksheetLanguage(l.languageClass);
+    this.tvm.setWorksheetLanguage(l.languageHtmlClass);
   }
 }
 
@@ -804,23 +805,23 @@ newButton?.addEventListener("click", async (event: Event) => {
 });
 
 pythonButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, false);
 });
 
 vbButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageVB.Instance, ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageVB.Instance, ideViewModel, testRunner, false);
 });
 
 csButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageCS.Instance, ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageCS.Instance, ideViewModel, testRunner, false);
 });
 
 javaButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageJava.Instance, ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageJava.Instance, ideViewModel, testRunner, false);
 });
 
 elanButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner);
+  await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner, false);
 });
 
 loadButton.addEventListener("click", chooser(getUploader(), false));

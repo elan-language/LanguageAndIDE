@@ -12,6 +12,7 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
@@ -78,7 +79,7 @@ return [main, _tests];}`;
 
 main
   call printNoLine(1)
-  call pause(100)
+  call sleep_ms(100)
   call printNoLine(2)
 end main`;
 
@@ -86,7 +87,7 @@ end main`;
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine(1);
-  await _stdlib.pause(100);
+  await _stdlib.sleep_ms(100);
   await _stdlib.printNoLine(2);
 }
 return [main, _tests];}`;
@@ -113,7 +114,7 @@ return [main, _tests];}`;
 
 main
   variable a set to clock()
-  call pause(100)
+  call sleep_ms(100)
   variable b set to clock()
   call printNoLine(b > a)
 end main`;
@@ -122,7 +123,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.clock();
-  await _stdlib.pause(100);
+  await _stdlib.sleep_ms(100);
   let b = _stdlib.clock();
   await _stdlib.printNoLine(b > a);
 }
@@ -671,14 +672,8 @@ test maths
   assert sin(pi/6).round(2) is 0.5
   assert sqrt(2).round(3) is 1.414
   assert tan(pi/4).round(2) is 1
-  assert sinDeg(30).round(2) is 0.5
-  assert asinDeg(0.5).round(2) is 30
-  assert cosDeg(60).round(2) is 0.5
-  assert acosDeg(0.5).round(2) is 60
-  assert tanDeg(45).round(2) is 1
-  assert atanDeg(1).round(2) is 45
-  assert degToRad(90).round(2) is 1.57
-  assert radToDeg(1).round(0) is 57
+  assert radians(90).round(2) is 1.57
+  assert degrees(1).round(0) is 57
 end test`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -697,14 +692,8 @@ _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "Float"], [0.5, "Float"], "assert34", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "Float"], [1.414, "Float"], "assert37", _stdlib, false));
   _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "Float"], [1, "Int"], "assert40", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sinDeg(30), 2), "Float"], [0.5, "Float"], "assert43", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), "Float"], [30, "Int"], "assert46", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cosDeg(60), 2), "Float"], [0.5, "Float"], "assert49", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acosDeg(0.5), 2), "Float"], [60, "Int"], "assert52", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tanDeg(45), 2), "Float"], [1, "Int"], "assert55", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atanDeg(1), 2), "Float"], [45, "Int"], "assert58", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degToRad(90), 2), "Float"], [1.57, "Float"], "assert61", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radToDeg(1), 0), "Float"], [57, "Int"], "assert64", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "assert46", _stdlib, false));
 }]);
 
 async function main() {
@@ -743,14 +732,8 @@ return [main, _tests];}`;
           new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert34"),
           new AssertOutcome(TestStatus.pass, "1.414", "1.414", "assert37"),
           new AssertOutcome(TestStatus.pass, "1", "1", "assert40"),
-          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert43"),
-          new AssertOutcome(TestStatus.pass, "30", "30", "assert46"),
-          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert49"),
-          new AssertOutcome(TestStatus.pass, "60", "60", "assert52"),
-          new AssertOutcome(TestStatus.pass, "1", "1", "assert55"),
-          new AssertOutcome(TestStatus.pass, "45", "45", "assert58"),
-          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "assert61"),
-          new AssertOutcome(TestStatus.pass, "57", "57", "assert64"),
+          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "assert43"),
+          new AssertOutcome(TestStatus.pass, "57", "57", "assert46"),
         ],
       ],
     ]);
@@ -761,7 +744,7 @@ return [main, _tests];}`;
 main
   variable results set to [0, 0]
   for i in range(1, 10001)
-    variable r set to randomInt(0, 1)
+    variable r set to randint(0, 1)
     call results.put(r, results[r] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -775,7 +758,7 @@ async function main() {
   let results = system.list([0, 0]);
   const elan_iterfor6 = [..._stdlib.range(1, 10001)];
   for (const i of elan_iterfor6) {
-    let r = _stdlib.randomInt(0, 1);
+    let r = _stdlib.randint(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
@@ -797,7 +780,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
 
@@ -853,7 +838,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
   test("RandomInFixedSequence", async () => {
@@ -911,7 +898,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
   test("Pass_RandomType", async () => {
@@ -978,7 +967,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
   });
 
@@ -1147,7 +1138,7 @@ end class
 class Bar inherits Foo
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 end class
@@ -1176,7 +1167,7 @@ class Bar extends Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -1356,7 +1347,7 @@ end main
 class Point
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return "a Point"
   end function
 end class`;
@@ -1377,7 +1368,7 @@ class Point {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "a Point";
   }
 
@@ -1710,6 +1701,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return "foo"
+  end function
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2083,10 +2080,10 @@ return [main, _tests];}`;
 class List
   constructor()
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
-  function asString() returns String
+  function toString() returns String
     return "MyList"
   end function
 
@@ -2256,6 +2253,72 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
+  });
+  test("Pass_createList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createList(5, "a")
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.createList(5, "a");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a, a, a, a, a]");
+  });
+  test("Pass_createListOfLists", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createListOfLists(3, 2, 5)
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = (await _stdlib.createListOfLists(3, 2, 5));
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[[5, 5], [5, 5], [5, 5]]");
   });
   test("Pass_allLibraryTypeNamesValid", async () => {
     const code = `${testHeader}

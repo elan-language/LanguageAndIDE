@@ -1,10 +1,10 @@
-' VB.NET with Elan 2.0.0-alpha
+' VB.NET with Elan 2.0.0-alpha1
 
 Sub main()
   Dim fruit = {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"} ' variable
   Dim done = False ' variable
   While Not done
-    Dim wanted = inputString("What type of fruit do you want ('x' to exit)? ") ' variable
+    Dim wanted = input("What type of fruit do you want ('x' to exit)? ") ' variable
     If wanted.equals("x") Then
       done = True ' set
     Else
@@ -34,19 +34,19 @@ Function binarySearch(li As List(Of String), item As String) As Boolean
   Return result
 End Function
 
-Sub test_
+<TestMethod> Sub test_binarySearch()
   Dim li1 = {"lemon", "lime", "orange"} ' variable
-  assert binarySearch(li1, "lemon") is True 
-  assert binarySearch(li1, "lime") is True 
-  assert binarySearch(li1, "orange") is True 
-  assert binarySearch(li1, "pear") is False 
+  Assert.AreEqual(True, binarySearch(li1, "lemon"))
+  Assert.AreEqual(True, binarySearch(li1, "lime"))
+  Assert.AreEqual(True, binarySearch(li1, "orange"))
+  Assert.AreEqual(False, binarySearch(li1, "pear"))
   Dim li2 = {"lemon", "orange"} ' variable
-  assert binarySearch(li2, "lemon") is True 
-  assert binarySearch(li2, "orange") is True 
-  assert binarySearch(li2, "pear") is False 
+  Assert.AreEqual(True, binarySearch(li2, "lemon"))
+  Assert.AreEqual(True, binarySearch(li2, "orange"))
+  Assert.AreEqual(False, binarySearch(li2, "pear"))
   Dim li3 = {"lemon"} ' variable
-  assert binarySearch(li3, "lemon") is True 
-  assert binarySearch(li3, "lime") is False 
+  Assert.AreEqual(True, binarySearch(li3, "lemon"))
+  Assert.AreEqual(False, binarySearch(li3, "lime"))
   Dim li4 = New List(Of String)() ' variable
-  assert binarySearch(li4, "pear") is False 
+  Assert.AreEqual(False, binarySearch(li4, "pear"))
 End Sub

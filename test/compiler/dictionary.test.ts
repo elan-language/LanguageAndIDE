@@ -7,6 +7,7 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -324,7 +325,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:4, z:10, d:2]");
   });
 
@@ -361,7 +364,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "[a:[a:1, x:2], b:[c:4]]");
   });
 
@@ -509,7 +514,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
@@ -554,7 +561,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "2[ff:1][bb:3]");
   });
 
@@ -603,7 +612,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
@@ -1038,8 +1049,8 @@ end main
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to a.withPut("b", 4)
-  variable c set to b.withPut("d", 2)
+  variable b set to a.withSet("b", 4)
+  variable c set to b.withSet("d", 2)
   call printNoLine(a)
   call printNoLine(c)
 end main`;
@@ -1048,8 +1059,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = a.withPut("b", 4);
-  let c = b.withPut("d", 2);
+  let b = a.withSet("b", 4);
+  let c = b.withSet("d", 2);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(c);
 }
@@ -1133,9 +1144,9 @@ async function main() {
   let s42 = "42";
   di.put(i42, 99);
   ds.put(s42, 98);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
-  await _stdlib.printNoLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di.hasKey(i42))} \${await _stdlib.toString(system.safeIndex(di, i42))} \${await _stdlib.toString(ds.hasKey(s42))} \${await _stdlib.toString(system.safeIndex(ds, s42))}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di)} \${await _stdlib.toString(ds)}\`);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(di.keys())} \${await _stdlib.toString(di.keys().contains(42))}\`);
 }
 return [main, _tests];}`;
 
@@ -1152,7 +1163,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98][42] true");
   });
 

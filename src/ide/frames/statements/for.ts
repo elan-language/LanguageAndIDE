@@ -16,7 +16,7 @@ export class For extends FrameWithStatements implements Statement {
   constructor(parent: File | Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("<i>elementName</i>");
+    this.variable.setPlaceholder("<i>item</i>");
     this.iter = new ExpressionField(this);
     this.iter.setPlaceholder("<i>source</i>");
   }
@@ -24,7 +24,7 @@ export class For extends FrameWithStatements implements Statement {
     return forKeyword;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.variable, this.iter];
   }
 

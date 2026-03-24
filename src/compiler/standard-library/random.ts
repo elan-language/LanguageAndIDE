@@ -65,4 +65,8 @@ export class Random {
     this.u = (c % 1000) * 1000000;
     this.v = 0;
   }
+
+  async toString() {
+    return `a Random`;
+  }
 }

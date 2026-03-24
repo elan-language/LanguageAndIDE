@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha
+// C# with Elan 2.0.0-alpha1
 
 // A program to investigate the Collatz Conjecture
 
@@ -30,7 +30,7 @@ static void main() {
       }
       displayVectorGraphics(vg); // call
       print(x); // call
-      pause(100); // call
+      sleep_ms(100); // call
     }
   }
   print("Finished"); // call
@@ -52,4 +52,4 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 }
 
-+const Int grey = 0x808080
+const Int grey = 0x808080

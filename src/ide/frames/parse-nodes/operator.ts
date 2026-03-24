@@ -13,7 +13,7 @@ export class Operator extends AbstractParseNode {
     super(file);
     this.elanOp = elanOp;
     this.langOp = langOp ? langOp : (lang) => (lang ? elanOp : elanOp);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {
@@ -50,12 +50,10 @@ export class Operator extends AbstractParseNode {
     const open = kw ? "<el-kw>" : "";
     const close = kw ? "</el-kw>" : "";
     const space = closePacked ? "" : " ";
-    return `${open}${space}${text}${space}${close}`;
+    return this.isValid() ? `${open}${space}${text}${space}${close}` : this.matchedText;
   }
 
   renderAsExport(): string {
-    return this.status === ParseStatus.valid
-      ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}`
-      : this.matchedText;
+    return this.isValid() ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}` : this.matchedText;
   }
 }

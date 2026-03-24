@@ -19,6 +19,7 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertCompiles,
   assertDoesNotCompile,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -32,7 +33,7 @@ export class DeprecatedClass {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -47,7 +48,7 @@ export class DeprecatedClass1 {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -594,6 +595,42 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
       `Code change required. Parameters for class were changed in v0.0.LibRef.html#Xxxx`,
+    ]);
+  });
+
+  test("Pass_putOnList", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new List<of Int>()
+  call x.put(1, 1)
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new _stdlib.List()._initialise());
+  x.put(1, 1);
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
     ]);
   });
 });

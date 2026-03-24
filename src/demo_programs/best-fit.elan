@@ -1,8 +1,8 @@
-# f91424cdeb7a5815335246d1e9d286ba2fc9eea03fdbb95933eb21b36572f339 Elan 2.0.0-alpha guest default_profile valid
+# 6f458fa3fe0b94de77a629fdb75fe1a3cce05b6ac044e0cc9888bd36b1e831d5 Elan 2.0.0-alpha guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + power(p.x, 2))
+  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + pow(p.x, 2))
   constant sumY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
   constant sumXY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
   constant n set to points.length()
@@ -21,7 +21,7 @@ class Point
     set this.y to y
   end constructor
 
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -31,7 +31,7 @@ function newPoint(x as Float, y as Float) returns Point
   return new Point(x, y)
 end function
 
-test test_
+test test_bestFit
   variable l1 set to [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
   variable a_b set to bestFitLine(l1)
   constant a set to a_b.item_0

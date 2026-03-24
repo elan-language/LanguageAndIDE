@@ -9,7 +9,7 @@ import { TupleNode } from "./tuple-node";
 export class ConstantValueNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {

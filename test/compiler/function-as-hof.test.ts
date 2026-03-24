@@ -281,7 +281,7 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to ref f
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -309,7 +309,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 
@@ -425,14 +425,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref power)
+  call printModified(3, ref pow2)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure
   
-function power(x as Int, y as Int) returns Int
+function pow2(x as Int, y as Int) returns Int
   return 0
 end function`;
 
@@ -458,14 +458,14 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref power)
+  call printModified(3, ref pow)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure
   
-function power(x as Int) returns String
+function pow(x as Int) returns String
   return "one"
 end function`;
 
@@ -636,7 +636,7 @@ class Foo
   constructor(f as Func<of Int => Int>)
     set this.pf to f
   end constructor
-  function asString() returns String
+  function toString() returns String
     return ""
   end function
 
@@ -664,7 +664,7 @@ class Foo {
     return this;
   }
 
-  async asString() {
+  async toString() {
     return "";
   }
 

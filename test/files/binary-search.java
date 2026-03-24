@@ -1,18 +1,18 @@
-// Java with Elan 2.0.0-alpha
+// Java with Elan 2.0.0-alpha1
 
 static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
   var done = false;
   while (!done) {
-    var wanted = inputString("What type of fruit do you want ('x' to exit)? ");
+    var wanted = input("What type of fruit do you want ('x' to exit)? ");
     if (wanted.equals("x")) {
       done = true; // set
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        print("\nWe can supply a " + (wanted).asString() + ""); // call
+        print(String.format("\nWe can supply a %", wanted)); // call
       } else {
-        print("\nSorry, we cannot supply a " + (wanted).asString() + ""); // call
+        print(String.format("\nSorry, we cannot supply a %", wanted)); // call
       }
     }
   }
@@ -34,19 +34,19 @@ static bool binarySearch(List<String> li, String item) { // function
   return result;
 }
 
-static void test_() {
+@Test static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
-  assert binarySearch(li1, "lemon") is true 
-  assert binarySearch(li1, "lime") is true 
-  assert binarySearch(li1, "orange") is true 
-  assert binarySearch(li1, "pear") is false 
+  assertEquals(true, binarySearch(li1, "lemon"))
+  assertEquals(true, binarySearch(li1, "lime"))
+  assertEquals(true, binarySearch(li1, "orange"))
+  assertEquals(false, binarySearch(li1, "pear"))
   var li2 = ["lemon", "orange"];
-  assert binarySearch(li2, "lemon") is true 
-  assert binarySearch(li2, "orange") is true 
-  assert binarySearch(li2, "pear") is false 
+  assertEquals(true, binarySearch(li2, "lemon"))
+  assertEquals(true, binarySearch(li2, "orange"))
+  assertEquals(false, binarySearch(li2, "pear"))
   var li3 = ["lemon"];
-  assert binarySearch(li3, "lemon") is true 
-  assert binarySearch(li3, "lime") is false 
+  assertEquals(true, binarySearch(li3, "lemon"))
+  assertEquals(false, binarySearch(li3, "lime"))
   var li4 = new List<String>();
-  assert binarySearch(li4, "pear") is false 
+  assertEquals(false, binarySearch(li4, "pear"))
 }

@@ -12,7 +12,7 @@ export class NotOperator extends AbstractParseNode {
   constructor(file: File, langOp?: (lang: Language) => string) {
     super(file);
     this.langOp = langOp ? langOp : (lang) => (lang ? this.elanOp : this.elanOp);
-    this.completionWhenEmpty = this.getCompletionFromLangOr("");
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {
@@ -47,7 +47,7 @@ export class NotOperator extends AbstractParseNode {
 
   renderAsHtml(): string {
     let html = this.matchedText;
-    if (this.status === ParseStatus.valid) {
+    if (this.isValid()) {
       const langOp = this.langOp(this.file.language());
       const kw = this.notIsKeyword();
       const open = kw ? "<el-kw>" : "";
@@ -58,8 +58,6 @@ export class NotOperator extends AbstractParseNode {
   }
 
   renderAsExport(): string {
-    return this.status === ParseStatus.valid
-      ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}`
-      : this.matchedText;
+    return this.isValid() ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}` : this.matchedText;
   }
 }

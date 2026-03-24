@@ -62,10 +62,10 @@ export class Stack<T1> {
     return this.system!.tuple([item, newStack]) as [typeof ElanT1, typeof Stack];
   }
 
-  async asString() {
+  async toString() {
     const items: string[] = [];
     for (const i of this.contents) {
-      const s = await this.system!.asString(i);
+      const s = await this.system!.toString(i);
       items.push(s);
     }
     return `[${items.join(", ")}]`;

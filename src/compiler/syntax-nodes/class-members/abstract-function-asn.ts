@@ -20,6 +20,8 @@ export class AbstractFunctionAsn extends BreakpointAsn implements Member, ElanSy
     super(fieldId, scope);
   }
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   params: AstNode = EmptyAsn.Instance;
   returnType: AstNode = EmptyAsn.Instance;
@@ -42,7 +44,7 @@ export class AbstractFunctionAsn extends BreakpointAsn implements Member, ElanSy
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    if (name !== "asString") {
+    if (name !== "toString") {
       return `${this.indent()}async ${name}(${this.params.compile()}) {\r
 ${this.indent()}${this.indent()}return ${this.returnType.compile()};\r
 ${this.indent()}}\r

@@ -6,7 +6,7 @@ import {
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
-  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -46,7 +46,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
@@ -81,7 +83,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 

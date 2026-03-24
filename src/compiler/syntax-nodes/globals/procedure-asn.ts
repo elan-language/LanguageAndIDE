@@ -20,6 +20,8 @@ export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Sc
 
   isProcedure = true;
 
+  symbolIsType: boolean = false;
+
   get symbolId() {
     return getId(this.name);
   }

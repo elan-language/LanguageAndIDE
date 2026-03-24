@@ -33,7 +33,7 @@ export class AbstractProperty extends SingleLineFrame {
     return abstractPropertyKeywords;
   }
 
-  getFieldsDefaultImpl(): Field[] {
+  getFields(): Field[] {
     return [this.name, this.type];
   }
 

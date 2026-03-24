@@ -38,7 +38,9 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`;
+    return this.isValid()
+      ? `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      : this.matchedText;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

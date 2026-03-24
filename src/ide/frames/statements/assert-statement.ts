@@ -35,8 +35,8 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     this.expected.parseFrom(source);
     source.removeNewLine();
   }
-  getFieldsDefaultImpl(): Field[] {
-    return [this.actual, this.expected];
+  getFields(): Field[] {
+    return this.language().getFields(this);
   }
 
   getIdPrefix(): string {
@@ -115,11 +115,11 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   testMsgAsHtml(): string {
     const cls = this.getCls(this.outcome);
     const msg = escapeHtmlChars(this.getMessage(this.outcome));
-    return ` <el-msg class="${cls}">${msg}</el-msg>`;
+    return `<el-msg class="${cls}"> ${msg}</el-msg>`;
   }
 
   renderAsHtml(): string {
     // special case because of need to incorporate test message
-    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-top>${this.language().renderSingleLineAsHtml(this)}</el-top>${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 }

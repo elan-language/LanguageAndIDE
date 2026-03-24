@@ -7,7 +7,6 @@ import { ElanCompilerError } from "../../compiler/elan-compiler-error";
 import { globalKeyword, libraryKeyword, thisKeyword } from "../../compiler/elan-keywords";
 import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
-import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
@@ -139,11 +138,11 @@ import { LitBoolean } from "../frames/parse-nodes/lit-boolean";
 import { LitFloat } from "../frames/parse-nodes/lit-float";
 import { LitInt } from "../frames/parse-nodes/lit-int";
 import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
-import { LitStringField } from "../frames/parse-nodes/lit-string-field";
 import { LitStringInterpolated } from "../frames/parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedEmpty } from "../frames/parse-nodes/lit-string-interpolated-empty";
+import { LitStringInterpolatedInsert } from "../frames/parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
-import { LitStringPlainText } from "../frames/parse-nodes/lit-string-plain-text";
+import { LitStringText } from "../frames/parse-nodes/lit-string-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { MethodNameUse } from "../frames/parse-nodes/method-name-use";
 import { Multiple } from "../frames/parse-nodes/multiple";
@@ -160,6 +159,7 @@ import { SetToClause } from "../frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../frames/parse-nodes/space-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
+import { TestName } from "../frames/parse-nodes/testName";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
@@ -223,7 +223,7 @@ export function transform(
   }
 
   if (node instanceof FileImpl) {
-    const astRoot = new FileAsn(node.libraryScope, node.getVersion());
+    const astRoot = new FileAsn(node.libraryScope, node.getVersion(), node.language());
 
     astRoot.children = node
       .getChildren()
@@ -669,7 +669,7 @@ export function transform(
   }
 
   if (node instanceof LitInt) {
-    return new LiteralIntAsn(node.matchedText, fieldId);
+    return new LiteralIntAsn(node.matchedText, node.isBinary, node.isHex, fieldId);
   }
 
   if (node instanceof LitBoolean) {
@@ -716,7 +716,7 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, false, scope);
   }
 
-  if (node instanceof IdentifierUse || node instanceof MethodNameUse) {
+  if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
     // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||
@@ -756,13 +756,9 @@ export function transform(
 
   if (node instanceof ParamDefNode) {
     const id = node.name?.matchedText ?? "";
-    const type = transform(node.type, fieldId, scope);
+    const type = node.type ? transform(node.type, fieldId, scope)! : EmptyAsn.Instance;
 
-    if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, fieldId, scope);
-    }
-
-    return undefined;
+    return new ParamDefAsn(id, type, fieldId, scope);
   }
 
   if (node instanceof TypeGenericNode) {
@@ -962,7 +958,7 @@ export function transform(
     return new KvpAsn(key, value, fieldId);
   }
 
-  if (node instanceof LitStringField) {
+  if (node instanceof LitStringInterpolatedInsert) {
     const value = transform(node.expr, fieldId, scope)!;
 
     return new InterpolatedAsn(value, fieldId);
@@ -972,7 +968,7 @@ export function transform(
     return new CommentAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof LitStringPlainText) {
+  if (node instanceof LitStringText) {
     return new LiteralStringAsn(node.matchedText, fieldId);
   }
 

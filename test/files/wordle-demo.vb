@@ -1,12 +1,12 @@
-' VB.NET with Elan 2.0.0-alpha
+' VB.NET with Elan 2.0.0-alpha1
 
-+Const allWords = "AAHED ZYMIC"
+Const allWords = "AAHED ZYMIC"
 
-+Const allValidAnswers = "ABACK ZONAL"
+Const allValidAnswers = "ABACK ZONAL"
 
 Sub main()
   While True
-    Const choice = inputIntBetween("1 to solve puzzle set by computer2 to set a puzzle for computer to solve3 to test test_effectiveness of computer's algorithm4 to look up word", 1, 4)
+    Const choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     clearAllDisplays() ' call
     executeOption(choice) ' call
     pressAnyKeyToContinue(True) ' call
@@ -41,10 +41,10 @@ Sub playGame() ' procedure
   initialiseGrid(grid) ' call
   Dim used = New Dictionary(Of String, String)() ' variable
   For Each letter In "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    used.put(letter, " ") ' call
+    used[letter] = " " ' set
   Next letter
   displayHtml(drawGrid(grid) + drawKeyboard(used)) ' call
-  Const target = allValidAnswers.split(" ")[randomInt(0, 2308)]
+  Const target = allValidAnswers.split(" ")[randint(0, 2308)]
   Dim attemptNo = 0 ' variable
   Dim solved = False ' variable
   While (attemptNo < 6) And (Not solved)
@@ -103,7 +103,7 @@ Sub colourAttempt(attemptNo As Integer, grid As List(Of List(Of String)), target
     Dim mark = marks[i] ' variable
     grid[i][attemptNo] = letter + mark ' set
     If mark.isAfter(used[letter]) Then
-      used.put(letter, mark) ' call
+      used[letter] = mark ' set
     End If
   Next i
   If marks.equals("22222") Then
@@ -181,7 +181,7 @@ Sub analyse() ' procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' set
       attempt = possible[0] ' set
     End While
-    outcomes.put(attempts, outcomes[attempts] + 1) ' call
+    outcomes[attempts] = outcomes[attempts] + 1 ' set
   Next word
   Dim success = 0 ' variable
   Dim weightedSum = 0 ' variable
@@ -190,7 +190,10 @@ Sub analyse() ' procedure
     weightedSum = weightedSum + (i*outcomes[i]) ' set
   Next i
   clearPrintedText() ' call
-  print($"For all 2309 possible answers,the current reverse-game algorithmsolved {(success/2309.0*100).floor()}% within 6 attempts,with an average of {divAsFloat(weightedSum, success).round(2)} attempts.") ' call
+  Const solved = (success/2309.0*100).floor()
+  Const avg = divAsFloat(weightedSum, success).round(2)
+  Const pc = "%"
+  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") ' call
 End Sub
 
 Function isUCLetter(k As String) As Boolean
@@ -198,12 +201,12 @@ Function isUCLetter(k As String) As Boolean
   Return (k.length() = 1) And (unicode > 64) And (unicode < 91)
 End Function
 
-Sub test_isUCLetter
-  assert isUCLetter("A") is True 
-  assert isUCLetter("Z") is True 
-  assert isUCLetter("a") is False 
-  assert isUCLetter("1") is False 
-  assert isUCLetter(" ") is False 
+<TestMethod> Sub test_isUCLetter()
+  Assert.AreEqual(True, isUCLetter("A"))
+  Assert.AreEqual(True, isUCLetter("Z"))
+  Assert.AreEqual(False, isUCLetter("a"))
+  Assert.AreEqual(False, isUCLetter("1"))
+  Assert.AreEqual(False, isUCLetter(" "))
 End Sub
 
 Function getWord(attemptNo As Integer, grid As List(Of List(Of String))) As String
@@ -218,9 +221,9 @@ Function setChar(word As String, n As Integer, newChar As String) As String
   Return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 End Function
 
-Sub test_setChar
-  assert setChar("ABCDE", 0, "_") is "_BCDE" 
-  assert setChar("ABCDE", 4, "_") is "ABCD_" 
+<TestMethod> Sub test_setChar()
+  Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_"))
+  Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_"))
 End Sub
 
 Function markAttempt(attempt As String, target As String) As String
@@ -241,17 +244,17 @@ Function markAttempt(attempt As String, target As String) As String
   Return mark
 End Function
 
-Sub test_markAttempt
-  assert markAttempt("ABCDE", "XXXXX") is "00000" 
-  assert markAttempt("ABCDE", "BCDEA") is "11111" 
-  assert markAttempt("ABCDE", "ABCDE") is "22222" 
-  assert markAttempt("SAINT", "LADLE") is "02000" 
-  assert markAttempt("IDEAL", "LADLE") is "01111" 
-  assert markAttempt("CABAL", "RECAP") is "10020" 
-  assert markAttempt("COLON", "GLORY") is "01100" 
-  assert markAttempt("AORTA", "RATTY") is "10120" 
-  assert markAttempt("RATTY", "AORTA") is "11020" 
-  assert markAttempt("FAIRY", "RATTY") is "02012" 
+<TestMethod> Sub test_markAttempt()
+  Assert.AreEqual("00000", markAttempt("ABCDE", "XXXXX"))
+  Assert.AreEqual("11111", markAttempt("ABCDE", "BCDEA"))
+  Assert.AreEqual("22222", markAttempt("ABCDE", "ABCDE"))
+  Assert.AreEqual("02000", markAttempt("SAINT", "LADLE"))
+  Assert.AreEqual("01111", markAttempt("IDEAL", "LADLE"))
+  Assert.AreEqual("10020", markAttempt("CABAL", "RECAP"))
+  Assert.AreEqual("01100", markAttempt("COLON", "GLORY"))
+  Assert.AreEqual("10120", markAttempt("AORTA", "RATTY"))
+  Assert.AreEqual("11020", markAttempt("RATTY", "AORTA"))
+  Assert.AreEqual("02012", markAttempt("FAIRY", "RATTY"))
 End Sub
 
 Function possibleAnswersAfterAttempt(possible As List(Of String), attempt As String, mark As String) As List(Of String)
@@ -265,13 +268,13 @@ Function possibleAnswersAfterAttempt(possible As List(Of String), attempt As Str
   Return newPossible
 End Function
 
-Sub test_possibleAnswersAfterAttempt
+<TestMethod> Sub test_possibleAnswersAfterAttempt()
   Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' variable
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is {"ABCDE"} 
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is {"BCDEA", "CDEAB", "DEABC", "EABCD"} 
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is {"BCDEA", "CDEAB", "EABCD"} 
-  assert possibleAnswersAfterAttempt({"RATTY"}, "AORTA", "10120") is {"RATTY"} 
-  assert possibleAnswersAfterAttempt({"FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"}, "FAIRY", "02012") is {"RASPY", "RATTY"} 
+  Assert.AreEqual({"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "20000"))
+  Assert.AreEqual({"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "10000"))
+  Assert.AreEqual({"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "10010"))
+  Assert.AreEqual({"RATTY"}, possibleAnswersAfterAttempt({"RATTY"}, "AORTA", "10120"))
+  Assert.AreEqual({"RASPY", "RATTY"}, possibleAnswersAfterAttempt({"FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"}, "FAIRY", "02012"))
 End Sub
 
 Function drawGrid(grid As List(Of List(Of String))) As String
@@ -301,4 +304,4 @@ Function drawKeyboard(used As Dictionary(Of String, String)) As String
   Return html + "<key></key></div></keyboard>"
 End Function
 
-+Const style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}"
+Const style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}"

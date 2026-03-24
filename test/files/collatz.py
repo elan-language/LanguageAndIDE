@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-alpha
+# Python with Elan 2.0.0-alpha1
 
 # A program to investigate the Collatz Conjecture
 
@@ -27,7 +27,7 @@ def main(): None:
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # set
       displayVectorGraphics(vg) # call
       print(x) # call
-      pause(100) # call
+      sleep_ms(100) # call
   print("Finished") # call
 
 # scale x. &nbsp;We pass in p just to get its length
@@ -44,4 +44,4 @@ def scx(i: int, p: list[int]) -> float: # function
 def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
 
-+grey = 0x808080 # constant
+grey = 0x808080 # constant

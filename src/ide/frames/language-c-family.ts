@@ -18,8 +18,6 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
-
-import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
@@ -76,9 +74,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   common_renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
-    if (frame instanceof AssertStatement) {
-      html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
-    } else if (frame instanceof CallStatement) {
+    if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
       html = `<el-punc>}</el-punc> <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
@@ -136,8 +132,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
-    } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw><el-punc> {</el-punc>`;
     } else if (frame instanceof While) {
@@ -150,12 +144,12 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
-  common_getFields(frame: Frame): Field[] {
-    let fields: Field[] = [];
-    if (frame instanceof FunctionFrame) {
-      fields = [frame.returnType, frame.name, frame.params];
-    }
-    return fields;
+  common_functionFrameFields(frame: FunctionFrame): Field[] {
+    return [frame.returnType, frame.name, frame.params];
+  }
+
+  common_assertStatementFields(frame: AssertStatement): Field[] {
+    return [frame.expected, frame.actual];
   }
 
   protected ABSTRACT = "abstract";
@@ -187,7 +181,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   OR = "||";
   NOT = "!";
 
-  COMMENT_MARKER = "//";
+  COMMENT_MARKER: string = "//";
   LIST_START: string = "[";
   LIST_END: string = "]";
 
@@ -200,6 +194,10 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   TRUE: string = "true";
   FALSE: string = "false";
+  BINARY_PREFIX: string = "0b";
+  HEX_PREFIX: string = "0x";
+
+  START_OF_GENERIC: string = "<";
 
   c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
@@ -218,10 +216,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   c_langs_paramDefAsHtml(node: ParamDefNode): string {
     return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
-  }
-
-  c_langs_paramDefCompletion(_node: ParamDefNode): string {
-    return `<i>Type</i> <i>name</i>`;
   }
 
   c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
