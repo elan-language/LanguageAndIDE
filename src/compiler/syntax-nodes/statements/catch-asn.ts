@@ -17,6 +17,8 @@ export class CatchAsn extends BreakpointAsn {
 
   variable: AstNode = EmptyAsn.Instance;
 
+  symbolIsType: boolean = false;
+
   get symbolId() {
     return getId(this.variable);
   }
@@ -79,6 +81,7 @@ ${this.parentIndent()}  }`;
       symbolId: v,
       symbolType: () => StringType.Instance,
       symbolScope: SymbolScope.parameter,
+      symbolIsType: false,
     };
 
     matches = matches.concat(symbolMatches(id, all, [counter]));

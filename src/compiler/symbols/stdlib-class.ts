@@ -26,6 +26,8 @@ export class StdLibClass implements Class {
     this.symbolId = this.name;
   }
 
+  symbolIsType: boolean = true;
+
   get isAbstract() {
     return this.typeOptions.isAbstract;
   }
@@ -144,6 +146,7 @@ export class StdLibClass implements Class {
           private: symbol.private,
           isAbstract: symbol.isAbstract,
           getClass: symbol.getClass,
+          symbolIsType: symbol.symbolIsType,
         } as ElanSymbol;
       } else {
         // should never get here
@@ -151,6 +154,7 @@ export class StdLibClass implements Class {
           symbolId: symbol.symbolId,
           symbolType: () => st1,
           symbolScope: symbol.symbolScope,
+          symbolIsType: symbol.symbolIsType,
         } as ElanSymbol;
       }
 

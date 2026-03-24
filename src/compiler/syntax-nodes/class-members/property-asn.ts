@@ -22,6 +22,8 @@ export class PropertyAsn extends BreakpointAsn implements Property, Member {
   isAbstract = false;
   private = false;
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   type: AstNode = EmptyAsn.Instance;
 

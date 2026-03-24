@@ -42,6 +42,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
           symbolId: n.id,
           symbolType: () => n.symbolType(),
           symbolScope: n.symbolScope,
+          symbolIsType: false,
         }));
     }
 

@@ -32,6 +32,7 @@ export class EnumValuesAsn extends AbstractAstNode implements AstNode {
       symbolId: n,
       symbolType: () => new EnumValueType(typeName, n),
       symbolScope: SymbolScope.program,
+      symbolIsType: false,
     }));
   }
 

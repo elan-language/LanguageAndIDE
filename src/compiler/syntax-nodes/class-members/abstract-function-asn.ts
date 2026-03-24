@@ -20,6 +20,8 @@ export class AbstractFunctionAsn extends BreakpointAsn implements Member, ElanSy
     super(fieldId, scope);
   }
 
+  symbolIsType: boolean = false;
+
   name: AstNode = EmptyAsn.Instance;
   params: AstNode = EmptyAsn.Instance;
   returnType: AstNode = EmptyAsn.Instance;

@@ -20,6 +20,8 @@ export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
   params: AstNode = EmptyAsn.Instance;
   returnType: AstNode = EmptyAsn.Instance;
 
+  symbolIsType: boolean = true;
+
   get symbolId() {
     return getId(this.name);
   }
