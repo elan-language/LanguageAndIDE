@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha
+' VB.NET with Elan 2.0.0-alpha1
 
 Const allWords = "AAHED ZYMIC"
 
