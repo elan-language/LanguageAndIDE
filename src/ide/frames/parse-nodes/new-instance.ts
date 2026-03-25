@@ -24,4 +24,8 @@ export class NewInstance extends AbstractSequence {
   renderAsHtml(): string {
     return this.isValid() ? this.file.language().newInstanceAsHtml(this) : this.matchedText;
   }
+
+  renderAsElanSource(): string {
+    return `${newKeyword} ${this.type?.renderAsElanSource()}(${this.args?.renderAsElanSource()})`;
+  }
 }

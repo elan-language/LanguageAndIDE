@@ -1,3 +1,4 @@
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { CSV } from "./csv";
 import { ParamDefNode } from "./param-def-node";
@@ -18,7 +19,7 @@ export class ParamListNode extends CSV {
   }
 
   override renderAsExport(): string {
-    return this.isValid() ? super.renderAsExport() : this.matchedText;
+    return this.isValid() ? removeHtmlTagsAndEscChars(this.renderAsHtml()) : this.matchedText;
   }
 
   override renderAsElanSource(): string {

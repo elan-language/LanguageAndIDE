@@ -1,11 +1,11 @@
 # Python with Elan 2.0.0-alpha1
 
 def main(): None:
-  grid = createBlockGraphics(white) # variable definition 
+  grid = createBlockGraphics(white) # variable definition
   fillRandom(grid) # call procedure
   while True:
     displayBlocks(grid) # call procedure
-    gridRef = AsRef[list[list[int]]](grid) # variable definition 
+    gridRef = AsRef[list[list[int]]](grid) # variable definition
     nextGeneration(gridRef) # call procedure
     grid = gridRef.value() # set
     sleep_ms(50) # call procedure
@@ -16,7 +16,7 @@ def fillRandom(grid: list[list[int]]) -> None: # procedure
       grid[col][row] = blackOrWhite(random()) # set
 
 def blackOrWhite(random: float) -> int: # function
-  result = black # variable definition 
+  result = black # variable definition
   if random > 0.5:
     result = white # set
   return result
@@ -58,11 +58,11 @@ def southWest(cell: tuple[int, int]) -> tuple[int, int]: # function
   return south(west(cell))
 
 def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
-  c = (x, y) # variable definition 
+  c = (x, y) # variable definition
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 
 def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
-  count = 0 # variable definition 
+  count = 0 # variable definition
   for cell in neighbourCells(x, y):
     cx = cell.item_0 # constant
     cy = cell.item_1 # constant
@@ -71,7 +71,7 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
   return count
 
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
-  result = False # variable definition 
+  result = False # variable definition
   if cell == black:
     result = (liveNeighbours > 1) and (liveNeighbours < 4) # set
   else:
@@ -79,15 +79,15 @@ def willLive(cell: int, liveNeighbours: int) -> bool: # function
   return result
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
-  colour = white # variable definition 
+  colour = white # variable definition
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # constant
   if live:
     colour = black # set
   return colour
 
 def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
-  nextGen = createBlockGraphics(white) # variable definition 
-  grid = gridRef.value() # variable definition 
+  nextGen = createBlockGraphics(white) # variable definition
+  grid = gridRef.value() # variable definition
   for x in range(0, 40):
     for y in range(0, 30):
       colour = nextCellValue(grid, x, y) # constant

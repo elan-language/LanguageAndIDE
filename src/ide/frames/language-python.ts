@@ -237,7 +237,7 @@ export class LanguagePython extends LanguageAbstract {
 
   newInstanceAsHtml(node: NewInstance): string {
     return node.status === ParseStatus.valid
-      ? `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`
+      ? `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`
       : node.matchedText;
   }
 

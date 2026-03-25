@@ -241,10 +241,8 @@ export class FileImpl implements File {
   async renderAsElanSource(): Promise<string> {
     const languageElan = LanguageElan.Instance;
     const langToRestore = this.language();
-    this.setLanguage(languageElan);
     const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
     this.currentHash = await this.getHash(content);
-    this.setLanguage(langToRestore);
     return `${languageElan.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 

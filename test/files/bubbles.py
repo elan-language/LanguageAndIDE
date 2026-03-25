@@ -1,10 +1,10 @@
 # Python with Elan 2.0.0-alpha1
 
 def main(): None:
-  bubbles = list[CircleVG]() # variable definition 
+  bubbles = list[CircleVG]() # variable definition
   # create 20 small bubbles at the bottom
   for i in range(1, 21):
-    b = (CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) # variable definition 
+    b = (CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) # variable definition
     bubbles.append(b) # call procedure
   while True:
     moveGrowBurst(bubbles) # call procedure

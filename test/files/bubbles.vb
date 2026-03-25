@@ -1,10 +1,10 @@
 ' VB.NET with Elan 2.0.0-alpha1
 
 Sub main()
-  Dim bubbles = New List(Of CircleVG)() ' variable definition 
+  Dim bubbles = New List(Of CircleVG)() ' variable definition
   ' create 20 small bubbles at the bottom
   For Each i In range(1, 21)
-    Dim b = (New CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) ' variable definition 
+    Dim b = (New CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) ' variable definition
     bubbles.append(b) ' call procedure
   Next i
   While True

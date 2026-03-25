@@ -5,13 +5,13 @@
 # https://en.wikipedia.org/wiki/Collatz_conjecture
 
 def main(): None:
-  x = 1 # variable definition 
+  x = 1 # variable definition
   while x > 0:
     x = inputInt("Enter a starting number (0 to quit)") # set
     # Array of the values we have seen so far
-    p = [x] # variable definition 
+    p = [x] # variable definition
     # capture the max value so we can scale the graph
-    max = x # variable definition 
+    max = x # variable definition
     while x > 1:
       # Collatz sequence
       if (x % 2) == 0:
@@ -22,7 +22,7 @@ def main(): None:
         max = x # set
       p.append(x) # call procedure
       # draw what we have got so far, scaled to the canvas
-      vg = list[VectorGraphic]() # variable definition 
+      vg = list[VectorGraphic]() # variable definition
       for i in range(0, p.length() - 1):
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # set
       displayVectorGraphics(vg) # call procedure
