@@ -1,3 +1,5 @@
+import { ofKeyword } from "../../../compiler/elan-keywords";
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
@@ -33,5 +35,15 @@ export class TypeGenericNode extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid() ? this.file.language().typeGenericAsHtml(this) : this.matchedText;
+  }
+
+  renderAsElanSource(): string {
+    return this.isValid()
+      ? `${this.qualifiedName?.renderAsElanSource()}<${ofKeyword} ${this.genericTypes?.renderAsElanSource()}>`
+      : this.matchedText;
+  }
+
+  renderAsExport(): string {
+    return this.isValid() ? `${removeHtmlTagsAndEscChars(this.renderAsHtml())}` : this.matchedText;
   }
 }
