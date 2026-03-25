@@ -2,13 +2,13 @@
 
 static void main() {
   var grid = createBlockGraphics(white);
-  fillRandom(grid); // call
+  fillRandom(grid); // call procedure
   while (true) {
-    displayBlocks(grid); // call
+    displayBlocks(grid); // call procedure
     var gridRef = new AsRef<List<List<int>>>(grid);
-    nextGeneration(gridRef); // call
+    nextGeneration(gridRef); // call procedure
     grid = gridRef.value(); // set
-    sleep_ms(50); // call
+    sleep_ms(50); // call procedure
   }
 }
 
@@ -117,7 +117,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
       nextGen[x][y] = colour; // set
     }
   }
-  gridRef.set(nextGen); // call
+  gridRef.set(nextGen); // call procedure
 }
 
 @Test static void test_north() {

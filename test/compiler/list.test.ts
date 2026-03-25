@@ -54,8 +54,8 @@ return [main, _tests];}`;
     const vbCode = `${testVBHeader}
 
 Sub main()
-  Dim a = {4, 5, 6, 7, 8} ' variable
-  printNoLine(a) ' call
+  Dim a = {4, 5, 6, 7, 8} ' variable definition
+  printNoLine(a) ' call procedure
 End Sub
 `;
     await assertExportedVBis(fileImpl, vbCode);

@@ -6,7 +6,7 @@ static void main() {
   var y = 15;
   while (true) {
     blocks[x][y] = red; // set
-    displayBlocks(blocks); // call
+    displayBlocks(blocks); // call procedure
     blocks[x][y] = black; // set
     var direction = randint(0, 3);
     if (direction == 0) {

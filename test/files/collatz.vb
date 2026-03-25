@@ -5,13 +5,13 @@
 ' https://en.wikipedia.org/wiki/Collatz_conjecture
 
 Sub main()
-  Dim x = 1 ' variable
+  Dim x = 1 ' variable definition 
   While x > 0
     x = inputInt("Enter a starting number (0 to quit)") ' set
     ' Array of the values we have seen so far
-    Dim p = {x} ' variable
+    Dim p = {x} ' variable definition 
     ' capture the max value so we can scale the graph
-    Dim max = x ' variable
+    Dim max = x ' variable definition 
     While x > 1
       ' Collatz sequence
       If (x Mod 2) = 0 Then
@@ -22,18 +22,18 @@ Sub main()
       If x > max Then
         max = x ' set
       End If
-      p.append(x) ' call
+      p.append(x) ' call procedure
       ' draw what we have got so far, scaled to the canvas
-      Dim vg = New List(Of VectorGraphic)() ' variable
+      Dim vg = New List(Of VectorGraphic)() ' variable definition 
       For Each i In range(0, p.length() - 1)
         vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' set
       Next i
-      displayVectorGraphics(vg) ' call
-      print(x) ' call
-      sleep_ms(100) ' call
+      displayVectorGraphics(vg) ' call procedure
+      print(x) ' call procedure
+      sleep_ms(100) ' call procedure
     End While
   End While
-  print("Finished") ' call
+  print("Finished") ' call procedure
 End Sub
 
 ' scale x. &nbsp;We pass in p just to get its length

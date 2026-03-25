@@ -10,9 +10,9 @@ static void main() {
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        print($"\nWe can supply a {wanted}"); // call
+        print($"\nWe can supply a {wanted}"); // call procedure
       } else {
-        print($"\nSorry, we cannot supply a {wanted}"); // call
+        print($"\nSorry, we cannot supply a {wanted}"); // call procedure
       }
     }
   }

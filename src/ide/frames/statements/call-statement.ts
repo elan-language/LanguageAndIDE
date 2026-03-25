@@ -41,7 +41,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "call";
+    return "call procedure";
   }
 
   renderAsElanSource(): string {

@@ -1,14 +1,14 @@
 ' VB.NET with Elan 2.0.0-alpha1
 
 Sub main()
-  Dim grid = createBlockGraphics(white) ' variable
-  fillRandom(grid) ' call
+  Dim grid = createBlockGraphics(white) ' variable definition 
+  fillRandom(grid) ' call procedure
   While True
-    displayBlocks(grid) ' call
-    Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable
-    nextGeneration(gridRef) ' call
+    displayBlocks(grid) ' call procedure
+    Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition 
+    nextGeneration(gridRef) ' call procedure
     grid = gridRef.value() ' set
-    sleep_ms(50) ' call
+    sleep_ms(50) ' call procedure
   End While
 End Sub
 
@@ -21,7 +21,7 @@ Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
 End Sub
 
 Function blackOrWhite(random As Double) As Integer
-  Dim result = black ' variable
+  Dim result = black ' variable definition 
   If random > 0.5 Then
     result = white ' set
   End If
@@ -73,12 +73,12 @@ Function southWest(cell As (Integer, Integer)) As (Integer, Integer)
 End Function
 
 Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
-  Dim c = (x, y) ' variable
+  Dim c = (x, y) ' variable definition 
   Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 End Function
 
 Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim count = 0 ' variable
+  Dim count = 0 ' variable definition 
   For Each cell In neighbourCells(x, y)
     Const cx = cell.item_0
     Const cy = cell.item_1
@@ -90,7 +90,7 @@ Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As In
 End Function
 
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
-  Dim result = False ' variable
+  Dim result = False ' variable definition 
   If cell = black Then
     result = (liveNeighbours > 1) And (liveNeighbours < 4) ' set
   Else
@@ -100,7 +100,7 @@ Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
 End Function
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim colour = white ' variable
+  Dim colour = white ' variable definition 
   Const live = willLive(grid[x][y], liveNeighbours(grid, x, y))
   If live Then
     colour = black ' set
@@ -109,15 +109,15 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
 End Function
 
 Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
-  Dim nextGen = createBlockGraphics(white) ' variable
-  Dim grid = gridRef.value() ' variable
+  Dim nextGen = createBlockGraphics(white) ' variable definition 
+  Dim grid = gridRef.value() ' variable definition 
   For Each x In range(0, 40)
     For Each y In range(0, 30)
       Const colour = nextCellValue(grid, x, y)
       nextGen[x][y] = colour ' set
     Next y
   Next x
-  gridRef.set(nextGen) ' call
+  gridRef.set(nextGen) ' call procedure
 End Sub
 
 <TestMethod> Sub test_north()

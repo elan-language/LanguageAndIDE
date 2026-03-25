@@ -71,50 +71,50 @@ return [main, _tests];}`;
     const pythonCode = `${testPythonHeader}
 
 def main(): None:
-  printNoLine(1) # call
-  foo() # call
-  printNoLine(3) # call
+  printNoLine(1) # call procedure
+  foo() # call procedure
+  printNoLine(3) # call procedure
 
 def foo() -> None: # procedure
-  printNoLine(2) # call
+  printNoLine(2) # call procedure
 `;
 
     const csCode = `${testCSHeader}
 
 static void main() {
-  printNoLine(1); // call
-  foo(); // call
-  printNoLine(3); // call
+  printNoLine(1); // call procedure
+  foo(); // call procedure
+  printNoLine(3); // call procedure
 }
 
 static void foo() { // procedure
-  printNoLine(2); // call
+  printNoLine(2); // call procedure
 }
 `;
 
     const javaCode = `${testJavaHeader}
 
 static void main() {
-  printNoLine(1); // call
-  foo(); // call
-  printNoLine(3); // call
+  printNoLine(1); // call procedure
+  foo(); // call procedure
+  printNoLine(3); // call procedure
 }
 
 static void foo() { // procedure
-  printNoLine(2); // call
+  printNoLine(2); // call procedure
 }
 `;
 
     const vbCode = `${testVBHeader}
 
 Sub main()
-  printNoLine(1) ' call
-  foo() ' call
-  printNoLine(3) ' call
+  printNoLine(1) ' call procedure
+  foo() ' call procedure
+  printNoLine(3) ' call procedure
 End Sub
 
 Sub foo() ' procedure
-  printNoLine(2) ' call
+  printNoLine(2) ' call procedure
 End Sub
 `;
 

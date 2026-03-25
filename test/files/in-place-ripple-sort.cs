@@ -2,9 +2,9 @@
 
 static void main() {
   var li = [7, 1, 0, 4, 8, 3, 6];
-  print(li); // call
-  inPlaceRippleSort(li); // call
-  print(li); // call
+  print(li); // call procedure
+  inPlaceRippleSort(li); // call procedure
+  print(li); // call procedure
 }
 
 static void inPlaceRippleSort(List<int> li) { // procedure
