@@ -19,4 +19,8 @@ export class TypeTupleNode extends AbstractSequence {
   override renderAsExport(): string {
     return this.isValid() ? super.renderAsExport() : this.matchedText;
   }
+
+  override renderAsElanSource(): string {
+    return `(${this.types?.renderAsElanSource()})`;
+  }
 }

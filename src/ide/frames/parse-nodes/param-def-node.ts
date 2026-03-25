@@ -29,7 +29,9 @@ export class ParamDefNode extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return this.isValid() ? this.file.language().paramDefAsHtml(this) : this.matchedText;
+    return this.isValid() || this.isIncomplete()
+      ? this.file.language().paramDefAsHtml(this)
+      : this.matchedText;
   }
 
   renderAsElanSource() {

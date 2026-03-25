@@ -1312,10 +1312,11 @@ suite("Parsing Nodes", () => {
       new NewInstance(fileWithPython()),
       `Foo()`,
       ParseStatus.valid,
-      "",
-      "",
       "Foo()",
       "",
+      "new Foo()",
+      "<el-type>Foo</el-type>()",
+      `Foo()`,
     );
     testNodeParse(
       new NewInstance(fileWithCS()),
@@ -1339,10 +1340,11 @@ suite("Parsing Nodes", () => {
       new NewInstance(fileWithVB()),
       `New Foo()`,
       ParseStatus.valid,
-      "",
-      "",
       "New Foo()",
       "",
+      "new Foo()",
+      "<el-kw>New</el-kw> <el-type>Foo</el-type>()",
+      "New Foo()",
     );
   });
   test("String Interpolation", () => {
@@ -2367,7 +2369,7 @@ suite("Parsing Nodes", () => {
       `a A`,
       "",
       `a A`,
-      "a A",
+      `<el-id>a</el-id><el-kw> As </el-kw>`,
       `a A`,
     );
   });
@@ -2391,7 +2393,7 @@ suite("Parsing Nodes", () => {
       `List<int>`,
       "",
       `List<int>`,
-      `List<int>`,
+      `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
       `List<int>`,
     );
   });
@@ -2403,7 +2405,7 @@ suite("Parsing Nodes", () => {
       `List<int> `,
       "",
       `List<int> `,
-      `List<int> `,
+      `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
       `List<int> `,
     );
   });

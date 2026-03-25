@@ -1,4 +1,4 @@
-import { thisKeyword } from "../../../compiler/elan-keywords";
+import { propertyKeyword, thisKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -21,5 +21,9 @@ export class PropertyRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid() ? this.file.language().propertyRefAsHtml(this) : this.matchedText;
+  }
+
+  renderAsElanSource(): string {
+    return `${propertyKeyword}.${this.name.renderAsElanSource()}`;
   }
 }

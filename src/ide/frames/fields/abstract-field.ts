@@ -748,7 +748,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderAsElanSource(): string {
-    return this.textAsSource();
+    return this.rootNode ? this.rootNode.renderAsElanSource() : this.textAsSource();
   }
 
   setFieldToKnownValidText(text: string) {

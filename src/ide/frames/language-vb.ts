@@ -304,7 +304,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
+    return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
