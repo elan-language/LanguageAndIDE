@@ -1726,9 +1726,10 @@ end main`;
       ["AsRef", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
+      ["CustomError", "*", "*"],
       ["Dictionary", "*", "*"],
       ["ElanRuntimeError", "*", "*"],
-      ["ElanUserError", "*", "*"],
+
       ["Float", "*", "*"],
       ["HashSet", "*", "*"],
       ["ImageVG", "*", "*"],
@@ -1770,7 +1771,10 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["CircleVG", "CircleVG", "CircleVG"]] as [string, string, string][];
+    const expected = [
+      ["CircleVG", "CircleVG", "CircleVG"],
+      ["CustomError", "*", "*"],
+    ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "args8", "0, new C", expected);
   });

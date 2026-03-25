@@ -398,7 +398,7 @@ class IDEViewModel implements IIDEViewModel {
       let msg = "";
       let stack = "";
       if (err instanceof ElanRuntimeError) {
-        msg = "A Runtime error occurred in the Elan code";
+        msg = err.message || "A Runtime error occurred in the Elan code";
         stack = err.elanStack;
         this.systemInfoPrintSafe(msg);
         this.systemInfoPrintSafe(stack);

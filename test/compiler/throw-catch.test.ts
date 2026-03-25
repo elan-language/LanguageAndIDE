@@ -216,13 +216,13 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanUserError
+  catch CustomError
     call printNoLine("Foo")
   end try
 end main
 
 procedure foo()
-  throw ElanUserError "Foo"
+  throw CustomError "Foo"
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -232,7 +232,7 @@ async function main() {
     await foo();
     await _stdlib.printNoLine("not caught");
   } catch (e) {
-    if (e instanceof _stdlib.ElanUserError) {
+    if (e instanceof _stdlib.CustomError) {
     await _stdlib.printNoLine("Foo");
     }
     else {
@@ -242,7 +242,7 @@ async function main() {
 }
 
 async function foo() {
-  throw system.initialise(await new _stdlib.ElanUserError()._initialise("Foo"));
+  throw system.initialise(await new _stdlib.CustomError()._initialise("Foo"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -771,7 +771,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only throw or catch ElanUserError or ElanRuntimeErrorLangRef.html#compile_error",
+      "Can only throw or catch CustomError or ElanRuntimeErrorLangRef.html#compile_error",
     ]);
   });
 
@@ -780,7 +780,7 @@ end class`;
 
 main
   try
-    throw ElanUserError "fail"
+    throw CustomError "fail"
   catch ElanRuntimeError
     call printNoLine("caught")
   end try
@@ -807,7 +807,7 @@ end main`;
 
 main
   try
-    throw ElanUserError "fail"
+    throw CustomError "fail"
   catch FooException
     call printNoLine("")
   end try
@@ -836,7 +836,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only throw or catch ElanUserError or ElanRuntimeErrorLangRef.html#compile_error",
+      "Can only throw or catch CustomError or ElanRuntimeErrorLangRef.html#compile_error",
     ]);
   });
 });
