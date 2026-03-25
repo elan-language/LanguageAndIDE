@@ -106,7 +106,7 @@ test('debug program', async ({ page }) => {
   await page.keyboard.press('End'); // to outer selector
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('ca'); // call
+  await page.keyboard.type('ca'); // call procedure
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('100');
@@ -132,7 +132,7 @@ test('compile error', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('ca'); // call
+  await page.keyboard.type('ca'); // call procedure
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   
@@ -150,7 +150,7 @@ test('parse error', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('ca'); // call
+  await page.keyboard.type('ca'); // call procedure
   await page.keyboard.type('4');
   
   await expect(page.locator('#call3')).toContainText('Invalid.');

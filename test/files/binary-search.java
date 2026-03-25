@@ -10,9 +10,9 @@ static void main() {
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        print(String.format("\nWe can supply a %", wanted)); // call
+        print(String.format("\nWe can supply a %", wanted)); // call procedure
       } else {
-        print(String.format("\nSorry, we cannot supply a %", wanted)); // call
+        print(String.format("\nSorry, we cannot supply a %", wanted)); // call procedure
       }
     }
   }

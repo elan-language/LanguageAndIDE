@@ -28,7 +28,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   }
 
   frameSpecificAnnotation(): string {
-    return "variable";
+    return "variable definition";
   }
 
   renderAsElanSource(): string {

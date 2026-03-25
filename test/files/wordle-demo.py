@@ -7,67 +7,67 @@ allValidAnswers = "ABACK ZONAL" # constant
 def main(): None:
   while True:
     choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4) # constant
-    clearAllDisplays() # call
-    executeOption(choice) # call
-    pressAnyKeyToContinue(True) # call
-    clearAllDisplays() # call
+    clearAllDisplays() # call procedure
+    executeOption(choice) # call procedure
+    pressAnyKeyToContinue(True) # call procedure
+    clearAllDisplays() # call procedure
 
 def executeOption(choice: int) -> None: # procedure
   if choice == 1:
-    print("Reduce screen magnification if you can't see all the keys") # call
-    playGame() # call
+    print("Reduce screen magnification if you can't see all the keys") # call procedure
+    playGame() # call procedure
   elif choice == 2:
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter") # call
-    playReverseGame() # call
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter") # call procedure
+    playReverseGame() # call procedure
   elif choice == 3:
-    print("Please wait for analysis to complete ...") # call
-    analyse() # call
+    print("Please wait for analysis to complete ...") # call procedure
+    analyse() # call procedure
   else:
     word = inputStringWithLimits("Enter word: ", 5, 5).upperCase() # constant
     if allValidAnswers.contains(word):
-      print(f"{word} is a valid answer") # call
+      print(f"{word} is a valid answer") # call procedure
     elif allWords.contains(word):
-      print(f"{word} is not a valid answer, but is a valid guess word") # call
+      print(f"{word} is not a valid answer, but is a valid guess word") # call procedure
     else:
-      print(f"{word} is not a recognised word") # call
+      print(f"{word} is not a recognised word") # call procedure
 
 def playGame() -> None: # procedure
-  grid = list[list[str]]() # variable
-  initialiseGrid(grid) # call
-  used = Dictionary[str, str]() # variable
+  grid = list[list[str]]() # variable definition 
+  initialiseGrid(grid) # call procedure
+  used = Dictionary[str, str]() # variable definition 
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
     used[letter] = " " # set
-  displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
+  displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
   target = allValidAnswers.split(" ")[randint(0, 2308)] # constant
-  attemptNo = 0 # variable
-  solved = False # variable
+  attemptNo = 0 # variable definition 
+  solved = False # variable definition 
   while (attemptNo < 6) and (not solved):
-    enterAttempt(attemptNo, grid, used) # call
-    solvedRef = AsRef[bool](solved) # variable
-    colourAttempt(attemptNo, grid, target, solvedRef, used) # call
+    enterAttempt(attemptNo, grid, used) # call procedure
+    solvedRef = AsRef[bool](solved) # variable definition 
+    colourAttempt(attemptNo, grid, target, solvedRef, used) # call procedure
     solved = solvedRef.value() # set
     attemptNo = attemptNo + 1 # set
-  clearPrintedText() # call
+  clearPrintedText() # call procedure
   if solved:
-    print("Well done!") # call
+    print("Well done!") # call procedure
 
 def initialiseGrid(grid: list[list[str]]) -> None: # procedure
   for i in range(0, 5):
-    sa = list[str]() # variable
+    sa = list[str]() # variable definition 
     for j in range(0, 6):
-      sa.append("") # call
-    grid.append(sa) # call
+      sa.append("") # call procedure
+    grid.append(sa) # call procedure
 
 def enterAttempt(attemptNo: int, grid: list[list[str]], used: Dictionary[str, str]) -> None: # procedure
-  chNo = 0 # variable
-  word = "" # variable
+  chNo = 0 # variable definition 
+  word = "" # variable definition 
   while chNo <= 5:
-    k = waitForKey().upperCase() # variable
+    k = waitForKey().upperCase() # variable definition 
     if (k.equals("BACKSPACE")) and (chNo > 0):
       chNo = chNo - 1 # set
       grid[chNo][attemptNo] = "" # set
       word = word # set
-      clearPrintedText() # call
+      clearPrintedText() # call procedure
     elif (chNo < 5) and isUCLetter(k):
       grid[chNo][attemptNo] = k # set
       chNo = chNo + 1 # set
@@ -76,36 +76,36 @@ def enterAttempt(attemptNo: int, grid: list[list[str]], used: Dictionary[str, st
       if allWords.contains(word):
         chNo = chNo + 1 # set
       else:
-        print("Invalid word") # call
-    displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
+        print("Invalid word") # call procedure
+    displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
 
 def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: AsRef[bool], used: Dictionary[str, str]) -> None: # procedure
-  attempt = getWord(attemptNo, grid) # variable
-  marks = markAttempt(attempt, target) # variable
+  attempt = getWord(attemptNo, grid) # variable definition 
+  marks = markAttempt(attempt, target) # variable definition 
   for i in range(0, 5):
-    letter = grid[i][attemptNo] # variable
-    mark = marks[i] # variable
+    letter = grid[i][attemptNo] # variable definition 
+    mark = marks[i] # variable definition 
     grid[i][attemptNo] = letter + mark # set
     if mark.isAfter(used[letter]):
       used[letter] = mark # set
   if marks.equals("22222"):
-    solved.set(True) # call
-  displayHtml(drawGrid(grid) + drawKeyboard(used)) # call
+    solved.set(True) # call procedure
+  displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
 
 def playReverseGame() -> None: # procedure
-  grid = list[list[str]]() # variable
-  initialiseGrid(grid) # call
-  attemptNo = 0 # variable
-  solved = False # variable
-  possible = allValidAnswers.split(" ") # variable
-  attempt = "ARISE" # variable
+  grid = list[list[str]]() # variable definition 
+  initialiseGrid(grid) # call procedure
+  attemptNo = 0 # variable definition 
+  solved = False # variable definition 
+  possible = allValidAnswers.split(" ") # variable definition 
+  attempt = "ARISE" # variable definition 
   while (attemptNo < 6) and (not solved):
     for i in range(0, 5):
       grid[i][attemptNo] = attempt[i] # set
-    displayHtml(drawGrid(grid)) # call
-    mark = "" # variable
-    markRef = AsRef[str](mark) # variable
-    enterMark(attemptNo, grid, markRef) # call
+    displayHtml(drawGrid(grid)) # call procedure
+    mark = "" # variable definition 
+    markRef = AsRef[str](mark) # variable definition 
+    enterMark(attemptNo, grid, markRef) # call procedure
     mark = markRef.value() # set
     if mark.equals("22222"):
       solved = True # set
@@ -113,56 +113,56 @@ def playReverseGame() -> None: # procedure
       attemptNo = attemptNo + 1 # set
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) # set
     if possible.length() == 0:
-      print("No possible answer matches marks so far. Press any key to continue") # call
+      print("No possible answer matches marks so far. Press any key to continue") # call procedure
       attemptNo = 6 # set
     else:
       attempt = possible[divAsInt(possible.length(), 2)] # set
 
 def enterMark(attemptNo: int, grid: list[list[str]], markRef: AsRef[str]) -> None: # procedure
-  mark = markRef.value() # variable
-  guess = getWord(attemptNo, grid) # variable
-  chNo = 0 # variable
+  mark = markRef.value() # variable definition 
+  guess = getWord(attemptNo, grid) # variable definition 
+  chNo = 0 # variable definition 
   while chNo <= 5:
-    k = waitForKey().upperCase() # variable
+    k = waitForKey().upperCase() # variable definition 
     if (k.equals("BACKSPACE")) and (chNo > 0):
       chNo = chNo - 1 # set
-      entry = grid[chNo][attemptNo] # variable
+      entry = grid[chNo][attemptNo] # variable definition 
       grid[chNo][attemptNo] = entry[0] # set
       mark = mark.subString(0, chNo) # set
     elif (chNo < 5) and "012".contains(k):
-      ch = grid[chNo][attemptNo] # variable
+      ch = grid[chNo][attemptNo] # variable definition 
       grid[chNo][attemptNo] = ch + k # set
       chNo = chNo + 1 # set
       mark = mark + k # set
     elif (chNo == 5) and (k.equals("ENTER")):
       chNo = chNo + 1 # set
-    displayHtml(drawGrid(grid)) # call
-  markRef.set(mark) # call
+    displayHtml(drawGrid(grid)) # call procedure
+  markRef.set(mark) # call procedure
 
 def analyse() -> None: # procedure
-  outcomes = list[int]() # variable
-  outcomes.initialise(10, 0) # call
+  outcomes = list[int]() # variable definition 
+  outcomes.initialise(10, 0) # call procedure
   for word in allValidAnswers.split(" "):
-    possible = allValidAnswers.split(" ") # variable
-    mark = "" # variable
-    attempt = "RAISE" # variable
-    attempts = 0 # variable
+    possible = allValidAnswers.split(" ") # variable definition 
+    mark = "" # variable definition 
+    attempt = "RAISE" # variable definition 
+    attempts = 0 # variable definition 
     while (not mark.equals("22222")):
       attempts = attempts + 1 # set
       mark = markAttempt(attempt, word) # set
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) # set
       attempt = possible[0] # set
     outcomes[attempts] = outcomes[attempts] + 1 # set
-  success = 0 # variable
-  weightedSum = 0 # variable
+  success = 0 # variable definition 
+  weightedSum = 0 # variable definition 
   for i in range(1, 7):
     success = success + outcomes[i] # set
     weightedSum = weightedSum + (i*outcomes[i]) # set
-  clearPrintedText() # call
+  clearPrintedText() # call procedure
   solved = (success/2309.0*100).floor() # constant
   avg = divAsFloat(weightedSum, success).round(2) # constant
   pc = "%" # constant
-  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") # call
+  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") # call procedure
 
 def isUCLetter(k: str) -> bool: # function
   unicode = k.asUnicode() # constant
@@ -176,7 +176,7 @@ def test_isUCLetter(self) -> None:
   self.assertEqual(isUCLetter(" "), False)
 
 def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
-  guessWord = "" # variable
+  guessWord = "" # variable definition 
   for i in range(0, 5):
     guessWord = guessWord + grid[i][attemptNo] # set
   return guessWord
@@ -189,8 +189,8 @@ def test_setChar(self) -> None:
   self.assertEqual(setChar("ABCDE", 4, "_"), "ABCD_")
 
 def markAttempt(attempt: str, target: str) -> str: # function
-  mark = "00000" # variable
-  unused = target # variable
+  mark = "00000" # variable definition 
+  unused = target # variable definition 
   for n in range(0, 5):
     if attempt[n].equals(unused[n]):
       mark = setChar(mark, n, "2") # set
@@ -214,7 +214,7 @@ def test_markAttempt(self) -> None:
   self.assertEqual(markAttempt("FAIRY", "RATTY"), "02012")
 
 def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) -> list[str]: # function
-  newPossible = list[str]() # variable
+  newPossible = list[str]() # variable definition 
   for word in possible:
     markForWord = markAttempt(attempt, word) # constant
     if markForWord.equals(mark):
@@ -222,7 +222,7 @@ def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) ->
   return newPossible
 
 def test_possibleAnswersAfterAttempt(self) -> None:
-  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable
+  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable definition 
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "20000"), ["ABCDE"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "10000"), ["BCDEA", "CDEAB", "DEABC", "EABCD"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXBX", "10010"), ["BCDEA", "CDEAB", "EABCD"])
@@ -230,7 +230,7 @@ def test_possibleAnswersAfterAttempt(self) -> None:
   self.assertEqual(possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012"), ["RASPY", "RATTY"])
 
 def drawGrid(grid: list[list[str]]) -> str: # function
-  html = f"<style>{style}</style> <grid>" # variable
+  html = f"<style>{style}</style> <grid>" # variable definition 
   for row in range(0, 6):
     html = html + "<word>" # set
     for col in range(0, 5):
@@ -242,7 +242,7 @@ def drawGrid(grid: list[list[str]]) -> str: # function
   return html + "</grid>"
 
 def drawKeyboard(used: Dictionary[str, str]) -> str: # function
-  html = "<keyboard><div>" # variable
+  html = "<keyboard><div>" # variable definition 
   for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM":
     if k.equals("-"):
       html = html + "</div><div>" # set

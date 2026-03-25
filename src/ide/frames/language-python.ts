@@ -79,7 +79,8 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
-      frame instanceof SetStatement
+      frame instanceof SetStatement ||
+      frame instanceof CatchStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }

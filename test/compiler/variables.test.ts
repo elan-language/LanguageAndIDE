@@ -57,15 +57,15 @@ return [main, _tests];}`;
     const pythonCode = `${testPythonHeader}
 
 def main(): None:
-  a = 3 # variable
-  printNoLine(a) # call
+  a = 3 # variable definition
+  printNoLine(a) # call procedure
 `;
 
     const csCode = `${testCSHeader}
 
 static void main() {
   var a = 3;
-  printNoLine(a); // call
+  printNoLine(a); // call procedure
 }
 `;
 
@@ -73,15 +73,15 @@ static void main() {
 
 static void main() {
   var a = 3;
-  printNoLine(a); // call
+  printNoLine(a); // call procedure
 }
 `;
 
     const vbCode = `${testVBHeader}
 
 Sub main()
-  Dim a = 3 ' variable
-  printNoLine(a) ' call
+  Dim a = 3 ' variable definition
+  printNoLine(a) ' call procedure
 End Sub
 `;
 

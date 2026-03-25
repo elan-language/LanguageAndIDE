@@ -65,10 +65,10 @@ return [main, _tests];}`;
     const pythonCode = `${testPythonHeader}
 
 def main(): None:
-  tot = 0 # variable
+  tot = 0 # variable definition
   for i in range(1, 11):
     tot = tot + i # set
-  printNoLine(tot) # call
+  printNoLine(tot) # call procedure
 `;
 
     const csCode = `${testCSHeader}
@@ -78,7 +78,7 @@ static void main() {
   foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
-  printNoLine(tot); // call
+  printNoLine(tot); // call procedure
 }
 `;
 
@@ -89,18 +89,18 @@ static void main() {
   foreach (i in range(1, 11)) {
     tot = tot + i; // set
   }
-  printNoLine(tot); // call
+  printNoLine(tot); // call procedure
 }
 `;
 
     const vbCode = `${testVBHeader}
 
 Sub main()
-  Dim tot = 0 ' variable
+  Dim tot = 0 ' variable definition
   For Each i In range(1, 11)
     tot = tot + i ' set
   Next i
-  printNoLine(tot) ' call
+  printNoLine(tot) ' call procedure
 End Sub
 `;
 

@@ -7,56 +7,56 @@ const String allValidAnswers = "ABACK ZONAL"
 static void main() {
   while (true) {
     const Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4);
-    clearAllDisplays(); // call
-    executeOption(choice); // call
-    pressAnyKeyToContinue(true); // call
-    clearAllDisplays(); // call
+    clearAllDisplays(); // call procedure
+    executeOption(choice); // call procedure
+    pressAnyKeyToContinue(true); // call procedure
+    clearAllDisplays(); // call procedure
   }
 }
 
 static void executeOption(int choice) { // procedure
   if (choice == 1) {
-    print("Reduce screen magnification if you can't see all the keys"); // call
-    playGame(); // call
+    print("Reduce screen magnification if you can't see all the keys"); // call procedure
+    playGame(); // call procedure
   } else if (choice == 2) {
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"); // call
-    playReverseGame(); // call
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"); // call procedure
+    playReverseGame(); // call procedure
   } else if (choice == 3) {
-    print("Please wait for analysis to complete ..."); // call
-    analyse(); // call
+    print("Please wait for analysis to complete ..."); // call procedure
+    analyse(); // call procedure
   } else {
     const String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase();
     if (allValidAnswers.contains(word)) {
-      print($"{word} is a valid answer"); // call
+      print($"{word} is a valid answer"); // call procedure
     } else if (allWords.contains(word)) {
-      print($"{word} is not a valid answer, but is a valid guess word"); // call
+      print($"{word} is not a valid answer, but is a valid guess word"); // call procedure
     } else {
-      print($"{word} is not a recognised word"); // call
+      print($"{word} is not a recognised word"); // call procedure
     }
   }
 }
 
 static void playGame() { // procedure
   var grid = new List<List<string>>();
-  initialiseGrid(grid); // call
+  initialiseGrid(grid); // call procedure
   var used = new Dictionary<string, string>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
     used[letter] = " "; // set
   }
-  displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
+  displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
   const String target = allValidAnswers.split(" ")[randint(0, 2308)];
   var attemptNo = 0;
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {
-    enterAttempt(attemptNo, grid, used); // call
+    enterAttempt(attemptNo, grid, used); // call procedure
     var solvedRef = new AsRef<bool>(solved);
-    colourAttempt(attemptNo, grid, target, solvedRef, used); // call
+    colourAttempt(attemptNo, grid, target, solvedRef, used); // call procedure
     solved = solvedRef.value(); // set
     attemptNo = attemptNo + 1; // set
   }
-  clearPrintedText(); // call
+  clearPrintedText(); // call procedure
   if (solved) {
-    print("Well done!"); // call
+    print("Well done!"); // call procedure
   }
 }
 
@@ -64,9 +64,9 @@ static void initialiseGrid(List<List<string>> grid) { // procedure
   foreach (i in range(0, 5)) {
     var sa = new List<string>();
     foreach (j in range(0, 6)) {
-      sa.append(""); // call
+      sa.append(""); // call procedure
     }
-    grid.append(sa); // call
+    grid.append(sa); // call procedure
   }
 }
 
@@ -79,7 +79,7 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
       chNo = chNo - 1; // set
       grid[chNo][attemptNo] = ""; // set
       word = word; // set
-      clearPrintedText(); // call
+      clearPrintedText(); // call procedure
     } else if ((chNo < 5) && isUCLetter(k)) {
       grid[chNo][attemptNo] = k; // set
       chNo = chNo + 1; // set
@@ -88,10 +88,10 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
       if (allWords.contains(word)) {
         chNo = chNo + 1; // set
       } else {
-        print("Invalid word"); // call
+        print("Invalid word"); // call procedure
       }
     }
-    displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
+    displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
   }
 }
 
@@ -107,14 +107,14 @@ static void colourAttempt(int attemptNo, List<List<string>> grid, string target,
     }
   }
   if (marks.equals("22222")) {
-    solved.set(true); // call
+    solved.set(true); // call procedure
   }
-  displayHtml(drawGrid(grid) + drawKeyboard(used)); // call
+  displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
 }
 
 static void playReverseGame() { // procedure
   var grid = new List<List<string>>();
-  initialiseGrid(grid); // call
+  initialiseGrid(grid); // call procedure
   var attemptNo = 0;
   var solved = false;
   var possible = allValidAnswers.split(" ");
@@ -123,10 +123,10 @@ static void playReverseGame() { // procedure
     foreach (i in range(0, 5)) {
       grid[i][attemptNo] = attempt[i]; // set
     }
-    displayHtml(drawGrid(grid)); // call
+    displayHtml(drawGrid(grid)); // call procedure
     var mark = "";
     var markRef = new AsRef<string>(mark);
-    enterMark(attemptNo, grid, markRef); // call
+    enterMark(attemptNo, grid, markRef); // call procedure
     mark = markRef.value(); // set
     if (mark.equals("22222")) {
       solved = true; // set
@@ -135,7 +135,7 @@ static void playReverseGame() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
     }
     if (possible.length() == 0) {
-      print("No possible answer matches marks so far. Press any key to continue"); // call
+      print("No possible answer matches marks so far. Press any key to continue"); // call procedure
       attemptNo = 6; // set
     } else {
       attempt = possible[divAsInt(possible.length(), 2)]; // set
@@ -162,14 +162,14 @@ static void enterMark(int attemptNo, List<List<string>> grid, AsRef<string> mark
     } else if ((chNo == 5) && (k.equals("ENTER"))) {
       chNo = chNo + 1; // set
     }
-    displayHtml(drawGrid(grid)); // call
+    displayHtml(drawGrid(grid)); // call procedure
   }
-  markRef.set(mark); // call
+  markRef.set(mark); // call procedure
 }
 
 static void analyse() { // procedure
   var outcomes = new List<int>();
-  outcomes.initialise(10, 0); // call
+  outcomes.initialise(10, 0); // call procedure
   foreach (word in allValidAnswers.split(" ")) {
     var possible = allValidAnswers.split(" ");
     var mark = "";
@@ -189,11 +189,11 @@ static void analyse() { // procedure
     success = success + outcomes[i]; // set
     weightedSum = weightedSum + (i*outcomes[i]); // set
   }
-  clearPrintedText(); // call
+  clearPrintedText(); // call procedure
   const Int solved = (success/2309.0*100).floor();
   const Float avg = divAsFloat(weightedSum, success).round(2);
   const String pc = "%";
-  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts."); // call
+  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts."); // call procedure
 }
 
 static bool isUCLetter(string k) { // function

@@ -65,7 +65,7 @@ return [main, _tests];}`;
     const pythonCode = `${testPythonHeader}
 
 def main(): None:
-  printNoLine(foo(3, 4)) # call
+  printNoLine(foo(3, 4)) # call procedure
 
 def foo(a: float, b: float) -> float: # function
   return a*b
@@ -74,7 +74,7 @@ def foo(a: float, b: float) -> float: # function
     const csCode = `${testCSHeader}
 
 static void main() {
-  printNoLine(foo(3, 4)); // call
+  printNoLine(foo(3, 4)); // call procedure
 }
 
 static double foo(double a, double b) { // function
@@ -85,7 +85,7 @@ static double foo(double a, double b) { // function
     const javaCode = `${testJavaHeader}
 
 static void main() {
-  printNoLine(foo(3, 4)); // call
+  printNoLine(foo(3, 4)); // call procedure
 }
 
 static double foo(double a, double b) { // function
@@ -96,7 +96,7 @@ static double foo(double a, double b) { // function
     const vbCode = `${testVBHeader}
 
 Sub main()
-  printNoLine(foo(3, 4)) ' call
+  printNoLine(foo(3, 4)) ' call procedure
 End Sub
 
 Function foo(a As Double, b As Double) As Double

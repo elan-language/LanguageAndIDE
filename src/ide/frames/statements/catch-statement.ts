@@ -19,19 +19,19 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new ExceptionTypeField(this);
-    this.exceptionType.setPlaceholder(`ElanRuntimeError`);
+    this.exceptionType.setPlaceholder(`type e.g. ElanRuntimeError or CustomError`);
     this.ghostable = false;
   }
-
-  override isDeletable(): boolean {
-    return false;
-  }
-  override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
 
   protected setClasses() {
     super.setClasses();
     this.pushClass(true, "outdent");
   }
+
+  override isDeletable(): boolean {
+    return false;
+  }
+  override deleteIfPermissible(): void {}
 
   initialKeywords(): string {
     return catchKeyword;
@@ -46,7 +46,7 @@ export class CatchStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "";
+    return "catch";
   }
 
   indent() {
