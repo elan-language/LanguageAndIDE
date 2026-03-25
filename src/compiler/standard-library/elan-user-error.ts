@@ -2,9 +2,9 @@ import { ClassOption, elanClass, ElanString } from "../elan-type-annotations";
 import { System } from "../system";
 
 @elanClass(ClassOption.concrete, [], ["message"], [ElanString])
-export class ElanUserError extends Error {
+export class CustomError extends Error {
   static emptyInstance() {
-    return new ElanUserError("");
+    return new CustomError("");
   }
 
   async _initialise(message: string) {

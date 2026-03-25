@@ -882,9 +882,9 @@ export function mustBeException(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (symbol.symbolId !== "ElanRuntimeError" && symbol.symbolId !== "ElanUserError") {
+  if (symbol.symbolId !== "ElanRuntimeError" && symbol.symbolId !== "CustomError") {
     compileErrors.push(
-      new SyntaxCompileError(`Can only throw or catch ElanUserError or ElanRuntimeError`, location),
+      new SyntaxCompileError(`Can only throw or catch CustomError or ElanRuntimeError`, location),
     );
   }
 }

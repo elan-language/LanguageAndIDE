@@ -28,7 +28,7 @@ import { AsRef } from "./as-ref";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { ElanRuntimeError } from "./elan-runtime-error";
-import { ElanUserError } from "./elan-user-error";
+import { CustomError } from "./elan-user-error";
 import { HashSet } from "./hash-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";
@@ -109,8 +109,8 @@ export class StdLib {
   @elanClassExport(ElanRuntimeError)
   ElanRuntimeError = ElanRuntimeError;
 
-  @elanClassExport(ElanUserError)
-  ElanUserError = ElanUserError;
+  @elanClassExport(CustomError)
+  CustomError = CustomError;
 
   // Standard colours
 
