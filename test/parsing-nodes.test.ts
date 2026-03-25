@@ -2371,6 +2371,42 @@ suite("Parsing Nodes", () => {
       `a A`,
     );
   });
+  test("ParamDef C# valid", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithCS()),
+      `List<int> a`,
+      ParseStatus.valid,
+      `List<int> a`,
+      "",
+      `a as List<of Int>`,
+      `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; <el-id>a</el-id>`,
+      `List<int> a`,
+    );
+  });
+  test("ParamDef C# incomplete 1", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithCS()),
+      `List<int>`,
+      ParseStatus.incomplete,
+      `List<int>`,
+      "",
+      `List<int>`,
+      `List<int>`,
+      `List<int>`,
+    );
+  });
+  test("ParamDef C# incomplete 2", () => {
+    testNodeParse(
+      new ParamDefNode(fileWithCS()),
+      `List<int> `,
+      ParseStatus.incomplete,
+      `List<int> `,
+      "",
+      `List<int> `,
+      `List<int> `,
+      `List<int> `,
+    );
+  });
   test("Type VB", () => {
     testNodeParse(
       new TypeNode(fileWithVB()),
