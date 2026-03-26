@@ -18,7 +18,6 @@ import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { RegExMatchNode } from "./parse-nodes/regex-match-node";
 import { Sequence } from "./parse-nodes/sequence";
@@ -99,10 +98,6 @@ export class LanguageJava extends LanguageCfamily {
     return this.c_langs_typeGenericAsHtml(node);
   }
 
-  propertyRefAsHtml(node: PropertyRef): string {
-    return this.c_langs_propertyRefAsHtml(node);
-  }
-
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {
     let definingString = "";
     let csv = "";
@@ -157,7 +152,7 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
     node.addElement(new SpaceNode(node.file, Space.required));
     this.addCommonElementsForNewInstance(node);
   }

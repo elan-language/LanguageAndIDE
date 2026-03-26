@@ -29,7 +29,6 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -193,6 +192,7 @@ export class LanguageElan extends LanguageAbstract {
   private letKeyword = "let";
   private LIBRARY = "library";
   private MAIN = "main";
+  private NEW = "new";
   private OF = "of";
   private OUT = "out";
   private PRINT = "print";
@@ -226,7 +226,7 @@ export class LanguageElan extends LanguageAbstract {
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "$";
-  NEW = "new";
+  NEW_INSTANCE_PREFIX = this.NEW;
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
@@ -240,9 +240,10 @@ export class LanguageElan extends LanguageAbstract {
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = `<${this.OF} `;
+  THIS_INSTANCE: string = this.THIS;
 
   addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
     node.addElement(new SpaceNode(node.file, Space.required));
     this.addCommonElementsForNewInstance(node);
   }
@@ -284,12 +285,8 @@ export class LanguageElan extends LanguageAbstract {
     return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.PROPERTY}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
   newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
+    return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
   addNodesForTypeTuple(node: TypeTupleNode): void {

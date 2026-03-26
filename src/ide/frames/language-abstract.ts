@@ -10,20 +10,19 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNode } from "./parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "./parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
+import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { ConstantStatement } from "./statements/constant-statement";
 import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
-import { AssertStatement } from "./statements/assert-statement";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -60,7 +59,6 @@ export abstract class LanguageAbstract implements Language {
 
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
-  abstract propertyRefAsHtml(node: PropertyRef): string;
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
@@ -152,7 +150,7 @@ export abstract class LanguageAbstract implements Language {
   abstract BOOL_NAME: string;
   abstract STRING_NAME: string;
   abstract LIST_NAME: string;
-  abstract NEW: string;
+  abstract NEW_INSTANCE_PREFIX: string;
 
   abstract TRUE: string;
   abstract FALSE: string;
@@ -160,6 +158,7 @@ export abstract class LanguageAbstract implements Language {
   abstract HEX_PREFIX: string;
 
   abstract START_OF_GENERIC: string;
+  abstract THIS_INSTANCE: string;
 
   protected spaced(text: string): string {
     return ` ${text} `;
