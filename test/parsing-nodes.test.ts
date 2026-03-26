@@ -39,7 +39,6 @@ import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
 import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
-import { Qualifier } from "../src/ide/frames/parse-nodes/qualifier";
 import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/ide/frames/parse-nodes/regex-match-node";
 import { SetToClause } from "../src/ide/frames/parse-nodes/set-to-clause";

@@ -5,8 +5,8 @@ import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
+import { Namespace } from "./namespace";
 import { PropertyRef } from "./property-ref";
-import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: Alternatives | undefined;
@@ -21,7 +21,7 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifierDot = () => new DotAfter(this.file, new Qualifier(this.file));
+      const qualifierDot = () => new DotAfter(this.file, new Namespace(this.file));
       const instance = new InstanceNode(this.file);
       const instanceDot = () => new DotAfter(this.file, instance);
       const propertyRef = () => new DotAfter(this.file, new PropertyRef(this.file));
