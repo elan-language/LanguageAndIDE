@@ -3,7 +3,7 @@ import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
 
-export class Namespace extends AbstractAlternatives {
+export class NamespaceNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
     this.completionWhenEmpty = "";
