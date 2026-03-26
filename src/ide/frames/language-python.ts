@@ -116,7 +116,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ConstantStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.NONE}</el-kw>`;
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
