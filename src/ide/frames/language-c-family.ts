@@ -23,7 +23,6 @@ import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -92,7 +91,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} ${this.NEW}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
+      html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
@@ -187,7 +186,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
-  NEW = "new";
+  NEW_INSTANCE_PREFIX = "new";
 
   TRUE: string = "true";
   FALSE: string = "false";
@@ -195,6 +194,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = "<";
+  THIS_INSTANCE: string = this.THIS;
 
   c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
@@ -228,11 +228,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }
 
-  c_langs_propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.THIS}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
   c_langs_newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
+    return `<el-kw>${this.NEW_INSTANCE_PREFIX} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 }

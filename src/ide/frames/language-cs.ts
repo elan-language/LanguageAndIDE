@@ -11,7 +11,6 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
@@ -86,12 +85,8 @@ export class LanguageCS extends LanguageCfamily {
     return this.c_langs_typeGenericAsHtml(node);
   }
 
-  propertyRefAsHtml(node: PropertyRef): string {
-    return this.c_langs_propertyRefAsHtml(node);
-  }
-
   addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
     node.addElement(new SpaceNode(node.file, Space.required));
     this.addCommonElementsForNewInstance(node);
   }

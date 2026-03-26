@@ -29,7 +29,6 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -113,7 +112,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} ${this.NEW} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
+      html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
@@ -133,7 +132,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
@@ -246,7 +245,7 @@ export class LanguageVB extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
-  NEW = "New";
+  NEW_INSTANCE_PREFIX = "New";
 
   TRUE: string = "True";
   FALSE: string = "False";
@@ -254,6 +253,7 @@ export class LanguageVB extends LanguageAbstract {
   HEX_PREFIX: string = "&H";
 
   START_OF_GENERIC: string = `(${this.OF} `;
+  THIS_INSTANCE: string = this.ME;
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
@@ -277,7 +277,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW));
+    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
     node.addElement(new SpaceNode(node.file, Space.required));
     this.addCommonElementsForNewInstance(node);
   }
@@ -299,12 +299,8 @@ export class LanguageVB extends LanguageAbstract {
     return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
   }
 
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.ME}</el-kw>.${node.name.renderAsHtml()}`;
-  }
-
   newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
+    return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {

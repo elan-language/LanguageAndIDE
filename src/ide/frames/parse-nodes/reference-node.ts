@@ -1,4 +1,3 @@
-import { thisKeyword } from "../../../compiler/elan-keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { FunctionRefNode } from "./function-ref-node";
 import { IdentifierUse } from "./identifier-use";
@@ -12,7 +11,8 @@ export class ReferenceNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.alternatives.push(new KeywordNode(this.file, thisKeyword));
+      const this_instance = this.file.language().THIS_INSTANCE;
+      this.alternatives.push(new KeywordNode(this.file, this_instance));
       this.alternatives.push(new IdentifierUse(this.file, this.tokenTypes));
       this.alternatives.push(new MethodCallNode(this.file));
       this.alternatives.push(new FunctionRefNode(this.file));

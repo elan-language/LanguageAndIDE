@@ -29,7 +29,6 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
-import { PropertyRef } from "./parse-nodes/property-ref";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -200,7 +199,7 @@ export class LanguagePython extends LanguageAbstract {
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "f";
-  NEW = ""; // i.e. there is no Python equivalent to 'new' keyword
+  NEW_INSTANCE_PREFIX = ""; // i.e. there is no Python equivalent to 'new' keyword
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
@@ -214,6 +213,7 @@ export class LanguagePython extends LanguageAbstract {
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = "[";
+  THIS_INSTANCE: string = this.SELF;
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
@@ -260,10 +260,6 @@ export class LanguagePython extends LanguageAbstract {
 
   listNodeAsHtml(node: ListNode): string {
     return `[${node.csv?.renderAsHtml()}]`;
-  }
-
-  propertyRefAsHtml(node: PropertyRef): string {
-    return `<el-kw>${this.SELF}</el-kw>.${node.name.renderAsHtml()}`;
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
