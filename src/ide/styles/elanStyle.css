@@ -65,6 +65,9 @@ el-id {
     color: var(--namedValue);
     white-space: pre;
 }
+el-instr {
+    color: var(--instruction);
+}
 el-punc {
     color: var(--defaultText);
 }
