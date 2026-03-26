@@ -4,7 +4,6 @@ import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
-import { Property } from "./class-members/property";
 import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -88,8 +87,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof SetStatement) {

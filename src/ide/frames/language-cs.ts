@@ -1,3 +1,4 @@
+import { Property } from "./class-members/property";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -42,6 +43,8 @@ export class LanguageCS extends LanguageCfamily {
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+    } else if (frame instanceof Property) {
+      html = `${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {${this.GET}, ${this.PRIVATE} ${this.SET} }`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }
@@ -116,6 +119,9 @@ export class LanguageCS extends LanguageCfamily {
     return this.common_assertStatementFields(frame);
   }
 
+  private GET: string = "get";
+  private SET: string = "set";
+
   reservedWords: Set<string> = new Set<string>([
     `abstract`,
     `as`,
@@ -147,6 +153,7 @@ export class LanguageCS extends LanguageCfamily {
     `float`,
     `for`,
     `foreach`,
+    `get`,
     `goto`,
     `if`,
     `implicit`,
@@ -173,6 +180,7 @@ export class LanguageCS extends LanguageCfamily {
     `return`,
     `sbyte`,
     `sealed`,
+    `set`,
     `short`,
     `sizeof`,
     `stackalloc`,
