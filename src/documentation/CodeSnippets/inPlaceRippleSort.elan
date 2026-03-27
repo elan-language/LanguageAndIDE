@@ -1,25 +1,28 @@
-# 5ce49e8314bde93e37819023925cf8658563cac744ff7b15f73251d203a028b7 Elan 2.0.0-alpha guest default_profile valid
+# bef1c3fe910c199d356c18b69746078ff749d0aeba51fe1ea4b28be54a4a9625 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
-  variable li set to example.asList()
+  variable li set to [99, 77, 88, 44, 66, 11]
   call print(li)
   call inPlaceRippleSort(li)
   call print(li)
 end main
 
-procedure inPlaceRippleSort(out arr as List<of Int>)
-  variable change set to true
-  variable lastComp set to arr.length() - 2
-  while changes
-    set changes to false
+# snipFrom
+procedure inPlaceRippleSort(li as List<of Int>)
+  variable hasChanged set to true
+  variable lastComp set to li.length() - 2
+  while hasChanged is true
+    set hasChanged to false
     for i in range(0, lastComp + 1)
-      if arr[i] > arr[i + 1] then
-        variable temp set to arr[i]
-        set arr[i] to arr[i + 1]
-        set arr[i + 1] to temp
-        set change to true
+      if li[i] > li[i + 1] then
+        variable temp set to li[i]
+        set li[i] to li[i + 1]
+        set li[i + 1] to temp
+        set hasChanged to true
       end if
     end for
     set lastComp to lastComp - 1
   end while
 end procedure
+
+# snipTo
