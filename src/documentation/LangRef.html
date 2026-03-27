@@ -234,7 +234,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <li>a procedure can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
  <li>a procedure does not return a value.</li>
  <li>a procedure's parameter named values (that are mutable) may be changed <i>inside</i> the procedure, but they do not affect the value of arguments in the <el-kw>call</el-kw> instruction.</li> 
- <li>to pass a changed parameter back to its calling argument, it must have been called <a href="CallByRef"><i>by reference</i></a>.</li>
+ <li>to pass a changed parameter back to its calling argument, it must have been called <a href="#CallByRef"><i>by reference</i></a>.</li>
 </ul>
 <p>The instructions within a procedure can therefore:</p>
 <ul>
@@ -243,7 +243,6 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </ul>
 
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
-
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of procedure</h4>
