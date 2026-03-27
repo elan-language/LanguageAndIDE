@@ -242,37 +242,35 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <li>include data input methods and other system methods, such as for random number generation.</li>
 </ul>
 
-<h3 class="no-TOC" id="CallByRef">Call by reference</h3>
-
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of procedure</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Procedure to order a list of integers:</p>
 <el-code-block source="inPlaceRippleSort.elan">
-<el-proc class="ok multiline" id="proc15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt></el-field>(<el-field id="params18" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field>)
+<el-proc class="ok multiline" id="proc18" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident20" class="ok" tabindex="-1"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params21" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field><el-punc>)</el-punc>
 </el-top>
-<el-statement class="ok" id="var19" tabindex="-1"><el-kw>variable </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var22" tabindex="-1"><el-kw>variable </el-kw><el-field id="var23" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="while25" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id><el-kw> is </el-kw><el-id>true</el-id></el-txt></el-field>
+<el-statement class="ok" id="var22" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var23" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-kw>true</el-kw></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var25" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok multiline" id="while28" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id><el-kw> is </el-kw><el-kw>true</el-kw></el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="set28" tabindex="-1"><el-kw>set </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for31" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident33" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr34" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr35" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field>
+<el-statement class="ok" id="set31" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident32" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-kw>false</el-kw></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok multiline" id="for34" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident36" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr37" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>0</el-lit>, <el-id>lastComp</el-id> + <el-lit>1</el-lit>)</el-txt></el-field>
 </el-top>
-<el-statement class="ok multiline" id="if37" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>] &gt; <el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field><el-kw> then</el-kw>
+<el-statement class="ok multiline" id="if38" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr40" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>] &gt; <el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field><el-kw> then</el-kw>
 </el-top>
-<el-statement class="ok" id="var40" tabindex="-1"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="-1"><el-txt><el-id>temp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call43" tabindex="-1"><el-kw>call </el-kw><el-field id="ident44" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args45" class="optional ok" tabindex="-1"><el-txt><el-id>i</el-id>, <el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="call46" tabindex="-1"><el-kw>call </el-kw><el-field id="ident47" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args48" class="optional ok" tabindex="-1"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="set49" tabindex="-1"><el-kw>set </el-kw><el-field id="ident50" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr51" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var41" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var42" class="ok" tabindex="-1"><el-txt><el-id>temp</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>]</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="set44" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident45" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id>]</el-txt></el-field><el-kw> to </el-kw><el-field id="expr46" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="set47" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident48" class="ok" tabindex="-1"><el-txt><el-id>li</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt></el-field><el-kw> to </el-kw><el-field id="expr49" class="ok" tabindex="-1"><el-txt><el-id>temp</el-id></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="set50" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident51" class="ok" tabindex="-1"><el-txt><el-id>hasChanged</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr52" class="ok" tabindex="-1"><el-txt><el-kw>true</el-kw></el-txt></el-field></el-top></el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-statement class="ok" id="set52" tabindex="-1"><el-kw>set </el-kw><el-field id="ident53" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr54" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id> - <el-lit>1</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="set53" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident54" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr55" class="ok" tabindex="-1"><el-txt><el-id>lastComp</el-id> - <el-lit>1</el-lit></el-txt></el-field></el-top></el-statement>
 <el-kw>end while</el-kw>
 </el-statement>
 <el-kw>end procedure</el-kw>
@@ -280,6 +278,8 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </el-code-block>
 <hr>
 </div></div>
+
+<h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 
 <h2 id="function"><el-kw>function</el-kw></h2>
 <p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
