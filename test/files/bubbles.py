@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-alpha1
 
-def main(): None:
+def main() -> None:
   bubbles = list[CircleVG]() # variable definition
   # create 20 small bubbles at the bottom
   for i in range(1, 21):

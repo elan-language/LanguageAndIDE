@@ -396,19 +396,19 @@ el-field el-msg {
   el-select .options {
     display: none; 
   }
-  .selected > el-select .options {
+  .selected > el-select * {
     border-style: solid;
     border-color: black;
     border-width: 1px;
     display: inline;
-    background-color: var(--optional);
-    color: var(--reverseText);
+    background-color: var(--panelBackground);
+    color: var(--optional);
   }
 
   .selected > el-select el-help,   .selected > el-select el-help a {
     display: inline;
-    background-color: var(--optional);
-    color: var(--reverseText);
+    background-color: var(--panelBackground);
+    color: var(--optional);
   }
     
   .selected > el-select el-txt {

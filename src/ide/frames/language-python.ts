@@ -135,13 +135,13 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.DEF} </el-kw>(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}:<el-kw>none</el-kw>`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.SELF}: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
@@ -151,7 +151,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>(): <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {

@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-alpha1
 
-def main(): None:
+def main() -> None:
   grid = createBlockGraphics(white) # variable definition
   fillRandom(grid) # call procedure
   while True:

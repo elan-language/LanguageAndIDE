@@ -61,7 +61,7 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
+      html = `${modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }

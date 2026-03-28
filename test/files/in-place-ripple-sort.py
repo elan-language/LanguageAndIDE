@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-alpha1
 
-def main(): None:
+def main() -> None:
   li = [7, 1, 0, 4, 8, 3, 6] # variable definition
   print(li) # call procedure
   inPlaceRippleSort(li) # call procedure

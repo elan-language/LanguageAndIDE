@@ -43,7 +43,7 @@ export class LanguageCS extends LanguageCfamily {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>, <el-kw>${this.PRIVATE} ${this.SET}</el-kw>}`;
+      html = `${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>; <el-kw>${this.PRIVATE} ${this.SET}</el-kw>;}`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }
