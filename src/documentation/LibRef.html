@@ -30,10 +30,10 @@ NOTE: This documentation is a work in progress and is not yet fully descriptive 
   <th>examples of defining<br>a literal value</th>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-instr>constant </el-instr><el-id>maxNumber</el-id><el-kw> set to </el-kw><el-lit>10</el-lit></td>
+  <td><el-kw>constant </el-kw><el-id>maxNumber</el-id><el-kw> set to </el-kw><el-lit>10</el-lit></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code><el-instr>variable </el-instr><el-id>flags</el-id><el-kw> set to </el-kw><el-lit>0b1100100</el-lit></el-code></td>
+  <td><el-code><el-kw>variable </el-kw><el-id>flags</el-id><el-kw> set to </el-kw><el-lit>0b1100100</el-lit></el-code></td>
 </tr>
 </table>
 
@@ -526,7 +526,7 @@ with specified changes: that is why all such methods have names starting '<el-co
 <p>To create a List, use either of:</p>
 <ul>
  <li>Method <el-method>createList</el-method> to define its length and the inital value (and implicitly the Type) of its items:<br>
-  <el-code><el-instr>variable</el-instr> <el-id>aList</el-id> <el-kw>set to</el-kw> <el-method>createList</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lkit>")</el-code></li>
+  <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to</el-kw> <el-method>createList</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lkit>")</el-code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
  <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-code><br>
  <el-code><el-kw>call</el-kw> <el-id>aList</el-id>.<el-method>initialise</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lit>")</el-code><br>
@@ -1417,7 +1417,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <p>Each block is be rendered as a solid colour.</p>
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
-<el-code-block source="block_graphics.elan">
+<el-code-block source="blockGraphics.elan">
 <el-statement class="ok" id="var37" tabindex="-1"><el-kw>variable </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>grid</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-method>createBlockGraphics</el-method>(<el-id>white</el-id>)</el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="while6" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field>

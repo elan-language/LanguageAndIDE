@@ -162,7 +162,7 @@ with all the same property values except for specific changes that you want to m
 </ul>
 
 <h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <el-type>List</el-type>)  or user defined (e.g. <el-type>MyClass</el-type>), is named like an identifier but
+<p>Every Type, whether system (e.g. <el-type>List</el-type>)  or user defined (e.g. <el-type>A_Class</el-type>), is named like an identifier but
  with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p> 
 
 <div id="global"></div>
@@ -764,7 +764,7 @@ number of values (which must be valid <a href="#Identifier">identifiers</a>).
 <p>An <el-kw>enum</el-kw> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
 
 <p>Examples of definition and use:</p>
-<el-code-block source="constants_enum.elan">
+<el-code-block source="constantsEnum.elan">
 <el-enum class="ok multiline" id="enum28" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type29" class="ok" tabindex="-1"><el-txt><el-type>Suit</el-type></el-txt></el-field></el-top> <el-field id="enumVals30" class="ok" tabindex="-1"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt></el-field> &mdash;  an <el-kw>enum</el-kw> for use in the following constant <el-id>colours</el-id></el-enum>
 <el-enum class="ok multiline" id="enum137" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type138" class="ok" tabindex="0"><el-txt><el-type>Action</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals139" class="ok" tabindex="0"><el-txt><el-id>stand</el-id>, <el-id>draw</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum140" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type141" class="ok" tabindex="0"><el-txt><el-type>Outcome</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals142" class="ok" tabindex="0"><el-txt><el-id>undecided</el-id>, <el-id>win</el-id>, <el-id>lose</el-id>, <el-id>draw</el-id>, <el-id>winDouble</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
@@ -1741,12 +1741,13 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  variable, while, with </el-code></p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
- <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
- value, property, or method.If you encounter this error you may eliminate the error simply by adding
-  more valid characters to the name, for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.</p>
+ <p>In addition to Elan keywords there are other 'reserved words' that cannot be used to define the name for a
+ value, property, or method. If you encounter this error you may eliminate the error simply by adding
+  more valid characters to the name, but not by merely changing the case of part of the name.</p>
  <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:</p>
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
+  <li>Keywords in all the supported languages.</li>
   <li>Lowercase versions of Elan Type names, such as <el-code>int, float, string, boolean, list, dictionary</el-code>.
   It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
   what it does (for a method), or represents (for a named value).</li>
@@ -1758,7 +1759,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  </ul>
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
  const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, ignore, implements,
- instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
+ instanceof, int, into, list, long, match, myclass, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
  short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
