@@ -161,6 +161,7 @@ import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
 import { TestName } from "../frames/parse-nodes/testName";
 import { ThisInstance } from "../frames/parse-nodes/this-instance";
+import { ThisProcRef } from "../frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
@@ -992,6 +993,13 @@ export function transform(
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
+  }
+
+  if (node instanceof ThisProcRef) {
+    const thisAsn = new ThisAsn(fieldId, scope);
+    const q = thisAsn as unknown as AstQualifierNode;
+    const id = node.procName!.matchedText;
+    return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
