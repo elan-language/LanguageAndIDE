@@ -1,17 +1,28 @@
-# c5ae0eb6fa95bb22f4f01705dc577561e714ad09ecf3521c14a8088607ff500a Elan 2.0.0-alpha guest default_profile valid
+# 662c7c5e5cd461d71d9a88ad7427adeedef45db3de76ff915f31a9cd5c86872d Elan 2.0.0-alpha1 guest default_profile valid
 
+# snipFrom
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue.keys()[(number/4).floor()]
+  variable rank set to rankValue().keys()[divAsInt(number, 4).floor()]
   variable suit set to number mod 4
-  return new Card() with rank set to rank, suit set to suit
+  # (originally) return new Card()with rank set to rank, suit set to suit
+  return new Card()
 end function
 
+# snipTo
 class Card
-  property rank as Int
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "Card"
+  end function
 
   property suit as Int
 
 end class
 
-constant rankValue set to {0:0}
+function rankValue() returns Dictionary<of Int, Int>
+  return [0:0]
+end function
