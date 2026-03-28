@@ -1,4 +1,4 @@
-import { globalKeyword, libraryKeyword, thisKeyword } from "../../../compiler/elan-keywords";
+import { globalKeyword, libraryKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -52,11 +52,12 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
+    const thisInstance = this.file.language().THIS_INSTANCE;
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([
           KeywordCompletion.create(globalKeyword, false, true),
           KeywordCompletion.create(libraryKeyword, false, true),
-          KeywordCompletion.create(thisKeyword, false, true),
+          KeywordCompletion.create(thisInstance, false, true),
         ])
       : super.symbolCompletion_keywords();
   }
