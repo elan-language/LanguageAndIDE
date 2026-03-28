@@ -982,7 +982,8 @@ export function transform(
   }
 
   if (node instanceof PropertyRef) {
-    const qualifier = transform(node.kw, fieldId, scope) as AstQualifierNode;
+    const thisAsn = new ThisAsn(fieldId, scope);
+    const qualifier = thisAsn as unknown as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
   }
