@@ -5,12 +5,20 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  testCSHeader,
   testHash,
   testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -428,5 +436,116 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Cannot use 'this' outside class context.LangRef.html#ThisCompileError",
     ]);
+  });
+  test("Pass_MinimalClassInLangs", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Foo()
+  call printNoLine(x.p1)
+end main
+
+class Foo
+  constructor()
+    set this.p1 to 0.1
+  end constructor
+
+  property p1 as Float
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    const pythonCode = `${testPythonHeader}
+
+def main() -> None:
+  x = Foo() # variable definition
+  printNoLine(x.p1) # call procedure
+
+class Foo
+
+  def __init__(self: Foo, ) -> None:
+    self.p1 = 0.1 # set
+  p1: float
+  def toString(self: Foo, ) -> str: # function
+    return ""
+
+`;
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim x = New Foo() ' variable definition
+  printNoLine(x.p1) ' call procedure
+End Sub
+
+Class Foo
+
+  Public Sub New()
+    Me.p1 = 0.1 ' set
+  End Sub
+  Property p1 As Double
+  Function toString() As String
+    Return ""
+  End Function
+End Class
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  var x = new Foo();
+  printNoLine(x.p1); // call procedure
+}
+
+class Foo {
+
+  public Foo() {
+    this.p1 = 0.1; // set
+  }
+  double p1 {get; private set;} // property
+  string toString() { // function
+    return "";
+  }
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  var x = new Foo();
+  printNoLine(x.p1); // call procedure
+}
+
+class Foo {
+
+  public Foo() {
+    this.p1 = 0.1; // set
+  }
+  double p1; // property
+  String toString() { // function
+    return "";
+  }
+}
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedVBis(fileImpl, vbCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
   });
 });

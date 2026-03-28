@@ -130,7 +130,7 @@ export class LanguageVB extends LanguageAbstract {
     if (frame instanceof AbstractClass) {
       html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {

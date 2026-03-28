@@ -4,7 +4,8 @@ import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
-import { modifierAsHtml } from "./frame-helpers";
+import { Property } from "./class-members/property";
+import { modifierAsHtml, selfType } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { AbstractClass } from "./globals/abstract-class";
@@ -63,7 +64,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
-      frame instanceof SetStatement
+      frame instanceof SetStatement ||
+      frame instanceof Property
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -109,9 +111,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     if (frame instanceof AbstractClass) {
       html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()} {`;
     } else if (frame instanceof Constructor) {
-      html = `TODO`;
+      html = `<el-kw>${this.PUBLIC} ${selfType(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
@@ -161,6 +163,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   protected INHERITS = "inherits";
   protected INTERFACE = "interface";
   protected PRIVATE = "private";
+  protected PUBLIC = "public";
   protected RETURN = "return";
   protected STATIC = "static";
   protected THIS = "this";
