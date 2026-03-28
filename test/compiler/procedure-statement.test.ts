@@ -70,7 +70,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
     const pythonCode = `${testPythonHeader}
 
-def main(): None:
+def main() -> None:
   printNoLine(1) # call procedure
   foo() # call procedure
   printNoLine(3) # call procedure

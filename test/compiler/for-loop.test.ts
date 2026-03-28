@@ -64,7 +64,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "55");
     const pythonCode = `${testPythonHeader}
 
-def main(): None:
+def main() -> None:
   tot = 0 # variable definition
   for i in range(1, 11):
     tot = tot + i # set

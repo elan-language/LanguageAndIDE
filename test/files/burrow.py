@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-alpha1
 
-def main(): None:
+def main() -> None:
   blocks = createBlockGraphics(white) # variable definition
   x = 20 # variable definition
   y = 15 # variable definition

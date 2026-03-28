@@ -320,7 +320,7 @@ ${this.language().renderBottomAsHtml(this)}
 
   public renderAsExport(): string {
     const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
+    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
     return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}`;
