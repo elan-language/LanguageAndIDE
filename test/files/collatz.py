@@ -4,7 +4,7 @@
 
 # https://en.wikipedia.org/wiki/Collatz_conjecture
 
-def main(): None:
+def main() -> None:
   x = 1 # variable definition
   while x > 0:
     x = inputInt("Enter a starting number (0 to quit)") # set

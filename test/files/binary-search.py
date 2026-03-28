@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-alpha1
 
-def main(): None:
+def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition
   done = False # variable definition
   while not done:

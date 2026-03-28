@@ -54,7 +54,7 @@ return [main, _tests];}`;
 
     const pythonCode = `${testPythonHeader}
 
-def main(): None:
+def main() -> None:
 
 `;
 
