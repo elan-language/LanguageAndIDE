@@ -1,4 +1,4 @@
-# 60600587cb4e1a11210518d6862f50d02673f9a4810dfb8769cc8b87e3a91345 Elan 2.0.0-alpha guest default_profile valid
+# 3577ea03945216e28f7f8a9de5cae85b2728d8ea8f5012ff61db7e14d3096ae8 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
   variable a set to 0
@@ -6,6 +6,8 @@ main
   variable c set to 0
   variable d set to 0
   variable x set to true
+  # snipFrom
   set x to (a > b) and (b < c)
   set x to (a + b) > (c - d)
+  # snipTo
 end main
