@@ -47,6 +47,7 @@ import { Term } from "../src/ide/frames/parse-nodes/term";
 import { TermChained } from "../src/ide/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
+import { ThisInstance } from "../src/ide/frames/parse-nodes/this-instance";
 import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
@@ -2538,6 +2539,80 @@ suite("Parsing Nodes", () => {
       `Int`,
       "<el-type>int</el-type>",
       `int`,
+    );
+  });
+  test("ThisInstance", () => {
+    testNodeParse(
+      new ThisInstance(f),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(
+      new ThisInstance(f),
+      `This`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(new ThisInstance(f), `th`, ParseStatus.incomplete, `th`, "", `th`, "th", `th`);
+    testNodeParse(new ThisInstance(f), `Th`, ParseStatus.incomplete, `Th`, "", `Th`, "Th", `Th`);
+    testNodeParse(
+      new ThisInstance(fileWithPython()),
+      `self`,
+      ParseStatus.valid,
+      `self`,
+      "",
+      `this`,
+      "<el-kw>self</el-kw>",
+      `self`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithVB()),
+      `Me`,
+      ParseStatus.valid,
+      `Me`,
+      "",
+      `this`,
+      "<el-kw>Me</el-kw>",
+      `Me`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithVB()),
+      `me`,
+      ParseStatus.valid,
+      `Me`,
+      "",
+      `this`,
+      "<el-kw>Me</el-kw>",
+      `Me`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithCS()),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithJava()),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
     );
   });
 });
