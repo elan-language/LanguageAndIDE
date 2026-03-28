@@ -765,7 +765,8 @@ class Bar
   end function
 
   procedure p()
-    call this.p1.pp()
+    variable p1 set to this.p1
+    call p1.pp()
   end procedure
 
   property p1 as Foo
@@ -809,7 +810,8 @@ class Bar {
   }
 
   async p() {
-    await this.p1.pp();
+    let p1 = this.p1;
+    await p1.pp();
   }
 
   elan_p1;

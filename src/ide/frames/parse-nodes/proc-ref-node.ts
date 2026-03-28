@@ -1,14 +1,24 @@
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
+import { DOT } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { InstanceProcRef } from "./instanceProcRef";
 import { MethodNameUse } from "./method-name-use";
+import { PunctuationNode } from "./punctuation-node";
+import { Sequence } from "./sequence";
+import { ThisInstance } from "./this-instance";
 
 export class ProcRefNode extends AbstractAlternatives {
-  constructor(file: File) {
-    super(file);
-    this.alternatives.push(new InstanceProcRef(this.file));
-    this.alternatives.push(new MethodNameUse(file, new Set([TokenType.method_procedure])));
+  constructor(f: File) {
+    super(f);
+    const thisProcRef = new Sequence(f, [
+      () => new ThisInstance(f),
+      () => new PunctuationNode(f, DOT),
+      () => new MethodNameUse(f, new Set([TokenType.method_procedure])),
+    ]);
+    this.alternatives.push(new MethodNameUse(f, new Set([TokenType.method_procedure])));
+    this.alternatives.push(thisProcRef);
+    this.alternatives.push(new InstanceProcRef(f));
   }
 
   getProcName(): string {

@@ -38,6 +38,7 @@ import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
 import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
+import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
 import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
 import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/ide/frames/parse-nodes/regex-match-node";
@@ -1532,7 +1533,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
-  test("ProcRefCompound", () => {
+  test("InstanceProcRef", () => {
     testNodeParse(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
@@ -1541,6 +1542,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", "");
+  });
+  test("ProcRefNode", () => {
+    testNodeParse(new ProcRefNode(f), `foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `bar.foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `this.foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `this.foo.bar`, ParseStatus.valid, "", ".bar");
   });
   // test("#339 call dot function on a literal", () => {
   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");

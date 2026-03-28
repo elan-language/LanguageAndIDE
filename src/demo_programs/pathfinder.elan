@@ -129,7 +129,8 @@ class Solver
     if (this.current.isEmpty or (this.current.point.equals(this.destination))) then
       set this.running to false
     else
-      call this.current.setVisited(true)
+      variable current set to this.current
+      call current.setVisited(true)
     end if
   end procedure
 

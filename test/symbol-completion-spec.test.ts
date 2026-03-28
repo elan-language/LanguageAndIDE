@@ -515,11 +515,11 @@ suite("Symbol Completion Spec", () => {
       ProcRefNode.name,
       "",
       [
+        TokenType.method_procedure,
         TokenType.id_let,
         TokenType.id_parameter_regular,
         TokenType.id_property,
         TokenType.id_variable,
-        TokenType.method_procedure,
       ],
       ["global,library,this"],
       "",

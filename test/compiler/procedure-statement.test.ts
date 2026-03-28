@@ -505,7 +505,8 @@ class Foo
     property p1 as Bar
 
     procedure length()
-      call this.p1.length(2)
+      variable p1 set to this.p1
+      call p1.length(2)
     end procedure
 
     function toString() returns String
@@ -555,7 +556,8 @@ class Foo {
   }
 
   async length() {
-    await this.p1.length(2);
+    let p1 = this.p1;
+    await p1.length(2);
   }
 
   async toString() {

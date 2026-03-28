@@ -910,7 +910,8 @@ class Foo
   property p1 as List<of Int>
 
   procedure append()
-    call this.p1.append(1)
+    variable p1 set to this.p1
+    call p1.append(1)
     call printNoLine(this.p1)
   end procedure
 end class`;
@@ -937,7 +938,8 @@ class Foo {
   p1 = system.initialise(_stdlib.List.emptyInstance());
 
   async append() {
-    this.p1.append(1);
+    let p1 = this.p1;
+    p1.append(1);
     await _stdlib.printNoLine(this.p1);
   }
 
