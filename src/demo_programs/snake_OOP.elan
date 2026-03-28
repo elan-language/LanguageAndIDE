@@ -40,7 +40,8 @@ class Snake
   procedure clockTick(key as String, apple as Apple)
     call setDirection(key)
     set this.priorTail to this.body[0]
-    call this.body.append(this.head)
+    variable body set to this.body
+    call body.append(this.head)
     set this.head to this.head.getAdjacentSquare(this.currentDir)
     if this.head.equals(apple.location) then
       call apple.newRandomPosition(this)

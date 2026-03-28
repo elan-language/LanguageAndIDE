@@ -3,12 +3,14 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { InstanceProcRef } from "./instanceProcRef";
 import { MethodNameUse } from "./method-name-use";
+import { ThisProcRef } from "./thisProcRef";
 
 export class ProcRefNode extends AbstractAlternatives {
-  constructor(file: File) {
-    super(file);
-    this.alternatives.push(new InstanceProcRef(this.file));
-    this.alternatives.push(new MethodNameUse(file, new Set([TokenType.method_procedure])));
+  constructor(f: File) {
+    super(f);
+    this.alternatives.push(new MethodNameUse(f, new Set([TokenType.method_procedure])));
+    this.alternatives.push(new ThisProcRef(f));
+    this.alternatives.push(new InstanceProcRef(f));
   }
 
   getProcName(): string {

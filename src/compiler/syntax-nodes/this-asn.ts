@@ -22,7 +22,7 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return thisKeyword;
+    return "this";
   }
 
   symbolType() {

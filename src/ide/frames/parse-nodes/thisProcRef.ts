@@ -1,14 +1,13 @@
-import { globalKeyword, libraryKeyword } from "../../../compiler/elan-keywords";
+import { globalKeyword, libraryKeyword, thisKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
+import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { Alternatives } from "./alternatives";
-import { DotAfter } from "./dot-after";
-import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
-import { NamespaceNode } from "./namespace-node";
+import { PunctuationNode } from "./punctuation-node";
+import { ThisInstance } from "./this-instance";
 
-export class InstanceProcRef extends AbstractSequence {
-  prefix: Alternatives | undefined;
+export class ThisProcRef extends AbstractSequence {
+  thisInstance: ThisInstance | undefined;
   procName: MethodNameUse | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -20,16 +19,10 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifierDot = () => new DotAfter(this.file, new NamespaceNode(this.file));
-      const instance = new InstanceNode(this.file);
-      const instanceDot = () => new DotAfter(this.file, instance);
-      this.prefix = new Alternatives(this.file, [qualifierDot, instanceDot]);
-      this.procName = new MethodNameUse(
-        this.file,
-        new Set([TokenType.method_procedure]),
-        () => instance.matchedText,
-      );
-      this.addElement(this.prefix);
+      this.thisInstance = new ThisInstance(this.file);
+      this.procName = new MethodNameUse(this.file);
+      this.addElement(this.thisInstance);
+      this.addElement(new PunctuationNode(this.file, DOT));
       this.addElement(this.procName!);
       super.parseText(text);
     }
@@ -37,7 +30,13 @@ export class InstanceProcRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid()
-      ? `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      ? `${this.thisInstance!.renderAsHtml()}.<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      : this.matchedText;
+  }
+
+  renderAsElanSource(): string {
+    return this.isValid()
+      ? `<el-kw>${thisKeyword}</el-kw>.<el-method>${this.procName?.renderAsHtml()}</el-method>`
       : this.matchedText;
   }
 

@@ -1,5 +1,4 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { thisKeyword } from "../../../compiler/elan-keywords";
 import {
   escapeHtmlChars,
   helper_compileMsgAsHtmlNew,
@@ -506,7 +505,8 @@ export abstract class AbstractField implements Selectable, Field {
       this.text = this.text.slice(0, li);
     }
 
-    const propertyPrefix = `${thisKeyword}.`;
+    const thisInstance = this.getFile().language().THIS_INSTANCE;
+    const propertyPrefix = `${thisInstance}.`;
     const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 
     if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {

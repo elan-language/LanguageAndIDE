@@ -38,6 +38,7 @@ import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
 import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
+import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
 import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
 import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/ide/frames/parse-nodes/regex-match-node";
@@ -47,6 +48,7 @@ import { Term } from "../src/ide/frames/parse-nodes/term";
 import { TermChained } from "../src/ide/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
+import { ThisInstance } from "../src/ide/frames/parse-nodes/this-instance";
 import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
@@ -1531,7 +1533,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
-  test("ProcRefCompound", () => {
+  test("InstanceProcRef", () => {
     testNodeParse(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
@@ -1540,6 +1542,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", "");
+  });
+  test("ProcRefNode", () => {
+    testNodeParse(new ProcRefNode(f), `foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `bar.foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `this.foo`, ParseStatus.valid, "", "");
+    testNodeParse(new ProcRefNode(f), `this.foo.bar`, ParseStatus.valid, "", ".bar");
   });
   // test("#339 call dot function on a literal", () => {
   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
@@ -2538,6 +2547,80 @@ suite("Parsing Nodes", () => {
       `Int`,
       "<el-type>int</el-type>",
       `int`,
+    );
+  });
+  test("ThisInstance", () => {
+    testNodeParse(
+      new ThisInstance(f),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(
+      new ThisInstance(f),
+      `This`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(new ThisInstance(f), `th`, ParseStatus.incomplete, `th`, "", `th`, "th", `th`);
+    testNodeParse(new ThisInstance(f), `Th`, ParseStatus.incomplete, `Th`, "", `Th`, "Th", `Th`);
+    testNodeParse(
+      new ThisInstance(fileWithPython()),
+      `self`,
+      ParseStatus.valid,
+      `self`,
+      "",
+      `this`,
+      "<el-kw>self</el-kw>",
+      `self`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithVB()),
+      `Me`,
+      ParseStatus.valid,
+      `Me`,
+      "",
+      `this`,
+      "<el-kw>Me</el-kw>",
+      `Me`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithVB()),
+      `me`,
+      ParseStatus.valid,
+      `Me`,
+      "",
+      `this`,
+      "<el-kw>Me</el-kw>",
+      `Me`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithCS()),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
+    );
+    testNodeParse(
+      new ThisInstance(fileWithJava()),
+      `this`,
+      ParseStatus.valid,
+      `this`,
+      "",
+      `this`,
+      "<el-kw>this</el-kw>",
+      `this`,
     );
   });
 });

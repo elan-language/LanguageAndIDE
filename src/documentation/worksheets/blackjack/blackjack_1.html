@@ -307,7 +307,8 @@ class Game
   property message as String
 
   procedure newRound()
-    call this.dealer.newHand()
+    variable dealer set to this.dealer
+    call dealer.newHand()
     for player in this.players
       call player.newHand()
     end for
@@ -321,7 +322,8 @@ class Game
   end procedure
 
   procedure addPlayer(player as Player)
-    call this.players.append(player)
+    variable players set to this.players
+    call players.append(player)
   end procedure
 
   procedure setMessage(message as String)
@@ -397,7 +399,8 @@ abstract class Player
 
   procedure draw()
     variable newCard set to dealCard(random())
-    call this.cards.append(newCard)
+    variable cards set to this.cards
+    call cards.append(newCard)
     if newCard.rank.equals("A") then
       call addAce()
     else
@@ -477,7 +480,8 @@ class Dealer inherits Player
   procedure newHand()
     set this.hasPlayed to false
     call newHandHelper()
-    call this.faceCard.set(this.cards[0])
+    variable faceCard set to this.faceCard
+    call faceCard.set(this.cards[0])
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure

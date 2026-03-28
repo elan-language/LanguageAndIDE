@@ -160,6 +160,8 @@ import { SpaceNode } from "../frames/parse-nodes/space-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
 import { TestName } from "../frames/parse-nodes/testName";
+import { ThisInstance } from "../frames/parse-nodes/this-instance";
+import { ThisProcRef } from "../frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
@@ -832,6 +834,10 @@ export function transform(
     return undefined;
   }
 
+  if (node instanceof ThisInstance) {
+    return new ThisAsn(fieldId, scope);
+  }
+
   if (node instanceof KeywordNode) {
     // todo decouple this from js
     if (node.fixedText === libraryKeyword) {
@@ -977,7 +983,8 @@ export function transform(
   }
 
   if (node instanceof PropertyRef) {
-    const qualifier = transform(node.kw, fieldId, scope) as AstQualifierNode;
+    const thisAsn = new ThisAsn(fieldId, scope);
+    const qualifier = thisAsn as unknown as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
   }
@@ -986,6 +993,13 @@ export function transform(
     const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
+  }
+
+  if (node instanceof ThisProcRef) {
+    const thisAsn = new ThisAsn(fieldId, scope);
+    const q = thisAsn as unknown as AstQualifierNode;
+    const id = node.procName!.matchedText;
+    return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {

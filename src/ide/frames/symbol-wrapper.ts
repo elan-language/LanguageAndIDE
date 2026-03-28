@@ -1,6 +1,5 @@
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { thisKeyword } from "../../compiler/elan-keywords";
 import {
   isAbstractTypeName,
   isCall,
@@ -48,7 +47,8 @@ export class SymbolWrapper {
     const symbol = this.wrapped as ElanSymbol;
 
     if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.scope)) {
-      return `${thisKeyword}.${symbol.symbolId}`;
+      const thisInstance = this.file.language().THIS_INSTANCE;
+      return `${thisInstance}.${symbol.symbolId}`;
     }
 
     if (isTypeSymbol(symbol)) {
@@ -135,7 +135,8 @@ export class SymbolWrapper {
     }
 
     if (isMemberOnFieldsClass(symbol, this.scope)) {
-      return `${thisKeyword}.${symbol.symbolId}`;
+      const thisInstance = this.file.language().THIS_INSTANCE;
+      return `${thisInstance}.${symbol.symbolId}`;
     }
 
     if (isCall(this.scope) && this.scope.args instanceof EmptyAsn) {
