@@ -36,8 +36,6 @@ export class ThisInstance extends AbstractParseNode {
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     const kw = this.file.language().THIS_INSTANCE;
-    return new Set<KeywordCompletion>([
-      KeywordCompletion.create(kw, false, true),
-    ]);
+    return new Set<KeywordCompletion>([KeywordCompletion.create(kw, false, true)]);
   }
 }
