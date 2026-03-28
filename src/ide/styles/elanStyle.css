@@ -65,8 +65,9 @@ el-id {
     color: var(--namedValue);
     white-space: pre;
 }
-el-instr {
-    color: var(--instruction);
+el-instr, tr el-instr {
+    font-family: consolas, monospace;
+    color: white; background-color: var(--instruction);
 }
 el-punc {
     color: var(--defaultText);
@@ -164,7 +165,8 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-bp,
 .selected > el-top, 
 .selected > el-top *, 
-.selected > el-kw, 
+.selected > el-kw,
+.selected > el-instr, 
 .selected > el-punc, 
 .selected > el-field, 
 .selected > el-field *, 

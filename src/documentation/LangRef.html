@@ -194,7 +194,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement insrtructions</a> within them.</li>
  <li><el-kw>test</el-kw> also contains instructions, in particular the <a href="#assert"><el-kw>assert</el-kw></a> instruction for testing functions during development of your program.</li>
  <li><el-kw>class</el-kw>, <el-kw>abstract class</el-kw>, and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
- <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
+ <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions: only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
    <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the first must be declared above the second.</li>
@@ -359,10 +359,8 @@ nor with some system provided functions (e.g. <el-method>abs</el-method>) and pr
 <div id="as"></div>
 <h3 class="no-TOC" id="Parameter">Parameters</h3>
 Parameters for both a <el-kw>procedure</el-kw> and a <el-kw>function</el-kw> are defined in exactly the same way.<br>Each parameter definition takes the form:
-<el-code>named value <el-kw>as</el-kw> Type</el-code>, for example:
-<el-code-block source="ageAsInt.elan">
-<el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>age</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>
-</el-code-block>
+<el-code>named value <el-kw>as</el-kw> Type</el-code>, for example: 
+<el-code><el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>age</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field></el-code>
 
 <h3  class="no-TOC" id="recursion">Recursion</h3>
 Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:
@@ -561,9 +559,9 @@ the overall test status will show the status of only the unghosted tests (green 
 
 <p>A Class may define:</p>
 <ul>
-<li>One or more properties &ndash; see <a href="#property">Property</a></li>
-<li><el-code>function</el-code> methods &ndash; see Function method</li>
-<li><el-code>procedure</el-code> methods &ndash; see Procedure method</li>
+<li>One or more properties: see <a href="#property">Property</a></li>
+<li><el-code>function</el-code> methods: see Function method</li>
+<li><el-code>procedure</el-code> methods:  see Procedure method</li>
 <li>a <el-code>constructor</el-code> which may be used for setting up the values of properties. The <el-code>constructor</el-code> may optionally define parameters to force the calling code to provide initial values. However, it is not necessary to add a <el-code>constructor</el-code> if you have no need to initialise properties. Code in the constructor may make use of any functions, and follows the same constraints as a <el-code>function</el-code> (i.e. it may not call any <el-code>procedure</el-code>, whether defined on the <el-code>class</el-code> or outside).</li>
 </ul>
 
@@ -1297,7 +1295,7 @@ instruction declares and initalises a mutable named valued. The name defined mus
 </ul>
 
 <h2 id="literalValue">Literal value</h2>
-<p>A literal value is where a value is written 'literally' in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
+<p>A literal value is where a value is written 'literally' in the code, such as <el-code>3.142</el-code>, in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
 <table>
 <tr><th>Type</th><th>Example of literal</th></tr>
@@ -1386,13 +1384,9 @@ then an empty string or list is returned.</p>
     <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
 </pre>
 
-<p>The editor automatically puts spaces around the operators <el-code>+</el-code> and <el-code>&minus;</el-code>, but not around <el-code>/</el-code> or <el-code>*</el-code>.
+<p>The editor automatically puts spaces around the operators <el-code>&plus;</el-code> and <el-code>&minus;</el-code>, but not around <el-code>/</el-code> or <el-code>*</el-code>.
 This is just to visually reinforce the precedence.</p>
-
-<p>The <el-code>+</el-code> operator is also used for concatenating <a href="LibRef.html#String"><el-type>String</el-type></a> values.</p>
-
-<p>The editor automatically inserts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
-<p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
+<p>The <el-code>&plus;</el-code> operator is also used for concatenating <el-type>String</el-type> values.</p>
 
 <div id="and"></div>
 <div id="not"></div>
@@ -1442,10 +1436,9 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
 
 <el-code-block source="combiningOperators.elan">
-<el-field id="expr19" class="ok" tabindex="0"><el-txt>(<el-id>a</el-id> &gt; <el-id>b</el-id>)<el-kw> and </el-kw>(<el-id>b</el-id> &lt; <el-id>c</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field>
+<el-statement class="ok" id="set18" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt><el-place><i>variableName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt>(<el-id>a</el-id> &gt; <el-id>b</el-id>)<el-kw> and </el-kw>(<el-id>b</el-id> &lt; <el-id>c</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>7</el-fr></el-statement>
 <br>
-<el-field id="expr35" class="ok" tabindex="0"><el-txt>(<el-id>a</el-id> + <el-id>b</el-id>) &gt; (<el-id>c</el-id> - <el-id>d</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field>
-</el-code-block>
+<el-statement class="ok" id="set21" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt><el-place><i>variableName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt>(<el-id>a</el-id> + <el-id>b</el-id>) &gt; (<el-id>c</el-id> - <el-id>d</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>8</el-fr></el-statement></el-code-block>
 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
@@ -1652,7 +1645,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 -->
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
  <p>A concrete Class may inherit from an abstract Class, and/or an interface, but not from another concrete Class.
- In Elan, all Classes must be either abstract or 'final' &ndash; a final Class being concrete and not-inheritable.</p>
+ In Elan, all Classes must be either abstract or 'final': a final Class being concrete and not-inheritable.</p>
 
 <h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
  <p>An interface may inherit from other interfaces, but not from any Class.</p>
@@ -1750,7 +1743,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
  <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
  value, property, or method.If you encounter this error you may eliminate the error simply by adding
-  more valid characters to the name &ndash; for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.</p>
+  more valid characters to the name, for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.</p>
  <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:</p>
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
@@ -1760,7 +1753,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
   use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
   just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of
-  complexity &ndash; especially in regard to debugging and interaction with the Elan editor &ndash; just to eliminate
+  complexity, especially in regard to debugging and interaction with the Elan editor, just to eliminate
   the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
  </ul>
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
@@ -1912,11 +1905,11 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <p>An error or infinite loop found in a test. Refer to <a href="#ignore">ghosting tests</a>.</p>
 
 <h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
-<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
+<p>Overly complex expressions, for example involving a sequence of open brackets, can result in
 very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
 breaking out parts of it into separate <el-kw>variable</el-kw> instructions; otherwise it might become impossible to add more text.</p>
 
-<h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialization</h3>
+<h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
 
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
