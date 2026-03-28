@@ -30,10 +30,10 @@ NOTE: This documentation is a work in progress and is not yet fully descriptive 
   <th>examples of defining<br>a literal value</th>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code><el-kw>constant </el-kw><el-id>maxNumber</el-id><el-kw> set to </el-kw><el-lit>10</el-lit></el-code></td>
+  <td><el-instr>constant </el-instr><el-id>maxNumber</el-id><el-kw> set to </el-kw><el-lit>10</el-lit></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code><el-kw>variable </el-kw><el-id>flags</el-id><el-kw> set to </el-kw><el-lit>0b1100100</el-lit></el-code></td>
+  <td><el-code><el-instr>variable </el-instr><el-id>flags</el-id><el-kw> set to </el-kw><el-lit>0b1100100</el-lit></el-code></td>
 </tr>
 </table>
 
@@ -74,8 +74,8 @@ always be passed into a function or procedure that is expecting a <el-type>Float
  <li>The <el-type>Int</el-type> type is <i>intended</i> to represent whole numbers
 in the range:</li>
   <li><ul>
-   <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
-   <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
+   <li>Maximum: 2<sup>53</sup> &minus; 1 (which is 9,007,199,254,740,991)</li>
+   <li>Minimum value: &minus;(2<sup>53</sup> &minus; 1)</li>
   </ul></li>
  <li>If you go greater than the limit given above, the number will be accurate to approximately 17 decimal digits.
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
@@ -526,7 +526,7 @@ with specified changes: that is why all such methods have names starting '<el-co
 <p>To create a List, use either of:</p>
 <ul>
  <li>Method <el-method>createList</el-method> to define its length and the inital value (and implicitly the Type) of its items:<br>
-  <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to</el-kw> <el-method>createList</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lkit>")</el-code></li>
+  <el-code><el-instr>variable</el-instr> <el-id>aList</el-id> <el-kw>set to</el-kw> <el-method>createList</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lkit>")</el-code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
  <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-code><br>
  <el-code><el-kw>call</el-kw> <el-id>aList</el-id>.<el-method>initialise</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lit>")</el-code><br>
@@ -2426,7 +2426,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <h1 id="Constants">System constants</h1>
 
 <p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-kw>constant</el-kw></a>s,
- in that they are mutable named values &mdash; though it would be poor practice to change them.</p>
+ in that they are mutable named values, though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
 <p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.

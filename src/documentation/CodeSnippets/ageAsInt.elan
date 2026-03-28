@@ -1,9 +1,0 @@
-# c4c0c4a4a449a136bfc4fbe9095bcaa29b41671f0702727e3bfff62c7b66c012 Elan 2.0.0-alpha guest default_profile valid
-
-function a(age as Int) returns Int
-  return age
-end function
-
-procedure b(out age as Int)
-  set age to age + 1
-end procedure
