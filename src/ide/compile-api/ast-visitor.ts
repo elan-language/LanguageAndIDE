@@ -160,6 +160,7 @@ import { SpaceNode } from "../frames/parse-nodes/space-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
 import { TestName } from "../frames/parse-nodes/testName";
+import { ThisInstance } from "../frames/parse-nodes/this-instance";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
@@ -830,6 +831,10 @@ export function transform(
 
   if (node instanceof SpaceNode) {
     return undefined;
+  }
+
+  if (node instanceof ThisInstance) {
+    return new ThisAsn(fieldId, scope);
   }
 
   if (node instanceof KeywordNode) {
