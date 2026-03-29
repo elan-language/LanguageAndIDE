@@ -1,8 +1,11 @@
-# 23ef15cacbb6a54af88e3fe56352caa06f9eae243d379c8ad6b399fe9b3b6eca Elan 2.0.0-alpha1 guest default_profile valid
+# 1c2951c3dbaa61d9ea94b2470886348cf80e8449ad0e5657c72a38cbc9f180f4 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
-  variable li set to [1, 2, 3]
-  for n in li
+  # snipFrom
+  variable names set to ["Tom", "Dick", "Harriet"]
+  call print(names[0])
+  for n in names
     call print(n)
   end for
+  # snipTo
 end main

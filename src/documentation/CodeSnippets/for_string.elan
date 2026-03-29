@@ -1,8 +1,9 @@
-# f9d498f24732d3b743854fb1c85da41f7b88f8b43664bcab9748c2012cae0ab4 Elan 2.0.0-alpha1 guest default_profile valid
+# d5f1aa20942203b2e92dd4fd28c6157614498ac5881b20459ba3f11769b76954 Elan 2.0.0-alpha1 guest default_profile valid
 
-main
-  variable st set to "a string"
-  for s in st
-    call print(s)
+function reverse(s as String) returns String
+  variable sReturn set to ""
+  for ch in s
+    set sReturn to ch + sReturn
   end for
-end main
+  return sReturn
+end function

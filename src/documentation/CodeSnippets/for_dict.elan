@@ -1,6 +1,7 @@
-# 307d115823650e9366e5d203ae14973e0425b547c4ae8b8ebc19f5f70ee17a15 Elan 2.0.0-alpha1 guest default_profile valid
+# 9edc2302c6602d5e60972cbe289e28065932c8f817a543f75fb8339f3cfde8cd Elan 2.0.0-alpha1 guest default_profile valid
 
 main
+  # snipFrom
   variable di set to ["A":1, "B":2, "C":3]
   for s in di.keys()
     call print(s)
@@ -8,4 +9,5 @@ main
   for n in di.values()
     call print(n)
   end for
+  # snipTo
 end main
