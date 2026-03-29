@@ -1054,75 +1054,36 @@ which is the mechanism for running unit tests during program development, not du
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
 whose return value is put into a variable. See <a href="#constant_structure">Constant data structures</a>.</p>
 
-<!--
-<h2 id="each"><el-kw>each</el-kw></h2>
-<p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or over the characters in a <el-type>String</el-type>.</p>
-<p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
-<p>The loop counter variable does not have to have been previously declared or initialised.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print the first item in a <el-type>List</el-type> and then each item in it:</p>
-<el-code-block source="each_1.elan">
-<el-statement class="ok" id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call8" tabindex="-1"><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt></el-field>)</el-statement>
-<el-statement class="ok multiline" id="each11" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field>
-<el-statement class="ok" id="call15" tabindex="-1"><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field>)</el-statement>
-<el-kw>end each</el-kw>
-</el-statement>
-</el-code-block>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Function to reverse a <el-type>String</el-type>:</p>
-<el-code-block source="each_2.elan">
-<el-func class="ok multiline" id="func23" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>reverse</el-method></el-txt></el-field>(<el-field id="params26" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type27" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="var30" tabindex="-1"><el-kw>variable </el-kw><el-field id="var31" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt>""</el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="each33" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="set37" tabindex="-1"><el-kw>set </el-kw><el-field id="ident38" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-id>ch</el-id> + <el-id>sReturn</el-id></el-txt></el-field></el-statement>
-<el-kw>end each</el-kw>
-</el-statement>
-<el-statement class="ok" id="return28" tabindex="-1"><el-kw>return </el-kw><el-field id="expr29" class="ok" tabindex="-1"><el-txt><el-id>sReturn</el-id></el-txt></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-</div></div>
-<hr>
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Technical note about each</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; The <el-kw>each</el-kw> instruction creates its own working copy of the subject values through which to loop sequentially.
-So even if the subject value is changed in any way within the <el-kw>each</el-kw> loop, this will not affect the items it refers to and  processes.</p>
-</div></div>
-<hr>
--->
 
 <h2 id="for"><el-kw>for</el-kw></h2>
 <div id="to"></div>
 <div id="step"></div>
-<p>The <el-kw>for..from..to &gt;.. step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The loop counter variable is of Type <el-type>Int</el-type>.</p>
-<p>It counts from the given <el-kw>from</el-kw> value through to <i>one less than</i> the <el-kw>to</el-kw> value
-(as implied by the <el-kw>&gt;</el-kw> sign supplied by the Editor). </p>
-<p>The loop counter variable does not have to have been previously declared or initialised.</p>
-<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to &gt;</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative,
-and may be defined by literals, integer named values or expressions that evaluate to integer values.</p>
-<p>Note that, if you require a negative step value, then only a literal with a negative sign can be used, for example:
-
-<el-code-block source="forStepNeg.elan">
-<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for11" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw>&gt; <el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>-<el-lit>2</el-lit></el-lit></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="call20" tabindex="-1"><el-kw>call </el-kw><el-field id="ident21" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args22" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field>)</el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-</el-code-block>
+<p>The construct <el-code><el-kw>for</el-kw> <el-id>p</el-id> <el-kw>in</el-kw> <el-id>q</el-id></el-code>  specifies looping through a sequence of
+ characters in a <el-type>String</el-type> or items in a <el-type>List</el-type>. 
+The forms of the <el-kw>for</el-kw> loop are:</p>
+<ul>
+ <li>The loop variable <el-id>p</el-id> is of Type <el-type>String</el-type> and the subject <el-id>q</el-id> is of Type <el-type>String</el-type>:<br>
+ <el-code><el-kw>set </el-kwid>title </el-id><el-kw>to </el-lit>"<el-lit>Winnie the Pooh</el-lit>"<br>
+ <el-kw>for </el-kw><el-id>ch </el-id><el-kw>in </el-kw><el-id>title</el-id></el-code><br>
+  puts each character in <el-id>title</el-id> in turn into <el-type>String</el-type> <el-id>ch</el-id>.</li>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <el-type>Int</el-type>):<br>
+ <el-code><el-kw>set </el-kwid>primes </el-id><el-kw>to </el-kw>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]<br>
+ <el-kw>for </el-kw><el-id>n </el-id><el-kw>in </el-kw><el-id>primes</el-id></el-code><br>
+  puts each item in the List <el-id>primes</el-id> in turn into <el-type>Int</el-type> <el-id>n</el-id>.</li>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <el-type>String</el-type>):</li>
+ <el-code><el-kw>set </el-kwid>basket </el-id><el-kw>to </el-kw>["<el-lit>apple</el-lit>", "<el-lit>banana</el-lit>", "<el-lit>cherry</el-lit>", "<el-lit>date</el-lit>"]<br>
+ <el-kw>for </el-kw><el-id>fruit </el-id><el-kw>in </el-kw><el-id>basket</el-id></el-code><br>
+  puts each item in the List <el-id>basket</el-id> in turn into <el-type>String</el-type> <el-id>fruit</el-id>.</li>
+</ul>
+<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of  <el-id>p</el-id>:</p>
+<ul>
+ <li>The loop variable <el-id>p</el-id>'s value is limited to a range:</li>
+ <el-code><el-kw>variable </el-kw><el-id>numbers</el-id><el-kw> set to </el-kw>[<el-lit>0</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>7</el-lit>, <el-lit>8</el-lit>, <el-lit>9</el-lit>, ]<br>
+ <el-kw>for </el-kw><el-id>n </el-id><el-method>in range</el-method>(<el-lit>3</el-lit>, <el-lit>8</el-lit>)<el-code><br>
+  gives values with which to index into the List <el-id>numbers</el-id>.</li>
+</ul>
+<p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
+<p>Do not re-assign the loop variable within the loop, though doing so would not alter the sequencing of the loop.</p>
 
 <div id="if"></div>
 <div id="then"></div>
@@ -1485,7 +1446,7 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-kw>end function</el-kw> </el-func>
 </el-code-block>
 
-<h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
+<h2 id="if_expression"><el-kw>if</el-kw> (expression)</h2>
 
 <p>The <el-kw>if</el-kw> expression has two forms, both of which return a value:</p>
 <ol>
@@ -1669,7 +1630,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <!--
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
  <p>If a parameter of a procedure is marked with <el-kw>out</el-kw> then this means that the parameter may be
- reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
+ re-assigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
  constant, a literal value, or a named value that is defined by a <el-kw>let</el-kw> instruction.</p>
 -->
 

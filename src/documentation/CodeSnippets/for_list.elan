@@ -1,0 +1,8 @@
+# 23ef15cacbb6a54af88e3fe56352caa06f9eae243d379c8ad6b399fe9b3b6eca Elan 2.0.0-alpha1 guest default_profile valid
+
+main
+  variable li set to [1, 2, 3]
+  for n in li
+    call print(n)
+  end for
+end main

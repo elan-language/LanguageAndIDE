@@ -2929,6 +2929,20 @@ variables to be evaluated before printing are put within curly braces, and the s
   <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>returns a random number in the (inclusive) range between the two arguments<br>Not usable from a function: see note</td>
+ </tr><tr id="range">
+  <td><el-method>range</el-method></td>
+  <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>List</el-type></td>
+  <td>returns a List containing the integers from the first argument to one <i>less</i> than the second argument<br>
+  if the second argument is not greater than the first, then the empty List is returned</td>
+ </tr><tr id="rangeInSteps">
+  <td><el-method>rangeInSteps</el-method></td>
+  <td><el-type>Int</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>List</el-type></td>
+  <td>returns a List containing the integers from the first argument to one <i>less</i> than the second argument<br>
+   in increments specified by the third argument<br>
+   if, however, the third argument is negative, the second argument must be less than the first,<br>
+    and the integers returned will run from the first to one <i>more</i> than the second</td>
  </tr>
 </table>
 
