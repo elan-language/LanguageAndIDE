@@ -174,4 +174,34 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\life.java`,
     );
   });
+  test("Pathfinder", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\pathfinder.elan`,
+      ``,
+      `${__dirname}\\files\\pathfinder.py`,
+      `${__dirname}\\files\\pathfinder.vb`,
+      `${__dirname}\\files\\pathfinder.cs`,
+      `${__dirname}\\files\\pathfinder.java`,
+    );
+  });
+  test("Roman Numerals Turing Machine", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\roman-numerals-turing-machine.elan`,
+      ``,
+      `${__dirname}\\files\\roman-numerals-turing-machine.py`,
+      `${__dirname}\\files\\roman-numerals-turing-machine.vb`,
+      `${__dirname}\\files\\roman-numerals-turing-machine.cs`,
+      `${__dirname}\\files\\roman-numerals-turing-machine.java`,
+    );
+  });
+  test("Snake OOP", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `${__dirname}\\files\\snake-OOP.elan`,
+      ``,
+      `${__dirname}\\files\\snake-OOP.py`,
+      `${__dirname}\\files\\snake-OOP.vb`,
+      `${__dirname}\\files\\snake-OOP.cs`,
+      `${__dirname}\\files\\snake-OOP.java`,
+    );
+  });
 });

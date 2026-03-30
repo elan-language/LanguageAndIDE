@@ -14,6 +14,7 @@ import {
   mustBeKnownSymbol,
   mustBeProcedure,
   mustBePublicMember,
+  mustbeValidQualifier,
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
   mustNotCallNonExtensionViaQualifier,
@@ -79,7 +80,9 @@ export class CallAsn extends BreakpointAsn {
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(procSymbol, this)) {
+    if (isMemberOnFieldsClass(procSymbol, this)) {
+      mustbeValidQualifier(qualifier, this.compileErrors, this.fieldId);
+    } else {
       mustBePublicMember(procSymbol, this.compileErrors, this.fieldId);
     }
 
@@ -141,9 +144,11 @@ export class CallAsn extends BreakpointAsn {
         wrappedInParms = `${this.indent()}${wrappedInParameters.join("; ")};\n`;
       }
 
+      const dot = prefix.endsWith(".") || prefix === "" ? "" : ".";
+
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});`;
+      return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${dot}${id}(${parms});`;
     }
     return "";
   }

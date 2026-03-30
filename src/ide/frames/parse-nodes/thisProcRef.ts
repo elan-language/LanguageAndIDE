@@ -36,7 +36,7 @@ export class ThisProcRef extends AbstractSequence {
 
   renderAsElanSource(): string {
     return this.isValid()
-      ? `<el-kw>${thisKeyword}</el-kw>.<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      ? `${thisKeyword}.${this.procName?.renderAsElanSource()}`
       : this.matchedText;
   }
 
