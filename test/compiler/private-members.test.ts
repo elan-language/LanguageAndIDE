@@ -105,7 +105,7 @@ class Foo
   end procedure
 
   procedure testSetP1(a as Int)
-    call setP1(a)
+    call this.setP1(a)
   end procedure
 
 end class`;

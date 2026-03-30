@@ -524,7 +524,7 @@ class Bar inherits Foo
   end function
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.ff())
     call printNoLine(this.p1)
   end procedure
@@ -629,10 +629,10 @@ class Bar inherits Yon
   end function
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.ff())
     call printNoLine(this.p1)
-    call setP2(a + 1)
+    call this.setP2(a + 1)
     call printNoLine(this.ff2())
     call printNoLine(this.p2)
   end procedure
@@ -754,10 +754,10 @@ class Bar inherits Yon
   end function
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.ff())
     call printNoLine(this.p1)
-    call setP2(a + 1)
+    call this.setP2(a + 1)
     call printNoLine(this.ff2())
     call printNoLine(this.p2)
   end procedure
@@ -945,7 +945,7 @@ class Bar inherits Foo
   property p1 as Int
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.p1)
   end procedure
 end class`;
@@ -1022,7 +1022,7 @@ abstract class Foo
   abstract procedure setP(a as Int)
 
   private procedure setP1(a as Int)
-    call setP(a)
+    call this.setP(a)
   end procedure
 
 end class
@@ -1038,7 +1038,7 @@ class Bar inherits Foo
   property p1 as Int
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.p1)
   end procedure
 
@@ -1136,7 +1136,7 @@ class Bar inherits Foo
   property p1 as Int
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.p1)
   end procedure
 
@@ -1235,7 +1235,7 @@ class Bar inherits Foo
   end function
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
     call printNoLine(this.p1)
   end procedure
 end class`;
@@ -1314,7 +1314,7 @@ end class
 abstract class Foo inherits Yon
 
   private procedure setP1(a as Int)
-    call setP(a)
+    call this.setP(a)
   end procedure
 
 end class
@@ -1327,7 +1327,7 @@ class Bar inherits Foo
   end function
 
   procedure testPrivate(a as Int)
-    call setP1(a)
+    call this.setP1(a)
   end procedure
 end class`;
 
