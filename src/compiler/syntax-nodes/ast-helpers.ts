@@ -40,6 +40,7 @@ import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
+import { ClassAsn } from "./globals/class-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
@@ -520,4 +521,8 @@ export function getChildSymbol(
   }
 
   return undefined;
+}
+
+export function getSuperClasses(cf: ClassAsn) {
+  return cf.getInheritanceItems();
 }

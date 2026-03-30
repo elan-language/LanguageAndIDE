@@ -15,12 +15,14 @@ import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { globalKeyword, libraryKeyword } from "../elan-keywords";
 import {
+  getSuperClasses,
   isAstIdNode,
   isAstQualifiedNode,
   isEmptyNode,
   isRootNode,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { ClassAsn } from "../syntax-nodes/globals/class-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
@@ -603,4 +605,81 @@ export function match(id1: string, id2: string, caseSensitive: boolean) {
 
 export function isByLanguageSymbol(s: ElanSymbol): s is ElanSymbolByLanguage {
   return s && "toLanguage" in s;
+}
+
+export function getClassType(className: string, rootNode: RootAstNode) {
+  const cls = rootNode.resolveSymbol(className, false, rootNode);
+  if (cls instanceof ClassType) {
+    return cls.subType;
+  }
+  return undefined;
+}
+
+export function isImplementingAbstract(
+  methodName: string,
+  className: string,
+  rootNode: RootAstNode,
+) {
+  const cls = rootNode.resolveSymbol(className, false, rootNode);
+  if (cls instanceof ClassType) {
+    const method = cls.resolveSymbol(methodName, false, cls);
+    const scope = cls.scope;
+    if (!(method instanceof UnknownSymbol) && scope instanceof ClassAsn) {
+      const abstractClasses = getAllAbstractClasses(scope, [], scope);
+
+      for (const ac of abstractClasses) {
+        if (!(ac.resolveOwnSymbol(methodName, true) instanceof UnknownSymbol)) {
+          return ac.name;
+        }
+      }
+    }
+  }
+  return "";
+}
+
+export function getSuperClassSymbols(
+  superClasses: AstNode[],
+  filter: (s: ElanSymbol) => boolean,
+  scope: Scope,
+): ClassAsn[] {
+  const nodes = superClasses.filter((i) => isAstIdNode(i));
+  const symbols = nodes
+    .map((n) => getGlobalScope(scope).resolveSymbol(n.id, true, scope))
+    .filter(filter);
+  return symbols as ClassAsn[];
+}
+
+function seenTwice(name: string, seenNames: string[]) {
+  return seenNames.filter((s) => s === name).length > 1;
+}
+
+export function getAllClasses(
+  cf: ClassAsn,
+  seenNames: string[],
+  filter: (d: ClassAsn) => boolean,
+  scope: Scope,
+) {
+  const superClasses = getSuperClasses(cf);
+
+  const symbols = getSuperClassSymbols(
+    superClasses,
+    (n) => n instanceof ClassAsn && !seenTwice(n.symbolId, seenNames),
+    scope,
+  );
+  let allSymbols = symbols;
+  seenNames.push(cf.symbolId);
+
+  for (const s of symbols) {
+    allSymbols = allSymbols.concat(getAllClasses(s, seenNames, filter, scope));
+  }
+
+  return allSymbols.filter(filter);
+}
+
+export function getAllInterfaces(cf: ClassAsn, seenNames: string[], scope: Scope) {
+  return getAllClasses(cf, seenNames, (s: ClassAsn) => s.isInterface, scope);
+}
+
+export function getAllAbstractClasses(cf: ClassAsn, seenNames: string[], scope: Scope) {
+  return getAllClasses(cf, seenNames, (s: ClassAsn) => s.isAbstract && !s.isInterface, scope);
 }
