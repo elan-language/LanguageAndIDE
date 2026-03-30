@@ -1,0 +1,7 @@
+# 06f8caf2ea4290f39c86b4b986080cd7cfffdb2b5998343e1148cf37f90639b3 Elan 2.0.0-alpha1 guest default_profile valid
+
+main
+  # snipFrom
+  call print(rangeInSteps(2, 30, 1).filter(lambda n as Int => rangeInSteps(2, sqrt(n).floor(), 1).reduce(true, lambda c as Boolean, m as Int => c and ((n mod m) isnt 0))))
+  # snipTo
+end main
