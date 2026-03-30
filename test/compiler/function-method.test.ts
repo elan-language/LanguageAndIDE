@@ -789,6 +789,87 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
+  test("Pass_FunctionOnDifferentInstance1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.yon())
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function foo() returns Foo
+    return this
+  end function
+
+  function bar() returns String
+    return "bar"
+  end function
+
+  function yon() returns String
+    return this.foo().bar()
+  end function
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.yon()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async foo() {
+    return this;
+  }
+
+  async bar() {
+    return "bar";
+  }
+
+  async yon() {
+    return (await (await this.foo()).bar());
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "bar");
+  });
+
   test("Fail_FunctionCannotBeCalledDirectly", async () => {
     const code = `${testHeader}
 
