@@ -297,7 +297,7 @@ export function addPrivateToggleToContextMenu(
   member: PossiblyPrivateMember,
   menu: Map<string, [string, (() => boolean) | undefined]>,
 ) {
-  if (member.private) {
+  if (member.isPrivate) {
     menu.set("makePublic", [
       "make public &nbsp;&nbsp; <span class='kb'>Ctrl+p</span>",
       member.makePublic,
@@ -315,23 +315,19 @@ export function addDeleteToContextMenu(
 }
 
 export function togglePrivatePublic(member: PossiblyPrivateMember) {
-  if (member.private) {
+  if (member.isPrivate) {
     return member.makePublic();
   } else {
     return member.makePrivate();
   }
 }
 
-export function selfType(member: MemberFrame) {
-  return (member.getParent() as ClassFrame).name.textAsHtml();
+export function selfTypeAsHtml(member: MemberFrame): string {
+  return (member.getParent() as ClassFrame).name.renderAsHtml();
 }
 
-export function modifierAsHtml(member: MemberFrame): string {
-  return member.private ? `<el-kw>private </el-kw>` : "";
-}
-
-export function modifierAsSource(member: MemberFrame): string {
-  return member.private ? `${privateKeyword} ` : "";
+export function modifierAsElanSource(member: MemberFrame): string {
+  return member.isPrivate ? `${privateKeyword} ` : "";
 }
 
 export function removeHtmlTagsAndEscChars(html: string): string {

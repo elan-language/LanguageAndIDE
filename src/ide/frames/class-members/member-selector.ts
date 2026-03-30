@@ -22,11 +22,14 @@ import { ClassFrame } from "../globals/class-frame";
 export class MemberSelector extends AbstractSelector implements MemberFrame {
   isMember: boolean = true;
   isAbstract = false;
-  private = false;
+  isPrivate = false;
   private class: ClassFrame;
   constructor(parent: Parent) {
     super(parent);
     this.class = parent as ClassFrame;
+  }
+  isOnAbstractClass(): boolean {
+    throw new Error("Should not be called");
   }
 
   override helpId(): string {

@@ -5,10 +5,12 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { selfType } from "./frame-helpers";
+import { ParamListField } from "./fields/param-list-field";
+import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -55,10 +57,6 @@ import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
 
 export class LanguagePython extends LanguageAbstract {
-  private constructor() {
-    super();
-  }
-
   static Instance: Language = new LanguagePython();
 
   commentRegex(): RegExp {
@@ -79,7 +77,10 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement ||
-      frame instanceof CatchStatement
+      frame instanceof CatchStatement ||
+      frame instanceof Property ||
+      frame instanceof FunctionMethod ||
+      frame instanceof ProcedureMethod
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -135,13 +136,13 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>None</el-kw>:`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
@@ -153,7 +154,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof TestFrame) {
@@ -164,6 +165,11 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
     }
     return html;
+  }
+
+  paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
+    const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
+    return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
   }
 
   renderBottomAsHtml(_frame: Frame): string {
