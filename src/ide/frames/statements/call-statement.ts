@@ -44,7 +44,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
     return "call procedure";
   }
 
-  renderAsElanSource(): string {
+  override renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsElanSource()}(${this.args.renderAsElanSource()})`;
   }
 }

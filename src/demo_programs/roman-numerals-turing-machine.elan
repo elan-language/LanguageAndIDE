@@ -1,4 +1,4 @@
-# b038302b8a3334e58b48f9b64040bce303fab830fe04af19504444edf12b5573 Elan 2.0.0-alpha guest default_profile valid
+# c3769e827332757d951f37d1025ee5f37c4901e7d95cab63704675364ec85d8b Elan 2.0.0-alpha1 guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -65,8 +65,8 @@ class TuringMachine
   end procedure
 
   procedure singleStep()
-    variable rule set to findMatchingRule()
-    call execute(rule)
+    variable rule set to this.findMatchingRule()
+    call this.execute(rule)
   end procedure
 
   function isHalted() returns Boolean
@@ -88,7 +88,7 @@ class TuringMachine
 
   procedure execute(rule as Rule)
     set this.currentState to rule.nextState
-    call write(rule.writeSymbol)
+    call this.write(rule.writeSymbol)
     if rule.move is Dir.right then
       set this.headPosition to this.headPosition + 1
       if this.headPosition >= this.tape.length() then

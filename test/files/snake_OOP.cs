@@ -1,0 +1,171 @@
+// C# with Elan 2.0.0-alpha1
+
+// Use the W,A,S,D keys to change Snake direction
+
+static void main() {
+  var blocks = createBlockGraphics(white);
+  var snake = new Snake();
+  var apple = new Apple();
+  apple.newRandomPosition(snake); // call procedure
+  while (!snake.gameOver()) {
+    snake.updateBlocks(blocks); // call procedure
+    apple.updateBlocks(blocks); // call procedure
+    displayBlocks(blocks); // call procedure
+    sleep_ms(150); // call procedure
+    snake.clockTick(getKey(), apple); // call procedure
+  }
+  print($"Game Over! Score: {snake.score()}"); // call procedure
+}
+
+class Snake {
+
+  public Snake() {
+    var tail = new Square(20, 15);
+    this.currentDir = Direction.right; // set
+    this.body = [tail]; // set
+    this.head = tail.getAdjacentSquare(this.currentDir); // set
+    this.priorTail = tail; // set
+  }
+  string toString() { // function
+    return "";
+  }
+  Direction currentDir {get; private set;} // property
+  Square head {get; private set;} // property
+  List<Square> body {get; private set;} // property
+  Square priorTail {get; private set;} // property
+  void clockTick(string key, Apple apple) { // procedure
+    this.setDirection(key); // call procedure
+    this.priorTail = this.body[0]; // set
+    var body = this.body;
+    body.append(this.head); // call procedure
+    this.head = this.head.getAdjacentSquare(this.currentDir); // set
+    if (this.head.equals(apple.location)) {
+      apple.newRandomPosition(this); // call procedure
+    } else {
+      this.body = this.body.subList(1, this.body.length()); // set
+    }
+  }
+  void updateBlocks(List<List<int>> blocks) { // procedure
+    blocks[this.head.x][this.head.y] = green; // set
+    if (!this.body[0].equals(this.priorTail)) {
+      blocks[this.priorTail.x][this.priorTail.y] = white; // set
+    }
+  }
+  int score() { // function
+    return this.body.length() - 1;
+  }
+  bool bodyCovers(Square sq) { // function
+    var result = false;
+    foreach (seg in this.body) {
+      if ((seg.equals(sq))) {
+        result = true; // set
+      }
+    }
+    return result;
+  }
+  bool gameOver() { // function
+    return this.bodyCovers(this.head) || this.head.hasHitEdge();
+  }
+  private void setDirection(string key) { // procedure
+    if (key.equals("w")) {
+      this.currentDir = Direction.up; // set
+    } else if (key.equals("s")) {
+      this.currentDir = Direction.down; // set
+    } else if (key.equals("a")) {
+      this.currentDir = Direction.left; // set
+    } else if (key.equals("d")) {
+      this.currentDir = Direction.right; // set
+    }
+  }
+}
+
+class Apple {
+
+  public Apple() {
+    this.location = new Square(0, 0); // set
+  }
+  string toString() { // function
+    return "";
+  }
+  Square location {get; private set;} // property
+  void newRandomPosition(Snake snake) { // procedure
+    var changePosition = true;
+    while (changePosition) {
+      const Int ranX = randint(0, 39);
+      const Int ranY = randint(0, 29);
+      this.location = new Square(ranX, ranY); // set
+      if (!snake.bodyCovers(this.location)) {
+        changePosition = false; // set
+      }
+    }
+  }
+  void updateBlocks(List<List<int>> blocks) { // procedure
+    blocks[this.location.x][this.location.y] = red; // set
+  }
+}
+
+class Square {
+
+  public Square(int x, int y) {
+    this.x = x; // set
+    this.y = y; // set
+  }
+  string toString() { // function
+    return "";
+  }
+  int x {get; private set;} // property
+  int y {get; private set;} // property
+  Square getAdjacentSquare(Direction d) { // function
+    var newX = this.x;
+    var newY = this.y;
+    if (d == Direction.left) {
+      newX = this.x - 1; // set
+    } else if (d == Direction.right) {
+      newX = this.x + 1; // set
+    } else if (d == Direction.up) {
+      newY = this.y - 1; // set
+    } else if (d == Direction.down) {
+      newY = this.y + 1; // set
+    }
+    return new Square(newX, newY);
+  }
+  bool hasHitEdge() { // function
+    return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
+  }
+}
+
+enum Direction up, down, left, right
+
+[TestMethod] static void test_snake() {
+  var snake = new Snake();
+  // bodyCovers
+  Assert.AreEqual(true, snake.bodyCovers(new Square(20, 15)))
+  Assert.AreEqual(false, snake.bodyCovers(new Square(21, 15)))
+  // gameOver, score - can only test test_for default - which is not thorough test
+  Assert.AreEqual(false, snake.gameOver())
+  Assert.AreEqual(0, snake.score())
+}
+
+[TestMethod] static void test_apple() {
+  // no tests
+}
+
+[TestMethod] static void test_square() {
+  // constructor - not testable as properties are private
+  // getAdjacentSquare
+  var sq1 = new Square(3, 4);
+  Assert.AreEqual(new Square(3, 3), sq1.getAdjacentSquare(Direction.up))
+  Assert.AreEqual(new Square(3, 5), sq1.getAdjacentSquare(Direction.down))
+  Assert.AreEqual(new Square(2, 4), sq1.getAdjacentSquare(Direction.left))
+  Assert.AreEqual(new Square(4, 4), sq1.getAdjacentSquare(Direction.right))
+  var sq2 = new Square(0, 0);
+  var sq3 = new Square(-1, 0);
+  Assert.AreEqual(sq3, sq2.getAdjacentSquare(Direction.left))
+  // hasHitEdge
+  Assert.AreEqual(false, (new Square(0, 0)).hasHitEdge())
+  Assert.AreEqual(false, (new Square(39, 20)).hasHitEdge())
+  Assert.AreEqual(true, (new Square(-1, 3)).hasHitEdge())
+  Assert.AreEqual(true, (new Square(3, -1)).hasHitEdge())
+  Assert.AreEqual(true, (new Square(40, 3)).hasHitEdge())
+  Assert.AreEqual(true, (new Square(3, 30)).hasHitEdge())
+}
