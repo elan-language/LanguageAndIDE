@@ -343,6 +343,7 @@ export function removeHtmlTagsAndEscChars(html: string): string {
   while (result.match(/<[[a-z\/][^>]*>/gm)) {
     result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
   }
+  result = result.replace(/&nbsp;/gm, " ");
   result = result.replace(/&gt;/gm, ">");
   result = result.replace(/&lt;/gm, "<");
   return result;

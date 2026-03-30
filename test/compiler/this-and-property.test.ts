@@ -599,4 +599,164 @@ class Foo {
     await assertExportedCSIs(fileImpl, csCode);
     await assertExportedJavaIs(fileImpl, javaCode);
   });
+  test("Pass_AbstractClassAndMembersInLangs", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+  
+abstract class Foo
+  abstract property p1 as Int
+
+  abstract procedure proc1()
+
+  abstract function func1() returns Int
+
+  property p1 as Float
+
+  private property p2 as Float
+
+  procedure proc1()
+
+  end procedure
+
+  private procedure proc2(a as String)
+
+  end procedure
+
+  private function f1(a as Int) returns Int
+    return a
+  end function
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    const pythonCode = `${testPythonHeader}
+
+def main() -> None:
+  x = Foo() # variable definition
+  printNoLine(x.p1) # call procedure
+
+class Foo
+  p1: float # property
+  p2: float # private property
+  def proc1(self: Foo) -> None: # procedure
+
+  def proc2(self: Foo, a: str) -> None: # private procedure
+
+  def f1(self: Foo, a: int) -> int: # private function
+    return a
+  def toString(self: Foo) -> str: # function
+    return ""
+
+`;
+    const vbCode = `${testVBHeader}
+
+Sub main()
+  Dim x = New Foo() ' variable definition
+  printNoLine(x.p1) ' call procedure
+End Sub
+
+Class Foo
+
+  Sub New()
+    Me.p1 = 0.1 ' set
+  End Sub
+  Property p1 As Double
+  Private Property p2 As Double
+  Sub proc1() ' procedure
+
+  End Sub
+  Private Sub proc2(a As String) ' private procedure
+
+  End Sub
+  Private Function f1(a As Integer) As Integer
+    Return a
+  End Function
+  Function toString() As String
+    Return ""
+  End Function
+End Class
+`;
+
+    const csCode = `${testCSHeader}
+
+static void main() {
+  var x = new Foo();
+  printNoLine(x.p1); // call procedure
+}
+
+class Foo {
+
+  public Foo() {
+    this.p1 = 0.1; // set
+  }
+  public double p1 {get; private set;} // property
+  private double p2 {get; private set;} // private property
+  public void proc1() { // procedure
+
+  }
+  private void proc2(string a) { // private procedure
+
+  }
+  private int f1(int a) { // private function
+    return a;
+  }
+  public string toString() { // function
+    return "";
+  }
+}
+`;
+
+    const javaCode = `${testJavaHeader}
+
+static void main() {
+  var x = new Foo();
+  printNoLine(x.p1); // call procedure
+}
+
+class Foo {
+
+  public Foo() {
+    this.p1 = 0.1; // set
+  }
+  public double p1; // property
+  private double p2; // private property
+  public void proc1() { // procedure
+
+  }
+  private void proc2(String a) { // private procedure
+
+  }
+  private int f1(int a) { // private function
+    return a;
+  }
+  public String toString() { // function
+    return "";
+  }
+}
+`;
+
+    await assertExportedPythonIs(fileImpl, pythonCode);
+    await assertExportedVBis(fileImpl, vbCode);
+    await assertExportedCSIs(fileImpl, csCode);
+    await assertExportedJavaIs(fileImpl, javaCode);
+  });
 });
