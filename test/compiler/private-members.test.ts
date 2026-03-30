@@ -180,7 +180,7 @@ class Foo
   end function
   
   function testFf(f as String) returns String
-    return ff(f)
+    return this.ff(f)
   end function
   
 end class`;

@@ -525,7 +525,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(ff())
+    call printNoLine(this.ff())
     call printNoLine(this.p1)
   end procedure
 end class`;
@@ -630,10 +630,10 @@ class Bar inherits Yon
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(ff())
+    call printNoLine(this.ff())
     call printNoLine(this.p1)
     call setP2(a + 1)
-    call printNoLine(ff2())
+    call printNoLine(this.ff2())
     call printNoLine(this.p2)
   end procedure
 end class`;
@@ -755,10 +755,10 @@ class Bar inherits Yon
 
   procedure testPrivate(a as Int)
     call setP1(a)
-    call printNoLine(ff())
+    call printNoLine(this.ff())
     call printNoLine(this.p1)
     call setP2(a + 1)
-    call printNoLine(ff2())
+    call printNoLine(this.ff2())
     call printNoLine(this.p2)
   end procedure
 end class`;
@@ -1120,7 +1120,7 @@ abstract class Foo
   abstract function ff(a as Int) returns Int
 
   private procedure setP1(a as Int)
-    call printNoLine(ff(a))
+    call printNoLine(this.ff(a))
   end procedure
 
 end class
@@ -1407,7 +1407,7 @@ end class
 abstract class Foo inherits Yon
 
   private function fff() returns Int
-    return ff()
+    return this.ff()
   end function
 
 end class
@@ -1420,7 +1420,7 @@ class Bar inherits Foo
   end function
 
   function testPrivate(a as Int) returns Int
-    return fff()
+    return this.fff()
   end function
 end class`;
 

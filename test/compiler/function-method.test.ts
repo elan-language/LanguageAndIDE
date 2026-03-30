@@ -619,7 +619,7 @@ class Foo
     property p1 as Float
 
     function times(b as Bar) returns Float
-        return p1PlusOne() * b.p1PlusOne()
+        return this.p1PlusOne() * b.p1PlusOne()
     end function
 
     function p1PlusOne() returns Float
@@ -735,7 +735,7 @@ class Foo
   property p1 as Float
 
   procedure prt()
-    call printNoLine(toString())
+    call printNoLine(this.toString())
   end procedure
 
   function toString() returns String

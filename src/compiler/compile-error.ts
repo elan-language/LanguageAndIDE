@@ -375,7 +375,7 @@ export class PropertyCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot prefix function with 'property'.`,
+      `Must prefix member with 'this'.`,
       location,
       "LangRef.html#compile_error",
     );

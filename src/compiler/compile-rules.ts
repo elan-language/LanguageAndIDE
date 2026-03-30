@@ -537,7 +537,7 @@ export function mustbeValidQualifier(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (qualifier instanceof ThisAsn) {
+  if (!(qualifier instanceof ThisAsn)) {
     compileErrors.push(new PropertyCompileError(location));
   }
 }
