@@ -2,7 +2,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../../compiler/compiler-interfaces/type-options";
 import { ClassSubType, ClassType } from "../../../compiler/symbols/class-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getAllAbstractClasses, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { getId, mustBeDeclaredAbove } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { compileNodes } from "../ast-helpers";
@@ -46,7 +46,7 @@ export class AbstractClassAsn extends ClassAsn {
       return this.circularDependency(cdName);
     }
 
-    const abstractClasses = this.getAllAbstractClasses(this, []);
+    const abstractClasses = getAllAbstractClasses(this, [], this);
 
     const thisIndex = this.getClassIndex();
     for (const ac of abstractClasses) {
