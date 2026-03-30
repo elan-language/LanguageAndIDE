@@ -5,9 +5,10 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { modifierAsHtml, selfType } from "./frame-helpers";
+import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
+import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { Enum } from "./globals/enum";
@@ -106,6 +107,18 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return html;
   }
 
+  protected modifierAsHtml(member: MemberFrame): string {
+    let modifier = "";
+    if (member.isPrivate && member.isOnAbstractClass()) {
+      modifier = this.PROTECTED;
+    } else if (member.isPrivate) {
+      modifier = this.PRIVATE;
+    } else {
+      modifier = this.PUBLIC;
+    }
+    return modifier === "" ? "" : `<el-kw>${modifier} </el-kw>`;
+  }
+
   common_renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
@@ -113,11 +126,11 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()} {`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.PUBLIC} ${selfType(frame)}(${frame.params.renderAsHtml()}) {`;
+      html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalProcedure) {
@@ -129,7 +142,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw><el-punc> {</el-punc>`;
     } else if (frame instanceof While) {
@@ -163,6 +176,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   protected INHERITS = "inherits";
   protected INTERFACE = "interface";
   protected PRIVATE = "private";
+  protected PROTECTED = "protected";
   protected PUBLIC = "public";
   protected RETURN = "return";
   protected STATIC = "static";

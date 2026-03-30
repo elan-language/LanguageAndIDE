@@ -183,7 +183,7 @@ export function T05_classes() {
   cl2.addChildBefore(p2, ms2);
   p2.name.setFieldToKnownValidText("value");
   p2.type.setFieldToKnownValidText("Int");
-  p2.private = true;
+  p2.isPrivate = true;
   const m1 = new FunctionMethod(cl2);
   cl2.addChildBefore(m1, ms2);
   m1.name.setFieldToKnownValidText("reset");
