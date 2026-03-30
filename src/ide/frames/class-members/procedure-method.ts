@@ -1,7 +1,7 @@
 import { privateKeyword } from "../../../compiler/elan-keywords";
 import {
   addPrivateToggleToContextMenu,
-  modifierAsSource,
+  modifierAsElanSource,
   singleIndent,
   togglePrivatePublic,
 } from "../frame-helpers";
@@ -9,15 +9,20 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
+import { AbstractClass } from "../globals/abstract-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
-  private: boolean;
+  isPrivate: boolean;
   isAbstract = false;
   constructor(parent: Parent, priv = false) {
     super(parent);
-    this.private = priv;
+    this.isPrivate = priv;
+  }
+
+  isOnAbstractClass(): boolean {
+    return this.getParent() instanceof AbstractClass;
   }
 
   override helpId(): string {
@@ -28,8 +33,13 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return singleIndent();
   }
 
+  frameSpecificAnnotation(): string {
+    const priv = this.isPrivate ? "private " : "";
+    return `${priv}procedure`;
+  }
+
   public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
 ${this.renderChildrenAsElanSource()}\r
 ${this.indent()}end procedure\r
 `;
@@ -40,7 +50,7 @@ ${this.indent()}end procedure\r
     const priv = `${privateKeyword} `;
     if (source.isMatch(priv)) {
       source.remove(priv);
-      this.private = true;
+      this.isPrivate = true;
     }
     return super.parseTop(source);
   }
@@ -50,11 +60,11 @@ ${this.indent()}end procedure\r
   }
 
   makePublic = () => {
-    this.private = false;
+    this.isPrivate = false;
     return true;
   };
   makePrivate = () => {
-    this.private = true;
+    this.isPrivate = true;
     return true;
   };
   getContextMenuItems() {
