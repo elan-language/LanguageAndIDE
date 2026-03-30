@@ -218,7 +218,7 @@ abstract class Foo
   end function
 
   procedure proc()
-    call printNoLine(func())
+    call printNoLine(this.func())
   end procedure
 
   property prop as Int
@@ -298,7 +298,7 @@ abstract class Foo
   abstract function func() returns Int
 
   procedure proc()
-    call printNoLine(func())
+    call printNoLine(this.func())
   end procedure
 
   property prop as Int

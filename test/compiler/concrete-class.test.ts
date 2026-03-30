@@ -635,7 +635,7 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to ff()
+    set this.p1 to this.ff()
   end constructor
   function toString() returns String
     return ""

@@ -1232,7 +1232,7 @@ end class`;
     ]);
   });
 
-  test("Fail_spuriousProperty1", async () => {
+  test("Fail_noThis", async () => {
     const code = `${testHeader}
 
 class Bar
@@ -1243,7 +1243,7 @@ class Bar
   end function
 
   procedure p()
-    variable a set to this.toString()
+    variable a set to toString()
   end procedure
 
 end class`;
@@ -1260,12 +1260,10 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot prefix function with 'property'.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
   });
 
-  test("Fail_spuriousProperty2", async () => {
+  test("Fail_notInScope", async () => {
     const code = `${testHeader}
 
 function foo() returns Int
@@ -1298,7 +1296,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot prefix function with 'property'.LangRef.html#compile_error",
+      "'foo' is not defined for type 'Bar'.LangRef.html#compile_error",
     ]);
   });
 

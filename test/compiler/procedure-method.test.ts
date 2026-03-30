@@ -174,7 +174,7 @@ class Foo
 
     procedure times(b as Bar)
         call b.p1PlusOne()
-        call p1PlusOne()
+        call this.p1PlusOne()
         set this.p1 to this.p1 + b.p1
         call printNoLine(this.p1)
     end procedure
