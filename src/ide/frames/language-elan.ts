@@ -110,7 +110,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof AbstractProcedure) {
       html = `<el-kw>${this.ABSTRACT} ${this.PROCEDURE} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
-      html = ``;
+      html = `<el-kw>${this.ABSTRACT} ${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     }
     return html;
   }

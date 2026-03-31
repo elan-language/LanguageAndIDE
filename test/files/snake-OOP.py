@@ -17,18 +17,18 @@ def main() -> None:
 
 class Snake
 
-  def __init__(self: Snake, ) -> None:
+  def __init__(self: Snake) -> None:
     tail = Square(20, 15) # variable definition
     self.currentDir = Direction.right # set
     self.body = [tail] # set
     self.head = tail.getAdjacentSquare(self.currentDir) # set
     self.priorTail = tail # set
-  def toString(self: Snake, ) -> str: # function
+  def toString(self: Snake) -> str: # function
     return ""
-  currentDir: Direction
-  head: Square
-  body: list[Square]
-  priorTail: Square
+  currentDir: Direction # private property
+  head: Square # private property
+  body: list[Square] # private property
+  priorTail: Square # private property
   def clockTick(self: Snake, key: str, apple: Apple) -> None: # procedure
     self.setDirection(key) # call procedure
     self.priorTail = self.body[0] # set
@@ -43,7 +43,7 @@ class Snake
     blocks[self.head.x][self.head.y] = green # set
     if not self.body[0].equals(self.priorTail):
       blocks[self.priorTail.x][self.priorTail.y] = white # set
-  def score(self: Snake, ) -> int: # function
+  def score(self: Snake) -> int: # function
     return self.body.length() - 1
   def bodyCovers(self: Snake, sq: Square) -> bool: # function
     result = False # variable definition
@@ -51,9 +51,9 @@ class Snake
       if (seg.equals(sq)):
         result = True # set
     return result
-  def gameOver(self: Snake, ) -> bool: # function
+  def gameOver(self: Snake) -> bool: # function
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
-  def setDirection(self: Snake, key: str) -> None: # procedure
+  def setDirection(self: Snake, key: str) -> None: # private procedure
     if key.equals("w"):
       self.currentDir = Direction.up # set
     elif key.equals("s"):
@@ -66,11 +66,11 @@ class Snake
 
 class Apple
 
-  def __init__(self: Apple, ) -> None:
+  def __init__(self: Apple) -> None:
     self.location = Square(0, 0) # set
-  def toString(self: Apple, ) -> str: # function
+  def toString(self: Apple) -> str: # function
     return ""
-  location: Square
+  location: Square # property
   def newRandomPosition(self: Apple, snake: Snake) -> None: # procedure
     changePosition = True # variable definition
     while changePosition:
@@ -88,10 +88,10 @@ class Square
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # set
     self.y = y # set
-  def toString(self: Square, ) -> str: # function
+  def toString(self: Square) -> str: # function
     return ""
-  x: int
-  y: int
+  x: int # property
+  y: int # property
   def getAdjacentSquare(self: Square, d: Direction) -> Square: # function
     newX = self.x # variable definition
     newY = self.y # variable definition
@@ -104,7 +104,7 @@ class Square
     elif d == Direction.down:
       newY = self.y + 1 # set
     return Square(newX, newY)
-  def hasHitEdge(self: Square, ) -> bool: # function
+  def hasHitEdge(self: Square) -> bool: # function
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
 
 

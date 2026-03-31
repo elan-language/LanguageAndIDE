@@ -89,7 +89,7 @@ End Function
 
 Class Solver
 
-  Public Sub New(nodes As List(Of Node), start As Point, destination As Point)
+  Sub New(nodes As List(Of Node), start As Point, destination As Point)
     Me.nodes = nodes ' set
     Me.start = start ' set
     Me.destination = destination ' set
@@ -203,7 +203,7 @@ End Function
 
 Class Node
 
-  Public Sub New(p As Point, distFromStart As Double, estDistToDest As Double)
+  Sub New(p As Point, distFromStart As Double, estDistToDest As Double)
     If p.isEmpty Then
       Me.isEmpty = True ' set
     End If
@@ -242,7 +242,7 @@ Class Point
   Property x As Integer
   Property y As Integer
   Property isEmpty As Boolean
-  Public Sub New(x As Integer, y As Integer)
+  Sub New(x As Integer, y As Integer)
     If (x < 0) Or (y < 0) Then
       Me.isEmpty = True ' set
     Else

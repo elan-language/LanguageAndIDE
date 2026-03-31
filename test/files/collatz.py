@@ -30,7 +30,7 @@ def main() -> None:
       sleep_ms(100) # call procedure
   print("Finished") # call procedure
 
-# scale x. &nbsp;We pass in p just to get its length
+# scale x.  We pass in p just to get its length
 
 def scx(i: int, p: list[int]) -> float: # function
   return divAsFloat(i*100, p.length())

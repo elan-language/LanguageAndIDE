@@ -66,7 +66,10 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement ||
-      frame instanceof Property
+      frame instanceof Property ||
+      frame instanceof AbstractProperty ||
+      frame instanceof AbstractProcedure ||
+      frame instanceof AbstractFunction
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -98,11 +101,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.returnType.renderAsHtml()} <el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) ;</el-punc>`;
+      html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.returnType.renderAsHtml()} <el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()});`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.ABSTRACT} ${this.VOID} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) ;</el-punc>`;
-    } else if (frame instanceof AbstractProperty) {
-      html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.type.renderAsHtml()} <el-id>${frame.name.renderAsHtml()}</el-id><el-punc>;</el-punc>`;
+      html = `<el-kw>${this.ABSTRACT} ${this.VOID} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()});`;
     }
     return html;
   }

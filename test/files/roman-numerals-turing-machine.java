@@ -45,40 +45,40 @@ class TuringMachine {
     this.currentState = initialState; // set
     this.headPosition = 0; // set
   }
-  String toString() { // function
+  public String toString() { // function
     return "";
   }
-  String initialState; // property
-  String currentState; // property
-  int headPosition; // property
-  String haltState; // property
-  List<Rule> rules; // property
-  String tape; // property
-  void setTape(String tape) { // procedure
+  public String initialState; // property
+  public String currentState; // property
+  public int headPosition; // property
+  public String haltState; // property
+  public List<Rule> rules; // property
+  public String tape; // property
+  public void setTape(String tape) { // procedure
     this.tape = tape; // set
   }
-  void append(Rule rule) { // procedure
+  public void append(Rule rule) { // procedure
     this.rules = this.rules.withAppend(rule); // set
   }
-  void singleStep() { // procedure
+  public void singleStep() { // procedure
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
   }
-  bool isHalted() { // function
+  public bool isHalted() { // function
     return this.currentState.equals(this.haltState);
   }
-  Rule findMatchingRule() { // function
+  public Rule findMatchingRule() { // function
     var matches = this.rules.filter(lambda Rule r => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError(String.format("No rule matching state % and symbol %", this.currentState, this.tape[this.headPosition]))
     }
     return matches.head();
   }
-  void write(String newSymbol) { // procedure
+  public void write(String newSymbol) { // procedure
     final Int hp = this.headPosition; // constant
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // set
   }
-  void execute(Rule rule) { // procedure
+  public void execute(Rule rule) { // procedure
     this.currentState = rule.nextState; // set
     this.write(rule.writeSymbol); // call procedure
     if (rule.move == Dir.right) {
@@ -98,11 +98,11 @@ class TuringMachine {
 
 class Rule {
 
-  String currentState; // property
-  String currentSymbol; // property
-  String nextState; // property
-  String writeSymbol; // property
-  Dir move; // property
+  public String currentState; // property
+  public String currentSymbol; // property
+  public String nextState; // property
+  public String writeSymbol; // property
+  public Dir move; // property
   public Rule(String currentState, String currentSymbol, String nextState, String writeSymbol, Dir move) {
     this.currentState = currentState; // set
     this.currentSymbol = currentSymbol; // set
@@ -110,7 +110,7 @@ class Rule {
     this.writeSymbol = writeSymbol; // set
     this.move = move; // set
   }
-  String toString() { // function
+  public String toString() { // function
     return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, this.move);
   }
 }
@@ -121,7 +121,7 @@ enum Dir left, right
 
 static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   // name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
-  // Example tape input: &nbsp;2024 (between 1 and 3999)
+  // Example tape input:  2024 (between 1 and 3999)
   tm.append(new Rule("init", "0", "init", "0", Dir.right)); // call procedure
   tm.append(new Rule("init", "1", "init", "1", Dir.right)); // call procedure
   tm.append(new Rule("init", "2", "init", "2", Dir.right)); // call procedure
@@ -179,7 +179,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("write1", "X", "write1", "X", Dir.right)); // call procedure
   tm.append(new Rule("write1", "|", "write1", "|", Dir.right)); // call procedure
   tm.append(new Rule("write1", " ", "write0", "I", Dir.right)); // call procedure
-  // write2 &nbsp;
+  // write2  
   tm.append(new Rule("write2", "0", "write2", "0", Dir.right)); // call procedure
   tm.append(new Rule("write2", "1", "write2", "1", Dir.right)); // call procedure
   tm.append(new Rule("write2", "2", "write2", "2", Dir.right)); // call procedure
@@ -196,7 +196,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("write2", "X", "write2", "X", Dir.right)); // call procedure
   tm.append(new Rule("write2", "|", "write2", "|", Dir.right)); // call procedure
   tm.append(new Rule("write2", " ", "write1", "I", Dir.right)); // call procedure
-  // write3 &nbsp;
+  // write3  
   tm.append(new Rule("write3", "0", "write3", "0", Dir.right)); // call procedure
   tm.append(new Rule("write3", "1", "write3", "1", Dir.right)); // call procedure
   tm.append(new Rule("write3", "2", "write3", "2", Dir.right)); // call procedure
@@ -213,7 +213,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("write3", "X", "write3", "X", Dir.right)); // call procedure
   tm.append(new Rule("write3", "|", "write3", "|", Dir.right)); // call procedure
   tm.append(new Rule("write3", " ", "write2", "I", Dir.right)); // call procedure
-  // write4 &nbsp;
+  // write4  
   tm.append(new Rule("write4", "0", "write4", "0", Dir.right)); // call procedure
   tm.append(new Rule("write4", "1", "write4", "1", Dir.right)); // call procedure
   tm.append(new Rule("write4", "2", "write4", "2", Dir.right)); // call procedure
@@ -317,7 +317,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("write9", " ", "write10", "I", Dir.right)); // call procedure
   // Write10
   tm.append(new Rule("write10", " ", "write0", "X", Dir.right)); // call procedure
-  // return &nbsp;
+  // return  
   tm.append(new Rule("return", "0", "return", "0", Dir.left)); // call procedure
   tm.append(new Rule("return", "1", "return", "1", Dir.left)); // call procedure
   tm.append(new Rule("return", "2", "return", "2", Dir.left)); // call procedure
@@ -335,7 +335,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("return", "]", "return", "]", Dir.left)); // call procedure
   tm.append(new Rule("return", "[", "readNextDigit", " ", Dir.right)); // call procedure
   tm.append(new Rule("return", " ", "readNextDigit", " ", Dir.right)); // call procedure
-  // gotoEnd - &nbsp;only after deleting input.
+  // gotoEnd -  only after deleting input.
   tm.append(new Rule("gotoEnd", "|", "gotoEnd", "|", Dir.right)); // call procedure
   tm.append(new Rule("gotoEnd", "I", "gotoEnd", "I", Dir.right)); // call procedure
   tm.append(new Rule("gotoEnd", "V", "gotoEnd", "V", Dir.right)); // call procedure
@@ -388,7 +388,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("moveV", "|", "nextChar", "V", Dir.right)); // call procedure
   tm.append(new Rule("moveV", "I", "writeV", "I", Dir.left)); // call procedure
   tm.append(new Rule("moveV", " ", "writeV", " ", Dir.left)); // call procedure
-  // moveX &nbsp;
+  // moveX  
   tm.append(new Rule("moveX", "|", "nextChar", "X", Dir.right)); // call procedure
   tm.append(new Rule("moveX", "I", "writeX", "I", Dir.left)); // call procedure
   tm.append(new Rule("moveX", "V", "writeX", "V", Dir.left)); // call procedure
@@ -396,13 +396,13 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("moveX", "L", "writeX", "L", Dir.left)); // call procedure
   tm.append(new Rule("moveX", "C", "writeX", "C", Dir.left)); // call procedure
   tm.append(new Rule("moveX", " ", "writeX", " ", Dir.left)); // call procedure
-  // moveL &nbsp;
+  // moveL  
   tm.append(new Rule("moveL", "|", "nextChar", "L", Dir.right)); // call procedure
   tm.append(new Rule("moveL", "I", "writeL", "I", Dir.left)); // call procedure
   tm.append(new Rule("moveL", "V", "writeL", "V", Dir.left)); // call procedure
   tm.append(new Rule("moveL", "X", "writeL", "X", Dir.left)); // call procedure
   tm.append(new Rule("moveL", " ", "writeL", " ", Dir.left)); // call procedure
-  // moveC &nbsp;
+  // moveC  
   tm.append(new Rule("moveC", "|", "nextChar", "C", Dir.right)); // call procedure
   tm.append(new Rule("moveC", "I", "writeC", "I", Dir.left)); // call procedure
   tm.append(new Rule("moveC", "V", "writeC", "V", Dir.left)); // call procedure
@@ -412,7 +412,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("moveC", "D", "writeC", "D", Dir.left)); // call procedure
   tm.append(new Rule("moveC", "M", "writeC", "M", Dir.left)); // call procedure
   tm.append(new Rule("moveC", " ", "writeC", " ", Dir.left)); // call procedure
-  // moveD &nbsp;
+  // moveD  
   tm.append(new Rule("moveD", "|", "nextChar", "D", Dir.right)); // call procedure
   tm.append(new Rule("moveD", "I", "writeD", "I", Dir.left)); // call procedure
   tm.append(new Rule("moveD", "V", "writeD", "V", Dir.left)); // call procedure
@@ -445,7 +445,7 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("writeD", " ", "nextChar", "D", Dir.right)); // call procedure
   tm.append(new Rule("writeM", "|", "nextChar", "M", Dir.right)); // call procedure
   tm.append(new Rule("writeM", " ", "nextChar", "M", Dir.right)); // call procedure
-  // checkForBars &nbsp;
+  // checkForBars  
   tm.append(new Rule("checkForBars", "I", "checkForBars", "I", Dir.left)); // call procedure
   tm.append(new Rule("checkForBars", "V", "checkForBars", "V", Dir.left)); // call procedure
   tm.append(new Rule("checkForBars", "X", "checkForBars", "X", Dir.left)); // call procedure

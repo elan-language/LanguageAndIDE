@@ -80,7 +80,10 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof CatchStatement ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
-      frame instanceof ProcedureMethod
+      frame instanceof ProcedureMethod ||
+      frame instanceof AbstractFunction ||
+      frame instanceof AbstractProcedure ||
+      frame instanceof AbstractProperty
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -90,11 +93,18 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      html = `TBD`;
+      html = `<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `TBD`;
+      html = `<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProperty) {
-      html = `TBD`;
+      html = html = `<el-comment>@property</el-comment><br>
+<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
@@ -132,7 +142,7 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>(<el-type>ABC</el-type>)${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
@@ -150,7 +160,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>(<el-type>ABC</el-type>)${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {

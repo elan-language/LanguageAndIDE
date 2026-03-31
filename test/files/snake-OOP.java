@@ -26,14 +26,14 @@ class Snake {
     this.head = tail.getAdjacentSquare(this.currentDir); // set
     this.priorTail = tail; // set
   }
-  String toString() { // function
+  public String toString() { // function
     return "";
   }
-  private Direction currentDir; // property
-  private Square head; // property
-  private List<Square> body; // property
-  private Square priorTail; // property
-  void clockTick(String key, Apple apple) { // procedure
+  private Direction currentDir; // private property
+  private Square head; // private property
+  private List<Square> body; // private property
+  private Square priorTail; // private property
+  public void clockTick(String key, Apple apple) { // procedure
     this.setDirection(key); // call procedure
     this.priorTail = this.body[0]; // set
     var body = this.body;
@@ -45,16 +45,16 @@ class Snake {
       this.body = this.body.subList(1, this.body.length()); // set
     }
   }
-  void updateBlocks(List<List<int>> blocks) { // procedure
+  public void updateBlocks(List<List<int>> blocks) { // procedure
     blocks[this.head.x][this.head.y] = green; // set
     if (!this.body[0].equals(this.priorTail)) {
       blocks[this.priorTail.x][this.priorTail.y] = white; // set
     }
   }
-  int score() { // function
+  public int score() { // function
     return this.body.length() - 1;
   }
-  bool bodyCovers(Square sq) { // function
+  public bool bodyCovers(Square sq) { // function
     var result = false;
     foreach (seg in this.body) {
       if ((seg.equals(sq))) {
@@ -63,10 +63,10 @@ class Snake {
     }
     return result;
   }
-  bool gameOver() { // function
+  public bool gameOver() { // function
     return this.bodyCovers(this.head) || this.head.hasHitEdge();
   }
-  private void setDirection(String key) { // procedure
+  private void setDirection(String key) { // private procedure
     if (key.equals("w")) {
       this.currentDir = Direction.up; // set
     } else if (key.equals("s")) {
@@ -84,11 +84,11 @@ class Apple {
   public Apple() {
     this.location = new Square(0, 0); // set
   }
-  String toString() { // function
+  public String toString() { // function
     return "";
   }
-  Square location; // property
-  void newRandomPosition(Snake snake) { // procedure
+  public Square location; // property
+  public void newRandomPosition(Snake snake) { // procedure
     var changePosition = true;
     while (changePosition) {
       final Int ranX = randint(0, 39); // constant
@@ -99,7 +99,7 @@ class Apple {
       }
     }
   }
-  void updateBlocks(List<List<int>> blocks) { // procedure
+  public void updateBlocks(List<List<int>> blocks) { // procedure
     blocks[this.location.x][this.location.y] = red; // set
   }
 }
@@ -110,12 +110,12 @@ class Square {
     this.x = x; // set
     this.y = y; // set
   }
-  String toString() { // function
+  public String toString() { // function
     return "";
   }
-  int x; // property
-  int y; // property
-  Square getAdjacentSquare(Direction d) { // function
+  public int x; // property
+  public int y; // property
+  public Square getAdjacentSquare(Direction d) { // function
     var newX = this.x;
     var newY = this.y;
     if (d == Direction.left) {
@@ -129,7 +129,7 @@ class Square {
     }
     return new Square(newX, newY);
   }
-  bool hasHitEdge() { // function
+  public bool hasHitEdge() { // function
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
   }
 }

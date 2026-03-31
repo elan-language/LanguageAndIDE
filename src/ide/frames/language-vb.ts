@@ -116,11 +116,11 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.ABSTRACT} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
-      html = ``;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     }
     return html;
   }
@@ -128,7 +128,7 @@ export class LanguageVB extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
@@ -203,7 +203,6 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  private ABSTRACT = "abstract";
   private AS = "As";
   private CATCH = "Catch";
   private CLASS = "Class";
@@ -222,6 +221,8 @@ export class LanguageVB extends LanguageAbstract {
   private INTERFACE = "Interface";
   private IS = "Is";
   private ME = "Me";
+  private MUST_INHERIT = "MustInherit";
+  private MUST_OVERRIDE = "MustOverride";
   private NEXT = "Next";
   private OF = "Of";
   private PRIVATE = "Private";

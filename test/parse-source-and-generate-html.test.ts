@@ -196,12 +196,42 @@ suite("Parse source and generate Html", () => {
   });
   test("Snake OOP", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\snake-OOP.elan`,
+      `${__dirname}\\files\\snake-oop.elan`,
       ``,
-      `${__dirname}\\files\\snake-OOP.py`,
-      `${__dirname}\\files\\snake-OOP.vb`,
-      `${__dirname}\\files\\snake-OOP.cs`,
-      `${__dirname}\\files\\snake-OOP.java`,
+      `${__dirname}\\files\\snake-oop.py`,
+      `${__dirname}\\files\\snake-oop.vb`,
+      `${__dirname}\\files\\snake-oop.cs`,
+      `${__dirname}\\files\\snake-oop.java`,
     );
+    test("Snake FP", async () => {
+      await assertGeneratesHtmlSourceAndExportFiles(
+        `${__dirname}\\files\\snake-fp.elan`,
+        ``,
+        `${__dirname}\\files\\snake-fp.py`,
+        `${__dirname}\\files\\snake-fp.vb`,
+        `${__dirname}\\files\\snake-fp.cs`,
+        `${__dirname}\\files\\snake-fp.java`,
+      );
+    });
+    test("Date/Time", async () => {
+      await assertGeneratesHtmlSourceAndExportFiles(
+        `${__dirname}\\files\\date-time.elan`,
+        ``,
+        `${__dirname}\\files\\date-time.py`,
+        `${__dirname}\\files\\date-time.vb`,
+        `${__dirname}\\files\\date-time.cs`,
+        `${__dirname}\\files\\date-time.java`,
+      );
+    });
+    test("Julia set", async () => {
+      await assertGeneratesHtmlSourceAndExportFiles(
+        `${__dirname}\\files\\julia-set.elan`,
+        ``,
+        `${__dirname}\\files\\julia-set.py`,
+        `${__dirname}\\files\\julia-set.vb`,
+        `${__dirname}\\files\\julia-set.cs`,
+        `${__dirname}\\files\\julia-set.java`,
+      );
+    });
   });
 });
