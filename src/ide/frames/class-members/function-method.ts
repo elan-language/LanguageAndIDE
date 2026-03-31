@@ -4,7 +4,11 @@ import {
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import { getClassType, isImplementingAbstract } from "../../../compiler/symbols/symbol-helpers";
+import { ClassSubType } from "../../../compiler/symbols/class-type";
+import {
+  getClassType,
+  isImplementingAbstractOrInterface,
+} from "../../../compiler/symbols/symbol-helpers";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
@@ -52,9 +56,9 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     const name = this.name.renderAsElanSource();
     const cls = (this.getParent() as ClassFrame).name.renderAsElanSource();
     const root = this.file.getAst(true)!;
-    const superCls = isImplementingAbstract(name, cls, root);
-    const abstractClass = getClassType(name, root);
-    return [superCls, abstractClass ? true : false];
+    const superCls = isImplementingAbstractOrInterface(name, cls, root);
+    const abstractClass = getClassType(superCls, root) === ClassSubType.abstract;
+    return [superCls, abstractClass];
   }
 
   public override renderAsElanSource(): string {

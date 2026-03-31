@@ -30,7 +30,7 @@ import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { BooleanType } from "./boolean-type";
-import { ClassType } from "./class-type";
+import { ClassSubType, ClassType } from "./class-type";
 import { ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
@@ -607,29 +607,31 @@ export function isByLanguageSymbol(s: ElanSymbol): s is ElanSymbolByLanguage {
   return s && "toLanguage" in s;
 }
 
-export function getClassType(className: string, rootNode: RootAstNode) {
+export function getClassType(className: string, rootNode: RootAstNode): ClassSubType | undefined {
   const cls = rootNode.resolveSymbol(className, false, rootNode);
-  if (cls instanceof ClassType) {
-    return cls.subType;
+  if (isClass(cls)) {
+    const st = cls.symbolType() as ClassType;
+    return st.subType;
   }
   return undefined;
 }
 
-export function isImplementingAbstract(
+export function isImplementingAbstractOrInterface(
   methodName: string,
   className: string,
   rootNode: RootAstNode,
 ): string {
   const cls = rootNode.resolveSymbol(className, false, rootNode);
-  if (cls instanceof ClassType) {
+  if (isClass(cls)) {
     const method = cls.resolveSymbol(methodName, false, cls);
-    const scope = cls.scope;
-    if (!(method instanceof UnknownSymbol) && scope instanceof ClassAsn) {
-      const abstractClasses = getAllAbstractClasses(scope, [], scope);
+    if (!(method instanceof UnknownSymbol) && cls instanceof ClassAsn) {
+      const abstractClasses = getAllAbstractClasses(cls, [], cls);
+      const interfaces = getAllInterfaces(cls, [], cls);
+      const all = abstractClasses.concat(interfaces);
 
-      for (const ac of abstractClasses) {
-        if (!(ac.resolveOwnSymbol(methodName, true) instanceof UnknownSymbol)) {
-          return ac.getName();
+      for (const a of all) {
+        if (!(a.resolveOwnSymbol(methodName, true) instanceof UnknownSymbol)) {
+          return a.getName();
         }
       }
     }
