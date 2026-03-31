@@ -4,7 +4,7 @@ import {
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import { isImplementingAbstract } from "../../../compiler/symbols/symbol-helpers";
+import { getClassType, isImplementingAbstract } from "../../../compiler/symbols/symbol-helpers";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
@@ -13,12 +13,12 @@ import {
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
+import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { AbstractClass } from "../globals/abstract-class";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
-import { File } from "../frame-interfaces/file";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
@@ -47,12 +47,13 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return `${priv}function`;
   }
 
-  public implementsAbstractMethodOnClass(): string {
+  public implementsAbstractMethodOnClassOrInterface(): [string, boolean] {
     const name = this.name.renderAsElanSource();
     const cls = (this.getParent() as ClassFrame).name.renderAsElanSource();
     const root = this.file.getAst(true)!;
     const superCls = isImplementingAbstract(name, cls, root);
-    return superCls;
+    const abstractClass = getClassType(name, root);
+    return [superCls, abstractClass ? true : false];
   }
 
   public override renderAsElanSource(): string {
