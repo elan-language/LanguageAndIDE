@@ -37,7 +37,7 @@ Const haltState = "halt"
 
 Class TuringMachine
 
-  Public Sub New(initialState As String, haltState As String)
+  Sub New(initialState As String, haltState As String)
     Me.tape = "" ' set
     Me.initialState = initialState ' set
     Me.haltState = haltState ' set
@@ -103,7 +103,7 @@ Class Rule
   Property nextState As String
   Property writeSymbol As String
   Property move As Dir
-  Public Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
+  Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
     Me.currentState = currentState ' set
     Me.currentSymbol = currentSymbol ' set
     Me.nextState = nextState ' set
@@ -121,7 +121,7 @@ Enum Dir left, right
 
 Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   ' name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
-  ' Example tape input: &nbsp;2024 (between 1 and 3999)
+  ' Example tape input:  2024 (between 1 and 3999)
   tm.append(New Rule("init", "0", "init", "0", Dir.right)) ' call procedure
   tm.append(New Rule("init", "1", "init", "1", Dir.right)) ' call procedure
   tm.append(New Rule("init", "2", "init", "2", Dir.right)) ' call procedure
@@ -179,7 +179,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("write1", "X", "write1", "X", Dir.right)) ' call procedure
   tm.append(New Rule("write1", "|", "write1", "|", Dir.right)) ' call procedure
   tm.append(New Rule("write1", " ", "write0", "I", Dir.right)) ' call procedure
-  ' write2 &nbsp;
+  ' write2  
   tm.append(New Rule("write2", "0", "write2", "0", Dir.right)) ' call procedure
   tm.append(New Rule("write2", "1", "write2", "1", Dir.right)) ' call procedure
   tm.append(New Rule("write2", "2", "write2", "2", Dir.right)) ' call procedure
@@ -196,7 +196,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("write2", "X", "write2", "X", Dir.right)) ' call procedure
   tm.append(New Rule("write2", "|", "write2", "|", Dir.right)) ' call procedure
   tm.append(New Rule("write2", " ", "write1", "I", Dir.right)) ' call procedure
-  ' write3 &nbsp;
+  ' write3  
   tm.append(New Rule("write3", "0", "write3", "0", Dir.right)) ' call procedure
   tm.append(New Rule("write3", "1", "write3", "1", Dir.right)) ' call procedure
   tm.append(New Rule("write3", "2", "write3", "2", Dir.right)) ' call procedure
@@ -213,7 +213,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("write3", "X", "write3", "X", Dir.right)) ' call procedure
   tm.append(New Rule("write3", "|", "write3", "|", Dir.right)) ' call procedure
   tm.append(New Rule("write3", " ", "write2", "I", Dir.right)) ' call procedure
-  ' write4 &nbsp;
+  ' write4  
   tm.append(New Rule("write4", "0", "write4", "0", Dir.right)) ' call procedure
   tm.append(New Rule("write4", "1", "write4", "1", Dir.right)) ' call procedure
   tm.append(New Rule("write4", "2", "write4", "2", Dir.right)) ' call procedure
@@ -317,7 +317,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("write9", " ", "write10", "I", Dir.right)) ' call procedure
   ' Write10
   tm.append(New Rule("write10", " ", "write0", "X", Dir.right)) ' call procedure
-  ' return &nbsp;
+  ' return  
   tm.append(New Rule("return", "0", "return", "0", Dir.left)) ' call procedure
   tm.append(New Rule("return", "1", "return", "1", Dir.left)) ' call procedure
   tm.append(New Rule("return", "2", "return", "2", Dir.left)) ' call procedure
@@ -335,7 +335,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("return", "]", "return", "]", Dir.left)) ' call procedure
   tm.append(New Rule("return", "[", "readNextDigit", " ", Dir.right)) ' call procedure
   tm.append(New Rule("return", " ", "readNextDigit", " ", Dir.right)) ' call procedure
-  ' gotoEnd - &nbsp;only after deleting input.
+  ' gotoEnd -  only after deleting input.
   tm.append(New Rule("gotoEnd", "|", "gotoEnd", "|", Dir.right)) ' call procedure
   tm.append(New Rule("gotoEnd", "I", "gotoEnd", "I", Dir.right)) ' call procedure
   tm.append(New Rule("gotoEnd", "V", "gotoEnd", "V", Dir.right)) ' call procedure
@@ -388,7 +388,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("moveV", "|", "nextChar", "V", Dir.right)) ' call procedure
   tm.append(New Rule("moveV", "I", "writeV", "I", Dir.left)) ' call procedure
   tm.append(New Rule("moveV", " ", "writeV", " ", Dir.left)) ' call procedure
-  ' moveX &nbsp;
+  ' moveX  
   tm.append(New Rule("moveX", "|", "nextChar", "X", Dir.right)) ' call procedure
   tm.append(New Rule("moveX", "I", "writeX", "I", Dir.left)) ' call procedure
   tm.append(New Rule("moveX", "V", "writeX", "V", Dir.left)) ' call procedure
@@ -396,13 +396,13 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("moveX", "L", "writeX", "L", Dir.left)) ' call procedure
   tm.append(New Rule("moveX", "C", "writeX", "C", Dir.left)) ' call procedure
   tm.append(New Rule("moveX", " ", "writeX", " ", Dir.left)) ' call procedure
-  ' moveL &nbsp;
+  ' moveL  
   tm.append(New Rule("moveL", "|", "nextChar", "L", Dir.right)) ' call procedure
   tm.append(New Rule("moveL", "I", "writeL", "I", Dir.left)) ' call procedure
   tm.append(New Rule("moveL", "V", "writeL", "V", Dir.left)) ' call procedure
   tm.append(New Rule("moveL", "X", "writeL", "X", Dir.left)) ' call procedure
   tm.append(New Rule("moveL", " ", "writeL", " ", Dir.left)) ' call procedure
-  ' moveC &nbsp;
+  ' moveC  
   tm.append(New Rule("moveC", "|", "nextChar", "C", Dir.right)) ' call procedure
   tm.append(New Rule("moveC", "I", "writeC", "I", Dir.left)) ' call procedure
   tm.append(New Rule("moveC", "V", "writeC", "V", Dir.left)) ' call procedure
@@ -412,7 +412,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("moveC", "D", "writeC", "D", Dir.left)) ' call procedure
   tm.append(New Rule("moveC", "M", "writeC", "M", Dir.left)) ' call procedure
   tm.append(New Rule("moveC", " ", "writeC", " ", Dir.left)) ' call procedure
-  ' moveD &nbsp;
+  ' moveD  
   tm.append(New Rule("moveD", "|", "nextChar", "D", Dir.right)) ' call procedure
   tm.append(New Rule("moveD", "I", "writeD", "I", Dir.left)) ' call procedure
   tm.append(New Rule("moveD", "V", "writeD", "V", Dir.left)) ' call procedure
@@ -445,7 +445,7 @@ Sub addRulesForRomanNumeralsInto(tm As TuringMachine) ' procedure
   tm.append(New Rule("writeD", " ", "nextChar", "D", Dir.right)) ' call procedure
   tm.append(New Rule("writeM", "|", "nextChar", "M", Dir.right)) ' call procedure
   tm.append(New Rule("writeM", " ", "nextChar", "M", Dir.right)) ' call procedure
-  ' checkForBars &nbsp;
+  ' checkForBars  
   tm.append(New Rule("checkForBars", "I", "checkForBars", "I", Dir.left)) ' call procedure
   tm.append(New Rule("checkForBars", "V", "checkForBars", "V", Dir.left)) ' call procedure
   tm.append(New Rule("checkForBars", "X", "checkForBars", "X", Dir.left)) ' call procedure

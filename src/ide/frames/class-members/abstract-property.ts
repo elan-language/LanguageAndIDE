@@ -8,11 +8,12 @@ import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
+import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { ConcreteClass } from "../globals/concrete-class";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class AbstractProperty extends SingleLineFrame {
+export class AbstractProperty extends SingleLineFrame implements MemberFrame {
   isAbstract = true;
   isMember = true;
   name: IdentifierField;
@@ -23,6 +24,11 @@ export class AbstractProperty extends SingleLineFrame {
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
     this.canHaveBreakPoint = false;
+  }
+  isPrivate: boolean = false;
+
+  isOnAbstractClass(): boolean {
+    return true;
   }
 
   getClass(): ConcreteClass {
@@ -46,10 +52,6 @@ export class AbstractProperty extends SingleLineFrame {
   }
 
   override outerHtmlTag: string = "el-prop";
-
-  renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${abstractKeyword} ${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
-  }
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${propertyKeyword} ${this.name.renderAsElanSource()} ${asKeyword} ${this.type.renderAsElanSource()}\r\n`;

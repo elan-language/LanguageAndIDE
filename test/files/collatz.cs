@@ -36,7 +36,7 @@ static void main() {
   print("Finished"); // call procedure
 }
 
-// scale x. &nbsp;We pass in p just to get its length
+// scale x.  We pass in p just to get its length
 
 static double scx(int i, List<int> p) { // function
   return divAsFloat(i*100, p.length());
