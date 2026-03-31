@@ -165,6 +165,10 @@ class TabViewModel implements ITabViewModel {
   setWorksheetLanguage(l: string) {
     worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
   }
+
+  setHelpLanguage(l: string) {
+    helpIFrame.contentWindow?.postMessage(`language:${l}`, "*");
+  }
 }
 
 class IDEViewModel implements IIDEViewModel {
@@ -716,6 +720,7 @@ class IDEViewModel implements IIDEViewModel {
     codeContainer.classList.add(l.languageHtmlClass);
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
+    this.tvm.setHelpLanguage(l.languageHtmlClass);
   }
 }
 
@@ -905,6 +910,7 @@ worksheetIFrame.addEventListener("load", () => {
 helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
   helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
+  tabViewModel.setHelpLanguage(codeViewModel.getLanguage().languageHtmlClass);
 });
 
 parseStatus.addEventListener("click", async (event) => {
