@@ -1,4 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { processCode } from "../tools/markupParser";
+import { codeBlockEndTag, codeBlockTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -25,12 +27,18 @@ function updatePaths(contents: string) {
   return newContents;
 }
 
-function updateFile(fileName: string) {
-  const contents = loadFile(fileName);
-  const newContents = updatePaths(contents);
-  saveFile(fileName, newContents);
+async function updateFile(fileName: string) {
+  let contents = loadFile(fileName);
+  contents = updatePaths(contents);
+  //contents = await processCode(contents, codeTag, codeEndTag);
+  contents = await processCode(contents, codeBlockTag, codeBlockEndTag);
+  saveFile(fileName, contents);
 }
 
-for (const fn of getDocs(docs)) {
-  updateFile(`${docs}${fn}`);
+export async function processDocumentation() {
+  for (const fn of getDocs(docs)) {
+    await updateFile(`${docs}${fn}`);
+  }
 }
+
+processDocumentation();
