@@ -12,6 +12,7 @@ import {
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
+import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { AbstractClass } from "../globals/abstract-class";
@@ -21,8 +22,10 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   isMember: boolean = true;
   isPrivate: boolean;
   isAbstract = false;
+  file: File;
   constructor(parent: Parent, priv = false) {
     super(parent);
+    this.file = parent.getFile();
     this.isPrivate = priv;
   }
   isOnAbstractClass(): boolean {

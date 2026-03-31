@@ -85,6 +85,8 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   public FINAL = "final";
+  OVERRIDES = "";
+  IMPLEMENTS = "";
 
   public STRING_NAME: string = "String";
 

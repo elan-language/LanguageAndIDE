@@ -241,6 +241,8 @@ export class LanguageElan extends LanguageAbstract {
 
   START_OF_GENERIC: string = `<${this.OF} `;
   THIS_INSTANCE: string = this.THIS;
+  OVERRIDES = "";
+  IMPLEMENTS = "";
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));

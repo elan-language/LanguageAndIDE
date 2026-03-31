@@ -230,6 +230,8 @@ export class LanguagePython extends LanguageAbstract {
 
   START_OF_GENERIC: string = "[";
   THIS_INSTANCE: string = this.SELF;
+  OVERRIDES = "";
+  IMPLEMENTS = "";
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
