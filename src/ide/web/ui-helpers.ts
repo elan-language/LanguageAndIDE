@@ -241,6 +241,7 @@ export interface ITabViewModel {
   focusInfoTab(cvm: ICodeEditorViewModel): void;
 
   setWorksheetLanguage(l: string): void;
+  setHelpLanguage(l: string): void;
 }
 
 export interface IIDEViewModel {
