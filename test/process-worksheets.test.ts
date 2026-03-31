@@ -11,13 +11,14 @@ import {
   processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
+import { LanguageElan } from "../src/ide/frames/language-elan";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 guest default_profile valid
 `;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-header"), true);
   });
@@ -32,7 +33,7 @@ suite("process worksheets", () => {
   end for
 end procedure`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-proc"), true);
   });
@@ -45,7 +46,7 @@ end procedure`;
   end for
 end for`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-statement"), true);
   });
@@ -55,7 +56,7 @@ end for`;
   set this.p1 to 1
 end constructor`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-constructor"), true);
   });
@@ -63,7 +64,7 @@ end constructor`;
   test("process expression", async () => {
     const code = `a + b`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
@@ -71,7 +72,7 @@ end constructor`;
   test("process keyword1", async () => {
     const code = `set`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-kw"), true);
   });
@@ -79,7 +80,7 @@ end constructor`;
   test("process keyword2", async () => {
     const code = `property`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-kw"), true);
   });
@@ -87,7 +88,7 @@ end constructor`;
   test("process identifier1", async () => {
     const code = `foo`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
@@ -95,7 +96,7 @@ end constructor`;
   test("process identifier2", async () => {
     const code = `foo()`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-method"), true);
   });
@@ -103,7 +104,7 @@ end constructor`;
   test("process type1", async () => {
     const code = `Int`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-type"), true);
   });
@@ -111,7 +112,7 @@ end constructor`;
   test("process type2", async () => {
     const code = `List<of Int>`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-type"), true);
   });
@@ -119,7 +120,7 @@ end constructor`;
   test("process expression", async () => {
     const code = `mark[something] + "2" + mark[something]`;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
@@ -280,7 +281,7 @@ end constructor`;
         end function
 `;
 
-    const actual = await processInnerCode(code);
+    const actual = await processInnerCode(code, LanguageElan.Instance);
 
     assert.strictEqual(actual.startsWith("<el-func"), true);
   });

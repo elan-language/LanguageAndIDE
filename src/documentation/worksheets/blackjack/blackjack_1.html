@@ -686,11 +686,15 @@ constant styleSheet set to ':root {    background-color: darkgreen;    padding-l
   <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
   <ul>
-    <li>Near the top of <el-code><el-kw>main</el-kw></el-code>, find this instruction:
-    <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>)</el-punc></el-top><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code-block>
-    and immediately <i>below</i> it insert a new <el-code><el-kw>call</el-kw></el-code> instruction.</li>
+    <li>Near the top of <code>main</code>, find this instruction:
+    <codeblock><div class="elan"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>)</el-punc></el-top><el-msg></el-msg><el-fr>0</el-fr></el-statement></div>
+<div class="python"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-comment> # call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="cs"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>);</el-punc></el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="vb"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>New</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>)<el-punc></el-punc></el-punc></el-top><el-msg></el-msg><el-comment> ' call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="java"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>);</el-punc></el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div></codeblock>
+    and immediately <i>below</i> it insert a new <code>call</code> instruction.</li>
     <li>Into the <i>two</i> editable fields type in the same code that you see in the instruction immediately above it,
-    <i>except</i> that instead of <el-code>"<el-lit>Player A</el-lit>"</el-code>, write <el-code>"<el-lit>Player B</el-lit>"</el-code>. Note that:
+    <i>except</i> that instead of <code>"Player A"</code>, write <code>"Player B"</code>. Note that:
     <ul>
       <li>your text will initially be black, but it will be coloured once you leave the field</li>
       <li>a drop-down list will offer you some 'auto-completion' options, which can save typing and
@@ -709,17 +713,19 @@ constant styleSheet set to ':root {    background-color: darkgreen;    padding-l
 
 <div class="step" id="step10"><h1>Step 10: modifying an existing instruction</h1>
   <ul>
-    <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-id>let</el-id></el-code> instruction
+    <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <code>let</code> instruction
       and note that this features two editable fields.</li>
-    <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
-    using the auto-completions to help <el-code><el-method>input</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
+    <li>In the first field enter <code>name1</code> and in the second field type in the following code
+    using the auto-completions to help <code>input("Enter name for first player")
+
+    Going back to the first field, try deleting the contents and typing <code>Name1</code>
     <p>What message do you see within the code editor?</p>
 <textarea class="question" id="question10-0" placeholder="input is required"></textarea>
     <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>
 <textarea class="question" id="question10-1" placeholder="input is required"></textarea>
-    Then revert the field back to <el-code><el-id>name2</el-id></el-code>.</li>
+    Then revert the field back to <code>name2</code>.</code></li><code>
     <li>Select the instruction below this - in other words the one that you added previously - and <b>Tab</b> to the second
-    field. Edit the contents, replacing the literal string <el-code>"<el-lit>Player A</el-lit>"</el-code> with <el-code><el-id>name2</el-id></el-code> 
+    field. Edit the contents, replacing the literal string <code>"Player A"</code> with <code>name2</code> 
     (no quotation marks because this is an <i>identifier</i> that holds a string, not a literal string).</li>
     <li>Run the program. When asked, type in your own first name, finishing with the <b>Enter</b> key.
       <p>Has the name you entered made a difference?</p>
@@ -728,11 +734,11 @@ constant styleSheet set to ':root {    background-color: darkgreen;    padding-l
 <textarea class="question" id="question10-3" placeholder="input is required"></textarea>
     </li>
     <li>To fix the unwanted side effect, insert the following new instruction immediately<i>after</i> the second player is created and added to the game:
-    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>(</el-punc><el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>)</el-punc></el-top><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code></li>
+    <code>call clearPrintedText()</code></li>
     <li>Now change the program so that it asks the user to enter a name for the <i>second</i> player, this time using
-      the identifier <el-code><el-id>name2</el-id></el-code>.</li>
+      the identifier <code>name2</code>.</li>
     <li>Run the program again, and confirm that you can now name both players.</li>
-  </ul>
+  </code></ul><code>
   
   <p>What would happen if you define the second identifier as name2, but in the next line
   you were to write name1? (If you need to check, run the program) </p>
@@ -740,7 +746,7 @@ constant styleSheet set to ':root {    background-color: darkgreen;    padding-l
   <p>And what if the the second identifier was still name2 but you used name3
   in the following instruction? This time, can you even run the program to try it?</p>
 <textarea class="question" id="question10-5" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+</code><h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="final" id="final11"><h1>Congratulations! You have completed this worksheet</h1>
 

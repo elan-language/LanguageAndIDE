@@ -147,8 +147,16 @@ watch the following video, exploring the code alongside the video:
   Make the changes shown in the video and then run the program - to show that you can now hit (and also miss!) the moles.
   If you find that the moles change too quickly to hit, change the speed by editing this line:
 
-  <el-code-block>let stop be clock() + 1000
- Code does not parse as Elan.</el-code-block>
+  <codeblock><div class="elan">let stop be clock() + 1000
+ Code does not parse as Elan.</div>
+<div class="python">let stop be clock() + 1000
+ Code does not parse as Elan.</div>
+<div class="cs">let stop be clock() + 1000
+ Code does not parse as Elan.</div>
+<div class="vb">let stop be clock() + 1000
+ Code does not parse as Elan.</div>
+<div class="java">let stop be clock() + 1000
+ Code does not parse as Elan.</div></codeblock>
 
   changing the value to 2000 (milliseconds), for example.
   <p>What is the main difference between how this game works and the one shown in the introductory video at the start of this worksheet?</p>
@@ -197,8 +205,7 @@ watch the following video, exploring the code alongside the video:
   <ul>
     <li>At the start of the program allow the user to select a level of play - say as a number in the range 1-5. 
       (Look up the library method <el-method>inputIntBetween</el-method> in the <b>Help</b> tab <a class="help" href="LibRef.html#inputIntBetween" id="help8-0">show in Help</a>.)
-      Use this number in a formula to alter the time specified in this instruction: <el-code>let stop be clock() + 1000
- Code does not parse as Elan.</el-code>
+      Use this number in a formula to alter the time specified in this instruction: <code>let stop be clock() + 1000</code>
     </li>
     <li>Keep track of how many moles have actually appeared, and display this as well as the score.</li>
     <li>Award a bonus point if, whenever three moles are shown at once, you hit all three before they disappear.</li>
