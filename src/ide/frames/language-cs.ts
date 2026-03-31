@@ -59,6 +59,8 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
+  OVERRIDES = "override";
+  IMPLEMENTS = "";
   INTERPOLATED_STRING_PREFIX: string = "$";
 
   renderTopAsHtml(frame: Frame): string {

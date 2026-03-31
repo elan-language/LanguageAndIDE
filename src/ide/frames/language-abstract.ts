@@ -1,6 +1,10 @@
+import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
+import { FunctionMethod } from "./class-members/function-method";
+import { ProcedureMethod } from "./class-members/procedure-method";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
@@ -133,6 +137,30 @@ export abstract class LanguageAbstract implements Language {
     return [frame.actual, frame.expected];
   }
 
+  protected implements(frame: FunctionMethod | ProcedureMethod): string {
+    const superImpl = implementsAbstractMethodOnClassOrInterface(
+      frame.name,
+      frame.getParent() as ClassFrame,
+    );
+    let implementsClause = "";
+    if (superImpl[0] !== "" && !superImpl[1]) {
+      implementsClause = ` <el-kw>${this.IMPLEMENTS}</el-kw> <el-type>${superImpl[0]}</el-type>.${frame.name.renderAsHtml()}`;
+    }
+    return implementsClause;
+  }
+
+  protected overrides(frame: FunctionMethod | ProcedureMethod) {
+    const superImpl = implementsAbstractMethodOnClassOrInterface(
+      frame.name,
+      frame.getParent() as ClassFrame,
+    );
+    let overridesKw = "";
+    if (superImpl[0] !== "" && superImpl[1]) {
+      overridesKw = `<el-kw>${this.OVERRIDES}</el-kw> `;
+    }
+    return overridesKw;
+  }
+
   abstract MOD: string;
   abstract EQUAL: string;
   abstract NOT_EQUAL: string;
@@ -159,6 +187,8 @@ export abstract class LanguageAbstract implements Language {
 
   abstract START_OF_GENERIC: string;
   abstract THIS_INSTANCE: string;
+  abstract OVERRIDES: string;
+  abstract IMPLEMENTS: string;
 
   protected spaced(text: string): string {
     return ` ${text} `;

@@ -1,3 +1,5 @@
+import { MethodNameField } from "../../ide/frames/fields/method-name-field";
+import { ClassFrame } from "../../ide/frames/globals/class-frame";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
@@ -616,12 +618,17 @@ export function getClassType(className: string, rootNode: RootAstNode): ClassSub
   return undefined;
 }
 
-export function isImplementingAbstractOrInterface(
-  methodName: string,
-  className: string,
-  rootNode: RootAstNode,
-): string {
+//Returns the name of the abstract class or interface defining the member, or "" if neither. Boolean value is true for an abstract class, false for an interface
+export function implementsAbstractMethodOnClassOrInterface(
+  nameField: MethodNameField,
+  classFrame: ClassFrame,
+): [string, boolean] {
+  const methodName = nameField.renderAsElanSource();
+  const className = classFrame.name.renderAsElanSource();
+  const rootNode = classFrame.getFile().getAst(true)!;
   const cls = rootNode.resolveSymbol(className, false, rootNode);
+
+  let superCls = "";
   if (isClass(cls)) {
     const method = cls.resolveSymbol(methodName, false, cls);
     if (!(method instanceof UnknownSymbol) && cls instanceof ClassAsn) {
@@ -631,12 +638,13 @@ export function isImplementingAbstractOrInterface(
 
       for (const a of all) {
         if (!(a.resolveOwnSymbol(methodName, true) instanceof UnknownSymbol)) {
-          return a.getName();
+          superCls = a.getName();
         }
       }
     }
   }
-  return "";
+  const abstractClass = getClassType(superCls, rootNode) === ClassSubType.abstract;
+  return [superCls, abstractClass];
 }
 
 export function getSuperClassSymbols(

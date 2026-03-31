@@ -4,11 +4,6 @@ import {
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import { ClassSubType } from "../../../compiler/symbols/class-type";
-import {
-  getClassType,
-  isImplementingAbstractOrInterface,
-} from "../../../compiler/symbols/symbol-helpers";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
@@ -21,7 +16,6 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { AbstractClass } from "../globals/abstract-class";
-import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
@@ -49,16 +43,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   frameSpecificAnnotation(): string {
     const priv = this.isPrivate ? "private " : "";
     return `${priv}function`;
-  }
-
-  //Returns the name of the abstract class or interface defining the member, or "" if neither. Boolean value is true for an abstract class, false for an interface
-  public implementsAbstractMethodOnClassOrInterface(): [string, boolean] {
-    const name = this.name.renderAsElanSource();
-    const cls = (this.getParent() as ClassFrame).name.renderAsElanSource();
-    const root = this.file.getAst(true)!;
-    const superCls = isImplementingAbstractOrInterface(name, cls, root);
-    const abstractClass = getClassType(superCls, root) === ClassSubType.abstract;
-    return [superCls, abstractClass];
   }
 
   public override renderAsElanSource(): string {
