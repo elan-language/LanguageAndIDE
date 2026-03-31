@@ -20,12 +20,11 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   public name: MethodNameField;
   public params: ParamListField;
   public returnType: TypeField;
-  file: File;
   isFunction = true;
+  abstract file: File;
 
   constructor(parent: Parent) {
     super(parent);
-    this.file = parent as File;
     this.name = new MethodNameField(this);
     this.params = new ParamListField(this);
     this.returnType = new TypeField(this);

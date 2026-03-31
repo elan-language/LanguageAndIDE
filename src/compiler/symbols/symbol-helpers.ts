@@ -619,7 +619,7 @@ export function isImplementingAbstract(
   methodName: string,
   className: string,
   rootNode: RootAstNode,
-) {
+): string {
   const cls = rootNode.resolveSymbol(className, false, rootNode);
   if (cls instanceof ClassType) {
     const method = cls.resolveSymbol(methodName, false, cls);
@@ -629,7 +629,7 @@ export function isImplementingAbstract(
 
       for (const ac of abstractClasses) {
         if (!(ac.resolveOwnSymbol(methodName, true) instanceof UnknownSymbol)) {
-          return ac.name;
+          return ac.getName();
         }
       }
     }
