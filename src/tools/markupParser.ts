@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
 import { readFileSync } from "node:fs";
-import { processWorksheetCode } from "./codeParser";
+import { processElanCode } from "./codeParser";
 import {
   code,
   currentFinalId,
@@ -399,7 +399,7 @@ async function processEachCodeInstance(
     0,
     0,
     async (initialCode: string, _i1: number = 0, _i2: number = 0) =>
-      await processWorksheetCode(initialCode, startTag, endTag),
+      await processElanCode(initialCode, startTag, endTag),
   );
 }
 

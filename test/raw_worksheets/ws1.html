@@ -49,15 +49,14 @@
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
     </div> 
       
-<el-code>procedure fillRandom(grid as Array2D<of Int>)
+<code>procedure fillRandom(grid as Array2D<of Int>)
   for col from 0 to 39 step 1
     for row from 0 to 29 step 1
       let cell be if random() > 0.5 then black else white
       call grid.put(col, row, cell)
     end for
   end for
-end procedure
- Code does not parse as Elan.</el-code>
+end procedure</code>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 
