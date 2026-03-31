@@ -47,6 +47,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return `${priv}function`;
   }
 
+  //Returns the name of the abstract class or interface defining the member, or "" if neither. Boolean value is true for an abstract class, false for an interface
   public implementsAbstractMethodOnClassOrInterface(): [string, boolean] {
     const name = this.name.renderAsElanSource();
     const cls = (this.getParent() as ClassFrame).name.renderAsElanSource();
