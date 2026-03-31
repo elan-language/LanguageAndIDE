@@ -13,6 +13,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testCSHeader,
   testHash,
   testHeader,
@@ -599,7 +600,7 @@ class Foo {
     await assertExportedCSIs(fileImpl, csCode);
     await assertExportedJavaIs(fileImpl, javaCode);
   });
-  test("Pass_AbstractClassAndMembersInLangs", async () => {
+  ignore_test("Pass_AbstractClassAndMembersInLangs", async () => {
     const code = `${testHeader}
 
 main

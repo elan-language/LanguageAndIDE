@@ -19,7 +19,7 @@ End Sub
 
 Class Snake
 
-  Public Sub New()
+  Sub New()
     Dim tail = New Square(20, 15) ' variable definition
     Me.currentDir = Direction.right ' set
     Me.body = {tail} ' set
@@ -29,10 +29,10 @@ Class Snake
   Function toString() As String
     Return ""
   End Function
-  private Property currentDir As Direction
-  private Property head As Square
-  private Property body As List(Of Square)
-  private Property priorTail As Square
+  Private Property currentDir As Direction
+  Private Property head As Square
+  Private Property body As List(Of Square)
+  Private Property priorTail As Square
   Sub clockTick(key As String, apple As Apple) ' procedure
     Me.setDirection(key) ' call procedure
     Me.priorTail = Me.body[0] ' set
@@ -66,7 +66,7 @@ Class Snake
   Function gameOver() As Boolean
     Return Me.bodyCovers(Me.head) Or Me.head.hasHitEdge()
   End Function
-  private Sub setDirection(key As String) ' procedure
+  Private Sub setDirection(key As String) ' private procedure
     If key.equals("w") Then
       Me.currentDir = Direction.up ' set
     ElseIf key.equals("s") Then
@@ -81,7 +81,7 @@ End Class
 
 Class Apple
 
-  Public Sub New()
+  Sub New()
     Me.location = New Square(0, 0) ' set
   End Sub
   Function toString() As String
@@ -106,7 +106,7 @@ End Class
 
 Class Square
 
-  Public Sub New(x As Integer, y As Integer)
+  Sub New(x As Integer, y As Integer)
     Me.x = x ' set
     Me.y = y ' set
   End Sub

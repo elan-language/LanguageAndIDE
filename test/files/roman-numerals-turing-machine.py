@@ -42,24 +42,24 @@ class TuringMachine
     self.rules = list[Rule]() # set
     self.currentState = initialState # set
     self.headPosition = 0 # set
-  def toString(self: TuringMachine, ) -> str: # function
+  def toString(self: TuringMachine) -> str: # function
     return ""
-  initialState: str
-  currentState: str
-  headPosition: int
-  haltState: str
-  rules: list[Rule]
-  tape: str
+  initialState: str # property
+  currentState: str # property
+  headPosition: int # property
+  haltState: str # property
+  rules: list[Rule] # property
+  tape: str # property
   def setTape(self: TuringMachine, tape: str) -> None: # procedure
     self.tape = tape # set
   def append(self: TuringMachine, rule: Rule) -> None: # procedure
     self.rules = self.rules.withAppend(rule) # set
-  def singleStep(self: TuringMachine, ) -> None: # procedure
+  def singleStep(self: TuringMachine) -> None: # procedure
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
-  def isHalted(self: TuringMachine, ) -> bool: # function
+  def isHalted(self: TuringMachine) -> bool: # function
     return self.currentState.equals(self.haltState)
-  def findMatchingRule(self: TuringMachine, ) -> Rule: # function
+  def findMatchingRule(self: TuringMachine) -> Rule: # function
     matches = self.rules.filter(lambda r: Rule => (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
       raise ElanRuntimeError("f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}"")
@@ -83,18 +83,18 @@ class TuringMachine
 
 class Rule
 
-  currentState: str
-  currentSymbol: str
-  nextState: str
-  writeSymbol: str
-  move: Dir
+  currentState: str # property
+  currentSymbol: str # property
+  nextState: str # property
+  writeSymbol: str # property
+  move: Dir # property
   def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
     self.currentState = currentState # set
     self.currentSymbol = currentSymbol # set
     self.nextState = nextState # set
     self.writeSymbol = writeSymbol # set
     self.move = move # set
-  def toString(self: Rule, ) -> str: # function
+  def toString(self: Rule) -> str: # function
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{self.move}"
 
 
@@ -104,7 +104,7 @@ Dir = Enum('Dir', 'left, right')
 
 def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   # name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
-  # Example tape input: &nbsp;2024 (between 1 and 3999)
+  # Example tape input:  2024 (between 1 and 3999)
   tm.append(Rule("init", "0", "init", "0", Dir.right)) # call procedure
   tm.append(Rule("init", "1", "init", "1", Dir.right)) # call procedure
   tm.append(Rule("init", "2", "init", "2", Dir.right)) # call procedure
@@ -162,7 +162,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("write1", "X", "write1", "X", Dir.right)) # call procedure
   tm.append(Rule("write1", "|", "write1", "|", Dir.right)) # call procedure
   tm.append(Rule("write1", " ", "write0", "I", Dir.right)) # call procedure
-  # write2 &nbsp;
+  # write2  
   tm.append(Rule("write2", "0", "write2", "0", Dir.right)) # call procedure
   tm.append(Rule("write2", "1", "write2", "1", Dir.right)) # call procedure
   tm.append(Rule("write2", "2", "write2", "2", Dir.right)) # call procedure
@@ -179,7 +179,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("write2", "X", "write2", "X", Dir.right)) # call procedure
   tm.append(Rule("write2", "|", "write2", "|", Dir.right)) # call procedure
   tm.append(Rule("write2", " ", "write1", "I", Dir.right)) # call procedure
-  # write3 &nbsp;
+  # write3  
   tm.append(Rule("write3", "0", "write3", "0", Dir.right)) # call procedure
   tm.append(Rule("write3", "1", "write3", "1", Dir.right)) # call procedure
   tm.append(Rule("write3", "2", "write3", "2", Dir.right)) # call procedure
@@ -196,7 +196,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("write3", "X", "write3", "X", Dir.right)) # call procedure
   tm.append(Rule("write3", "|", "write3", "|", Dir.right)) # call procedure
   tm.append(Rule("write3", " ", "write2", "I", Dir.right)) # call procedure
-  # write4 &nbsp;
+  # write4  
   tm.append(Rule("write4", "0", "write4", "0", Dir.right)) # call procedure
   tm.append(Rule("write4", "1", "write4", "1", Dir.right)) # call procedure
   tm.append(Rule("write4", "2", "write4", "2", Dir.right)) # call procedure
@@ -300,7 +300,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("write9", " ", "write10", "I", Dir.right)) # call procedure
   # Write10
   tm.append(Rule("write10", " ", "write0", "X", Dir.right)) # call procedure
-  # return &nbsp;
+  # return  
   tm.append(Rule("return", "0", "return", "0", Dir.left)) # call procedure
   tm.append(Rule("return", "1", "return", "1", Dir.left)) # call procedure
   tm.append(Rule("return", "2", "return", "2", Dir.left)) # call procedure
@@ -318,7 +318,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("return", "]", "return", "]", Dir.left)) # call procedure
   tm.append(Rule("return", "[", "readNextDigit", " ", Dir.right)) # call procedure
   tm.append(Rule("return", " ", "readNextDigit", " ", Dir.right)) # call procedure
-  # gotoEnd - &nbsp;only after deleting input.
+  # gotoEnd -  only after deleting input.
   tm.append(Rule("gotoEnd", "|", "gotoEnd", "|", Dir.right)) # call procedure
   tm.append(Rule("gotoEnd", "I", "gotoEnd", "I", Dir.right)) # call procedure
   tm.append(Rule("gotoEnd", "V", "gotoEnd", "V", Dir.right)) # call procedure
@@ -371,7 +371,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("moveV", "|", "nextChar", "V", Dir.right)) # call procedure
   tm.append(Rule("moveV", "I", "writeV", "I", Dir.left)) # call procedure
   tm.append(Rule("moveV", " ", "writeV", " ", Dir.left)) # call procedure
-  # moveX &nbsp;
+  # moveX  
   tm.append(Rule("moveX", "|", "nextChar", "X", Dir.right)) # call procedure
   tm.append(Rule("moveX", "I", "writeX", "I", Dir.left)) # call procedure
   tm.append(Rule("moveX", "V", "writeX", "V", Dir.left)) # call procedure
@@ -379,13 +379,13 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("moveX", "L", "writeX", "L", Dir.left)) # call procedure
   tm.append(Rule("moveX", "C", "writeX", "C", Dir.left)) # call procedure
   tm.append(Rule("moveX", " ", "writeX", " ", Dir.left)) # call procedure
-  # moveL &nbsp;
+  # moveL  
   tm.append(Rule("moveL", "|", "nextChar", "L", Dir.right)) # call procedure
   tm.append(Rule("moveL", "I", "writeL", "I", Dir.left)) # call procedure
   tm.append(Rule("moveL", "V", "writeL", "V", Dir.left)) # call procedure
   tm.append(Rule("moveL", "X", "writeL", "X", Dir.left)) # call procedure
   tm.append(Rule("moveL", " ", "writeL", " ", Dir.left)) # call procedure
-  # moveC &nbsp;
+  # moveC  
   tm.append(Rule("moveC", "|", "nextChar", "C", Dir.right)) # call procedure
   tm.append(Rule("moveC", "I", "writeC", "I", Dir.left)) # call procedure
   tm.append(Rule("moveC", "V", "writeC", "V", Dir.left)) # call procedure
@@ -395,7 +395,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("moveC", "D", "writeC", "D", Dir.left)) # call procedure
   tm.append(Rule("moveC", "M", "writeC", "M", Dir.left)) # call procedure
   tm.append(Rule("moveC", " ", "writeC", " ", Dir.left)) # call procedure
-  # moveD &nbsp;
+  # moveD  
   tm.append(Rule("moveD", "|", "nextChar", "D", Dir.right)) # call procedure
   tm.append(Rule("moveD", "I", "writeD", "I", Dir.left)) # call procedure
   tm.append(Rule("moveD", "V", "writeD", "V", Dir.left)) # call procedure
@@ -428,7 +428,7 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("writeD", " ", "nextChar", "D", Dir.right)) # call procedure
   tm.append(Rule("writeM", "|", "nextChar", "M", Dir.right)) # call procedure
   tm.append(Rule("writeM", " ", "nextChar", "M", Dir.right)) # call procedure
-  # checkForBars &nbsp;
+  # checkForBars  
   tm.append(Rule("checkForBars", "I", "checkForBars", "I", Dir.left)) # call procedure
   tm.append(Rule("checkForBars", "V", "checkForBars", "V", Dir.left)) # call procedure
   tm.append(Rule("checkForBars", "X", "checkForBars", "X", Dir.left)) # call procedure

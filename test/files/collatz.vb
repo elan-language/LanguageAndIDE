@@ -36,7 +36,7 @@ Sub main()
   print("Finished") ' call procedure
 End Sub
 
-' scale x. &nbsp;We pass in p just to get its length
+' scale x.  We pass in p just to get its length
 
 Function scx(i As Integer, p As List(Of Integer)) As Double
   Return divAsFloat(i*100, p.length())

@@ -95,17 +95,17 @@ class Solver {
     this.destination = destination; // set
     this.current = new Node(emptyPoint(), 0, 0); // set
   }
-  string toString() { // function
+  public string toString() { // function
     return "";
   }
-  List<Node> nodes {get; private set;} // property
-  Point start {get; private set;} // property
-  Point destination {get; private set;} // property
-  Node current {get; private set;} // property
-  Algorithm alg {get; private set;} // property
-  bool running {get; private set;} // property
+  public List<Node> nodes {get; private set;} // property
+  public Point start {get; private set;} // property
+  public Point destination {get; private set;} // property
+  public Node current {get; private set;} // property
+  public Algorithm alg {get; private set;} // property
+  public bool running {get; private set;} // property
   // TODO can this go into the constructor ?
-  void initialise(Algorithm alg) { // procedure
+  public void initialise(Algorithm alg) { // procedure
     this.alg = alg; // set
     this.current = new Node(this.start, 0, infinity); // set
     this.running = true; // set
@@ -115,7 +115,7 @@ class Solver {
       node.setVisited(false); // call procedure
     }
   }
-  void visitNextPoint() { // procedure
+  public void visitNextPoint() { // procedure
     this.updateNeighbours(); // call procedure
     this.current = this.nextNodeToVisit(); // set
     if ((this.current.isEmpty || (this.current.point.equals(this.destination)))) {
@@ -125,7 +125,7 @@ class Solver {
       current.setVisited(true); // call procedure
     }
   }
-  void updateNeighbours() { // procedure
+  public void updateNeighbours() { // procedure
     var distToCurrent = this.current.distFromStart;
     var currentPoint = this.current.point;
     foreach (neighbour in this.currentNeighbours()) {
@@ -136,7 +136,7 @@ class Solver {
       }
     }
   }
-  List<Node> currentNeighbours() { // function
+  public List<Node> currentNeighbours() { // function
     var currentNode = this.current;
     var currentPoint = currentNode.point;
     var neighbours = new List<Node>();
@@ -149,14 +149,14 @@ class Solver {
     }
     return neighbours;
   }
-  Node getNodeFor(Point p) { // function
+  public Node getNodeFor(Point p) { // function
     var matches = this.nodes.filter(lambda Node n => n.point.equals(p));
     return if(matches.length() == 1, matches.head(), emptyNode());
   }
-  Point getLastVisited() { // function
+  public Point getLastVisited() { // function
     return this.current.point;
   }
-  Node nextNodeToVisit() { // function
+  public Node nextNodeToVisit() { // function
     var lowestCostSoFar = infinity;
     var lowestCostNode = emptyNode();
     var possibilities = this.nodes.filter(lambda Node nd => (!nd.visited) && (nd.distFromStart < infinity));
@@ -169,7 +169,7 @@ class Solver {
     }
     return lowestCostNode;
   }
-  double calculateCost(Node node) { // function
+  public double calculateCost(Node node) { // function
     var cost = 0.0;
     const Float fromStart = node.distFromStart;
     const Float estToDest = node.estDistToDest;
@@ -182,7 +182,7 @@ class Solver {
     }
     return cost;
   }
-  (List<Point>, double) getRouteAndLength() { // function
+  public (List<Point>, double) getRouteAndLength() { // function
     var route = [this.destination];
     var length = 0.0;
     var node = this.getNodeFor(this.destination);
@@ -213,22 +213,22 @@ class Node {
     this.via = emptyPoint(); // set
     this.estDistToDest = estDistToDest; // set
   }
-  Point point {get; private set;} // property
-  bool visited {get; private set;} // property
-  double distFromStart {get; private set;} // property
-  Point via {get; private set;} // property
-  double estDistToDest {get; private set;} // property
-  bool isEmpty {get; private set;} // property
-  void setVisited(bool value) { // procedure
+  public Point point {get; private set;} // property
+  public bool visited {get; private set;} // property
+  public double distFromStart {get; private set;} // property
+  public Point via {get; private set;} // property
+  public double estDistToDest {get; private set;} // property
+  public bool isEmpty {get; private set;} // property
+  public void setVisited(bool value) { // procedure
     this.visited = value; // set
   }
-  void setDistanceFromStart(double d) { // procedure
+  public void setDistanceFromStart(double d) { // procedure
     this.distFromStart = d; // set
   }
-  void setVia(Point p) { // procedure
+  public void setVia(Point p) { // procedure
     this.via = p; // set
   }
-  string toString() { // function
+  public string toString() { // function
     return $"[{this.point.toString()} {this.visited} {this.distFromStart}]";
   }
 }
@@ -239,9 +239,9 @@ static Point emptyPoint() { // function
 
 class Point {
 
-  int x {get; private set;} // property
-  int y {get; private set;} // property
-  bool isEmpty {get; private set;} // property
+  public int x {get; private set;} // property
+  public int y {get; private set;} // property
+  public bool isEmpty {get; private set;} // property
   public Point(int x, int y) {
     if ((x < 0) || (y < 0)) {
       this.isEmpty = true; // set
@@ -250,17 +250,17 @@ class Point {
       this.y = y; // set
     }
   }
-  double minDistTo(Point p) { // function
+  public double minDistTo(Point p) { // function
     return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2));
   }
-  bool isAdjacentTo(Point p) { // function
+  public bool isAdjacentTo(Point p) { // function
     return (this.minDistTo(p) == 1) || (this.minDistTo(p).round(4) == sqrt(2).round(4));
   }
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  List<Point> neighbouringPoints() { // function
+  public List<Point> neighbouringPoints() { // function
     return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)];
   }
-  string toString() { // function
+  public string toString() { // function
     return $"{this.x},{this.y}";
   }
 }

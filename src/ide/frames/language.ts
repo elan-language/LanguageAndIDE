@@ -1,10 +1,10 @@
-import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
-import { NewInstance } from "../parse-nodes/new-instance";
-import { ParamDefNode } from "../parse-nodes/param-def-node";
-import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
-import { Field } from "./field";
-import { Frame } from "./frame";
+import { Field } from "./frame-interfaces/field";
+import { Frame } from "./frame-interfaces/frame";
+import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { NewInstance } from "./parse-nodes/new-instance";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 
 export interface Language {
   languageHtmlClass: string;

@@ -26,14 +26,14 @@ class Snake {
     this.head = tail.getAdjacentSquare(this.currentDir); // set
     this.priorTail = tail; // set
   }
-  string toString() { // function
+  public string toString() { // function
     return "";
   }
-  Direction currentDir {get; private set;} // property
-  Square head {get; private set;} // property
-  List<Square> body {get; private set;} // property
-  Square priorTail {get; private set;} // property
-  void clockTick(string key, Apple apple) { // procedure
+  private Direction currentDir {get; private set;} // private property
+  private Square head {get; private set;} // private property
+  private List<Square> body {get; private set;} // private property
+  private Square priorTail {get; private set;} // private property
+  public void clockTick(string key, Apple apple) { // procedure
     this.setDirection(key); // call procedure
     this.priorTail = this.body[0]; // set
     var body = this.body;
@@ -45,16 +45,16 @@ class Snake {
       this.body = this.body.subList(1, this.body.length()); // set
     }
   }
-  void updateBlocks(List<List<int>> blocks) { // procedure
+  public void updateBlocks(List<List<int>> blocks) { // procedure
     blocks[this.head.x][this.head.y] = green; // set
     if (!this.body[0].equals(this.priorTail)) {
       blocks[this.priorTail.x][this.priorTail.y] = white; // set
     }
   }
-  int score() { // function
+  public int score() { // function
     return this.body.length() - 1;
   }
-  bool bodyCovers(Square sq) { // function
+  public bool bodyCovers(Square sq) { // function
     var result = false;
     foreach (seg in this.body) {
       if ((seg.equals(sq))) {
@@ -63,10 +63,10 @@ class Snake {
     }
     return result;
   }
-  bool gameOver() { // function
+  public bool gameOver() { // function
     return this.bodyCovers(this.head) || this.head.hasHitEdge();
   }
-  private void setDirection(string key) { // procedure
+  private void setDirection(string key) { // private procedure
     if (key.equals("w")) {
       this.currentDir = Direction.up; // set
     } else if (key.equals("s")) {
@@ -84,11 +84,11 @@ class Apple {
   public Apple() {
     this.location = new Square(0, 0); // set
   }
-  string toString() { // function
+  public string toString() { // function
     return "";
   }
-  Square location {get; private set;} // property
-  void newRandomPosition(Snake snake) { // procedure
+  public Square location {get; private set;} // property
+  public void newRandomPosition(Snake snake) { // procedure
     var changePosition = true;
     while (changePosition) {
       const Int ranX = randint(0, 39);
@@ -99,7 +99,7 @@ class Apple {
       }
     }
   }
-  void updateBlocks(List<List<int>> blocks) { // procedure
+  public void updateBlocks(List<List<int>> blocks) { // procedure
     blocks[this.location.x][this.location.y] = red; // set
   }
 }
@@ -110,12 +110,12 @@ class Square {
     this.x = x; // set
     this.y = y; // set
   }
-  string toString() { // function
+  public string toString() { // function
     return "";
   }
-  int x {get; private set;} // property
-  int y {get; private set;} // property
-  Square getAdjacentSquare(Direction d) { // function
+  public int x {get; private set;} // property
+  public int y {get; private set;} // property
+  public Square getAdjacentSquare(Direction d) { // function
     var newX = this.x;
     var newY = this.y;
     if (d == Direction.left) {
@@ -129,7 +129,7 @@ class Square {
     }
     return new Square(newX, newY);
   }
-  bool hasHitEdge() { // function
+  public bool hasHitEdge() { // function
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
   }
 }

@@ -79,14 +79,14 @@ class Solver
     self.start = start # set
     self.destination = destination # set
     self.current = Node(emptyPoint(), 0, 0) # set
-  def toString(self: Solver, ) -> str: # function
+  def toString(self: Solver) -> str: # function
     return ""
-  nodes: list[Node]
-  start: Point
-  destination: Point
-  current: Node
-  alg: Algorithm
-  running: bool
+  nodes: list[Node] # property
+  start: Point # property
+  destination: Point # property
+  current: Node # property
+  alg: Algorithm # property
+  running: bool # property
   # TODO can this go into the constructor ?
   def initialise(self: Solver, alg: Algorithm) -> None: # procedure
     self.alg = alg # set
@@ -96,7 +96,7 @@ class Solver
       node.setDistanceFromStart(infinity) # call procedure
       node.setVia(emptyPoint()) # call procedure
       node.setVisited(False) # call procedure
-  def visitNextPoint(self: Solver, ) -> None: # procedure
+  def visitNextPoint(self: Solver) -> None: # procedure
     self.updateNeighbours() # call procedure
     self.current = self.nextNodeToVisit() # set
     if (self.current.isEmpty or (self.current.point.equals(self.destination))):
@@ -104,7 +104,7 @@ class Solver
     else:
       current = self.current # variable definition
       current.setVisited(True) # call procedure
-  def updateNeighbours(self: Solver, ) -> None: # procedure
+  def updateNeighbours(self: Solver) -> None: # procedure
     distToCurrent = self.current.distFromStart # variable definition
     currentPoint = self.current.point # variable definition
     for neighbour in self.currentNeighbours():
@@ -112,7 +112,7 @@ class Solver
       if distViaCurrent < neighbour.distFromStart:
         neighbour.setVia(currentPoint) # call procedure
         neighbour.setDistanceFromStart(distViaCurrent) # call procedure
-  def currentNeighbours(self: Solver, ) -> list[Node]: # function
+  def currentNeighbours(self: Solver) -> list[Node]: # function
     currentNode = self.current # variable definition
     currentPoint = currentNode.point # variable definition
     neighbours = list[Node]() # variable definition
@@ -125,9 +125,9 @@ class Solver
   def getNodeFor(self: Solver, p: Point) -> Node: # function
     matches = self.nodes.filter(lambda n: Node => n.point.equals(p)) # variable definition
     return if(matches.length() == 1, matches.head(), emptyNode())
-  def getLastVisited(self: Solver, ) -> Point: # function
+  def getLastVisited(self: Solver) -> Point: # function
     return self.current.point
-  def nextNodeToVisit(self: Solver, ) -> Node: # function
+  def nextNodeToVisit(self: Solver) -> Node: # function
     lowestCostSoFar = infinity # variable definition
     lowestCostNode = emptyNode() # variable definition
     possibilities = self.nodes.filter(lambda nd: Node => (not nd.visited) and (nd.distFromStart < infinity)) # variable definition
@@ -148,7 +148,7 @@ class Solver
     elif self.alg == Algorithm.heuristic:
       cost = estToDest # set
     return cost
-  def getRouteAndLength(self: Solver, ) -> tuple[list[Point], float]: # function
+  def getRouteAndLength(self: Solver) -> tuple[list[Point], float]: # function
     route = [self.destination] # variable definition
     length = 0.0 # variable definition
     node = self.getNodeFor(self.destination) # variable definition
@@ -174,19 +174,19 @@ class Node
     self.distFromStart = distFromStart # set
     self.via = emptyPoint() # set
     self.estDistToDest = estDistToDest # set
-  point: Point
-  visited: bool
-  distFromStart: float
-  via: Point
-  estDistToDest: float
-  isEmpty: bool
+  point: Point # property
+  visited: bool # property
+  distFromStart: float # property
+  via: Point # property
+  estDistToDest: float # property
+  isEmpty: bool # property
   def setVisited(self: Node, value: bool) -> None: # procedure
     self.visited = value # set
   def setDistanceFromStart(self: Node, d: float) -> None: # procedure
     self.distFromStart = d # set
   def setVia(self: Node, p: Point) -> None: # procedure
     self.via = p # set
-  def toString(self: Node, ) -> str: # function
+  def toString(self: Node) -> str: # function
     return f"[{self.point.toString()} {self.visited} {self.distFromStart}]"
 
 
@@ -195,9 +195,9 @@ def emptyPoint() -> Point: # function
 
 class Point
 
-  x: int
-  y: int
-  isEmpty: bool
+  x: int # property
+  y: int # property
+  isEmpty: bool # property
   def __init__(self: Point, x: int, y: int) -> None:
     if (x < 0) or (y < 0):
       self.isEmpty = True # set
@@ -209,9 +209,9 @@ class Point
   def isAdjacentTo(self: Point, p: Point) -> bool: # function
     return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == sqrt(2).round(4))
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  def neighbouringPoints(self: Point, ) -> list[Point]: # function
+  def neighbouringPoints(self: Point) -> list[Point]: # function
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]
-  def toString(self: Point, ) -> str: # function
+  def toString(self: Point) -> str: # function
     return f"{self.x},{self.y}"
 
 
