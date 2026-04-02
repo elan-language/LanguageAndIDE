@@ -184,16 +184,26 @@ export async function processInnerCode(code: string, l: Language) {
   );
 }
 
-function transformCodeTag(tag: string) {
+function ct(tag: string) {
   switch (tag) {
     case codeTag:
-      return "<el-code>";
+      return "<code>";
     case codeEndTag:
-      return "</el-code>";
+      return "</code>";
     case codeBlockTag:
       return "<codeblock>";
     case codeBlockEndTag:
       return "</codeblock>";
+  }
+  return tag;
+}
+
+function lt(tag: string, start: boolean) {
+  switch (tag) {
+    case codeTag:
+      return start ? "<span" : "</span>";
+    case codeBlockTag:
+      return start ? "<div" : "</div>";
   }
   return tag;
 }
@@ -214,8 +224,10 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
 
   for (const l of languages) {
     const cc = await processInnerCode(code, l);
-    processed.push(`<div class="${l.languageHtmlClass}">${cc}</div>`);
+    processed.push(
+      `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
+    );
   }
 
-  return `${transformCodeTag(startTag)}${processed.join("\n")}${transformCodeTag(endTag)}`;
+  return `${ct(startTag)}${processed.join("\n")}${ct(endTag)}`;
 }
