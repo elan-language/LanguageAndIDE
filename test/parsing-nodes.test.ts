@@ -15,6 +15,7 @@ import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
 import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
 import { IfExpr } from "../src/ide/frames/parse-nodes/if-expr";
+import { InheritanceNode } from "../src/ide/frames/parse-nodes/inheritanceNode";
 import { InstanceNode } from "../src/ide/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
@@ -2621,6 +2622,60 @@ suite("Parsing Nodes", () => {
       `this`,
       "<el-kw>this</el-kw>",
       `this`,
+    );
+  });
+  test("Inheritance node", () => {
+    testNodeParse(
+      new InheritanceNode(fileWithJava()),
+      `Foo, Bar, Yon`,
+      ParseStatus.valid,
+      `Foo, Bar, Yon`,
+      "",
+      `inherits Foo, Bar, Yon`,
+      "<el-kw>implements</el-kw> <el-type>Foo</el-type>, <el-type>Bar</el-type>, <el-type>Yon</el-type>",
+      `implements Foo, Bar, Yon`,
+    );
+    testNodeParse(
+      new InheritanceNode(fileWithVB()),
+      `Foo, Bar, Yon`,
+      ParseStatus.valid,
+      `Foo, Bar, Yon`,
+      "",
+      `inherits Foo, Bar, Yon`,
+      `
+<br><el-kw>Implements</el-kw> <el-type>Foo</el-type>, <el-type>Bar</el-type>, <el-type>Yon</el-type>`,
+      `
+Implements Foo, Bar, Yon`,
+    );
+    testNodeParse(
+      new InheritanceNode(f),
+      `inherits Foo, Bar, Yon`,
+      ParseStatus.valid,
+      `inherits Foo, Bar, Yon`,
+      "",
+      `inherits Foo, Bar, Yon`,
+      "<el-kw>inherits</el-kw> <el-type>Foo</el-type>, <el-type>Bar</el-type>, <el-type>Yon</el-type>",
+      `inherits Foo, Bar, Yon`,
+    );
+    testNodeParse(
+      new InheritanceNode(fileWithPython()),
+      `Foo, Bar, Yon`,
+      ParseStatus.valid,
+      `Foo, Bar, Yon`,
+      "",
+      `inherits Foo, Bar, Yon`,
+      "<el-type>Foo</el-type>, <el-type>Bar</el-type>, <el-type>Yon</el-type>",
+      `Foo, Bar, Yon`,
+    );
+    testNodeParse(
+      new InheritanceNode(fileWithCS()),
+      `Foo, Bar, Yon`,
+      ParseStatus.valid,
+      `Foo, Bar, Yon`,
+      "",
+      `inherits Foo, Bar, Yon`,
+      ": <el-type>Foo</el-type>, <el-type>Bar</el-type>, <el-type>Yon</el-type>",
+      `: Foo, Bar, Yon`,
     );
   });
 });
