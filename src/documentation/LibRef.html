@@ -2304,10 +2304,12 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
 
-<el-code-block source="func_random.elan">
-<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-</el-code-block>
+<codeblock>
+main
+  variable rand set to new Random()
+  call rand.initialiseFromClock()
+end main
+</codeblock>
 
 <p>Then, in a function, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <el-type>Random</el-type> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <el-type>Random</el-type>.
 If you need another random value, you use the returned <el-type>Random</el-type> on which to apply the dot method again.</p>
@@ -2353,29 +2355,22 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To roll a dice in a function:</p>
 
-<el-code-block source="func_random.elan">
-<el-main class="ok multiline" id="main1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
-</el-top>
-<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method><el-method>initialiseFromClock</el-method></el-method></el-txt></el-field>(<el-field id="args8" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for12" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw>&lt; <el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="set18" tabindex="-1"><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="set21" tabindex="-1"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field>)</el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-<el-kw>end main</el-kw>
-</el-main>
-<el-func class="ok multiline" id="func27" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method></el-txt></el-field>(<el-field id="params30" class="optional ok" tabindex="-1"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type31" class="ok" tabindex="-1"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field>
-</el-top>
-<el-statement class="ok" id="return32" tabindex="-1"><el-kw>return </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func></el-code-block>
+<codeblock>
+  main
+  variable rand set to new Random()
+  call rand.initialiseFromClock()
+  variable dice set to 0
+  for i in range(1, 11)
+    set dice to rollDice(rand).item_0
+    set rand to rollDice(rand).item_1
+    call print(dice)
+  end for
+end main
+
+function rollDice(rnd as Random) returns (Int, Random)
+  return rnd.nextInt(1, 6)
+end function
+</codeblock>
 <hr>
 </div></div>
 

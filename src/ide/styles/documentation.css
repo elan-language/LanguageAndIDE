@@ -162,3 +162,32 @@ el-topic {
 body *, code, el-code, el-code-block, el-field {
   user-select: none;
 }
+
+/* display of code translations */
+el-fr {
+  display: none;
+}
+
+el-field el-text {
+  font: consolas, monospace; /* Not sure why this is needed, but displays as sans face without */
+}
+
+body .elan, body .python, body .vb, body .cs, body .java {
+  display: none;
+}
+
+body.elan .elan, 
+body.python .python, 
+body.vb .vb, 
+body.cs .cs, 
+body.java .java {
+  display: block;
+}
+
+body.elan span.elan, 
+body.python span.python, 
+body.vb span.vb, 
+body.cs span.cs, 
+body.java span.java {
+  display:inline;
+}
