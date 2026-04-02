@@ -24,6 +24,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -330,6 +331,32 @@ export class LanguageVB extends LanguageAbstract {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  inheritanceAsHtml(node: InheritanceNode): string {
+    let result = ``;
+    if (node.isValid()) {
+      const types = node.getAllTypeNames();
+      const firstTypeAbstract = node.firstTypeIsAbstract();
+      let interfaces = types;
+      if (firstTypeAbstract) {
+        result = `
+<br><el-kw>${this.INHERITS}</el-kw> <el-type>${types[0]}</el-type>`;
+        interfaces = types.slice(1);
+        if (interfaces.length > 0) {
+          result += " ";
+        }
+      }
+      if (interfaces.length > 0) {
+        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");
+        result += `
+<br><el-kw>${this.IMPLEMENTS}</el-kw> ${csvTypes}`;
+      }
+    } else {
+      result = node.matchedText;
+    }
+    return result;
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
