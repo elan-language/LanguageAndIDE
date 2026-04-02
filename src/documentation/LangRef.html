@@ -1578,20 +1578,6 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-statement id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-method>createBlockGraphics</el-method>(<el-id>white</el-id>)</el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>Where the new instance is of a <a href="#class"> user-defined class</a> the expression may optionally
-be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
-
-<el-code-block source="dealCard.elan">
-<el-func class="ok multiline" id="func302" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident304" class="ok" tabindex="-1"><el-txt><el-method>dealCard</el-method></el-txt></el-field>(<el-field id="params305" class="optional ok" tabindex="-1"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="-1"><el-txt><el-type>Card</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="let309" tabindex="-1"><el-kw>variable </el-kw><el-field id="var310" class="ok" tabindex="-1"><el-txt><el-id>number</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr311" class="ok" tabindex="-1"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let789" tabindex="-1"><el-kw>variable </el-kw><el-field id="var790" class="ok" tabindex="-1"><el-txt><el-id>rank</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr791" class="ok" tabindex="-1"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let315" tabindex="-1"><el-kw>variable </el-kw><el-field id="var316" class="ok" tabindex="-1"><el-txt><el-id>suit</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr317" class="ok" tabindex="-1"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-
 <h1 id="Comment">Comments</h1>
 <h2># comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.

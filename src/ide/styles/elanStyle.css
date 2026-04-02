@@ -225,6 +225,7 @@ el-field.advisory, el-field.advisory el-kw, el-field.advisory el-type, el-field.
 el-field el-txt {
     color: var(--defaultText);
     background-color: var(--panelBackground);
+    font-family: consolas, monospace; /* needed for comments in documented code */
 }
 el-field.error *, el-field.error input  {
     background-color: var(--warning);
