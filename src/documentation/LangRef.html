@@ -1578,19 +1578,6 @@ Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a l
 <el-statement id="var5" tabindex="-1"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-method>createBlockGraphics</el-method>(<el-id>white</el-id>)</el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>Where the new instance is of a <a href="#class"> user-defined class</a> the expression may optionally
-be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
-
-<codeblock>
-function dealCard(random as Float) returns Card
-  variable number set to (random*52).floor()
-  variable rank set to rankValue().keys()[divAsInt(number, 4).floor()]
-  variable suit set to number mod 4
-  # (originally) return new Card()with rank set to rank, suit set to suit
-  return new Card()
-end function
-</codeblock>
-
 <h1 id="Comment">Comments</h1>
 <h2># comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
