@@ -26,6 +26,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -309,6 +310,11 @@ export class LanguagePython extends LanguageAbstract {
 
   override typeTupleAsHtml(node: TypeTupleNode): string {
     return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
+  }
+
+  inheritanceAsHtml(node: InheritanceNode): string {
+    // TODO: specific logic for adding ABC if class is abstract and no inheritance
+    return node.isValid() ? `${node.typeList!.renderAsHtml()}` : node.matchedText;
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

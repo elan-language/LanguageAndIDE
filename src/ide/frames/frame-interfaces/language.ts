@@ -1,3 +1,4 @@
+import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -35,6 +36,7 @@ export interface Language {
   newInstanceAsHtml(node: NewInstance): string;
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
+  inheritanceAsHtml(node: InheritanceNode): string;
 
   MOD: string;
   EQUAL: string;

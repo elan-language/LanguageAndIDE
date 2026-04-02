@@ -1,4 +1,4 @@
-import { asKeyword, ofKeyword } from "../../compiler/elan-keywords";
+import { asKeyword, inheritsKeyword, ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -24,6 +24,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -296,6 +297,12 @@ export class LanguageElan extends LanguageAbstract {
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  inheritanceAsHtml(node: InheritanceNode): string {
+    return node.isValid()
+      ? `<el-kw>${inheritsKeyword}</el-kw> ${node.typeList!.renderAsHtml()}`
+      : node.matchedText;
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
