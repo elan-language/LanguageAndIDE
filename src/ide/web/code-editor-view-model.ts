@@ -516,6 +516,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     await this.changeLanguage(language, vm, tr, true);
   }
 
+  async loadFromUrl(vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
+    this.recreateFile(vm, false);
+    const params = new URL(window.location.href).searchParams;
+    const rawCode = params.get("code");
+    if (rawCode) {
+      const code = atob(rawCode);
+      this.recreateFile(vm, false, LanguageElan.Instance);
+      await this.readAndParse(vm, fm, tr, code, this.fileName, ParseMode.loadNew);
+      fm.reset();
+    }
+  }
+
   showCode() {
     collapseAllMenus();
     removeFocussedClassFromAllTabs();

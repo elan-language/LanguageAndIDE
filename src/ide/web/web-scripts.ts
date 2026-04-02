@@ -78,6 +78,7 @@ const fileButton = document.getElementById("file") as HTMLButtonElement;
 const languageButton = document.getElementById("language") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
+const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -233,6 +234,7 @@ class IDEViewModel implements IIDEViewModel {
           appendButton,
           saveButton,
           exportButton,
+          copyAsUrlButton,
           autoSaveButton,
           newButton,
           demosButton,
@@ -276,15 +278,20 @@ class IDEViewModel implements IIDEViewModel {
       }
 
       if (isEmpty) {
-        this.disable([saveButton, exportButton], "Some code must be added in order to save");
+        this.disable(
+          [saveButton, exportButton, copyAsUrlButton],
+          "Some code must be added in order to save",
+        );
       } else if (!(isParsing || isIncomplete)) {
-        this.disable([saveButton, exportButton], "Invalid code cannot be saved");
+        this.disable([saveButton, exportButton, copyAsUrlButton], "Invalid code cannot be saved");
       } else if (fileManager.isAutosaving()) {
         this.disable([saveButton], "Autosave is enabled- cancel to manual save");
         this.enable(exportButton, "Export the code into a file");
+        this.enable(copyAsUrlButton, "Copy the code into a url");
       } else {
         this.enable(saveButton, "Save the code into a file");
         this.enable(exportButton, "Export the code into a file");
+        this.enable(copyAsUrlButton, "Copy the code into a url");
       }
 
       if (!cvm.containsMain()) {
@@ -843,6 +850,21 @@ exportButton.addEventListener("click", async (e: Event) => {
   await getDownloader()(e);
 });
 
+copyAsUrlButton.addEventListener("click", async (_e: Event) => {
+  const code = await codeViewModel.renderAsSource();
+  const bEncoded = btoa(code);
+  const url = new URL(window.location.href);
+  url.searchParams.set("code", bEncoded);
+  const urlAsString = url.toString();
+
+  if (urlAsString.length < 2000) {
+    window.location.href = urlAsString;
+    await navigator.clipboard.writeText(urlAsString);
+  } else {
+    alert("Code is too long for data url");
+  }
+});
+
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
@@ -1028,8 +1050,13 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
 async function setup(p: Profile) {
   fileManager.reset();
   codeViewModel.setProfile(p);
-  codeViewModel.recreateFile(ideViewModel, true);
-  await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
+
+  if (new URL(window.location.href).searchParams.get("code")) {
+    await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner);
+  } else {
+    codeViewModel.recreateFile(ideViewModel, true);
+    await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
+  }
 }
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
