@@ -104,7 +104,7 @@ in the range:</li>
 </div></div>
 
 <h2 id="Float">Floating point</h2>
-<p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
+<p>A floating point number is a decimal number (also known as a Real number)  that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
  <el-code>120.0</el-code> &equals; <el-code>1.20e2</el-code>, and
  <el-code>0.012</el-code> &equals; <el-code>1.20e-2</el-code>.</p>
@@ -2478,25 +2478,54 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 </ul>
 
 <div id="LibraryProcedures"></div>
-<h1 id="StandaloneFunctions">Standalone functions</h1>
+<h1>Standalone library</h1>
     <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in round brackets, corresponding to the parameters defined for that function.</p>
 
-<h2 id="unicode">unicode</h2>
-<p>Function <el-method>unicode</el-method> converts a Unicode (codepoint) value expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an <el-type>Int</el-type>, into a string of a single character. For example:</p>
-<el-code-block source="unicode_hearts.elan">
-<el-func class="ok multiline" id="func3">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>hearts</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>String</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-method>unicode</el-method>(<el-lit>0x2665</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
+<h2 id="StandaloneFunctions">Standalone functions</h2>
+<p>These system methods are functions that may be referenced from within a function:</p> 
+<table class="tableMethod">
+ <tr>
+  <th>system<br>method</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Types</th>
+  <th>returns</th>
+ </tr><tr id="parseAsFloat">
+  <td><el-method>parseAsFloat</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Boolean</el-type>, <el-type>Float</el-type></td>
+  <td>a 2-Tuple in which the first item is <el-id>true</el-id> if the parse was successful,<br>
+  &ndash; <el-id>false</el-id> otherwise<br>
+  and, if <el-id>true</el-id>, the second item is the <el-type>Float</el-type> value, otherwise zero</td>
+ </tr><tr id="parseAsInt">
+  <td><el-method>parseAsInt</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Boolean</el-type>, <el-type>Int</el-type></td>
+  <td>a 2-Tuple in which the first item is <el-id>true</el-id> if the parse was successful,<br>
+  &ndash; <el-id>false</el-id> otherwise<br>
+  and, if <el-id>true</el-id>, the second item is the <el-type>Int</el-type> value, otherwise zero</td>
+ </tr><tr id="unicode">
+  <td><el-method>unicode</el-method></td>
+  <td><el-type>Int</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td>a string containing the one character defined at the given Unicode code point</td>
+ </tr>
+</table>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of using standalone functions</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Deconstructing the 2-Tuple returned by <el-method>parseAsInt</el-method>:</p>
+<el-code-block source="test_parse.elan">
+<el-statement class="ok" id="var20" tabindex="-1"><el-kw>variable </el-kw><el-field id="var21" class="ok" tabindex="-1"><el-txt><el-id>success</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr22" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var23" tabindex="-1"><el-kw>variable </el-kw><el-field id="var24" class="ok" tabindex="-1"><el-txt><el-id>value</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
 </el-code-block>
+<h5 class="no-TOC">Note</h5>
+<ul>
+ <li>Always check the <el-type>Boolean</el-type> before using the returned value in case it's zero only because the parse was unsuccessful.</li>
+</ul>
 
-<h2 id="parseAs">parseAsInt and parseAsFloat</h2>
-
-<p>Method <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-Tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-id>true</el-id> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.</p>
-<p>Method <el-method>parseAsFloat</el-method> does the equivalent for floating point.</p>
-<p> Their operation is illustrated by these tests: </p>
-
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test3" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>test_parse</el-id></el-txt></el-field>
@@ -2511,24 +2540,47 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-
-<h4 class="no-TOC">Notes</h4>
+<h5 class="no-TOC">Notes</h5>
 <ul>
  <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
- <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
- <li> You can '<a href="#Tuple">deconstruct</a>' the 2-Tuple into its two variables:
-<el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var20" tabindex="-1"><el-kw>variable </el-kw><el-field id="var21" class="ok" tabindex="-1"><el-txt><el-id>success</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr22" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var23" tabindex="-1"><el-kw>variable </el-kw><el-field id="var24" class="ok" tabindex="-1"><el-txt><el-id>value</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
-</el-code-block></li>
-    <li>One use of these parsing methods is for validating user input, but note that an easier way is to use the various <a href="#SystemMethods">input methods</a>.</li>
+ <li>When validating user input,it may be easier to use the various <a href="#SystemMethods">input methods</a>.</li>
 </ul>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using method <el-method>unicode</el-method>:</p>
+<el-code-block source="unicode_hearts.elan">
+<el-func class="ok multiline" id="func3">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>hearts</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>String</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-method>unicode</el-method>(<el-lit>0x2665</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+<p>returns a string containing the heart character &#x2665;.</p>
+<hr>
+</div></div>
 
-<div id="floor"></div>
-<div id="ceiling"></div>
-<div id="round"></div>
-<div id="isNaN"></div>
-<div id="isInfinite"></div>
+<h2 id="StandaloneDotMethods">Standalone dot methods</h2>
+
+For the dot methods that can be applied
+<table class="tableMethod">
+ <tr>
+  <th>system<br>method</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Types</th>
+  <th>returns</th>
+ </tr>
+ </tr><tr id="isNaN">
+  <td><el-method>isNaN</el-method></td>
+  <td><el-type>Float</el-type> or <el-type>Int</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if value is 'NaN', i.e. not a number<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr><tr id="isInfinite">
+  <td><el-method>isInfinite</el-method></td>
+  <td><el-type>Float</el-type> or <el-type>Int</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-id>true</el-id> if value would be infinite, e.g. after division by zero<br>&ndash; <el-id>false</el-id> otherwise</td>
+ </tr>
+</table>
+
 <h2><el-method>floor</el-method>, <el-method>ceiling</el-method>, <el-method>round</el-method>, <el-method>isNaN</el-method>, <el-method>isInfinite</el-method></h2>
 <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
 <el-method>NaN</el-method> is short for 'Not A (Real) Number'. Their use is illustrated with the following tests:</p>
