@@ -126,14 +126,18 @@ end constructor`;
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
 
-  ignore_test("process wrapped expression", async () => {
+  test("process wrapped expression", async () => {
     const code = `<code>
   mark[something] + "2" + mark[something]
 </code>`;
 
     const actual = await processCode(code, codeTag, codeEndTag);
 
-    const expected = `<el-code><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</el-code>`;
+    const expected = `<code><span class="elan"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
+<span class="python"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
+<span class="cs"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
+<span class="vb"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
+<span class="java"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span></code>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -153,14 +157,22 @@ end constructor`;
     assert.strictEqual(actual.startsWith(`<codeblock><div class="elan"><el-test`), true);
   });
 
-  ignore_test("process multiple code", async () => {
+  test("process multiple code", async () => {
     const code = `<code>new</code>
 <code>Int</code>`;
 
     const actual = await processCode(code, codeTag, codeEndTag);
 
-    const expected = `<el-code><el-kw>new</el-kw></el-code>
-<el-code><el-type>Int</el-type></el-code>`;
+    const expected = `<code><span class="elan"><el-kw>new</el-kw></span>
+<span class="python"><el-kw>new</el-kw></span>
+<span class="cs"><el-kw>new</el-kw></span>
+<span class="vb"><el-kw>new</el-kw></span>
+<span class="java"><el-kw>new</el-kw></span></code>
+<code><span class="elan"><el-type>Int</el-type></span>
+<span class="python"><el-type>int</el-type></span>
+<span class="cs"><el-type>int</el-type></span>
+<span class="vb"><el-type>Integer</el-type></span>
+<span class="java"><el-type>int</el-type></span></code>`;
 
     assert.strictEqual(actual, expected);
   });

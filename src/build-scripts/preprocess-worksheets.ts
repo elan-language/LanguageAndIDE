@@ -7,7 +7,7 @@ import {
   processTitle,
   setCurrentDir,
 } from "../tools/markupParser";
-import { codeBlockEndTag, codeBlockTag } from "../tools/parserConstants";
+import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -105,8 +105,8 @@ export async function processWorksheet(fileName: string) {
   [title, version, source] = processTitle(source);
   source = appendFooter(source);
 
-  //let updatedContent = await processCode(source, codeTag, codeEndTag);
-  let updatedContent = await processCode(source, codeBlockTag, codeBlockEndTag);
+  let updatedContent = await processCode(source, codeTag, codeEndTag);
+  updatedContent = await processCode(source, codeBlockTag, codeBlockEndTag);
   updatedContent = await processSteps(updatedContent);
   updatedContent = await processFinals(updatedContent);
 
