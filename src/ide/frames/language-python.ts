@@ -145,7 +145,7 @@ export class LanguagePython extends LanguageAbstract {
     if (frame instanceof AbstractClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      const inheritance = frame.doesInherit() ? `(${frame.inheritance.renderAsHtml()})` : ``;
+      const inheritance = frame.doesInherit() ? `(${frame.inheritance.renderAsHtml()})` : ` ${frame.inheritance.renderAsHtml()}`;
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${inheritance}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
@@ -180,8 +180,9 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   abstractInheritance(frame: ClassFrame): string {
-    const abc = `<el-type>ABC</el-type>`;
-    return frame.doesInherit() ? `(${abc}, ${frame.inheritance.renderAsHtml()})` : `(${abc})`;
+    return frame.doesInherit()
+      ? `(<el-type>ABC</el-type>, ${frame.inheritance.renderAsHtml()})`
+      : `(<el-type>ABC</el-type> ${frame.inheritance.renderAsHtml()})`;
   }
 
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
