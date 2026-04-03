@@ -794,11 +794,8 @@ export function transform(
   }
 
   if (node instanceof InheritanceNode) {
-    if (node.typeList instanceof CSV) {
-      const types = transformMany(node.typeList, fieldId, scope).items;
-      return new CsvAsn(types, fieldId);
-    }
-    return EmptyAsn.Instance;
+    const types = transformMany(node, fieldId, scope).items;
+    return new CsvAsn(types, fieldId);
   }
 
   if (node instanceof OptionalNode) {

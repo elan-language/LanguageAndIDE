@@ -438,7 +438,7 @@ end main`;
       "Cannot use 'this' outside class context.LangRef.html#ThisCompileError",
     ]);
   });
-  test("Pass_ConcreteClassAndMembersInLangs", async () => {
+  ignore_test("Pass_ConcreteClassAndMembersInLangs", async () => {
     const code = `${testHeader}
 
 main

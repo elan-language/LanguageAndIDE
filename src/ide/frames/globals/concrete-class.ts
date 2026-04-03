@@ -31,9 +31,9 @@ export class ConcreteClass extends ClassFrame {
   }
 
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}class ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
+    return `${this.sourceAnnotations()}${classKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
 ${parentHelper_renderChildrenAsElanSource(this)}\r
-end class\r\n`;
+${endKeyword} ${classKeyword}\r\n`;
   }
 
   topKeywords(): string {
