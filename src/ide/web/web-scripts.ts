@@ -858,7 +858,6 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
   const urlAsString = url.toString();
 
   if (urlAsString.length < 2000) {
-    window.location.href = urlAsString;
     await navigator.clipboard.writeText(urlAsString);
   } else {
     alert("Code is too long for data url");
