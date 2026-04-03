@@ -9,11 +9,10 @@ export function languageHelper_inheritance(
 ): string {
   const node = frame.inheritance.getRootNode()! as InheritanceNode;
   const field = frame.inheritance;
-  let result = "";
+  let result = " <i>inheritance:</i> ";
   if (field.isSelected()) {
     result = ` ${field.renderAsHtml()}`;
   } else if (frame.doesInherit() && node.isValid()) {
-    result = "";
     const abstractClasses = node.getAbstractClassNames();
     if (abstractClasses.length > 0) {
       const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
