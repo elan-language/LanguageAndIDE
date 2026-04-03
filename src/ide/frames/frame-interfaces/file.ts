@@ -4,13 +4,13 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { TestStatus } from "../../../compiler/test-status";
+import { Profile } from "../profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
 import { Language } from "./language";
 import { Parent } from "./parent";
-import { Profile } from "./profile";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 

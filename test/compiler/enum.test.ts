@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -41,7 +41,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -82,7 +82,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -123,7 +123,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -172,7 +172,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -219,7 +219,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -260,7 +260,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -299,7 +299,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -326,7 +326,7 @@ enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -353,7 +353,7 @@ enum fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -375,7 +375,7 @@ enum Fruit apple, Orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -397,7 +397,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -421,7 +421,7 @@ enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -445,7 +445,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -469,7 +469,7 @@ enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -493,7 +493,7 @@ enum if apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -516,7 +516,7 @@ enum Fruit apple, orange, if`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -540,7 +540,7 @@ enum Fruit apple, orange, break`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -566,7 +566,7 @@ enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -590,7 +590,7 @@ enum Fruit apple, orange, pear, orange`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

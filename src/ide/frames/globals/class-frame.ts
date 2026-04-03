@@ -22,7 +22,6 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
-import { Profile } from "../frame-interfaces/profile";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import {
   parentHelper_addChildAfter,
@@ -48,6 +47,7 @@ import {
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
+import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
 

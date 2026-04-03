@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -46,7 +46,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -82,7 +82,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -118,7 +118,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -154,7 +154,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -190,7 +190,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -264,7 +264,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -338,7 +338,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -370,7 +370,7 @@ end function
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -392,7 +392,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -418,7 +418,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -445,7 +445,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -472,7 +472,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -505,7 +505,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -539,7 +539,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -576,7 +576,7 @@ end function`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -613,7 +613,7 @@ end function`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

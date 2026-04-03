@@ -36,7 +36,7 @@
 //   const codeSource = new CodeSourceFromString(source);
 //   const fl = new FileImpl(
 //     hash,
-//     new DefaultProfile(),
+//     new Profile(""),
 //     "guest",
 //     transforms(),
 //     new StdLib(new StubInputOutput()),false,

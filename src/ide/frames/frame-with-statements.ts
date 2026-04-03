@@ -7,7 +7,6 @@ import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
-import { Profile } from "./frame-interfaces/profile";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import {
   parentHelper_addChildAfter,
@@ -35,6 +34,7 @@ import {
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "./parent-helpers";
+import { Profile } from "./profile";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus } from "./status-enums";
