@@ -3,8 +3,8 @@ import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
-import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
+import { Profile } from "../ide/frames/profile";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
@@ -20,7 +20,7 @@ function updateVersion() {
 
   const file = new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "guest",
     transforms(),
     new StdLib(new StubInputOutput()),

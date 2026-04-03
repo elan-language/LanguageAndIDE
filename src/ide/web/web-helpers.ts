@@ -1,8 +1,6 @@
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { transform, transformMany } from "../compile-api/ast-visitor";
 import { Transforms } from "../compile-api/transforms";
-import { DefaultProfile } from "../frames/default-profile";
-import { Profile } from "../frames/frame-interfaces/profile";
 
 export async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
@@ -17,18 +15,6 @@ export function transforms() {
     transform: transform,
     transformMany: transformMany,
   } as Transforms;
-}
-
-export async function fetchDefaultProfile() {
-  try {
-    const jsonProfile = `./profiles/default.json`;
-    const f = await fetch(jsonProfile, { mode: "same-origin" });
-    const j = await f.json();
-    return j as Profile;
-  } catch {
-    console.warn("default profile not found");
-    return new DefaultProfile();
-  }
 }
 
 export function checkForUnclosedHtmlTag(text: string) {

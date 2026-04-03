@@ -31,9 +31,12 @@ import {
   variableKeyword,
   whileKeyword,
 } from "../../compiler/elan-keywords";
-import { Profile } from "./frame-interfaces/profile";
 
-export class DefaultProfile implements Profile {
+export const defaultUsername = "guest";
+
+export class Profile {
+  constructor(_param: string) {}
+
   name: string = "default_profile";
   globals: string[] = [
     mainKeyword,

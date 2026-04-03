@@ -4,17 +4,16 @@ import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
-import { DefaultProfile } from "../frames/default-profile";
 import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Language } from "../frames/frame-interfaces/language";
-import { Profile } from "../frames/frame-interfaces/profile";
 import { LanguageCS } from "../frames/language-cs";
 import { LanguageElan } from "../frames/language-elan";
 import { LanguageJava } from "../frames/language-java";
 import { LanguagePython } from "../frames/language-python";
 import { LanguageVB } from "../frames/language-vb";
+import { Profile } from "../frames/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -30,6 +29,7 @@ import {
   confirmContinueOnNonChromeBrowser,
   cursorWait,
   domEventType,
+  getLanguageByClass,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuKey,
@@ -46,7 +46,7 @@ import {
   warningOrError,
   wrapEventHandler,
 } from "./ui-helpers";
-import { fetchDefaultProfile, sanitiseHtml } from "./web-helpers";
+import { sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
@@ -1011,11 +1011,10 @@ window.addEventListener("message", async (m) => {
 });
 
 if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
-  // fetch triggers page display
-  fetchDefaultProfile().then(
-    async (defaultProfile) => await setup(defaultProfile),
-    async () => await setup(new DefaultProfile()),
-  );
+  const sp = new URL(window.location.href).searchParams;
+  const param = sp.get("profile") || "";
+  const profile = new Profile(param);
+  setup(profile);
 } else {
   const msg = "Require Chrome or Edge";
   ideViewModel.disable(
@@ -1049,11 +1048,19 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
 async function setup(p: Profile) {
   fileManager.reset();
   codeViewModel.setProfile(p);
+  const sp = new URL(window.location.href).searchParams;
+  const lang = sp.get("lang") ?? "";
+  const cvd = sp.get("cvd");
+  const code = sp.get("code");
 
-  if (new URL(window.location.href).searchParams.get("code")) {
-    await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner);
+  if (cvd) {
+    changeCss("cvd-colourScheme");
+  }
+
+  if (code) {
+    await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner, code);
   } else {
-    codeViewModel.recreateFile(ideViewModel, true);
+    codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
     await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
   }
 }
