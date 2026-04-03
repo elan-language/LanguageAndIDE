@@ -4,7 +4,6 @@ import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
-import { DefaultProfile } from "../ide/frames/default-profile";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
@@ -16,6 +15,7 @@ import { LanguageElan } from "../ide/frames/language-elan";
 import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageVB } from "../ide/frames/language-vb";
+import { Profile } from "../ide/frames/profile";
 import { ConstantStatement } from "../ide/frames/statements/constant-statement";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { ParseStatus } from "../ide/frames/status-enums";
@@ -33,7 +33,7 @@ function transforms(): Transforms {
 async function newFileImpl(): Promise<FileImpl> {
   return new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "guest",
     transforms(),
     new StdLib(new StubInputOutput()),

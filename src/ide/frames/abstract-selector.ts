@@ -13,9 +13,9 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
-import { Profile } from "./frame-interfaces/profile";
 import { Overtyper } from "./overtyper";
 import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
+import { Profile } from "./profile";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {

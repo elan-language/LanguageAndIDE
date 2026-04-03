@@ -11,9 +11,9 @@ import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
-import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { LanguageElan } from "../frames/language-elan";
+import { Profile } from "../frames/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { FileManager } from "./file-manager";
@@ -516,16 +516,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     await this.changeLanguage(language, vm, tr, true);
   }
 
-  async loadFromUrl(vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
+  async loadFromUrl(vm: IIDEViewModel, fm: FileManager, tr: TestRunner, rawCode: string) {
     this.recreateFile(vm, false);
-    const params = new URL(window.location.href).searchParams;
-    const rawCode = params.get("code");
-    if (rawCode) {
-      const code = atob(rawCode);
-      this.recreateFile(vm, false, LanguageElan.Instance);
-      await this.readAndParse(vm, fm, tr, code, this.fileName, ParseMode.loadNew);
-      fm.reset();
-    }
+    const code = atob(rawCode);
+    this.recreateFile(vm, false, LanguageElan.Instance);
+    await this.readAndParse(vm, fm, tr, code, this.fileName, ParseMode.loadNew);
+    fm.reset();
   }
 
   showCode() {

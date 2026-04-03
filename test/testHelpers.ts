@@ -14,7 +14,6 @@ import { UnknownType } from "../src/compiler/symbols/unknown-type";
 import { TestStatus } from "../src/compiler/test-status";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { AbstractField } from "../src/ide/frames/fields/abstract-field";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
@@ -36,6 +35,7 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { Profile } from "../src/ide/frames/profile";
 
 
 // flag to update test files
@@ -204,7 +204,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -608,7 +608,7 @@ export function fileWithJava(): FileImpl {
 function fileWithLanguage(language: Language): FileImpl {
   const f = new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),false,
@@ -619,7 +619,7 @@ function fileWithLanguage(language: Language): FileImpl {
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, false));
+  const main = new MainFrame(new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);

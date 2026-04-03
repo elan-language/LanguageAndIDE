@@ -26,7 +26,6 @@ import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
-import { defaultUsername, Profile } from "./frame-interfaces/profile";
 import { Selectable } from "./frame-interfaces/selectable";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
@@ -39,6 +38,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { defaultUsername, Profile } from "./profile";
 
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
