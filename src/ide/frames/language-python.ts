@@ -196,6 +196,10 @@ export class LanguagePython extends LanguageAbstract {
     return ""; // Python blocks have no textual ending;
   }
 
+  renderFileTrailerAsHtml(): string {
+    return "\n\n<el-header>main()</el-header>";
+  }
+
   private DEF = "def";
   private CLASS = "class";
   private ELIF = "elif";

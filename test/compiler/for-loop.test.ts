@@ -69,6 +69,8 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # set
   printNoLine(tot) # call procedure
+
+main()
 `;
 
     const csCode = `${testCSHeader}

@@ -61,6 +61,8 @@ export abstract class LanguageAbstract implements Language {
 
   abstract renderBottomAsHtml(frame: Frame): string;
 
+  abstract renderFileTrailerAsHtml(): string;
+
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
   abstract newInstanceAsHtml(node: NewInstance): string;

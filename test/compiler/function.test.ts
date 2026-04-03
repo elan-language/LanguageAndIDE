@@ -69,6 +69,8 @@ def main() -> None:
 
 def foo(a: float, b: float) -> float: # function
   return a*b
+
+main()
 `;
 
     const csCode = `${testCSHeader}

@@ -56,6 +56,8 @@ return [main, _tests];}`;
 
 def main() -> None:
 
+
+main()
 `;
 
     const csCode = `${testCSHeader}

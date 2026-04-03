@@ -507,6 +507,8 @@ class Foo
   def toString(self: Foo) -> str: # function
     return ""
 
+
+main()
 `;
     const vbCode = `${testVBHeader}
 
@@ -667,6 +669,7 @@ class Foo
   def toString(self: Foo) -> str: # function
     return ""
 
+main()
 `;
     const vbCode = `${testVBHeader}
 
