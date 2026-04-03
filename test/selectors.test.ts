@@ -4,9 +4,7 @@ import { assertKeyword, functionKeyword, testKeyword } from "../src/compiler/ela
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
-import { Profile } from "../src/ide/frames/frame-interfaces/profile";
 import { AbstractClass } from "../src/ide/frames/globals/abstract-class";
 import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
@@ -23,8 +21,9 @@ import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
+import { Profile } from "../src/ide/frames/profile";
 
-export class TestProfileSPJ implements Profile {
+export class TestProfileSPJ extends Profile {
   name: string = "SPJ";
   globals: string[] = [functionKeyword, testKeyword];
   statements: string[] = [assertKeyword];
@@ -79,7 +78,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - globals", () => {
     const f = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -100,7 +99,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - members", () => {
     const f = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -135,7 +134,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - abstract class", () => {
     const f = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -164,7 +163,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - interface", () => {
     const f = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -181,7 +180,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - statements", () => {
     const f = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -203,7 +202,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Function", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -218,7 +217,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Procedure", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -233,7 +232,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Test", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -248,7 +247,7 @@ suite("Selector tests", () => {
   test("Selection Context - deeper nesting 1", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -265,7 +264,7 @@ suite("Selector tests", () => {
   test("Selection Context - deeper nesting 2", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -281,7 +280,7 @@ suite("Selector tests", () => {
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -296,7 +295,7 @@ suite("Selector tests", () => {
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -315,7 +314,7 @@ suite("Selector tests", () => {
   ignore_test("#377 - Global select filtered by profile", () => {
     const f = new FileImpl(
       hash,
-      new TestProfileSPJ(),
+      new TestProfileSPJ(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -330,7 +329,7 @@ suite("Selector tests", () => {
   test("#2386 - Selector should respond to Enter", () => {
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
