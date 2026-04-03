@@ -3,6 +3,7 @@ import { Property } from "./class-members/property";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -79,6 +80,31 @@ export class LanguageJava extends LanguageCfamily {
       html = this.common_renderTopAsHtml(frame);
     }
     return html;
+  }
+
+  inheritance(frame: ClassFrame): string {
+    const node = frame.inheritance.getRootNode()! as InheritanceNode;
+    let result = ``;
+    if (frame.doesInherit() && node.isValid()) {
+      const types = node.getAllTypeNames();
+      const firstTypeAbstract = node.firstTypeIsAbstract();
+      let interfaces = types;
+      if (firstTypeAbstract) {
+        result = ` <el-kw>${this.EXTENDS}</el-kw> <el-type>${types[0]}</el-type>`;
+        interfaces = types.slice(1);
+        if (interfaces.length > 0) {
+          result += " ";
+        }
+      }
+      if (interfaces.length > 0) {
+        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");
+        result += ` <el-kw>${this.IMPLEMENTS}</el-kw> ${csvTypes}`;
+      }
+    } else {
+      result = node.matchedText;
+    }
+    return result;
   }
 
   renderBottomAsHtml(frame: Frame): string {

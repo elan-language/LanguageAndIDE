@@ -10,6 +10,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -129,9 +130,9 @@ export class LanguageVB extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
@@ -145,7 +146,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
@@ -333,15 +334,16 @@ export class LanguageVB extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
-  inheritanceAsHtml(node: InheritanceNode): string {
+  inheritance(frame: ClassFrame): string {
+    const node = frame.inheritance.getRootNode()! as InheritanceNode;
     let result = ``;
-    if (node.isValid()) {
+    if (frame.doesInherit() && node.isValid()) {
       const types = node.getAllTypeNames();
       const firstTypeAbstract = node.firstTypeIsAbstract();
       let interfaces = types;
       if (firstTypeAbstract) {
         result = `
-<br><el-kw>${this.INHERITS}</el-kw> <el-type>${types[0]}</el-type>`;
+<br> <el-kw>${this.INHERITS}</el-kw> <el-type>${types[0]}</el-type>`;
         interfaces = types.slice(1);
         if (interfaces.length > 0) {
           result += " ";
@@ -351,7 +353,7 @@ export class LanguageVB extends LanguageAbstract {
         const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
         const csvTypes = typesAsHtml.join(", ");
         result += `
-<br><el-kw>${this.IMPLEMENTS}</el-kw> ${csvTypes}`;
+<br> <el-kw>${this.IMPLEMENTS}</el-kw> ${csvTypes}`;
       }
     } else {
       result = node.matchedText;

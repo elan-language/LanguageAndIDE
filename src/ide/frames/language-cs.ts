@@ -3,11 +3,12 @@ import { Property } from "./class-members/property";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
+
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -74,6 +75,10 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
+  inheritance(frame: ClassFrame): string {
+    return frame.doesInherit() ? `: ${frame.inheritance.renderAsHtml()}` : ``;
+  }
+
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);
   }
@@ -116,10 +121,6 @@ export class LanguageCS extends LanguageCfamily {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
-  }
-
-  inheritanceAsHtml(node: InheritanceNode): string {
-    return node.isValid() ? `: ${node.typeList!.renderAsHtml()}` : node.matchedText;
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

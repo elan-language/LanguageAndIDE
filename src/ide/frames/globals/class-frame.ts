@@ -1,6 +1,6 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
-import { classKeyword } from "../../../compiler/elan-keywords";
+import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
@@ -201,7 +201,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
 
   public inheritanceAsElanSource(): string {
-    return this.doesInherit() ? ` ${this.inheritance.renderAsElanSource()}` : ``;
+    return this.doesInherit() ? ` ${inheritsKeyword} ${this.inheritance.renderAsElanSource()}` : ``;
   }
 
   indent(): string {
@@ -263,6 +263,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   parseTop(source: CodeSource): boolean {
     source.remove(this.topKeywords());
     this.name.parseFrom(source);
+    source.removeRegEx(/^\sinherits\s/, true);
     this.inheritance.parseFrom(source);
     return true;
   }
@@ -325,7 +326,6 @@ ${this.language().renderBottomAsHtml(this)}
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}`;
   }
-
   resetFieldText(): void {
     super.resetFieldText();
     parentHelper_resetFieldTextOnChildren(this);

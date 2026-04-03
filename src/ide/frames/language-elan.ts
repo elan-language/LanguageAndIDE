@@ -1,4 +1,4 @@
-import { asKeyword, inheritsKeyword, ofKeyword } from "../../compiler/elan-keywords";
+import { asKeyword, ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -11,6 +11,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -24,7 +25,6 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -123,9 +123,9 @@ export class LanguageElan extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
@@ -139,7 +139,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
@@ -152,6 +152,12 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
+  }
+
+  private inheritance(frame: ClassFrame): string {
+    return frame.doesInherit()
+      ? ` <el-kw>${this.INHERITS}</el-kw> ${frame.inheritance.renderAsHtml()}`
+      : ` ${frame.inheritance.renderAsHtml()}`;
   }
 
   renderTopAsExport(_frame: Frame): string {
@@ -297,12 +303,6 @@ export class LanguageElan extends LanguageAbstract {
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
-  }
-
-  inheritanceAsHtml(node: InheritanceNode): string {
-    return node.isValid()
-      ? `<el-kw>${inheritsKeyword}</el-kw> ${node.typeList!.renderAsHtml()}`
-      : node.matchedText;
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

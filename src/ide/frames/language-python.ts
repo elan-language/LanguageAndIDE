@@ -12,6 +12,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -26,7 +27,6 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -143,9 +143,10 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>(<el-type>ABC</el-type>)${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      const inheritance = frame.doesInherit() ? `(${frame.inheritance.renderAsHtml()})` : ``;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${inheritance}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
@@ -161,7 +162,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>(<el-type>ABC</el-type>)${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
@@ -176,6 +177,11 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
     }
     return html;
+  }
+
+  abstractInheritance(frame: ClassFrame): string {
+    const abc = `<el-type>ABC</el-type>`;
+    return frame.doesInherit() ? `(${abc}, ${frame.inheritance.renderAsHtml()})` : `(${abc})`;
   }
 
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
@@ -310,11 +316,6 @@ export class LanguagePython extends LanguageAbstract {
 
   override typeTupleAsHtml(node: TypeTupleNode): string {
     return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
-  }
-
-  inheritanceAsHtml(node: InheritanceNode): string {
-    // TODO: specific logic for adding ABC if class is abstract and no inheritance
-    return node.isValid() ? `${node.typeList!.renderAsHtml()}` : node.matchedText;
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
