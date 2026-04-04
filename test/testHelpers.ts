@@ -25,6 +25,7 @@ import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageVB } from "../src/ide/frames/language-vb";
+import { Profile } from "../src/ide/frames/profile";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
@@ -35,7 +36,6 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { Profile } from "../src/ide/frames/profile";
 
 
 // flag to update test files
