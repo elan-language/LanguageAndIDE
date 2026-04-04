@@ -13,14 +13,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testCSHeader,
   testHash,
   testHeader,
   testJavaHeader,
   testPythonHeader,
   testVBHeader,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -507,6 +506,7 @@ class Foo
   def toString(self: Foo) -> str: # function
     return ""
 
+main()
 `;
     const vbCode = `${testVBHeader}
 

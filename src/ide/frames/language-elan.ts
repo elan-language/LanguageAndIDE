@@ -168,6 +168,10 @@ export class LanguageElan extends LanguageAbstract {
     return `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
   }
 
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
   private ABSTRACT = "abstract";
   private AS = "as";
   private ASSERT = "assert";

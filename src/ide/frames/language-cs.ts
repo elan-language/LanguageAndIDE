@@ -87,6 +87,10 @@ export class LanguageCS extends LanguageCfamily {
     return this.common_renderBottomAsHtml(frame);
   }
 
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
   addNodesForParamDef(node: ParamDefNode): void {
     this.c_langs_addNodesForParamDef(node);
   }

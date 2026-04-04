@@ -77,6 +77,8 @@ def main() -> None:
 
 def foo() -> None: # procedure
   printNoLine(2) # call procedure
+
+main()
 `;
 
     const csCode = `${testCSHeader}

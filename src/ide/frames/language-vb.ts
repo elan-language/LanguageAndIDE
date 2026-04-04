@@ -205,6 +205,10 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
   private AS = "As";
   private CATCH = "Catch";
   private CLASS = "Class";
