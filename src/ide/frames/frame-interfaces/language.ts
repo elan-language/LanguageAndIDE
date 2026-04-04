@@ -22,6 +22,8 @@ export interface Language {
 
   renderBottomAsHtml(frame: Frame): string;
 
+  renderFileTrailerAsHtml(): string;
+
   getFields(node: Frame): Field[];
 
   addNodesForNewInstance(node: NewInstance): void;

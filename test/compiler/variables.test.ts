@@ -59,6 +59,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   printNoLine(a) # call procedure
+
+main()
 `;
 
     const csCode = `${testCSHeader}

@@ -90,6 +90,10 @@ export class LanguageJava extends LanguageCfamily {
     return this.common_renderBottomAsHtml(frame);
   }
 
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
   public FINAL = "final";
   OVERRIDES = "";
   EXTENDS = "extends";
