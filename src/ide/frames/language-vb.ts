@@ -340,7 +340,7 @@ export class LanguageVB extends LanguageAbstract {
       this.INHERITS,
       this.IMPLEMENTS,
       `
-<br>`,
+<br>&nbsp;&nbsp;`,
     );
   }
 
