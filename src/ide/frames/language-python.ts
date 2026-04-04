@@ -182,9 +182,12 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   abstractInheritance(frame: ClassFrame): string {
+    const inheritance = frame.inheritance.renderAsHtml();
     return frame.doesInherit()
-      ? `(<el-type>ABC</el-type>, ${frame.inheritance.renderAsHtml()})`
-      : `(<el-type>ABC</el-type> ${frame.inheritance.renderAsHtml()})`;
+      ? `(<el-type>ABC</el-type>, ${inheritance})`
+      : frame.isSelected()
+        ? `(<el-type>ABC</el-type> ${inheritance})`
+        : `(<el-type>ABC</el-type>)`;
   }
 
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
