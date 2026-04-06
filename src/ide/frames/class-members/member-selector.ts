@@ -53,7 +53,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       [privatePropertyKeywords, "private Property", (_parent: Parent) => this.class.createProperty(true)],
       [privateProcedureKeywords, "private Procedure", (_parent: Parent) => this.class.createProcedure(true)],
       [privateFunctionKeywords, "private Function", (_parent: Parent) => this.class.createFunction(true)],
-      [comment, `<b>${comment}</b>`, (_parent: Parent) => this.class.createComment()],
+      [comment, `<b>${comment}</b> comment`, (_parent: Parent) => this.class.createComment()],
     ];
   }
 

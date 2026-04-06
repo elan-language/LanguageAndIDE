@@ -6,7 +6,7 @@ def main() -> None:
   while not done:
     wanted = input("What type of fruit do you want ('x' to exit)? ") # variable definition
     if wanted.equals("x"):
-      done = True # set
+      done = True # change variable
     else:
       result = binarySearch(fruit, wanted) # variable definition
       if result:
@@ -20,11 +20,11 @@ def binarySearch(li: list[str], item: str) -> bool: # function
     mid = divAsInt(li.length(), 2) # constant
     value = li[mid] # variable definition
     if item.equals(value):
-      result = True # set
+      result = True # change variable
     elif item.isBefore(value):
-      result = binarySearch(li.subList(0, mid), item) # set
+      result = binarySearch(li.subList(0, mid), item) # change variable
     else:
-      result = binarySearch(li.subList(mid + 1, li.length()), item) # set
+      result = binarySearch(li.subList(mid + 1, li.length()), item) # change variable
   return result
 
 def test_binarySearch(self) -> None:

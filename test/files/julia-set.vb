@@ -35,7 +35,7 @@ Function allpoints(p As Coords) As List(Of VectorGraphic)
       ' colour depends on how many iterations were done for that point
       Const col = if(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff))
       Dim rect = (New RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) ' variable definition
-      vg2 = vg2.withAppend(rect) ' set
+      vg2 = vg2.withAppend(rect) ' change variable
     Next yp
   Next xp
   Return vg2
@@ -48,11 +48,11 @@ Function onepoint(x As Double, y As Double, maxnum As Integer, p As Coords) As I
   Dim i = 0 ' variable definition
   While Not done
     Const c = 2*a*b
-    a = (a*a - b*b) + p.jx ' set
-    b = c + p.jy ' set
-    i = i + 1 ' set
+    a = (a*a - b*b) + p.jx ' change variable
+    b = c + p.jy ' change variable
+    i = i + 1 ' change variable
     If (i >= maxnum) Or ((a*a + b*b) > 4) Then
-      done = True ' set
+      done = True ' change variable
     End If
   End While
   Return i
@@ -62,13 +62,13 @@ Class Coords
 
   Sub New()
     ' number of cells per unit distance on complex plane
-    Me.scale = 100 ' set
+    Me.scale = 100 ' change variable
     ' centered on the screen to start
-    Me.xoff = 0 ' set
-    Me.yoff = 0 ' set
+    Me.xoff = 0 ' change variable
+    Me.yoff = 0 ' change variable
     ' Julia set parameters
-    Me.jx = -0.512 ' set
-    Me.jy = 0.521 ' set
+    Me.jx = -0.512 ' change variable
+    Me.jy = 0.521 ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -90,33 +90,33 @@ Class Coords
       ' loop because more than one key may have been pressed
       While Not k.equals("")
         If k.equals("z") Then
-          Me.scale = Me.scale*1.2 ' set
+          Me.scale = Me.scale*1.2 ' change variable
         ElseIf k.equals("x") Then
-          Me.scale = Me.scale/1.2 ' set
+          Me.scale = Me.scale/1.2 ' change variable
         ElseIf k.equals("ArrowUp") Then
-          Me.yoff = Me.yoff + panstep ' set
+          Me.yoff = Me.yoff + panstep ' change variable
         ElseIf k.equals("ArrowDown") Then
-          Me.yoff = Me.yoff - panstep ' set
+          Me.yoff = Me.yoff - panstep ' change variable
         ElseIf k.equals("ArrowLeft") Then
-          Me.xoff = Me.xoff + panstep ' set
+          Me.xoff = Me.xoff + panstep ' change variable
         ElseIf k.equals("ArrowRight") Then
-          Me.xoff = Me.xoff - panstep ' set
+          Me.xoff = Me.xoff - panstep ' change variable
         ElseIf k.equals("g") Then
-          Me.jx = Me.jx + jstep ' set
+          Me.jx = Me.jx + jstep ' change variable
         ElseIf k.equals("j") Then
-          Me.jx = Me.jx - jstep ' set
+          Me.jx = Me.jx - jstep ' change variable
         ElseIf k.equals("y") Then
-          Me.jy = Me.jy + jstep ' set
+          Me.jy = Me.jy + jstep ' change variable
         ElseIf k.equals("h") Then
-          Me.jy = Me.jy - jstep ' set
+          Me.jy = Me.jy - jstep ' change variable
           ' for autocomplete in the RHS expression, don't type "property"
         Else
           ' ignore erroneous key presses
         End If
         ' there is no harm in recalculating even if an invalid key was pressed
-        changed = True ' set
+        changed = True ' change variable
         ' another key may have been pressed
-        k = getKey() ' set
+        k = getKey() ' change variable
       End While
       sleep_ms(10) ' call procedure
     End While

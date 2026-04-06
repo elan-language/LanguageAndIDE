@@ -19,10 +19,10 @@ class Snake
 
   def __init__(self: Snake) -> None:
     tail = Square(20, 15) # variable definition
-    self.currentDir = Direction.right # set
-    self.body = [tail] # set
-    self.head = tail.getAdjacentSquare(self.currentDir) # set
-    self.priorTail = tail # set
+    self.currentDir = Direction.right # change variable
+    self.body = [tail] # change variable
+    self.head = tail.getAdjacentSquare(self.currentDir) # change variable
+    self.priorTail = tail # change variable
   def toString(self: Snake) -> str: # function
     return ""
   currentDir: Direction # private property
@@ -31,43 +31,43 @@ class Snake
   priorTail: Square # private property
   def clockTick(self: Snake, key: str, apple: Apple) -> None: # procedure
     self.setDirection(key) # call procedure
-    self.priorTail = self.body[0] # set
+    self.priorTail = self.body[0] # change variable
     body = self.body # variable definition
     body.append(self.head) # call procedure
-    self.head = self.head.getAdjacentSquare(self.currentDir) # set
+    self.head = self.head.getAdjacentSquare(self.currentDir) # change variable
     if self.head.equals(apple.location):
       apple.newRandomPosition(self) # call procedure
     else:
-      self.body = self.body.subList(1, self.body.length()) # set
+      self.body = self.body.subList(1, self.body.length()) # change variable
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure
-    blocks[self.head.x][self.head.y] = green # set
+    blocks[self.head.x][self.head.y] = green # change variable
     if not self.body[0].equals(self.priorTail):
-      blocks[self.priorTail.x][self.priorTail.y] = white # set
+      blocks[self.priorTail.x][self.priorTail.y] = white # change variable
   def score(self: Snake) -> int: # function
     return self.body.length() - 1
   def bodyCovers(self: Snake, sq: Square) -> bool: # function
     result = False # variable definition
     for seg in self.body:
       if (seg.equals(sq)):
-        result = True # set
+        result = True # change variable
     return result
   def gameOver(self: Snake) -> bool: # function
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
   def setDirection(self: Snake, key: str) -> None: # private procedure
     if key.equals("w"):
-      self.currentDir = Direction.up # set
+      self.currentDir = Direction.up # change variable
     elif key.equals("s"):
-      self.currentDir = Direction.down # set
+      self.currentDir = Direction.down # change variable
     elif key.equals("a"):
-      self.currentDir = Direction.left # set
+      self.currentDir = Direction.left # change variable
     elif key.equals("d"):
-      self.currentDir = Direction.right # set
+      self.currentDir = Direction.right # change variable
 
 
 class Apple
 
   def __init__(self: Apple) -> None:
-    self.location = Square(0, 0) # set
+    self.location = Square(0, 0) # change variable
   def toString(self: Apple) -> str: # function
     return ""
   location: Square # property
@@ -76,18 +76,18 @@ class Apple
     while changePosition:
       ranX = randint(0, 39) # constant
       ranY = randint(0, 29) # constant
-      self.location = Square(ranX, ranY) # set
+      self.location = Square(ranX, ranY) # change variable
       if not snake.bodyCovers(self.location):
-        changePosition = False # set
+        changePosition = False # change variable
   def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure
-    blocks[self.location.x][self.location.y] = red # set
+    blocks[self.location.x][self.location.y] = red # change variable
 
 
 class Square
 
   def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # set
-    self.y = y # set
+    self.x = x # change variable
+    self.y = y # change variable
   def toString(self: Square) -> str: # function
     return ""
   x: int # property
@@ -96,13 +96,13 @@ class Square
     newX = self.x # variable definition
     newY = self.y # variable definition
     if d == Direction.left:
-      newX = self.x - 1 # set
+      newX = self.x - 1 # change variable
     elif d == Direction.right:
-      newX = self.x + 1 # set
+      newX = self.x + 1 # change variable
     elif d == Direction.up:
-      newY = self.y - 1 # set
+      newY = self.y - 1 # change variable
     elif d == Direction.down:
-      newY = self.y + 1 # set
+      newY = self.y + 1 # change variable
     return Square(newX, newY)
   def hasHitEdge(self: Square) -> bool: # function
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)

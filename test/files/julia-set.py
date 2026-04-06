@@ -33,7 +33,7 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
       # colour depends on how many iterations were done for that point
       col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # constant
       rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
-      vg2 = vg2.withAppend(rect) # set
+      vg2 = vg2.withAppend(rect) # change variable
   return vg2
 
 def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
@@ -43,24 +43,24 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
   i = 0 # variable definition
   while not done:
     c = 2*a*b # constant
-    a = (a*a - b*b) + p.jx # set
-    b = c + p.jy # set
-    i = i + 1 # set
+    a = (a*a - b*b) + p.jx # change variable
+    b = c + p.jy # change variable
+    i = i + 1 # change variable
     if (i >= maxnum) or ((a*a + b*b) > 4):
-      done = True # set
+      done = True # change variable
   return i
 
 class Coords
 
   def __init__(self: Coords) -> None:
     # number of cells per unit distance on complex plane
-    self.scale = 100 # set
+    self.scale = 100 # change variable
     # centered on the screen to start
-    self.xoff = 0 # set
-    self.yoff = 0 # set
+    self.xoff = 0 # change variable
+    self.yoff = 0 # change variable
     # Julia set parameters
-    self.jx = -0.512 # set
-    self.jy = 0.521 # set
+    self.jx = -0.512 # change variable
+    self.jy = 0.521 # change variable
   def toString(self: Coords) -> str: # function
     return ""
   scale: float # property
@@ -80,32 +80,32 @@ class Coords
       # loop because more than one key may have been pressed
       while not k.equals(""):
         if k.equals("z"):
-          self.scale = self.scale*1.2 # set
+          self.scale = self.scale*1.2 # change variable
         elif k.equals("x"):
-          self.scale = self.scale/1.2 # set
+          self.scale = self.scale/1.2 # change variable
         elif k.equals("ArrowUp"):
-          self.yoff = self.yoff + panstep # set
+          self.yoff = self.yoff + panstep # change variable
         elif k.equals("ArrowDown"):
-          self.yoff = self.yoff - panstep # set
+          self.yoff = self.yoff - panstep # change variable
         elif k.equals("ArrowLeft"):
-          self.xoff = self.xoff + panstep # set
+          self.xoff = self.xoff + panstep # change variable
         elif k.equals("ArrowRight"):
-          self.xoff = self.xoff - panstep # set
+          self.xoff = self.xoff - panstep # change variable
         elif k.equals("g"):
-          self.jx = self.jx + jstep # set
+          self.jx = self.jx + jstep # change variable
         elif k.equals("j"):
-          self.jx = self.jx - jstep # set
+          self.jx = self.jx - jstep # change variable
         elif k.equals("y"):
-          self.jy = self.jy + jstep # set
+          self.jy = self.jy + jstep # change variable
         elif k.equals("h"):
-          self.jy = self.jy - jstep # set
+          self.jy = self.jy - jstep # change variable
           # for autocomplete in the RHS expression, don't type "property"
         else:
           # ignore erroneous key presses
         # there is no harm in recalculating even if an invalid key was pressed
-        changed = True # set
+        changed = True # change variable
         # another key may have been pressed
-        k = getKey() # set
+        k = getKey() # change variable
       sleep_ms(10) # call procedure
 
 

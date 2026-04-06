@@ -8,10 +8,10 @@ Sub main()
   rnd.initialiseFromClock() ' call procedure
   Dim game = (New Game(rnd)).withNewApple() ' variable definition
   While game.isOn
-    blocks = updateGraphics(game, blocks) ' set
+    blocks = updateGraphics(game, blocks) ' change variable
     displayBlocks(blocks) ' call procedure
     sleep_ms(150) ' call procedure
-    game = clockTick(game, getKey()) ' set
+    game = clockTick(game, getKey()) ' change variable
   End While
   print($"Game Over! Score: {score(game)}") ' call procedure
 End Sub
@@ -78,13 +78,13 @@ Class Game
   Property rnd As Random
   Property key As String
   Sub New(rnd As Random)
-    Me.head = New Square(22, 15) ' set
-    Me.body = {New Square(20, 15), New Square(21, 15)} ' set
-    Me.priorTail = New Square(0, 0) ' set
-    Me.key = "d" ' set
-    Me.isOn = True ' set
-    Me.apple = New Square(12, 15) ' set
-    Me.rnd = rnd ' set
+    Me.head = New Square(22, 15) ' change variable
+    Me.body = {New Square(20, 15), New Square(21, 15)} ' change variable
+    Me.priorTail = New Square(0, 0) ' change variable
+    Me.key = "d" ' change variable
+    Me.isOn = True ' change variable
+    Me.apple = New Square(12, 15) ' change variable
+    Me.rnd = rnd ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -102,37 +102,37 @@ Class Game
   End Function
   Function withHead(value As Square) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.head = value ' set
+    copyOfThis.head = value ' change variable
     Return copyOfThis
   End Function
   Function withBody(value As List(Of Square)) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.body = value ' set
+    copyOfThis.body = value ' change variable
     Return copyOfThis
   End Function
   Function withPriorTail(value As Square) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.priorTail = value ' set
+    copyOfThis.priorTail = value ' change variable
     Return copyOfThis
   End Function
   Function withApple(value As Square) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.apple = value ' set
+    copyOfThis.apple = value ' change variable
     Return copyOfThis
   End Function
   Function withIsOn(value As Boolean) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.isOn = value ' set
+    copyOfThis.isOn = value ' change variable
     Return copyOfThis
   End Function
   Function withRnd(value As Random) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.rnd = value ' set
+    copyOfThis.rnd = value ' change variable
     Return copyOfThis
   End Function
   Function withKey(value As String) As Game
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.key = value ' set
+    copyOfThis.key = value ' change variable
     Return copyOfThis
   End Function
 End Class
@@ -142,17 +142,17 @@ Class Square
   Property x As Integer
   Property y As Integer
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' set
-    Me.y = y ' set
+    Me.x = x ' change variable
+    Me.y = y ' change variable
   End Sub
   Function withX(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.x = value ' set
+    copyOfThis.x = value ' change variable
     Return copyOfThis
   End Function
   Function withY(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' variable definition
-    copyOfThis.y = value ' set
+    copyOfThis.y = value ' change variable
     Return copyOfThis
   End Function
   Function toString() As String
@@ -181,12 +181,12 @@ End Sub
 <TestMethod> Sub test_updateGraphics()
   Dim blocks = createBlockGraphics(white) ' variable definition
   Dim g1 = New Game(New Random()) ' variable definition
-  blocks = updateGraphics(g1, blocks) ' set
+  blocks = updateGraphics(g1, blocks) ' change variable
   Assert.AreEqual(red, blocks[12][15])
   Assert.AreEqual(green, blocks[22][15])
   Assert.AreEqual(white, blocks[21][15])
   Dim g3 = clockTick(g1, "d") ' variable definition
-  blocks = updateGraphics(g3, blocks) ' set
+  blocks = updateGraphics(g3, blocks) ' change variable
   Assert.AreEqual(red, blocks[12][15])
   Assert.AreEqual(green, blocks[22][15])
   Assert.AreEqual(green, blocks[23][15])

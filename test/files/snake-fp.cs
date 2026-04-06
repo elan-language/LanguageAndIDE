@@ -8,10 +8,10 @@ static void main() {
   rnd.initialiseFromClock(); // call procedure
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
-    blocks = updateGraphics(game, blocks); // set
+    blocks = updateGraphics(game, blocks); // change variable
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
-    game = clockTick(game, getKey()); // set
+    game = clockTick(game, getKey()); // change variable
   }
   print($"Game Over! Score: {score(game)}"); // call procedure
 }
@@ -78,13 +78,13 @@ class Game {
   public Random rnd {get; private set;} // property
   public string key {get; private set;} // property
   public Game(Random rnd) {
-    this.head = new Square(22, 15); // set
-    this.body = [new Square(20, 15), new Square(21, 15)]; // set
-    this.priorTail = new Square(0, 0); // set
-    this.key = "d"; // set
-    this.isOn = true; // set
-    this.apple = new Square(12, 15); // set
-    this.rnd = rnd; // set
+    this.head = new Square(22, 15); // change variable
+    this.body = [new Square(20, 15), new Square(21, 15)]; // change variable
+    this.priorTail = new Square(0, 0); // change variable
+    this.key = "d"; // change variable
+    this.isOn = true; // change variable
+    this.apple = new Square(12, 15); // change variable
+    this.rnd = rnd; // change variable
   }
   public string toString() { // function
     return "";
@@ -102,37 +102,37 @@ class Game {
   }
   public Game withHead(Square value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.head = value; // set
+    copyOfThis.head = value; // change variable
     return copyOfThis;
   }
   public Game withBody(List<Square> value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.body = value; // set
+    copyOfThis.body = value; // change variable
     return copyOfThis;
   }
   public Game withPriorTail(Square value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.priorTail = value; // set
+    copyOfThis.priorTail = value; // change variable
     return copyOfThis;
   }
   public Game withApple(Square value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.apple = value; // set
+    copyOfThis.apple = value; // change variable
     return copyOfThis;
   }
   public Game withIsOn(bool value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.isOn = value; // set
+    copyOfThis.isOn = value; // change variable
     return copyOfThis;
   }
   public Game withRnd(Random value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.rnd = value; // set
+    copyOfThis.rnd = value; // change variable
     return copyOfThis;
   }
   public Game withKey(string value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.key = value; // set
+    copyOfThis.key = value; // change variable
     return copyOfThis;
   }
 }
@@ -142,17 +142,17 @@ class Square {
   public int x {get; private set;} // property
   public int y {get; private set;} // property
   public Square(int x, int y) {
-    this.x = x; // set
-    this.y = y; // set
+    this.x = x; // change variable
+    this.y = y; // change variable
   }
   public Square withX(int value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.x = value; // set
+    copyOfThis.x = value; // change variable
     return copyOfThis;
   }
   public Square withY(int value) { // function
     var copyOfThis = copy(this);
-    copyOfThis.y = value; // set
+    copyOfThis.y = value; // change variable
     return copyOfThis;
   }
   public string toString() { // function
@@ -181,12 +181,12 @@ class Square {
 [TestMethod] static void test_updateGraphics() {
   var blocks = createBlockGraphics(white);
   var g1 = new Game(new Random());
-  blocks = updateGraphics(g1, blocks); // set
+  blocks = updateGraphics(g1, blocks); // change variable
   Assert.AreEqual(red, blocks[12][15])
   Assert.AreEqual(green, blocks[22][15])
   Assert.AreEqual(white, blocks[21][15])
   var g3 = clockTick(g1, "d");
-  blocks = updateGraphics(g3, blocks); // set
+  blocks = updateGraphics(g3, blocks); // change variable
   Assert.AreEqual(red, blocks[12][15])
   Assert.AreEqual(green, blocks[22][15])
   Assert.AreEqual(green, blocks[23][15])

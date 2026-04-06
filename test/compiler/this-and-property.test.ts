@@ -3,23 +3,23 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedCSIs,
+    assertExportedJavaIs,
+    assertExportedPythonIs,
+    assertExportedVBis,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testCSHeader,
+    testHash,
+    testHeader,
+    testJavaHeader,
+    testPythonHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -494,7 +494,7 @@ def main() -> None:
 class Foo
 
   def __init__(self: Foo) -> None:
-    self.p1 = 0.1 # set
+    self.p1 = 0.1 # change variable
   p1: float # property
   p2: float # private property
   def proc1(self: Foo) -> None: # procedure
@@ -519,7 +519,7 @@ End Sub
 Class Foo
 
   Sub New()
-    Me.p1 = 0.1 ' set
+    Me.p1 = 0.1 ' change variable
   End Sub
   Property p1 As Double
   Private Property p2 As Double
@@ -548,7 +548,7 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // set
+    this.p1 = 0.1; // change variable
   }
   public double p1 {get; private set;} // property
   private double p2 {get; private set;} // private property
@@ -577,7 +577,7 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // set
+    this.p1 = 0.1; // change variable
   }
   public double p1; // property
   private double p2; // private property

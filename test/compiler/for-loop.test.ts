@@ -3,24 +3,24 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedCSIs,
+    assertExportedJavaIs,
+    assertExportedPythonIs,
+    assertExportedVBis,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testCSHeader,
+    testHash,
+    testHeader,
+    testJavaHeader,
+    testPythonHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
@@ -67,7 +67,7 @@ return [main, _tests];}`;
 def main() -> None:
   tot = 0 # variable definition
   for i in range(1, 11):
-    tot = tot + i # set
+    tot = tot + i # change variable
   printNoLine(tot) # call procedure
 
 main()
@@ -78,7 +78,7 @@ main()
 static void main() {
   var tot = 0;
   foreach (i in range(1, 11)) {
-    tot = tot + i; // set
+    tot = tot + i; // change variable
   }
   printNoLine(tot); // call procedure
 }
@@ -89,7 +89,7 @@ static void main() {
 static void main() {
   var tot = 0;
   foreach (i in range(1, 11)) {
-    tot = tot + i; // set
+    tot = tot + i; // change variable
   }
   printNoLine(tot); // call procedure
 }
@@ -100,7 +100,7 @@ static void main() {
 Sub main()
   Dim tot = 0 ' variable definition
   For Each i In range(1, 11)
-    tot = tot + i ' set
+    tot = tot + i ' change variable
   Next i
   printNoLine(tot) ' call procedure
 End Sub

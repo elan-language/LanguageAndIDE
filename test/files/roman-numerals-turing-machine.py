@@ -19,7 +19,7 @@ def main() -> None:
   while not tm.isHalted():
     rule = tm.findMatchingRule() # variable definition
     tm.singleStep() # call procedure
-    steps = steps + 1 # set
+    steps = steps + 1 # change variable
     clearPrintedText() # call procedure
     print(tm.tape) # call procedure
     printTab(tm.headPosition - 1, "^") # call procedure
@@ -36,12 +36,12 @@ haltState = "halt" # constant
 class TuringMachine
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
-    self.tape = "" # set
-    self.initialState = initialState # set
-    self.haltState = haltState # set
-    self.rules = list[Rule]() # set
-    self.currentState = initialState # set
-    self.headPosition = 0 # set
+    self.tape = "" # change variable
+    self.initialState = initialState # change variable
+    self.haltState = haltState # change variable
+    self.rules = list[Rule]() # change variable
+    self.currentState = initialState # change variable
+    self.headPosition = 0 # change variable
   def toString(self: TuringMachine) -> str: # function
     return ""
   initialState: str # property
@@ -51,9 +51,9 @@ class TuringMachine
   rules: list[Rule] # property
   tape: str # property
   def setTape(self: TuringMachine, tape: str) -> None: # procedure
-    self.tape = tape # set
+    self.tape = tape # change variable
   def append(self: TuringMachine, rule: Rule) -> None: # procedure
-    self.rules = self.rules.withAppend(rule) # set
+    self.rules = self.rules.withAppend(rule) # change variable
   def singleStep(self: TuringMachine) -> None: # procedure
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
@@ -66,19 +66,19 @@ class TuringMachine
     return matches.head()
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure
     hp = self.headPosition # constant
-    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # set
+    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # change variable
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure
-    self.currentState = rule.nextState # set
+    self.currentState = rule.nextState # change variable
     self.write(rule.writeSymbol) # call procedure
     if rule.move == Dir.right:
-      self.headPosition = self.headPosition + 1 # set
+      self.headPosition = self.headPosition + 1 # change variable
       if self.headPosition >= self.tape.length():
-        self.tape = self.tape + " " # set
+        self.tape = self.tape + " " # change variable
     else:
-      self.headPosition = self.headPosition - 1 # set
+      self.headPosition = self.headPosition - 1 # change variable
       if self.headPosition < 0:
-        self.tape = " " + self.tape # set
-        self.headPosition = 0 # set
+        self.tape = " " + self.tape # change variable
+        self.headPosition = 0 # change variable
 
 
 class Rule
@@ -89,11 +89,11 @@ class Rule
   writeSymbol: str # property
   move: Dir # property
   def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
-    self.currentState = currentState # set
-    self.currentSymbol = currentSymbol # set
-    self.nextState = nextState # set
-    self.writeSymbol = writeSymbol # set
-    self.move = move # set
+    self.currentState = currentState # change variable
+    self.currentSymbol = currentSymbol # change variable
+    self.nextState = nextState # change variable
+    self.writeSymbol = writeSymbol # change variable
+    self.move = move # change variable
   def toString(self: Rule) -> str: # function
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{self.move}"
 
