@@ -19,7 +19,7 @@ Sub main()
   While Not tm.isHalted()
     Dim rule = tm.findMatchingRule() ' variable definition
     tm.singleStep() ' call procedure
-    steps = steps + 1 ' set
+    steps = steps + 1 ' change variable
     clearPrintedText() ' call procedure
     print(tm.tape) ' call procedure
     printTab(tm.headPosition - 1, "^") ' call procedure
@@ -38,12 +38,12 @@ Const haltState = "halt"
 Class TuringMachine
 
   Sub New(initialState As String, haltState As String)
-    Me.tape = "" ' set
-    Me.initialState = initialState ' set
-    Me.haltState = haltState ' set
-    Me.rules = New List(Of Rule)() ' set
-    Me.currentState = initialState ' set
-    Me.headPosition = 0 ' set
+    Me.tape = "" ' change variable
+    Me.initialState = initialState ' change variable
+    Me.haltState = haltState ' change variable
+    Me.rules = New List(Of Rule)() ' change variable
+    Me.currentState = initialState ' change variable
+    Me.headPosition = 0 ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -55,10 +55,10 @@ Class TuringMachine
   Property rules As List(Of Rule)
   Property tape As String
   Sub setTape(tape As String) ' procedure
-    Me.tape = tape ' set
+    Me.tape = tape ' change variable
   End Sub
   Sub append(rule As Rule) ' procedure
-    Me.rules = Me.rules.withAppend(rule) ' set
+    Me.rules = Me.rules.withAppend(rule) ' change variable
   End Sub
   Sub singleStep() ' procedure
     Dim rule = Me.findMatchingRule() ' variable definition
@@ -76,21 +76,21 @@ Class TuringMachine
   End Function
   Sub write(newSymbol As String) ' procedure
     Const hp = Me.headPosition
-    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' set
+    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' change variable
   End Sub
   Sub execute(rule As Rule) ' procedure
-    Me.currentState = rule.nextState ' set
+    Me.currentState = rule.nextState ' change variable
     Me.write(rule.writeSymbol) ' call procedure
     If rule.move = Dir.right Then
-      Me.headPosition = Me.headPosition + 1 ' set
+      Me.headPosition = Me.headPosition + 1 ' change variable
       If Me.headPosition >= Me.tape.length() Then
-        Me.tape = Me.tape + " " ' set
+        Me.tape = Me.tape + " " ' change variable
       End If
     Else
-      Me.headPosition = Me.headPosition - 1 ' set
+      Me.headPosition = Me.headPosition - 1 ' change variable
       If Me.headPosition < 0 Then
-        Me.tape = " " + Me.tape ' set
-        Me.headPosition = 0 ' set
+        Me.tape = " " + Me.tape ' change variable
+        Me.headPosition = 0 ' change variable
       End If
     End If
   End Sub
@@ -104,11 +104,11 @@ Class Rule
   Property writeSymbol As String
   Property move As Dir
   Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
-    Me.currentState = currentState ' set
-    Me.currentSymbol = currentSymbol ' set
-    Me.nextState = nextState ' set
-    Me.writeSymbol = writeSymbol ' set
-    Me.move = move ' set
+    Me.currentState = currentState ' change variable
+    Me.currentSymbol = currentSymbol ' change variable
+    Me.nextState = nextState ' change variable
+    Me.writeSymbol = writeSymbol ' change variable
+    Me.move = move ' change variable
   End Sub
   Function toString() As String
     Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{Me.move}"

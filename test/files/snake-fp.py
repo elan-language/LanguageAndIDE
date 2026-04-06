@@ -8,10 +8,10 @@ def main() -> None:
   rnd.initialiseFromClock() # call procedure
   game = (Game(rnd)).withNewApple() # variable definition
   while game.isOn:
-    blocks = updateGraphics(game, blocks) # set
+    blocks = updateGraphics(game, blocks) # change variable
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
-    game = clockTick(game, getKey()) # set
+    game = clockTick(game, getKey()) # change variable
   print(f"Game Over! Score: {score(game)}") # call procedure
 
 def clockTick(g: Game, k: str) -> Game: # function
@@ -67,13 +67,13 @@ class Game
   rnd: Random # property
   key: str # property
   def __init__(self: Game, rnd: Random) -> None:
-    self.head = Square(22, 15) # set
-    self.body = [Square(20, 15), Square(21, 15)] # set
-    self.priorTail = Square(0, 0) # set
-    self.key = "d" # set
-    self.isOn = True # set
-    self.apple = Square(12, 15) # set
-    self.rnd = rnd # set
+    self.head = Square(22, 15) # change variable
+    self.body = [Square(20, 15), Square(21, 15)] # change variable
+    self.priorTail = Square(0, 0) # change variable
+    self.key = "d" # change variable
+    self.isOn = True # change variable
+    self.apple = Square(12, 15) # change variable
+    self.rnd = rnd # change variable
   def toString(self: Game) -> str: # function
     return ""
   def withNewApple(self: Game) -> Game: # function
@@ -88,31 +88,31 @@ class Game
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.head = value # set
+    copyOfThis.head = value # change variable
     return copyOfThis
   def withBody(self: Game, value: list[Square]) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.body = value # set
+    copyOfThis.body = value # change variable
     return copyOfThis
   def withPriorTail(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.priorTail = value # set
+    copyOfThis.priorTail = value # change variable
     return copyOfThis
   def withApple(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.apple = value # set
+    copyOfThis.apple = value # change variable
     return copyOfThis
   def withIsOn(self: Game, value: bool) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.isOn = value # set
+    copyOfThis.isOn = value # change variable
     return copyOfThis
   def withRnd(self: Game, value: Random) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.rnd = value # set
+    copyOfThis.rnd = value # change variable
     return copyOfThis
   def withKey(self: Game, value: str) -> Game: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.key = value # set
+    copyOfThis.key = value # change variable
     return copyOfThis
 
 
@@ -121,15 +121,15 @@ class Square
   x: int # property
   y: int # property
   def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # set
-    self.y = y # set
+    self.x = x # change variable
+    self.y = y # change variable
   def withX(self: Square, value: int) -> Square: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.x = value # set
+    copyOfThis.x = value # change variable
     return copyOfThis
   def withY(self: Square, value: int) -> Square: # function
     copyOfThis = copy(self) # variable definition
-    copyOfThis.y = value # set
+    copyOfThis.y = value # change variable
     return copyOfThis
   def toString(self: Square) -> str: # function
     return f"{self.x}, {self.y}"
@@ -155,12 +155,12 @@ def test_clockTick(self) -> None:
 def test_updateGraphics(self) -> None:
   blocks = createBlockGraphics(white) # variable definition
   g1 = Game(Random()) # variable definition
-  blocks = updateGraphics(g1, blocks) # set
+  blocks = updateGraphics(g1, blocks) # change variable
   self.assertEqual(blocks[12][15], red)
   self.assertEqual(blocks[22][15], green)
   self.assertEqual(blocks[21][15], white)
   g3 = clockTick(g1, "d") # variable definition
-  blocks = updateGraphics(g3, blocks) # set
+  blocks = updateGraphics(g3, blocks) # change variable
   self.assertEqual(blocks[12][15], red)
   self.assertEqual(blocks[22][15], green)
   self.assertEqual(blocks[23][15], green)

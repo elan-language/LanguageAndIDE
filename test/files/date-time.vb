@@ -3,7 +3,7 @@
 Sub main()
   Dim reply = "" ' variable definition
   While Not reply.upperCase().equals("Q")
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' set
+    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' change variable
     If reply.equals("") Then
       Const now = divAsInt(clock(), 1000)
       print(now) ' call procedure
@@ -69,11 +69,11 @@ Function dayInYear(year As Integer, unixDays As Integer) As Integer
   Dim dayNumber = unixDays + 1 ' variable definition
   If year > unixYear Then
     ' discount previous nominal years
-    dayNumber = dayNumber - 365*(year - unixYear) ' set
+    dayNumber = dayNumber - 365*(year - unixYear) ' change variable
     ' discount previous leap days
     For Each y In range(unixYear, year)
       If leap(y) Then
-        dayNumber = dayNumber - 1 ' set
+        dayNumber = dayNumber - 1 ' change variable
       End If
     Next y
   End If
@@ -87,9 +87,9 @@ End Sub
 Function leap(year As Integer) As Boolean
   Dim leapYear = False ' variable definition
   If (year Mod 4) = 0 Then
-    leapYear = True ' set
+    leapYear = True ' change variable
     If ((year Mod 100) = 0) And ((divAsInt(year, 100) Mod 4) <> 0) Then
-      leapYear = False ' set
+      leapYear = False ' change variable
     End If
   End If
   Return leapYear
@@ -109,10 +109,10 @@ Function monthDay(startDays As List(Of Integer), dayNumber As Integer) As (Integ
   Dim monthFound = False ' variable definition
   While monthFound = False
     If (dayNumber < startDays[month]) Then
-      monthFound = True ' set
-      day = dayNumber - startDays[month - 1] + 1 ' set
+      monthFound = True ' change variable
+      day = dayNumber - startDays[month - 1] + 1 ' change variable
     Else
-      month = month + 1 ' set
+      month = month + 1 ' change variable
     End If
   End While
   Return (month, day)
@@ -123,7 +123,7 @@ Function startDaysList(year As Integer, startDays As List(Of Integer)) As List(O
   Dim startDaysL = getStartDays() ' variable definition
   If leap(year) Then
     For Each m In range(2, 13)
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) ' set
+      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) ' change variable
     Next m
   End If
   Return startDaysL
@@ -181,9 +181,9 @@ Function pad(d As String, p As String, s As String) As String
   If p.length() > s.length() Then
     If d.upperCase().equals("L") Then
       Const ps = p + s
-      sR = ps.subString(ps.length() - p.length(), ps.length()) ' set
+      sR = ps.subString(ps.length() - p.length(), ps.length()) ' change variable
     ElseIf d.upperCase().equals("R") Then
-      sR = (s + p).subString(0, p.length()) ' set
+      sR = (s + p).subString(0, p.length()) ' change variable
     End If
   End If
   Return sR

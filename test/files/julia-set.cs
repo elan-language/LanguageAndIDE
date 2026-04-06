@@ -35,7 +35,7 @@ static List<VectorGraphic> allpoints(Coords p) { // function
       // colour depends on how many iterations were done for that point
       const Int col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
-      vg2 = vg2.withAppend(rect); // set
+      vg2 = vg2.withAppend(rect); // change variable
     }
   }
   return vg2;
@@ -48,11 +48,11 @@ static int onepoint(double x, double y, int maxnum, Coords p) { // function
   var i = 0;
   while (!done) {
     const Float c = 2*a*b;
-    a = (a*a - b*b) + p.jx; // set
-    b = c + p.jy; // set
-    i = i + 1; // set
+    a = (a*a - b*b) + p.jx; // change variable
+    b = c + p.jy; // change variable
+    i = i + 1; // change variable
     if ((i >= maxnum) || ((a*a + b*b) > 4)) {
-      done = true; // set
+      done = true; // change variable
     }
   }
   return i;
@@ -62,13 +62,13 @@ class Coords {
 
   public Coords() {
     // number of cells per unit distance on complex plane
-    this.scale = 100; // set
+    this.scale = 100; // change variable
     // centered on the screen to start
-    this.xoff = 0; // set
-    this.yoff = 0; // set
+    this.xoff = 0; // change variable
+    this.yoff = 0; // change variable
     // Julia set parameters
-    this.jx = -0.512; // set
-    this.jy = 0.521; // set
+    this.jx = -0.512; // change variable
+    this.jy = 0.521; // change variable
   }
   public string toString() { // function
     return "";
@@ -90,33 +90,33 @@ class Coords {
       // loop because more than one key may have been pressed
       while (!k.equals("")) {
         if (k.equals("z")) {
-          this.scale = this.scale*1.2; // set
+          this.scale = this.scale*1.2; // change variable
         } else if (k.equals("x")) {
-          this.scale = this.scale/1.2; // set
+          this.scale = this.scale/1.2; // change variable
         } else if (k.equals("ArrowUp")) {
-          this.yoff = this.yoff + panstep; // set
+          this.yoff = this.yoff + panstep; // change variable
         } else if (k.equals("ArrowDown")) {
-          this.yoff = this.yoff - panstep; // set
+          this.yoff = this.yoff - panstep; // change variable
         } else if (k.equals("ArrowLeft")) {
-          this.xoff = this.xoff + panstep; // set
+          this.xoff = this.xoff + panstep; // change variable
         } else if (k.equals("ArrowRight")) {
-          this.xoff = this.xoff - panstep; // set
+          this.xoff = this.xoff - panstep; // change variable
         } else if (k.equals("g")) {
-          this.jx = this.jx + jstep; // set
+          this.jx = this.jx + jstep; // change variable
         } else if (k.equals("j")) {
-          this.jx = this.jx - jstep; // set
+          this.jx = this.jx - jstep; // change variable
         } else if (k.equals("y")) {
-          this.jy = this.jy + jstep; // set
+          this.jy = this.jy + jstep; // change variable
         } else if (k.equals("h")) {
-          this.jy = this.jy - jstep; // set
+          this.jy = this.jy - jstep; // change variable
           // for autocomplete in the RHS expression, don't type "property"
         } else {
           // ignore erroneous key presses
         }
         // there is no harm in recalculating even if an invalid key was pressed
-        changed = true; // set
+        changed = true; // change variable
         // another key may have been pressed
-        k = getKey(); // set
+        k = getKey(); // change variable
       }
       sleep_ms(10); // call procedure
     }

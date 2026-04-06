@@ -38,7 +38,7 @@ export class SetStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "set";
+    return "change variable";
   }
 
   renderAsElanSource(): string {

@@ -21,10 +21,10 @@ class Snake {
 
   public Snake() {
     var tail = new Square(20, 15);
-    this.currentDir = Direction.right; // set
-    this.body = [tail]; // set
-    this.head = tail.getAdjacentSquare(this.currentDir); // set
-    this.priorTail = tail; // set
+    this.currentDir = Direction.right; // change variable
+    this.body = [tail]; // change variable
+    this.head = tail.getAdjacentSquare(this.currentDir); // change variable
+    this.priorTail = tail; // change variable
   }
   public String toString() { // function
     return "";
@@ -35,20 +35,20 @@ class Snake {
   private Square priorTail; // private property
   public void clockTick(String key, Apple apple) { // procedure
     this.setDirection(key); // call procedure
-    this.priorTail = this.body[0]; // set
+    this.priorTail = this.body[0]; // change variable
     var body = this.body;
     body.append(this.head); // call procedure
-    this.head = this.head.getAdjacentSquare(this.currentDir); // set
+    this.head = this.head.getAdjacentSquare(this.currentDir); // change variable
     if (this.head.equals(apple.location)) {
       apple.newRandomPosition(this); // call procedure
     } else {
-      this.body = this.body.subList(1, this.body.length()); // set
+      this.body = this.body.subList(1, this.body.length()); // change variable
     }
   }
   public void updateBlocks(List<List<int>> blocks) { // procedure
-    blocks[this.head.x][this.head.y] = green; // set
+    blocks[this.head.x][this.head.y] = green; // change variable
     if (!this.body[0].equals(this.priorTail)) {
-      blocks[this.priorTail.x][this.priorTail.y] = white; // set
+      blocks[this.priorTail.x][this.priorTail.y] = white; // change variable
     }
   }
   public int score() { // function
@@ -58,7 +58,7 @@ class Snake {
     var result = false;
     foreach (seg in this.body) {
       if ((seg.equals(sq))) {
-        result = true; // set
+        result = true; // change variable
       }
     }
     return result;
@@ -68,13 +68,13 @@ class Snake {
   }
   private void setDirection(String key) { // private procedure
     if (key.equals("w")) {
-      this.currentDir = Direction.up; // set
+      this.currentDir = Direction.up; // change variable
     } else if (key.equals("s")) {
-      this.currentDir = Direction.down; // set
+      this.currentDir = Direction.down; // change variable
     } else if (key.equals("a")) {
-      this.currentDir = Direction.left; // set
+      this.currentDir = Direction.left; // change variable
     } else if (key.equals("d")) {
-      this.currentDir = Direction.right; // set
+      this.currentDir = Direction.right; // change variable
     }
   }
 }
@@ -82,7 +82,7 @@ class Snake {
 class Apple {
 
   public Apple() {
-    this.location = new Square(0, 0); // set
+    this.location = new Square(0, 0); // change variable
   }
   public String toString() { // function
     return "";
@@ -93,22 +93,22 @@ class Apple {
     while (changePosition) {
       final Int ranX = randint(0, 39); // constant
       final Int ranY = randint(0, 29); // constant
-      this.location = new Square(ranX, ranY); // set
+      this.location = new Square(ranX, ranY); // change variable
       if (!snake.bodyCovers(this.location)) {
-        changePosition = false; // set
+        changePosition = false; // change variable
       }
     }
   }
   public void updateBlocks(List<List<int>> blocks) { // procedure
-    blocks[this.location.x][this.location.y] = red; // set
+    blocks[this.location.x][this.location.y] = red; // change variable
   }
 }
 
 class Square {
 
   public Square(int x, int y) {
-    this.x = x; // set
-    this.y = y; // set
+    this.x = x; // change variable
+    this.y = y; // change variable
   }
   public String toString() { // function
     return "";
@@ -119,13 +119,13 @@ class Square {
     var newX = this.x;
     var newY = this.y;
     if (d == Direction.left) {
-      newX = this.x - 1; // set
+      newX = this.x - 1; // change variable
     } else if (d == Direction.right) {
-      newX = this.x + 1; // set
+      newX = this.x + 1; // change variable
     } else if (d == Direction.up) {
-      newY = this.y - 1; // set
+      newY = this.y - 1; // change variable
     } else if (d == Direction.down) {
-      newY = this.y + 1; // set
+      newY = this.y + 1; // change variable
     }
     return new Square(newX, newY);
   }

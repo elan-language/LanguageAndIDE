@@ -42,7 +42,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [classKeyword, "class", (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, "<b>a</b>bstract class", (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, "<b>i</b>nterface", (_parent: Parent) => this.file.createInterface()],
-      [comment, `<b>${comment}</b>`, (_parent: Parent) => this.file.createGlobalComment()],
+      [comment, `<b>${comment}</b> comment`, (_parent: Parent) => this.file.createGlobalComment()],
     ];
   }
 

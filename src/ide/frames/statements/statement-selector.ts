@@ -37,7 +37,7 @@ export class StatementSelector extends AbstractSelector {
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
-      [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)], //TODO could get wording from language
+      [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
@@ -47,7 +47,7 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, "try", (parent: Parent) => this.factory.newTryCatch(parent)],
       [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
-      [comment, `<b>${comment}</b>`, (parent: Parent) => this.factory.newComment(parent)],
+      [comment, `<b>${comment}</b> comment`, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 

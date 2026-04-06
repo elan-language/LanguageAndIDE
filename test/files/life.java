@@ -7,7 +7,7 @@ static void main() {
     displayBlocks(grid); // call procedure
     var gridRef = new AsRef<List<List<int>>>(grid);
     nextGeneration(gridRef); // call procedure
-    grid = gridRef.value(); // set
+    grid = gridRef.value(); // change variable
     sleep_ms(50); // call procedure
   }
 }
@@ -15,7 +15,7 @@ static void main() {
 static void fillRandom(List<List<int>> grid) { // procedure
   foreach (col in range(0, 40)) {
     foreach (row in range(0, 30)) {
-      grid[col][row] = blackOrWhite(random()); // set
+      grid[col][row] = blackOrWhite(random()); // change variable
     }
   }
 }
@@ -23,7 +23,7 @@ static void fillRandom(List<List<int>> grid) { // procedure
 static int blackOrWhite(double random) { // function
   var result = black;
   if (random > 0.5) {
-    result = white; // set
+    result = white; // change variable
   }
   return result;
 }
@@ -83,7 +83,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
     final Int cx = cell.item_0; // constant
     final Int cy = cell.item_1; // constant
     if (grid[cx][cy] == black) {
-      count = count + 1; // set
+      count = count + 1; // change variable
     }
   }
   return count;
@@ -92,9 +92,9 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
 static bool willLive(int cell, int liveNeighbours) { // function
   var result = false;
   if (cell == black) {
-    result = (liveNeighbours > 1) && (liveNeighbours < 4); // set
+    result = (liveNeighbours > 1) && (liveNeighbours < 4); // change variable
   } else {
-    result = liveNeighbours == 3; // set
+    result = liveNeighbours == 3; // change variable
   }
   return result;
 }
@@ -103,7 +103,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var colour = white;
   final Boolean live = willLive(grid[x][y], liveNeighbours(grid, x, y)); // constant
   if (live) {
-    colour = black; // set
+    colour = black; // change variable
   }
   return colour;
 }
@@ -114,7 +114,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   foreach (x in range(0, 40)) {
     foreach (y in range(0, 30)) {
       final Int colour = nextCellValue(grid, x, y); // constant
-      nextGen[x][y] = colour; // set
+      nextGen[x][y] = colour; // change variable
     }
   }
   gridRef.set(nextGen); // call procedure

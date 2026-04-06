@@ -7,18 +7,18 @@ def main() -> None:
     displayBlocks(grid) # call procedure
     gridRef = AsRef[list[list[int]]](grid) # variable definition
     nextGeneration(gridRef) # call procedure
-    grid = gridRef.value() # set
+    grid = gridRef.value() # change variable
     sleep_ms(50) # call procedure
 
 def fillRandom(grid: list[list[int]]) -> None: # procedure
   for col in range(0, 40):
     for row in range(0, 30):
-      grid[col][row] = blackOrWhite(random()) # set
+      grid[col][row] = blackOrWhite(random()) # change variable
 
 def blackOrWhite(random: float) -> int: # function
   result = black # variable definition
   if random > 0.5:
-    result = white # set
+    result = white # change variable
   return result
 
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -67,22 +67,22 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
     cx = cell.item_0 # constant
     cy = cell.item_1 # constant
     if grid[cx][cy] == black:
-      count = count + 1 # set
+      count = count + 1 # change variable
   return count
 
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   result = False # variable definition
   if cell == black:
-    result = (liveNeighbours > 1) and (liveNeighbours < 4) # set
+    result = (liveNeighbours > 1) and (liveNeighbours < 4) # change variable
   else:
-    result = liveNeighbours == 3 # set
+    result = liveNeighbours == 3 # change variable
   return result
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   colour = white # variable definition
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # constant
   if live:
-    colour = black # set
+    colour = black # change variable
   return colour
 
 def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
@@ -91,7 +91,7 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   for x in range(0, 40):
     for y in range(0, 30):
       colour = nextCellValue(grid, x, y) # constant
-      nextGen[x][y] = colour # set
+      nextGen[x][y] = colour # change variable
   gridRef.set(nextGen) # call procedure
 
 def test_north(self) -> None:

@@ -19,7 +19,7 @@ static void main() {
   while (!tm.isHalted()) {
     var rule = tm.findMatchingRule();
     tm.singleStep(); // call procedure
-    steps = steps + 1; // set
+    steps = steps + 1; // change variable
     clearPrintedText(); // call procedure
     print(tm.tape); // call procedure
     printTab(tm.headPosition - 1, "^"); // call procedure
@@ -38,12 +38,12 @@ final String haltState = "halt" // constant
 class TuringMachine {
 
   public TuringMachine(String initialState, String haltState) {
-    this.tape = ""; // set
-    this.initialState = initialState; // set
-    this.haltState = haltState; // set
-    this.rules = new List<Rule>(); // set
-    this.currentState = initialState; // set
-    this.headPosition = 0; // set
+    this.tape = ""; // change variable
+    this.initialState = initialState; // change variable
+    this.haltState = haltState; // change variable
+    this.rules = new List<Rule>(); // change variable
+    this.currentState = initialState; // change variable
+    this.headPosition = 0; // change variable
   }
   public String toString() { // function
     return "";
@@ -55,10 +55,10 @@ class TuringMachine {
   public List<Rule> rules; // property
   public String tape; // property
   public void setTape(String tape) { // procedure
-    this.tape = tape; // set
+    this.tape = tape; // change variable
   }
   public void append(Rule rule) { // procedure
-    this.rules = this.rules.withAppend(rule); // set
+    this.rules = this.rules.withAppend(rule); // change variable
   }
   public void singleStep() { // procedure
     var rule = this.findMatchingRule();
@@ -76,21 +76,21 @@ class TuringMachine {
   }
   public void write(String newSymbol) { // procedure
     final Int hp = this.headPosition; // constant
-    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // set
+    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // change variable
   }
   public void execute(Rule rule) { // procedure
-    this.currentState = rule.nextState; // set
+    this.currentState = rule.nextState; // change variable
     this.write(rule.writeSymbol); // call procedure
     if (rule.move == Dir.right) {
-      this.headPosition = this.headPosition + 1; // set
+      this.headPosition = this.headPosition + 1; // change variable
       if (this.headPosition >= this.tape.length()) {
-        this.tape = this.tape + " "; // set
+        this.tape = this.tape + " "; // change variable
       }
     } else {
-      this.headPosition = this.headPosition - 1; // set
+      this.headPosition = this.headPosition - 1; // change variable
       if (this.headPosition < 0) {
-        this.tape = " " + this.tape; // set
-        this.headPosition = 0; // set
+        this.tape = " " + this.tape; // change variable
+        this.headPosition = 0; // change variable
       }
     }
   }
@@ -104,11 +104,11 @@ class Rule {
   public String writeSymbol; // property
   public Dir move; // property
   public Rule(String currentState, String currentSymbol, String nextState, String writeSymbol, Dir move) {
-    this.currentState = currentState; // set
-    this.currentSymbol = currentSymbol; // set
-    this.nextState = nextState; // set
-    this.writeSymbol = writeSymbol; // set
-    this.move = move; // set
+    this.currentState = currentState; // change variable
+    this.currentSymbol = currentSymbol; // change variable
+    this.nextState = nextState; // change variable
+    this.writeSymbol = writeSymbol; // change variable
+    this.move = move; // change variable
   }
   public String toString() { // function
     return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, this.move);

@@ -129,7 +129,7 @@ def prop_I3(self: I3) -> int:
 class Yon(I3, Foo1, I2)
 
   def __init__(self: Yon) -> None:
-    self.prop_Foo1 = "" # set
+    self.prop_Foo1 = "" # change variable
   prop_I3: int # property
   def method_Foo(self: Yon) -> int: # function
     return 0
@@ -178,7 +178,7 @@ Class Yon
   Implements I3, I2
 
   Sub New()
-    Me.prop_Foo1 = "" ' set
+    Me.prop_Foo1 = "" ' change variable
   End Sub
   Property prop_I3 As Integer
   Overrides Function method_Foo() As Integer
@@ -226,7 +226,7 @@ interface I3: I2 {
 class Yon: I3, Foo1, I2 {
 
   public Yon() {
-    this.prop_Foo1 = ""; // set
+    this.prop_Foo1 = ""; // change variable
   }
   public int prop_I3 {get; private set;} // property
   public override int method_Foo() { // function
@@ -274,7 +274,7 @@ interface I3 extends I2 {
 class Yon extends Foo1 implements I3, I2 {
 
   public Yon() {
-    this.prop_Foo1 = ""; // set
+    this.prop_Foo1 = ""; // change variable
   }
   public int prop_I3; // property
   public  int method_Foo() { // function

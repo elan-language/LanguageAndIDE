@@ -41,7 +41,7 @@ Sub playGame() ' procedure
   initialiseGrid(grid) ' call procedure
   Dim used = New Dictionary(Of String, String)() ' variable definition
   For Each letter In "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    used[letter] = " " ' set
+    used[letter] = " " ' change variable
   Next letter
   displayHtml(drawGrid(grid) + drawKeyboard(used)) ' call procedure
   Const target = allValidAnswers.split(" ")[randint(0, 2308)]
@@ -51,8 +51,8 @@ Sub playGame() ' procedure
     enterAttempt(attemptNo, grid, used) ' call procedure
     Dim solvedRef = New AsRef(Of Boolean)(solved) ' variable definition
     colourAttempt(attemptNo, grid, target, solvedRef, used) ' call procedure
-    solved = solvedRef.value() ' set
-    attemptNo = attemptNo + 1 ' set
+    solved = solvedRef.value() ' change variable
+    attemptNo = attemptNo + 1 ' change variable
   End While
   clearPrintedText() ' call procedure
   If solved Then
@@ -76,17 +76,17 @@ Sub enterAttempt(attemptNo As Integer, grid As List(Of List(Of String)), used As
   While chNo <= 5
     Dim k = waitForKey().upperCase() ' variable definition
     If (k.equals("BACKSPACE")) And (chNo > 0) Then
-      chNo = chNo - 1 ' set
-      grid[chNo][attemptNo] = "" ' set
-      word = word ' set
+      chNo = chNo - 1 ' change variable
+      grid[chNo][attemptNo] = "" ' change variable
+      word = word ' change variable
       clearPrintedText() ' call procedure
     ElseIf (chNo < 5) And isUCLetter(k) Then
-      grid[chNo][attemptNo] = k ' set
-      chNo = chNo + 1 ' set
-      word = word + k ' set
+      grid[chNo][attemptNo] = k ' change variable
+      chNo = chNo + 1 ' change variable
+      word = word + k ' change variable
     ElseIf (chNo = 5) And (k.equals("ENTER")) Then
       If allWords.contains(word) Then
-        chNo = chNo + 1 ' set
+        chNo = chNo + 1 ' change variable
       Else
         print("Invalid word") ' call procedure
       End If
@@ -101,9 +101,9 @@ Sub colourAttempt(attemptNo As Integer, grid As List(Of List(Of String)), target
   For Each i In range(0, 5)
     Dim letter = grid[i][attemptNo] ' variable definition
     Dim mark = marks[i] ' variable definition
-    grid[i][attemptNo] = letter + mark ' set
+    grid[i][attemptNo] = letter + mark ' change variable
     If mark.isAfter(used[letter]) Then
-      used[letter] = mark ' set
+      used[letter] = mark ' change variable
     End If
   Next i
   If marks.equals("22222") Then
@@ -121,24 +121,24 @@ Sub playReverseGame() ' procedure
   Dim attempt = "ARISE" ' variable definition
   While (attemptNo < 6) And (Not solved)
     For Each i In range(0, 5)
-      grid[i][attemptNo] = attempt[i] ' set
+      grid[i][attemptNo] = attempt[i] ' change variable
     Next i
     displayHtml(drawGrid(grid)) ' call procedure
     Dim mark = "" ' variable definition
     Dim markRef = New AsRef(Of String)(mark) ' variable definition
     enterMark(attemptNo, grid, markRef) ' call procedure
-    mark = markRef.value() ' set
+    mark = markRef.value() ' change variable
     If mark.equals("22222") Then
-      solved = True ' set
+      solved = True ' change variable
     Else
-      attemptNo = attemptNo + 1 ' set
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' set
+      attemptNo = attemptNo + 1 ' change variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' change variable
     End If
     If possible.length() = 0 Then
       print("No possible answer matches marks so far. Press any key to continue") ' call procedure
-      attemptNo = 6 ' set
+      attemptNo = 6 ' change variable
     Else
-      attempt = possible[divAsInt(possible.length(), 2)] ' set
+      attempt = possible[divAsInt(possible.length(), 2)] ' change variable
     End If
   End While
 End Sub
@@ -150,17 +150,17 @@ Sub enterMark(attemptNo As Integer, grid As List(Of List(Of String)), markRef As
   While chNo <= 5
     Dim k = waitForKey().upperCase() ' variable definition
     If (k.equals("BACKSPACE")) And (chNo > 0) Then
-      chNo = chNo - 1 ' set
+      chNo = chNo - 1 ' change variable
       Dim entry = grid[chNo][attemptNo] ' variable definition
-      grid[chNo][attemptNo] = entry[0] ' set
-      mark = mark.subString(0, chNo) ' set
+      grid[chNo][attemptNo] = entry[0] ' change variable
+      mark = mark.subString(0, chNo) ' change variable
     ElseIf (chNo < 5) And "012".contains(k) Then
       Dim ch = grid[chNo][attemptNo] ' variable definition
-      grid[chNo][attemptNo] = ch + k ' set
-      chNo = chNo + 1 ' set
-      mark = mark + k ' set
+      grid[chNo][attemptNo] = ch + k ' change variable
+      chNo = chNo + 1 ' change variable
+      mark = mark + k ' change variable
     ElseIf (chNo = 5) And (k.equals("ENTER")) Then
-      chNo = chNo + 1 ' set
+      chNo = chNo + 1 ' change variable
     End If
     displayHtml(drawGrid(grid)) ' call procedure
   End While
@@ -176,18 +176,18 @@ Sub analyse() ' procedure
     Dim attempt = "RAISE" ' variable definition
     Dim attempts = 0 ' variable definition
     While (Not mark.equals("22222"))
-      attempts = attempts + 1 ' set
-      mark = markAttempt(attempt, word) ' set
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' set
-      attempt = possible[0] ' set
+      attempts = attempts + 1 ' change variable
+      mark = markAttempt(attempt, word) ' change variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' change variable
+      attempt = possible[0] ' change variable
     End While
-    outcomes[attempts] = outcomes[attempts] + 1 ' set
+    outcomes[attempts] = outcomes[attempts] + 1 ' change variable
   Next word
   Dim success = 0 ' variable definition
   Dim weightedSum = 0 ' variable definition
   For Each i In range(1, 7)
-    success = success + outcomes[i] ' set
-    weightedSum = weightedSum + (i*outcomes[i]) ' set
+    success = success + outcomes[i] ' change variable
+    weightedSum = weightedSum + (i*outcomes[i]) ' change variable
   Next i
   clearPrintedText() ' call procedure
   Const solved = (success/2309.0*100).floor()
@@ -212,7 +212,7 @@ End Sub
 Function getWord(attemptNo As Integer, grid As List(Of List(Of String))) As String
   Dim guessWord = "" ' variable definition
   For Each i In range(0, 5)
-    guessWord = guessWord + grid[i][attemptNo] ' set
+    guessWord = guessWord + grid[i][attemptNo] ' change variable
   Next i
   Return guessWord
 End Function
@@ -231,14 +231,14 @@ Function markAttempt(attempt As String, target As String) As String
   Dim unused = target ' variable definition
   For Each n In range(0, 5)
     If attempt[n].equals(unused[n]) Then
-      mark = setChar(mark, n, "2") ' set
-      unused = setChar(unused, n, " ") ' set
+      mark = setChar(mark, n, "2") ' change variable
+      unused = setChar(unused, n, " ") ' change variable
     End If
   Next n
   For Each n In range(0, 5)
     If (Not mark[n].equals("2")) And unused.contains(attempt[n]) Then
-      mark = setChar(mark, n, "1") ' set
-      unused = setChar(unused, unused.indexOf(attempt[n]), " ") ' set
+      mark = setChar(mark, n, "1") ' change variable
+      unused = setChar(unused, unused.indexOf(attempt[n]), " ") ' change variable
     End If
   Next n
   Return mark
@@ -262,7 +262,7 @@ Function possibleAnswersAfterAttempt(possible As List(Of String), attempt As Str
   For Each word In possible
     Const markForWord = markAttempt(attempt, word)
     If markForWord.equals(mark) Then
-      newPossible = newPossible.withAppend(word) ' set
+      newPossible = newPossible.withAppend(word) ' change variable
     End If
   Next word
   Return newPossible
@@ -280,14 +280,14 @@ End Sub
 Function drawGrid(grid As List(Of List(Of String))) As String
   Dim html = $"<style>{style}</style> <grid>" ' variable definition
   For Each row In range(0, 6)
-    html = html + "<word>" ' set
+    html = html + "<word>" ' change variable
     For Each col In range(0, 5)
       Const entry = grid[col][row]
       Const ch = if(entry.length() > 0, entry[0], "")
       Const mark = if(entry.length() > 1, entry.subString(1, entry.length()), "")
-      html = html + $"<ch class='_{mark}'>{ch}</ch>" ' set
+      html = html + $"<ch class='_{mark}'>{ch}</ch>" ' change variable
     Next col
-    html = html + "</word>" ' set
+    html = html + "</word>" ' change variable
   Next row
   Return html + "</grid>"
 End Function
@@ -296,9 +296,9 @@ Function drawKeyboard(used As Dictionary(Of String, String)) As String
   Dim html = "<keyboard><div>" ' variable definition
   For Each k In "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
     If k.equals("-") Then
-      html = html + "</div><div>" ' set
+      html = html + "</div><div>" ' change variable
     Else
-      html = html + $"<key class='_{used[k]}'>{k}</key>" ' set
+      html = html + $"<key class='_{used[k]}'>{k}</key>" ' change variable
     End If
   Next k
   Return html + "<key></key></div></keyboard>"

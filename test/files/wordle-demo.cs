@@ -41,7 +41,7 @@ static void playGame() { // procedure
   initialiseGrid(grid); // call procedure
   var used = new Dictionary<string, string>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-    used[letter] = " "; // set
+    used[letter] = " "; // change variable
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
   const String target = allValidAnswers.split(" ")[randint(0, 2308)];
@@ -51,8 +51,8 @@ static void playGame() { // procedure
     enterAttempt(attemptNo, grid, used); // call procedure
     var solvedRef = new AsRef<bool>(solved);
     colourAttempt(attemptNo, grid, target, solvedRef, used); // call procedure
-    solved = solvedRef.value(); // set
-    attemptNo = attemptNo + 1; // set
+    solved = solvedRef.value(); // change variable
+    attemptNo = attemptNo + 1; // change variable
   }
   clearPrintedText(); // call procedure
   if (solved) {
@@ -76,17 +76,17 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
     if ((k.equals("BACKSPACE")) && (chNo > 0)) {
-      chNo = chNo - 1; // set
-      grid[chNo][attemptNo] = ""; // set
-      word = word; // set
+      chNo = chNo - 1; // change variable
+      grid[chNo][attemptNo] = ""; // change variable
+      word = word; // change variable
       clearPrintedText(); // call procedure
     } else if ((chNo < 5) && isUCLetter(k)) {
-      grid[chNo][attemptNo] = k; // set
-      chNo = chNo + 1; // set
-      word = word + k; // set
+      grid[chNo][attemptNo] = k; // change variable
+      chNo = chNo + 1; // change variable
+      word = word + k; // change variable
     } else if ((chNo == 5) && (k.equals("ENTER"))) {
       if (allWords.contains(word)) {
-        chNo = chNo + 1; // set
+        chNo = chNo + 1; // change variable
       } else {
         print("Invalid word"); // call procedure
       }
@@ -101,9 +101,9 @@ static void colourAttempt(int attemptNo, List<List<string>> grid, string target,
   foreach (i in range(0, 5)) {
     var letter = grid[i][attemptNo];
     var mark = marks[i];
-    grid[i][attemptNo] = letter + mark; // set
+    grid[i][attemptNo] = letter + mark; // change variable
     if (mark.isAfter(used[letter])) {
-      used[letter] = mark; // set
+      used[letter] = mark; // change variable
     }
   }
   if (marks.equals("22222")) {
@@ -121,24 +121,24 @@ static void playReverseGame() { // procedure
   var attempt = "ARISE";
   while ((attemptNo < 6) && (!solved)) {
     foreach (i in range(0, 5)) {
-      grid[i][attemptNo] = attempt[i]; // set
+      grid[i][attemptNo] = attempt[i]; // change variable
     }
     displayHtml(drawGrid(grid)); // call procedure
     var mark = "";
     var markRef = new AsRef<string>(mark);
     enterMark(attemptNo, grid, markRef); // call procedure
-    mark = markRef.value(); // set
+    mark = markRef.value(); // change variable
     if (mark.equals("22222")) {
-      solved = true; // set
+      solved = true; // change variable
     } else {
-      attemptNo = attemptNo + 1; // set
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
+      attemptNo = attemptNo + 1; // change variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // change variable
     }
     if (possible.length() == 0) {
       print("No possible answer matches marks so far. Press any key to continue"); // call procedure
-      attemptNo = 6; // set
+      attemptNo = 6; // change variable
     } else {
-      attempt = possible[divAsInt(possible.length(), 2)]; // set
+      attempt = possible[divAsInt(possible.length(), 2)]; // change variable
     }
   }
 }
@@ -150,17 +150,17 @@ static void enterMark(int attemptNo, List<List<string>> grid, AsRef<string> mark
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
     if ((k.equals("BACKSPACE")) && (chNo > 0)) {
-      chNo = chNo - 1; // set
+      chNo = chNo - 1; // change variable
       var entry = grid[chNo][attemptNo];
-      grid[chNo][attemptNo] = entry[0]; // set
-      mark = mark.subString(0, chNo); // set
+      grid[chNo][attemptNo] = entry[0]; // change variable
+      mark = mark.subString(0, chNo); // change variable
     } else if ((chNo < 5) && "012".contains(k)) {
       var ch = grid[chNo][attemptNo];
-      grid[chNo][attemptNo] = ch + k; // set
-      chNo = chNo + 1; // set
-      mark = mark + k; // set
+      grid[chNo][attemptNo] = ch + k; // change variable
+      chNo = chNo + 1; // change variable
+      mark = mark + k; // change variable
     } else if ((chNo == 5) && (k.equals("ENTER"))) {
-      chNo = chNo + 1; // set
+      chNo = chNo + 1; // change variable
     }
     displayHtml(drawGrid(grid)); // call procedure
   }
@@ -176,18 +176,18 @@ static void analyse() { // procedure
     var attempt = "RAISE";
     var attempts = 0;
     while ((!mark.equals("22222"))) {
-      attempts = attempts + 1; // set
-      mark = markAttempt(attempt, word); // set
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // set
-      attempt = possible[0]; // set
+      attempts = attempts + 1; // change variable
+      mark = markAttempt(attempt, word); // change variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // change variable
+      attempt = possible[0]; // change variable
     }
-    outcomes[attempts] = outcomes[attempts] + 1; // set
+    outcomes[attempts] = outcomes[attempts] + 1; // change variable
   }
   var success = 0;
   var weightedSum = 0;
   foreach (i in range(1, 7)) {
-    success = success + outcomes[i]; // set
-    weightedSum = weightedSum + (i*outcomes[i]); // set
+    success = success + outcomes[i]; // change variable
+    weightedSum = weightedSum + (i*outcomes[i]); // change variable
   }
   clearPrintedText(); // call procedure
   const Int solved = (success/2309.0*100).floor();
@@ -212,7 +212,7 @@ static bool isUCLetter(string k) { // function
 static string getWord(int attemptNo, List<List<string>> grid) { // function
   var guessWord = "";
   foreach (i in range(0, 5)) {
-    guessWord = guessWord + grid[i][attemptNo]; // set
+    guessWord = guessWord + grid[i][attemptNo]; // change variable
   }
   return guessWord;
 }
@@ -231,14 +231,14 @@ static string markAttempt(string attempt, string target) { // function
   var unused = target;
   foreach (n in range(0, 5)) {
     if (attempt[n].equals(unused[n])) {
-      mark = setChar(mark, n, "2"); // set
-      unused = setChar(unused, n, " "); // set
+      mark = setChar(mark, n, "2"); // change variable
+      unused = setChar(unused, n, " "); // change variable
     }
   }
   foreach (n in range(0, 5)) {
     if ((!mark[n].equals("2")) && unused.contains(attempt[n])) {
-      mark = setChar(mark, n, "1"); // set
-      unused = setChar(unused, unused.indexOf(attempt[n]), " "); // set
+      mark = setChar(mark, n, "1"); // change variable
+      unused = setChar(unused, unused.indexOf(attempt[n]), " "); // change variable
     }
   }
   return mark;
@@ -262,7 +262,7 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
   foreach (word in possible) {
     const String markForWord = markAttempt(attempt, word);
     if (markForWord.equals(mark)) {
-      newPossible = newPossible.withAppend(word); // set
+      newPossible = newPossible.withAppend(word); // change variable
     }
   }
   return newPossible;
@@ -280,14 +280,14 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
 static string drawGrid(List<List<string>> grid) { // function
   var html = $"<style>{style}</style> <grid>";
   foreach (row in range(0, 6)) {
-    html = html + "<word>"; // set
+    html = html + "<word>"; // change variable
     foreach (col in range(0, 5)) {
       const String entry = grid[col][row];
       const String ch = if(entry.length() > 0, entry[0], "");
       const String mark = if(entry.length() > 1, entry.subString(1, entry.length()), "");
-      html = html + $"<ch class='_{mark}'>{ch}</ch>"; // set
+      html = html + $"<ch class='_{mark}'>{ch}</ch>"; // change variable
     }
-    html = html + "</word>"; // set
+    html = html + "</word>"; // change variable
   }
   return html + "</grid>";
 }
@@ -296,9 +296,9 @@ static string drawKeyboard(Dictionary<string, string> used) { // function
   var html = "<keyboard><div>";
   foreach (k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM") {
     if (k.equals("-")) {
-      html = html + "</div><div>"; // set
+      html = html + "</div><div>"; // change variable
     } else {
-      html = html + $"<key class='_{used[k]}'>{k}</key>"; // set
+      html = html + $"<key class='_{used[k]}'>{k}</key>"; // change variable
     }
   }
   return html + "<key></key></div></keyboard>";
