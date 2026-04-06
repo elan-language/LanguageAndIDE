@@ -271,7 +271,7 @@ interface I3 extends I2 {
   abstract int prop_I3; // abstract property
 }
 
-class Yon extends Foo1 implements I3, I2  {
+class Yon extends Foo1 implements I3, I2 {
 
   public Yon() {
     this.prop_Foo1 = ""; // set
