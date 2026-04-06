@@ -140,7 +140,9 @@ class Yon(I3, Foo1, I2)
   def toString(self: Yon) -> str: # function
     return self.prop_Foo1
 
-main()`;
+
+main()
+`;
 
     const vbCode = `${testVBHeader}
 
@@ -194,7 +196,8 @@ Class Yon
   Function toString() As String
     Return Me.prop_Foo1
   End Function
-End Class`;
+End Class
+`;
 
     const csCode = `${testCSHeader}
 
@@ -241,7 +244,8 @@ class Yon: I3, Foo1, I2 {
   public string toString() { // function
     return this.prop_Foo1;
   }
-}`;
+}
+`;
 
     const javaCode = `${testJavaHeader}
 
@@ -288,7 +292,8 @@ class Yon extends Foo1 implements I3, I2  {
   public String toString() { // function
     return this.prop_Foo1;
   }
-}`;
+}
+`;
 
     await assertExportedPythonIs(fileImpl, pythonCode);
     await assertExportedVBis(fileImpl, vbCode);

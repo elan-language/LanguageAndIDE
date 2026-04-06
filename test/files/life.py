@@ -175,3 +175,5 @@ def test_willLive(self) -> None:
   self.assertEqual(willLive(black, 6), False)
   self.assertEqual(willLive(black, 7), False)
   self.assertEqual(willLive(black, 8), False)
+
+main()

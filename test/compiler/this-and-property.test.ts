@@ -19,7 +19,7 @@ import {
   testJavaHeader,
   testPythonHeader,
   testVBHeader,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -505,6 +505,7 @@ class Foo
     return a
   def toString(self: Foo) -> str: # function
     return ""
+
 
 main()
 `;

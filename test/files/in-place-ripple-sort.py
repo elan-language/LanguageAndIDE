@@ -18,3 +18,5 @@ def inPlaceRippleSort(li: list[int]) -> None: # procedure
         li[i + 1] = temp # set
         hasChanged = True # set
     lastComp = lastComp - 1 # set
+
+main()
