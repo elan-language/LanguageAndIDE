@@ -17,7 +17,7 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
-  InvalidSourceForEachCompileError,
+  InvalidSourceForForLoopCompileError,
   IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
@@ -91,12 +91,12 @@ import {
   isInsideFunctionOrConstructor,
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
+import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { EmptyAsn } from "./syntax-nodes/empty-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -1208,7 +1208,7 @@ export function mustBeIterable(
   location: string,
 ) {
   if (isKnownType(symbolType) && !isIterableType(symbolType)) {
-    compileErrors.push(new InvalidSourceForEachCompileError(location));
+    compileErrors.push(new InvalidSourceForForLoopCompileError(location));
   }
 }
 
