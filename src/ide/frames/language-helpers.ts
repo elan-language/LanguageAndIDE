@@ -5,7 +5,7 @@ export function languageHelper_inheritance(
   frame: ClassFrame,
   inheritsWord: string,
   implementsWord: string,
-  joiner: string
+  joiner: string,
 ): string {
   const node = frame.inheritance.getRootNode()! as InheritanceNode;
   const field = frame.inheritance;
