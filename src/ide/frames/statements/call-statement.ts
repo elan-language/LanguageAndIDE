@@ -41,7 +41,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "call procedure";
+    return this.proc.text === "print" ? "" : "call procedure";
   }
 
   override renderAsElanSource(): string {
