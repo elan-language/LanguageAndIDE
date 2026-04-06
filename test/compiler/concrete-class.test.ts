@@ -2284,4 +2284,73 @@ end class`;
       "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_PropertyMustBeInitialised", async () => {
+    const code = `${testHeader}
+
+class Bar
+  constructor()
+
+  end constructor
+
+  property prop_1 as String
+
+  function toString() returns String
+    return this.prop_1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Property prop_1 must be initialised in constructor.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InheritedPropertyMustBeInitialised", async () => {
+    const code = `${testHeader}
+
+abstract class Foo
+  property prop_1 as String
+
+end class
+
+class Bar inherits Foo
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return this.prop_1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Property prop_1 must be initialised in constructor.LangRef.html#compile_error",
+    ]);
+  });
 });

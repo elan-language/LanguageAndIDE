@@ -5,6 +5,7 @@ import { Member } from "../../../compiler/compiler-interfaces/member";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { ProcedureType } from "../../../compiler/symbols/procedure-type";
 import {
+  getAllAbstractClasses,
   getGlobalScope,
   isValueTypeExcludingString,
 } from "../../../compiler/symbols/symbol-helpers";
@@ -18,6 +19,8 @@ import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { ClassAsn } from "../globals/class-asn";
 import { SetAsn } from "../statements/set-asn";
+import { AbstractPropertyAsn } from "./abstract-property-asn";
+import { PropertyAsn } from "./property-asn";
 
 export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
   constructor(fieldId: string, scope: Scope) {
@@ -39,8 +42,16 @@ export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
   public compile(): string {
     this.compileErrors = [];
 
+    let properties: PropertyAsn | AbstractPropertyAsn[] = [];
     const cls = this.getClass();
-    const properties = cls instanceof ClassAsn ? cls.properties() : [];
+    if (cls instanceof ClassAsn) {
+      const abstractClasses = getAllAbstractClasses(cls, [], cls);
+      properties = cls.properties();
+
+      for (const ac of abstractClasses) {
+        properties = properties.concat(ac.properties());
+      }
+    }
 
     const toInitProperties = properties.filter((p) => !isValueTypeExcludingString(p.symbolType()));
     const sets = this.children.filter((c) => c instanceof SetAsn);
