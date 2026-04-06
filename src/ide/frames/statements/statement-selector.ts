@@ -36,6 +36,7 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent)],
+      ["x", "print", (parent: Parent) => this.factory.newCall(parent, "print")],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
       [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],

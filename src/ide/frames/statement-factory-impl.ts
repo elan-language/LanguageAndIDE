@@ -20,8 +20,12 @@ export class StatementFactoryImpl implements StatementFactory {
   public newAssert(parent: Parent): Frame {
     return new AssertStatement(parent);
   }
-  public newCall(parent: Parent): Frame {
-    return new CallStatement(parent);
+  public newCall(parent: Parent, procName = ""): Frame {
+    const call =  new CallStatement(parent);
+    if (procName !== "") {
+      call.proc.setFieldToKnownValidText(procName);
+    }
+    return call;
   }
   public newCatch(parent: Parent): Frame {
     return new CatchStatement(parent);

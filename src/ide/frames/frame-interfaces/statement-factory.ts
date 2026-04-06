@@ -3,7 +3,7 @@ import { Parent } from "./parent";
 
 export interface StatementFactory {
   newAssert(parent: Parent): Frame;
-  newCall(parent: Parent): Frame;
+  newCall(parent: Parent, procName: string): Frame;
   newCatch(parent: Parent): Frame;
   newElif(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
