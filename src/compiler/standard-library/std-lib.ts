@@ -743,11 +743,9 @@ export class StdLib {
   }
 
   // Graphics
-  @elanProcedure(["prompt"], ProcedureOptions.async)
-  async pressAnyKeyToContinue(prompt: boolean) {
-    if (prompt) {
-      await this.prompt("Press any key to continue");
-    }
+  @elanProcedure([], ProcedureOptions.async)
+  async pressAnyKeyToContinue() {
+    await this.prompt("Press any key to continue");
     await this.waitForKey();
     return;
   }

@@ -9,7 +9,7 @@ static void main() {
     const Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4);
     clearAllDisplays(); // call procedure
     executeOption(choice); // call procedure
-    pressAnyKeyToContinue(true); // call procedure
+    pressAnyKeyToContinue(); // call procedure
     clearAllDisplays(); // call procedure
   }
 }
