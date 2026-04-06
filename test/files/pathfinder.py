@@ -241,3 +241,5 @@ def test_point(self) -> None:
   n = p.neighbouringPoints() # variable definition
   expected = [Point(-1, -1), Point(0, -1), Point(1, -1), Point(-1, 0), Point(1, 0), Point(-1, 1), Point(0, 1), Point(1, 1)] # variable definition
   self.assertEqual(n, expected)
+
+main()

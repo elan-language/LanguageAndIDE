@@ -45,3 +45,5 @@ def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
 
 grey = 0x808080 # constant
+
+main()

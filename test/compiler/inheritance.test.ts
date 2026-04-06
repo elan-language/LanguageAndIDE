@@ -2878,6 +2878,7 @@ end class
 
 class Bar inherits Yon
   constructor()
+    set this.p1 to 0
   end constructor
   function toString() returns String
     return ""
@@ -2916,6 +2917,7 @@ end class
 
 class Bar inherits Yon
   constructor()
+    set this.p1 to 0
   end constructor
   function toString() returns String
     return ""
@@ -3125,6 +3127,7 @@ end class
 
 class Bar inherits Yon
   constructor()
+    set this.p1 to 0
   end constructor
   function toString() returns String
     return ""

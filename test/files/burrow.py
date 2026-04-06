@@ -17,3 +17,5 @@ def main() -> None:
       y = min([y + 1, 29]) # set
     elif direction == 3:
       y = max([y - 1, 0]) # set
+
+main()
