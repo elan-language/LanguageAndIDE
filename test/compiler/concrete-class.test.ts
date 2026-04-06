@@ -597,6 +597,69 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_InheritedPropertyInitialised", async () => {
+    const code = `${testHeader}
+
+abstract class Foo
+  property prop_1 as String
+
+end class
+
+class Bar inherits Foo
+  constructor()
+    set this.prop_1 to ""
+  end constructor
+
+  function toString() returns String
+    return this.prop_1
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop_1", ""]]);};
+  prop_1 = "";
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop_1 = "";
+    return this;
+  }
+
+  async toString() {
+    return this.prop_1;
+  }
+
+}
+
+async function main() {
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Pass_NoConstructor", async () => {
     const code = `${testHeader}
 
