@@ -153,7 +153,6 @@ End Class
 
 MustInherit Class Foo1
   Inherits Foo
-  
 
   Property prop_Foo1 As String
 End Class
@@ -170,7 +169,6 @@ End Interface
 
 Interface I3
   Inherits I2
-  
 
   MustOverride Property prop_I3 As Integer
 End Interface
@@ -178,7 +176,6 @@ End Interface
 Class Yon
   Inherits Foo1
   Implements I3, I2
-  
 
   Sub New()
     Me.prop_Foo1 = "" ' set
