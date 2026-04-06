@@ -83,7 +83,7 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   inheritance(frame: ClassFrame): string {
-    return languageHelper_inheritance(frame, this.EXTENDS, this.IMPLEMENTS, " ");
+    return languageHelper_inheritance(frame, this.EXTENDS, this.IMPLEMENTS, " ", "");
   }
 
   renderBottomAsHtml(frame: Frame): string {

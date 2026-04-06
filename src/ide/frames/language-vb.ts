@@ -344,7 +344,7 @@ export class LanguageVB extends LanguageAbstract {
       this.INHERITS,
       this.IMPLEMENTS,
       `
-<br>&nbsp;&nbsp;`,
+<br>&nbsp;&nbsp;`
     );
   }
 

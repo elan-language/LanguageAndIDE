@@ -146,7 +146,7 @@ main()
 
     const vbCode = `${testVBHeader}
 
-MustInherit Class Foo 
+MustInherit Class Foo
 
   MustOverride Function method_Foo() As Integer
 End Class

@@ -5,14 +5,14 @@ export function languageHelper_inheritance(
   frame: ClassFrame,
   inheritsWord: string,
   implementsWord: string,
-  joiner: string,
+  joiner: string
 ): string {
   const node = frame.inheritance.getRootNode()! as InheritanceNode;
   const field = frame.inheritance;
   const hasSupertype = frame.doesInherit();
   let result = "";
   if (field.isSelected() || (frame.isSelected() && !hasSupertype)) {
-    result = ` ${field.renderAsHtml()}`;
+    result = `${field.renderAsHtml()}`;
   } else if (hasSupertype && node.isValid()) {
     //TODO:  If frame is an interface, then any interface supertypes should be 'extend/inherit' rather than 'implements`
     const abstractClasses = node.getAbstractClassNames();
@@ -28,7 +28,6 @@ export function languageHelper_inheritance(
       const keyWord = frame.isInterface ? inheritsWord : implementsWord;
       result += `${joiner}<el-kw>${keyWord}</el-kw> ${csvTypes}`;
     }
-    result += joiner;
   }
   return result;
 }
