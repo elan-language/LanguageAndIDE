@@ -250,12 +250,12 @@ export class NotNewableCompileError extends CompileError {
   }
 }
 
-export class InvalidSourceForEachCompileError extends CompileError {
+export class InvalidSourceForForLoopCompileError extends CompileError {
   constructor(location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Source for 'each' must be an Array, List, or String.`,
+      `Source must evaluate to a List or String.`,
       location,
       "LangRef.html#compile_error",
     );
