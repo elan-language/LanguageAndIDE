@@ -4,9 +4,8 @@ import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
   addDeleteToContextMenu,
-  helper_pastePopUp,
   isFrameWithStatements,
-  isSelector,
+  isSelector
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -22,7 +21,6 @@ export abstract class AbstractSelector extends AbstractFrame {
   isSelector = true;
   isStatement = true;
   text: string = "";
-  label: string = "new code";
   protected profile: Profile;
   overtyper = new Overtyper();
 
@@ -45,15 +43,15 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [string, (parent: Parent) => Frame][];
+  abstract defaultOptions(): [string, string, (parent: Parent) => Frame][];
   abstract profileAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(userEntry: boolean): [string, (parent: Parent) => Frame][] {
+  optionsFilteredByContext(userEntry: boolean): [string, string, (parent: Parent) => Frame][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByProfile(userEntry: boolean): [string, (parent: Parent) => Frame][] {
+  optionsFilteredByProfile(userEntry: boolean): [string, string, (parent: Parent) => Frame][] {
     return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
   }
 
@@ -85,7 +83,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  optionsMatchingUserInput(match: string): [string, (parent: Parent) => Frame][] {
+  optionsMatchingUserInput(match: string): [string, string, (parent: Parent) => Frame][] {
     return this.optionsFilteredByProfile(true).filter((o) => o[0].startsWith(match));
   }
 
@@ -121,7 +119,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   addFrame(keyword: string, pendingChars: string): Frame {
-    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][1];
+    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][2];
     const parent = this.getParent();
     const newFrame: Frame = func(parent);
     parent.addChildBefore(newFrame, this);
@@ -166,12 +164,10 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   renderAsHtml(): string {
-    return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.textToDisplayAsHtml()}</${this.outerHtmlTag}>`;
+    const message = this.isSelected() ? "press Enter, or <i>right</i>-click here, to view options" : "new code";
+    return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top></${this.outerHtmlTag}>`;
   }
 
-  textToDisplayAsHtml(): string {
-    return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><div class="options">${this.getCompletion()}</div>${helper_pastePopUp(this)}${this.helpAsHtml()}</el-select>`;
-  }
   renderAsElanSource(): string {
     return `${this.indent()}`;
   }
@@ -201,15 +197,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         break;
       }
       case "Enter": {
-        const next = this.getNextPeerFrame();
-        if (next !== this) {
-          next.select(true, false);
-        } else {
-          const parent = this.getParent();
-          if (parent instanceof AbstractFrame) {
-            parent.select(true, false);
-          }
-        }
+        this.showContextMenu = true;
         break;
       }
       case "d": {
@@ -253,6 +241,22 @@ export abstract class AbstractSelector extends AbstractFrame {
           codeHasChanged = super.processKey(e);
         }
       }
+    }
+    return codeHasChanged;
+  }
+
+  protected handleContextMenuEvent(e: editorEvent): boolean {
+    let codeHasChanged = false;
+    if (e.command) {
+      // This case is when user has selected an item FROM the context menu
+      const map = this.getContextMenuItems();
+      codeHasChanged = map.get(e.command)![1]?.(e.optionalData);
+    } else {
+      // Bringup the context menu
+      if (!this.isSelected()) {
+        this.select(true, false);
+      }
+      this.showContextMenu = true;
     }
     return codeHasChanged;
   }
@@ -326,10 +330,18 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-
+    const allOptions = this.optionsFilteredByProfile(true);
+    allOptions.forEach(o => {
+      const name = o[0];
+      const action = () => {
+        this.addFrame(name, "");
+        return true;
+      };
+      const html = `${o[1]}`;
+      map.set(name, [html, action]);
+    }); 
     addDeleteToContextMenu(this, map);
     map.set("paste", ["paste <span class='kb'>Ctrl+v</span>", this.paste]);
-
     return map;
   }
 
