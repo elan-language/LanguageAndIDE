@@ -34,19 +34,20 @@ export class StatementSelector extends AbstractSelector {
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     const comment = this.getCommentMarker();
     return [
+      ["p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
+      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
+      [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
-      [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent)],
-      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
+      [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
+      [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
       [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],
-      [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
-      [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
-      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
-      [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
-      [tryKeyword, "try", (parent: Parent) => this.factory.newTryCatch(parent)],
-      [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
+      [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent, "")],
+      [tryKeyword, "try", (parent: Parent) => this.factory.newTryCatch(parent)],
+      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
+      [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
       [comment, `<b>${comment}</b> comment`, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
