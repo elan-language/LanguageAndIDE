@@ -335,7 +335,7 @@ export abstract class AbstractFrame implements Frame {
           const map = this.getContextMenuItems();
           codeHasChanged = map.get(e.command)![1]?.(e.optionalData);
         } else {
-          // Bringup the context menu
+          // Bring up the context menu
           if (!this.isSelected()) {
             this.select(true, false);
           }

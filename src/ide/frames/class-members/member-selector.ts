@@ -40,21 +40,21 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [string, (parent: Parent) => Frame][] {
-    const options: [string, (parent: Parent) => Frame][] = [
-      [constructorKeyword, (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, (_parent: Parent) => this.class.createProperty()],
-      [procedureKeyword, (_parent: Parent) => this.class.createProcedure()],
-      [functionKeyword, (_parent: Parent) => this.class.createFunction()],
-      [abstractPropertyKeywords, (_parent: Parent) => this.class.createAbstractProperty()],
-      [abstractProcedureKeywords, (_parent: Parent) => this.class.createAbstractProcedure()],
-      [abstractFunctionKeywords, (_parent: Parent) => this.class.createAbstractFunction()],
-      [privatePropertyKeywords, (_parent: Parent) => this.class.createProperty(true)],
-      [privateProcedureKeywords, (_parent: Parent) => this.class.createProcedure(true)],
-      [privateFunctionKeywords, (_parent: Parent) => this.class.createFunction(true)],
-      [this.getCommentMarker(), (_parent: Parent) => this.class.createComment()],
+  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+    const comment = this.getCommentMarker();
+    return [
+      [constructorKeyword, "constructor", (_parent: Parent) => this.class.createConstructor()],
+      [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
+      [procedureKeyword, "procedure", (_parent: Parent) => this.class.createProcedure()],
+      [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
+      [abstractPropertyKeywords, "abstract Property", (_parent: Parent) => this.class.createAbstractProperty()],
+      [abstractProcedureKeywords, "abstract Procedure", (_parent: Parent) => this.class.createAbstractProcedure()],
+      [abstractFunctionKeywords, "abstract Function", (_parent: Parent) => this.class.createAbstractFunction()],
+      [privatePropertyKeywords, "private Property", (_parent: Parent) => this.class.createProperty(true)],
+      [privateProcedureKeywords, "private Procedure", (_parent: Parent) => this.class.createProcedure(true)],
+      [privateFunctionKeywords, "private Function", (_parent: Parent) => this.class.createFunction(true)],
+      [comment, `<b>${comment}</b>`, (_parent: Parent) => this.class.createComment()],
     ];
-    return options;
   }
 
   profileAllows(keyword: string): boolean {

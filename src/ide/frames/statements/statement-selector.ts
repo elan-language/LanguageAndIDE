@@ -31,22 +31,23 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+    const comment = this.getCommentMarker();
     return [
-      [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
-      [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
+      [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
+      [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
-      [elifKeyword, (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
-      [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
-      [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
-      [constantKeyword, (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
-      [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
-      [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
-      [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
-      [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
-      [this.getCommentMarker(), (parent: Parent) => this.factory.newComment(parent)],
+      [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)], //TODO could get wording from language
+      [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],
+      [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
+      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
+      [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
+      [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [tryKeyword, "try", (parent: Parent) => this.factory.newTryCatch(parent)],
+      [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
+      [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
+      [comment, `<b>${comment}</b>`, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 
