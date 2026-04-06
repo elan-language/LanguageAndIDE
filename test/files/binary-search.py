@@ -42,3 +42,5 @@ def test_binarySearch(self) -> None:
   self.assertEqual(binarySearch(li3, "lime"), False)
   li4 = list[str]() # variable definition
   self.assertEqual(binarySearch(li4, "pear"), False)
+
+main()

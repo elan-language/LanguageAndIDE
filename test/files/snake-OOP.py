@@ -140,3 +140,5 @@ def test_square(self) -> None:
   self.assertEqual((Square(3, -1)).hasHitEdge(), True)
   self.assertEqual((Square(40, 3)).hasHitEdge(), True)
   self.assertEqual((Square(3, 30)).hasHitEdge(), True)
+
+main()

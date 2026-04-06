@@ -78,7 +78,7 @@ export class LanguageCS extends LanguageCfamily {
   inheritance(frame: ClassFrame): string {
     return frame.doesInherit()
       ? `: ${frame.inheritance.renderAsHtml()}`
-      : ` ${frame.inheritance.renderAsHtml()}`;
+      : `${frame.inheritance.renderAsHtml()}`;
   }
 
   renderBottomAsHtml(frame: Frame): string {

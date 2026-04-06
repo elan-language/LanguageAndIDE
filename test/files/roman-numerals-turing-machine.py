@@ -448,3 +448,5 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("barFound", "M", "barFound", "M", Dir.left)) # call procedure
   tm.append(Rule("barFound", "|", "barFound", "|", Dir.left)) # call procedure
   tm.append(Rule("barFound", " ", "removeBars", " ", Dir.right)) # call procedure
+
+main()
