@@ -81,9 +81,9 @@ export class Profile {
 
   private statements1_0 = ["print", constantKeyword, variableKeyword, setKeyword];
   private statements1_1 = this.statements1_0.concat([ifKeyword, elifKeyword, elseKeyword, whileKeyword, forKeyword, callKeyword]);
-  private statements1_2 = this.statements1_1.concat([assertKeyword]);
-  private statements1_3 = this.statements1_1;
-  private statements1_4 = this.statements1_1.concat([tryKeyword, catchKeyword, throwKeyword]);
+  private statements1_2 = [assertKeyword].concat(this.statements1_1); // to put assert at front, (shown only when within a test)
+  private statements1_3 = this.statements1_2;
+  private statements1_4 = this.statements1_3.concat([tryKeyword, catchKeyword, throwKeyword]);
   private statements2_0 = this.statements1_4;
   private statements2_1 = this.statements2_0;
   private statements2_2 = this.statements2_1;
