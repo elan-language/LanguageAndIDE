@@ -13,7 +13,7 @@ Sub main()
     sleep_ms(150) ' call procedure
     game = clockTick(game, getKey()) ' change variable
   End While
-  print($"Game Over! Score: {score(game)}") ' call procedure
+  print($"Game Over! Score: {score(game)}")
 End Sub
 
 Function clockTick(g As Game, k As String) As Game

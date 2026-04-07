@@ -29,11 +29,11 @@ Sub main()
         vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' change variable
       Next i
       displayVectorGraphics(vg) ' call procedure
-      print(x) ' call procedure
+      print(x)
       sleep_ms(100) ' call procedure
     End While
   End While
-  print("Finished") ' call procedure
+  print("Finished")
 End Sub
 
 ' scale x.  We pass in p just to get its length

@@ -29,11 +29,11 @@ static void main() {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // change variable
       }
       displayVectorGraphics(vg); // call procedure
-      print(x); // call procedure
+      print(x);
       sleep_ms(100); // call procedure
     }
   }
-  print("Finished"); // call procedure
+  print("Finished");
 }
 
 // scale x.  We pass in p just to get its length

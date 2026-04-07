@@ -22,7 +22,7 @@ def main() -> None:
     vg = allpoints(p) # variable definition
     displayVectorGraphics(vg) # call procedure
     p.checkkeys() # call procedure
-    print(f"x = {p.jx} y = {p.jy}") # call procedure
+    print(f"x = {p.jx} y = {p.jy}")
 
 def allpoints(p: Coords) -> list[VectorGraphic]: # function
   vg2 = list[VectorGraphic]() # variable definition

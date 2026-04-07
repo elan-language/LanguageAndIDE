@@ -16,22 +16,22 @@ static void main() {
 
 static void executeOption(int choice) { // procedure
   if (choice == 1) {
-    print("Reduce screen magnification if you can't see all the keys"); // call procedure
+    print("Reduce screen magnification if you can't see all the keys");
     playGame(); // call procedure
   } else if (choice == 2) {
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"); // call procedure
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter");
     playReverseGame(); // call procedure
   } else if (choice == 3) {
-    print("Please wait for analysis to complete ..."); // call procedure
+    print("Please wait for analysis to complete ...");
     analyse(); // call procedure
   } else {
     final String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase(); // constant
     if (allValidAnswers.contains(word)) {
-      print(String.format("% is a valid answer", word)); // call procedure
+      print(String.format("% is a valid answer", word));
     } else if (allWords.contains(word)) {
-      print(String.format("% is not a valid answer, but is a valid guess word", word)); // call procedure
+      print(String.format("% is not a valid answer, but is a valid guess word", word));
     } else {
-      print(String.format("% is not a recognised word", word)); // call procedure
+      print(String.format("% is not a recognised word", word));
     }
   }
 }
@@ -56,7 +56,7 @@ static void playGame() { // procedure
   }
   clearPrintedText(); // call procedure
   if (solved) {
-    print("Well done!"); // call procedure
+    print("Well done!");
   }
 }
 
@@ -88,7 +88,7 @@ static void enterAttempt(int attemptNo, List<List<String>> grid, Dictionary<Stri
       if (allWords.contains(word)) {
         chNo = chNo + 1; // change variable
       } else {
-        print("Invalid word"); // call procedure
+        print("Invalid word");
       }
     }
     displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
@@ -135,7 +135,7 @@ static void playReverseGame() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // change variable
     }
     if (possible.length() == 0) {
-      print("No possible answer matches marks so far. Press any key to continue"); // call procedure
+      print("No possible answer matches marks so far. Press any key to continue");
       attemptNo = 6; // change variable
     } else {
       attempt = possible[divAsInt(possible.length(), 2)]; // change variable
@@ -193,7 +193,7 @@ static void analyse() { // procedure
   final Int solved = (success/2309.0*100).floor(); // constant
   final Float avg = divAsFloat(weightedSum, success).round(2); // constant
   final String pc = "%"; // constant
-  print(String.format("For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved %% within 6 attempts,\nwith an average of % attempts.", solved, pc, avg)); // call procedure
+  print(String.format("For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved %% within 6 attempts,\nwith an average of % attempts.", solved, pc, avg));
 }
 
 static bool isUCLetter(String k) { // function

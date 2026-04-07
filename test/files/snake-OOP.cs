@@ -14,7 +14,7 @@ static void main() {
     sleep_ms(150); // call procedure
     snake.clockTick(getKey(), apple); // call procedure
   }
-  print($"Game Over! Score: {snake.score()}"); // call procedure
+  print($"Game Over! Score: {snake.score()}");
 }
 
 class Snake {
