@@ -196,12 +196,12 @@ suite("Parse source and generate Html", () => {
   });
   test("Snake OOP", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `./out/test/files/snake-oop.elan`,
+      `./out/test/files/snake-OOP.elan`,
       ``,
-      `./out/test/files/snake-oop.py`,
-      `./out/test/files/snake-oop.vb`,
-      `./out/test/files/snake-oop.cs`,
-      `./out/test/files/snake-oop.java`,
+      `./out/test/files/snake-OOP.py`,
+      `./out/test/files/snake-OOP.vb`,
+      `./out/test/files/snake-OOP.cs`,
+      `./out/test/files/snake-OOP.java`,
     );
     test("Snake FP", async () => {
       await assertGeneratesHtmlSourceAndExportFiles(
