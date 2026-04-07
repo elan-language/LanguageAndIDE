@@ -32,11 +32,14 @@ export class StatementSelector extends AbstractSelector {
   }
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
-    const comment = this.getCommentMarker();
     return [
       ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
+      [
+        variableKeyword,
+        "<b>v</b>ariable definition",
+        (parent: Parent) => this.factory.newVar(parent),
+      ],
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
       [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
@@ -48,7 +51,11 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
-      [comment, `<b>${comment}</b> comment`, (parent: Parent) => this.factory.newComment(parent)],
+      [
+        this.getCommentMarker(),
+        `<b>${this.getCommentMarker()}</b> comment`,
+        (parent: Parent) => this.factory.newComment(parent),
+      ],
     ];
   }
 

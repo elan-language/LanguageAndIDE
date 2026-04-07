@@ -867,7 +867,7 @@ export abstract class AbstractFrame implements Frame {
           cls += " separator";
         }
         items.push(
-          `<div class='${cls}' data-id='${this.htmlId}' data-func='${k}' title="" tabindex="-1">${val}</div>`,
+          `<div class='${cls}' data-id='${this.htmlId}' data-func="${k}" title="" tabindex="-1">${val}</div>`,
         );
       }
 

@@ -310,7 +310,7 @@ suite("Selector tests", () => {
     assert.equal(help, " procedure function test constant enum class abstract interface #");
   });
 
-ignore_test("#377 - Global select filtered by profile", () => {
+  ignore_test("#377 - Global select filtered by profile", () => {
     const f = new FileImpl(
       hash,
       new TestProfileSPJ(""),

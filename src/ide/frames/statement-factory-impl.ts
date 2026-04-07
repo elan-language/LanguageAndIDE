@@ -21,7 +21,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new AssertStatement(parent);
   }
   public newCall(parent: Parent, procName = ""): Frame {
-    const call =  new CallStatement(parent);
+    const call = new CallStatement(parent);
     if (procName !== "") {
       call.proc.setFieldToKnownValidText(procName);
     }
