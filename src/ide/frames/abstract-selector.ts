@@ -2,11 +2,7 @@ import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
-import {
-  addDeleteToContextMenu,
-  isFrameWithStatements,
-  isSelector
-} from "./frame-helpers";
+import { addDeleteToContextMenu, isFrameWithStatements, isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -164,7 +160,9 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   renderAsHtml(): string {
-    const message = this.isSelected() ? "press Enter, or <i>right</i>-click here, to view options" : "new code";
+    const message = this.isSelected()
+      ? "press Enter, or <i>right</i>-click here, to view options"
+      : "new code";
     return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top></${this.outerHtmlTag}>`;
   }
 
@@ -331,7 +329,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
     const allOptions = this.optionsFilteredByProfile(true);
-    allOptions.forEach(o => {
+    allOptions.forEach((o) => {
       const name = o[0];
       const action = () => {
         this.addFrame(name, "");
@@ -339,7 +337,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       };
       const html = `${o[1]}`;
       map.set(name, [html, action]);
-    }); 
+    });
     addDeleteToContextMenu(this, map);
     map.set("paste", ["paste <span class='kb'>Ctrl+v</span>", this.paste]);
     return map;
