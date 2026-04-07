@@ -6,12 +6,12 @@ Sub main()
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' change variable
     If reply.equals("") Then
       Const now = divAsInt(clock(), 1000)
-      print(now) ' call procedure
-      print(getDate(now)) ' call procedure
+      print(now)
+      print(getDate(now))
     Else
       Dim td = parseAsInt(reply) ' variable definition
       If td.item_0 And (td.item_1 >= 0) Then
-        print(getDate(td.item_1)) ' call procedure
+        print(getDate(td.item_1))
       End If
     End If
   End While

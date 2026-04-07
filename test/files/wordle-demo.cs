@@ -16,22 +16,22 @@ static void main() {
 
 static void executeOption(int choice) { // procedure
   if (choice == 1) {
-    print("Reduce screen magnification if you can't see all the keys"); // call procedure
+    print("Reduce screen magnification if you can't see all the keys");
     playGame(); // call procedure
   } else if (choice == 2) {
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"); // call procedure
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter");
     playReverseGame(); // call procedure
   } else if (choice == 3) {
-    print("Please wait for analysis to complete ..."); // call procedure
+    print("Please wait for analysis to complete ...");
     analyse(); // call procedure
   } else {
     const String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase();
     if (allValidAnswers.contains(word)) {
-      print($"{word} is a valid answer"); // call procedure
+      print($"{word} is a valid answer");
     } else if (allWords.contains(word)) {
-      print($"{word} is not a valid answer, but is a valid guess word"); // call procedure
+      print($"{word} is not a valid answer, but is a valid guess word");
     } else {
-      print($"{word} is not a recognised word"); // call procedure
+      print($"{word} is not a recognised word");
     }
   }
 }
@@ -56,7 +56,7 @@ static void playGame() { // procedure
   }
   clearPrintedText(); // call procedure
   if (solved) {
-    print("Well done!"); // call procedure
+    print("Well done!");
   }
 }
 
@@ -88,7 +88,7 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
       if (allWords.contains(word)) {
         chNo = chNo + 1; // change variable
       } else {
-        print("Invalid word"); // call procedure
+        print("Invalid word");
       }
     }
     displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
@@ -135,7 +135,7 @@ static void playReverseGame() { // procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark); // change variable
     }
     if (possible.length() == 0) {
-      print("No possible answer matches marks so far. Press any key to continue"); // call procedure
+      print("No possible answer matches marks so far. Press any key to continue");
       attemptNo = 6; // change variable
     } else {
       attempt = possible[divAsInt(possible.length(), 2)]; // change variable
@@ -193,7 +193,7 @@ static void analyse() { // procedure
   const Int solved = (success/2309.0*100).floor();
   const Float avg = divAsFloat(weightedSum, success).round(2);
   const String pc = "%";
-  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts."); // call procedure
+  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.");
 }
 
 static bool isUCLetter(string k) { // function

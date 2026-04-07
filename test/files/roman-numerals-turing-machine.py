@@ -21,13 +21,13 @@ def main() -> None:
     tm.singleStep() # call procedure
     steps = steps + 1 # change variable
     clearPrintedText() # call procedure
-    print(tm.tape) # call procedure
+    print(tm.tape)
     printTab(tm.headPosition - 1, "^") # call procedure
-    print(f"Step: {steps}") # call procedure
-    print(f"State: {tm.currentState}") # call procedure
-    print(f"Rule applied: {rule.toString()}") # call procedure
+    print(f"Step: {steps}")
+    print(f"State: {tm.currentState}")
+    print(f"Rule applied: {rule.toString()}")
     sleep_ms(40) # call procedure
-  print(f"The roman numeral equivalent for {dec} is {tm.tape.trim()}") # call procedure
+  print(f"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
 
 initState = "init" # constant
 

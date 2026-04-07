@@ -13,7 +13,7 @@ static void main() {
     sleep_ms(150); // call procedure
     game = clockTick(game, getKey()); // change variable
   }
-  print($"Game Over! Score: {score(game)}"); // call procedure
+  print($"Game Over! Score: {score(game)}");
 }
 
 static Game clockTick(Game g, string k) { // function

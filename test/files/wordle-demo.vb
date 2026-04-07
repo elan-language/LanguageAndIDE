@@ -16,22 +16,22 @@ End Sub
 
 Sub executeOption(choice As Integer) ' procedure
   If choice = 1 Then
-    print("Reduce screen magnification if you can't see all the keys") ' call procedure
+    print("Reduce screen magnification if you can't see all the keys")
     playGame() ' call procedure
   ElseIf choice = 2 Then
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter") ' call procedure
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter")
     playReverseGame() ' call procedure
   ElseIf choice = 3 Then
-    print("Please wait for analysis to complete ...") ' call procedure
+    print("Please wait for analysis to complete ...")
     analyse() ' call procedure
   Else
     Const word = inputStringWithLimits("Enter word: ", 5, 5).upperCase()
     If allValidAnswers.contains(word) Then
-      print($"{word} is a valid answer") ' call procedure
+      print($"{word} is a valid answer")
     ElseIf allWords.contains(word) Then
-      print($"{word} is not a valid answer, but is a valid guess word") ' call procedure
+      print($"{word} is not a valid answer, but is a valid guess word")
     Else
-      print($"{word} is not a recognised word") ' call procedure
+      print($"{word} is not a recognised word")
     End If
   End If
 End Sub
@@ -56,7 +56,7 @@ Sub playGame() ' procedure
   End While
   clearPrintedText() ' call procedure
   If solved Then
-    print("Well done!") ' call procedure
+    print("Well done!")
   End If
 End Sub
 
@@ -88,7 +88,7 @@ Sub enterAttempt(attemptNo As Integer, grid As List(Of List(Of String)), used As
       If allWords.contains(word) Then
         chNo = chNo + 1 ' change variable
       Else
-        print("Invalid word") ' call procedure
+        print("Invalid word")
       End If
     End If
     displayHtml(drawGrid(grid) + drawKeyboard(used)) ' call procedure
@@ -135,7 +135,7 @@ Sub playReverseGame() ' procedure
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' change variable
     End If
     If possible.length() = 0 Then
-      print("No possible answer matches marks so far. Press any key to continue") ' call procedure
+      print("No possible answer matches marks so far. Press any key to continue")
       attemptNo = 6 ' change variable
     Else
       attempt = possible[divAsInt(possible.length(), 2)] ' change variable
@@ -193,7 +193,7 @@ Sub analyse() ' procedure
   Const solved = (success/2309.0*100).floor()
   Const avg = divAsFloat(weightedSum, success).round(2)
   Const pc = "%"
-  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") ' call procedure
+  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 End Sub
 
 Function isUCLetter(k As String) As Boolean

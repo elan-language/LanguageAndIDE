@@ -12,7 +12,7 @@ def main() -> None:
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
     game = clockTick(game, getKey()) # change variable
-  print(f"Game Over! Score: {score(game)}") # call procedure
+  print(f"Game Over! Score: {score(game)}")
 
 def clockTick(g: Game, k: str) -> Game: # function
   g2 = if(k.equals(""), g, g.withKey(k)) # variable definition

@@ -14,22 +14,22 @@ def main() -> None:
 
 def executeOption(choice: int) -> None: # procedure
   if choice == 1:
-    print("Reduce screen magnification if you can't see all the keys") # call procedure
+    print("Reduce screen magnification if you can't see all the keys")
     playGame() # call procedure
   elif choice == 2:
-    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter") # call procedure
+    print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter")
     playReverseGame() # call procedure
   elif choice == 3:
-    print("Please wait for analysis to complete ...") # call procedure
+    print("Please wait for analysis to complete ...")
     analyse() # call procedure
   else:
     word = inputStringWithLimits("Enter word: ", 5, 5).upperCase() # constant
     if allValidAnswers.contains(word):
-      print(f"{word} is a valid answer") # call procedure
+      print(f"{word} is a valid answer")
     elif allWords.contains(word):
-      print(f"{word} is not a valid answer, but is a valid guess word") # call procedure
+      print(f"{word} is not a valid answer, but is a valid guess word")
     else:
-      print(f"{word} is not a recognised word") # call procedure
+      print(f"{word} is not a recognised word")
 
 def playGame() -> None: # procedure
   grid = list[list[str]]() # variable definition
@@ -49,7 +49,7 @@ def playGame() -> None: # procedure
     attemptNo = attemptNo + 1 # change variable
   clearPrintedText() # call procedure
   if solved:
-    print("Well done!") # call procedure
+    print("Well done!")
 
 def initialiseGrid(grid: list[list[str]]) -> None: # procedure
   for i in range(0, 5):
@@ -76,7 +76,7 @@ def enterAttempt(attemptNo: int, grid: list[list[str]], used: Dictionary[str, st
       if allWords.contains(word):
         chNo = chNo + 1 # change variable
       else:
-        print("Invalid word") # call procedure
+        print("Invalid word")
     displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
 
 def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: AsRef[bool], used: Dictionary[str, str]) -> None: # procedure
@@ -113,7 +113,7 @@ def playReverseGame() -> None: # procedure
       attemptNo = attemptNo + 1 # change variable
       possible = possibleAnswersAfterAttempt(possible, attempt, mark) # change variable
     if possible.length() == 0:
-      print("No possible answer matches marks so far. Press any key to continue") # call procedure
+      print("No possible answer matches marks so far. Press any key to continue")
       attemptNo = 6 # change variable
     else:
       attempt = possible[divAsInt(possible.length(), 2)] # change variable
@@ -162,7 +162,7 @@ def analyse() -> None: # procedure
   solved = (success/2309.0*100).floor() # constant
   avg = divAsFloat(weightedSum, success).round(2) # constant
   pc = "%" # constant
-  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.") # call procedure
+  print(f"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 
 def isUCLetter(k: str) -> bool: # function
   unicode = k.asUnicode() # constant

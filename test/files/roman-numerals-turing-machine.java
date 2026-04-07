@@ -21,14 +21,14 @@ static void main() {
     tm.singleStep(); // call procedure
     steps = steps + 1; // change variable
     clearPrintedText(); // call procedure
-    print(tm.tape); // call procedure
+    print(tm.tape);
     printTab(tm.headPosition - 1, "^"); // call procedure
-    print(String.format("Step: %", steps)); // call procedure
-    print(String.format("State: %", tm.currentState)); // call procedure
-    print(String.format("Rule applied: %", rule.toString())); // call procedure
+    print(String.format("Step: %", steps));
+    print(String.format("State: %", tm.currentState));
+    print(String.format("Rule applied: %", rule.toString()));
     sleep_ms(40); // call procedure
   }
-  print(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // call procedure
+  print(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim()));
 }
 
 final String initState = "init" // constant
