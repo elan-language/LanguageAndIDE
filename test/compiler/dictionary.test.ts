@@ -803,20 +803,6 @@ procedure foo()
 end procedure
 `;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await foo();
-}
-
-async function foo() {
-  let a = system.dictionary([["a", system.dictionary([["c", 2]])], ["b", system.dictionary([["d", 3]])]]);
-  system.safeSet(a, 1, ["a", "c"]);
-  await _stdlib.print(system.safeIndex(system.safeIndex(a, "a"), "c"));
-}
-global["foo"] = foo;
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),

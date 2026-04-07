@@ -11,7 +11,6 @@ import {
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
   mustNotSetIndexInFunctionMethod,
-  mustNotSetRangedIndex,
 } from "../../compile-rules";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
