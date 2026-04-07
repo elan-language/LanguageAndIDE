@@ -10,9 +10,9 @@ def main() -> None:
     else:
       result = binarySearch(fruit, wanted) # variable definition
       if result:
-        print(f"\nWe can supply a {wanted}") # call procedure
+        print(f"\nWe can supply a {wanted}")
       else:
-        print(f"\nSorry, we cannot supply a {wanted}") # call procedure
+        print(f"\nSorry, we cannot supply a {wanted}")
 
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition

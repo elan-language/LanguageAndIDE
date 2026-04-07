@@ -50,8 +50,8 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     ];
   }
 
-  profileAllows(_keyword: string): boolean {
-    return true;
+  profileAllows(keyword: string): boolean {
+    return this.profile.globals.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {

@@ -6,12 +6,12 @@ static void main() {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // change variable
     if (reply.equals("")) {
       final Int now = divAsInt(clock(), 1000); // constant
-      print(now); // call procedure
-      print(getDate(now)); // call procedure
+      print(now);
+      print(getDate(now));
     } else {
       var td = parseAsInt(reply);
       if (td.item_0 && (td.item_1 >= 0)) {
-        print(getDate(td.item_1)); // call procedure
+        print(getDate(td.item_1));
       }
     }
   }

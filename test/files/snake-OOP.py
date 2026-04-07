@@ -13,7 +13,7 @@ def main() -> None:
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
     snake.clockTick(getKey(), apple) # call procedure
-  print(f"Game Over! Score: {snake.score()}") # call procedure
+  print(f"Game Over! Score: {snake.score()}")
 
 class Snake
 

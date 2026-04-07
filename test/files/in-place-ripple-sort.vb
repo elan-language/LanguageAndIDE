@@ -2,9 +2,9 @@
 
 Sub main()
   Dim li = {7, 1, 0, 4, 8, 3, 6} ' variable definition
-  print(li) ' call procedure
+  print(li)
   inPlaceRippleSort(li) ' call procedure
-  print(li) ' call procedure
+  print(li)
 End Sub
 
 Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure

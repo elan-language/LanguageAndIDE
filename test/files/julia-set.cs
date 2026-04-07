@@ -22,7 +22,7 @@ static void main() {
     var vg = allpoints(p);
     displayVectorGraphics(vg); // call procedure
     p.checkkeys(); // call procedure
-    print($"x = {p.jx} y = {p.jy}"); // call procedure
+    print($"x = {p.jx} y = {p.jy}");
   }
 }
 

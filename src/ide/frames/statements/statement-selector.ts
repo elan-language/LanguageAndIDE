@@ -34,7 +34,7 @@ export class StatementSelector extends AbstractSelector {
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     const comment = this.getCommentMarker();
     return [
-      ["p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
+      ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
       [
         variableKeyword,
@@ -49,15 +49,15 @@ export class StatementSelector extends AbstractSelector {
       [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
       [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
       [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent, "")],
-      [tryKeyword, "try", (parent: Parent) => this.factory.newTryCatch(parent)],
+      [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
       [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
       [comment, `<b>${comment}</b> comment`, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 
-  profileAllows(_keyword: string): boolean {
-    return true;
+  profileAllows(keyword: string): boolean {
+    return this.profile.statements.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

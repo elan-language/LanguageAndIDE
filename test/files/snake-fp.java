@@ -13,7 +13,7 @@ static void main() {
     sleep_ms(150); // call procedure
     game = clockTick(game, getKey()); // change variable
   }
-  print(String.format("Game Over! Score: %", score(game))); // call procedure
+  print(String.format("Game Over! Score: %", score(game)));
 }
 
 static Game clockTick(Game g, String k) { // function

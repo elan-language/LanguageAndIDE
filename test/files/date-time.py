@@ -6,12 +6,12 @@ def main() -> None:
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # change variable
     if reply.equals(""):
       now = divAsInt(clock(), 1000) # constant
-      print(now) # call procedure
-      print(getDate(now)) # call procedure
+      print(now)
+      print(getDate(now))
     else:
       td = parseAsInt(reply) # variable definition
       if td.item_0 and (td.item_1 >= 0):
-        print(getDate(td.item_1)) # call procedure
+        print(getDate(td.item_1))
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
