@@ -111,9 +111,4 @@ export class Profile {
   private class_members2_2 = this.class_members2_1;
 
   private class_members3_0 = this.class_members2_2;
-
-  name: string = "default_profile";
-  require_log_on: boolean = false;
-  can_load_only_own_files: boolean = false;
-  show_user_and_profile: boolean = false;
 }

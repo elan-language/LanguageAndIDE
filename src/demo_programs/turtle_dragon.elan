@@ -1,4 +1,4 @@
-# 672430d9275f228ab2959e62232ed837b9ac9c8ea624473bceda0b7a79065b82 Elan 2.0.0-alpha guest default_profile valid
+# 672430d9275f228ab2959e62232ed837b9ac9c8ea624473bceda0b7a79065b82 Elan 2.0.0-alpha valid
 
 main
   constant order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)

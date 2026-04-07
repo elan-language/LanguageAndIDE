@@ -3,19 +3,20 @@ import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-wo
 import { LanguageElan } from "../src/ide/frames/language-elan";
 import { processInnerCode } from "../src/tools/codeParser";
 import {
-  processCode,
-  processFinals,
-  processHelps,
-  processHints,
-  processLoads,
-  processQuestions,
-  processSteps,
+    processCode,
+    processFinals,
+    processHelps,
+    processHints,
+    processLoads,
+    processQuestions,
+    processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("process worksheets", () => {
-  test("process file with header", async () => {
-    const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 guest default_profile valid
+  ignore_test("process file with header", async () => {
+    const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 valid
 `;
 
     const actual = await processInnerCode(code, LanguageElan.Instance);

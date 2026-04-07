@@ -1,4 +1,4 @@
-# 9f69e2f9a42ddb8547c4274f24b3d13488290b6bd9dacb43b68e8e70e1bd8c21 Elan 2.0.0-alpha1 guest default_profile valid
+# 9f69e2f9a42ddb8547c4274f24b3d13488290b6bd9dacb43b68e8e70e1bd8c21 Elan 2.0.0-alpha1 valid
 
 main
   variable style set to "<style> h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } </style>"

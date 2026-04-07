@@ -1,4 +1,4 @@
-# 07ef999228e7c7e3bf1c73b9268dd8489295ffad850e6edda316a58fcac3b349 Elan 2.0.0-alpha guest default_profile valid
+# 07ef999228e7c7e3bf1c73b9268dd8489295ffad850e6edda316a58fcac3b349 Elan 2.0.0-alpha valid
 
 main
   variable grid set to createBlockGraphics(white)

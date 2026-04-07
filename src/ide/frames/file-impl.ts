@@ -230,7 +230,7 @@ export class FileImpl implements File {
     const trailer = this.language().renderFileTrailerAsHtml();
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}${trailer}`
+      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${globals}${trailer}`
       : `${globals}${trailer}`;
   }
 
@@ -302,27 +302,6 @@ export class FileImpl implements File {
     this.isProduction = flag;
   }
 
-  private getUserName() {
-    return this.userName ? this.userName : defaultUsername;
-  }
-
-  private getUserNameAsHtml() {
-    const cls = this.profile.show_user_and_profile ? "show" : "hide";
-    const userName = this.getUserName();
-    return `<el-user class="${cls}">${userName}</el-user>`;
-  }
-
-  private getProfileName() {
-    const pn = this.profile.name.replaceAll(" ", "_");
-    return pn ? pn : "_";
-  }
-
-  private getProfileNameAsHtml() {
-    const cls = this.profile.show_user_and_profile ? "show" : "hide";
-    const profileName = this.getProfileName();
-    return `<el-profile class="${cls}">${profileName}</el-profile>`;
-  }
-
   getAst(invalidate: boolean): RootAstNode | undefined {
     if (!this.ast || invalidate) {
       this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
@@ -359,7 +338,7 @@ export class FileImpl implements File {
   }
 
   private renderHashableContent(globals: string, lang: string): string {
-    const code = `${this.getVersionString(lang)} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    const code = `${this.getVersionString(lang)} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 
@@ -789,10 +768,10 @@ export class FileImpl implements File {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
 
-      if (tokens.length === 7) {
+      if (tokens.length === 5) {
         await this.validateHash(tokens[1], code);
         language = this.validateLanguage(tokens, 0);
-      } else if (tokens.length === 9) {
+      } else if (tokens.length === 7) {
         await this.validateHash(tokens[1], code);
         language = this.validateLanguage(tokens, 2);
       } else {
