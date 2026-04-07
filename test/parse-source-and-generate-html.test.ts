@@ -10,227 +10,227 @@ import { assertEffectOfActionNew, assertGeneratesHtmlSourceAndExportFiles } from
 suite("Parse source and generate Html", () => {
   test("Test Empty File", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T00_emptyFile.elan`,
-      `${__dirname}\\files\\T00_emptyFile.html`,
+      `./out/test/files/T00_emptyFile.elan`,
+      `./out/test/files/T00_emptyFile.html`,
     );
   });
 
   test("Test Hello World", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T01_helloWorld.elan`,
-      `${__dirname}\\files\\T01_helloWorld.html`,
+      `./out/test/files/T01_helloWorld.elan`,
+      `./out/test/files/T01_helloWorld.html`,
     );
   });
 
   test("Test Comments", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T02_comments.elan`,
-      `${__dirname}\\files\\T02_comments.html`,
+      `./out/test/files/T02_comments.elan`,
+      `./out/test/files/T02_comments.html`,
     );
   });
 
   test("Test Main With All Statements", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
-      `${__dirname}\\files\\T03_mainWithAllStatements.html`,
+      `./out/test/files/T03_mainWithAllStatements.elan`,
+      `./out/test/files/T03_mainWithAllStatements.html`,
     );
   });
 
   test("Test All Globals Except Class", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T04_allGlobalsExceptClass.elan`,
-      `${__dirname}\\files\\T04_allGlobalsExceptClass.html`,
+      `./out/test/files/T04_allGlobalsExceptClass.elan`,
+      `./out/test/files/T04_allGlobalsExceptClass.html`,
     );
   });
 
   test("Test Classes", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\T05_classes.elan`,
-      `${__dirname}\\files\\T05_classes.html`,
+      `./out/test/files/T05_classes.elan`,
+      `./out/test/files/T05_classes.html`,
     );
   });
 
   test("Test Select Main By Id", async () => {
     await assertEffectOfActionNew(
-      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      `./out/test/files/T03_mainWithAllStatements.elan`,
       SelectMainById,
-      `${__dirname}\\files\\T07_mainSelected.html`,
+      `./out/test/files/T07_mainSelected.html`,
     );
   });
 
   test("Test Select Statement By Id", async () => {
     await assertEffectOfActionNew(
-      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      `./out/test/files/T03_mainWithAllStatements.elan`,
       SelectStatementById,
-      `${__dirname}\\files\\T07_statementSelected.html`,
+      `./out/test/files/T07_statementSelected.html`,
     );
   });
 
   //-------------------
   test("ExpandAll", async () => {
     await assertEffectOfActionNew(
-      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      `./out/test/files/T03_mainWithAllStatements.elan`,
       ExpandAll,
-      `${__dirname}\\files\\T08_expandAll.html`,
+      `./out/test/files/T08_expandAll.html`,
     );
   });
 
   test("CollapseAll", async () => {
     await assertEffectOfActionNew(
-      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      `./out/test/files/T03_mainWithAllStatements.elan`,
       CollapseAll,
-      `${__dirname}\\files\\T08_collapseAll.html`,
+      `./out/test/files/T08_collapseAll.html`,
     );
   });
 
   test("#702 - last line is a comment", async () => {
     await assertEffectOfActionNew(
-      `${__dirname}\\files\\test702.elan`,
+      `./out/test/files/test702.elan`,
       CollapseAll,
-      `${__dirname}\\files\\test702.html`,
+      `./out/test/files/test702.html`,
     );
   });
 
   ignore_test("Test Newline in literal string", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\test1762newlineInString.elan`,
-      `${__dirname}\\files\\test1762newlineInString.html`,
+      `./out/test/files/test1762newlineInString.elan`,
+      `./out/test/files/test1762newlineInString.html`,
     );
   });
   test("Ghosting", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\ghosted.elan`,
-      `${__dirname}\\files\\ghosted.html`,
+      `./out/test/files/ghosted.elan`,
+      `./out/test/files/ghosted.html`,
     );
   });
   test("Burrow", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\burrow.elan`,
+      `./out/test/files/burrow.elan`,
       ``,
-      `${__dirname}\\files\\burrow.py`,
-      `${__dirname}\\files\\burrow.vb`,
-      `${__dirname}\\files\\burrow.cs`,
-      `${__dirname}\\files\\burrow.java`,
+      `./out/test/files/burrow.py`,
+      `./out/test/files/burrow.vb`,
+      `./out/test/files/burrow.cs`,
+      `./out/test/files/burrow.java`,
     );
   });
   test("Bubbles", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\bubbles.elan`,
+      `./out/test/files/bubbles.elan`,
       ``,
-      `${__dirname}\\files\\bubbles.py`,
-      `${__dirname}\\files\\bubbles.vb`,
-      `${__dirname}\\files\\bubbles.cs`,
-      `${__dirname}\\files\\bubbles.java`,
+      `./out/test/files/bubbles.py`,
+      `./out/test/files/bubbles.vb`,
+      `./out/test/files/bubbles.cs`,
+      `./out/test/files/bubbles.java`,
     );
   });
   test("Ripple Sort", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\in-place-ripple-sort.elan`,
+      `./out/test/files/in-place-ripple-sort.elan`,
       ``,
-      `${__dirname}\\files\\in-place-ripple-sort.py`,
-      `${__dirname}\\files\\in-place-ripple-sort.vb`,
-      `${__dirname}\\files\\in-place-ripple-sort.cs`,
-      `${__dirname}\\files\\in-place-ripple-sort.java`,
+      `./out/test/files/in-place-ripple-sort.py`,
+      `./out/test/files/in-place-ripple-sort.vb`,
+      `./out/test/files/in-place-ripple-sort.cs`,
+      `./out/test/files/in-place-ripple-sort.java`,
     );
   });
   test("Binary Search", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\binary-search.elan`,
+      `./out/test/files/binary-search.elan`,
       ``,
-      `${__dirname}\\files\\binary-search.py`,
-      `${__dirname}\\files\\binary-search.vb`,
-      `${__dirname}\\files\\binary-search.cs`,
-      `${__dirname}\\files\\binary-search.java`,
+      `./out/test/files/binary-search.py`,
+      `./out/test/files/binary-search.vb`,
+      `./out/test/files/binary-search.cs`,
+      `./out/test/files/binary-search.java`,
     );
   });
   test("Collatz", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\collatz.elan`,
+      `./out/test/files/collatz.elan`,
       ``,
-      `${__dirname}\\files\\collatz.py`,
-      `${__dirname}\\files\\collatz.vb`,
-      `${__dirname}\\files\\collatz.cs`,
-      `${__dirname}\\files\\collatz.java`,
+      `./out/test/files/collatz.py`,
+      `./out/test/files/collatz.vb`,
+      `./out/test/files/collatz.cs`,
+      `./out/test/files/collatz.java`,
     );
   });
   ignore_test("Wordle Demo", async () => {
     // ignored only because it is slow for a test due to size
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\wordle-demo.elan`,
+      `./out/test/files/wordle-demo.elan`,
       ``,
-      `${__dirname}\\files\\wordle-demo.py`,
-      `${__dirname}\\files\\wordle-demo.vb`,
-      `${__dirname}\\files\\wordle-demo.cs`,
-      //`${__dirname}\\files\\wordle-demo.java`,   Works live, but not in test!
+      `./out/test/files/wordle-demo.py`,
+      `./out/test/files/wordle-demo.vb`,
+      `./out/test/files/wordle-demo.cs`,
+      //`./out/test/files/wordle-demo.java`,   Works live, but not in test!
     );
   });
   test("Life", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\life.elan`,
+      `./out/test/files/life.elan`,
       ``,
-      `${__dirname}\\files\\life.py`,
-      `${__dirname}\\files\\life.vb`,
-      `${__dirname}\\files\\life.cs`,
-      `${__dirname}\\files\\life.java`,
+      `./out/test/files/life.py`,
+      `./out/test/files/life.vb`,
+      `./out/test/files/life.cs`,
+      `./out/test/files/life.java`,
     );
   });
   test("Pathfinder", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\pathfinder.elan`,
+      `./out/test/files/pathfinder.elan`,
       ``,
-      `${__dirname}\\files\\pathfinder.py`,
-      `${__dirname}\\files\\pathfinder.vb`,
-      `${__dirname}\\files\\pathfinder.cs`,
-      `${__dirname}\\files\\pathfinder.java`,
+      `./out/test/files/pathfinder.py`,
+      `./out/test/files/pathfinder.vb`,
+      `./out/test/files/pathfinder.cs`,
+      `./out/test/files/pathfinder.java`,
     );
   });
   test("Roman Numerals Turing Machine", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\roman-numerals-turing-machine.elan`,
+      `./out/test/files/roman-numerals-turing-machine.elan`,
       ``,
-      `${__dirname}\\files\\roman-numerals-turing-machine.py`,
-      `${__dirname}\\files\\roman-numerals-turing-machine.vb`,
-      `${__dirname}\\files\\roman-numerals-turing-machine.cs`,
-      `${__dirname}\\files\\roman-numerals-turing-machine.java`,
+      `./out/test/files/roman-numerals-turing-machine.py`,
+      `./out/test/files/roman-numerals-turing-machine.vb`,
+      `./out/test/files/roman-numerals-turing-machine.cs`,
+      `./out/test/files/roman-numerals-turing-machine.java`,
     );
   });
   test("Snake OOP", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `${__dirname}\\files\\snake-oop.elan`,
+      `./out/test/files/snake-OOP.elan`,
       ``,
-      `${__dirname}\\files\\snake-oop.py`,
-      `${__dirname}\\files\\snake-oop.vb`,
-      `${__dirname}\\files\\snake-oop.cs`,
-      `${__dirname}\\files\\snake-oop.java`,
+      `./out/test/files/snake-OOP.py`,
+      `./out/test/files/snake-OOP.vb`,
+      `./out/test/files/snake-OOP.cs`,
+      `./out/test/files/snake-OOP.java`,
     );
     test("Snake FP", async () => {
       await assertGeneratesHtmlSourceAndExportFiles(
-        `${__dirname}\\files\\snake-fp.elan`,
+        `./out/test/files/snake-fp.elan`,
         ``,
-        `${__dirname}\\files\\snake-fp.py`,
-        `${__dirname}\\files\\snake-fp.vb`,
-        `${__dirname}\\files\\snake-fp.cs`,
-        `${__dirname}\\files\\snake-fp.java`,
+        `./out/test/files/snake-fp.py`,
+        `./out/test/files/snake-fp.vb`,
+        `./out/test/files/snake-fp.cs`,
+        `./out/test/files/snake-fp.java`,
       );
     });
     test("Date/Time", async () => {
       await assertGeneratesHtmlSourceAndExportFiles(
-        `${__dirname}\\files\\date-time.elan`,
+        `./out/test/files/date-time.elan`,
         ``,
-        `${__dirname}\\files\\date-time.py`,
-        `${__dirname}\\files\\date-time.vb`,
-        `${__dirname}\\files\\date-time.cs`,
-        `${__dirname}\\files\\date-time.java`,
+        `./out/test/files/date-time.py`,
+        `./out/test/files/date-time.vb`,
+        `./out/test/files/date-time.cs`,
+        `./out/test/files/date-time.java`,
       );
     });
     test("Julia set", async () => {
       await assertGeneratesHtmlSourceAndExportFiles(
-        `${__dirname}\\files\\julia-set.elan`,
+        `./out/test/files/julia-set.elan`,
         ``,
-        `${__dirname}\\files\\julia-set.py`,
-        `${__dirname}\\files\\julia-set.vb`,
-        `${__dirname}\\files\\julia-set.cs`,
-        `${__dirname}\\files\\julia-set.java`,
+        `./out/test/files/julia-set.py`,
+        `./out/test/files/julia-set.vb`,
+        `./out/test/files/julia-set.cs`,
+        `./out/test/files/julia-set.java`,
       );
     });
   });

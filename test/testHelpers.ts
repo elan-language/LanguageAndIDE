@@ -683,7 +683,7 @@ export async function createTestRunner() {
 }
 
 export async function testElanProgram(pathFromSrc: string) {
-  const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\src\\${pathFromSrc}`);
+  const f = await loadFileAsModelNew(pathFromSrc);
   const runner = await createTestRunner();
   f.refreshParseAndCompileStatuses(false);
   assert.equal(f.readParseStatus(), ParseStatus.valid);

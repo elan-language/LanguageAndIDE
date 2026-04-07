@@ -208,7 +208,7 @@ suite("Editing Frames", () => {
   });
 
   test("#644 cutting statement when there is already a selector following", async () => {
-    const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
+    const file = await loadFileAsModelNew(`./out/test/files/test644.elan`);
     const runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("var3");
@@ -221,7 +221,7 @@ suite("Editing Frames", () => {
     assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
   test("#666 able to move a frame past a selector", async () => {
-    const file = await loadFileAsModelNew(`${__dirname}\\files\\test666.elan`);
+    const file = await loadFileAsModelNew(`./out/test/files/test666.elan`);
     const runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("var3");
