@@ -307,7 +307,7 @@ end constructor`;
   });
 
   test("process test worksheets", async () => {
-    const rootdir = `${__dirname}/../../`;
+    const rootdir = `.\\out\test/../../`;
     const worksheets = `${rootdir}test/raw_worksheets/`;
 
     processWorksheetsInDirectory(worksheets);
