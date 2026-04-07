@@ -860,9 +860,14 @@ export abstract class AbstractFrame implements Frame {
       const map = this.getContextMenuItems();
 
       for (const k of map.keys()) {
-        const val = map.get(k)!;
+        let val = map.get(k)![0];
+        let cls = "context-menu-item";
+        if (val.startsWith("separator ")) {
+          val = val.substring(10);
+          cls += " separator";
+        }
         items.push(
-          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}' title="" tabindex="-1">${val[0]}</div>`,
+          `<div class='${cls}' data-id='${this.htmlId}' data-func='${k}' title="" tabindex="-1">${val}</div>`,
         );
       }
 
