@@ -1,4 +1,4 @@
-# 662c7c5e5cd461d71d9a88ad7427adeedef45db3de76ff915f31a9cd5c86872d Elan 2.0.0-alpha1 guest default_profile valid
+# 662c7c5e5cd461d71d9a88ad7427adeedef45db3de76ff915f31a9cd5c86872d Elan 2.0.0-alpha1 valid
 
 # snipFrom
 function dealCard(random as Float) returns Card

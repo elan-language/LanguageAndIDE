@@ -1,4 +1,4 @@
-# 2b65e3e544aed76647cbe3245e3489b92e66b54ae3e0adc2ae7f4a4cb5b3f2ba Elan 2.0.0-alpha guest default_profile valid
+# 2b65e3e544aed76647cbe3245e3489b92e66b54ae3e0adc2ae7f4a4cb5b3f2ba Elan 2.0.0-alpha valid
 
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]

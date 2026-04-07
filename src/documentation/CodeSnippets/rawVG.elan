@@ -1,4 +1,4 @@
-# 342428288d433e344d97d14eef7dd9a52db9826abef691353a422a034000ec47 Elan 2.0.0-alpha guest default_profile valid
+# 342428288d433e344d97d14eef7dd9a52db9826abef691353a422a034000ec47 Elan 2.0.0-alpha valid
 
 main
   variable movingCircle set to "<circle cx='50' cy='50' r='50' style='fill:red;'>\n<animate attributeName='cx' begin='0s' dur='2s' from='50' to='90%' repeatCount='indefinite' /></circle>"

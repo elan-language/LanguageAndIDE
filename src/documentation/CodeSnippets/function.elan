@@ -1,4 +1,4 @@
-# 0cb9cb3c77fec721bce397254e10b8e615ea0a3b0c96d88a12265905af9f8535 Elan 2.0.0-alpha guest default_profile valid
+# 0cb9cb3c77fec721bce397254e10b8e615ea0a3b0c96d88a12265905af9f8535 Elan 2.0.0-alpha valid
 
 # snipFrom
 function score(g as Game) returns Int

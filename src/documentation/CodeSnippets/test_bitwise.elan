@@ -1,4 +1,4 @@
-# b9a96b6376c2673d9d7326d4ffc446fb17c297f69695fd8d486268321c573752 Elan 2.0.0-alpha guest default_profile valid
+# b9a96b6376c2673d9d7326d4ffc446fb17c297f69695fd8d486268321c573752 Elan 2.0.0-alpha valid
 
 test test_bitwise
   variable a set to 13

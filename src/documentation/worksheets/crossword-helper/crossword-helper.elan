@@ -1,4 +1,4 @@
-# 06dd9dde263f759302094a0306808ebe36609f44b3b60fb9ba2386b9948b7e16 Elan 2.0.0-alpha guest default_profile incomplete
+# 06dd9dde263f759302094a0306808ebe36609f44b3b60fb9ba2386b9948b7e16 Elan 2.0.0-alpha incomplete
 
 main
   variable w set to words.split(" ")

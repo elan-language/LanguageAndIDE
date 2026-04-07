@@ -254,7 +254,7 @@ const pre = elanVersion.preRelease === "" ? "" : `-${elanVersion.preRelease}`;
 
 export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
-export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
+export const testHeader = `# FFFF ${testHeaderVersion} valid`;
 
 export const testPythonHeader = `# Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 export const testJavaHeader = `// Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;

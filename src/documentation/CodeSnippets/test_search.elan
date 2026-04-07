@@ -1,4 +1,4 @@
-# 9a84ea9f634a1f9f67187064003b662e0864103af1987e8fb964a15f9d44f455 Elan 2.0.0-alpha guest default_profile valid
+# 9a84ea9f634a1f9f67187064003b662e0864103af1987e8fb964a15f9d44f455 Elan 2.0.0-alpha valid
 
 main
   variable fruit set to getFruit()

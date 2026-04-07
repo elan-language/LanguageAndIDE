@@ -1,4 +1,4 @@
-# c2817ece7e2e822c8e26a6cd901378143b5a8c93686dd84fab950be30388d422 Elan 2.0.0-alpha guest default_profile valid
+# c2817ece7e2e822c8e26a6cd901378143b5a8c93686dd84fab950be30388d422 Elan 2.0.0-alpha valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to new List<of String>()
