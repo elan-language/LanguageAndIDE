@@ -3,80 +3,80 @@ import { testElanProgram } from "./testHelpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\best-fit.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\best-fit.elan`);
   });
   test("test binary-search", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\binary-search.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\binary-search.elan`);
   });
   test("test bubbles", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\bubbles.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\bubbles.elan`);
   });
   test("test burrow", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\burrow.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\burrow.elan`);
   });
   test("test collatz", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\collatz.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\collatz.elan`);
   });
   test("test fern", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\fern.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\fern.elan`);
   });
   /*   test("test fern-params", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\fern-params.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\fern-params.elan`);
   }); Not high enough value to warrant the long time that this test takes*/
   test("test in-place-ripple-sort", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\in-place-ripple-sort.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\in-place-ripple-sort.elan`);
   });
   test("test julia-set", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\julia-set.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\julia-set.elan`);
   });
   test("test kaleidoscope", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\kaleidoscope.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\kaleidoscope.elan`);
   });
   test("test life", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\life.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\life.elan`);
   });
   test("test maze-generator", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\maze-generator.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\maze-generator.elan`);
   });
   test("test password-generator", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\password-generator.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\password-generator.elan`);
   });
   test("test pathfinder", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\pathfinder.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\pathfinder.elan`);
   });
   test("test roman-numerals-turing-machine.elan", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\roman-numerals-turing-machine.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\roman-numerals-turing-machine.elan`);
   });
   test("test snake_FP", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\snake_FP.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\snake_FP.elan`);
   });
   test("test snake_OOP", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\snake_OOP.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\snake_OOP.elan`);
   });
   test("test snake_PP", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\snake_PP.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\snake_PP.elan`);
   });
   test("test turtle-snowflake", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\turtle-snowflake.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\turtle-snowflake.elan`);
   });
   test("test turtle-spiral", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\turtle-spiral.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\turtle-spiral.elan`);
   });
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\wordle-solver.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\wordle-solver.elan`);
   });
   ignore_test("test wordle-demo", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\wordle-demo.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\wordle-demo.elan`);
   });
   test("test hodgepodge", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\hodgepodge.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\hodgepodge.elan`);
   });
   test("test turtle_dragon", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\turtle_dragon.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\turtle_dragon.elan`);
   });
   test("test date-time", async () => {
-    await testElanProgram(`${__dirname}\\demo_programs\\date-time.elan`);
+    await testElanProgram(`.\\out\\test\\demo_programs\\date-time.elan`);
   });
   //Worksheet loaded code
   // test("test blackjack 1", async () => {

@@ -1,5 +1,6 @@
 import assert from "assert";
 import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-worksheets";
+import { LanguageElan } from "../src/ide/frames/language-elan";
 import { processInnerCode } from "../src/tools/codeParser";
 import {
   processCode,
@@ -11,8 +12,6 @@ import {
   processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
-import { LanguageElan } from "../src/ide/frames/language-elan";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -308,7 +307,7 @@ end constructor`;
   });
 
   test("process test worksheets", async () => {
-    const rootdir = `${__dirname}/../../`;
+    const rootdir = `.\\out\test/../../`;
     const worksheets = `${rootdir}test/raw_worksheets/`;
 
     processWorksheetsInDirectory(worksheets);
