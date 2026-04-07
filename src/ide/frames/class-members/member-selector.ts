@@ -47,12 +47,36 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
       [procedureKeyword, "procedure", (_parent: Parent) => this.class.createProcedure()],
       [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
-      [abstractPropertyKeywords, "abstract Property", (_parent: Parent) => this.class.createAbstractProperty()],
-      [abstractProcedureKeywords, "abstract Procedure", (_parent: Parent) => this.class.createAbstractProcedure()],
-      [abstractFunctionKeywords, "abstract Function", (_parent: Parent) => this.class.createAbstractFunction()],
-      [privatePropertyKeywords, "private Property", (_parent: Parent) => this.class.createProperty(true)],
-      [privateProcedureKeywords, "private Procedure", (_parent: Parent) => this.class.createProcedure(true)],
-      [privateFunctionKeywords, "private Function", (_parent: Parent) => this.class.createFunction(true)],
+      [
+        abstractPropertyKeywords,
+        "abstract Property",
+        (_parent: Parent) => this.class.createAbstractProperty(),
+      ],
+      [
+        abstractProcedureKeywords,
+        "abstract Procedure",
+        (_parent: Parent) => this.class.createAbstractProcedure(),
+      ],
+      [
+        abstractFunctionKeywords,
+        "abstract Function",
+        (_parent: Parent) => this.class.createAbstractFunction(),
+      ],
+      [
+        privatePropertyKeywords,
+        "private Property",
+        (_parent: Parent) => this.class.createProperty(true),
+      ],
+      [
+        privateProcedureKeywords,
+        "private Procedure",
+        (_parent: Parent) => this.class.createProcedure(true),
+      ],
+      [
+        privateFunctionKeywords,
+        "private Function",
+        (_parent: Parent) => this.class.createFunction(true),
+      ],
       [comment, `<b>${comment}</b> comment`, (_parent: Parent) => this.class.createComment()],
     ];
   }

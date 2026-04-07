@@ -36,7 +36,11 @@ export class StatementSelector extends AbstractSelector {
     return [
       ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
+      [
+        variableKeyword,
+        "<b>v</b>ariable definition",
+        (parent: Parent) => this.factory.newVar(parent),
+      ],
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
       [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
