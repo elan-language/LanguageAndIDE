@@ -11,7 +11,6 @@ import {
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
   mustNotSetIndexInFunctionMethod,
-  mustNotSetRangedIndex,
 } from "../../compile-rules";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
@@ -56,9 +55,6 @@ export class SetAsn extends BreakpointAsn {
         const code = this.assignable.compile();
         getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
         return `${this.indent()}${this.breakPoint(this.debugSymbols())}${code};`;
-      }
-      if (this.assignable.isRangeSubscript()) {
-        mustNotSetRangedIndex(this.compileErrors, this.fieldId);
       }
     }
 
