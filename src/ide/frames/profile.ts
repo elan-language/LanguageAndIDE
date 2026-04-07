@@ -80,14 +80,21 @@ export class Profile {
   private globals3_0 = this.globals2_2;
 
   private statements1_0 = ["print", constantKeyword, variableKeyword, setKeyword];
-  private statements1_1 = this.statements1_0.concat([ifKeyword, elifKeyword, elseKeyword, whileKeyword, forKeyword, callKeyword]);
+  private statements1_1 = this.statements1_0.concat([
+    ifKeyword,
+    elifKeyword,
+    elseKeyword,
+    whileKeyword,
+    forKeyword,
+    callKeyword,
+  ]);
   private statements1_2 = [assertKeyword].concat(this.statements1_1); // to put assert at front, (shown only when within a test)
   private statements1_3 = this.statements1_2;
   private statements1_4 = this.statements1_3.concat([tryKeyword, catchKeyword, throwKeyword]);
   private statements2_0 = this.statements1_4;
   private statements2_1 = this.statements2_0;
   private statements2_2 = this.statements2_1;
-  private statements3_0 = this.statements2_0;  // TODO add 'with' frame when implemented
+  private statements3_0 = this.statements2_0; // TODO add 'with' frame when implemented
 
   private class_members2_0: string[] = [
     constructorKeyword, // Can be removed when it is added to template
@@ -95,15 +102,16 @@ export class Profile {
     procedureKeyword,
     propertyKeyword,
   ];
-  private class_members2_1: string[] = this.class_members2_0.concat(
-    [abstractFunctionKeywords,
+  private class_members2_1: string[] = this.class_members2_0.concat([
+    abstractFunctionKeywords,
     abstractProcedureKeywords,
-    abstractPropertyKeywords,]);
+    abstractPropertyKeywords,
+  ]);
 
   private class_members2_2 = this.class_members2_1;
 
   private class_members3_0 = this.class_members2_2;
-  
+
   name: string = "default_profile";
   require_log_on: boolean = false;
   can_load_only_own_files: boolean = false;
