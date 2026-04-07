@@ -1331,32 +1331,6 @@ end main
     ]);
   });
 
-  test("Fail_Range", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to [1:1, 2:2]
-  set a to a[1..]
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot range Dictionary<of Int, Int>.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
     const code = `${testHeader}
 

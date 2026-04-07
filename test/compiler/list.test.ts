@@ -1949,104 +1949,6 @@ end main`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
   });
 
-  test("Fail_negativeRange1Compile", async () => {
-    const code = `${testHeader}
-
-main
-    variable a set to [1,2,3,4]
-    variable b set to a[-1..2]
-    call printNoLine(b)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative.LangRef.html#compile_error"]);
-  });
-
-  test("Fail_negativeRange1Runtime", async () => {
-    const code = `${testHeader}
-
-main
-    variable a set to [1,2,3,4]
-    variable b set to -1
-    variable c set to a[b..2]
-    call printNoLine(c)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
-  });
-
-  test("Fail_negativeRange2Compile", async () => {
-    const code = `${testHeader}
-
-main
-    variable a set to [1,2,3,4]
-    variable b set to a[0..-1]
-    call printNoLine(b)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative.LangRef.html#compile_error"]);
-  });
-
-  test("Fail_negativeRange2Runtime", async () => {
-    const code = `${testHeader}
-
-main
-    variable a set to [1,2,3,4]
-    variable b set to -1
-    variable c set to a[0..b]
-    call printNoLine(c)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: -1 size: 4");
-  });
-
   test("Fail_listOfLibFunction", async () => {
     const code = `${testHeader}
 
@@ -2237,33 +2139,6 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
-  });
-
-  test("Fail_RangeNotInt", async () => {
-    const code = `${testHeader}
-
-main
-    variable a set to [1,2,3,4]
-    variable b set to a["2"..5]
-    variable c set to a[2..5.0]
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
-    ]);
   });
 
   test("Fail_NegativeIndex", async () => {

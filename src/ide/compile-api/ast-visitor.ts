@@ -59,7 +59,6 @@ import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { QualifierAsn } from "../../compiler/syntax-nodes/qualifier-asn";
-import { RangeAsn } from "../../compiler/syntax-nodes/range-asn";
 import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
 import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
@@ -126,7 +125,6 @@ import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
-import { IndexRange } from "../frames/parse-nodes/index-range";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
 import { InstanceNode } from "../frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
@@ -908,14 +906,6 @@ export function transform(
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
     return new TypeAsn(TupleName, EmptyAsn.Instance, gp, fieldId, scope);
-  }
-
-  if (node instanceof IndexRange) {
-    const fromNode = node.fromIndex?.matchedNode;
-    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
-    const toNode = node.toIndex?.matchedNode;
-    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
-    return new RangeAsn(from, to, fieldId, scope);
   }
 
   if (node instanceof IndexDouble) {

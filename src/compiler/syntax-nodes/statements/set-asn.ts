@@ -57,9 +57,6 @@ export class SetAsn extends BreakpointAsn {
         getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
         return `${this.indent()}${this.breakPoint(this.debugSymbols())}${code};`;
       }
-      if (this.assignable.isRangeSubscript()) {
-        mustNotSetRangedIndex(this.compileErrors, this.fieldId);
-      }
     }
 
     const lhs = assignableAstNode.compile();
