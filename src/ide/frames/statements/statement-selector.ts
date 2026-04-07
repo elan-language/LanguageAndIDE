@@ -34,7 +34,7 @@ export class StatementSelector extends AbstractSelector {
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     const comment = this.getCommentMarker();
     return [
-      ["p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
+      ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
       [variableKeyword, "<b>v</b>ariable definition", (parent: Parent) => this.factory.newVar(parent)],
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
@@ -53,7 +53,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.statements.includes(keyword);
+    return this.profile.statements.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
