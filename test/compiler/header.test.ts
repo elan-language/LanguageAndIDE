@@ -4,13 +4,13 @@ import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import {
-    assertDoesNotParseWithMessage,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    transforms,
+  assertDoesNotParseWithMessage,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  transforms,
 } from "./compiler-test-helpers";
 
 // Tests ignored pending moving up to full release 2.0

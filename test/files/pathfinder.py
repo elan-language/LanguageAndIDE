@@ -205,7 +205,7 @@ class Point
       self.x = x # change variable
       self.y = y # change variable
   def minDistTo(self: Point, p: Point) -> float: # function
-    return sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
+    return sqrt((p.x - self.x)**2 + (p.y - self.y)**2)
   def isAdjacentTo(self: Point, p: Point) -> bool: # function
     return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == sqrt(2).round(4))
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds

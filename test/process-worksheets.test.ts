@@ -3,13 +3,13 @@ import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-wo
 import { LanguageElan } from "../src/ide/frames/language-elan";
 import { processInnerCode } from "../src/tools/codeParser";
 import {
-    processCode,
-    processFinals,
-    processHelps,
-    processHints,
-    processLoads,
-    processQuestions,
-    processSteps,
+  processCode,
+  processFinals,
+  processHelps,
+  processHints,
+  processLoads,
+  processQuestions,
+  processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
 import { ignore_test } from "./compiler/compiler-test-helpers";

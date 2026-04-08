@@ -250,7 +250,6 @@ export class LanguageVB extends LanguageAbstract {
   private SINGLE_QUOTE = "'";
   private POWER = "^";
 
-
   EQUAL: string = "=";
   NOT_EQUAL: string = "<>";
   MOD = "Mod";

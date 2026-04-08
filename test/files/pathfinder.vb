@@ -251,7 +251,7 @@ Class Point
     End If
   End Sub
   Function minDistTo(p As Point) As Double
-    Return sqrt(pow((p.x - Me.x), 2) + pow((p.y - Me.y), 2))
+    Return sqrt((p.x - Me.x)^2 + (p.y - Me.y)^2)
   End Function
   Function isAdjacentTo(p As Point) As Boolean
     Return (Me.minDistTo(p) = 1) Or (Me.minDistTo(p).round(4) = sqrt(2).round(4))

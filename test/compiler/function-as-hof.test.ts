@@ -458,14 +458,14 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref pow)
+  call printModified(3, ref foo)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure
   
-function pow(x as Int) returns String
+function foo(x as Int) returns String
   return "one"
 end function`;
 

@@ -22,9 +22,7 @@ export class RaiseToPower extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return this.isValid()
-      ? this.file.language().raiseToPowerAsHtml(this)
-      : this.matchedText;
+    return this.isValid() ? this.file.language().raiseToPowerAsHtml(this) : this.matchedText;
   }
 
   renderAsElanSource(): string {

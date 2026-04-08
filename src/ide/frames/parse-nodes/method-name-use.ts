@@ -29,7 +29,7 @@ export class MethodNameUse extends AbstractParseNode {
       );
     }
     if (this.isValid()) {
-      if ( this.matchedText === "pow") {
+      if (this.matchedText === "pow") {
         this.status = ParseStatus.invalid;
         this.matchedText = "";
         this.remainingText = text;

@@ -2623,6 +2623,78 @@ suite("Parsing Nodes", () => {
       `this`,
     );
   });
+  test("RaiseToPower as expression - Elan", () => {
+    testNodeParse(
+      new ExprNode(f),
+      `pow(a, b) + pow(c, d)`,
+      ParseStatus.valid,
+      `pow(a, b) + pow(c, d)`,
+      "",
+      `pow(a, b) + pow(c, d)`,
+      "<el-method>pow</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) + <el-method>pow</el-method>(<el-id>c</el-id>, <el-id>d</el-id>)",
+      `pow(a, b) + pow(c, d)`,
+    );
+  });
+  test("RaiseToPower as expression - Elan2", () => {
+    testNodeParse(
+      new ExprNode(f),
+      `lambda s as Float, p as Point => s + pow(x, 2)`,
+      ParseStatus.valid,
+      `lambda s as Float, p as Point => s + pow(x, 2)`,
+      "",
+      ``,
+      "",
+      ``,
+    );
+  });
+  test("RaiseToPower as expression - Python", () => {
+    testNodeParse(
+      new ExprNode(fileWithPython()),
+      `a**b + c**d`,
+      ParseStatus.valid,
+      `a**b + c**d`,
+      "",
+      `pow(a, b) + pow(c, d)`,
+      "<el-id>a</el-id>**<el-id>b</el-id> + <el-id>c</el-id>**<el-id>d</el-id>",
+      `a**b + c**d`,
+    );
+  });
+  test("RaiseToPower as expression - VB", () => {
+    testNodeParse(
+      new ExprNode(fileWithVB()),
+      `a^b + c^d`,
+      ParseStatus.valid,
+      `a^b + c^d`,
+      "",
+      `pow(a, b) + pow(c, d)`,
+      "<el-id>a</el-id>^<el-id>b</el-id> + <el-id>c</el-id>^<el-id>d</el-id>",
+      `a^b + c^d`,
+    );
+  });
+  test("RaiseToPower as expression - C#", () => {
+    testNodeParse(
+      new ExprNode(fileWithCS()),
+      `pow(a, b) + pow(c, d)`,
+      ParseStatus.valid,
+      `pow(a, b) + pow(c, d)`,
+      "",
+      `pow(a, b) + pow(c, d)`,
+      "<el-method>pow</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) + <el-method>pow</el-method>(<el-id>c</el-id>, <el-id>d</el-id>)",
+      `pow(a, b) + pow(c, d)`,
+    );
+  });
+  test("RaiseToPower as expression - Java", () => {
+    testNodeParse(
+      new ExprNode(fileWithJava()),
+      `pow(a, b) + pow(c, d)`,
+      ParseStatus.valid,
+      `pow(a, b) + pow(c, d)`,
+      "",
+      `pow(a, b) + pow(c, d)`,
+      "<el-method>pow</el-method>(<el-id>a</el-id>, <el-id>b</el-id>) + <el-method>pow</el-method>(<el-id>c</el-id>, <el-id>d</el-id>)",
+      `pow(a, b) + pow(c, d)`,
+    );
+  });
 });
 
 class test_seq1 extends AbstractSequence {

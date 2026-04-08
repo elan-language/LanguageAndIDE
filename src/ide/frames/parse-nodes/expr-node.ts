@@ -12,7 +12,6 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
-import { RaiseToPower } from "./raise-to-power";
 import { Term } from "./term";
 import { TupleNode } from "./tuple-node";
 
@@ -30,7 +29,6 @@ export class ExprNode extends AbstractAlternatives {
       this.alternatives.push(new TupleNode(this.file));
       //then others
       this.alternatives.push(new Term(this.file));
-      this.alternatives.push(new RaiseToPower(this.file));
       this.alternatives.push(new BinaryExpression(this.file));
       super.parseText(text);
     }

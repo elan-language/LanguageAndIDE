@@ -95,7 +95,7 @@ export abstract class LanguageAbstract implements Language {
     node.addElement(new PunctuationNode(node.file, "pow("));
     node.addElement(node.base);
     node.addElement(new CommaNode(node.file));
-    node.addElement(new SpaceNode(node.file, Space.added));
+    node.addElement(new SpaceNode(node.file, Space.ignored));
     node.addElement(node.exponent);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
   }
@@ -103,7 +103,6 @@ export abstract class LanguageAbstract implements Language {
   default_raiseToPowerAsHtml(node: RaiseToPower): string {
     return `<el-method>pow</el-method>(${node.base?.renderAsHtml()}, ${node.exponent?.renderAsHtml()})`;
   }
-
 
   default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
     return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;
