@@ -3,6 +3,7 @@ import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { Regexes } from "../src/ide/frames/fields/regexes";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { AbstractSequence } from "../src/ide/frames/parse-nodes/abstract-sequence";
+import { ArgListNode } from "../src/ide/frames/parse-nodes/arg-list-node";
 import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/ide/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../src/ide/frames/parse-nodes/bracketed-expression";
@@ -2641,6 +2642,18 @@ suite("Parsing Nodes", () => {
       `lambda s as Float, p as Point => s + pow(x, 2)`,
       ParseStatus.valid,
       `lambda s as Float, p as Point => s + pow(x, 2)`,
+      "",
+      ``,
+      "",
+      ``,
+    );
+  });
+  test("RaiseToPower as ArgListNode - Elan2", () => {
+    testNodeParse(
+      new ArgListNode(f, () => ""),
+      `pow(`,
+      ParseStatus.incomplete,
+      `pow(`,
       "",
       ``,
       "",

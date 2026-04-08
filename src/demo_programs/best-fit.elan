@@ -2,7 +2,7 @@
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + pow(p.x, 2))
+  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + pow((p.x), 2))
   constant sumY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
   constant sumXY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
   constant n set to points.length()
