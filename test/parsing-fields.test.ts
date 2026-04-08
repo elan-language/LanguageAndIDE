@@ -399,4 +399,27 @@ suite("Field Parsing Tests", () => {
       assert.equal(actual.readParseStatus(), ParseStatus.invalid);
     });
   });
+  test("parse ArgList field on call statement #2824", () => {
+    const main = new MainFrame(
+      new FileImpl(
+        hash,
+        new Profile(""),
+        "",
+        transforms(),
+        new StdLib(new StubInputOutput()),
+        false,
+      ),
+    );
+    const call = new CallStatement(main);
+    const args = call.args;
+    assert.equal(args.textAsSource(), "");
+    assert.equal(args.readParseStatus(), ParseStatus.valid);
+    args.setFieldToKnownValidText("pow(");
+    args.parseCurrentText();
+    assert.equal(args.readParseStatus(), ParseStatus.incomplete);
+    assert.equal(
+      args.renderAsHtml(),
+      `<el-field id="args5" class="optional warning" tabindex="-1"><el-txt>pow(</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+  });
 });
