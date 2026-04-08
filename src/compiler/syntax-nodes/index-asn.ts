@@ -4,10 +4,7 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import {
-  getId,
-  mustNotBeNegativeIndex,
-} from "../compile-rules";
+import { getId, mustNotBeNegativeIndex } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
 import { CsvAsn } from "./csv-asn";
@@ -72,8 +69,12 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     const indexed = this.precedingNode!.compile();
     const indexedType = this.precedingNode!.symbolType();
 
-    const code = this.compileSimpleSubscript(getId(this.precedingNode), indexedType, indexed, subscript)
-
+    const code = this.compileSimpleSubscript(
+      getId(this.precedingNode),
+      indexedType,
+      indexed,
+      subscript,
+    );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
