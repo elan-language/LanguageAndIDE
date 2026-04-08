@@ -90,8 +90,15 @@ export class LanguageJava extends LanguageCfamily {
     return this.common_renderBottomAsHtml(frame);
   }
 
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
   renderFileTrailerAsHtml(): string {
     return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
   }
 
   public FINAL = "final";

@@ -37,6 +37,7 @@ export interface File extends Parent {
 
   fileName: string;
   readonly defaultFileName: string;
+  doingExport: boolean;
 
   addChildBefore(g: Frame, before: Frame): void;
   addChildAfter(g: Frame, after: Frame): void;

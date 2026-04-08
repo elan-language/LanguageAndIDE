@@ -61,7 +61,11 @@ export class ExpressionField extends AbstractField {
       this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
     );
     this.completionOverride = descriptions ? `<i>${descriptions}</i>)` : "";
-    return super.textAsHtml();
+    let result = super.textAsHtml();
+    if (this.getFile().doingExport) {
+      result = this.getFile().language().translateExpression(result);
+    }
+    return result;
   }
 
   override getCompletion() {

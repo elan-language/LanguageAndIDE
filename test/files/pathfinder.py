@@ -1,5 +1,7 @@
 # Python with Elan 2.0.0-alpha1
 
+import math
+
 def main() -> None:
   start = Point(5, 5) # variable definition
   destination = Point(34, 24) # variable definition
@@ -205,9 +207,9 @@ class Point
       self.x = x # change variable
       self.y = y # change variable
   def minDistTo(self: Point, p: Point) -> float: # function
-    return sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
+    return math.sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
   def isAdjacentTo(self: Point, p: Point) -> bool: # function
-    return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == sqrt(2).round(4))
+    return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == math.sqrt(2).round(4))
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]

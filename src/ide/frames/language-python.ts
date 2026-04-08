@@ -56,6 +56,7 @@ import { While } from "./statements/while";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
+import { languageHelper_mathFunctions } from "./language-helpers";
 
 export class LanguagePython extends LanguageAbstract {
   static Instance: Language = new LanguagePython();
@@ -166,6 +167,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
+      this.importMath = false; // reset at start of file
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
@@ -199,9 +201,39 @@ export class LanguagePython extends LanguageAbstract {
     return ""; // Python blocks have no textual ending;
   }
 
+  renderFileImportsAsHtml(): string {
+    // no HTML needed here as it is actually only used for export
+    return this.importMath ? "import math\n\n" : "";
+  }
+
   renderFileTrailerAsHtml(): string {
     return "\n\n<el-method>main</el-method>()";
   }
+
+  translateExpression(expr: string): string {
+    const regexp = new RegExp(
+      `<el-method>(${languageHelper_mathFunctions.join("|")})</el-method>`,
+      "g",
+    );
+    const result = expr.replace(regexp, this.lookupmath);
+    return result;
+  }
+
+  private importMath = false;
+  private mathExceptions: { [propName: string]: string } = {
+    pow: "pow",
+    abs: "abs",
+    logE: "math.log",
+  };
+  // 'this' is undefined inside a traditional function definition
+  // so we use an arrow function so it has access to 'this'
+  private lookupmath = (_match: string, p1: string, _offset: number, _string: string) => {
+    const result = this.mathExceptions[p1] ?? `math.${p1}`;
+    if (result.startsWith("math.")) {
+      this.importMath = true;
+    }
+    return result;
+  };
 
   private DEF = "def";
   private CLASS = "class";

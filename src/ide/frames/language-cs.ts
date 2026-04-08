@@ -85,8 +85,15 @@ export class LanguageCS extends LanguageCfamily {
     return this.common_renderBottomAsHtml(frame);
   }
 
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
   renderFileTrailerAsHtml(): string {
     return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
   }
 
   addNodesForParamDef(node: ParamDefNode): void {
