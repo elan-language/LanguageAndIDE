@@ -1,18 +1,18 @@
 import { Class } from "./compiler-interfaces/class";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
-  Deprecated,
-  Deprecation,
-  DeprecationSeverity,
-  ElanDescriptor,
-  elanMetadataKey,
-  ElanMethodDescriptor,
-  IElanFunctionDescriptor,
-  IElanProcedureDescriptor,
-  isConstantDescriptor,
-  isFunctionDescriptor,
-  isProcedureDescriptor,
-  TypeDescriptor,
+    Deprecated,
+    Deprecation,
+    DeprecationSeverity,
+    ElanDescriptor,
+    elanMetadataKey,
+    ElanMethodDescriptor,
+    IElanFunctionDescriptor,
+    IElanProcedureDescriptor,
+    isConstantDescriptor,
+    isFunctionDescriptor,
+    isProcedureDescriptor,
+    TypeDescriptor,
 } from "./compiler-interfaces/elan-type-interfaces";
 import { GlobalConstant } from "./compiler-interfaces/global-constant";
 import { Property } from "./compiler-interfaces/property";
@@ -21,19 +21,19 @@ import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { constructorKeyword } from "./elan-keywords";
-import { AnyType } from "./symbols/any-type";
+import { AnyExceptEnumType } from "./symbols/any-except-enum-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import {
-  AnyName,
-  BooleanName,
-  ClassName,
-  FloatName,
-  FuncName,
-  IntName,
-  RegExpName,
-  StringName,
-  TupleName,
+    AnyExceptEnumName,
+    BooleanName,
+    ClassName,
+    FloatName,
+    FuncName,
+    IntName,
+    RegExpName,
+    StringName,
+    TupleName,
 } from "./symbols/elan-type-names";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
@@ -189,8 +189,8 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case RegExpName:
         return RegExpType.Instance;
-      case AnyName:
-        return AnyType.Instance;
+      case AnyExceptEnumName:
+        return AnyExceptEnumType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -591,7 +591,7 @@ export function elanDeprecated(
   };
 }
 
-export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyName);
+export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyExceptEnumName);
 export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);
 export const ElanString: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(StringName);
