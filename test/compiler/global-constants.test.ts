@@ -311,7 +311,7 @@ return [main, _tests];}`;
 
 constant a set to Fruit.apple
 main
-  call printNoLine(a)
+  call printNoLine(enumValue(a))
 end main
 enum Fruit apple, orange, pear
 `;
@@ -326,7 +326,7 @@ const global = new class {
 
 };
 async function main() {
-  await _stdlib.printNoLine(global.a);
+  await _stdlib.printNoLine((await _stdlib.enumValue(global.a)));
 }
 return [main, _tests];}`;
 

@@ -954,7 +954,7 @@ export function transform(
   if (node instanceof LitStringInterpolatedInsert) {
     const value = transform(node.expr, fieldId, scope)!;
 
-    return new InterpolatedAsn(value, fieldId);
+    return new InterpolatedAsn(value, fieldId, scope);
   }
 
   if (node instanceof CommentNode) {

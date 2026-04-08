@@ -160,7 +160,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 72);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 73);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1642,7 +1642,10 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["alpha", "*", "*"]] as [string, string, string][];
+    const expected = [
+      ["alpha", "*", "*"],
+      ["enumValue", "*", "*"],
+    ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);
   });
