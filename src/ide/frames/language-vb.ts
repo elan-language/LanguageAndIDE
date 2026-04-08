@@ -205,8 +205,15 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
   renderFileTrailerAsHtml(): string {
     return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
   }
 
   private AS = "As";

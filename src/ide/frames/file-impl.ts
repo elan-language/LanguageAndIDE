@@ -95,6 +95,7 @@ export class FileImpl implements File {
   parseError?: string;
   readonly defaultFileName = "code.elan";
   fileName: string = this.defaultFileName;
+  doingExport: boolean = false;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
   private _testStatus: TestStatus = TestStatus.default;
@@ -249,10 +250,15 @@ export class FileImpl implements File {
   }
 
   async renderAsExport(): Promise<string> {
+    const oldde = this.doingExport;
+    this.doingExport = true;
     const globals = parentHelper_renderChildrenAsExport(this);
+    this.doingExport = oldde;
+    // No need to remove HTML as this has none as it is for export only
+    const imports = this.language().renderFileImportsAsHtml();
     const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml());
     const lang = this.language().languageFullName;
-    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${globals}${trailer}
+    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${globals}${trailer}
 `;
   }
 

@@ -22,7 +22,10 @@ export interface Language {
 
   renderBottomAsHtml(frame: Frame): string;
 
+  renderFileImportsAsHtml(): string;
   renderFileTrailerAsHtml(): string;
+
+  translateExpression(expr: string): string;
 
   getFields(node: Frame): Field[];
 
