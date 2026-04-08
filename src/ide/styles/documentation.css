@@ -40,6 +40,9 @@ table
  tr.subhead td, tr.subhead td * { background-color: var(--docHeading); color: white; font-weight: bold; text-align:left; }
 
 /* special tables */
+
+.tablePlain tr td { background-color: white }
+
 .tableAccordion {
  tr:nth-child(even) td { background-color: var(--docAccord0); }
  tr:nth-child(odd)  td { background-color: var(--docAccord1); }
