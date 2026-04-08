@@ -12,6 +12,7 @@ import {
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
+  elanAnyEnumType,
   elanAnyType,
   elanClassExport,
   elanClassType,
@@ -413,6 +414,12 @@ export class StdLib {
       }
     }
     return this.system.tuple([false, 0]) as [boolean, number];
+  }
+
+  @elanFunction(["any enum"], FunctionOptions.pureAsync, ElanString)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async enumValue(@elanAnyEnumType() s: any) {
+    return await this.system.toString(s);
   }
 
   @elanProcedure(["any"], ProcedureOptions.async)

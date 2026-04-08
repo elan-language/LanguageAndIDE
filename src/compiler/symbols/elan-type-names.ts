@@ -11,3 +11,4 @@ export const TupleName = "Tuple";
 export const ClassName = "Class";
 export const ImageName = "ImageVG";
 export const AnyExceptEnumName = "AnyExceptEnum";
+export const AnyEnumName = "AnyEnum";
