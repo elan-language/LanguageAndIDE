@@ -41,7 +41,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   }
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
-    const comment = this.getCommentMarker();
     return [
       [constructorKeyword, "constructor", (_parent: Parent) => this.class.createConstructor()],
       [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
@@ -77,7 +76,11 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         "private Function",
         (_parent: Parent) => this.class.createFunction(true),
       ],
-      [comment, `<b>${comment}</b> comment`, (_parent: Parent) => this.class.createComment()],
+      [
+        this.getCommentMarker(),
+        `<b>${this.getCommentMarker()}</b> comment`,
+        (_parent: Parent) => this.class.createComment(),
+      ],
     ];
   }
 
@@ -94,7 +97,9 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       result = keyword === commentMarker;
     } else if (this.class.isRecord) {
       result =
-        keyword === propertyKeyword || keyword === functionKeyword || keyword === commentMarker;
+        keyword === propertyKeyword ||
+        keyword === functionKeyword ||
+        keyword === this.getCommentMarker();
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else {

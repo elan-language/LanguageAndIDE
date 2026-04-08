@@ -200,7 +200,7 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   renderFileTrailerAsHtml(): string {
-    return "\n\n<el-header>main()</el-header>";
+    return "\n\n<el-method>main</el-method>()";
   }
 
   private DEF = "def";

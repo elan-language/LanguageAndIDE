@@ -1,4 +1,4 @@
-# 0842e7e43d411f08a693b246a855e9a5adaeafaa02e27868d133267f578c25c6 Elan 2.0.0-alpha guest default_profile valid
+# 0842e7e43d411f08a693b246a855e9a5adaeafaa02e27868d133267f578c25c6 Elan 2.0.0-alpha valid
 
 test test_matchesRegExp
   variable s1 set to "hello"

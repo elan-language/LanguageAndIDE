@@ -1,4 +1,4 @@
-# 8dbe4f4939c37c7bdd876251f19c362ffd2cbf11d5f954de051dd2e3cacc3344 Elan 2.0.0-alpha guest default_profile valid
+# 8dbe4f4939c37c7bdd876251f19c362ffd2cbf11d5f954de051dd2e3cacc3344 Elan 2.0.0-alpha valid
 
 test test_floor
   variable p set to pi

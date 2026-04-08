@@ -1,4 +1,4 @@
-# 41b0cf400247c7aab3c361dd9f769c32e393bfc20a5dca80b7cef9b7e937cb8c Elan 2.0.0-alpha1 guest default_profile valid
+# 41b0cf400247c7aab3c361dd9f769c32e393bfc20a5dca80b7cef9b7e937cb8c Elan 2.0.0-alpha1 valid
 
 main
   variable reply set to ""

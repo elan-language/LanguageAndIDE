@@ -1,4 +1,4 @@
-# 221687b464f15c5374c35fb0b3a275461b0701fe8c48983bf17f03e5d5ad90e3 Elan 2.0.0-alpha guest default_profile valid
+# 221687b464f15c5374c35fb0b3a275461b0701fe8c48983bf17f03e5d5ad90e3 Elan 2.0.0-alpha valid
 
 main
   constant maxNumber set to 10

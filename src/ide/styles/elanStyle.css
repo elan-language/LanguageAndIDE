@@ -548,4 +548,8 @@ el-statement.paused-at > el-fr
   .imported:has(+ .imported) {
     display: block;
     padding-bottom: 0;
-}
+  }
+
+  .context-menu-item.separator {
+    border-top: solid 1px black;
+  }

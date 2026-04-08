@@ -31,7 +31,6 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
-    const comment = this.getCommentMarker();
     return [
       [mainKeyword, "<b>m</b>ain", (_parent: Parent) => this.file.createMain()],
       [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
@@ -46,7 +45,11 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
         (_parent: Parent) => this.file.createAbstractClass(),
       ],
       [interfaceKeyword, "<b>i</b>nterface", (_parent: Parent) => this.file.createInterface()],
-      [comment, `<b>${comment}</b> comment`, (_parent: Parent) => this.file.createGlobalComment()],
+      [
+        this.getCommentMarker(),
+        `<b>${this.getCommentMarker()}</b> comment`,
+        (_parent: Parent) => this.file.createGlobalComment(),
+      ],
     ];
   }
 

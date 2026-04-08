@@ -1,4 +1,4 @@
-# 1e5c7e9c10ab7a83c8642d657d0e3bbae679d8311f4866e884cf202cff4ccd17 Elan 2.0.0-alpha guest default_profile valid
+# 1e5c7e9c10ab7a83c8642d657d0e3bbae679d8311f4866e884cf202cff4ccd17 Elan 2.0.0-alpha valid
 
 test test_list
   variable a set to [5, 1, 7]

@@ -1,4 +1,4 @@
-# e83bd6c8c48973073a8a1d80121391c1f79884951650c109cc43721d55dc946b Elan 2.0.0-alpha guest default_profile valid
+# e83bd6c8c48973073a8a1d80121391c1f79884951650c109cc43721d55dc946b Elan 2.0.0-alpha valid
 
 main
   variable probability set to random()

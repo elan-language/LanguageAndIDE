@@ -1,4 +1,4 @@
-# b0b423185ce545c3652ca3dee0eba50227d9cc9a7f59864b0e845c0e1c9b4550 Elan 2.0.0-alpha guest default_profile valid
+# b0b423185ce545c3652ca3dee0eba50227d9cc9a7f59864b0e845c0e1c9b4550 Elan 2.0.0-alpha valid
 
 function binarySearch(li as List<of String>, item as String) returns Boolean
   variable result set to false

@@ -1,4 +1,4 @@
-# 9554bf1adc96a713b3028344ea21a0ff4c477c90697f4d57bb24f8c61b8cb515 Elan 2.0.0-alpha guest default_profile valid
+# 9554bf1adc96a713b3028344ea21a0ff4c477c90697f4d57bb24f8c61b8cb515 Elan 2.0.0-alpha valid
 
 # This code is the start-point for Worksheet 'Merge lists' where the task is to implement the 'merge' function properly, and hence get all tests passing.
 function merge(a as List<of String>, b as List<of String>) returns List<of String>

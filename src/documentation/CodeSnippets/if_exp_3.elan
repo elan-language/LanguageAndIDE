@@ -1,4 +1,4 @@
-# 25c029066acb242ec9e9de67654eeef396aa0af565532e96f23d5bc316917b54 Elan 2.0.0-alpha guest default_profile valid
+# 25c029066acb242ec9e9de67654eeef396aa0af565532e96f23d5bc316917b54 Elan 2.0.0-alpha valid
 
 main
   constant p set to unicode(0x03c0)

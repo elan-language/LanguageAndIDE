@@ -83,18 +83,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.optionsFilteredByProfile(true).filter((o) => o[0].startsWith(match));
   }
 
-  commonStartText(match: string): string {
-    return this.optionsMatchingUserInput(match)
-      .map((o) => o[0])
-      .reduce((soFar, o) => this.maxCommonStart(soFar, o));
-  }
-
-  private maxCommonStart(a: string, b: string): string {
-    return a !== "" && b !== "" && a[0] === b[0]
-      ? a[0] + this.maxCommonStart(a.slice(1), b.slice(1))
-      : "";
-  }
-
   getCompletion(): string {
     return this.optionsMatchingUserInput(this.text)
       .map((o) => o[0])
@@ -295,9 +283,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   processOptions(key: string | undefined) {
     if (this.overtyper.hasNotConsumed(key)) {
       const options = this.optionsMatchingUserInput(this.text + key);
-      if (options.length > 1) {
-        this.text += this.commonStartText(this.text + key).substring(this.text.length);
-      } else if (options.length === 1) {
+      if (options.length === 1) {
         const typeToAdd = options[0][0];
 
         const pendingChars = typeToAdd.slice((this.text + key).length);
@@ -338,8 +324,8 @@ export abstract class AbstractSelector extends AbstractFrame {
       const html = `${o[1]}`;
       map.set(name, [html, action]);
     });
+    map.set("paste", ["separator paste <span class='kb'>Ctrl+v</span>", this.paste]);
     addDeleteToContextMenu(this, map);
-    map.set("paste", ["paste <span class='kb'>Ctrl+v</span>", this.paste]);
     return map;
   }
 
