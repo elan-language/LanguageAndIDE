@@ -23,6 +23,7 @@ import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { RegExMatchNode } from "./parse-nodes/regex-match-node";
 import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
@@ -186,6 +187,14 @@ export class LanguageJava extends LanguageCfamily {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  addNodesForRaiseToPower(node: RaiseToPower): void {
+    this.default_addNodesForRaiseToPower(node);
+  }
+
+  raiseToPowerAsHtml(node: RaiseToPower): string {
+    return this.default_raiseToPowerAsHtml(node);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

@@ -31,6 +31,7 @@ import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
@@ -307,6 +308,14 @@ export class LanguageElan extends LanguageAbstract {
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  addNodesForRaiseToPower(node: RaiseToPower): void {
+    this.default_addNodesForRaiseToPower(node);
+  }
+
+  raiseToPowerAsHtml(node: RaiseToPower): string {
+    return this.default_raiseToPowerAsHtml(node);
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

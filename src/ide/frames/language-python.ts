@@ -33,7 +33,10 @@ import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { TermSimple } from "./parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "./parse-nodes/term-simple-with-opt-index";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -220,6 +223,7 @@ export class LanguagePython extends LanguageAbstract {
 
   private OPEN_SQUARE_BRACKET = "[";
   private CLOSE_SQUARE_BRACKET = "]";
+  private POWER = "**";
 
   MOD: string = "%";
   EQUAL: string = "==";
@@ -326,6 +330,20 @@ export class LanguagePython extends LanguageAbstract {
 
   override typeTupleAsHtml(node: TypeTupleNode): string {
     return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
+  }
+
+  addNodesForRaiseToPower(node: RaiseToPower): void {
+    node.base = new TermSimpleWithOptIndex(node.file);
+    node.exponent = new TermSimple(node.file);
+    node.addElement(node.base);
+    node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(new PunctuationNode(node.file, this.POWER));
+    node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(node.exponent);
+  }
+
+  raiseToPowerAsHtml(node: RaiseToPower): string {
+    return `${node.base?.renderAsHtml()}${this.POWER}${node.exponent?.renderAsHtml()}`;
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

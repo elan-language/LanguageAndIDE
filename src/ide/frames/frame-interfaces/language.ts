@@ -1,6 +1,7 @@
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { RaiseToPower } from "../parse-nodes/raise-to-power";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { Field } from "./field";
@@ -30,6 +31,7 @@ export interface Language {
   addNodesForParamDef(node: ParamDefNode): void;
   addNodesForTypeGeneric(node: TypeGenericNode): void;
   addNodesForTypeTuple(node: TypeTupleNode): void;
+  addNodesForRaiseToPower(node: RaiseToPower): void;
   standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   paramDefAsHtml(node: ParamDefNode): string;
@@ -37,6 +39,7 @@ export interface Language {
   newInstanceAsHtml(node: NewInstance): string;
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
+  raiseToPowerAsHtml(node: RaiseToPower): string;
 
   MOD: string;
   EQUAL: string;

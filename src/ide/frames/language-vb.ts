@@ -32,7 +32,10 @@ import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { TermSimple } from "./parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "./parse-nodes/term-simple-with-opt-index";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
 import { TypeNode } from "./parse-nodes/type-node";
@@ -245,6 +248,8 @@ export class LanguageVB extends LanguageAbstract {
   private WHILE = "While";
 
   private SINGLE_QUOTE = "'";
+  private POWER = "^";
+
 
   EQUAL: string = "=";
   NOT_EQUAL: string = "<>";
@@ -336,6 +341,20 @@ export class LanguageVB extends LanguageAbstract {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  addNodesForRaiseToPower(node: RaiseToPower): void {
+    node.base = new TermSimpleWithOptIndex(node.file);
+    node.exponent = new TermSimple(node.file);
+    node.addElement(node.base);
+    node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(new PunctuationNode(node.file, this.POWER));
+    node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(node.exponent);
+  }
+
+  raiseToPowerAsHtml(node: RaiseToPower): string {
+    return `${node.base?.renderAsHtml()}${this.POWER}${node.exponent?.renderAsHtml()}`;
   }
 
   inheritance(frame: ClassFrame): string {

@@ -151,6 +151,7 @@ import { ParamListNode } from "../frames/parse-nodes/param-list-node";
 import { PropertyInstanceRef } from "../frames/parse-nodes/property-instance-ref";
 import { PropertyRef } from "../frames/parse-nodes/property-ref";
 import { PunctuationNode } from "../frames/parse-nodes/punctuation-node";
+import { RaiseToPower } from "../frames/parse-nodes/raise-to-power";
 import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
 import { Sequence } from "../frames/parse-nodes/sequence";
 import { SetToClause } from "../frames/parse-nodes/set-to-clause";
@@ -658,6 +659,14 @@ export function transform(
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
     return new UnaryExprAsn(op, operand, fieldId, scope);
+  }
+
+  if (node instanceof RaiseToPower) {
+    const base = transform(node.base, fieldId, scope) as AstNode;
+    const exp = transform(node.exponent, fieldId, scope) as AstNode;
+    const id = "pow";
+    const parameters = [base, exp];
+    return new FuncCallAsn(id, parameters, fieldId, scope);
   }
 
   if (node instanceof BinaryExpression) {

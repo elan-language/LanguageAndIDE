@@ -1,15 +1,13 @@
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { BinaryOperation } from "./binary-operation";
-import { ExprNode } from "./expr-node";
 import { allIdsAndMethods, allKeywordsThatCanStartAnExpression } from "./parse-node-helpers";
-import { Term } from "./term";
+import { TermSimple } from "./term-simple";
+import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";
 
-export class BinaryExpression extends AbstractSequence {
-  lhs: Term | undefined;
-  op: BinaryOperation | undefined;
-  rhs: ExprNode | undefined;
+export class RaiseToPower extends AbstractSequence {
+  base: TermSimpleWithOptIndex | undefined;
+  exponent: TermSimple | undefined;
 
   constructor(file: File) {
     super(file);
@@ -17,29 +15,20 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.lhs = new Term(this.file);
-    this.addElement(this.lhs);
-    this.op = new BinaryOperation(this.file);
-    this.addElement(this.op);
-    this.rhs = new ExprNode(this.file);
-    this.addElement(this.rhs);
-    super.parseText(text);
+    if (text.length > 0) {
+      this.file.language().addNodesForRaiseToPower(this);
+      super.parseText(text);
+    }
   }
 
   renderAsHtml(): string {
     return this.isValid()
-      ? `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`
+      ? this.file.language().raiseToPowerAsHtml(this)
       : this.matchedText;
   }
 
   renderAsElanSource(): string {
-    return `${this.lhs?.renderAsElanSource()}${this.op!.renderAsElanSource()}${this.rhs?.renderAsElanSource()}`;
-  }
-
-  renderAsExport(): string {
-    return this.isValid()
-      ? `${this.lhs?.renderAsExport()}${this.op!.renderAsExport()}${this.rhs?.renderAsExport()}`
-      : this.matchedText;
+    return `pow(${this.base?.renderAsElanSource()}, ${this.exponent?.renderAsElanSource()})`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

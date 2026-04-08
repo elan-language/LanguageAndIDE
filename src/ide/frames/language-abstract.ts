@@ -9,13 +9,17 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
+import { CommaNode } from "./parse-nodes/comma-node";
 import { CSV } from "./parse-nodes/csv";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { SpaceNode } from "./parse-nodes/space-node";
+import { TermSimple } from "./parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "./parse-nodes/term-simple-with-opt-index";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNode } from "./parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "./parse-nodes/type-simple-or-generic";
@@ -68,6 +72,7 @@ export abstract class LanguageAbstract implements Language {
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
+  abstract raiseToPowerAsHtml(node: RaiseToPower): string;
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
@@ -81,7 +86,24 @@ export abstract class LanguageAbstract implements Language {
   abstract addNodesForNewInstance(node: NewInstance): void;
   abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
   abstract addNodesForTypeTuple(node: TypeTupleNode): void;
+  abstract addNodesForRaiseToPower(node: RaiseToPower): void;
   abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+
+  default_addNodesForRaiseToPower(node: RaiseToPower): void {
+    node.base = new TermSimpleWithOptIndex(node.file);
+    node.exponent = new TermSimple(node.file);
+    node.addElement(new PunctuationNode(node.file, "pow("));
+    node.addElement(node.base);
+    node.addElement(new CommaNode(node.file));
+    node.addElement(new SpaceNode(node.file, Space.added));
+    node.addElement(node.exponent);
+    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
+  }
+
+  default_raiseToPowerAsHtml(node: RaiseToPower): string {
+    return `<el-method>pow</el-method>(${node.base?.renderAsHtml()}, ${node.exponent?.renderAsHtml()})`;
+  }
+
 
   default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
     return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;

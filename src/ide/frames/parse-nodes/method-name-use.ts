@@ -1,5 +1,6 @@
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
+import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
@@ -27,10 +28,17 @@ export class MethodNameUse extends AbstractParseNode {
         Regexes.identifier,
       );
     }
-    if (this.isValid() && this.remainingText.length > 0) {
-      this._done = true;
+    if (this.isValid()) {
+      if ( this.matchedText === "pow") {
+        this.status = ParseStatus.invalid;
+        this.matchedText = "";
+        this.remainingText = text;
+      } else if (this.remainingText.length > 0) {
+        this._done = true;
+      }
     }
   }
+
   symbolCompletion_tokenTypes(): Set<TokenType> {
     return this.tokenTypes;
   }

@@ -14,6 +14,7 @@ import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
+import { RaiseToPower } from "./parse-nodes/raise-to-power";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
@@ -118,6 +119,14 @@ export class LanguageCS extends LanguageCfamily {
     return this.c_langs_newInstanceAsHtml(node);
   }
 
+  addNodesForRaiseToPower(node: RaiseToPower): void {
+    this.default_addNodesForRaiseToPower(node);
+  }
+
+  raiseToPowerAsHtml(node: RaiseToPower): string {
+    return this.default_raiseToPowerAsHtml(node);
+  }
+
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
@@ -137,6 +146,7 @@ export class LanguageCS extends LanguageCfamily {
     return this.common_assertStatementFields(frame);
   }
 
+  private POWER: string = "^";
   private GET: string = "get";
   private SET: string = "set";
 
