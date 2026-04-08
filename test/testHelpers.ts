@@ -36,6 +36,7 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 
 
 // flag to update test files
@@ -706,4 +707,46 @@ export function asDebugSymbol(name: string, value: any, typeMap : string) {
   } as DebugSymbol
 }
 
+export function selectOption(selector : AbstractSelector, option : string) {
+  const map = selector.getContextMenuItems();
+  let keyForString = "";
+
+  for(const v of map) {
+    const [key, [rawVal,]] = v;
+    const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
+    if (val.trim() === option.trim()) {
+      keyForString = key;
+    }
+  }
+
+  const event = {
+    key : "ContextMenu",
+    type : "contextmenu",
+    command : keyForString,
+    target : "frame",
+    modKey: { control: false, shift: false, alt: false },
+    optionalData: undefined
+  } as editorEvent;
+
+  selector.processKey(event);
+}
+
+export function assertOptions(selector : AbstractSelector, options : string[]) {
+  const map = selector.getContextMenuItems();
+  const availableOptions : string[] = [];
+
+  for(const v of map) {
+    const [, [rawVal,]] = v;
+    const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
+    if (!val.startsWith("delete") && !val.startsWith("copy") && !val.startsWith("paste")) {
+      availableOptions.push(val);
+    }
+  }
+
+  assertEqual(availableOptions.length, options.length);
+
+  for(let i = 0; i < availableOptions.length; i++){
+    assertEqual(availableOptions[i], options[i]);
+  }
+}
 

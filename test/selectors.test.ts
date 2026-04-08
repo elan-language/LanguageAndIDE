@@ -1,5 +1,4 @@
 import assert from "assert";
-
 import { assertKeyword, functionKeyword, testKeyword } from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
@@ -21,7 +20,8 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
-import { key } from "./testHelpers";
+import { assertOptions, key, selectOption } from "./testHelpers";
+import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 
 export class TestProfileSPJ extends Profile {
   name: string = "SPJ";
@@ -57,6 +57,11 @@ suite("Selector tests", () => {
   ignore_test("Member Select - procedure", () => {
     const file = classWithConstructor();
     const sel = file.getById("select4");
+
+    selectOption(sel as AbstractSelector, "procedure");
+
+    assertOptions(sel as AbstractSelector, ["property", "procedure", "function", "# comment"]);
+
     sel.processKey(key("p"));
     sel.processKey(key("o"));
     sel.processKey(key("c"));
