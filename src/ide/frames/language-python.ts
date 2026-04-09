@@ -212,7 +212,7 @@ export class LanguagePython extends LanguageAbstract {
 
   translateExpression(expr: string): string {
     const regexp = new RegExp(
-      `<el-method>(${languageHelper_mathFunctions.join("|")})</el-method>`,
+      `(<el-method>)(${languageHelper_mathFunctions.join("|")})(</el-method>)`,
       "g",
     );
     const result = expr.replace(regexp, this.lookupmath);
@@ -227,12 +227,19 @@ export class LanguagePython extends LanguageAbstract {
   };
   // 'this' is undefined inside a traditional function definition
   // so we use an arrow function so it has access to 'this'
-  private lookupmath = (_match: string, p1: string, _offset: number, _string: string) => {
-    const result = this.mathExceptions[p1] ?? `math.${p1}`;
+  private lookupmath = (
+    _match: string,
+    p1: string,
+    p2: string,
+    p3: string,
+    _offset: number,
+    _string: string,
+  ) => {
+    const result = this.mathExceptions[p2] ?? `math.${p2}`;
     if (result.startsWith("math.")) {
       this.importMath = true;
     }
-    return result;
+    return `${p1}${result}${p3}`;
   };
 
   private DEF = "def";

@@ -77,7 +77,11 @@ export class ArgListField extends AbstractField {
       this.setPlaceholder(`<i>${allTypes}</i>`);
     }
 
-    return super.textAsHtml();
+    let result = super.textAsHtml();
+    if (this.getFile().doingExport) {
+      result = this.getFile().language().translateExpression(result);
+    }
+    return result;
   }
 
   override getCompletion() {
