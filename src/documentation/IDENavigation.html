@@ -43,7 +43,8 @@ you want the IDE to open in:</p>
 <h3 class="acc-title" tabindex="0">Profiles</h3>
 <div class="acc-body">
 
-<p>The teacher may wish to limit the range of language constructs presented to a pupil, and this is done by defining an appropriate <el-code>profile</el-code> in the URL given to the pupil:</p>
+<p>The teacher may wish to limit the range of language constructs presented to a pupil, and this is done by defining an appropriate <el-code>profile</el-code> in the URL given to the pupil.
+If no <el-code>profile</el-code> is specified, then the full language is available.</p>
 <ul>
  <li><b>Procedural programming</b>
  <ul>
@@ -55,11 +56,11 @@ you want the IDE to open in:</p>
  </ul>
 </li><li><b>Object-oriented programming</b>
  <ul>
-  <li><el-code>profile=2.0</el-code> adds to the above <el-kw>class</el-kw>, <el-kw>property</el-kw>, <el-kw>function</el-kw> method and <el-kw>procedure</el-kw> method.</li> 
+  <li><el-code>profile=2.0</el-code> adds to the above <el-kw>class</el-kw>, <el-kw>property</el-kw>, <el-kw>function</el-kw> method and <el-kw>procedure</el-kw> method.</li>
   <li><el-code>profile=2.1</el-code> adds <el-kw>abstract class</el-kw>
-  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li> 
+  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
   <li><el-code>profile=2.2</el-code> adds <el-kw>interface</el-kw>
-  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li> 
+  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
  </ul>
 </li><li><b>Functional programming</b>
  <ul>
@@ -160,12 +161,14 @@ and, on pressing <b>Enter</b> or <i>right click</i>, this menu appears:<br>
 which means that a second press of <b>Enter</b> will choose the (top) <b>print</b> option and supply the procedure call:<br>
 <el-code><el-kw>call</el-kw> <el-method>print</el-method>(<i>any</i>)</el-code><br>
 soliciting values and literals to be printed.<br>
-The <b>change value</b> option inserts a <el-kw>set</el-kw> instruction.
+The <b>change value</b> option inserts a <el-kw>set</el-kw> instruction.<br>
+The initial letters shown in <b>bold</b> indicate the single letter that can be used from the keyboard for that instruction.
+Other instructions are entered by clicking on them in this menu.
  </li>
 </ul>
 
 <p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions. They do not alter the program's behaviour, though they are treated by the editor <i>like</i> instructions.</p>
- 
+
 <h3 id="SelectInstructions">To select instructions</h3>
 
 <table>
@@ -392,7 +395,7 @@ with CVD:</p>
  colour scheme via a small dialogue. Whether or not you tick the CVD option, clicking <b>confirm</b>
   automatically tries to reload the web page, so you will receive a warning (which you can cancel) if you have unsaved code.
   You can also just press <b>Escape</b> to remove the dialogue.</li>
- <li>The URL provided to a pupil may include a CVD scheme, as described above in <a href="#LaunchIDE">Launch the IDE</a>.</li>  
+ <li>The URL provided to a pupil may include a CVD scheme, as described above in <a href="#LaunchIDE">Launch the IDE</a>.</li>
 </ul>
 </div></div>
 

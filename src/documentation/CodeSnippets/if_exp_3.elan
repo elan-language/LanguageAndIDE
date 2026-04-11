@@ -1,4 +1,4 @@
-# 25c029066acb242ec9e9de67654eeef396aa0af565532e96f23d5bc316917b54 Elan 2.0.0-alpha guest default_profile valid
+# 492f3d8efe1d875d47f8be332168bf8464ec9a2288a8bc3ced60893047f50363 Elan 2.0.0-alpha1 valid
 
 main
   constant p set to unicode(0x03c0)
@@ -7,5 +7,5 @@ main
 end main
 
 procedure testPi(p as String, v as Float)
-  call print(if(pi > v, $"yes, {p} > {v}", $"no, {p} < {v}"))
+  call print(if(pi > v, $"so, {p} > {v}", $"and {p} < {v}"))
 end procedure

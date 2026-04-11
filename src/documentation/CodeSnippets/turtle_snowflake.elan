@@ -1,4 +1,4 @@
-# 53ee1374a8a746d1dc8fa8dc9537cb14b228d1cd1ff8eaf4a2691a534456ac39 Elan 2.0.0-alpha guest default_profile valid
+# a860c445ed99c003a45b0ef689e5dbec741dd5dd80cec7a81ecf2819e6ff3d6d Elan 2.0.0-alpha1 valid
 
 main
   variable t set to new Turtle()
@@ -10,6 +10,8 @@ main
     call t.turn(120)
   end for
 end main
+
+constant side set to 60
 
 procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
@@ -25,5 +27,3 @@ procedure drawSide(length as Float, t as Turtle)
     call t.move(length)
   end if
 end procedure
-
-constant side set to 60

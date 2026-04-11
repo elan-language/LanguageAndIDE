@@ -1,8 +1,16 @@
-# 5cc4e6fbdc934c7f1c0f27447028a1289052eb73c4b789a9a7303d3451627d72 Elan 2.0.0-alpha guest default_profile valid
+# ba6ed539e3f55a7a368036ecd508ce74cf5c69b56f0935cf3b2acf0f12eb163c Elan 2.0.0-alpha1 valid
 
 main
+  # snipFrom
   variable vg set to new List<of VectorGraphic>()
-  variable circ set to new CircleVG() with centreX set to 20, centreY set to 20, radius set to 5, fillColour set to green, strokeColour set to red, strokeWidth set to 2
+  variable circ set to new CircleVG()
+  call circ.setCentreX(20)
+  call circ.setCentreY(20)
+  call circ.setRadius(5)
+  call circ.setFillColour(green)
+  call circ.setStrokeColour(red)
+  call circ.setStrokeWidth(2)
   call vg.append(circ)
   call displayVectorGraphics(vg)
+  # snipTo
 end main
