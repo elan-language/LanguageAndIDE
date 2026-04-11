@@ -5,11 +5,14 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { selfType } from "./frame-helpers";
+import { ParamListField } from "./fields/param-list-field";
+import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -53,12 +56,9 @@ import { While } from "./statements/while";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
+import { languageHelper_mathFunctions } from "./language-helpers";
 
 export class LanguagePython extends LanguageAbstract {
-  private constructor() {
-    super();
-  }
-
   static Instance: Language = new LanguagePython();
 
   commentRegex(): RegExp {
@@ -79,7 +79,13 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement ||
-      frame instanceof CatchStatement
+      frame instanceof CatchStatement ||
+      frame instanceof Property ||
+      frame instanceof FunctionMethod ||
+      frame instanceof ProcedureMethod ||
+      frame instanceof AbstractFunction ||
+      frame instanceof AbstractProcedure ||
+      frame instanceof AbstractProperty
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -89,11 +95,18 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      html = `TBD`;
+      html = `<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `TBD`;
+      html = `<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProperty) {
-      html = `TBD`;
+      html = html = `<el-comment>@property</el-comment><br>
+<el-comment>@abstractmethod</el-comment><br>
+<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>
+&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
@@ -131,17 +144,20 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      const inheritance = frame.doesInherit()
+        ? `(${frame.inheritance.renderAsHtml()})`
+        : `${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${inheritance}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>None</el-kw>:`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
@@ -149,11 +165,12 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
+      this.importMath = false; // reset at start of file
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof TestFrame) {
@@ -166,9 +183,64 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
+  abstractInheritance(frame: ClassFrame): string {
+    const inheritance = frame.inheritance.renderAsHtml();
+    return frame.doesInherit()
+      ? `(<el-type>ABC</el-type>, ${inheritance})`
+      : frame.isSelected()
+        ? `(<el-type>ABC</el-type>${inheritance})`
+        : `(<el-type>ABC</el-type>)`;
+  }
+
+  paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
+    const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
+    return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
+  }
+
   renderBottomAsHtml(_frame: Frame): string {
     return ""; // Python blocks have no textual ending;
   }
+
+  renderFileImportsAsHtml(): string {
+    // no HTML needed here as it is actually only used for export
+    return this.importMath ? "import math\n\n" : "";
+  }
+
+  renderFileTrailerAsHtml(): string {
+    return "\n\n<el-method>main</el-method>()";
+  }
+
+  translateExpression(expr: string): string {
+    const regexp = new RegExp(
+      `(<el-method>)(${languageHelper_mathFunctions.join("|")})(</el-method>)`,
+      "g",
+    );
+    const result = expr.replace(regexp, this.lookupmath);
+    return result;
+  }
+
+  private importMath = false;
+  private mathExceptions: { [propName: string]: string } = {
+    pow: "pow",
+    abs: "abs",
+    logE: "math.log",
+  };
+  // 'this' is undefined inside a traditional function definition
+  // so we use an arrow function so it has access to 'this'
+  private lookupmath = (
+    _match: string,
+    p1: string,
+    p2: string,
+    p3: string,
+    _offset: number,
+    _string: string,
+  ) => {
+    const result = this.mathExceptions[p2] ?? `math.${p2}`;
+    if (result.startsWith("math.")) {
+      this.importMath = true;
+    }
+    return `${p1}${result}${p3}`;
+  };
 
   private DEF = "def";
   private CLASS = "class";
@@ -214,6 +286,8 @@ export class LanguagePython extends LanguageAbstract {
 
   START_OF_GENERIC: string = "[";
   THIS_INSTANCE: string = this.SELF;
+  OVERRIDES = "";
+  IMPLEMENTS = "";
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);

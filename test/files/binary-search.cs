@@ -6,13 +6,13 @@ static void main() {
   while (!done) {
     var wanted = input("What type of fruit do you want ('x' to exit)? ");
     if (wanted.equals("x")) {
-      done = true; // set
+      done = true; // change variable
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        print($"\nWe can supply a {wanted}"); // call procedure
+        print($"\nWe can supply a {wanted}");
       } else {
-        print($"\nSorry, we cannot supply a {wanted}"); // call procedure
+        print($"\nSorry, we cannot supply a {wanted}");
       }
     }
   }
@@ -24,11 +24,11 @@ static bool binarySearch(List<string> li, string item) { // function
     const Int mid = divAsInt(li.length(), 2);
     var value = li[mid];
     if (item.equals(value)) {
-      result = true; // set
+      result = true; // change variable
     } else if (item.isBefore(value)) {
-      result = binarySearch(li.subList(0, mid), item); // set
+      result = binarySearch(li.subList(0, mid), item); // change variable
     } else {
-      result = binarySearch(li.subList(mid + 1, li.length()), item); // set
+      result = binarySearch(li.subList(mid + 1, li.length()), item); // change variable
     }
   }
   return result;

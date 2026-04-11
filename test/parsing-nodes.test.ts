@@ -1,6 +1,5 @@
 import { abstractKeyword } from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { Regexes } from "../src/ide/frames/fields/regexes";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { AbstractSequence } from "../src/ide/frames/parse-nodes/abstract-sequence";
@@ -56,6 +55,7 @@ import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression";
+import { Profile } from "../src/ide/frames/profile";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { DOT } from "../src/ide/frames/symbols";
 import { StubInputOutput } from "../src/ide/stub-input-output";
@@ -73,7 +73,7 @@ import {
 suite("Parsing Nodes", () => {
   const f = new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),

@@ -255,7 +255,7 @@ export class WebInputOutput implements ElanInputOutput {
           const v = inp.value.replace(/</g, "&lt;");
 
           div.removeChild(inp);
-          await this.print(v);
+          await this.print(v + "\n");
         }
       }, 250);
     });

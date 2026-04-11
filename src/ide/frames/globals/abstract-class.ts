@@ -1,4 +1,9 @@
-import { abstractClassKeywords, classKeyword, endKeyword } from "../../../compiler/elan-keywords";
+import {
+  abstractClassKeywords,
+  abstractKeyword,
+  classKeyword,
+  endKeyword,
+} from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
@@ -31,9 +36,9 @@ export class AbstractClass extends ClassFrame {
   }
 
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}abstract class ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
+    return `${this.sourceAnnotations()}${abstractKeyword} ${classKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
 ${parentHelper_renderChildrenAsElanSource(this)}\r
-end class\r\n`;
+${endKeyword} ${classKeyword}\r\n`;
   }
 
   topKeywords(): string {

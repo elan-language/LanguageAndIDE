@@ -12,20 +12,19 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
-import { Profile } from "../frame-interfaces/profile";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Profile } from "../profile";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
   public name: MethodNameField;
   public params: ParamListField;
   public returnType: TypeField;
-  file: File;
   isFunction = true;
+  abstract file: File;
 
   constructor(parent: Parent) {
     super(parent);
-    this.file = parent as File;
     this.name = new MethodNameField(this);
     this.params = new ParamListField(this);
     this.returnType = new TypeField(this);

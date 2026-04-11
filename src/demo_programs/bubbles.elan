@@ -1,4 +1,4 @@
-# 15af44cdb0cd11c0a62a0c148e829345ed016138d028e69da786aa6d5bc70c18 Elan 2.0.0-alpha guest default_profile valid
+# 15af44cdb0cd11c0a62a0c148e829345ed016138d028e69da786aa6d5bc70c18 Elan 2.0.0-alpha valid
 
 main
   variable bubbles set to new List<of CircleVG>()

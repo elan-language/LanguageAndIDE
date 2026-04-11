@@ -59,7 +59,6 @@ import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { QualifierAsn } from "../../compiler/syntax-nodes/qualifier-asn";
-import { RangeAsn } from "../../compiler/syntax-nodes/range-asn";
 import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
 import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
@@ -126,7 +125,6 @@ import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { IndexDouble } from "../frames/parse-nodes/index-double";
-import { IndexRange } from "../frames/parse-nodes/index-range";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
 import { InstanceNode } from "../frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
@@ -346,7 +344,7 @@ export function transform(
 
     propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
-    propertyAsn.private = node.private;
+    propertyAsn.private = node.isPrivate;
 
     return propertyAsn;
   }
@@ -491,7 +489,7 @@ export function transform(
   if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
-    functionAsn.private = node.private;
+    functionAsn.private = node.isPrivate;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
     functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -509,7 +507,7 @@ export function transform(
   if (node instanceof ProcedureMethod) {
     const procedureAsn = new ProcedureMethodAsn(node.getHtmlId(), scope);
     procedureAsn.breakpointStatus = node.breakpointStatus;
-    procedureAsn.private = node.private;
+    procedureAsn.private = node.isPrivate;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =
@@ -794,11 +792,8 @@ export function transform(
   }
 
   if (node instanceof InheritanceNode) {
-    if (node.typeList instanceof CSV) {
-      const types = transformMany(node.typeList, fieldId, scope).items;
-      return new CsvAsn(types, fieldId);
-    }
-    return EmptyAsn.Instance;
+    const types = transformMany(node, fieldId, scope).items;
+    return new CsvAsn(types, fieldId);
   }
 
   if (node instanceof OptionalNode) {
@@ -913,14 +908,6 @@ export function transform(
     return new TypeAsn(TupleName, EmptyAsn.Instance, gp, fieldId, scope);
   }
 
-  if (node instanceof IndexRange) {
-    const fromNode = node.fromIndex?.matchedNode;
-    const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
-    const toNode = node.toIndex?.matchedNode;
-    const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
-    return new RangeAsn(from, to, fieldId, scope);
-  }
-
   if (node instanceof IndexDouble) {
     const index1 = transform(node.index1, fieldId, scope) as AstCollectionNode;
     const index2 = transform(node.index2, fieldId, scope) as AstCollectionNode;
@@ -967,7 +954,7 @@ export function transform(
   if (node instanceof LitStringInterpolatedInsert) {
     const value = transform(node.expr, fieldId, scope)!;
 
-    return new InterpolatedAsn(value, fieldId);
+    return new InterpolatedAsn(value, fieldId, scope);
   }
 
   if (node instanceof CommentNode) {

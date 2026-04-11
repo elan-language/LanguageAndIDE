@@ -1,4 +1,4 @@
-# f9dcff83372dc8408276b3d13e4d94c152045baea4e93c37ee2cdafa18102b34 Elan 2.0.0-alpha guest default_profile valid
+# f9dcff83372dc8408276b3d13e4d94c152045baea4e93c37ee2cdafa18102b34 Elan 2.0.0-alpha valid
 
 main
   variable game set to new Game(1000)

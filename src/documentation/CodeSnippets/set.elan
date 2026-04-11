@@ -1,4 +1,4 @@
-# fc36fd88ecc26a592715fa4a161f1931fce218ef8302c3b826c03f1806f4aacc Elan 2.0.0-alpha guest default_profile valid
+# fc36fd88ecc26a592715fa4a161f1931fce218ef8302c3b826c03f1806f4aacc Elan 2.0.0-alpha valid
 
 main
   variable st set to new HashSet<of Int>()

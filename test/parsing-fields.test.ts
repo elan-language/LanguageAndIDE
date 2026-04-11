@@ -1,6 +1,5 @@
 import assert from "assert";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
@@ -15,13 +14,14 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "./testHelpers";
+import { Profile } from "../src/ide/frames/profile";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -44,7 +44,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -67,7 +67,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -97,7 +97,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -125,7 +125,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -152,7 +152,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -170,7 +170,7 @@ suite("Field Parsing Tests", () => {
       const func = new GlobalFunction(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -192,7 +192,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -215,7 +215,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -234,7 +234,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -257,7 +257,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -279,7 +279,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -298,7 +298,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -316,7 +316,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -334,7 +334,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -352,7 +352,7 @@ suite("Field Parsing Tests", () => {
       const c = new ConstantGlobal(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -385,7 +385,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new DefaultProfile(),
+          new Profile(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),

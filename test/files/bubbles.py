@@ -21,3 +21,5 @@ def moveGrowBurst(bubbles: list[CircleVG]) -> None: # procedure
       b.setRadius(b.radius + 0.2) # call procedure
   displayVectorGraphics(bubbles) # call procedure
   sleep_ms(5) # call procedure
+
+main()

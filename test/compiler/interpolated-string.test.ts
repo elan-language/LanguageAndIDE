@@ -1,8 +1,9 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -30,7 +31,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -66,7 +67,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -93,7 +94,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -117,7 +118,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -139,7 +140,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -171,7 +172,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -192,5 +193,31 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, " ");
+  });
+
+  test("Fail_InterpolatedEnumValue", async () => {
+    const code = `${testHeader}
+
+main
+   call printNoLine($"{Fruit.apple}")
+end main
+
+enum Fruit apple, orange, pear`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot interpolate an Enum value, use enumValue to convert to a String firstLangRef.html#compile_error",
+    ]);
   });
 });

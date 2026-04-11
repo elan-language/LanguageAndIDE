@@ -2,7 +2,11 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../../compiler/compiler-interfaces/type-options";
 import { ClassSubType, ClassType } from "../../../compiler/symbols/class-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import {
+  getAllAbstractClasses,
+  getAllInterfaces,
+  getGlobalScope,
+} from "../../../compiler/symbols/symbol-helpers";
 import {
   getId,
   mustBeDeclaredAbove,
@@ -53,8 +57,8 @@ export class ConcreteClassAsn extends ClassAsn {
     }
 
     const extendsClause = this.getExtends();
-    const abstractClasses = this.getAllAbstractClasses(this, []);
-    const interfaces = this.getAllInterfaces(this, []);
+    const abstractClasses = getAllAbstractClasses(this, [], this);
+    const interfaces = getAllInterfaces(this, [], this);
 
     const thisIndex = this.getClassIndex();
     for (const ac of abstractClasses) {

@@ -18,6 +18,7 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
+  removeHtmlTagsAndEscChars,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -26,7 +27,6 @@ import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
-import { defaultUsername, Profile } from "./frame-interfaces/profile";
 import { Selectable } from "./frame-interfaces/selectable";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
@@ -39,6 +39,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { defaultUsername, Profile } from "./profile";
 
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
@@ -94,6 +95,7 @@ export class FileImpl implements File {
   parseError?: string;
   readonly defaultFileName = "code.elan";
   fileName: string = this.defaultFileName;
+  doingExport: boolean = false;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
   private _testStatus: TestStatus = TestStatus.default;
@@ -226,10 +228,11 @@ export class FileImpl implements File {
   public async renderAsHtml(withHeader: boolean = true): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
+    const trailer = this.language().renderFileTrailerAsHtml();
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
-      : globals;
+      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${globals}${trailer}`
+      : `${globals}${trailer}`;
   }
 
   async renderAsSource(): Promise<string> {
@@ -247,9 +250,15 @@ export class FileImpl implements File {
   }
 
   async renderAsExport(): Promise<string> {
+    const oldde = this.doingExport;
+    this.doingExport = true;
     const globals = parentHelper_renderChildrenAsExport(this);
+    this.doingExport = oldde;
+    // No need to remove HTML as this has none as it is for export only
+    const imports = this.language().renderFileImportsAsHtml();
+    const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml());
     const lang = this.language().languageFullName;
-    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${globals}
+    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${globals}${trailer}
 `;
   }
 
@@ -299,27 +308,6 @@ export class FileImpl implements File {
     this.isProduction = flag;
   }
 
-  private getUserName() {
-    return this.userName ? this.userName : defaultUsername;
-  }
-
-  private getUserNameAsHtml() {
-    const cls = this.profile.show_user_and_profile ? "show" : "hide";
-    const userName = this.getUserName();
-    return `<el-user class="${cls}">${userName}</el-user>`;
-  }
-
-  private getProfileName() {
-    const pn = this.profile.name.replaceAll(" ", "_");
-    return pn ? pn : "_";
-  }
-
-  private getProfileNameAsHtml() {
-    const cls = this.profile.show_user_and_profile ? "show" : "hide";
-    const profileName = this.getProfileName();
-    return `<el-profile class="${cls}">${profileName}</el-profile>`;
-  }
-
   getAst(invalidate: boolean): RootAstNode | undefined {
     if (!this.ast || invalidate) {
       this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
@@ -356,7 +344,7 @@ export class FileImpl implements File {
   }
 
   private renderHashableContent(globals: string, lang: string): string {
-    const code = `${this.getVersionString(lang)} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
+    const code = `${this.getVersionString(lang)} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
 
@@ -786,10 +774,10 @@ export class FileImpl implements File {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
 
-      if (tokens.length === 7) {
+      if (tokens.length === 5) {
         await this.validateHash(tokens[1], code);
         language = this.validateLanguage(tokens, 0);
-      } else if (tokens.length === 9) {
+      } else if (tokens.length === 7) {
         await this.validateHash(tokens[1], code);
         language = this.validateLanguage(tokens, 2);
       } else {

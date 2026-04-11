@@ -106,7 +106,7 @@ export async function processWorksheet(fileName: string) {
   source = appendFooter(source);
 
   let updatedContent = await processCode(source, codeTag, codeEndTag);
-  updatedContent = await processCode(updatedContent, codeBlockTag, codeBlockEndTag);
+  updatedContent = await processCode(source, codeBlockTag, codeBlockEndTag);
   updatedContent = await processSteps(updatedContent);
   updatedContent = await processFinals(updatedContent);
 

@@ -4,16 +4,10 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import {
-  getId,
-  mustBeAssignableType,
-  mustBeRangeableType,
-  mustNotBeNegativeIndex,
-} from "../compile-rules";
+import { getId, mustNotBeNegativeIndex } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
 import { CsvAsn } from "./csv-asn";
-import { RangeAsn } from "./range-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
@@ -36,14 +30,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   isAsync: boolean = false;
-
-  isSimpleSubscript() {
-    return !(this.index instanceof RangeAsn);
-  }
-
-  isRangeSubscript() {
-    return this.index instanceof RangeAsn;
-  }
 
   compileSubscript() {
     return this.index.compile();
@@ -72,24 +58,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     );
   }
 
-  compileRange(indexedType: SymbolType, indexed: string, subscript: string) {
-    mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
-    const [indexType] = getIndexAndOfType(indexedType, 0);
-    mustBeAssignableType(
-      indexType,
-      (this.index as RangeAsn).from.symbolType(),
-      this.compileErrors,
-      this.fieldId,
-    );
-    mustBeAssignableType(
-      indexType,
-      (this.index as RangeAsn).to.symbolType(),
-      this.compileErrors,
-      this.fieldId,
-    );
-    return this.wrapRange(`${indexed}, ${subscript}`);
-  }
-
   compile(): string {
     this.compileErrors = [];
     const subscript = this.compileSubscript();
@@ -101,9 +69,12 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     const indexed = this.precedingNode!.compile();
     const indexedType = this.precedingNode!.symbolType();
 
-    const code = this.isSimpleSubscript()
-      ? this.compileSimpleSubscript(getId(this.precedingNode), indexedType, indexed, subscript)
-      : this.compileRange(indexedType, indexed, subscript);
+    const code = this.compileSimpleSubscript(
+      getId(this.precedingNode),
+      indexedType,
+      indexed,
+      subscript,
+    );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
@@ -114,15 +85,9 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     if (!this.precedingNode) {
       return UnknownType.Instance;
     }
-
     const indexedType = this.precedingNode.symbolType();
-
-    if (this.isSimpleSubscript()) {
-      const [, ofType] = getIndexAndOfType(indexedType, 0);
-      return ofType;
-    }
-
-    return indexedType;
+    const [, ofType] = getIndexAndOfType(indexedType, 0);
+    return ofType;
   }
 
   toString() {

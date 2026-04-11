@@ -9,6 +9,11 @@ import { ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
+import { LanguageCS } from "../frames/language-cs";
+import { LanguageElan } from "../frames/language-elan";
+import { LanguageJava } from "../frames/language-java";
+import { LanguagePython } from "../frames/language-python";
+import { LanguageVB } from "../frames/language-vb";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
@@ -241,6 +246,7 @@ export interface ITabViewModel {
   focusInfoTab(cvm: ICodeEditorViewModel): void;
 
   setWorksheetLanguage(l: string): void;
+  setHelpLanguage(l: string): void;
 }
 
 export interface IIDEViewModel {
@@ -606,4 +612,15 @@ export function checkForUnsavedChanges(
 
 export function useChromeFileAPI() {
   return "showOpenFilePicker" in self;
+}
+
+export function getLanguageByClass(cl: string) {
+  const languages = [
+    LanguageElan.Instance,
+    LanguagePython.Instance,
+    LanguageCS.Instance,
+    LanguageVB.Instance,
+    LanguageJava.Instance,
+  ];
+  return languages.find((l) => l.languageHtmlClass === cl) ?? LanguageElan.Instance;
 }

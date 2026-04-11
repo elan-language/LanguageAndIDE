@@ -7,7 +7,7 @@ Sub main()
     displayBlocks(grid) ' call procedure
     Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition
     nextGeneration(gridRef) ' call procedure
-    grid = gridRef.value() ' set
+    grid = gridRef.value() ' change variable
     sleep_ms(50) ' call procedure
   End While
 End Sub
@@ -15,7 +15,7 @@ End Sub
 Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
   For Each col In range(0, 40)
     For Each row In range(0, 30)
-      grid[col][row] = blackOrWhite(random()) ' set
+      grid[col][row] = blackOrWhite(random()) ' change variable
     Next row
   Next col
 End Sub
@@ -23,7 +23,7 @@ End Sub
 Function blackOrWhite(random As Double) As Integer
   Dim result = black ' variable definition
   If random > 0.5 Then
-    result = white ' set
+    result = white ' change variable
   End If
   Return result
 End Function
@@ -83,7 +83,7 @@ Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As In
     Const cx = cell.item_0
     Const cy = cell.item_1
     If grid[cx][cy] = black Then
-      count = count + 1 ' set
+      count = count + 1 ' change variable
     End If
   Next cell
   Return count
@@ -92,9 +92,9 @@ End Function
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
   Dim result = False ' variable definition
   If cell = black Then
-    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' set
+    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' change variable
   Else
-    result = liveNeighbours = 3 ' set
+    result = liveNeighbours = 3 ' change variable
   End If
   Return result
 End Function
@@ -103,7 +103,7 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
   Dim colour = white ' variable definition
   Const live = willLive(grid[x][y], liveNeighbours(grid, x, y))
   If live Then
-    colour = black ' set
+    colour = black ' change variable
   End If
   Return colour
 End Function
@@ -114,7 +114,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
   For Each x In range(0, 40)
     For Each y In range(0, 30)
       Const colour = nextCellValue(grid, x, y)
-      nextGen[x][y] = colour ' set
+      nextGen[x][y] = colour ' change variable
     Next y
   Next x
   gridRef.set(nextGen) ' call procedure

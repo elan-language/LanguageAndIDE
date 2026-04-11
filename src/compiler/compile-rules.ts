@@ -17,7 +17,7 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
-  InvalidSourceForEachCompileError,
+  InvalidSourceForForLoopCompileError,
   IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
@@ -91,11 +91,13 @@ import {
   isInsideFunctionOrConstructor,
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
+import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { EnumType } from "./symbols/enum-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -200,6 +202,21 @@ export function mustBeKnownSymbolType(
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
   if (ReservedWords.Instance.matchesIgnoringCase(id)) {
     compileErrors.push(new SyntaxCompileError(`'${id}' matches a reserved word.`, location));
+  }
+}
+
+export function mustNotBeEnum(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof EnumType) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        "Cannot interpolate an Enum value, use enumValue to convert to a String first",
+        location,
+      ),
+    );
   }
 }
 
@@ -537,7 +554,7 @@ export function mustbeValidQualifier(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (qualifier instanceof ThisAsn) {
+  if (qualifier === EmptyAsn.Instance) {
     compileErrors.push(new PropertyCompileError(location));
   }
 }
@@ -1207,7 +1224,7 @@ export function mustBeIterable(
   location: string,
 ) {
   if (isKnownType(symbolType) && !isIterableType(symbolType)) {
-    compileErrors.push(new InvalidSourceForEachCompileError(location));
+    compileErrors.push(new InvalidSourceForForLoopCompileError(location));
   }
 }
 

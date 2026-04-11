@@ -69,6 +69,12 @@ el-instr {
     font-family: consolas, monospace;
     color: var(--instruction); background-color: white;
 }
+.newcode {
+    color: var(--optional);
+}
+.selected > .newcode {
+    color: white;
+}
 el-regex {
     color: var(--string);
 }
@@ -164,6 +170,7 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-top *, 
 .selected > el-kw,
 .selected > el-instr, 
+.selected > el-punc,
 .selected > el-field, 
 .selected > el-field *, 
 .selected > el-txt, 
@@ -224,6 +231,7 @@ el-field.advisory, el-field.advisory el-kw, el-field.advisory el-type, el-field.
 el-field el-txt {
     color: var(--defaultText);
     background-color: var(--panelBackground);
+    font-family: consolas, monospace; /* needed for comments in documented code */
 }
 el-field.error *, el-field.error input  {
     background-color: var(--warning);
@@ -540,4 +548,8 @@ el-statement.paused-at > el-fr
   .imported:has(+ .imported) {
     display: block;
     padding-bottom: 0;
-}
+  }
+
+  .context-menu-item.separator {
+    border-top: solid 1px black;
+  }

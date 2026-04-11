@@ -35,7 +35,7 @@ export class Throw extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "throw";
+    return "throw exception";
   }
 
   renderAsElanSource(): string {

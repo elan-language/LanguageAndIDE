@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -70,7 +70,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -144,7 +144,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -218,7 +218,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -335,7 +335,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -474,7 +474,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -587,7 +587,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -619,7 +619,7 @@ class Foo
     property p1 as Float
 
     function times(b as Bar) returns Float
-        return p1PlusOne() * b.p1PlusOne()
+        return this.p1PlusOne() * b.p1PlusOne()
     end function
 
     function p1PlusOne() returns Float
@@ -704,7 +704,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -735,7 +735,7 @@ class Foo
   property p1 as Float
 
   procedure prt()
-    call printNoLine(toString())
+    call printNoLine(this.toString())
   end procedure
 
   function toString() returns String
@@ -774,7 +774,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -787,6 +787,87 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
+  test("Pass_FunctionOnDifferentInstance1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.yon())
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function foo() returns Foo
+    return this
+  end function
+
+  function bar() returns String
+    return "bar"
+  end function
+
+  function yon() returns String
+    return this.foo().bar()
+  end function
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.yon()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async foo() {
+    return this;
+  }
+
+  async bar() {
+    return "bar";
+  }
+
+  async yon() {
+    return (await (await this.foo()).bar());
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
   test("Fail_FunctionCannotBeCalledDirectly", async () => {
@@ -819,7 +900,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -857,7 +938,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -894,7 +975,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -939,7 +1020,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -972,7 +1053,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1007,7 +1088,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1042,7 +1123,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1074,7 +1155,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1106,7 +1187,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1138,7 +1219,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1180,7 +1261,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1228,7 +1309,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1261,7 +1342,7 @@ end function`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1292,7 +1373,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1324,7 +1405,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

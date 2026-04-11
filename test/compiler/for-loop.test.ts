@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -49,7 +49,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -67,8 +67,10 @@ return [main, _tests];}`;
 def main() -> None:
   tot = 0 # variable definition
   for i in range(1, 11):
-    tot = tot + i # set
+    tot = tot + i # change variable
   printNoLine(tot) # call procedure
+
+main()
 `;
 
     const csCode = `${testCSHeader}
@@ -76,7 +78,7 @@ def main() -> None:
 static void main() {
   var tot = 0;
   foreach (i in range(1, 11)) {
-    tot = tot + i; // set
+    tot = tot + i; // change variable
   }
   printNoLine(tot); // call procedure
 }
@@ -87,7 +89,7 @@ static void main() {
 static void main() {
   var tot = 0;
   foreach (i in range(1, 11)) {
-    tot = tot + i; // set
+    tot = tot + i; // change variable
   }
   printNoLine(tot); // call procedure
 }
@@ -98,7 +100,7 @@ static void main() {
 Sub main()
   Dim tot = 0 ' variable definition
   For Each i In range(1, 11)
-    tot = tot + i ' set
+    tot = tot + i ' change variable
   Next i
   printNoLine(tot) ' call procedure
 End Sub
@@ -124,7 +126,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -164,7 +166,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -204,7 +206,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -248,7 +250,7 @@ async function main() {
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -291,7 +293,7 @@ async function main() {
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -339,7 +341,7 @@ global["foo"] = foo;
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -381,7 +383,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -410,7 +412,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -440,7 +442,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -465,7 +467,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -494,7 +496,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -520,7 +522,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -544,7 +546,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -569,7 +571,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -594,7 +596,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -619,7 +621,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -645,7 +647,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

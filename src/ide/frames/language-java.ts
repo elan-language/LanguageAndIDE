@@ -1,12 +1,14 @@
+import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
-import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
+import { languageHelper_inheritance } from "./language-helpers";
 import { Alternatives } from "./parse-nodes/alternatives";
 import { CommaNode } from "./parse-nodes/comma-node";
 import { CSV } from "./parse-nodes/csv";
@@ -61,7 +63,9 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
+      html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
+    } else if (frame instanceof AbstractProperty) {
+      html = `<el-kw>${this.ABSTRACT}</el-kw> ${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }
@@ -78,11 +82,29 @@ export class LanguageJava extends LanguageCfamily {
     return html;
   }
 
+  inheritance(frame: ClassFrame): string {
+    return languageHelper_inheritance(frame, this.EXTENDS, this.IMPLEMENTS, " ");
+  }
+
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);
   }
 
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
+  }
+
   public FINAL = "final";
+  OVERRIDES = "";
+  EXTENDS = "extends";
+  IMPLEMENTS = "implements";
 
   public STRING_NAME: string = "String";
 

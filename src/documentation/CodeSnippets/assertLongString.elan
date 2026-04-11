@@ -1,4 +1,4 @@
-# 2613bd3780d5874f700d9b4f9354f31636622cc6d942186697bd85b46b4e5b8a Elan 2.0.0-alpha guest default_profile valid
+# 2613bd3780d5874f700d9b4f9354f31636622cc6d942186697bd85b46b4e5b8a Elan 2.0.0-alpha valid
 
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
 

@@ -1,4 +1,4 @@
-# 5e26bc86890e055e6548a3566125dd3ce842ec170e2c5febb4a5efd2e62a9330 Elan 2.0.0-alpha guest default_profile valid
+# 5e26bc86890e055e6548a3566125dd3ce842ec170e2c5febb4a5efd2e62a9330 Elan 2.0.0-alpha valid
 
 constant allWords set to "AAHED ZYMIC"
 
@@ -9,7 +9,7 @@ main
     constant choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
-    call pressAnyKeyToContinue(true)
+    call pressAnyKeyToContinue()
     call clearAllDisplays()
   end while
 end main

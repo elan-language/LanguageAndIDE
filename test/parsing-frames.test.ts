@@ -2,7 +2,6 @@ import assert from "assert";
 
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
@@ -16,6 +15,7 @@ import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { Profile } from "../src/ide/frames/profile";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -27,7 +27,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -46,7 +46,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -64,7 +64,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -83,7 +83,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -102,7 +102,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -121,7 +121,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -140,7 +140,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -158,7 +158,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -176,7 +176,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -194,7 +194,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -212,7 +212,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -232,7 +232,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -252,7 +252,7 @@ constant pi set to 3.142
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -274,7 +274,7 @@ constant e set to 2.718
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -296,7 +296,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -320,7 +320,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -349,7 +349,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -383,7 +383,7 @@ enum Fruit apple, orange, pear
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -422,7 +422,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -451,7 +451,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -476,7 +476,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -502,7 +502,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -525,7 +525,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -549,7 +549,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -576,7 +576,7 @@ abstract class Card
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -605,7 +605,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

@@ -31,27 +31,36 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     return [
-      [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
-      [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
-      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
-      [elifKeyword, (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
-      [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
-      [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
-      [constantKeyword, (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
-      [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
-      [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
-      [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
-      [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
-      [this.getCommentMarker(), (parent: Parent) => this.factory.newComment(parent)],
+      ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
+      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
+      [
+        variableKeyword,
+        "<b>v</b>ariable definition",
+        (parent: Parent) => this.factory.newVar(parent),
+      ],
+      [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
+      [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
+      [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
+      [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
+      [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],
+      [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
+      [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent, "")],
+      [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
+      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
+      [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [
+        this.getCommentMarker(),
+        `<b>${this.getCommentMarker()}</b> comment`,
+        (parent: Parent) => this.factory.newComment(parent),
+      ],
     ];
   }
 
-  profileAllows(_keyword: string): boolean {
-    return true;
+  profileAllows(keyword: string): boolean {
+    return this.profile.statements.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

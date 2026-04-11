@@ -1,6 +1,6 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
-import { classKeyword } from "../../../compiler/elan-keywords";
+import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
@@ -22,7 +22,6 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
-import { Profile } from "../frame-interfaces/profile";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import {
   parentHelper_addChildAfter,
@@ -48,6 +47,7 @@ import {
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
+import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
 
@@ -201,7 +201,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
 
   public inheritanceAsElanSource(): string {
-    return this.doesInherit() ? ` ${this.inheritance.renderAsElanSource()}` : ``;
+    return this.doesInherit() ? ` ${inheritsKeyword} ${this.inheritance.renderAsElanSource()}` : ``;
   }
 
   indent(): string {
@@ -263,6 +263,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   parseTop(source: CodeSource): boolean {
     source.remove(this.topKeywords());
     this.name.parseFrom(source);
+    source.removeRegEx(/^\sinherits\s/, true);
     this.inheritance.parseFrom(source);
     return true;
   }
@@ -325,7 +326,6 @@ ${this.language().renderBottomAsHtml(this)}
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}`;
   }
-
   resetFieldText(): void {
     super.resetFieldText();
     parentHelper_resetFieldTextOnChildren(this);

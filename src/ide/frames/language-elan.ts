@@ -6,11 +6,12 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -96,7 +97,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
@@ -110,7 +111,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof AbstractProcedure) {
       html = `<el-kw>${this.ABSTRACT} ${this.PROCEDURE} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
-      html = ``;
+      html = `<el-kw>${this.ABSTRACT} ${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     }
     return html;
   }
@@ -122,15 +123,15 @@ export class LanguageElan extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
@@ -138,11 +139,11 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
@@ -153,12 +154,29 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
+  private inheritance(frame: ClassFrame): string {
+    return frame.doesInherit()
+      ? ` <el-kw>${this.INHERITS}</el-kw> ${frame.inheritance.renderAsHtml()}`
+      : ` ${frame.inheritance.renderAsHtml()}`;
+  }
+
   renderTopAsExport(_frame: Frame): string {
     return ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderBottomAsHtml(frame: Frame): string {
     return `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
+  }
+
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
   }
 
   private ABSTRACT = "abstract";
@@ -241,6 +259,8 @@ export class LanguageElan extends LanguageAbstract {
 
   START_OF_GENERIC: string = `<${this.OF} `;
   THIS_INSTANCE: string = this.THIS;
+  OVERRIDES = "";
+  IMPLEMENTS = "";
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
@@ -309,6 +329,10 @@ export class LanguageElan extends LanguageAbstract {
 
   assertStatementFields(frame: AssertStatement): Field[] {
     return this.default_assertStatementFields(frame);
+  }
+
+  private modifierAsHtml(member: MemberFrame): string {
+    return member.isPrivate ? `<el-kw>${this.PRIVATE} </el-kw>` : "";
   }
 
   // Elan keywords followed by JavaScript keywords

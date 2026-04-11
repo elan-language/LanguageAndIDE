@@ -86,11 +86,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(funcSymbol, this.scope)) {
+    if (isMemberOnFieldsClass(funcSymbol, this.scope)) {
+      mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
+    } else {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
-
-    mustbeValidQualifier(this.precedingNode, this.compileErrors, this.fieldId);
 
     if (funcSymbolType instanceof FunctionType) {
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);

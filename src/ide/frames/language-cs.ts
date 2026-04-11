@@ -1,11 +1,14 @@
+import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
+
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -30,7 +33,13 @@ export class LanguageCS extends LanguageCfamily {
   defaultMimeType: string = "text/plain";
 
   annotation(frame: Frame): string {
-    return this.common_Annotation(frame);
+    let annotation = "";
+    if (frame instanceof Property) {
+      annotation = frame.frameSpecificAnnotation();
+    } else {
+      annotation = this.common_Annotation(frame);
+    }
+    return annotation;
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -43,13 +52,17 @@ export class LanguageCS extends LanguageCfamily {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>; <el-kw>${this.PRIVATE} ${this.SET}</el-kw>;}`;
+      html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>; <el-kw>${this.PRIVATE} ${this.SET}</el-kw>;}`;
+    } else if (frame instanceof AbstractProperty) {
+      html = `<el-kw>${this.ABSTRACT}</el-kw> ${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>; <el-kw>${this.PRIVATE} ${this.SET}</el-kw>;}`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }
     return html;
   }
 
+  OVERRIDES = "override";
+  IMPLEMENTS = "";
   INTERPOLATED_STRING_PREFIX: string = "$";
 
   renderTopAsHtml(frame: Frame): string {
@@ -62,8 +75,25 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
+  inheritance(frame: ClassFrame): string {
+    return frame.doesInherit()
+      ? `: ${frame.inheritance.renderAsHtml()}`
+      : `${frame.inheritance.renderAsHtml()}`;
+  }
+
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);
+  }
+
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
   }
 
   addNodesForParamDef(node: ParamDefNode): void {

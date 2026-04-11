@@ -14,7 +14,6 @@ import { UnknownType } from "../src/compiler/symbols/unknown-type";
 import { TestStatus } from "../src/compiler/test-status";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { AbstractField } from "../src/ide/frames/fields/abstract-field";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
@@ -26,6 +25,7 @@ import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageVB } from "../src/ide/frames/language-vb";
+import { Profile } from "../src/ide/frames/profile";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
@@ -36,6 +36,7 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 
 
 // flag to update test files
@@ -204,7 +205,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -608,7 +609,7 @@ export function fileWithJava(): FileImpl {
 function fileWithLanguage(language: Language): FileImpl {
   const f = new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),false,
@@ -619,7 +620,7 @@ function fileWithLanguage(language: Language): FileImpl {
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()),false, false));
+  const main = new MainFrame(new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
@@ -683,7 +684,7 @@ export async function createTestRunner() {
 }
 
 export async function testElanProgram(pathFromSrc: string) {
-  const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\src\\${pathFromSrc}`);
+  const f = await loadFileAsModelNew(pathFromSrc);
   const runner = await createTestRunner();
   f.refreshParseAndCompileStatuses(false);
   assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -706,4 +707,46 @@ export function asDebugSymbol(name: string, value: any, typeMap : string) {
   } as DebugSymbol
 }
 
+export function selectOption(selector : AbstractSelector, option : string) {
+  const map = selector.getContextMenuItems();
+  let keyForString = "";
+
+  for(const v of map) {
+    const [key, [rawVal,]] = v;
+    const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
+    if (val.trim() === option.trim()) {
+      keyForString = key;
+    }
+  }
+
+  const event = {
+    key : "ContextMenu",
+    type : "contextmenu",
+    command : keyForString,
+    target : "frame",
+    modKey: { control: false, shift: false, alt: false },
+    optionalData: undefined
+  } as editorEvent;
+
+  selector.processKey(event);
+}
+
+export function assertOptions(selector : AbstractSelector, options : string[]) {
+  const map = selector.getContextMenuItems();
+  const availableOptions : string[] = [];
+
+  for(const v of map) {
+    const [, [rawVal,]] = v;
+    const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
+    if (!val.startsWith("delete") && !val.startsWith("copy") && !val.startsWith("paste")) {
+      availableOptions.push(val);
+    }
+  }
+
+  assertEqual(availableOptions.length, options.length);
+
+  for(let i = 0; i < availableOptions.length; i++){
+    assertEqual(availableOptions[i], options[i]);
+  }
+}
 

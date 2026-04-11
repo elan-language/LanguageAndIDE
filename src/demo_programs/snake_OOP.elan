@@ -1,4 +1,4 @@
-# b5b02fd5605756c1e03a97bd5bfd04968b6b4f38e8525e5a8d4ca4f4e0cb1936 Elan 2.0.0-alpha guest default_profile valid
+# 0733c668a9f4dc7ee7d354f1926169770886f9a6729a0285d25cbe86194e94f1 Elan 2.0.0-alpha1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -38,7 +38,7 @@ class Snake
   private property priorTail as Square
 
   procedure clockTick(key as String, apple as Apple)
-    call setDirection(key)
+    call this.setDirection(key)
     set this.priorTail to this.body[0]
     variable body set to this.body
     call body.append(this.head)
@@ -63,7 +63,7 @@ class Snake
 
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
-     for seg in this.body
+    for seg in this.body
       if (seg.equals(sq)) then
         set result to true
       end if
@@ -72,7 +72,7 @@ class Snake
   end function
 
   function gameOver() returns Boolean
-    return bodyCovers(this.head) or this.head.hasHitEdge()
+    return this.bodyCovers(this.head) or this.head.hasHitEdge()
   end function
 
   private procedure setDirection(key as String)

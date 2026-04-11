@@ -1,4 +1,4 @@
-# c3e8633a6669feb2c4a10b9ac0bde01d7fbc9347a17e1a155f3a87eca5eae570 Elan 2.0.0-alpha guest default_profile valid
+# 6981c2414cb32c0b9798be5f17ade89734e154dde276cd62f515649a67fbde34 Elan 2.0.0-alpha1 valid
 
 main
   variable start set to new Point(5, 5)
@@ -59,7 +59,7 @@ end procedure
 
 function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
   variable gr set to createBlockGraphics(white)
-   for rock in rocks
+  for rock in rocks
     set gr to withPut(gr, rock.x, rock.y, black)
   end for
   set gr to withPut(gr, start.x, start.y, green)
@@ -77,7 +77,7 @@ end function
 
 function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
   variable graphics set to gr
-   for p in route
+  for p in route
     set graphics to withPut(graphics, p.x, p.y, orange)
   end for
   variable start set to route[0]
@@ -116,7 +116,7 @@ class Solver
     set this.alg to alg
     set this.current to new Node(this.start, 0, infinity)
     set this.running to true
-     for node in this.nodes
+    for node in this.nodes
       call node.setDistanceFromStart(infinity)
       call node.setVia(emptyPoint())
       call node.setVisited(false)
@@ -124,8 +124,8 @@ class Solver
   end procedure
 
   procedure visitNextPoint()
-    call updateNeighbours()
-    set this.current to nextNodeToVisit()
+    call this.updateNeighbours()
+    set this.current to this.nextNodeToVisit()
     if (this.current.isEmpty or (this.current.point.equals(this.destination))) then
       set this.running to false
     else
@@ -137,7 +137,7 @@ class Solver
   procedure updateNeighbours()
     variable distToCurrent set to this.current.distFromStart
     variable currentPoint set to this.current.point
-     for neighbour in currentNeighbours()
+    for neighbour in this.currentNeighbours()
       variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
         call neighbour.setVia(currentPoint)
@@ -150,8 +150,8 @@ class Solver
     variable currentNode set to this.current
     variable currentPoint set to currentNode.point
     variable neighbours set to new List<of Node>()
-     for p in currentPoint.neighbouringPoints()
-      variable node set to getNodeFor(p)
+    for p in currentPoint.neighbouringPoints()
+      variable node set to this.getNodeFor(p)
       variable point set to node.point
       if not point.isEmpty then
         set neighbours to neighbours.withAppend(node)
@@ -173,8 +173,8 @@ class Solver
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to emptyNode()
     variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
-     for nd in possibilities
-      variable cost set to calculateCost(nd)
+    for nd in possibilities
+      variable cost set to this.calculateCost(nd)
       if cost < lowestCostSoFar then
         set lowestCostSoFar to cost
         set lowestCostNode to nd
@@ -200,13 +200,13 @@ class Solver
   function getRouteAndLength() returns (List<of Point>, Float)
     variable route set to [this.destination]
     variable length set to 0.0
-    variable node set to getNodeFor(this.destination)
+    variable node set to this.getNodeFor(this.destination)
     while not node.point.equals(this.start)
       variable previous set to node.via
       variable p set to node.point
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
-      set node to getNodeFor(previous)
+      set node to this.getNodeFor(previous)
     end while
     return (route, length)
   end function
@@ -284,7 +284,7 @@ class Point
   end function
 
   function isAdjacentTo(p as Point) returns Boolean
-    return (minDistTo(p) is 1) or (minDistTo(p).round(4) is sqrt(2).round(4))
+    return (this.minDistTo(p) is 1) or (this.minDistTo(p).round(4) is sqrt(2).round(4))
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds

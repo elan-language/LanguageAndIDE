@@ -18,7 +18,6 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     this.name = new MethodNameField(this);
     this.params = new ParamListField(this);
   }
-
   isProcedure = true;
 
   initialKeywords(): string {

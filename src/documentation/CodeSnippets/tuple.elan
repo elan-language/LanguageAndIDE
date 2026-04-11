@@ -1,4 +1,4 @@
-# 0fbc380687b05cfd3455b48b29d372212b6bc5d8ed0d45494dbcd470e28cc15a Elan 2.0.0-alpha guest default_profile valid
+# 0fbc380687b05cfd3455b48b29d372212b6bc5d8ed0d45494dbcd470e28cc15a Elan 2.0.0-alpha valid
 
 main
   variable point set to (3, 4)

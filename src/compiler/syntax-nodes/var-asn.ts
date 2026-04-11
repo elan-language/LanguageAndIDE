@@ -44,15 +44,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       this.indices.items.length > 0
         ? this.indices.items[this.indices.items.length - 1]
         : EmptyAsn.Instance;
-    return index instanceof IndexAsn && index.isSimpleSubscript();
-  }
-
-  isRangeSubscript() {
-    const index =
-      this.indices.items.length > 0
-        ? this.indices.items[this.indices.items.length - 1]
-        : EmptyAsn.Instance;
-    return index instanceof IndexAsn && index.isRangeSubscript();
+    return index instanceof IndexAsn;
   }
 
   getSymbol() {

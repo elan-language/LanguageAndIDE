@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -70,7 +70,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -149,7 +149,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -219,7 +219,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -281,7 +281,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -322,7 +322,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -360,7 +360,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -399,7 +399,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -423,7 +423,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -437,20 +437,34 @@ end main`;
       "Cannot use 'this' outside class context.LangRef.html#ThisCompileError",
     ]);
   });
-  test("Pass_MinimalClassInLangs", async () => {
+  test("Pass_ConcreteClassAndMembersInLangs", async () => {
     const code = `${testHeader}
 
 main
   variable x set to new Foo()
   call printNoLine(x.p1)
 end main
-
+  
 class Foo
   constructor()
     set this.p1 to 0.1
   end constructor
 
   property p1 as Float
+
+  private property p2 as Float
+
+  procedure proc1()
+
+  end procedure
+
+  private procedure proc2(a as String)
+
+  end procedure
+
+  private function f1(a as Int) returns Int
+    return a
+  end function
 
   function toString() returns String
     return ""
@@ -460,7 +474,7 @@ end class`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -479,12 +493,21 @@ def main() -> None:
 
 class Foo
 
-  def __init__(self: Foo, ) -> None:
-    self.p1 = 0.1 # set
-  p1: float
-  def toString(self: Foo, ) -> str: # function
+  def __init__(self: Foo) -> None:
+    self.p1 = 0.1 # change variable
+  p1: float # property
+  p2: float # private property
+  def proc1(self: Foo) -> None: # procedure
+
+  def proc2(self: Foo, a: str) -> None: # private procedure
+
+  def f1(self: Foo, a: int) -> int: # private function
+    return a
+  def toString(self: Foo) -> str: # function
     return ""
 
+
+main()
 `;
     const vbCode = `${testVBHeader}
 
@@ -495,10 +518,20 @@ End Sub
 
 Class Foo
 
-  Public Sub New()
-    Me.p1 = 0.1 ' set
+  Sub New()
+    Me.p1 = 0.1 ' change variable
   End Sub
   Property p1 As Double
+  Private Property p2 As Double
+  Sub proc1() ' procedure
+
+  End Sub
+  Private Sub proc2(a As String) ' private procedure
+
+  End Sub
+  Private Function f1(a As Integer) As Integer
+    Return a
+  End Function
   Function toString() As String
     Return ""
   End Function
@@ -515,10 +548,20 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // set
+    this.p1 = 0.1; // change variable
   }
-  double p1 {get; private set;} // property
-  string toString() { // function
+  public double p1 {get; private set;} // property
+  private double p2 {get; private set;} // private property
+  public void proc1() { // procedure
+
+  }
+  private void proc2(string a) { // private procedure
+
+  }
+  private int f1(int a) { // private function
+    return a;
+  }
+  public string toString() { // function
     return "";
   }
 }
@@ -534,10 +577,20 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // set
+    this.p1 = 0.1; // change variable
   }
-  double p1; // property
-  String toString() { // function
+  public double p1; // property
+  private double p2; // private property
+  public void proc1() { // procedure
+
+  }
+  private void proc2(String a) { // private procedure
+
+  }
+  private int f1(int a) { // private function
+    return a;
+  }
+  public String toString() { // function
     return "";
   }
 }

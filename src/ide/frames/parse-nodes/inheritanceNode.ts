@@ -1,35 +1,34 @@
-import { inheritsKeyword } from "../../../compiler/elan-keywords";
-import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
-import { AbstractSequence } from "./abstract-sequence";
+import { ClassSubType } from "../../../compiler/symbols/class-type";
+import { getClassType } from "../../../compiler/symbols/symbol-helpers";
 import { CSV } from "./csv";
-import { KeywordNode } from "./keyword-node";
-import { Space } from "./parse-node-helpers";
-import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
+import { File } from "../frame-interfaces/file";
+import { RootAstNode } from "../../../compiler/compiler-interfaces/root-ast-node";
 
-export class InheritanceNode extends AbstractSequence {
-  inherits: KeywordNode | undefined;
-  typeList: CSV | undefined;
-
-  parseText(text: string): void {
-    if (text.length > 0) {
-      this.inherits = new KeywordNode(this.file, inheritsKeyword);
-      this.addElement(this.inherits);
-      this.addElement(new SpaceNode(this.file, Space.required));
-      this.typeList = new CSV(
-        this.file,
-        () => new TypeNode(this.file, new Set<TokenType>([TokenType.type_abstract])),
-        1,
-      );
-      this.typeList.setSyntaxCompletionWhenEmpty("Type(s) - comma-separated");
-      this.addElement(this.typeList);
-      super.parseText(text);
-    }
+export class InheritanceNode extends CSV {
+  constructor(file: File) {
+    super(file, () => new TypeNode(file), 0);
   }
 
-  symbolCompletion_keywords(): Set<KeywordCompletion> {
-    return this.getElements().length === 0
-      ? new Set<KeywordCompletion>([KeywordCompletion.create(inheritsKeyword)])
-      : super.symbolCompletion_keywords();
+  private getAllTypeNames(): string[] {
+    return this.matchedText.split(", ");
+  }
+
+  private rootNode(): RootAstNode {
+    return this.file.getAst(true)!;
+  }
+
+  getAbstractClassNames(): string[] {
+    const rootNode = this.rootNode();
+    return this.getAllTypeNames().filter(
+      (t) => getClassType(t, rootNode) === ClassSubType.abstract,
+    );
+  }
+
+  getInterfaceNames(): string[] {
+    const rootNode = this.rootNode();
+    return this.getAllTypeNames().filter(
+      (t) => getClassType(t, rootNode) === ClassSubType.interface,
+    );
   }
 }

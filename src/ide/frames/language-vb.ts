@@ -5,11 +5,12 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { modifierAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -22,6 +23,7 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { languageHelper_inheritance } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -106,7 +108,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONST} <el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
@@ -116,11 +118,11 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.ABSTRACT} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
-      html = ``;
+      html = `<el-kw>${this.MUST_OVERRIDE} ${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     }
     return html;
   }
@@ -128,15 +130,15 @@ export class LanguageVB extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
@@ -144,11 +146,11 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()})${this.implements(frame)}`;
     } else if (frame instanceof TestFrame) {
       html = `&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
@@ -157,6 +159,16 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
+  }
+
+  private modifierAsHtml(member: MemberFrame): string {
+    let modifier = "";
+    if (member.isPrivate && member.isOnAbstractClass()) {
+      modifier = this.PROTECTED;
+    } else if (member.isPrivate) {
+      modifier = this.PRIVATE;
+    }
+    return modifier === "" ? "" : `<el-kw>${modifier} </el-kw>`;
   }
 
   renderBottomAsHtml(frame: Frame): string {
@@ -193,7 +205,17 @@ export class LanguageVB extends LanguageAbstract {
     return html;
   }
 
-  private ABSTRACT = "abstract";
+  renderFileImportsAsHtml(): string {
+    return "";
+  }
+  renderFileTrailerAsHtml(): string {
+    return "";
+  }
+
+  translateExpression(expr: string): string {
+    return expr;
+  }
+
   private AS = "As";
   private CATCH = "Catch";
   private CLASS = "Class";
@@ -212,10 +234,13 @@ export class LanguageVB extends LanguageAbstract {
   private INTERFACE = "Interface";
   private IS = "Is";
   private ME = "Me";
+  private MUST_INHERIT = "MustInherit";
+  private MUST_OVERRIDE = "MustOverride";
   private NEXT = "Next";
   private OF = "Of";
   private PRIVATE = "Private";
   private PROPERTY = "Property";
+  private PROTECTED = "Protected";
   private PUBLIC = "Public";
   private RETURN = "Return";
   private STEP = "Step";
@@ -254,6 +279,8 @@ export class LanguageVB extends LanguageAbstract {
 
   START_OF_GENERIC: string = `(${this.OF} `;
   THIS_INSTANCE: string = this.ME;
+  OVERRIDES = "Overrides";
+  IMPLEMENTS = "Implements";
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);
@@ -316,6 +343,16 @@ export class LanguageVB extends LanguageAbstract {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  inheritance(frame: ClassFrame): string {
+    return languageHelper_inheritance(
+      frame,
+      this.INHERITS,
+      this.IMPLEMENTS,
+      `
+<br>&nbsp;&nbsp;`,
+    );
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

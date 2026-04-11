@@ -1,7 +1,6 @@
 import assert from "assert";
 
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { Alternatives } from "../src/ide/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../src/ide/frames/parse-nodes/arg-list-node";
@@ -29,11 +28,12 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { Profile } from "../src/ide/frames/profile";
 
 suite("Symbol Completion Spec", () => {
   const f = new FileImpl(
     hash,
-    new DefaultProfile(),
+    new Profile(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),

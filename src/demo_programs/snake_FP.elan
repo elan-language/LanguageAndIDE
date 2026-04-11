@@ -1,4 +1,4 @@
-# ba49d079f35df5a54e8fc1879e14aa17c0da1eeb4ec5c48457f1e95ab92616db Elan 2.0.0-alpha guest default_profile valid
+# a5d3e203d56bbf1cf1eb5d04dfae8ba8ee812fcca3ef50bb8af63a3dba28f4a1 Elan 2.0.0-alpha1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -105,7 +105,7 @@ class Game
     variable y set to y_rnd3.item_0
     variable rnd3 set to y_rnd3.item_1
     variable apple2 set to new Square(x, y)
-    variable g2 set to withApple(apple2).withRnd(rnd3)
+    variable g2 set to this.withApple(apple2).withRnd(rnd3)
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
@@ -213,7 +213,7 @@ test test_updateGraphics
   assert blocks[23][15] is green
 end test
 
-test testnewApple
+test test_testnewApple
   variable g1 set to new Game(new Random())
   assert g1.apple is new Square(12, 15)
   variable g2 set to g1.withNewApple()

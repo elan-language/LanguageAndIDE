@@ -2,10 +2,11 @@ import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
+import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class Constructor extends FrameWithStatements {
+export class Constructor extends FrameWithStatements implements MemberFrame {
   isConstructor = true;
   isMember = true;
   isAbstract = false;
@@ -14,6 +15,11 @@ export class Constructor extends FrameWithStatements {
   constructor(parent: Parent) {
     super(parent);
     this.params = new ParamListField(this);
+  }
+  isPrivate: boolean = false;
+
+  isOnAbstractClass(): boolean {
+    return false;
   }
 
   initialKeywords(): string {

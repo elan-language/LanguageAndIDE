@@ -6,23 +6,30 @@ import {
 } from "../../../compiler/elan-keywords";
 import {
   addPrivateToggleToContextMenu,
-  modifierAsSource,
+  modifierAsElanSource,
   singleIndent,
   togglePrivatePublic,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
+import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
+import { AbstractClass } from "../globals/abstract-class";
 import { FunctionFrame } from "../globals/function-frame";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
-  private: boolean;
+  isPrivate: boolean;
   isAbstract = false;
+  file: File;
   constructor(parent: Parent, priv = false) {
     super(parent);
-    this.private = priv;
+    this.file = parent.getFile();
+    this.isPrivate = priv;
+  }
+  isOnAbstractClass(): boolean {
+    return this.getParent() instanceof AbstractClass;
   }
 
   helpId(): string {
@@ -33,8 +40,13 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return singleIndent();
   }
 
+  frameSpecificAnnotation(): string {
+    const priv = this.isPrivate ? "private " : "";
+    return `${priv}function`;
+  }
+
   public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
@@ -45,7 +57,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
     const priv = `${privateKeyword} `;
     if (source.isMatch(priv)) {
       source.remove(priv);
-      this.private = true;
+      this.isPrivate = true;
     }
     super.parseTop(source);
   }
@@ -54,11 +66,11 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
   }
 
   makePublic = () => {
-    this.private = false;
+    this.isPrivate = false;
     return true;
   };
   makePrivate = () => {
-    this.private = true;
+    this.isPrivate = true;
     return true;
   };
 

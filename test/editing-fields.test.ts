@@ -1,6 +1,5 @@
 import assert from "assert";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { GlobalComment } from "../src/ide/frames/globals/global-comment";
@@ -14,13 +13,14 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "./testHelpers";
+import { Profile } from "../src/ide/frames/profile";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -68,7 +68,7 @@ suite("Editing Fields Tests", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -156,7 +156,7 @@ suite("Editing Fields Tests", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -206,7 +206,7 @@ suite("Editing Fields Tests", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -237,7 +237,7 @@ suite("Editing Fields Tests", () => {
     const comment = new GlobalComment(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -265,7 +265,7 @@ suite("Editing Fields Tests", () => {
     const comment = new GlobalComment(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -295,7 +295,7 @@ suite("Editing Fields Tests", () => {
     const main = new MainFrame(
       new FileImpl(
         hash,
-        new DefaultProfile(),
+        new Profile(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -329,7 +329,7 @@ suite("Editing Fields Tests", () => {
   test("End of field marker automatically skips to next field #496", () => {
     const file = new FileImpl(
       hash,
-      new DefaultProfile(),
+      new Profile(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

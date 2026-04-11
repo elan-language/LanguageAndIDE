@@ -1,4 +1,4 @@
-# 39e5ffe36cbb1bb9f17360220311a2488ee63ca90d82aaf1355fa8d78cdaaffd Elan 2.0.0-alpha guest default_profile valid
+# 39e5ffe36cbb1bb9f17360220311a2488ee63ca90d82aaf1355fa8d78cdaaffd Elan 2.0.0-alpha valid
 
 main
   call print(1)

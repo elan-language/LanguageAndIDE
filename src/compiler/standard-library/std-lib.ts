@@ -12,6 +12,7 @@ import {
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
+  elanAnyEnumType,
   elanAnyType,
   elanClassExport,
   elanClassType,
@@ -415,6 +416,12 @@ export class StdLib {
     return this.system.tuple([false, 0]) as [boolean, number];
   }
 
+  @elanFunction(["any enum"], FunctionOptions.pureAsync, ElanString)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async enumValue(@elanAnyEnumType() s: any) {
+    return await this.system.toString(s);
+  }
+
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async print(@elanAnyType() s: any) {
@@ -743,11 +750,9 @@ export class StdLib {
   }
 
   // Graphics
-  @elanProcedure(["prompt"], ProcedureOptions.async)
-  async pressAnyKeyToContinue(prompt: boolean) {
-    if (prompt) {
-      await this.prompt("Press any key to continue");
-    }
+  @elanProcedure([], ProcedureOptions.async)
+  async pressAnyKeyToContinue() {
+    await this.prompt("Press any key to continue");
     await this.waitForKey();
     return;
   }
