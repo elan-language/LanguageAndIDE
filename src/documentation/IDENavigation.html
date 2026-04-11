@@ -2,9 +2,12 @@
 <html lang="en-GB">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../ide/styles/colourScheme.css" rel="stylesheet">
-<link href="../ide/styles/documentation.css" rel="stylesheet">
-<link href="../ide/styles/elanStyle.css" rel="stylesheet">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css" >
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<!-- Font Awesome has external link symbol at U+F08E (in Unicode Private Use Area)    -->
+<!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="favicon.ico" rel="icon">
 <title>Elan IDE Navigation</title>
 <script type="text/javascript" src="generated_toc.js"></script>
@@ -13,11 +16,67 @@
 <body id="top">
 <div class="docTitle">IDE controls & keyboard shortcuts</div>
 
+<div class="accordion" id="LaunchIDE">
+<h2 class="acc-title" tabindex="0" id="LaunchIDE">Launch the IDE</h2>
+<div class="acc-body">
+<p>Use a compatible browser (currently Chrome, Chromium and Edge) and one of these links, depending on which language
+you want the IDE to open in:</p>
+<ul>
+ <li><a href="https://elan-lang.org"><b>Reference Language</b> (Elan) <i class="fa">&#xf08e;</i></a> &ndash; <el-code>https://elan-lang.org</el-code></li>
+ <li><a href="https://elan-lang.org?lang=python"><b>Python</b>  <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=python</el-code></li>
+ <li><a href="https://elan-lang.org?lang=vb"><b>VB.NET</b>  <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=vb</el-code></li>
+ <li><a href="https://elan-lang.org?lang=cs"><b>C#</b>  <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=cs</el-code></li>
+ <li><a href="https://elan-lang.org?lang=java"><b>Java</b>  <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=java</el-code></li>
+</ul>
+<div class="accordion" id="CustomiseIDE">
+<h3 class="acc-title" tabindex="0">Customising the IDE</h3>
+<div class="acc-body">
+
+<p>To customise start-up, you add further options after <b>?</b> in the URL, separated by <b>&</b> and including no spaces, for example:</p>
+<ul>
+ <li>To specify a profile that reflects limits to the use of the IDE<br>
+ <el-code>https://elan-lang.org?profile=1.0</el-code></li>
+ <li>To specify both a language and a CVD option:<br>
+ <el-code>https://elan-lang.org?lang=python&cvd=1</el-code></li>
+</ul>
+
+<div class="accordion" id="Profile">
+<h3 class="acc-title" tabindex="0">Profiles</h3>
+<div class="acc-body">
+
+<p>The teacher may wish to limit the range of language constructs presented to a pupil, and this is done by defining an appropriate <el-code>profile</el-code> in the URL given to the pupil.
+If no <el-code>profile</el-code> is specified, then the full language is available.</p>
+<ul>
+ <li><b>Procedural programming</b>
+ <ul>
+  <li><el-code>profile=1.0</el-code> limits the programmer to instructions <el-instr>print</el-instr>, <el-kw>constant</el-kw>, <el-kw>variable</el-kw>, <el-kw>set</el-kw> and <el-kw>comment</el-kw>.</li>
+  <li><el-code>profile=1.1</el-code> adds <el-kw>if</el-kw>, <el-kw>while</el-kw>, <el-kw>for</el-kw> and <el-kw>call</el-kw>.</li>
+  <li><el-code>profile=1.2</el-code> adds user-defined <el-kw>function</el-kw>, <el-kw>test</el-kw> and <el-kw>constant</el-kw>.</li>
+  <li><el-code>profile=1.3</el-code> adds user-defined <el-kw>procedure</el-kw>.</li>
+  <li><el-code>profile=1.4</el-code> adds <el-kw>try</el-kw>, <el-kw>catch</el-kw>, <el-kw>throw</el-kw>.</li>
+ </ul>
+</li><li><b>Object-oriented programming</b>
+ <ul>
+  <li><el-code>profile=2.0</el-code> adds to the above <el-kw>class</el-kw>, <el-kw>property</el-kw>, <el-kw>function</el-kw> method and <el-kw>procedure</el-kw> method.</li>
+  <li><el-code>profile=2.1</el-code> adds <el-kw>abstract class</el-kw>
+  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
+  <li><el-code>profile=2.2</el-code> adds <el-kw>interface</el-kw>
+  and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
+ </ul>
+</li><li><b>Functional programming</b>
+ <ul>
+  <li>(To be decided)</li>
+ </ul></li>
+</ul>
+</div></div>
+</div></div>
+</div></div>
+
 <div class="accordion">
 <h2 class="acc-title" tabindex="0" id="Navigation">Navigate around the IDE</h2>
 <div class="acc-body">
   <p>Watch the video: <a href="videos/navigate-ide.html">Navigate around the IDE</a></p>
-  <p><i>Always use Elan with the browser in 'full screen mode' &ndash; it makes more space available and is safer.</i></p>
+  <p><i>Always use the browser in 'full screen mode' &ndash; it makes more space available and is safer.</i></p>
   <p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel, or change the magnification via the browser's zoom menu.</p>
   <p>If an area has a blue tinted background, it does not have browser 'focus' and will not respond to keyboard input.
 Use keyboard shortcuts or mouse or touch gestures to change the focus (which is indicated by a white background):</p>
@@ -41,7 +100,7 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
 <div class="accordion">
 <h3 class="acc-title" tabindex="0">Loading and saving</h3>
 <div class="acc-body">
-To access the <b>demo</b> or <b>file</b> menus via the keyboard:
+<p>To access the <b>demo</b> or <b>file</b> menus via the keyboard:</p>
 <ul>
   <li>If the menus are disabled, you need to stop the program currently running</li>
   <li>press <b>Ctrl+b</b> then <b>Tab</b> to the menu (if needed)</li>
@@ -90,21 +149,27 @@ cause the browser tab to be closed.</p>
 <el-code source="promptNewCode.elan">
 <el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
 </el-code></li>
-The first comment in a file (which shows the Elan version) is automatically created and cannot be edited, deleted or moved.</li>
+The first comment in a file (which shows the software version) is automatically created and cannot be edited, deleted or moved.</li>
  <li><b>'new code' prompts</b> look like this:
 <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> procedure function test constant enum record class abstract interface #</div></el-select>
 </el-global></el-code>
-or, when selected, a prompt at the Global level:
-<el-code source="promptGlobal.elan">
-<el-global contenteditable="" spellcheck="false" class="selected focused ok empty" id="select14" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> main procedure function test constant enum class abstract interface #</div></el-select></el-global></el-code>
-or, when selected, a prompt in the Main procedure:
-<el-code source="promptMain.elan">
-<el-statement contenteditable="" spellcheck="false" class="selected focused ok empty" id="select7" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> call for if constant set throw try variable while #</div></el-select></el-statement></el-code>
-<br>though the specific words offered will depend upon the context.</li>
+or, when selected:
+<el-code source="prompt.elan">
+<el-statement contenteditable="" spellcheck="false" class="selected focused ok empty" id="select12" tabindex="-1"><el-top class="newcode">press Enter, or <i>right</i>-click here, to view options</el-top></el-statement>
+</el-code><br>
+and, on pressing <b>Enter</b> or <i>right click</i>, this menu appears:<br>
+<img src="images/promptMenu.png" width="400"><br>
+which means that a second press of <b>Enter</b> will choose the (top) <b>print</b> option and supply the procedure call:<br>
+<el-code><el-kw>call</el-kw> <el-method>print</el-method>(<i>any</i>)</el-code><br>
+soliciting values and literals to be printed.<br>
+The <b>change value</b> option inserts a <el-kw>set</el-kw> instruction.<br>
+The initial letters shown in <b>bold</b> indicate the single letter that can be used from the keyboard for that instruction.
+Other instructions are entered by clicking on them in this menu.
+ </li>
 </ul>
 
 <p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions. They do not alter the program's behaviour, though they are treated by the editor <i>like</i> instructions.</p>
- 
+
 <h3 id="SelectInstructions">To select instructions</h3>
 
 <table>
@@ -262,7 +327,7 @@ To restore the cut instructions to their original context, use <el-code>undo</el
     <h3 class="acc-title" tabindex="0" id="Ghosting">Ghosting</h3>
     <div class="acc-body">
 <p>Instead of being able to 'comment out' code that you wish to retain but not execute,
- Elan provides a method for 'ghosting' sections of code with much the same effect,
+ there is a method for 'ghosting' sections of code with much the same effect,
  while leaving the ghosted code fully formatted.</p>
 <ul>
  <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, an entire <el-kw>procedure</el-kw> or a <el-kw>test</el-kw>) to be ghosted.</li>
@@ -318,15 +383,22 @@ To restore the cut instructions to their original context, use <el-code>undo</el
 </div></div>
 
 <div class="accordion">
-  <h2 class="acc-title" tabindex="0" id="MacOS">Apple macOS specific</h2>
-  <p class="acc-body">Where a keyboard shortcut is shown with the <b>Ctrl</b> control key, using Apple's macOS you should use the &#x2318; <b>Command</b> key instead.</p>
+<h2 class="acc-title" tabindex="0" id="MacOS">Apple macOS specific</h2>
+<p class="acc-body">Where a keyboard shortcut is shown with the <b>Ctrl</b> control key, users of Apple's macOS should use the &#x2318; <b>Command</b> key instead.</p>
 </div>
 
 <div class="accordion">
-  <h2 class="acc-title" tabindex="0" id="ColourScheme">Change colour scheme for CVD</h2>
-  <p class="acc-body">Button <b>File</b> has menu option <b>Preferences</b> which offers a slightly modified colour scheme for users with CVD. Note that switching colour schemes
-  automatically re-loads the web page &ndash; so you will receive a warning if you have unsaved code.</p>
-</div>
+<h2 class="acc-title" tabindex="0" id="ColourScheme">Colour scheme for CVD</h2>
+<div class="acc-body"><p>There are two ways in which to change the colour scheme for users
+with CVD:</p>
+<ul>
+ <li>Button <b>file</b> has menu option <b>preferences</b> which offers an alternative
+ colour scheme via a small dialogue. Whether or not you tick the CVD option, clicking <b>confirm</b>
+  automatically tries to reload the web page, so you will receive a warning (which you can cancel) if you have unsaved code.
+  You can also just press <b>Escape</b> to remove the dialogue.</li>
+ <li>The URL provided to a pupil may include a CVD scheme, as described above in <a href="#LaunchIDE">Launch the IDE</a>.</li>
+</ul>
+</div></div>
 
 <h2></h2><!-- for final rule -->
 

@@ -1,13 +1,15 @@
-# 2c296fb61e782105ec3d4784cafac6adfed8e2e27c1a7c218e0f9f7e5fc6a92a Elan 2.0.0-alpha valid
+# bcfc906baca9115dabb0adea3d4cea8a317f74e63d15f60fd551787358b2bdb0 Elan 2.0.0-alpha1 guest default_profile valid
 
 main
   call print(factorial(7))
 end main
 
+# snipFrom
 function factorial(n as Int) returns Int
   return (if(n > 1, n*factorial(n - 1), 1))
 end function
 
+# snipTo
 test test_factorial
   assert factorial(3) is 6
 end test
