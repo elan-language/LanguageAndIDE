@@ -1870,6 +1870,14 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-code-block>
 
 <h1 id="InputOutput">Input/output</h1>
+This section covers a variety of input and output facilities:
+<ul>
+ <li><a href="#KeyboardInput">Keyboard input</a> </li>
+ <li><a href="#FileInputOutput">Text file input/output</a></li>
+ <li><a href="#RenderHtml">Rendering Html in the display</a></li>
+ <li><a href="#DisplayImageURL">Displaying images from URLs</a></li>
+ <li><a href="#Sound">Sound</a></li>
+</ul>
 
 <h2 id="KeyboardInput">Keyboard input</h2>
 <p>soliciting and retrieving keyboard input requires using these system methods:</p>
@@ -2169,9 +2177,9 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <p>will produce:</p>
 <img src="images/Html_2.png" width="275" height="200">
 
-<h2 id="displayImageURL">Displaying images from URLs</h2>
+<h2 id="DisplayImageURL">Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an http or https URL may be sent to the display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
+<p>An image that can be retrieved with an <el-code>http</el-code> or <el-code>https</el-code> URL may be sent to the display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
@@ -2179,26 +2187,22 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="var3" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-top></el-statement>
 <el-statement class="ok" id="call7" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args9" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
- <h5 class="no-TOC">Notes</h5>
-  <ul>
-   <li>The usual <b>&lt;img&gt;</b> tag attributes are respected, though <el-id>alt</el-id> does not give the expected tooltip when hovering over the image,
-   and <el-id>title</el-id> is only a descriptive comment.</li>
- </ul>
+   <p>The usual <el-code>&lt;img&gt;</el-code> tag attributes are respected, though <el-code>alt</el-code> does not give the expected tooltip when hovering over the image, and <el-code>title</el-code> is only a descriptive comment.</p>
 
- <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition: and then call the <el-method>displayVectorGraphics</el-method> method on it, thus:
+ <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition, set properties by calling <a href="#VG_properties">vector graphic procedures</a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <el-code-block source="imageVG.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>("<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>")<el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>400</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>200</el-lit>, <br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>Shark</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call11" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args13" class="optional ok" tabindex="-1"><el-txt>[<el-id>pic</el-id>]</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>sharkUrl</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>"</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var7" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var8" class="ok" tabindex="-1"><el-txt><el-id>sharkVG</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>sharkUrl</el-id>)</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call11" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-id>sharkVG</el-id>.<el-method><el-method>setWidth</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args13" class="optional ok" tabindex="-1"><el-txt><el-lit>400</el-lit></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="call14" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="-1"><el-txt><el-id>sharkVG</el-id>.<el-method><el-method>setHeight</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args16" class="optional ok" tabindex="-1"><el-txt><el-lit>200</el-lit></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="call17" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-id>sharkVG</el-id>.<el-method><el-method>setAlt</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args19" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Shark</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="call30" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident31" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args32" class="optional ok" tabindex="-1"><el-txt>[<el-id>sharkVG</el-id>]</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 </el-code-block>
- <h5 class="no-TOC">Notes</h5>
-  <ul>
-   <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id>.</li>
-   <li>Other vector graphic image properties such as <i>x,y</i> position can be added into the <el-kw>with</el-kw> clause.</li>
-  </ul>
+ </li>
 </ul>
 
 <div id="Sound"></div>
-<h2 id="tone">Sound output</h2>
+<h2 id="tone">Sound</h2>
 
 <p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
 <ul>
@@ -2212,100 +2216,235 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; An example that plays a C major scale first ascending then descending:</p>
 <el-code-block source="sound.elan">
-<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw>&lt; <el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+<el-statement class="ok" id="var5" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var8" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var11" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var14" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok multiline" id="for17" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>0</el-lit>, <el-id>scaleL</el-id>)</el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="call21" tabindex="-1"><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>sleep</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 <el-statement class="ok multiline" id="for27" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw>&lt; <el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>0</el-lit>, <el-id>scaleL</el-id>)</el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="call33" tabindex="-1"><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args35" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="call31" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident32" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args33" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
 <hr>
 </div></div>
 
-<h1 id="Constants">System constants</h1>
+<h1 id="CommonMethods">Common methods</h1>
+<h2 id="CommonDotMethods">Common dot methods</h2>
 
-<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-kw>constant</el-kw></a>s,
- in that they are mutable named values, though it would be poor practice to change them.</p>
+<p>Click on a Type to go to the Type's function dot methods, or on <el-code><i class="fa">&#xf08e;</i></el-code> to go to the specific method on that Type.</p>
 
-<h2 id="StringConstants">String constants</h2>
-<p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.
-Within a string delimited by <i>single quotes</i>, those literal characters can also be used.</p>
-<table class="tableType">
+<table>
  <tr>
-  <th>name</th><th>Type</th><th >value</th>
- </tr><tr id="openBrace">
-  <td><el-id>openBrace</el-id></td>
-  <td><el-type>String</el-type></td>
-  <td><el-code>&nbsp; { </el-code></td>
- </tr><tr id="closeBrace">
-  <td><el-id>closeBrace</el-id></td>
-  <td><el-type>String</el-type></td>
-  <td><el-code>&nbsp; } </el-code></td>
- </tr><tr id="quotes">
-  <td><el-id>quotes</el-id></td>
-  <td><el-type>String</el-type></td>
-  <td><el-code>&nbsp; &quot; </el-code></td>
+  <th>Dot method</th>
+  <th colspan="3"> Value Type</th>
+  <th colspan="6">Reference Type</th>
+  <th>Tuple</th>
+ </tr><tr><!---->
+  <td></td>
+  <td><a href="#Int"><el-type>Int</el-type></a></td>
+  <td><a href="#Float"><el-type>Float</el-type></a></td>
+  <td><a href="#Boolean"><el-type>Boolean</el-type></a></td>
+  <td><a href="#String"><el-type>String</el-type></a></td>
+  <td><a href="#List"><el-type>List</el-type></a></td>
+  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
+  <td><a href="#HashSet"><el-type>HashSet</el-type></a></td>
+  <td><a href="#Stack"><el-type>Stack</el-type></a></td>
+  <td><a href="#Queue"><el-type>Queue</el-type></a></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="ceiling"><el-method>ceiling</el-method></td>
+  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="contains"><el-method>contains</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#contains_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#contains_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 4.</td>
+  <td><a href="#contains_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="equals"><el-method>equals</el-method></td>
+  <td><a href="#equals_Int"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Boolean"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Stack"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Tuple"><i class="fa">&#xf08e;</i></a></td>
+ </tr><tr><!---->
+  <td id="floor"><el-method>floor</el-method></td>
+  <td><a href="#floor"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#floor"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="indexOf"><el-method>indexOf</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#indexOf_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#indexOf_List"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="isInfinite"><el-method>isInfinite</el-method></td>
+  <td><a href="#isIntinite"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isInfinite"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="isNan"><el-method>isNan</el-method></td>
+  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="length"><el-method>length</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#length_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 3.</td>
+  <td><a href="#length_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_Stack"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
+  <td><a href="#notEqualTo_Int"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Boolean"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Stack"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Tuple"><i class="fa">&#xf08e;</i></a></td>
+ </tr><tr><!---->
+  <td id="peek"><el-method>peek</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#peek_Stack"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#peek_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="round"><el-method>round</el-method></td>
+  <td><a href="#round"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#round"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="toString"><el-method>toString</el-method> note 1.</td>
+  <td><a href="#toString_Int"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Boolean"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_String"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Stack"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Tuple"><i class="fa">&#xf08e;</i></a></td>
+ </tr><tr><!---->
+  <td id="withSet"><el-method>withSet</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#withSet_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withSet_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td id="withRemoveAt"><el-method>withRemoveAt</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#withRemoveAt_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withRemoveAt_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
  </tr>
 </table>
 
-<h2 id="MathsConstant">Maths constant</h2>
-<table class="tableType">
- <tr><th>name</th><th>Type</th><th>value</th></tr>
-<tr id="pi">
-  <td><el-id>pi</el-id></td>
-  <td><el-type>Float</el-type></td>
-  <td>&#x1d70b = 3.141592653589793..</td>
- </tr>
-</table>
-
-<h2 id="BooleanConstants">Boolean constants</h2>
-<table class="tableType">
- <tr>
-  <th>name</th><th>Type</th><th >value</th>
- </tr><tr id="true">
-  <td><el-id>true</el-id></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><a href="#Boolean"><el-id>true</el-id></a></td>
- </tr><tr id="false">
-  <td><el-id>false</el-id></td>
-  <td><el-type>Boolean</el-type></td>
-  <td><a href="#Boolean"><el-kw>false</el-kw></a></td>
- </tr>
-</table>
-
-<h2 id="Colours">Colour constants</h2>
-<table class="tableColours">
-<tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
-<tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
-    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
-    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
-    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
-    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><el-code>0x0000ff</el-code></td></tr>
-    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
-    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
-    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
-    <tr><td><el-id>transparent</el-id> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
-</table>
-<p>A colour is specified as an <el-type>Int</el-type> value using one of these methods:</p>
-<ul>
- <li>the limited colours defined as library constants as in the above table.</li>
- <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
- <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
-    using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
- <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes.
-</ul>
+<h4 class="no-TOC">Notes</h4>
+<ol>
+ <li>The method <el-method>toString</el-method> is so widely applicable because it enables you to print
+ all variables and data structures to the IDE's display pane for debugging purposes.</li>
+ <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <el-type>Float</el-type> values, but they can accept <el-type>Int</el-type> values without raising an error.</li>
+ <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
+  <el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>length</el-method>()</el-code>) &#x27f6; 15</li>
+ <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> can be
+  done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
+<table class="tablePlain">
+ <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>contains</el-method>("<el-lit>widget</el-lit>")</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
+  <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>values</el-method>().<el-method>contains</el-method>(<el-lit>42</el-lit>)</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
+</table></li>
+</ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>
 <p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
@@ -2808,242 +2947,6 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <hr>
 </div></div>
 
-<h1 id="CommonMethods">Common methods</h1>
-<p>Although these methods are described in earlier sections under each Type, the tables list those which are applicable to several Types.</p>
-
-<h2 id="CommonProcedureMethods">Comon procedure methods</h2>
-<p>These methods are applicable to both <el-type>List</el-type> and <el-type>Dictionary</el-type>:</p>
-
-<table>
- <tr>
-  <th>Procedure method</th>
-  <th colspan="2">Reference Type</th>
-  <th>Notes</th>
- </tr><tr><!---->
-  <td></td>
-  <td><a href="#List"><el-type>List</el-type></a></td>
-  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="put"><el-method>put</el-method></td>
-  <td><a href="#put_List">(&#x2714;)</a></td>
-  <td><a href="#put_Dictionary">(&#x2714;)</a></td>
-  <td><b><i>deprecated</i></b> as of v1.9</td>
- </tr><tr><!---->
-  <td id="removeAt"><el-method>removeAt</el-method></td>
-  <td><a href="#removeAt_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#removeAt_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
- </tr>
-</table>
-
-<h2 id="CommonDotMethods">Common dot methods</h2>
-<p>Click on a Type to go to the Type's function dot methods, or on <el-code><i class="fa">&#xf08e;</i></el-code> to go to the specific method on that Type.</p>
-
-<table>
- <tr>
-  <th>Dot method</th>
-  <th colspan="3"> Value Type</th>
-  <th colspan="6">Reference Type</th>
-  <th>Tuple</th>
- </tr><tr><!---->
-  <td></td>
-  <td><a href="#Int"><el-type>Int</el-type></a></td>
-  <td><a href="#Float"><el-type>Float</el-type></a></td>
-  <td><a href="#Boolean"><el-type>Boolean</el-type></a></td>
-  <td><a href="#String"><el-type>String</el-type></a></td>
-  <td><a href="#List"><el-type>List</el-type></a></td>
-  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
-  <td><a href="#HashSet"><el-type>HashSet</el-type></a></td>
-  <td><a href="#Stack"><el-type>Stack</el-type></a></td>
-  <td><a href="#Queue"><el-type>Queue</el-type></a></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="ceiling"><el-method>ceiling</el-method></td>
-  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="contains"><el-method>contains</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#contains_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#contains_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 4.</td>
-  <td><a href="#contains_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="equals"><el-method>equals</el-method></td>
-  <td><a href="#equals_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Tuple"><i class="fa">&#xf08e;</i></a></td>
- </tr><tr><!---->
-  <td id="floor"><el-method>floor</el-method></td>
-  <td><a href="#floor"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#floor"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="indexOf"><el-method>indexOf</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#indexOf_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#indexOf_List"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="isInfinite"><el-method>isInfinite</el-method></td>
-  <td><a href="#isIntinite"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isInfinite"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="isNan"><el-method>isNan</el-method></td>
-  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="length"><el-method>length</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#length_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 3.</td>
-  <td><a href="#length_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
-  <td><a href="#notEqualTo_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Tuple"><i class="fa">&#xf08e;</i></a></td>
- </tr><tr><!---->
-  <td id="peek"><el-method>peek</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#peek_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#peek_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="round"><el-method>round</el-method></td>
-  <td><a href="#round"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#round"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="toString"><el-method>toString</el-method> note 1.</td>
-  <td><a href="#toString_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Tuple"><i class="fa">&#xf08e;</i></a></td>
- </tr><tr><!---->
-  <td id="withSet"><el-method>withSet</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#withSet_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#withSet_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr><!---->
-  <td id="withRemoveAt"><el-method>withRemoveAt</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#withRemoveAt_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#withRemoveAt_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr>
-</table>
-
-<h4 class="no-TOC">Notes</h4>
-<ol>
- <li>The method <el-method>toString</el-method> is so widely applicable because it enables you to print
- all variables and data structures to the IDE's display pane for debugging purposes.</li>
- <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <el-type>Float</el-type> values, but they can accept <el-type>Int</el-type> values without raising an error.</li>
- <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
-  <el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>length</el-method>()</el-code>) &#x27f6; 15</li>
- <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> can be
-  done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
-<table class="tablePlain">
- <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>contains</el-method>("<el-lit>widget</el-lit>")</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
-  <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>values</el-method>().<el-method>contains</el-method>(<el-lit>42</el-lit>)</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
-</table></li>
-</ol>
-
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
 <p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
 
@@ -3081,6 +2984,80 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
+
+<h1 id="Constants">System constants</h1>
+
+<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-kw>constant</el-kw></a>s,
+ in that they are mutable named values, though it would be poor practice to change them.</p>
+
+<h2 id="StringConstants">String constants</h2>
+<p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.
+Within a string delimited by <i>single quotes</i>, those literal characters can also be used.</p>
+<table class="tableType">
+ <tr>
+  <th>name</th><th>Type</th><th >value</th>
+ </tr><tr id="openBrace">
+  <td><el-id>openBrace</el-id></td>
+  <td><el-type>String</el-type></td>
+  <td><el-code>&nbsp; { </el-code></td>
+ </tr><tr id="closeBrace">
+  <td><el-id>closeBrace</el-id></td>
+  <td><el-type>String</el-type></td>
+  <td><el-code>&nbsp; } </el-code></td>
+ </tr><tr id="quotes">
+  <td><el-id>quotes</el-id></td>
+  <td><el-type>String</el-type></td>
+  <td><el-code>&nbsp; &quot; </el-code></td>
+ </tr>
+</table>
+
+<h2 id="MathsConstant">Maths constant</h2>
+<table class="tableType">
+ <tr><th>name</th><th>Type</th><th>value</th></tr>
+<tr id="pi">
+  <td><el-id>pi</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td>&#x1d70b = 3.141592653589793..</td>
+ </tr>
+</table>
+
+<h2 id="BooleanConstants">Boolean constants</h2>
+<table class="tableType">
+ <tr>
+  <th>name</th><th>Type</th><th >value</th>
+ </tr><tr id="true">
+  <td><el-id>true</el-id></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><a href="#Boolean"><el-id>true</el-id></a></td>
+ </tr><tr id="false">
+  <td><el-id>false</el-id></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><a href="#Boolean"><el-kw>false</el-kw></a></td>
+ </tr>
+</table>
+
+<h2 id="Colours">Colour constants</h2>
+<table class="tableColours">
+<tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
+<tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
+    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
+    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
+    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
+    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
+    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><el-code>0x0000ff</el-code></td></tr>
+    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
+    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
+    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
+    <tr><td><el-id>transparent</el-id> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
+</table>
+<p>A colour is specified as an <el-type>Int</el-type> value using one of these methods:</p>
+<ul>
+ <li>the limited colours defined as library constants as in the above table.</li>
+ <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
+ <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
+    using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
+ <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes.
+</ul>
 
 <h2>Defining your own HoFs</h2>
 

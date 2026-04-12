@@ -1,0 +1,17 @@
+# fd75a1ab3744b376d78e374a0b5d388aba0a87192e12fdb9ecc5e66a5b93a0fb Elan 2.0.0-alpha1 valid
+
+# snipFrom
+main
+  variable rainbow set to getRainbow()
+  variable suitColours set to getSuitColours()
+end main
+
+function getRainbow() returns List<of Int>
+  return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
+end function
+
+function getSuitColours() returns Dictionary<of String, Int>
+  return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
+end function
+
+# snipTo

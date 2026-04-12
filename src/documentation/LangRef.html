@@ -171,12 +171,12 @@ with all the same property values except for specific changes that you want to m
 <div id="library"></div>
 <h2 id="Scope">Scope and name qualification</h2>
 <p>'Scope' in the table above refers to where in your code a named value is accessible.
- <el-kw>constant</el-kw>s and <el-kw>enum</el-kw>s, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
+ <a href="#constant">Global <el-kw>constant</el-kw>s</a> and <a href="#enum"><el-kw>enum</el-kw>s</a>, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
  Every other kind of named value is <i>local</i> and restricted to the procedure or function within which it is defined.</p>
-<p>Local named values can have the same name as a <el-kw>constant</el-kw>, <el-kw>function</el-kw>, or <el-kw>procedure</el-kw> (which are all defined at global level or are in the standard library).
+<p>Local named values can have the same name as a global <el-kw>constant</el-kw>, <el-kw>function</el-kw>, or <el-kw>procedure</el-kw> (which are all defined at global level or are in the standard library).
  In such cases, when the name is used within the same method, then it will refer to the local definition.
-  If you have done this, but then need to access the <el-kw>constant</el-kw>, <el-kw>function</el-kw>, or <el-kw>procedure</el-kw> with the same name,
-  then you prefix the name with a <i>dot qualifier</i> of either <el-kw>global</el-kw> or <el-kw>library</el-kw> as appropriate</p>
+ If you have done this, but then need to access the <el-kw>constant</el-kw>, <el-kw>function</el-kw>, or <el-kw>procedure</el-kw> with the same name,
+ then you prefix the name with a <i>dot qualifier</i> of either <el-kw>global</el-kw> or <el-kw>library</el-kw> as appropriate</p>
 
 <h2 id="dotSyntax">Dot syntax</h3>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>.</p>
@@ -194,8 +194,23 @@ with all the same property values except for specific changes that you want to m
  <li>To refer to a value in an <el-kw>enum</el-kw>, e.g.to pick one of the values in the <el-kw>enum</el-kw> <el-type>Suit</el-type>:<br>
  <el-code><el-kw>enum </el-kw><el-type>Suit</el-type> <el-id>spades</el-id>, <el-id>hearts</el-id> <el-id>diamonds</el-id>, <el-id>clubs</el-id><br>
  <el-kw>variable </el-kw> <el-id>s</el-id> <el-kw>set to</el-kw> <el-type>Suit</el-type>.<el-id>spades</el-id></el-code></li>
+<li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a function or procedure.
+The global value may then be referred to by prefixing the variable name with the keyword <el-kw>global</el-kw> and a dot. In this example, a call to the function
+returns the value of the global constant and not the value of the local constant of the same name:
+<el-code-block source="constantOverride">
+<el-const class="ok multiline" id="const1" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="var2" class="ok" tabindex="-1"><el-txt><el-id>maxHits</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text3" class="ok" tabindex="-1"><el-txt><el-lit>20</el-lit></el-txt></el-field></el-const>
+<el-func class="ok multiline" id="func7" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-method>hits</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params10" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type11" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="let14" tabindex="-1"><el-top><el-kw>constant </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>maxHits</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>99</el-lit></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="return12" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-kw>global</el-kw>.<el-id>maxHits</el-id></el-txt></el-field></el-top></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+A similar name override is available to force reference to a library name by prefixing the keyword <el-kw>library</el-kw>.
+ </li>
 </ul>
-<p>You cannot use dot syntax with procedures that you define at the global level,
+<p>You cannot use dot syntax with functions and procedures that you define at the global level,
  nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
 
 <h1 id="GlobalInstructions">Global instructions</h1>
@@ -366,9 +381,10 @@ and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
 <h3  class="no-TOC" id="recursion">Recursion</h3>
 <p>Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:</p>
 <el-code-block source="factorial.elan">
-<el-func class="ok multiline" id="func5" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field>(<el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return10" tabindex="-1"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt>(<el-kw>if </el-kw><el-id>n</el-id> &gt; <el-lit>1</el-lit><el-kw><br>then </el-kw><el-id>n</el-id>*<el-method>factorial</el-method>(<el-id>n</el-id> - <el-lit>1</el-lit>)<el-kw><br>else </el-kw><el-lit>1</el-lit>)</el-txt></el-field></el-statement>
+<el-func class="ok multiline" id="func13" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident15" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params16" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type17" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return18" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>(<el-method>if</el-method>(<el-id>n</el-id> &gt; <el-lit>1</el-lit>, <el-id>n</el-id>*<el-method>factorial</el-method>(<el-id>n</el-id> - <el-lit>1</el-lit>), <el-lit>1</el-lit>))</el-txt></el-field></el-top></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -740,21 +756,29 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <el-const class="ok multiline" id="const7" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>warningMsg</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text9" class="ok" tabindex="-1"><el-txt>"<el-lit>Limit reached</el-lit>"</el-txt></el-field> &mdash;  a <el-type>String</el-type> value</el-const>
 </el-code-block>
 
-<h3 class="no-TOC" id="constant_structure">Constant data structures</h3>
+<h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
 whose return value is put into a variable.</p>
-<p>This example defines a list of colours in an indexable variable:</p>
+<p>These examples define a constant list and a constant dictionary of colours in indexable variables:</p>
 
-<el-code-block source="constant_colours.elan">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident35" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method></el-txt></el-field>(<el-field id="params36" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-compl><i>parameter definitions</i></el-compl></el-field>)<el-kw> returns </el-kw><el-field id="type37" class="ok" tabindex="-1"><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field>
+<el-code-block source="constantColours.elan">
+<el-statement class="ok" id="var14" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var15" class="ok" tabindex="-1"><el-txt><el-id>rainbow</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method>()</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var22" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var23" class="ok" tabindex="-1"><el-txt><el-id>suitColours</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-method>getSuitColours</el-method>()</el-txt></el-field></el-top></el-statement>
+<br>
+<el-func class="ok multiline" id="func5" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="return38" tabindex="-1"><el-kw>return </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt>[<el-lit>0x9400D3</el-lit>, <el-lit>0x4B0082</el-lit>, <el-lit>0x0000CD</el-lit>, <el-lit>0x008000</el-lit>, <el-lit>0xFFFF00</el-lit>, <el-lit>0xFFA500</el-lit>, <el-lit>0xFF0000</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return10" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt>[<el-lit>0x9400D3</el-lit>, <el-lit>0x4B0082</el-lit>, <el-lit>0x0000CD</el-lit>, <el-lit>0x008000</el-lit>, <el-lit>0xFFFF00</el-lit>, <el-lit>0xFFA500</el-lit>, <el-lit>0xFF0000</el-lit>]</el-txt></el-field></el-top></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
-<br><br>
-<el-statement id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rainbow</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>getRainbow</el-method>()</el-txt></el-field></el-statement>
-<el-func class="ok multiline" id="func33" tabindex="-1">
+<el-func class="ok multiline" id="func27" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-method>getSuitColours</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params30" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type31" class="ok" tabindex="-1"><el-txt><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="return32" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt>["<el-lit>spades</el-lit>":<el-id>black</el-id>, "<el-lit>hearts</el-lit>":<el-id>red</el-id>, "<el-lit>diamonds</el-lit>":<el-id>red</el-id>, "<el-lit>clubs</el-lit>":<el-id>black</el-id>]</el-txt></el-field></el-top></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
 </el-code-block>
+
 
 <h2 id="enum"><el-kw>enum</el-kw></h2>
 <p>An <el-kw>enum</el-kw> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
