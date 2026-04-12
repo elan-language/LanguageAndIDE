@@ -1,0 +1,8 @@
+# 207073ff9c0575e39d8a8ec539ce82469006ab49f86551873902d1771410d5bc Elan 2.0.0-alpha1 valid
+
+constant maxHits set to 20
+
+function hits() returns Int
+  constant maxHits set to 99
+  return global.maxHits
+end function
