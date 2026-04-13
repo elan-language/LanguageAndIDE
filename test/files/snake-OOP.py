@@ -38,13 +38,13 @@ class Snake
     if self.head.equals(apple.location):
       apple.newRandomPosition(self) # call procedure
     else:
-      self.body = self.body.subList(1, self.body.length()) # change variable
+      self.body = self.body.subList(1, len(self.body)) # change variable
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure
     blocks[self.head.x][self.head.y] = green # change variable
     if not self.body[0].equals(self.priorTail):
       blocks[self.priorTail.x][self.priorTail.y] = white # change variable
   def score(self: Snake) -> int: # function
-    return self.body.length() - 1
+    return len(self.body) - 1
   def bodyCovers(self: Snake, sq: Square) -> bool: # function
     result = False # variable definition
     for seg in self.body:
