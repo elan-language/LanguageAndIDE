@@ -1818,29 +1818,29 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To roll a dice in a function:</p>
 
-<el-code-block source="func_random.elan">
-<el-main class="ok multiline" id="main1" tabindex="-1">
+<el-code-block source="rollDice.elan">
+<el-main class="ok multiline" id="main0" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw>
 </el-top>
-<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method><el-method>initialiseFromClock</el-method></el-method></el-txt></el-field>(<el-field id="args8" class="empty optional ok" tabindex="-1"><el-txt></el-txt></el-field>)</el-statement>
-<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method><el-method>initialiseFromClock</el-method></el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args8" class="empty optional ok" tabindex="-1"></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-statement class="ok" id="var9" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-top></el-statement>
 <el-statement class="ok multiline" id="for12" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw>&lt; <el-field id="expr16" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit> + <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit></el-lit></el-txt></el-field>
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>1</el-lit>, <el-lit>11</el-lit>)</el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="set18" tabindex="-1"><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="set21" tabindex="-1"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field>)</el-statement>
+<el-statement class="ok" id="set16" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="set32" tabindex="-1"><el-top><el-kw>set </el-kw><el-field id="ident33" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr34" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 <el-kw>end main</el-kw>
 </el-main>
-<el-func class="ok multiline" id="func27" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method></el-txt></el-field>(<el-field id="params30" class="optional ok" tabindex="-1"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type31" class="ok" tabindex="-1"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field>
+<el-func class="ok multiline" id="func20" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>rollDice</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params23" class="optional ok" tabindex="-1"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type24" class="ok" tabindex="-1"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field>
 </el-top>
-<el-statement class="ok" id="return32" tabindex="-1"><el-kw>return </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return25" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr26" class="ok" tabindex="-1"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-top></el-statement>
 <el-kw>end function</el-kw>
-</el-func></el-code-block>
+</el-func>
+</el-code-block>
 <hr>
 </div></div>
 
@@ -1870,7 +1870,7 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-code-block>
 
 <h1 id="InputOutput">Input/output</h1>
-This section covers a variety of input and output facilities:
+<p>This section covers a variety of input and output facilities:</p>
 <ul>
  <li><a href="#KeyboardInput">Keyboard input</a> </li>
  <li><a href="#FileInputOutput">Text file input/output</a></li>
@@ -1926,25 +1926,25 @@ This section covers a variety of input and output facilities:
   <td><el-method>inputInt</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed<br>
   provided that it is an integer.<br> If it is not, the prompt is repeated with an error message</td>
  </tr><tr id="inputIntBetween">
   <td><el-method>inputIntBetween</el-method></td>
   <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed<br>
   provided that it is an integer with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
  </tr><tr id="inputFloat">
   <td><el-method>inputFloat</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>Float</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed<br>
   provided that it is a number.<br> If it is not, the prompt is repeated with an error message</td>
  </tr><tr id="inputFloatBetween">
   <td><el-method>inputFloatBetween</el-method></td>
   <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Float</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed<br>
   provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
  </tr><tr id="waitForKey">
   <td><el-method>waitForKey</el-method></td>
@@ -2122,7 +2122,8 @@ This section covers a variety of input and output facilities:
 <li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
-<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-kw>try..catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a Class provided by Elan for this purpose):</li>
+<li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
+To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-kw>try...catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a Class provided by Elan for this purpose):</li>
 
 <el-code-block source="TextFileWriter_3.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>file</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt></el-field></el-statement>
@@ -2853,8 +2854,8 @@ They may not be used inside a function that you have defined, because to do so w
 
 <h2 id="IOMethods">Input/output</h2>
 <ul>
- <li>Keyboard input: see <a href="#KeyboardInput">Keyboard input</a>.</li>
- <li>File input/output: see <a href="#FileInputOutput">Text file input/output</a>.</li>
+ <li><a href="#KeyboardInput">Keyboard input</a> </li>
+ <li><a href="#FileInputOutput">Text file input/output</a></li>
 </ul>
 
 <h2 id="MiscMethods">Clock and random numbers</h2>

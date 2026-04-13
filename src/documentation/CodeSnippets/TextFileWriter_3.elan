@@ -1,4 +1,4 @@
-# fdbd3cb1fc2068fa337f77930186bd0f59519742054328b74fe8bd63214fd4ad Elan 2.0.0-alpha valid
+# 037f54a5084eadd8423a025a557b7e4645186d79daac87be5265d24512ea4397 Elan 2.0.0-alpha1 valid
 
 main
   # snipFrom
@@ -8,8 +8,8 @@ main
   end for
   try
     call file.saveAndClose()
-  catch ElanRuntimeException
-    call print("File save cancelled")
+  catch ElanRuntimeError
+    call print("Save cancelled")
   end try
   # snipTo
 end main
