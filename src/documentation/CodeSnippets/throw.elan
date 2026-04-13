@@ -1,22 +1,13 @@
-# 74e106d30e9dabcf2a8f3ee896664a7106467d56ce83c8118be7e586b5bffcdc Elan 2.0.0-alpha1 valid
+# cb23ad52cf905b40d572020a2633f1480dd2df36b4f26c44aac7e86086e8b914 Elan 2.0.0-alpha1 valid
 
 main
-  call print(percent(11, 10))
+  call print($"{percent(23, 20)}" + "%")
 end main
 
 function percent(value as Float, maximum as Float) returns Float
   variable r set to 100.0
   if value > maximum then
     throw ElanRuntimeError "proportion exceeds 100%"
-  else
-    set r to value/maximum*r
   end if
-  return r
-end function
-
-function onAxis(xp as Float, yp as Float, xq as Float, yq as Float) returns Float
-  if yp is 0 then
-    throw ElanRuntimeError "yp is zero: {xp},{yp} + {xq},{yq}"
-  end if
-  return xp*yp
+  return value/maximum*r
 end function

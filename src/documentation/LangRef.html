@@ -1024,7 +1024,7 @@ the correct Type must be provided. For example, if the Class <el-type>Square</el
 <p>The <el-kw>assert</el-kw> instruction is used only within a <a href="#test"><el-kw>test</el-kw></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
- In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> instruction.</p>
+ In Elan, you can get equivalent functionality by throwing an <b>exception</b>, as described in the <a href="#throw"><el-kw>throw</el-kw></a> instruction.</p>
 
 <h2 id="call"><el-kw>call</el-kw></h2>
 <p>The <el-kw>call</el-kw> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
@@ -1230,40 +1230,55 @@ So even if the loop variable is changed in any way within the <el-kw>for</el-kw>
 <p>A <el-kw>set</el-kw> instruction may not assign a new value to a parameter within a procedure unless the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
-<p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
- which defines an explanatory string. For example:</p>
+<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
+ which defines an explanatory string.</p>
+
+<p>For the program to retain control when an exception is raised, use the <a href="#try"><el-kw>try</el-kw></a> instruction.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>throw</el-kw></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To stop the program if a value calculated in a function is out of range:</p>
 <el-code-block source="throw.elan">
-<el-statement class="ok multiline" id="if18" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>value</el-id> &gt; <el-id>maximum</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
-<el-statement class="ok" id="throw8" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg9" class="ok" tabindex="-1"><el-txt>"<el-lit>proportion exceeds 100%</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok outdent" id="else24" tabindex="-1"><el-top>
-    <el-kw>else </el-kw><el-field id="elif26" class="empty optional ok" tabindex="-1"></el-field></el-top></el-statement>
-<el-statement class="ok" id="set31" tabindex="-1"><el-kw>set </el-kw><el-field id="ident32" class="ok" tabindex="-1"><el-txt><el-id>r</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-id>value</el-id>/<el-id>maximum</el-id>*<el-id>r</el-id></el-txt></el-field></el-statement>
+<el-main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="call3" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident4" class="ok" tabindex="-1"><el-txt><el-method>print</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="args5" class="optional ok" tabindex="-1"><el-txt>$"{<el-method>percent</el-method>(<el-lit>23</el-lit>, <el-lit>20</el-lit>)}" + "<el-lit>%</el-lit>"</el-txt></el-field><el-punc>)</el-punc></el-top></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
+<el-func class="ok multiline" id="func6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-method>percent</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params9" class="optional ok" tabindex="-1"><el-txt><el-id>value</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>maximum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type10" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok" id="var13" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>r</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>100</el-lit>.0</el-lit></el-txt></el-field></el-top></el-statement>
+<el-statement class="ok multiline" id="if16" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>value</el-id> &gt; <el-id>maximum</el-id></el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="throw19" tabindex="-1"><el-top><el-kw>throw</el-kw> <el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>ElanRuntimeError</el-type></el-txt></el-field> <el-field id="msg20" class="ok" tabindex="-1"><el-txt>"<el-lit>proportion exceeds 100%</el-lit>"</el-txt></el-field></el-top></el-statement>
 <el-kw>end if</el-kw>
 </el-statement>
+<el-statement class="ok" id="return11" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-id>value</el-id>/<el-id>maximum</el-id>*<el-id>r</el-id></el-txt></el-field></el-top></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
 </el-code-block>
 <p>At runtime, if the condition is met, execution will stop and the display will show:</p>
-<p>
-<el-code>A Runtime error occurred in the Elan code</el-code><br>
-<el-code>Error: proportion exceeds 100%</el-code>
-</p>
-<p>This example interpolates current values into the exception message string:</p>
-<el-code-block source="throw.elan">
-<el-statement class="ok multiline" id="if41" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
-<el-statement class="ok" id="throw44" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg45" class="ok" tabindex="-1"><el-txt>"<el-lit>yp is zero: </el-lit>{<el-id>xp</el-id>}<el-lit>,</el-lit>{<el-id>yp</el-id>}<el-lit> + </el-lit>{<el-id>xq</el-id>}<el-lit>,</el-lit>{<el-id>yq</el-id>}"</el-txt></el-field></el-statement>
-<el-kw>end if</el-kw>
-</el-statement>
-</el-code-block>
-
-<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a>instruction,
-where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, and continue as appropriate.</p>
+<el-code>proportion exceeds 100%</el-code><br>
+<el-code>Error</el-code>
+<hr>
+</div></div>
 
 <div id="catch"></div>
-<div id="exception"></div>
 <h2 id="try"><el-kw>try</el-kw></h2>
-<p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> instruction. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
+<p>You can enclose code in a <el-kw>try..catch</el-kw> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
+<p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions,
+ such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files</a>.</p>
+<p>You can also use a <el-kw>test</el-kw> to check whether another piece of code might throw an exception by wrapping it in a <el-kw>try..catch</el-kw> instruction.</p>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>try..catch</el-kw></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Use a <el-kw>test</el-kw> to catch an error in a function:</p>
 <el-code-block source="try_1.elan">
 <el-test id="test3" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>test_try_1</el-id></el-txt></el-field>
@@ -1280,9 +1295,9 @@ where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, 
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<hr>
 
-The variable holding the exception (by default its name is <el-text><el-id>e</el-id></el-text>, but this may be changed by you) is of Type <el-type>String</el-type>.</p>
-<p>You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To check an error message and, if unexpected, throw the exception up:</p>
 <el-code-block source="try_2.elan">
 <el-test class="none multiline" id="test22" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-id>test_try_2</el-id></el-txt></el-field>
@@ -1304,6 +1319,34 @@ The variable holding the exception (by default its name is <el-text><el-id>e</el
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<hr>
+
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To stop the program if one of two points has negative <i>x</i> or <i>y</i>:</p>
+<el-code-block source="throw_2.elan">
+<el-main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+</el-top>
+<el-statement class="ok" id="var49" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var50" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr51" class="ok" tabindex="-1"><el-txt>(-<el-lit><el-lit>1</el-lit>.0</el-lit>, <el-lit><el-lit>2</el-lit>.0</el-lit>)</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var52" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var53" class="ok" tabindex="-1"><el-txt><el-id>b</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr54" class="ok" tabindex="-1"><el-txt>(<el-lit><el-lit>3</el-lit>.0</el-lit>, <el-lit><el-lit>6</el-lit>.0</el-lit>)</el-txt></el-field></el-top></el-statement>
+<el-statement class="ok" id="var101" tabindex="-1"><el-top><el-kw>variable </el-kw><el-field id="var102" class="ok" tabindex="-1"><el-txt><el-id>fQ</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr103" class="ok" tabindex="-1"><el-txt><el-method>firstQuadrant</el-method>(<el-id>a</el-id>, <el-id>b</el-id>)</el-txt></el-field></el-top></el-statement>
+<el-kw>end main</el-kw>
+</el-main>
+<el-func class="ok multiline" id="func26" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident28" class="ok" tabindex="-1"><el-txt><el-method>firstQuadrant</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params29" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>b</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type30" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+</el-top>
+<el-statement class="ok multiline" id="if35" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr37" class="ok" tabindex="-1"><el-txt>(<el-id>a</el-id>.<el-id>item_0</el-id> &lt; <el-lit>0</el-lit>)<el-kw> or </el-kw>(<el-id>a</el-id>.<el-id>item_1</el-id> &lt; <el-lit>0</el-lit>)<el-kw> or </el-kw>(<el-id>b</el-id>.<el-id>item_0</el-id> &lt; <el-lit>0</el-lit>)<el-kw> or </el-kw>(<el-id>b</el-id>.<el-id>item_1</el-id> &lt; <el-lit>0</el-lit>)</el-txt></el-field><el-kw> then</el-kw>
+</el-top>
+<el-statement class="ok" id="throw38" tabindex="-1"><el-top><el-kw>throw</el-kw> <el-field id="type40" class="ok" tabindex="-1"><el-txt><el-type>ElanRuntimeError</el-type></el-txt></el-field> <el-field id="msg39" class="ok" tabindex="-1"><el-txt>$"<el-lit>point (</el-lit>{<el-id>a</el-id>}<el-lit>) or (</el-lit>{<el-id>b</el-id>}<el-lit>) is not in the first quadrant</el-lit>"</el-txt></el-field></el-top></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<el-statement class="ok" id="return31" tabindex="-1"><el-top><el-kw>return </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-top></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+<hr>
+</div></div>
 
 <h2 id="variable"><el-kw>variable</el-kw></h2>
 <p>The <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>
@@ -1805,9 +1848,9 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
   the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
  </ul>
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
- const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, ignore, implements,
+ const, continue, curry, debugger, default, delete, dictionary, do, double, error, eval, export, extends, final, finally, float, goto, ignore, implements,
  instanceof, int, into, list, long, match, myclass, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
- short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
+ short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, xor, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.

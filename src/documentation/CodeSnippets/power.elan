@@ -1,6 +1,7 @@
-# dfed92148c3929fc45b51f38e10a6c7f8ffebf004fab683ac3480f85193c5422 Elan 2.0.0-alpha valid
+# c33958c461f7572540ef3b6dea01ab5fe3279386dcf7ce4a3a58dd0ddb3fd0a6 Elan 2.0.0-alpha1 valid
 
 main
-  variable n set to 10
-  set n to pow(n, 5)
+  call print(pow(2, 10))
+  variable n set to 2
+  set n to pow(n, 10)
 end main
