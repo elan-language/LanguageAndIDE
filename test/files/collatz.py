@@ -23,7 +23,7 @@ def main() -> None:
       p.append(x) # call procedure
       # draw what we have got so far, scaled to the canvas
       vg = list[VectorGraphic]() # variable definition
-      for i in range(0, p.length() - 1):
+      for i in range(0, len(p) - 1):
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # change variable
       displayVectorGraphics(vg) # call procedure
       print(x)
@@ -33,7 +33,7 @@ def main() -> None:
 # scale x.  We pass in p just to get its length
 
 def scx(i: int, p: list[int]) -> float: # function
-  return divAsFloat(i*100, p.length())
+  return divAsFloat(i*100, len(p))
 
 # scale y
 
