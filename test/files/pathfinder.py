@@ -33,7 +33,7 @@ def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list
     length = rl.item_1 # constant
     gr2 = addRoute(gr2, route) # change variable
     displayBlocks(gr2) # call procedure
-    printNoLine(f"Length of route: {length.round(2)} ") # call procedure
+    printNoLine(f"Length of route: {round(length, 2)} ") # call procedure
   else:
     printNoLine("No path found. ") # call procedure
 
@@ -69,7 +69,7 @@ def addRoute(gr: list[list[int]], route: list[Point]) -> list[list[int]]: # func
   for p in route:
     graphics = withPut(graphics, p.x, p.y, orange) # change variable
   start = route[0] # variable definition
-  dest = route[route.length() - 1] # variable definition
+  dest = route[len(route) - 1] # variable definition
   graphics = withPut(graphics, start.x, start.y, green) # change variable
   graphics = withPut(graphics, dest.x, dest.y, red) # change variable
   return graphics
@@ -126,7 +126,7 @@ class Solver
     return neighbours
   def getNodeFor(self: Solver, p: Point) -> Node: # function
     matches = self.nodes.filter(lambda n: Node => n.point.equals(p)) # variable definition
-    return if(matches.length() == 1, matches.head(), emptyNode())
+    return if(len(matches) == 1, matches.head(), emptyNode())
   def getLastVisited(self: Solver) -> Point: # function
     return self.current.point
   def nextNodeToVisit(self: Solver) -> Node: # function
@@ -189,7 +189,7 @@ class Node
   def setVia(self: Node, p: Point) -> None: # procedure
     self.via = p # change variable
   def toString(self: Node) -> str: # function
-    return f"[{self.point.toString()} {self.visited} {self.distFromStart}]"
+    return f"[{str(self.point)} {self.visited} {self.distFromStart}]"
 
 
 def emptyPoint() -> Point: # function
@@ -209,7 +209,7 @@ class Point
   def minDistTo(self: Point, p: Point) -> float: # function
     return math.sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
   def isAdjacentTo(self: Point, p: Point) -> bool: # function
-    return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == math.sqrt(2).round(4))
+    return (self.minDistTo(p) == 1) or (round(self.minDistTo(p), 4) == round(math.sqrt(2), 4))
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]

@@ -16,15 +16,15 @@ def main() -> None:
 
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition
-  if li.length() > 0:
-    mid = divAsInt(li.length(), 2) # constant
+  if len(li) > 0:
+    mid = divAsInt(len(li), 2) # constant
     value = li[mid] # variable definition
     if item.equals(value):
       result = True # change variable
     elif item.isBefore(value):
       result = binarySearch(li.subList(0, mid), item) # change variable
     else:
-      result = binarySearch(li.subList(mid + 1, li.length()), item) # change variable
+      result = binarySearch(li.subList(mid + 1, len(li)), item) # change variable
   return result
 
 def test_binarySearch(self) -> None:
