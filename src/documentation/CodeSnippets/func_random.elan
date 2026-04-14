@@ -1,16 +1,6 @@
-# 96bb7bc114b3b15380c9c26153c14b3584638918018a94d071eb74b5cb235a60 Elan 2.0.0-alpha valid
+# 5976310505852005269e57b9d7e0dec984321206da14dc487c5f30780fdf84f0 Elan 2.0.0-alpha1 valid
 
 main
   variable rand set to new Random()
   call rand.initialiseFromClock()
-  variable dice set to 0
-  for i in range(1, 11)
-    set dice to rollDice(rand).item_0
-    set rand to rollDice(rand).item_1
-    call print(dice)
-  end for
 end main
-
-function rollDice(rnd as Random) returns (Int, Random)
-  return rnd.nextInt(1, 6)
-end function
