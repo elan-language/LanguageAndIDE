@@ -1774,6 +1774,12 @@ By this means features such as simple SVG animation can be defined.</p>
 <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
 
+<!-- experimental: Elan code -->
+<codeblock>
+  variable rand set to new Random()
+  call rand.initialiseFromClock()
+</codeblock>
+
 <p>Then, in a function, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <el-type>Random</el-type> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <el-type>Random</el-type>.
 If you need another random value, you use the returned <el-type>Random</el-type> on which to apply the dot method again.</p>
 <p>Avoid applying <el-method>next</el-method> or <el-method>nextInt</el-method> more than once on the same <el-type>Random</el-type> because they will return the same values.</p>
