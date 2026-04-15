@@ -1387,7 +1387,7 @@ main
   end for
 end main
 
-constant side set to 60
+constant side set to 100
 
 procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
@@ -1796,6 +1796,7 @@ main
   for i in range(1, 11)
     set dice to rollDice(rnd).item_0
     set rnd to rollDice(rnd).item_1
+    call print(dice)
   end for
 end main
 
@@ -2980,7 +2981,8 @@ The subset is chosen by a lambda function that tests list item values and return
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
   return if matches.length() is 1,  matches.head(), emptyNode()
-end function</codeblock>
+end function
+</codeblock>
 <hr>
 </div></div>
 
@@ -3081,12 +3083,12 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of the words in a <el-type>String</el-type>,
 use <el-method>reduce</el-method> on a <el-type>List</el-type> of words (created by <el-method>split</el-method> and then reassembled by <el-method>join</el-method>):</p>
 <codeblock>
-<  variable s set to "'Twas brillig and the slithy toves"
+  variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List<of String>()
   set sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
   call print(sR)
-/codeblock>
+</codeblock>
 &nbsp;&nbsp;&#x27f6; toves slithy the and brillig 'Twas
 
 <h5 class="no-TOC">&nbsp;&nbsp;&nbsp;Note</h5>
