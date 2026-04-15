@@ -28,6 +28,7 @@
     --string:  rgb(165, 2, 2);
     --comment: rgb(1, 106, 1);
     --namedValue: rgb(144, 4, 225);
+    --instruction: rgb(98, 98, 98); 
 
     /* Code Highlights */
     --selection:rgb(173, 214, 255); /* All text colours */

@@ -128,6 +128,12 @@ el-code-block img {
 a:visited, a:link, a:active {color: var(--docHeading); text-decoration: none; }
 a:hover, s {color: var(--docHeading); text-decoration: underline; }
 
+instr {
+  font-family: consolas, monospace;
+  color: var(--instruction);
+  white-space: normal;
+}
+
 /* This avoids the need to have <el-code> around small snippets*/
 el-kw, el-type, el-id, el-method, el-lit, el-comment {
   font-family: consolas, monospace;
