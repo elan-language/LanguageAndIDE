@@ -2108,8 +2108,8 @@ or you could make the code offer the user options: to save again, or to continue
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
 the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
 <codeblock>
-  variable style set to "<style> h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } </style>"
-  call displayHtml($"{style}<h1>New heading</h1><p>some new text</p>")
+  variable style set to "&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;"
+  call displayHtml($"{style}&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;")
 </codeblock>
 
 <p>will produce:</p>
@@ -2122,7 +2122,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <codeblock>
-  variable pic set to "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'>"
+  variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
   call displayHtml(pic)
 </codeblock>
    <p>The usual <el-code>&lt;img&gt;</el-code> tag attributes are respected, though <el-code>alt</el-code> does not give the expected tooltip when hovering over the image, and <el-code>title</el-code> is only a descriptive comment.</p>
