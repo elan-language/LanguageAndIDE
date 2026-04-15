@@ -464,7 +464,7 @@ three immutable data structure Types <el-type>HashSet</el-type>, <el-type>Stack<
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
 <p>Since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
 it is also possible to make changes via <el-kw>function</el-kw> dot methods,  which return a copy of the data structure
-with specified changes: that is why all such methods have names starting '<el-code>with</el-code>'.</p>
+with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
 <p id="of">All six  contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
@@ -511,6 +511,14 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-code>new <el-type>HashSet</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
   <td><el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
   <td><el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+ </tr><tr>
+  <td>create initialised
+  <td><el-code><el-method>createList</el-method>(<el-lit>number</el-lit>, <el-lit>value</el-lit>)<el-code><br>
+  <el-code><el-method>createListOfLists</el-method>(<el-lit>cols</el-lit>, <el-lit>rows</el-lit>, <el-lit>value</el-lit>)<el-code></td>
+  <td>Not available</td>
+  <td>Not available</td>
+  <td>Not available</td>
+  <td>Not available</td>
  </tr><tr>
   <td>read by index</td>
   <td><el-code><el-id>li</el-id>[<el-lit>2</el-lit>]</el-code></td>
@@ -1105,8 +1113,8 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <el-type>Stack</el-type>:</p>
 <table class="tablePlain">
-<tr>
-<td><codeblock>
+<tr><td>
+<codeblock>
   variable sk set to new Stack<of String>()
   call print(sk.length())
   set sk to sk.push("apple")
@@ -1130,8 +1138,8 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <el-type>Queue</el-type>:</p>
 <table class="tablePlain">
-<tr>
-<td><codeblock>
+<tr><td>
+<codeblock>
   variable qu set to new Queue<of String>()
   call print(qu.length())
   set qu to qu.enqueue("apple")
@@ -2621,7 +2629,8 @@ test test_maths
   assert log10(1000) is 3
   assert log2(65536) is 16
   assert log2(0x10000) is 16
-end test</codeblock>
+end test
+</codeblock>
 
 <h2 id="BitwiseFunctions">Bitwise functions</h2>
     <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
