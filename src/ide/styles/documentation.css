@@ -163,7 +163,7 @@ el-topic {
 }
 
 body *, code, el-code, el-code-block, el-field {
-  user-select: none;
+  user-select: auto;
 }
 
 /* display of code translations */
