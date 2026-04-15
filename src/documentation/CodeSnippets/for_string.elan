@@ -1,9 +1,0 @@
-# d5f1aa20942203b2e92dd4fd28c6157614498ac5881b20459ba3f11769b76954 Elan 2.0.0-alpha1 valid
-
-function reverse(s as String) returns String
-  variable sReturn set to ""
-  for ch in s
-    set sReturn to ch + sReturn
-  end for
-  return sReturn
-end function

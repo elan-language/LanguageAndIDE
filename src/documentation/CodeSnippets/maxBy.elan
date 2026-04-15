@@ -1,8 +1,0 @@
-# 35358f33067bd8ae903d2b19f5fb2e77a91e2ab0aa598ff09e4df4e42a6a33ed Elan 2.0.0-alpha valid
-
-main
-  # snipFrom
-  variable a set to [33, 4, 0, 92, 89, 55, 102]
-  call print(a.maxBy(lambda x as Int => x mod 10))
-  # snipTo
-end main
