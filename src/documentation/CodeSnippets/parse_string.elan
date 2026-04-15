@@ -1,7 +1,0 @@
-# be7afa669bcacd7eeec81d90b2c8579eb2423b4732c5f214af2500d8310e1de4 Elan 2.0.0-alpha valid
-
-main
-  variable s set to "1"
-  variable success set to parseAsInt(s).item_0
-  variable value set to parseAsInt(s).item_1
-end main

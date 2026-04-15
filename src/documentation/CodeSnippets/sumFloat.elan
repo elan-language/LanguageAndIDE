@@ -1,8 +1,0 @@
-# 322f676cc41579572324eefff11f8ff60f906de5b5fe9d1a577af8b60cf69dc8 Elan 2.0.0-alpha valid
-
-main
-  # snipFrom
-  variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
-  call print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
-  # snipTo
-end main

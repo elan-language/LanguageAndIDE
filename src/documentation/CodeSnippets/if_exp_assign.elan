@@ -1,9 +1,0 @@
-# 998124f2d37bd885b56d3dba91d3586918be9507a67ecad26f631669cbc1b173 Elan 2.0.0-alpha valid
-
-main
-  # snipFrom
-  variable c set to 1160
-  set c to (if(c < 1160, c + 40, c - 1160))
-  variable d set to if(c < 580, c - 40, c + 60)
-  # snipTo
-end main

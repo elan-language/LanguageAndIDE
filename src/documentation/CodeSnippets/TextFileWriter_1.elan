@@ -1,8 +1,0 @@
-# 1c2f2f9b501a4a1b83afcfa0fa6f498064e963d842ddb30908bc690a2da744f5 Elan 2.0.0-alpha valid
-
-main
-  # snipFrom
-  variable file set to createFileForWriting("myFile.txt")
-  call file.writeWholeFile("Text line 1\nText line 2")
-  # snipTo
-end main

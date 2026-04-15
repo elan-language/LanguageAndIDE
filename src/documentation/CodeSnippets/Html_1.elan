@@ -1,5 +1,0 @@
-# ff91b5879e5d62c10cf708791091b305fc9cc11b9da779368f37ec385780a047 Elan 2.0.0-alpha1 valid
-
-main
-  call displayHtml("<h1 style='color: blue;'>A heading</h1><p>some text</p>")
-end main

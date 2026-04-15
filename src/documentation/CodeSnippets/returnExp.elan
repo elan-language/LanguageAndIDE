@@ -1,5 +1,0 @@
-# 22ca595984c7f72380aae90b06cdcf7b4d881818058a0a09e835d80cc9c88024 Elan 2.0.0-alpha valid
-
-function foo(a as Int, b as Int) returns Boolean
-  return if(pow(a, b) < pow(b, a), true, false)
-end function

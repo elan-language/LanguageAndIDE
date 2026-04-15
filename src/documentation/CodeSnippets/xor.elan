@@ -1,5 +1,0 @@
-# f17b659cae1d2f09791b536eaefe14a3b2e44dd4f15e1372969124c2c5b57982 Elan 2.0.0-alpha valid
-
-function xor(a as Boolean, b as Boolean) returns Boolean
-  return a and not b or b and not a
-end function
