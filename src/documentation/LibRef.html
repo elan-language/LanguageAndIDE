@@ -181,7 +181,7 @@ Its Type is <el-type>Float</el-type>.
     nor as an index into a <el-type>List</el-type>  even if the variable contains no fractional part.
     It may, however, be converted into an <el-type>Int</el-type> before passing, using the function <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of Type <el-type>Float</el-type>, but initialise it with an integer value, then add <el-lit>.0</el-lit> on the end of the whole number, as in:<br>
- <el-code><el-kw>variable</el-kw> <el-id>hour</el-id> <el-kw>set to</el-kw> <el-lit>3.0</el-lit></el-code></li>
+ <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <el-type>Int</el-type> may always be used where a <el-type>Float</el-type> is expected.</li>
 </ul>
 
@@ -280,8 +280,7 @@ end test
  <td><code>call print($"Spanish introduces a question with {unicode(191)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with &#191;</code></td>
 </tr><tr>
 </tr><tr>
-<td><el-kw>call</el-kw> <el-method>print</el-method>
- ($"<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</td>
+<td><code>call print($"This is an up arrow: {unicode(0x2191)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</code></td>
 </tr>
 </table>
 
@@ -292,16 +291,14 @@ end test
 <p>Strings can be built from other strings by concatenation using the plus operator, for example:</p>
 <table class="tablePlain">
 <tr>
- <td><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>Hello </el-lit>" + "<el-lit>world</el-lit>")</td><td>&#x27f6;</td><td>Hello world</td>
+ <td><code>call print("Hello " + "world")</td><td>&#x27f6;</td><td>Hello world</code></td>
 </tr>
 </table>
 
 <p>A newline may be inserted within a string with <el-lit>\n</el-lit>:
 <table class="tablePlain">
 <tr>
- <td><el-kw>call</el-kw> <el-method>print</el-method>
- ("<el-lit>Hello\nworld</el-lit>")</td><td>&#x27f6;</td><td>Hello<br>world</td>
+ <td>call print("Hello\nworld")</td><td>&#x27f6;</td><td>Hello<br>world</td>
 </tr>
 </table>
 
@@ -428,16 +425,15 @@ end test
 <p>If <el-code>a</el-code> and <el-code>b</el-code> have values 3 and 17:</p>
 <table class="tablePlain">
 <tr>
- <td><el-kw>call</el-kw> <el-method>print</el-method>
- ($"{<el-id>a</el-id>} <el-lit>times</el-lit> {<el-id>b</el-id>} <el-lit>equals</el-lit> {<el-id>a</el-id>*<el-id>b</el-id>}")</td><td>&#x27f6;</td><td>3 times 17 equals 51</td>
+ <td><code>call print($"{a} times {b} equals {a*b}")</td><td>&#x27f6;</td><td>3 times 17 equals 51</code></td>
 </tr>
 </table>
 
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><el-kw>set </el-kw><el-id>message</el-id><el-kw> to $"</el-kw><el-lit>LANDED SAFELY AT SPEED </el-lit>{(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>{<el-id>fuel</el-id>.<el-method>floor</el-method>()}"<br>
- <el-kw>call </el-kw><el-method>print</el-method>(<el-id>message</el-id>)</td>
+ <td><code>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</code><br>
+     <code>call print(message)</code></td>
 </td><td>
  <td><br>&#x27f6;</td>
  <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
@@ -446,8 +442,8 @@ end test
 <p>And, for the area of a circle:</p>
 <table class="tablePlain">
 <tr>
- <td><el-code><el-kw>constant</el-kw></el-code> <el-id>r</el-id> <el-kw>set to </el-kw>2.0<br>
- <el-code><el-kw>call </el-kw><el-method>print</el-method>($"area = {(<el-id>pi</el-id>*<el-id>r</el-id>*<el-id>r</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>)}"</el-code>
+ <td><code>constant r set to 2.0</code><br>
+     <code>call print($"area = {(pi*r*r).round(2)}"</code>
  <td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
@@ -557,15 +553,15 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>To create a List, use either of:</p>
 <ul>
  <li>Method <a href="#createList"><el-method>createList</el-method></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
-  <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to</el-kw> <el-method>createList</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lkit>")</el-code></li>
+  <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
- <el-code><el-kw>variable</el-kw> <el-id>aList</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-code><br>
- <el-code><el-kw>call</el-kw> <el-id>aList</el-id>.<el-method>initialise</el-method>(<el-lit>10</el-lit>, "<el-lit>no one</el-lit>")</el-code><br>
- <el-code><el-kw>call</el-kw> <el-id>aList</el-id>.<el-method>append</el-method>("<el-lit>4</el-lit>")</el-code></li>
+ <code>variable aList set to new List&lt;of String&gt;()</code><br>
+ <code>call aList.initialise(10, "no one")</code><br>
+ <code>call aList.append("4")</code></li>
 </ul>
 <p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-kw>set</el-kw> instruction and a valid index value in square brackets:</p>
 <ul>
- <li><el-code><el-kw>set</el-kw> <el-id>aList</el-id>[<el-id>ix</el-id>] <el-kw>to</el-kw> "<el-lit>Smith</el-lit>"</el-code></li>
+ <li><code>set aList[ix] to "Smith"</code></li>
 </ul>
 <p>A List's size can be dynamically changed using the procedure methods listed below.</p>
 
@@ -574,14 +570,14 @@ with specified changes: that is why all such methods have names starting '<el-me
  the methods <el-method>head</el-method>, <a href="#tail"><el-method>tail</el-method></a> and <a href="#subList"><el-method>subList</el-method></a>:</p>
 <ul>
  <li>To extract the first item in a List:<br>
- <el-kw>variable</el-kw> <el-id>headItem</el-id> <el-kw>set to</el-kw> <el-id>myList</el-id>[<el-lit>0</el-lit>]<br>
+ <code>variable headItem set to myList[0]</code><br>
  or<br>
- <el-kw>set</el-kw> <el-id>heatItem</el-id> <el-kw>to</el-kw> <el-id>myList</el-id><el-method>.head</el-method>()</el-kw>
+ <code>set heatItem to myList.head()</code>
  </li><li>To form a new List of all but the first item in a List:<br>
- <el-kw>variable</el-kw>  <el-id>tailList</el-id> <el-kw>set to</el-kw> <el-id>myList</el-id><el-method>.tail</el-method>()</el-kw><br>
+ <code>variable  tailList set to myList.tail()</code><br>
  If the original list contains only one item, the new List will be the empty List.
  </li><li>To get some other portion of a List, use the method <el-method>subList</el-method>:<br>
- <el-kw>set</el-kw> <el-id>shortList</el-id> <el-kw>to</el-kw> <el-id>myList</el-id><el-method>.subList</el-method>(<el-lit>1</el-lit>,<el-lit>5</el-lit>)</el-kw>
+ <code>set shortList to myList.subList(1,5)</code>
 </li>
 </ul>
 <p>In all these cases the items indexed must exist, else a runtime error will stop the program.</p>
@@ -592,22 +588,22 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>To create a 2D array that holds a value of a single Type in every cell, you define such a List of Lists thus:</p>
 <ul>
  <li>Use method <a href="#createListOfLists"><el-method>createListOfLists</el-method></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
-<el-code><el-kw>variable</el-kw> <el-id>array2D</el-id> <el-kw>set to </el-kw> <el-method>createListOfLists</el-method>(<el-id>cols</el-id>, <el-id>rows</el-id>, <el-id>value</el-id>)</el-code></li>
+   <code>variable array2D set to  createListOfLists(cols, rows, value)</code></li>
 <li>For the special case of <a href="#BlockGraphics">Block graphics</a>, use 40 columns and 30 rows or (more simply):<br>
-<el-code><el-kw>variable</el-kw> <el-id>grid</el-id> <el-kw>set to </el-kw> <el-method>createBlockGraphics</el-method>(<el-id>value</el-id>)</el-code></li>
+   <code>variable grid set to createBlockGraphics(value)</code></li>
 </ul>
 
 <p>The item at index <el-id>ix</el-id>,<el-id>iy</el-id> in a 2D array can be accessed and changed
  using its two coordinates in square brackets:</p>
 <ul>
-<li><el-code><el-kw>variable</el-kw> <el-id>value</el-id> <el-kw>set to</el-kw>  <el-id>array2D</el-id>[<el-id>ix</el-id>][<el-id>iy</el-id>]</el-code></li>
-<li><el-code><el-kw>set</el-kw> <el-id>array2D</el-id>[<el-id>ix</el-id>][<el-id>iy</el-id>] <el-kw>to</el-kw> 7</el-code></li>
+  <li><code>variable value set to  array2D[ix][iy]</code></li>
+  <li><code>set array2D[ix][iy] to 7</code></li>
 </ul>
 
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><el-code><el-kw>variable</el-kw> <el-id>array3D</el-id> <el-kw>set to new</el-kw> <el-type>List</el-type>&lt;of <el-type>List</el-type>&lt;of List&lt;of <el-type>Float</el-type>&gt;&gt;&gt;()</el-code></li>
+<li><code>variable array3D set to new List&lt;of List&lt;of List&lt;of Float&gt;&gt;&gt;()</code></li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
@@ -895,25 +891,25 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 <p>Example of creating a Set from a literal List and changing its content:</p>
 
 <table class="tablePlain"><!--source="set.elan"-->
-<tr><td>
-<el-code><el-kw>variable</el-kw> <el-id>st</el-id> <el-kw>set to new </el-kw><el-type>HashSet</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>()<br>
-<el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])<br>
-<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code><br></td>
+<tr>
+<td><code>variable st set to new HashSet&lt;of Int()</code><br>
+  <code>set st  to st.addFromList([3, 5, 7])</code><br>
+  <code>call print(st.length())</code><br></td>
 <td><br><br>&#x27f6;</td><td><br><br>3</td>
 </tr><tr>
-<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)<br>
-<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><code>set st  to st.add(7)</code><br>
+  <code>call print(st.length())</code></td>
 <td><br>&#x27f6;</td><td><br>3</td>
 </tr><tr>
-<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br>
-<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><code>set st  to st.remove(3)</code><br>
+  <code>call print(st.length())</code></td>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
-<td><el-code><el-kw>set</el-kw> <el-id>st</el-id> <el-kw> to </el-kw><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)<br>
-<el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>.<el-method>length</el-method>())</el-code></td>
+<td><code>set st  to st.remove(3)</code><br>
+  <code>call print(st.length())</code></td>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
-<td><el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>st</el-id>)</el-code></td>
+<td><code>call print(st)</code></td>
 <td>&#x27f6;</td><td>[5, 7]</td>
 </table>
 
@@ -1186,22 +1182,22 @@ of differing Types held together and referenced by a single identifier.</p>
 <h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
 <p>A new Tuple is defined by a list of items separated by commas and  enclosed in round brackets:</p>
 
-<el-code>
-<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var6" tabindex="-1"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt></el-field></el-statement>
-</el-code>
+<code>variable point set to (3, 4)</code>
+<code>variable t set to (3, "apple", true)</code>
 
 <h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
 <p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-id>item_</el-id>N, thus:</p>
 <table class="tablePlain">
 <tr>
- <td><el-code>
- <el-kw>variable </el-kw><el-txt><el-id>t</el-id></el-txt><el-kw> set to </el-kw><el-txt>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-kw>true</el-kw>)</el-txt><br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_0</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_1</el-id></el-txt>)<br>
- <el-kw>call </el-kw><el-txt><el-method>print</el-method></el-txt>(<el-txt><el-id>t</el-id>.<el-id>item_2</el-id></el-txt>)
- </el-code></td>
+ <td>
+<codeblock>
+  variable t set to (3, "apple", true)
+  call print(t)
+  call print(t.item_0)
+  call print(t.item_1)
+  call print(t.item_2)
+</codeblock>
+ </td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
  <td><br>(3, apple, true)<br>3<br>apple<br>true</td>
  </tr>
@@ -1831,7 +1827,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <p>This example defines the Type for a function that defines three parameters of Type <el-type>String</el-type>, <el-type>String</el-type>, and <el-type>Int</el-type> respectively, and returns a <el-type>Boolean</el-type> value. This Type would match that of a function definition like this:</p>
 
 <codeblock>
-function matchAt(a as String, b as String, p as Int) returns Boolean  
+function matchAt(a as String, b as String, p as Int) returns Boolean
   return if a[p].equals(b[p]) then true else false
 end function
 </codeblock>
@@ -2368,12 +2364,12 @@ the style definition into a named value as a literal but enclosed in <i>single</
  all variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <el-type>Float</el-type> values, but they can accept <el-type>Int</el-type> values without raising an error.</li>
  <li>The length of a <el-type>Dictionary</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
-  <el-code><el-kw>call </el-kw><el-method>print</el-method>(<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>length</el-method>()</el-code>) &#x27f6; 15</li>
+  <code>call print(dict.keys().length()) &#x27f6; 15</code></li>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>keys</el-method>().<el-method>contains</el-method>("<el-lit>widget</el-lit>")</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
-  <tr><td><el-code><el-kw>call </el-kw><el-method>print</el-method> (<el-id>dict</el-id>.<el-method>values</el-method>().<el-method>contains</el-method>(<el-lit>42</el-lit>)</el-code>)</td><td>&#x27f6;</td><td><el-id>true</el-id> or <el-id>false</el-id></td></tr>
+ <tr><td><code>call print (dict.keys().contains("widget"))&#x27f6;true or false</code></td></tr>
+ <tr><td><code>call print (dict.values().contains(42))&#x27f6;true or false</code></td></tr>
 </table></li>
 </ol>
 
@@ -2456,16 +2452,18 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Procedure <el-method>print</el-method> sends text strings to the display pane:</p>
 <table class="tablePlain">
 <tr>
- <td><el-code>
- <el-kw>call </el-kw><el-method>print</el-method></el-txt>("<el-lit>Hello</el-lit>"</el-txt>)<br>
- <el-kw>variable </el-kw><el-id>a</el-id><el-kw> set to </el-kw><el-lit>3</el-lit><br>
- <el-kw>variable </el-kw><el-id>b</el-id><el-kw> set to </el-kw><el-lit>4</el-lit><br>
- <el-kw>call </el-kw><el-method>print</el-method>(<el-id>a</el-id>*<el-id>b</el-id>)<br>
- <el-kw>call </el-kw><el-method>print</el-method>($"{<el-id>a</el-id>} times {<el-id>b</el-id>}) equals {<el-id>a</el-id>*}<el-id>b</el-id>")<br>
- <el-kw>variable</el-kw> <el-id>t</el-id> <el-kw>set to</el-kw> (<el-id>true</el-id>, <el-lit>42</el-lit>)<br>
- <el-kw>call </el-kw><el-method>print</el-method>(<el-id>t</el-id>.<el-id>item_0</el-id>)<br>
- <el-kw>call </el-kw><el-method>print</el-method>(<el-id>t</el-id>.<el-id>item_1</el-id>)<br>
- </el-code></td>
+ <td>
+<codeblock>
+  call print("Hello")
+  variable a set to 3
+  variable b set to 4
+  call print(a*b)
+  call print($"{a} times {b}) equals {a*}b")
+  variable t set to (true, 42)
+  call print(t.item_0)
+  call print(t.item_1)
+</codeblock>
+ </td>
  <td>&#x27f6;<br><br><br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
  <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="LibRef.html#InterpolatedString">interpolated strings</a>]<br>[defining a <a href="LibRef.html#Tuple">2-Tuple</a>]<br>true<br>42</td>
  </tr>
@@ -2547,10 +2545,8 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <h4 class="no-TOC acc-title" tabindex="0">Examples using standalone functions</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Deconstructing the 2-Tuple returned by <el-method>parseAsInt</el-method>:</p>
-<codeblock>
-<el-statement class="ok" id="var20" tabindex="-1"><el-kw>variable </el-kw><el-field id="var21" class="ok" tabindex="-1"><el-txt><el-id>success</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr22" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_0</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="var23" tabindex="-1"><el-kw>variable </el-kw><el-field id="var24" class="ok" tabindex="-1"><el-txt><el-id>value</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-method>parseAsInt</el-method>(<el-id>s</el-id>).<el-id>item_1</el-id></el-txt></el-field></el-statement>
-</codeblock>
+  <code>variable success set to parseAsInt(s).item_0</code>
+  <code>variable value set to parseAsInt(s).item_1</code>
 <p>Always check the <el-type>Boolean</el-type> (<el-id>success</el-id>) before using the returned value (<el-id>value</el-id>) in case the latter is zero only because the parse was unsuccessful.</p>
 
 <hr>
@@ -2575,7 +2571,7 @@ end test
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Using method <el-method>unicode</el-method>:</p>
 <table class="tablePlain">
  <tr>
-  <td><el-kw>call</el-kw> <el-method>print</el-method>(<el-method>unicode</el-method>(<el-lit>0x2665</el-lit>))</td><td>&#x27f6;</td><td>&#x2665</td>
+  <td><code>call print(unicode(0x2665))</code></td><td>&#x27f6;</td><td>&#x2665</td>
  </tr>
 </table>
 <hr>
