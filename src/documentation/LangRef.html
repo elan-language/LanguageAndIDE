@@ -182,18 +182,18 @@ with all the same property values except for specific changes that you want to m
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>.</p>
 <ul>
  <li>To apply a function method to a named value, e.g. to obtain the length of a string using a library method:<br>
- <el-code><el-kw>variable </el-kw> <el-id>n</el-id> <el-kw>set to</el-kw> <el-id>s</el-id>.<el-method>length</el-method>()<br></el-code></li>
+ <code>variable  n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise a <el-type>List</el-type> using a library procedure:<br>
- <el-code><el-kw>call </el-kw> <el-id>li</el-id>.<el-method>initialise</el-method>(<el-id>10</el-id>,<el-id>0</el-id>)</el-code></li>
+ <code>call  li.initialise(10,0)</code></li>
  <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>game</el-id>) of a Class and, in this example to get the length of the property's current string value, using
  library methods:<br>
- <el-code><el-kw>variable </el-kw> <el-id>bodyGL</el-id> <el-kw>set to</el-kw> <el-id>game</el-id>.<el-id>body</el-id>.<el-method>toString</el-method>().<el-method>length</el-method>()</el-code></li>
+ <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <el-code><el-kw>variable </el-kw> <el-id>point</el-id> <el-kw>set to</el-kw> (<el-lit>3</el-lit>, <el-lit>7</el-lit>)<br>
- <el-kw>variable </el-kw> <el-id>x</el-id> <el-kw>set to</el-kw> <el-id>point</el-id>.<el-id>item_0</el-id></el-code></li>
+ <code>variable  point set to (3, 7)</code><br>
+ <code>variable  x set to point.item_0</code></li>
  <li>To refer to a value in an <el-kw>enum</el-kw>, e.g.to pick one of the values in the <el-kw>enum</el-kw> <el-type>Suit</el-type>:<br>
- <el-code><el-kw>enum </el-kw><el-type>Suit</el-type> <el-id>spades</el-id>, <el-id>hearts</el-id> <el-id>diamonds</el-id>, <el-id>clubs</el-id><br>
- <el-kw>variable </el-kw> <el-id>s</el-id> <el-kw>set to</el-kw> <el-type>Suit</el-type>.<el-id>spades</el-id></el-code></li>
+ <code>enum Suit spades, hearts diamonds, clubs</code><br>
+ <code>variable  s set to Suit.spades</code></li>
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a function or procedure.
 The global value may then be referred to by prefixing the variable name with the keyword <el-kw>global</el-kw> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local constant of the same name:
@@ -276,9 +276,9 @@ end main
 <p>Procedure calls are of two kinds:</p>
 <ul>
  <li>to execute an action:<br>
- <el-kw>call</el-kw> <el-method>print</el-method>(<el-id>aList</el-id>)</li>
+ <code>call print(aList)</code></li>
  <li>to apply a procedure to a value using <a href="dotSyntax">dot syntax</a>:<br>
- <el-kw>call</el-kw> <el-id>aList</el-id>.<el-method>removeAt</el-method>(<el-lit>4</el-lit>)</li>
+ <code>call aList.removeAt(4)</code></li>
 </ul>
 <p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
 
@@ -615,9 +615,8 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-kw>abstract class</el-kw>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> instruction. For example:</p>
-<p><el-code><el-kw>abstract function</el-kw> <el-method>calculateDiscount</el-method>() as <el-type>Float</el-type></el-code></p>
-<p>
-If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
+<p><code>abstract function calculateDiscount() as Float</code></p>
+<p>If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-kw>abstract</el-kw> on the superclass.</li>
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <el-code>default</el-code>.</li>
@@ -969,17 +968,17 @@ which is the mechanism for running unit tests during program development, not du
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
-  <el-statement><el-kw>call</el-kw> <el-method>fillRandom</el-method>(<el-id>grid</el-id>)</el-statement>
+  <code>call fillRandom(grid)</code>
 <li>a procedure method on an object of a Class that you have defined</li>
-  <el-statement><el-kw>call</el-kw> <el-id>apple</el-id>.<el-method>newRandomPosition</el-method>(<el-id>snake</el-id>)</el-statement>
-  <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>hand</el-id>.<el-method>draw</el-method>()</el-statement>
+  <code>call apple.newRandomPosition(snake)</code>
+  <code>call property.hand.draw()</code>
 <li>a procedure method that belongs to the same Class as the procedure that you are calling from</li>
-  <el-statement><el-kw>call</el-kw> <el-method>updateNeighbours</el-method>()</el-statement>
+  <code>call updateNeighbours()</code>
 <li>a procedure provided by the standard library</li>
-  <el-statement><el-kw>call</el-kw> <el-method>sleep_ms</el-method>(<el-lit>2000</el-lit>)</el-statement>
+  <code>call sleep_ms(2000)</code>
 <li>a procedure method on an object of a Type provided by the standard library</li>
-  <el-statement><el-kw>call</el-kw> <el-id>vg</el-id>.<el-method>append</el-method>(<el-id>rect</el-id>)</el-statement>
-  <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
+  <code>call vg.append(rect)</code>
+  <code>call property.cards.append(card)</code>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1410,8 +1409,8 @@ end function
 <h4 class="no-TOC">Testing equality of <el-type>String</el-type> values and of all Reference Types</h4>
 <p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods</a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
-<li><el-code><el-kw>if</el-kw> <el-id>listA</el-id>.<el-method>equals</el-method>(<el-id>listB</el-id>) <el-kw>then</el-kw></el-code></li>
-<li><el-code><el-kw>set</el-kw> <el-id>differs</el-id> <el-kw>to</el-kw> <el-id>set1</el-id>.<el-method>notEqualTo</el-method>(<el-id>set2</el-id>)</el-code></li>
+<li><code>if listA.equals(listB) then</code></li>
+<li><code>set differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
 Two Lists compare equal if they contain the same items in the same order.
