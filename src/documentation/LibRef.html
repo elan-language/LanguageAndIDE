@@ -277,10 +277,13 @@ end test
 
 <table class="tablePlain">
 <tr>
- <td><code>call print($"Spanish introduces a question with {unicode(191)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with &#191;</code></td>
+ <td><codeblock>
+  call print($"Spanish introduces a question with {unicode(191)}")</td><td>&#x27f6;</td><td>Spanish introduces a question with &#191;
+ </codeblock></td>
 </tr><tr>
-</tr><tr>
-<td><code>call print($"This is an up arrow: {unicode(0x2191)}")</td><td>&#x27f6;</td><td>This is an up arrow:  &#x2191;</code></td>
+ <td><codeblock>
+  call print($"This is an up arrow: {unicode(0x2191)}")</td><td>&#x27f6;</td><td>This is an up arrow: &#x2191;
+ </codeblock></td>
 </tr>
 </table>
 
@@ -425,15 +428,19 @@ end test
 <p>If <el-code>a</el-code> and <el-code>b</el-code> have values 3 and 17:</p>
 <table class="tablePlain">
 <tr>
- <td><code>call print($"{a} times {b} equals {a*b}")</td><td>&#x27f6;</td><td>3 times 17 equals 51</code></td>
+ <td><codeblock>
+  call print($"{a} times {b} equals {a*b}")</td><td>&#x27f6;</td><td>3 times 17 equals 51
+ </codeblock></td>
 </tr>
 </table>
 
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><code>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</code><br>
-     <code>call print(message)</code></td>
+ <td><codeblock>
+  set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"
+  call print(message)
+ </codeblock>
 </td><td>
  <td><br>&#x27f6;</td>
  <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
@@ -443,7 +450,9 @@ end test
 <table class="tablePlain">
 <tr>
  <td><code>constant r set to 2.0</code><br>
-     <code>call print($"area = {(pi*r*r).round(2)}"</code>
+     <codeblock>
+  call print($"area = {(pi*r*r).round(2)}"
+  </codeblock>
  <td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
@@ -2458,7 +2467,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
   variable a set to 3
   variable b set to 4
   call print(a*b)
-  call print($"{a} times {b}) equals {a*}b")
+  call print($"{a} times {b}) equals {a*b}")
   variable t set to (true, 42)
   call print(t.item_0)
   call print(t.item_1)
@@ -2897,8 +2906,7 @@ end function
  in that they are mutable named values, though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
-<p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.
-Within a string delimited by <i>single quotes</i>, those literal characters can also be used.</p>
+<p>These constants are of use when the characters { } and " are required within a string.</p>
 <table class="tableType">
  <tr>
   <th>name</th><th>Type</th><th >value</th>
