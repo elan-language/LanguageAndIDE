@@ -508,14 +508,44 @@ end test
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <el-code>test</el-code>.</p>
 
 <h2 id="class"><el-kw>class</el-kw></h2>
-
 <p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>.</p>
-<p>A Class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
-<h3 class="no-TOC">Definition</h3>
-<p>Here is an example of a <el-kw>class</el-kw> definition, taken from demo program <el-code>snake_OOP.elan</el-code>:</p>
+<h3 class="no-TOC">Defining a Class</h3>
+<p>A Class is instantiated using the keyword <el-kw>class</el-kw> followed by the Class name, and optional <el-kw>inherits</el-kw> to refer to a <el-kw>class</el-kw> or <el-kw>abstract class</el-kw> defined above in the program.</p>
+<p>A Class definition must include properties, a <el-kw>constructor</el-kw> and at least one method called <el-method>toString</el-method>.</p>
+<p>Its properties must all be initialised in the <el-kw>constructor</el-kw>.</p>
+<p>It may contain functions and procedure methods.</p>
+<p>The <el-kw>constructor</el-kw> may optionally define parameters to force the calling code to provide initial values.</p>
+<p> Code in the constructor may make use of any functions, and follows the same constraints as a <el-kw>function</el-kw> (i.e. it may not call any <el-kw>procedure</el-kw>, whether defined in the <el-kw>class</el-kw> or outside).</p>
+<p>A simple demonstration of a Class is:</p>
+<codeblock>
+main
+  variable x set to new Thing()
+  call print(x.names.toString())
+end main
 
+class Thing
+  property names as List<of String>
+
+  constructor()
+    set this.names to createList(6, "X")
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+end class
+</codeblock>
+
+<p>Here is an example of <el-kw>class</el-kw> definition taken from demo program <b>snake - object-oriented</b>:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example Class definition</h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Apple:</p>
 <codeblock>
 class Apple
   constructor()
@@ -546,63 +576,12 @@ class Apple
 
 end class
 </codeblock>
-
-<p>A Class may define:</p>
-<ul>
-<li>One or more properties: see <a href="#property">Property</a></li>
-<li><el-code>function</el-code> methods: see Function method</li>
-<li><el-code>procedure</el-code> methods:  see Procedure method</li>
-<li>a <el-code>constructor</el-code> which may be used for setting up the values of properties. The <el-code>constructor</el-code> may optionally define parameters to force the calling code to provide initial values. However, it is not necessary to add a <el-code>constructor</el-code> if you have no need to initialise properties. Code in the constructor may make use of any functions, and follows the same constraints as a <el-code>function</el-code> (i.e. it may not call any <el-code>procedure</el-code>, whether defined on the <el-code>class</el-code> or outside).</li>
-</ul>
-
-<h3 class="no-TOC" id="UsingAClass">Using a Class</h3>
-<p>A Class is instantiated using the keyword <el-kw>class</el-kw> followed by the Class name, and optional <el-kw>inherits</el-kw> to refer to a <el-kw>class</el-kw> or <el-kw>abstract class</el-kw> defined above in the program.</p>
-<p>The Class name must have an initial capital letter because it functions as a new Type.</p>
-<p>This example shows the definition of a Class that includes its <el-kw>constructor</el-kw>, <el-kw>property</el-kw> definitions and an example of the required <el-method>toString</el-method> method:</p>
-
-<codeblock>
-class Square
-  constructor(x as Int, y as Int)
-    set this.x to x
-    set this.y to y
-  end constructor
-
-  function toString() returns String
-    return ""
-  end function
-
-  property x as Int
-  property y as Int
-
-  function getAdjacentSquare(d as Direction) returns Square
-    variable newX set to this.x
-    variable newY set to this.y
-    if d is Direction.left then
-      set newX to this.x - 1
-    elif d is Direction.right then
-      set newX to this.x + 1
-    elif d is Direction.up then
-      set newY to this.y - 1
-    elif d is Direction.down then
-      set newY to this.y + 1
-    end if
-    return new Square(newX, newY)
-  end function
-
-  function hasHitEdge() returns Boolean
-    return (this.x is -1) or (this.y is -1) or (this.x is 40) or (this.y is 30)
-  end function
-end class
-
-main
-  variable tail set to new Square(20, 15)
-  call print(tail)
-end main
-</codeblock>
+<hr>
+</div></div>
 
 <h3 class="no-TOC" id="this"><el-kw>this</el-kw></h3>
 If in the code of Class <el-type>A</el-type> you want to invoke a method in Class <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
-you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by this line in demo program <el-code>snake_OOP.elan</el-code>:</p>
+you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by this line in demo program <b>snake - object-oriented</b>:</p>
 
 <codeblock>
   call apple.newRandomPosition(this)
@@ -885,14 +864,7 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   property body as [Square]
 </codeblock>
 
-<p>It may be given an initial value within a <el-kw>constructor</el-kw> but
-if it is not thus initialised, then it will be given the default value <el-kw>empty</el-kw> for its Type. You can test whether a property contains this
-default thus:</p>
-<codeblock>
-  property names List
-...
-  if names is empty List
-</codeblock>
+<p>It may be given an initial value within a <el-kw>constructor</el-kw>.
 </p>A property may be read, but not written to.
 Properties may be modified only from outside the Class by means of a <a href="#procedure_method">Procedure method</a>.</p>
 
