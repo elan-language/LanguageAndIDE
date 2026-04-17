@@ -15,10 +15,6 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<!--<p class="noteBox">
-NOTE: This documentation is a work in progress and is not yet fully descriptive of Elan v.2
-</p>-->
-
 <h1 id="namedValue">Named values</h1>
 
 <p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
@@ -110,7 +106,7 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><el-type>Random</el-type></a></td>
-  <td><a href="LibRef.html#AsRef"><el-topic>Argument reference</el-topic><br><el-type>AsRef</el-type></td>
+  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><el-type>AsRef</el-type></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
   <td><a href="LibRef.html#Maybe"><el-topic>Maybe</el-topic><br><el-type>Maybe</el-type></a></td>
   </tr>
@@ -307,7 +303,33 @@ end procedure
 <hr>
 </div></div>
 
+<div id="AsRef"</div> 
+<div id="set_Ref"</div> 
+<div id="value_Ref"</div> 
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
+<p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
+must use a reference (or pointer) to it, defined as Type <el-type>AsRef</el-type>.
+This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of call by reference</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <el-method>main</el-method>,
+ so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
+<codeblock>
+main
+  variable arg set to "abc"
+  variable argRef set to new AsRef<of String>(arg)
+  call changeArg(argRef)
+  call print(argRef.value())
+end main
+
+procedure changeArg(pointer as AsRef<of String>)
+  constant r set to pointer.value()
+  call pointer.set(r.upperCase())
+end procedure
+</codeblock>
+<hr>
+</div></div>
 
 <h2 id="function"><el-kw>function</el-kw></h2>
 <p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
@@ -1151,7 +1173,9 @@ end if
 <h2 id="set"><el-kw>set</el-kw></h2>
 <p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
-<p>A <el-kw>set</el-kw> instruction may not assign a new value to a parameter within a procedure unless the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
+<p>A <el-kw>set</el-kw> instruction may not assign a new value to a parameter within a procedure.</p>
+<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <el-type>AsRef</el-type>,
+which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference</a></p>
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
 <p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
