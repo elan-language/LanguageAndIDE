@@ -31,7 +31,7 @@ def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[
   return graphics.withSet(x, graphics[x].withSet(y, colour))
 
 def score(g: Game) -> int: # function
-  return g.body.length() - 2
+  return len(g.body) - 2
 
 def moveSnake(g: Game) -> Game: # function
   k = g.key # variable definition
@@ -43,7 +43,7 @@ def moveSnake(g: Game) -> Game: # function
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # variable definition
-  moveTail = g.body.subList(1, g.body.length()) # variable definition
+  moveTail = g.body.subList(1, len(g.body)) # variable definition
   return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 
 def headOverApple(g: Game) -> bool: # function
@@ -266,3 +266,5 @@ def test_newGame(self) -> None:
   self.assertEqual(game.priorTail, Square(0, 0))
   self.assertEqual(game.key, "d")
   self.assertEqual(game.isOn, True)
+
+main()

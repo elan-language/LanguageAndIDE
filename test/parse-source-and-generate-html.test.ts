@@ -203,35 +203,35 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/snake-OOP.cs`,
       `./out/test/files/snake-OOP.java`,
     );
-    test("Snake FP", async () => {
-      await assertGeneratesHtmlSourceAndExportFiles(
-        `./out/test/files/snake-fp.elan`,
-        ``,
-        `./out/test/files/snake-fp.py`,
-        `./out/test/files/snake-fp.vb`,
-        `./out/test/files/snake-fp.cs`,
-        `./out/test/files/snake-fp.java`,
-      );
-    });
-    test("Date/Time", async () => {
-      await assertGeneratesHtmlSourceAndExportFiles(
-        `./out/test/files/date-time.elan`,
-        ``,
-        `./out/test/files/date-time.py`,
-        `./out/test/files/date-time.vb`,
-        `./out/test/files/date-time.cs`,
-        `./out/test/files/date-time.java`,
-      );
-    });
-    test("Julia set", async () => {
-      await assertGeneratesHtmlSourceAndExportFiles(
-        `./out/test/files/julia-set.elan`,
-        ``,
-        `./out/test/files/julia-set.py`,
-        `./out/test/files/julia-set.vb`,
-        `./out/test/files/julia-set.cs`,
-        `./out/test/files/julia-set.java`,
-      );
-    });
+  });
+  test("Snake FP", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/snake-fp.elan`,
+      ``,
+      `./out/test/files/snake-fp.py`,
+      `./out/test/files/snake-fp.vb`,
+      `./out/test/files/snake-fp.cs`,
+      `./out/test/files/snake-fp.java`,
+    );
+  });
+  test("Date/Time", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/date-time.elan`,
+      ``,
+      `./out/test/files/date-time.py`,
+      `./out/test/files/date-time.vb`,
+      `./out/test/files/date-time.cs`,
+      `./out/test/files/date-time.java`,
+    );
+  });
+  test("Julia set", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/julia-set.elan`,
+      ``,
+      `./out/test/files/julia-set.py`,
+      `./out/test/files/julia-set.vb`,
+      `./out/test/files/julia-set.cs`,
+      `./out/test/files/julia-set.java`,
+    );
   });
 });
