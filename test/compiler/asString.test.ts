@@ -3,14 +3,13 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   testHash,
   testHeader,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("toString", () => {
@@ -47,21 +46,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_ClassHasNoAsString", async () => {
+  test("Pass_EmptyClassIsCreatedWithDefaultConstructorAndToString", async () => {
     const code = `${testHeader}
 
 main
-  variable f set to new Foo()
-  variable s set to f.toString()
-  call printNoLine(s)
+
 end main
 
 class Foo
-  constructor()
-      set this.p1 to 5
-  end constructor
-
-  property p1 as Float
 
 end class`;
 
@@ -74,12 +66,32 @@ end class`;
       false,
       true,
     );
+
+    const objectCode =`let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "undefined";
+  }
+
+}
+return [main, _tests];}`;
+
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Concrete class must have a 'toString' function taking no parameters and returning a String.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
   });
 
   test("Pass_emptyClassAsString", async () => {

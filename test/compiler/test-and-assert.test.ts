@@ -688,10 +688,10 @@ class Foo {
 
 }
 
-_tests.push(["test71", async (_outcomes) => {
+_tests.push(["test73", async (_outcomes) => {
   let a = system.initialise(await new Foo()._initialise(3));
   let b = system.initialise(await new Foo()._initialise(3));
-  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert80", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "Foo"], [b, "Foo"], "assert82", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -717,7 +717,7 @@ return [main, _tests];}`;
       ],
       ["test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")]],
       ["test42", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert48")]],
-      ["test71", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert80")]],
+      ["test73", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert82")]],
     ]);
   });
 
