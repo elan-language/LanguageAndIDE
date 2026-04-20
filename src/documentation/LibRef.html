@@ -88,12 +88,14 @@ in the range:</li>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
 <codeblock>
+main
   for n in range(50, 73)
     variable s set to lambda n as Int => n.toString().length()
     variable np set to pow(2, n).floor()
     call printTab(s(n), $"{n}")
     call printTab(30 - s(np), $"{np}\n")
   end for
+end main
 </codeblock>
 <img src="images/bigIntegers.png" width="285" height="471">
 </ul>
@@ -437,10 +439,9 @@ end test
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><codeblock>
-  set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"
-  call print(message)
- </codeblock>
+ <td><codeblock>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
+  <codeblock>call print(message) </codeblock>
+
 </td><td>
  <td><br>&#x27f6;</td>
  <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
@@ -449,10 +450,8 @@ end test
 <p>And, for the area of a circle:</p>
 <table class="tablePlain">
 <tr>
- <td><code>constant r set to 2.0</code><br>
-     <codeblock>
-  call print($"area = {(pi*r*r).round(2)}"
-  </codeblock>
+ <td><codeblock>constant r set to 2.0</codeblock>
+     <codeblock>call print($"area = {(pi*r*r).round(2)}"</codeblock>
  <td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
@@ -1119,6 +1118,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 <table class="tablePlain">
 <tr><td>
 <codeblock>
+main
   variable sk set to new Stack<of String>()
   call print(sk.length())
   set sk to sk.push("apple")
@@ -1133,6 +1133,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   call print(sk)
   set sk to sk.pop().item_1
   call print(sk)
+end main
 </codeblock>
 </td>
 <td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
@@ -1144,6 +1145,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
 <table class="tablePlain">
 <tr><td>
 <codeblock>
+main
   variable qu set to new Queue<of String>()
   call print(qu.length())
   set qu to qu.enqueue("apple")
@@ -1158,6 +1160,7 @@ And you can create a new <el-type>HashSet</el-type> from an existing <el-type>Li
   call print(qu)
   set qu to qu.dequeue().item_1
   call print(qu)
+end main
 </codeblock>
 </td>
 <td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
@@ -1200,11 +1203,13 @@ of differing Types held together and referenced by a single identifier.</p>
 <tr>
  <td>
 <codeblock>
+main
   variable t set to (3, "apple", true)
   call print(t)
   call print(t.item_0)
   call print(t.item_1)
   call print(t.item_2)
+end main
 </codeblock>
  </td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -1216,6 +1221,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <codeblock>
 function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
+end function
 </codeblock>
 <p>Note that the appropriate <el-id>item_</el-id>Ns will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
@@ -1253,6 +1259,7 @@ function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Flo
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
 <codeblock>
+main
   variable grid set to createBlockGraphics(white)
   while true
     variable x set to randint(0, 39)
@@ -1261,6 +1268,7 @@ function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Flo
     set grid[x][y] to colour
     call displayBlocks(grid)
   end while
+end main
 </codeblock>
 
 <h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
@@ -1375,6 +1383,7 @@ So the top left corner of the display is at (-100,75).</p>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a square:</p>
 <codeblock>
+main
   variable t set to new Turtle()
   call t.placeAt(-75, 50)
   call t.show()
@@ -1383,6 +1392,7 @@ So the top left corner of the display is at (-100,75).</p>
     call t.move(80)
     call sleep(0.5)
   end for
+end main
 </codeblock>
 <img src="images/turtleSquare.png" width="270" height="290">
 <hr>
@@ -1668,6 +1678,7 @@ together with the procedure and function methods provided to alter their values 
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a circle with a coloured circumference:</p>
 <codeblock>
+main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG()
   call circ.setCentreX(20)
@@ -1678,12 +1689,14 @@ together with the procedure and function methods provided to alter their values 
   call circ.setStrokeWidth(2)
   call vg.append(circ)
   call displayVectorGraphics(vg)
+end main
 </codeblock>
 <p><img src="images/VG_circle.png" width="200" height="200" ></p>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a circle that changes between red and green every second:</p>
 <codeblock>
+main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG()
   call circ.setCentreX(50)
@@ -1700,6 +1713,7 @@ together with the procedure and function methods provided to alter their values 
     call circ.setFillColour(green)
   end while
   call displayVectorGraphics(vg)
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -1723,9 +1737,11 @@ By this means features such as simple SVG animation can be defined.</p>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To display a repeating movement of a circle:</p>
 <codeblock>
+main
   variable movingCircle set to "<circle cx='50' cy='50' r='50' style='fill:red;'>\n<animate attributeName='cx' begin='0s' dur='2s' from='50' to='90%' repeatCount='indefinite' /></circle>"
   variable raw set to (new RawVG()).withContent(movingCircle)
   call displayVectorGraphics([raw])
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -1751,10 +1767,8 @@ By this means features such as simple SVG animation can be defined.</p>
 <p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
 
-<codeblock>
-  variable rand set to new Random()
-  call rand.initialiseFromClock()
-</codeblock>
+<codeblock>variable rand set to new Random()</codeblock>
+<codeblock>call rand.initialiseFromClock()</codeblock>
 
 <p>Then, in a function, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <el-type>Random</el-type> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <el-type>Random</el-type>.
 If you need another random value, you use the returned <el-type>Random</el-type> on which to apply the dot method again.</p>
@@ -1931,10 +1945,13 @@ end function
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
 <p>Whether your application makes use of graphics, or uses the display  just for text, reading keystrokes 'on the fly' is done via one of the three methods shown here:</p>
 <codeblock>
+main
   variable key1 set to getKey()
   variable key2 set to getNumericKey()
-  variable keyCap set to getKeyWithModifier().item_0
-  variable keyMod set to getKeyWithModifier().item_1
+  variable km set to getKeyWithModifier()
+  variable keyCap set to km.item_0
+  variable keyMod set to km.item_1
+end main
 </codeblock>
 <ul>
  <li>When any of these functions (except<el-method> waitForKey</el-method>) is called, the system <i>does not wait for a response</i>, but immediately returns a <el-type>String</el-type> or Tuple.</li>
@@ -1958,10 +1975,12 @@ end function
  </li>
 </ul>
 <codeblock>
+main
   call pressAnyKeyToContinue()
   call print("OK, press A or B")
   variable key set to waitForKey()
   call print($"That was {key}")
+end main
 </codeblock>
 
 <h2 id="FileInputOutput">Text file input/output</h2>
@@ -2019,9 +2038,11 @@ end function
 </table>
 <p>These methods may be used to read a whole file in one go:</p>
 <codeblock>
+main
   variable file set to openFileForReading()
   variable text set to file.readWholeFile()
   call print(text)
+end main
 </codeblock>
 
 <h4 class="no-TOC">Notes</h4>
@@ -2059,8 +2080,10 @@ end function
 
 <p>These methods may be used to write a whole file in one go:</p>
 <codeblock>
+main
   variable file set to createFileForWriting("myFile.txt")
   call file.writeWholeFile("Text line 1\nText line 2")
+end main
 </codeblock>
 
 <h4 class="no-TOC">Notes</h4>
@@ -2073,6 +2096,7 @@ end function
 To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-kw>try...catch</el-kw> instruction like this (where <el-type>ElanRuntimeError</el-type> is a Class provided by Elan for this purpose):</li>
 
 <codeblock>
+main
   variable file set to createFileForWriting("squares.txt")
   for i in range(1, (101))
     call file.writeLine($"{i*i}")
@@ -2082,6 +2106,7 @@ To guard against this possibility (it might mean the loss of important data),  y
   catch ElanRuntimeError
     call print("Save cancelled")
   end try
+end main
 </codeblock>
 or you could make the code offer the user options: to save again, or to continue without saving.
 </ul>
@@ -2112,8 +2137,10 @@ or you could make the code offer the user options: to save again, or to continue
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
 the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
 <codeblock>
+main
   variable style set to "&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;"
   call displayHtml($"{style}&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;")
+end main
 </codeblock>
 
 <p>will produce:</p>
@@ -2126,19 +2153,23 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <codeblock>
+main
   variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
   call displayHtml(pic)
+end main
 </codeblock>
    <p>The usual <el-code>&lt;img&gt;</el-code> tag attributes are respected, though <el-code>alt</el-code> does not give the expected tooltip when hovering over the image, and <el-code>title</el-code> is only a descriptive comment.</p>
 
  <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition, set properties by calling <a href="#VG_properties">vector graphic procedures</a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>
+main
   variable sharkUrl set to "https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"
   variable sharkVG set to new ImageVG(sharkUrl)
   call sharkVG.setWidth(400)
   call sharkVG.setHeight(200)
   call sharkVG.setAlt("Shark")
   call displayVectorGraphics([sharkVG])
+end main
 </codeblock>
  </li>
 </ul>
@@ -2158,6 +2189,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; An example that plays a C major scale first ascending then descending:</p>
 <codeblock>
+main
   variable scale set to [262, 294, 330, 349, 392, 440, 494, 523]
   variable scaleL set to scale.length()
   variable quaver set to 250
@@ -2169,6 +2201,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
   for i in range(0, scaleL)
     call tone(quaver, scale[scaleL - 1 - i], volume)
   end for
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -2463,6 +2496,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <tr>
  <td>
 <codeblock>
+main
   call print("Hello")
   variable a set to 3
   variable b set to 4
@@ -2471,6 +2505,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
   variable t set to (true, 42)
   call print(t.item_0)
   call print(t.item_1)
+end main
 </codeblock>
  </td>
  <td>&#x27f6;<br><br><br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
@@ -2482,6 +2517,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Procedure <el-method>printTab</el-method> helps in the layout of information printed to the display, e.g. when printing columns of data:</p>
 <codeblock>
+main
   call printTab(0, "Number")
   call printTab(10, "Square")
   call printTab(20, "Cube\n")
@@ -2490,17 +2526,20 @@ the style definition into a named value as a literal but enclosed in <i>single</
     call printTab(10, $"{pow(i, 2)}")
     call printTab(20, $"{pow(i, 3)}\n")
   end for
+end main
 </codeblock>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; For numeric output, it is preferable to right-align the columns, e.g. when listing powers of 9: :</p>
 <codeblock>
+main
   variable tab set to 10
   for i in range(1, tab)
     variable j set to pow(9, i).floor()
     variable f set to (lambda j as Int => j.toString().length())
     call printTab(tab - f(j), $"{j}\n")
   end for
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -3008,15 +3047,19 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To cube each integer value in a list:</p>
 <codeblock>
+main
   variable li set to [1, 2, 3, 4, 5]
   call print(li.map(lambda n as Int => pow(n, 3)))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; [1, 8, 27, 64, 125]
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To change each string in a list to upper case:</p>
 <codeblock>
+main
   variable names set to ["Tom", "Dick", "Harriet"]
   call print(names.map(lambda s as String => s.upperCase()))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; ["TOM", "DICK", "HARRIET"]
 
@@ -3072,8 +3115,10 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a <el-type>List</el-type> to their sum:</p>
 <codeblock>
+main
   variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
   call print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; 10.94
 
@@ -3085,21 +3130,25 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of items in a <el-type>List</el-type>:</p>
 <codeblock>
+main
   variable n set to [2, 3, 5, 7, 11, 13]
   variable nR set to new List<of Int>()
   variable eL set to new List<of Int>()
   call print(n.reduce(eL, lambda nR as List<of Int>, m as Int => nR.withPrepend(m)))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; [13, 11, 7, 5, 3, 2]
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of the words in a <el-type>String</el-type>,
 use <el-method>reduce</el-method> on a <el-type>List</el-type> of words (created by <el-method>split</el-method> and then reassembled by <el-method>join</el-method>):</p>
 <codeblock>
+main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List<of String>()
   set sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
   call print(sR)
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; toves slithy the and brillig 'Twas
 
@@ -3124,15 +3173,19 @@ They take a function as an argument, and return the list item corresponding to t
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the integer that has the highest last digit:</p>
 <codeblock>
+main
   variable a set to [33, 4, 0, 92, 89, 55, 102]
   call print(a.maxBy(lambda x as Int => x mod 10))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; 89
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the the shortest string:</p>
 <codeblock>
+main
   variable fruit set to ["apple", "orange", "pear"]
   call print(fruit.minBy(lambda x as String => x.length()))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; pear
 <hr>
@@ -3155,8 +3208,10 @@ They take a function as an argument, and return the list item corresponding to t
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reorder strings in a <el-type>List</el-type>, using method <el-method>isBefore</el-method> for descending (you would use <el-method>isAfter</el-method> for ascending):</p>
 <codeblock>
+main
   variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
   call print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
+end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; [Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice]
 <hr>

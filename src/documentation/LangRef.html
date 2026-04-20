@@ -340,14 +340,12 @@ end procedure
  <li>a function's execution cannot be interrupted by any external event, though a a non-terminating loop in a function may be detected with tests that <a href="#ignore">time out</a>.</li>
 </ul>
 <p id="returns">A function definition is comprised of its unique name and, in brackets, its input parameters with their Types, followed by the keyword <el-kw>returns</el-kw>,
-and the Type of the value that will be returned, for example:</p>
-<codeblock>
-function factorial(n as Int) returns Int
-</codeblock>
+and the Type of the value that will be returned.</p>
 <p id="return">
 A <el-kw>return</el-kw> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
-and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
-<p>You follow the <el-kw>return</el-kw> instruction with the value to be returned by the function. This may be an expression that will be evaluated before returning. for example:</p>
+and there can be only one <el-kw>return</el-kw> instruction in a function. 
+You follow the <el-kw>return</el-kw> instruction with the value to be returned by the function. 
+This may be an expression that will be evaluated before returning. For example:</p>
 <codeblock>
 function foo(a as Int, b as Int) returns Boolean
   return if(pow(a, b) < pow(b, a), true, false)
@@ -492,7 +490,7 @@ end test
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an assert:</p>
 
 <codeblock>
-  test testoverApple
+test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
   assert headOverApple(g2) is true actual (computed): false
@@ -706,8 +704,10 @@ whose return value is put into a variable.</p>
 <p>These examples define a constant list and a constant dictionary of colours in indexable variables:</p>
 
 <codeblock>
+main
   variable rainbow set to getRainbow()
   variable suitColours set to getSuitColours()
+end main
 
 function getRainbow() returns List<of Int>
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
@@ -733,18 +733,9 @@ enum Action stand, draw
 enum Outcome undecided, win, lose, draw, winDouble
 enum Status pending, playing, standing, blackjack, bust
 
+main
   variable status set to Status.pending
-</codeblock>
-
-<p>And from demo program <el-code>snake.OOP.elan</el-code>, some code lines demonstrating reference to the <el-kw>enum</el-kw> <el-type>Direction</el-type> and to its values:</p>
-<codeblock>
-enum Direction up, down, left, right
-
-constructor()
-  set property.currentDir to Direction.right
-end constructor
-
-function getAdjacentSquare(d as Direction) returns Square
+end main
 </codeblock>
 
 <div id="Member"></div>
@@ -858,10 +849,13 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
 <p>A <el-kw>property</el-kw> is a named value defined on a <el-kw>class</el-kw> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
  and a Type (which may be another class name), for example:</p>
 <codeblock>
+class 
   property height as Int
   property board as Board
   property head as Square
-  property body as [Square]
+  property body as List<of Square>
+
+end class
 </codeblock>
 
 <p>It may be given an initial value within a <el-kw>constructor</el-kw>.
@@ -904,6 +898,7 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
 <li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <el-code>property. </el-code>('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
 </ul>
 <codeblock>
+class Game
   constructor(board as Board)
     set property.board to board
   end constructor
@@ -911,6 +906,7 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
   procedure setHeight(height as Int)
     set property.height to height
   end procedure
+end class
 </codeblock>
 
 <h2 id="constructor"><el-kw>constructor</el-kw></h2>
@@ -923,10 +919,12 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
 the correct Type must be provided. For example, if the Class <el-type>Square</el-type> has this constructor:</p>
 
 <codeblock>
+class Square
   constructor(x as Int, y as Int)
     set property.x to x
     set property.y to y
   end constructor
+end class
 </codeblock>
 
 <p>then it may be instantiated like this:</p>
@@ -1020,30 +1018,41 @@ The forms of the <el-kw>for</el-kw> loop are:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id> is of Type <el-type>String</el-type> and the subject <el-id>q</el-id> is of Type <el-type>String</el-type>:<br>
  <codeblock>
- set title to "Winnie the Pooh"
+main
+  set title to "Winnie the Pooh"</codeblock>
   for ch in title
-</codeblock><br>
+    call print(ch)
+  end for
+end main
+ </codeblock>
+<br>
   puts each character in <el-id>title</el-id> in turn into <el-type>String</el-type> <el-id>ch</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <el-type>Int</el-type>):<br>
  <codeblock>
-  set primes to [2, 3, 5, 7, 11]
-  for n in primes 
- </codeblock><br>
+main
+  set primes to [2, 3, 5, 7, 11]</codeblock>
+  for n in primes
+    call print(n)
+  end for
+end main
+</codeblock><br>
   puts each item in the List <el-id>primes</el-id> in turn into <el-type>Int</el-type> <el-id>n</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <el-type>String</el-type>):</li>
- <codeblock>
-  set basket to ["apple", "banana", "cherry", "date"]
-  for fruit in basket
- </codeblock><br>
+ <codeblock>set basket to ["apple", "banana", "cherry", "date"]</codeblock>
+ <codeblock>for fruit in basket</codeblock><br>
   puts each item in the List <el-id>basket</el-id> in turn into <el-type>String</el-type> <el-id>fruit</el-id>.</li>
 </ul>
 <p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of  <el-id>p</el-id>:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id>'s value is limited to a range:</li>
- <codeblock>
+<codeblock>
+main
   variable numbers set to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   for n in range(3, 8)
- </codeblock><br>
+    call print(n)
+  end for
+end main
+</codeblock><br>
   gives values with which to index into the List <el-id>numbers</el-id>.</li>
 </ul>
 <p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
@@ -1066,16 +1075,19 @@ end function
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To print the first item in a <el-type>List</el-type> and then each item in it:</p>
 <codeblock>
+main
   variable names set to ["Tom", "Dick", "Harriet"]
   call print(names[0])
   for n in names
     call print(n)
   end for
+end main
 </codeblock>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To print first the keys and then the values from a <el-type>Dictionary</el-type>:</p>
 <codeblock>
+main
   variable di set to ["A":1, "B":2, "C":3]
   for s in di.keys()
     call print(s)
@@ -1083,6 +1095,7 @@ end function
   for n in di.values()
     call print(n)
   end for
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -1131,12 +1144,12 @@ So even if the loop variable is changed in any way within the <el-kw>for</el-kw>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
-  if item.equals(value) then
-    set result to true
-  elif item.isBefore(value) then
-    set result to binarySearch(li[:mid], item)
-  else
-    set result to binarySearch(li[mid + 1:], item)
+if item.equals(value) then
+  set result to true
+elif item.isBefore(value) then
+  set result to binarySearch(li[:mid], item)
+else
+  set result to binarySearch(li[mid + 1:], item)
 end if
 </codeblock>
 <hr>
@@ -1253,11 +1266,13 @@ instruction declares and initialises a mutable named valued. The name defined mu
  when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
 
 <codeblock>
+main
   variable file set to openFileForReading()
   while not file.endOfFile()
     call print(file.readLine())
   end while
-call file.close()
+  call file.close()
+end main
 </codeblock>
 
 <h1 id="Expression">Expressions</h1>
@@ -1297,10 +1312,12 @@ then an empty string or list is returned.</p>
 
 <p>Example of using indexing on a string:</p>
 <codeblock>
+main
   variable a set to "Hello world!"
   call print(a[4])
   call print(a.subString(4, a.length()))
   call print(a.subString(0, 7))
+end main
 </codeblock>
 <p>would print these lines to the display:</p>
 <pre><el-code>
@@ -1311,11 +1328,13 @@ then an empty string or list is returned.</p>
 
 <p>And on a list:</p>
 <codeblock>
+main
   variable li set to new List<of Int>()
   set li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
   call print(li.subList(0, 7))
+end main
 </codeblock>
 
 <p>would print these lines to the display:</p>
@@ -1334,10 +1353,8 @@ then an empty string or list is returned.</p>
 <p>For the <el-code> + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
 <p>For the <el-code> / </el-code> operator, at least one of the values must be a <el-type>Float</el-type>, and the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="power">For raising one value to the power of another, use the syntax in these examples:<br>
-<codeblock>
-  call print(pow(4, 4))
-  variable c set to sqrt(pow(a, 2) + pow(b, 2))
-</codeblock>
+<codeblock>call print(pow(4, 4))</codeblock>
+<codeblock>variable c set to sqrt(pow(a, 2) + pow(b, 2))</codeblock>
 
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
 <p id="mod"> The operator <el-kw>mod</el-kw> (integer remainder) is applied  only to <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
@@ -1427,18 +1444,18 @@ Two instances which are subclasses of the same abstract Class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<codeblock>
-set x to (a > b) and (b < c)7
-set x to (a + b) > (c - d)
-</codeblock>
+<codeblock>set x to (a > b) and (b < c)</codeblock>
+<codeblock>set x to (a + b) > (c - d)</codeblock>
 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>
+main
   call print(sin(radians(30)))
   variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
   variable name set to input("Your name")
   call print(name.upperCase())
+end main
 </codeblock>
 
 <h4 class="no-TOC">Notes</h4>
@@ -1494,26 +1511,20 @@ end function
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> expression:</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice of <el-kw>variable</el-kw> assignments (the brackets around the first <el-kw>if</el-kw> expression are optional):</p>
-<codeblock>
-  variable c set to 1160
-  set c to (if c < 1160 then c + 40 else c - 1160)
-  variable d set to if c < 580 then c - 40 else c + 60
-</codeblock>
+
+<codeblock>variable c set to 1160</codeblock>
+<codeblock>set c to (if c < 1160 then c + 40 else c - 1160)</codeblock>
+<codeblock>variable d set to if c < 580 then c - 40 else c + 60</codeblock>
+
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-kw>return</el-kw> instruction:</p>
 <codeblock>
-  return if isGreen(attempt, target, n)
-    then setChar(attempt, n, "*")
-    else attempt
+  return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
 </codeblock>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-kw>elif</el-kw> clause:</p>
 <codeblock>
-  return if attempt[n] is "*"
-    then attempt
-    elif isYellow(attempt, target, n)
-    then setChar(attempt, n, "+")
-    else setChar(attempt, n, "_")
+  return if attempt[n] is "*" then attempt elif isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 </codeblock>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-kw>if</el-kw> expression in a <el-kw>call</el-kw> <el-method>print</el-method>:</p>
