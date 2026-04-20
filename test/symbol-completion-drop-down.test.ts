@@ -252,7 +252,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident22", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
   });
 
   test("Pass_InConstructor", async () => {

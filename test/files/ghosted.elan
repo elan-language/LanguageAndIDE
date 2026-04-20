@@ -1,10 +1,17 @@
-# df68fdc6bed1a6193627d8051addd01c2841fcc986a64b9eec96a45c192d6046 Elan 2.0.0-alpha1 valid
+# abba0f7c9fef9089161f643e804e7bd3d6eff69d5f378751e9c3b6a675f354cc Elan 2.0.0-alpha1 valid
 
 [ghosted] constant k set to 3
 
 [ghosted] enum Status open, closed
 
 [ghosted] class Snake
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "undefined"
+  end function
 
 end class
 

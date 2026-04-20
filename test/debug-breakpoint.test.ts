@@ -171,6 +171,14 @@ class Foo
     variable d set to [1:2]
     set a to 2
   end procedure
+
+  constructor()
+
+  end constructor
+
+  function toString() return String
+    return ""
+  end function
 end class`;
 
     const fileImpl = new FileImpl(
@@ -219,6 +227,14 @@ class Foo
     variable d set to [1:2]
     set a to 2
     return a
+  end function
+
+  constructor()
+
+  end constructor
+
+  function toString() return String
+    return ""
   end function
 end class`;
 

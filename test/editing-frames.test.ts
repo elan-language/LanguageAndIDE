@@ -199,11 +199,11 @@ suite("Editing Frames", () => {
   test("Delete frame - Can delete constructor", () => {
     const file = classWithConstructor();
     const cls = file.getById("class1") as ConcreteClass;
-    assert.equal(cls.getChildren().length, 2);
+    assert.equal(cls.getChildren().length, 4);
     const con = file.getById("constructor5") as Constructor;
     con.select(true, false);
     con.processKey(ctrl_del());
-    assert.equal(cls.getChildren().length, 1);
+    assert.equal(cls.getChildren().length, 3);
     assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
 

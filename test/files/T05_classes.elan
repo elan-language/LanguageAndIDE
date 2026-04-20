@@ -1,4 +1,4 @@
-# ec70f870d4f82fac1e74a0a66325440945d294c890f77684070c81c053dcf64b Elan 2.0.0-alpha1 valid
+# ee828118e26ce778021fae93f64785ac14db0e81d53524b6d82cab3884b84d9b Elan 2.0.0-alpha1 valid
 
 class Player
   constructor()
@@ -6,6 +6,10 @@ class Player
   end constructor
 
   property score as Int
+
+  function toString() returns String
+    return "undefined"
+  end function
 
 end class
 
