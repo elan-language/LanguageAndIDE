@@ -177,6 +177,10 @@ el-fr {
   display: none;
 }
 
+el-test el-msg.warning {
+  display: none;
+}
+
 el-field el-text {
   font: consolas, monospace; /* Not sure why this is needed, but displays as sans face without */
 }
