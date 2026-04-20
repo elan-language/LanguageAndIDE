@@ -477,12 +477,12 @@ the overall test status will show the status of only the unghosted tests (green 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an entire test:</p>
 
 <codeblock>
-test test_overApple
+[ghosted] test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
-  assert headOverApple(g2) is false pass
+  assert headOverApple(g2) is false
   variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true pass
+  assert headOverApple(g3) is true
 end test
 </codeblock>
 <hr>
@@ -493,9 +493,9 @@ end test
 test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
-  assert headOverApple(g2) is true actual (computed): false
+  [ghosted] assert headOverApple(g2) is true
   variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true pass
+  assert headOverApple(g3) is true
 end test
 </codeblock>
 <hr>
