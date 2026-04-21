@@ -32,7 +32,7 @@
     "fast-dev-compile": "cpr ./src/environments/environment.ts ./src/environment.ts -o && npm run compile-src && npm run fast-build-website",
     "dev-compile": "cpr ./src/environments/environment.ts ./src/environment.ts -o && npm run compile-base && npm run build-website",
     "production-compile": "cpr ./src/environments/environment.prod.ts ./src/environment.ts -o && npm run compile-base && npm run update-build-script && npm run build-website",
-    "pretest": "npm run dev-compile && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o && cpr ./src/demo_programs ./out/test/demo_programs -o",
+    "pretest": "npm run fast-dev-compile && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o && cpr ./src/demo_programs ./out/test/demo_programs -o",
     "fast-pretest": "npm run fast-dev-compile && npm run fast-compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o && cpr ./src/demo_programs ./out/test/demo_programs -o",
     "lint": "eslint src",
     "fast-test": "npm run fast-pretest && mocha --timeout 10000 out/test/compiler/*.test.js && mocha --timeout 10000 out/test/*.test.js",

@@ -1,5 +1,4 @@
 import assert from "assert";
-import { assertKeyword, functionKeyword, testKeyword } from "../src/compiler/elan-keywords";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
@@ -320,5 +319,22 @@ suite("Selector tests", () => {
     ]);
   });
 
-  ignore_test("#377 - Global select filtered by profile", () => {});
+  test("Selection Filtering - profile 1.0", () => {
+    const file = new FileImpl(
+      hash,
+      new Profile("1.0"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const globSel = file.getFirstChild();
+    const main = new MainFrame(file);
+    file.addChildBefore(main, globSel);
+    file.updateAllParseStatus();
+    const g = new GlobalSelector(file);
+    assertOptions(g, ["# comment"]);
+    const s = new StatementSelector(main);
+    assertOptions(s, ["print", "constant", "variable definition", "change variable", "# comment"]);
+  });
 });
