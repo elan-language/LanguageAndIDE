@@ -15,7 +15,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   override isDeletable() {
-    return false;
+    return true;
   }
 
   initialKeywords(): string {
