@@ -59,7 +59,7 @@ end constructor`;
 
     const actual = await processInnerCode(code, LanguageElan.Instance);
 
-    assert.strictEqual(actual.startsWith("<el-constructor"), true);
+    assert.strictEqual(actual.startsWith("<el-method>"), true);
   });
 
   test("process expression", async () => {

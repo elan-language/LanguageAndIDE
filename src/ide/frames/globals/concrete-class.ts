@@ -12,7 +12,7 @@ import { ClassFrame } from "./class-frame";
 export class ConcreteClass extends ClassFrame {
   private constr: Constructor;
   private toString: FunctionMethod;
-  
+
   constructor(parent: File) {
     super(parent);
     this.isConcrete = true;
@@ -66,15 +66,14 @@ ${endKeyword} ${classKeyword}\r\n`;
     if (source.isMatchRegEx(/^constructor\(/)) {
       this.constr.parseFrom(source);
       this.removeChild(this.getFirstSelectorAsDirectChild());
-      this.addChildAfter(new MemberSelector(this), this.constr);  //So that parsing will continue from the selector *after* the catch
+      this.addChildAfter(new MemberSelector(this), this.constr); //So that parsing will continue from the selector *after* the catch
     }
     source.removeIndent();
     if (source.isMatchRegEx(/^function toString\(/)) {
       this.toString.parseFrom(source);
       this.removeChild(this.getFirstSelectorAsDirectChild()); //So that parsing will continue from the selector *after* the catch
-      this.addChildAfter(new MemberSelector(this), this.toString); 
+      this.addChildAfter(new MemberSelector(this), this.toString);
     }
     return super.parseBottom(source);
   }
-
 }

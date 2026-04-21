@@ -1,7 +1,5 @@
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { Constructor } from "../src/ide/frames/class-members/constructor";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
-import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
 import { Property } from "../src/ide/frames/class-members/property";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
@@ -258,10 +256,7 @@ export function classWithConstructor(): FileImpl {
   const file = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const globSel = file.getFirstChild();
   const cls = new ConcreteClass(file);
-  file.addChildBefore(cls, globSel);
-  const memberSel = cls.getFirstChild() as MemberSelector;
-  const con = new Constructor(cls);
-  cls.addChildBefore(con, memberSel);
+  file.addChildBefore(cls, globSel); 
   file.updateAllParseStatus();
   return file;
 }
