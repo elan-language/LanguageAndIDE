@@ -48,32 +48,32 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
       [
         abstractPropertyKeywords,
-        "abstract Property",
+        "abstract property",
         (_parent: Parent) => this.class.createAbstractProperty(),
       ],
       [
         abstractProcedureKeywords,
-        "abstract Procedure",
+        "abstract procedure",
         (_parent: Parent) => this.class.createAbstractProcedure(),
       ],
       [
         abstractFunctionKeywords,
-        "abstract Function",
+        "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
       ],
       [
         privatePropertyKeywords,
-        "private Property",
+        "private property",
         (_parent: Parent) => this.class.createProperty(true),
       ],
       [
         privateProcedureKeywords,
-        "private Procedure",
+        "private procedure",
         (_parent: Parent) => this.class.createProcedure(true),
       ],
       [
         privateFunctionKeywords,
-        "private Function",
+        "private function",
         (_parent: Parent) => this.class.createFunction(true),
       ],
       [

@@ -89,7 +89,7 @@ suite("Navigation", () => {
     const main_st_last = file.getById("select2");
     assert.equal(main_st_last.isSelected(), false);
     assert.equal(main.isSelected(), false);
-    assert.equal(global_select.isSelected(), true);
+    assert.equal(global_select.isSelected(), false);
     file.processKey(home());
     assert.equal(main.isSelected(), true);
     assert.equal(global_select.isSelected(), false);

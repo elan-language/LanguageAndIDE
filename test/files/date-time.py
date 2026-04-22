@@ -1,5 +1,7 @@
 # Python with Elan 2.0.0-alpha1
 
+import math
+
 def main() -> None:
   reply = "" # variable definition
   while not reply.upperCase().equals("Q"):
@@ -45,7 +47,7 @@ def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   second = (unixSecs % 60) # constant
   # days and years from Unix epoch
   unixDay = divAsInt(unixSecs, daySecs) # constant
-  years = ((unixDay + 1)/365.24).floor() # constant
+  years = math.floor(((unixDay + 1)/365.24)) # constant
   # this year and weekday
   year = unixYear + years # constant
   weekday = (unixDay + unixWeekday) % 7 # constant
@@ -136,7 +138,7 @@ def getStartDays() -> list[int]: # function
   return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
 
 def padLwithZero(i: int) -> str: # function
-  return pad("L", "00", i.toString())
+  return pad("L", "00", str(i))
 
 def test_padLwithZero(self) -> None:
   self.assertEqual(padLwithZero(1), "01")
@@ -148,10 +150,12 @@ def pad(d: str, p: str, s: str) -> str: # function
   # p: output string pattern of pad characters and of length
   # s: input string
   sR = s # variable definition
-  if p.length() > s.length():
+  if len(p) > len(s):
     if d.upperCase().equals("L"):
       ps = p + s # constant
-      sR = ps.subString(ps.length() - p.length(), ps.length()) # change variable
+      sR = ps.subString(len(ps) - len(p), len(ps)) # change variable
     elif d.upperCase().equals("R"):
-      sR = (s + p).subString(0, p.length()) # change variable
+      sR = (s + p).subString(0, len(p)) # change variable
   return sR
+
+main()

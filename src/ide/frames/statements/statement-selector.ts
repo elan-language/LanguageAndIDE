@@ -33,6 +33,7 @@ export class StatementSelector extends AbstractSelector {
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     return [
+      [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
       [
@@ -40,7 +41,6 @@ export class StatementSelector extends AbstractSelector {
         "<b>v</b>ariable definition",
         (parent: Parent) => this.factory.newVar(parent),
       ],
-      [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
       [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
       [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
@@ -70,7 +70,7 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix() === tryKeyword;
-    } else if (keyword === callKeyword) {
+    } else if (keyword === callKeyword || keyword === "print") {
       result = !(
         this.isWithinAFunction() ||
         this.isDirectlyWithinATest() ||

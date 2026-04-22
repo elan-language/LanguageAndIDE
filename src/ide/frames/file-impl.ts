@@ -130,11 +130,12 @@ export class FileImpl implements File {
     if (withMain) {
       const main = new MainFrame(this);
       this.getChildren().push(main);
+      const selector = main.getFirstChild();
+      selector.select(true, false);
     }
 
     const selector = new GlobalSelector(this);
     this.getChildren().push(selector);
-    selector.select(true, false);
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
