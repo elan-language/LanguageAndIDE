@@ -217,6 +217,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   START_OF_GENERIC: string = "<";
   THIS_INSTANCE: string = this.THIS;
 
+  EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];
+
   c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
       node.file,
