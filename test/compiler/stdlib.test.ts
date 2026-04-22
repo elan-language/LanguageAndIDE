@@ -382,7 +382,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "'25g'  does not parse as an integer");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'25g' does not parse as an integer");
   });
 
   test("Pass_int1", async () => {
@@ -477,7 +477,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "'' does not parse as an integer");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'10.1' does not parse as an integer");
   });
   test("Pass print (procedure) String", async () => {
     const code = `${testHeader}
