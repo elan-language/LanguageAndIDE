@@ -88,8 +88,8 @@ suite("Editing Frames", () => {
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
-    const constructor = file.getById("constructor5") as Constructor;
-    assert.equal(constructor.isSelected(), true);
+    const selector = file.getById("select4") as MemberSelector;
+    assert.equal(selector.isSelected(), true);
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
@@ -196,14 +196,14 @@ suite("Editing Frames", () => {
     assert.equal(file.getChildren().length, 1);
     assert.equal(file.getFirstChild(), sel);
   });
-  test("Delete frame - Can delete constructor", () => {
+  test("Delete frame - delete constructor", () => {
     const file = classWithConstructor();
     const cls = file.getById("class1") as ConcreteClass;
-    assert.equal(cls.getChildren().length, 2);
+    assert.equal(cls.getChildren().length, 3);
     const con = file.getById("constructor5") as Constructor;
     con.select(true, false);
     con.processKey(ctrl_del());
-    assert.equal(cls.getChildren().length, 1);
+    assert.equal(cls.getChildren().length, 2);
     assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
 

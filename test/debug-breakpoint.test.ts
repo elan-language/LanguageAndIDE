@@ -171,54 +171,13 @@ class Foo
     variable d set to [1:2]
     set a to 2
   end procedure
-end class`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  constructor()
 
-    const expected = [
-      asDebugSymbol("a", 1, '{"Type":"Int"}'),
-      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
-      asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
-      asDebugSymbol("e", 3, '{"Type":"Int"}'),
-      asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
-    ];
+  end constructor
 
-    await assertDebugBreakPoint(fileImpl, "set32", expected);
-  });
-
-  test("Pass_LocalvariablesMemberFunction", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
-  variable a set to f.ff(3)
-end main
-
-class Foo
-
-  property f as Int
-
-  function ff(e as Int) returns Int
-    variable a set to 1
-    variable b set to [1, 2]
-    variable c set to "fred"
-    variable d set to [1:2]
-    set a to 2
-    return a
+  function toString() returns String
+    return ""
   end function
 end class`;
 
@@ -246,7 +205,64 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set35", expected);
+    await assertDebugBreakPoint(fileImpl, "set42", expected);
+  });
+
+  test("Pass_LocalvariablesMemberFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  variable a set to f.ff(3)
+end main
+
+class Foo
+
+  property f as Int
+
+  function ff(e as Int) returns Int
+    variable a set to 1
+    variable b set to [1, 2]
+    variable c set to "fred"
+    variable d set to [1:2]
+    set a to 2
+    return a
+  end function
+
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
+      asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "set45", expected);
   });
 
   test("Pass_LocalvariablesConstructor", async () => {
@@ -297,7 +313,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set25", expected);
+    await assertDebugBreakPoint(fileImpl, "set32", expected);
   });
 
   test("Pass_InForLoop", async () => {

@@ -146,8 +146,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   addChildBefore(child: Frame, before: Frame): void {
     parentHelper_addChildBefore(this, child, before);
   }
-  addChildAfter(child: Frame, before: Frame): void {
-    parentHelper_addChildAfter(this, child, before);
+  addChildAfter(child: Frame, after: Frame): void {
+    parentHelper_addChildAfter(this, child, after);
   }
   removeChild(child: Frame): void {
     parentHelper_removeChild(this, child);

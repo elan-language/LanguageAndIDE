@@ -14,10 +14,6 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     this.file = parent;
   }
 
-  override isDeletable() {
-    return true;
-  }
-
   initialKeywords(): string {
     return mainKeyword;
   }
