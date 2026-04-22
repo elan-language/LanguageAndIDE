@@ -5,12 +5,6 @@ import math
 import time
 def clock():
   return int(time.time()*1000)
-def parseAsInt(s):
-  try:
-    n = int(s)
-  except ValueError:
-    return (False, 0)
-  return (True, n)
 
 def main() -> None:
   reply = "" # variable definition
