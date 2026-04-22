@@ -9,10 +9,13 @@ Sub main()
       print(now)
       print(getDate(now))
     Else
-      Dim td = parseAsInt(reply) ' variable definition
-      If td.item_0 And (td.item_1 >= 0) Then
-        print(getDate(td.item_1))
-      End If
+      Try 
+        Dim td = int(reply) ' variable definition
+        If td >= 0 Then
+          print(getDate(td))
+        End If
+      Catch e As ElanRuntimeError
+      End Try
     End If
   End While
 End Sub

@@ -11,9 +11,11 @@ def main() -> None:
       print(now)
       print(getDate(now))
     else:
-      td = parseAsInt(reply) # variable definition
-      if td.item_0 and (td.item_1 >= 0):
-        print(getDate(td.item_1))
+      try:
+        td = int(reply) # variable definition
+        if td >= 0:
+          print(getDate(td))
+      except ElanRuntimeError: # catch
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
