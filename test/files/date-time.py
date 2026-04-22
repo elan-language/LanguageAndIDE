@@ -2,27 +2,37 @@
 
 import math
 
+import time
+def clock():
+  return int(time.time()*1000)
+def parseAsInt(s):
+  try:
+    n = int(s)
+  except ValueError:
+    return (False, 0)
+  return (True, n)
+
 def main() -> None:
   reply = "" # variable definition
-  while not reply.upperCase().equals("Q"):
+  while not reply.upper() == ("Q"):
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # change variable
-    if reply.equals(""):
-      now = divAsInt(clock(), 1000) # constant
+    if reply == (""):
+      now = math.floor((clock())/(1000)) # constant
       print(now)
       print(getDate(now))
     else:
       td = parseAsInt(reply) # variable definition
-      if td.item_0 and (td.item_1 >= 0):
-        print(getDate(td.item_1))
+      if td[0] and (td[1] >= 0):
+        print(getDate(td[1]))
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
-  hour = dt.item_0 # constant
-  minute = dt.item_1 # constant
-  second = dt.item_2 # constant
-  days = dt.item_3 # constant
-  year = dt.item_4 # constant
-  weekday = dt.item_5 # constant
+  hour = dt[0] # constant
+  minute = dt[1] # constant
+  second = dt[2] # constant
+  days = dt[3] # constant
+  year = dt[4] # constant
+  weekday = dt[5] # constant
   z2 = "00" # constant
   h = padLwithZero(hour) # constant
   m = padLwithZero(minute) # constant
@@ -30,8 +40,8 @@ def getDate(unixSecs: int) -> str: # function
   startDays = getStartDays() # variable definition
   startDaysL = startDaysList(year, startDays) # variable definition
   month_day = monthDay(startDaysL, (days % startDays[12])) # variable definition
-  month = month_day.item_0 # constant
-  day = month_day.item_1 # constant
+  month = month_day[0] # constant
+  day = month_day[1] # constant
   dayName = getWeekdayName(weekday) # constant
   d = padLwithZero(day) # constant
   monthName = getMonthName(month) # constant
@@ -42,11 +52,11 @@ def test_getDate(self) -> None:
 
 def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # get separate values from Unix time
-  hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24) # constant
-  minute = divAsInt(unixSecs, 60) % 60 # constant
+  hour = (math.floor((math.floor((unixSecs)/(60)))/(60)) % 24) # constant
+  minute = math.floor((unixSecs)/(60)) % 60 # constant
   second = (unixSecs % 60) # constant
   # days and years from Unix epoch
-  unixDay = divAsInt(unixSecs, daySecs) # constant
+  unixDay = math.floor((unixSecs)/(daySecs)) # constant
   years = math.floor(((unixDay + 1)/365.24)) # constant
   # this year and weekday
   year = unixYear + years # constant
@@ -77,7 +87,7 @@ def leap(year: int) -> bool: # function
   leapYear = False # variable definition
   if (year % 4) == 0:
     leapYear = True # change variable
-    if ((year % 100) == 0) and ((divAsInt(year, 100) % 4) != 0):
+    if ((year % 100) == 0) and ((math.floor((year)/(100)) % 4) != 0):
       leapYear = False # change variable
   return leapYear
 
@@ -151,11 +161,11 @@ def pad(d: str, p: str, s: str) -> str: # function
   # s: input string
   sR = s # variable definition
   if len(p) > len(s):
-    if d.upperCase().equals("L"):
+    if d.upper() == ("L"):
       ps = p + s # constant
-      sR = ps.subString(len(ps) - len(p), len(ps)) # change variable
-    elif d.upperCase().equals("R"):
-      sR = (s + p).subString(0, len(p)) # change variable
+      sR = ps[len(ps) - len(p):len(ps)] # change variable
+    elif d.upper() == ("R"):
+      sR = (s + p)[0:len(p)] # change variable
   return sR
 
 main()

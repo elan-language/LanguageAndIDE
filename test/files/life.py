@@ -22,27 +22,27 @@ def blackOrWhite(random: float) -> int: # function
   return result
 
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # constant
-  y = cell.item_1 # constant
-  y2 = if(y == 0, 29, y - 1) # constant
+  x = cell[0] # constant
+  y = cell[1] # constant
+  y2 = (29 if y == 0 else y - 1) # constant
   return (x, y2)
 
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # constant
-  y = cell.item_1 # constant
-  y2 = if(y == 29, 0, y + 1) # constant
+  x = cell[0] # constant
+  y = cell[1] # constant
+  y2 = (0 if y == 29 else y + 1) # constant
   return (x, y2)
 
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # constant
-  y = cell.item_1 # constant
-  x2 = if(x == 39, 0, x + 1) # constant
+  x = cell[0] # constant
+  y = cell[1] # constant
+  x2 = (0 if x == 39 else x + 1) # constant
   return (x2, y)
 
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # constant
-  y = cell.item_1 # constant
-  x2 = if(x == 0, 39, x - 1) # constant
+  x = cell[0] # constant
+  y = cell[1] # constant
+  x2 = (39 if x == 0 else x - 1) # constant
   return (x2, y)
 
 def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -64,8 +64,8 @@ def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
 def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
   count = 0 # variable definition
   for cell in neighbourCells(x, y):
-    cx = cell.item_0 # constant
-    cy = cell.item_1 # constant
+    cx = cell[0] # constant
+    cy = cell[1] # constant
     if grid[cx][cy] == black:
       count = count + 1 # change variable
   return count
