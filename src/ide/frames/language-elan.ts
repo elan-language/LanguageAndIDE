@@ -217,7 +217,7 @@ export class LanguageElan extends LanguageAbstract {
   private PRIVATE = "private";
   private PROCEDURE = "procedure";
   private PROPERTY = "property";
-  private RECORD = "record";
+  private REF = "ref";
   private RETURN = "return";
   private RETURNS = "returns";
   private SET = "set";
@@ -261,6 +261,8 @@ export class LanguageElan extends LanguageAbstract {
   THIS_INSTANCE: string = this.THIS;
   OVERRIDES = "";
   IMPLEMENTS = "";
+
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.REF, this.THIS, this.NOT];
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
@@ -425,6 +427,7 @@ export class LanguageElan extends LanguageAbstract {
     `null`,
     `on`,
     `otherwise`,
+    `record`,
     `package`,
     `partial`,
     `pattern`,

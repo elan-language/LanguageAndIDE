@@ -170,7 +170,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_system,
         TokenType.type_enum,
       ],
-      ["new,if,lambda,this,ref,not"],
+      ["new,if,lambda,ref,this,not"],
     );
   });
   test("Expression3", () => {
@@ -467,7 +467,7 @@ suite("Symbol Completion Spec", () => {
       TermSimple.name,
       "",
       allIds.concat([TokenType.method_function, TokenType.method_system, TokenType.type_enum]),
-      ["new,if,lambda,this,ref,not"],
+      ["new,if,lambda,ref,this,not"],
       "",
     );
   });

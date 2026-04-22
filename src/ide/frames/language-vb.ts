@@ -236,6 +236,7 @@ export class LanguageVB extends LanguageAbstract {
   private ME = "Me";
   private MUST_INHERIT = "MustInherit";
   private MUST_OVERRIDE = "MustOverride";
+  private NEW = "New";
   private NEXT = "Next";
   private OF = "Of";
   private PRIVATE = "Private";
@@ -270,7 +271,7 @@ export class LanguageVB extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
-  NEW_INSTANCE_PREFIX = "New";
+  NEW_INSTANCE_PREFIX = this.NEW;
 
   TRUE: string = "True";
   FALSE: string = "False";
@@ -281,6 +282,8 @@ export class LanguageVB extends LanguageAbstract {
   THIS_INSTANCE: string = this.ME;
   OVERRIDES = "Overrides";
   IMPLEMENTS = "Implements";
+
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.FUNCTION, this.ME, this.NOT];
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);

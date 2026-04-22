@@ -68,6 +68,8 @@ export interface Language {
   START_OF_GENERIC: string;
   THIS_INSTANCE: string;
 
+  EXPRESSION_KEYWORDS: string[];
+
   // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
   reservedWords: Set<string>;
 }
