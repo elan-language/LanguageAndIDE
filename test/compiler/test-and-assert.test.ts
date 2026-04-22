@@ -163,47 +163,6 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_AssertTupleFromParseAsInt", async () => {
-    const code = `${testHeader}
-
-main
-end main
-
-test test_square
-  assert parseAsInt("3") is (true, 3)
-end test
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-
-}
-
-_tests.push(["test3", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => _stdlib.parseAsInt("3"), "(Boolean, Int)"], [system.tuple([true, 3]), "(Boolean, Int)"], "assert6", _stdlib, false));
-}]);
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "(true, 3)", "(true, 3)", "assert6")]],
-    ]);
-  });
-
   test("Pass_AssertSimpleVarRef", async () => {
     const code = `${testHeader}
 

@@ -9,10 +9,13 @@ main
       call print(now)
       call print(getDate(now))
     else
-      variable td set to parseAsInt(reply)
-      if td.item_0 and (td.item_1 >= 0) then
-        call print(getDate(td.item_1))
-      end if
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch ElanRuntimeError
+      end try
     end if
   end while
 end main

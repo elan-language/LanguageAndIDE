@@ -26,9 +26,13 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
   variable correctSoFar set to true
   while (counter < sequence.length()) and correctSoFar
     variable k set to waitForKey()
-    constant validMove set to parseAsInt(k)
-    constant valid set to validKey.item_1
-    constant move set to validMove.item_2
+    variable valid set to false
+    variable move set to 0
+    try
+      set move to parseAsInt(k)
+      set valid to true
+    catch ElanRuntimeError
+    end try
     if valid and (sequence[counter] is move) then
       call displayMove(move, interval)
     else
