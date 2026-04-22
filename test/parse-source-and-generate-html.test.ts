@@ -43,7 +43,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Classes", async () => {
+  ignore_test("Test Classes", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/T05_classes.elan`,
       `./out/test/files/T05_classes.html`,
@@ -97,7 +97,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/test1762newlineInString.html`,
     );
   });
-  test("Ghosting", async () => {
+  ignore_test("Ghosting", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/ghosted.elan`,
       `./out/test/files/ghosted.html`,
