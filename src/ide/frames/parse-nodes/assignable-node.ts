@@ -14,4 +14,8 @@ export class AssignableNode extends AbstractAlternatives {
     this.alternatives.push(new PropertyRef(file));
     this.alternatives.push(new PropertyInstanceRef(file));
   }
+
+    symbolCompletion_tokenTypes(): Set<TokenType> {
+      return new Set<TokenType>([TokenType.id_variable, TokenType.id_property]);
+    }
 }
