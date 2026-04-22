@@ -15,19 +15,17 @@ export class AssignableNode extends AbstractAlternatives {
     this.alternatives.push(new PropertyInstanceRef(file));
   }
 
-    symbolCompletion_tokenTypes(): Set<TokenType> {
-      return new Set<TokenType>([TokenType.id_variable, TokenType.id_property]);
-    }
+  symbolCompletion_tokenTypes(): Set<TokenType> {
+    return new Set<TokenType>([TokenType.id_variable, TokenType.id_property]);
+  }
 
-      override symbolCompletion_keywords(): Set<KeywordCompletion> {
-        const langExprKeywords = [this.file.language().THIS_INSTANCE];
-        let kws = langExprKeywords.map(
-          (kw) => KeywordCompletion.create(kw),
-        );
-        const trim = this.matchedText.trim();
-        if (trim.length > 0) {
-          kws = kws.filter((kw) => kw.keyword.startsWith(trim));
-        }
-        return new Set(kws);
-      }
+  override symbolCompletion_keywords(): Set<KeywordCompletion> {
+    const langExprKeywords = [this.file.language().THIS_INSTANCE];
+    let kws = langExprKeywords.map((kw) => KeywordCompletion.create(kw));
+    const trim = this.matchedText.trim();
+    if (trim.length > 0) {
+      kws = kws.filter((kw) => kw.keyword.startsWith(trim));
+    }
+    return new Set(kws);
+  }
 }

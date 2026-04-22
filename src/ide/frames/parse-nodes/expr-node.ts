@@ -57,9 +57,7 @@ export class ExprNode extends AbstractAlternatives {
 
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
     const langExprKeywords = this.file.language().EXPRESSION_KEYWORDS;
-    let kws = langExprKeywords.map(
-      (kw) => KeywordCompletion.create(kw),
-    );
+    let kws = langExprKeywords.map((kw) => KeywordCompletion.create(kw));
     const trim = this.matchedText.trim();
     if (trim.length > 0) {
       kws = kws.filter((kw) => kw.keyword.startsWith(trim));

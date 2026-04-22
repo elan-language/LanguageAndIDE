@@ -262,7 +262,14 @@ export class LanguageElan extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
-  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.REF, this.THIS, this.NOT];
+  EXPRESSION_KEYWORDS: string[] = [
+    this.NEW,
+    this.IF,
+    this.lambdaKeyword,
+    this.REF,
+    this.THIS,
+    this.NOT,
+  ];
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));

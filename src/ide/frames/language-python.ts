@@ -467,7 +467,7 @@ export class LanguagePython extends LanguageAbstract {
     // copy TBD
     subString: "[$0:$1]",
     printNoLine: "print($0, end='')",
-    withAppendPy: "($0 + [($1)])",  // list + [value]
+    withAppendPy: "($0 + [($1)])", // list + [value]
   };
 
   private translateStandaloneWithParams(expr: string): string {
