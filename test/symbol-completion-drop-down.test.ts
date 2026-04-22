@@ -286,7 +286,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident9", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
   });
 
   test("Pass_InProcedure", async () => {
@@ -325,7 +325,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident23", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident25", "a", expected);
   });
 
   test("Pass_InProcedureParameter", async () => {
@@ -364,7 +364,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident23", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident25", "a", expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -527,7 +527,7 @@ end main`;
       ["proc2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident43", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "ident45", ".", 3, expected);
   });
 
   test("Pass_CallLibMembers", async () => {
@@ -610,7 +610,7 @@ end main`;
 
     const expected = [["pproc3", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident43", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "ident45", "p", 5, expected);
   });
 
   test("Pass_CallExtensions", async () => {
@@ -923,7 +923,7 @@ end class`;
       ["foo", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident31", "f", 0, expected, true);
+    await assertAutocompletes(fileImpl, "ident33", "f", 0, expected, true);
   });
 
   test("Pass_properties2", async () => {
@@ -965,7 +965,7 @@ end class`;
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident31", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "ident33", "o", 1, expected);
   });
 
   ignore_test("Pass_properties3", async () => {
@@ -1098,7 +1098,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
-    await assertSymbolCompletionWithString(fileImpl, "ident31", "this.f", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident33", "this.f", expected);
   });
 
   test("Pass_properties6", async () => {
@@ -1143,7 +1143,7 @@ end class`;
       ["bar", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident31", "b", 0, expected, true);
+    await assertAutocompletes(fileImpl, "ident33", "b", 0, expected, true);
   });
 
   test("Pass_properties7", async () => {
@@ -1185,7 +1185,7 @@ end class`;
 
     const expected = [["bar", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident31", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident33", "a", 1, expected);
   });
 
   test("Pass_private1", async () => {
@@ -1266,7 +1266,7 @@ end class`;
       ["pp2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident26", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident28", "pp", expected);
   });
 
   test("Pass_assert", async () => {
@@ -1312,7 +1312,7 @@ end test`;
       ["toString", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "text31", "gr.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "text33", "gr.", expected);
   });
 
   test("Pass_typeName1", async () => {
@@ -1922,7 +1922,7 @@ end class`;
       ["bar2", "bar2", "bar2"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident29", "ba", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident31", "ba", expected);
   });
 
   test("Pass_largeConstant", async () => {
@@ -2081,7 +2081,7 @@ end class`;
 
     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr18", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr28", "pp", expected);
   });
 
   test("Pass_inheritPropertyKeyword1", async () => {
@@ -2120,7 +2120,7 @@ end class`;
       ["pppp", "this.pppp", "this.pppp"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr25", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr35", "pp", expected);
   });
 
   ignore_test("Pass_inheritPropertyKeyword2", async () => {
@@ -2231,7 +2231,7 @@ end class`;
 
     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr22", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr32", "pp", expected);
   });
 
   test("Pass_inheritFunction", async () => {
@@ -2265,7 +2265,7 @@ end class`;
       ["ff1", "ff1", "ff1("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr22", "ff", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr32", "ff", expected);
   });
 
   test("Pass_inheritIndirectFunction", async () => {
@@ -2303,7 +2303,7 @@ end class`;
       ["ff1", "ff1", "ff1("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr26", "ff", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr36", "ff", expected);
   });
 
   test("Pass_inheritProcedure", async () => {
@@ -2336,7 +2336,7 @@ end class`;
       ["pp1", "pp1", "pp1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident18", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident28", "pp", expected);
   });
 
   test("Pass_inheritIndirectProcedure", async () => {
@@ -2373,7 +2373,7 @@ end class`;
       ["pp1", "pp1", "pp1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident22", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident32", "pp", expected);
   });
 
   test("Pass_stdlibClass", async () => {

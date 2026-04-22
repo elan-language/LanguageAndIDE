@@ -176,7 +176,7 @@ class Foo
 
   end constructor
 
-  function toString() return String
+  function toString() returns String
     return ""
   end function
 end class`;
@@ -205,7 +205,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set32", expected);
+    await assertDebugBreakPoint(fileImpl, "set42", expected);
   });
 
   test("Pass_LocalvariablesMemberFunction", async () => {
@@ -233,7 +233,7 @@ class Foo
 
   end constructor
 
-  function toString() return String
+  function toString() returns String
     return ""
   end function
 end class`;
@@ -262,7 +262,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set35", expected);
+    await assertDebugBreakPoint(fileImpl, "set45", expected);
   });
 
   test("Pass_LocalvariablesConstructor", async () => {
@@ -313,7 +313,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set25", expected);
+    await assertDebugBreakPoint(fileImpl, "set32", expected);
   });
 
   test("Pass_InForLoop", async () => {
