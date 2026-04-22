@@ -394,8 +394,7 @@ export class StdLib {
     return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
-  @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
-  parseAsFloat(s: string): [boolean, number] {
+  private parseAsFloat(s: string): [boolean, number] {
     if (StdLib.negatableLitFloatOnly.test(s)) {
       const f = parseFloat(s);
       if (Number.isFinite(f)) {
@@ -405,8 +404,7 @@ export class StdLib {
     return this.system.tuple([false, 0]) as [boolean, number];
   }
 
-  @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
-  parseAsInt(s: string): [boolean, number] {
+  private parseAsInt(s: string): [boolean, number] {
     if (StdLib.negatableLitIntOnly.test(s)) {
       const i = parseInt(s);
       if (isFinite(i)) {
@@ -414,6 +412,28 @@ export class StdLib {
       }
     }
     return this.system.tuple([false, 0]) as [boolean, number];
+  }
+
+  @elanFunction(["string"], FunctionOptions.pure, ElanFloat)
+  float(s: string): number {
+    if (StdLib.negatableLitFloatOnly.test(s)) {
+      const f = parseFloat(s);
+      if (Number.isFinite(f)) {
+        return f;
+      }
+    }
+    throw new ElanRuntimeError(`'${s}' does not parse as a float`);
+  }
+
+  @elanFunction(["string"], FunctionOptions.pure, ElanInt)
+  int(s: string): number {
+    if (StdLib.negatableLitIntOnly.test(s)) {
+      const i = parseInt(s);
+      if (isFinite(i)) {
+        return i;
+      }
+    }
+    throw new ElanRuntimeError(`'${s}' does not parse as an integer`);
   }
 
   @elanFunction(["any enum"], FunctionOptions.pureAsync, ElanString)

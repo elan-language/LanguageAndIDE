@@ -9,9 +9,12 @@ static void main() {
       print(now);
       print(getDate(now));
     } else {
-      var td = parseAsInt(reply);
-      if (td.item_0 && (td.item_1 >= 0)) {
-        print(getDate(td.item_1));
+      try {
+        var td = int(reply);
+        if (td >= 0) {
+          print(getDate(td));
+        }
+      } catch (ElanRuntimeError e) {
       }
     }
   }

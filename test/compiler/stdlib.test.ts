@@ -183,18 +183,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetrue");
   });
 
-  test("Pass_parseAsFloat1", async () => {
+  test("Pass_float1", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to  parseAsFloat("10.1")
+  variable a set to  float("10.1")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsFloat("10.1");
+  let a = _stdlib.float("10.1");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -213,21 +213,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(true, 10.1)");
+    await assertObjectCodeExecutes(fileImpl, "10.1");
   });
 
-  test("Pass_parseAsFloat2", async () => {
+  test("Pass_float2", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to parseAsFloat("x12")
+  variable a set to float("x12")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsFloat("x12");
+  let a = _stdlib.float("x12");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -246,21 +246,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'x12' does not parse as a float");
   });
 
-  test("Pass_parseAsFloat3", async () => {
+  test("Pass_float3", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to parseAsFloat("25g")
+  variable a set to float("25g")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsFloat("25g");
+  let a = _stdlib.float("25g");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -279,21 +279,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'25g' does not parse as a float");
   });
 
-  test("Pass_parseAsFloat4", async () => {
+  test("Pass_float4", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to  parseAsFloat("10")
+  variable a set to  float("10")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsFloat("10");
+  let a = _stdlib.float("10");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -312,27 +312,27 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(true, 10)");
+    await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test("Pass_parseAsFloatExponent", async () => {
+  test("Pass_floatExponent", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to  parseAsFloat("10.1e2")
-  variable b set to  parseAsFloat("10.1e+2")
-  variable c set to  parseAsFloat("10.1e-2")
-  variable d set to  parseAsFloat("0.12E2")
+  variable a set to  float("10.1e2")
+  variable b set to  float("10.1e+2")
+  variable c set to  float("10.1e-2")
+  variable d set to  float("0.12E2")
   call printNoLine([a, b, c, d])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsFloat("10.1e2");
-  let b = _stdlib.parseAsFloat("10.1e+2");
-  let c = _stdlib.parseAsFloat("10.1e-2");
-  let d = _stdlib.parseAsFloat("0.12E2");
+  let a = _stdlib.float("10.1e2");
+  let b = _stdlib.float("10.1e+2");
+  let c = _stdlib.float("10.1e-2");
+  let d = _stdlib.float("0.12E2");
   await _stdlib.printNoLine(system.list([a, b, c, d]));
 }
 return [main, _tests];}`;
@@ -351,24 +351,52 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "[(true, 1010), (true, 1010), (true, 0.101), (true, 12)]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[1010, 1010, 0.101, 12]");
   });
 
-  test("Pass_parseAsInt0", async () => {
+  test("Fail_int0", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to parseAsInt("25g")
+  variable a set to int("25g")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.int("25g");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'25g' does not parse as an integer");
+  });
+
+  test("Pass_int1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to int("10")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsInt("25g");
+  let a = _stdlib.int("10");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -387,22 +415,20 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
+    await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test("Pass_parseAsInt1", async () => {
+  test("fail_int2", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to parseAsInt("10")
-  call printNoLine(a)
+  variable a set to int("")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsInt("10");
-  await _stdlib.printNoLine(a);
+  let a = _stdlib.int("");
 }
 return [main, _tests];}`;
 
@@ -420,22 +446,20 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(true, 10)");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'' does not parse as an integer");
   });
 
-  test("Pass_parseAsInt2", async () => {
+  test("Fail_int3", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to parseAsInt("")
-  call printNoLine(a)
+  variable a set to int("10.1")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.parseAsInt("");
-  await _stdlib.printNoLine(a);
+  let a = _stdlib.int("10.1");
 }
 return [main, _tests];}`;
 
@@ -453,40 +477,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
-  });
-
-  test("Pass_parseAsInt3", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to parseAsInt("10.1")
-  call printNoLine(a)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = _stdlib.parseAsInt("10.1");
-  await _stdlib.printNoLine(a);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(false, 0)");
+    await assertObjectCodeDoesNotExecute(fileImpl, "'10.1' does not parse as an integer");
   });
   test("Pass print (procedure) String", async () => {
     const code = `${testHeader}
@@ -1731,7 +1722,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  call printNoLine(parseAsInt("12 34 56".split(" ")[1]))
+  call printNoLine(int("12 34 56".split(" ")[1]))
   call printNoLine("z" + "a b c".split(" ")[1])
   call printNoLine("a b c".split(" ")[1] + "z")
 end main`;
@@ -1739,7 +1730,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.parseAsInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
+  await _stdlib.printNoLine(_stdlib.int(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
   await _stdlib.printNoLine("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
   await _stdlib.printNoLine(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
 }
@@ -1759,7 +1750,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "(true, 34)zbbz");
+    await assertObjectCodeExecutes(fileImpl, "34zbbz");
   });
 
   test("Pass_drawHtml", async () => {

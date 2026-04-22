@@ -5,12 +5,6 @@ import math
 import time
 def clock():
   return int(time.time()*1000)
-def parseAsInt(s):
-  try:
-    n = int(s)
-  except ValueError:
-    return (False, 0)
-  return (True, n)
 
 def main() -> None:
   reply = "" # variable definition
@@ -21,9 +15,11 @@ def main() -> None:
       print(now)
       print(getDate(now))
     else:
-      td = parseAsInt(reply) # variable definition
-      if td[0] and (td[1] >= 0):
-        print(getDate(td[1]))
+      try:
+        td = int(reply) # variable definition
+        if td >= 0:
+          print(getDate(td))
+      except ElanRuntimeError: # catch
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition

@@ -1,4 +1,4 @@
-# 3b2dad6037bd14c2ebc2ffd50b09c8dc29f031bb50f03c0d81bc34b2a06e35d0 Elan 2.0.0-alpha1 valid
+# f94c767035d5edc78beaa2c828123217ad53f3db5eb7a2ea9ac0b02ebd4ad271 Elan 2.0.0-alpha1 valid
 
 main
   variable reply set to ""
@@ -9,10 +9,13 @@ main
       call print(now)
       call print(getDate(now))
     else
-      variable td set to parseAsInt(reply)
-      if td.item_0 and (td.item_1 >= 0) then
-        call print(getDate(td.item_1))
-      end if
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch ElanRuntimeError
+      end try
     end if
   end while
 end main
