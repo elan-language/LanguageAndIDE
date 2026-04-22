@@ -1,11 +1,13 @@
 # Python with Elan 2.0.0-alpha1
 
+import math
+
 def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition
   done = False # variable definition
   while not done:
     wanted = input("What type of fruit do you want ('x' to exit)? ") # variable definition
-    if wanted.equals("x"):
+    if wanted == ("x"):
       done = True # change variable
     else:
       result = binarySearch(fruit, wanted) # variable definition
@@ -17,9 +19,9 @@ def main() -> None:
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition
   if len(li) > 0:
-    mid = divAsInt(len(li), 2) # constant
+    mid = math.floor((len(li))/(2)) # constant
     value = li[mid] # variable definition
-    if item.equals(value):
+    if item == (value):
       result = True # change variable
     elif item.isBefore(value):
       result = binarySearch(li.subList(0, mid), item) # change variable

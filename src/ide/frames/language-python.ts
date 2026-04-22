@@ -122,6 +122,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
+      this.importEnum = true;
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
@@ -167,7 +168,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
+      this.importEnum = false;
       this.importMath = false; // reset at start of file
+      this.polyfillsUsed = {};
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
@@ -203,7 +206,17 @@ export class LanguagePython extends LanguageAbstract {
 
   renderFileImportsAsHtml(): string {
     // no HTML needed here as it is actually only used for export
-    return this.importMath ? "import math\n\n" : "";
+    let result = "";
+    result += this.importEnum ? "import enum\n" : "";
+    result += this.importMath ? "import math\n" : "";
+    // blank line only if we have any imports
+    result += this.importEnum || this.importMath ? "\n" : "";
+    let extra = "";
+    for (const p in this.polyfillsUsed) {
+      result += this.polyfillTable[p];
+      extra = "\n"; // extra newline if we have any polyfills here
+    }
+    return result + extra;
   }
 
   renderFileTrailerAsHtml(): string {
@@ -220,7 +233,9 @@ export class LanguagePython extends LanguageAbstract {
     let result = expr.replace(regexp, this.lookupmath);
 
     // non-math functions which are dot methods and stay dot methods
-    result = this.translateDotMethods(result);
+    // or standalone and stay standalone
+    // ie just a name change required
+    result = this.translatePlainMethods(result);
 
     // extension methods (dot methods) which become standalone functions in Python
     // and the object becomes the argument
@@ -228,9 +243,19 @@ export class LanguagePython extends LanguageAbstract {
     // or the object becomes the first argument
     // eg num.round(3) becomes round(num, 3)
     result = this.translateExtension(result);
+
+    // standalone functions with parameters which need moving
+    result = this.translateStandaloneWithParams(result);
+
+    result = this.translateOddities(result);
+    // Not sure if I should be acting on expr or result.
+    // There should be no overlap between any of the Elan or Python names.
+    this.registerPolyfills(expr);
+
     return result;
   }
 
+  private importEnum = false;
   private importMath = false;
   private mathExceptions: { [propName: string]: string } = {
     pow: "pow",
@@ -255,7 +280,10 @@ export class LanguagePython extends LanguageAbstract {
     return `${p1}${result}${p3}`;
   };
 
-  private dotMethodTable: { [propName: string]: string } = {
+  private plainMethodTable: { [propName: string]: string } = {
+    unicode: "chr",
+    rangeInSteps: "range",
+    indexOf: "find", // "index" raises an exception on not found
     upperCase: "upper",
     lowerCase: "lower",
     trim: "strip",
@@ -263,13 +291,17 @@ export class LanguagePython extends LanguageAbstract {
   // omitting split: "split" as the name is the same
 
   // non-math functions which are dot methods and stay dot methods
+  // or stanalone and stay standalone
   // these just need the name changing, and no import statement is needed
   // could use regexp lookahead and lookbehind to handle the tags
   // but I am doing it the way I know for now
-  private translateDotMethods(expr: string): string {
+  private translatePlainMethods(expr: string): string {
     return expr.replace(
-      /(${this.METHOPTAG})(${Object.keys(this.dotMethodTable).join("|")})(${this.METHCLTAG})/g,
-      (_match, p1, p2, p3) => `${p1}${this.dotMethodTable[p2]}${p3}`,
+      new RegExp(
+        `(${this.METHOPTAG})(${Object.keys(this.plainMethodTable).join("|")})(${this.METHCLTAG})`,
+        "g",
+      ),
+      (_match, p1, p2, p3) => `${p1}${this.plainMethodTable[p2]}${p3}`,
     );
   }
 
@@ -292,6 +324,7 @@ export class LanguagePython extends LanguageAbstract {
     isNaN: "math.isnan",
     isInfinite: "math.isinf",
     round: "round",
+    withAppend: "withAppendPy", // adjusted in a later pass
   };
 
   // Dot methods which translate to standalone functions
@@ -309,7 +342,7 @@ export class LanguagePython extends LanguageAbstract {
       // Adjust the match position to take account of the fact that the part
       // before the match may have already changed in length, but the part
       // after the match has not changed.
-      // pos2 is the position of the function name in "result".
+      // pos2 is the position of the function name (with its tags) in "result".
       const pos2 = match.index + result.length - expr.length;
       const funcName = match[2]; // second set of brackets is the function name
       // convert the quotes so we can distinguish the two ends of a string
@@ -413,6 +446,180 @@ export class LanguagePython extends LanguageAbstract {
     }
     // ran off end of string
     throw new Error("No match");
+  }
+
+  // Table for functions with parameters that need moving
+  // Add brackets round the whole expression
+  // if there may be a higher-priority operator adjacent
+  private standaloneTable: { [propName: string]: string } = {
+    // there is no confusion with "if" statements
+    // as this code is only run for expressions
+    if: "($1 if $0 else $2)",
+    divAsInt: "math.floor(($0)/($1))",
+    divAsFloat: "(($0)/($1))",
+    createList: "[$1 for n in range($0)]",
+    bitAnd: "(($0) & ($1))",
+    bitOr: "($0 | $1)",
+    bitXor: "($0 ^ $1)",
+    bitNot: "(~$0)",
+    bitShiftL: "($0 &lt;&lt; $1)",
+    bitShiftR: "(($0 & (1&lt;&lt;32)-1) &gt;&gt; $1)",
+    // copy TBD
+    subString: "[$0:$1]",
+    printNoLine: "print($0, end='')",
+    withAppendPy: "($0 + [($1)])",  // list + [value]
+  };
+
+  private translateStandaloneWithParams(expr: string): string {
+    // We use the same algorithm more or less as translateExtension
+    // (dot methods which translate to standalone functions;
+    //  the object in obj.length() moves to the right in the string).
+    // The twist is that this time there are arguments which move to the left
+    // in the string, and hence we need to find the function calls in reverse order
+    // from right to left so that the arguments get translated before the function call.
+    // Otherwise it is hard to keep track of where we are in the "result" string.
+    // There is no direct mechanism that I can find in JavaScript to run a //g regular expression
+    // match from right to left.
+    // But we can do it in about 3 extra lines of code by:
+    // - reversing the string to be searched
+    // - reversing the string from which we construct the regular expression
+    // - reversing the matched string after the match
+    // - adjusting the returned index, where the string was found
+    // this may be a bit inefficient -- it reverses the string repeatedly
+    // but most of the time it doesn't find anything so only does it once
+    // As this is a one-line function, let's make it local for the moment
+    const strRev = (s: string) => [...s].reverse().join("");
+    let result = expr;
+    // brackets the wrong way round as the string is reversed!
+    // easier to debug if I changed the brackets on the fly
+    const regexp = new RegExp(
+      strRev(
+        `)${this.METHOPTAG}()${Object.keys(this.standaloneTable).join("|")}()${this.METHCLTAG}(`,
+      ),
+      "g",
+    );
+    let match;
+    // We scan through the original line "expr" looking for function names to convert
+    // in one pass so that we don't scan the same area twice, in case the name is the same.
+    // note assignment to "match" not a comparison
+    while ((match = regexp.exec(strRev(expr)))) {
+      const funcName = strRev(match[2]); // second set of brackets is the function name
+      const funcLength = match[0].length; // length of function name with its tags
+      // Adjust the match position to take account of the fact that the part
+      // after the match may have already changed in length, but the part
+      // before the match has not changed.
+      // pos2 is the position of the function name (with its tags) in "result".
+      const pos2 = expr.length - match.index - funcLength;
+
+      // see previous comment
+      // this needs to be a separate function one day
+      const working = result
+        .replaceAll(this.OPENQUOTE, "z")
+        .replaceAll(this.CLOSEQUOTE, "z")
+        .replaceAll('"<', this.OPENQUOTE + "<")
+        .replaceAll('>"', ">" + this.CLOSEQUOTE)
+        .replaceAll("</", "<@");
+
+      // move beyond the bracket following the function name
+      const pos1 = pos2 + funcLength + 1;
+      // fetch the aguments.  prms is array of strings
+      // returns { prms: params, end: index }
+      const params = this.getparams(working, pos1);
+
+      // replace the call and the arguments with the replacement string from the table
+      // the arguments may have already been rewritten earlier.
+
+      // we don't check that we have the right number of arguments
+      // just drop in as many as we have placeholders for
+
+      const replacement = this.standaloneTable[funcName];
+      // for dot methods eg subString we need to remove the dot
+      const dotAdjust = pos2 > 0 && result[pos2 - 1] === "." ? 1 : 0;
+      // and now put it all together
+      result =
+        result.substring(0, pos2 - dotAdjust) + // up to the function name
+        replacement.replace(/\$(\d)/g, (_match, p1) =>
+          result.substring(params.prms[+p1][0], params.prms[+p1][1]),
+        ) + // params in expression
+        result.substring(params.end + 1); // rest of the string (+1 for trailing bracket on params)
+      if (replacement.startsWith("math.")) {
+        this.importMath = true;
+      }
+    } // while regexp.exec
+    return result;
+  }
+
+  // start points to first character of params, after the open bracket
+  // returns array of [start, end] positions for the params and the offset of the end
+  // can't return the actual strings as we are working on the "working" version
+  // with adjusted quotes
+  private getparams(text: string, start: number): { prms: number[][]; end: number } {
+    const params = []; // not really a constant, it gets elements added
+    const lup = { close: ")", nest: this.OPENQUOTE + "([", sep: ",)" };
+    let index = start;
+    let pstart = index;
+    while (index < text.length) {
+      const c = text[index];
+      if (lup.sep.includes(c)) {
+        params.push([pstart, index]);
+        pstart = index + 2; // for next param, beyond the comma and space
+      }
+      if (c === lup.close) {
+        return { prms: params, end: index };
+      }
+      if (lup.nest.includes(c)) {
+        index = this.findmatch(text, index, 1);
+        // and continue after the nested element
+      }
+      // else an ordinary character, take no action
+      index++;
+    }
+    // ran off end of string
+    throw new Error("Bad param syntax");
+  }
+
+  private polyfillTable: { [propName: string]: string } = {
+    clock: `import time
+def clock():
+  return int(time.time()*1000)
+`,
+    parseAsInt: `def parseAsInt(s):
+  try:
+    n = int(s)
+  except ValueError:
+    return (False, 0)
+  return (True, n)
+`,
+  };
+
+  private polyfillsUsed: { [f: string]: boolean } = {};
+
+  private registerPolyfills(expr: string): void {
+    let match;
+    const regexp = new RegExp(
+      `(${this.METHOPTAG})(${Object.keys(this.polyfillTable).join("|")})(${this.METHCLTAG})`,
+      "g",
+    );
+    while ((match = regexp.exec(expr))) {
+      const funcName = match[2];
+      this.polyfillsUsed[funcName] = true;
+    }
+  }
+
+  private translateOddities(expr: string): string {
+    // the items in a tuple
+    let result = expr.replace(/\.<el-id>item_(\d)<\/el-id>/g, "[$1]");
+
+    // .equals --> ' == '
+    // this can be table-driven one day
+    // note leading dot included in string to replace
+    // we keep the brackets round the right hand side in case it is an expression
+    // with an operator with lower priority than "==", though there are not many
+    result = result.replace(
+      new RegExp(`.(${this.METHOPTAG})(equals)(${this.METHCLTAG})`, "g"),
+      (_match, _p1, _p2, _p3) => ` == `,
+    );
+    return result;
   }
 
   private DEF = "def";
