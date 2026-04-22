@@ -195,6 +195,8 @@ export abstract class LanguageAbstract implements Language {
   abstract OVERRIDES: string;
   abstract IMPLEMENTS: string;
 
+  abstract EXPRESSION_KEYWORDS: string[];
+
   protected spaced(text: string): string {
     return ` ${text} `;
   }

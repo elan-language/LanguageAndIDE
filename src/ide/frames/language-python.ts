@@ -423,6 +423,7 @@ export class LanguagePython extends LanguageAbstract {
   private FOR = "for";
   private IF = "if";
   private IN = "in";
+  private LAMBDA = "lambda";
   private NONE = "None";
   private RAISE = "raise";
   private RETURN = "return";
@@ -461,6 +462,8 @@ export class LanguagePython extends LanguageAbstract {
   THIS_INSTANCE: string = this.SELF;
   OVERRIDES = "";
   IMPLEMENTS = "";
+
+  EXPRESSION_KEYWORDS: string[] = [this.LAMBDA, this.SELF, this.NOT];
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);

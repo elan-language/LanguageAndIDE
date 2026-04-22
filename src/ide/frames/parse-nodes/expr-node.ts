@@ -1,10 +1,3 @@
-import {
-  ifKeyword,
-  lambdaKeyword,
-  newKeyword,
-  notKeyword,
-  refKeyword,
-} from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
@@ -63,8 +56,8 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   override symbolCompletion_keywords(): Set<KeywordCompletion> {
-    const thisInstance = this.file.language().THIS_INSTANCE;
-    let kws = [newKeyword, ifKeyword, lambdaKeyword, thisInstance, refKeyword, notKeyword].map(
+    const langExprKeywords = this.file.language().EXPRESSION_KEYWORDS;
+    let kws = langExprKeywords.map(
       (kw) => KeywordCompletion.create(kw),
     );
     const trim = this.matchedText.trim();

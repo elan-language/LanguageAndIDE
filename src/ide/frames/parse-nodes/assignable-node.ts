@@ -1,5 +1,5 @@
 import { File } from "../frame-interfaces/file";
-import { TokenType } from "../symbol-completion-helpers";
+import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { InstanceNode } from "./instanceNode";
 import { PropertyInstanceRef } from "./property-instance-ref";
@@ -18,4 +18,16 @@ export class AssignableNode extends AbstractAlternatives {
     symbolCompletion_tokenTypes(): Set<TokenType> {
       return new Set<TokenType>([TokenType.id_variable, TokenType.id_property]);
     }
+
+      override symbolCompletion_keywords(): Set<KeywordCompletion> {
+        const langExprKeywords = [this.file.language().THIS_INSTANCE];
+        let kws = langExprKeywords.map(
+          (kw) => KeywordCompletion.create(kw),
+        );
+        const trim = this.matchedText.trim();
+        if (trim.length > 0) {
+          kws = kws.filter((kw) => kw.keyword.startsWith(trim));
+        }
+        return new Set(kws);
+      }
 }
