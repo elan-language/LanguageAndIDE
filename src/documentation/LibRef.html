@@ -1013,8 +1013,8 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
     <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
-    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code><code>Stack</code>&lt;of <el-type><code>String</code></el-type>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
-    <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
+    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code><code>Stack</code>&lt;of <code><code>String</code></code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
+    <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a function, or specify it as the <el-instr>return</el-instr> Type.</li>
     <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
     <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
@@ -1800,13 +1800,13 @@ If you need another random value, you use the returned <code>Random</code> on wh
   <th>returns</th>
  </tr><tr id="next">
   <td><el-method>next</el-method></td>
-  <td><el-type>Float, Float</el-type></td>
-  <td>2-Tuple:<br>(<el-type>Float, Random</el-type>)</td>
+  <td><code>Float, Float</code></td>
+  <td>2-Tuple:<br>(<code>Float, Random</code>)</td>
   <td>random <code>Float</code> value in the range of the arguments, and<br>new instance of <code>Random</code> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
-  <td>2-Tuple:<br>(<el-type>Int, Random</el-type>)</td>
+  <td><code>Int, Int</code></td>
+  <td>2-Tuple:<br>(<code>Int, Random</code>)</td>
   <td>random <code>Int</code> value in the range of the arguments, and<br>new instance of <code>Random</code> for subsequent use</td>
  </tr>
 </table>
@@ -1906,7 +1906,7 @@ end function
   If it is not, the prompt is repeated with the relevant limit displayed</td>
  </tr><tr id="inputStringFromOptions">
   <td><el-method>inputStringFromOptions</el-method></td>
-  <td><code>String</code>, <el-type>List&lt;of String&gt;</el-type></td>
+  <td><code>String</code>, <code>List&lt;of String&gt;</code></td>
   <td><code>String</code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
   provided it is one of the options in the list.<br>
@@ -2475,7 +2475,7 @@ end main
   You can put your own <el-lit>\n</el-lit> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
-  <td><el-type>Int, String</el-type></td>
+  <td><code>Int, String</code></td>
   <td>(none)</td>
   <td>prints the string to the display starting at the tab position given (from 0)<br> without appending a newline</td>
  </tr><tr id="sleep">
@@ -2689,12 +2689,12 @@ end test
   <th>returns</th>
  </tr><tr id="bitAnd">
   <td><el-method>bitAnd</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
+  <td><code>Int, Int</code></td>
   <td><code>Int</code></td>
   <td>integer whose binary representation is the bitwise AND of the inputs</td>
  </tr><tr id="bitOr">
   <td><el-method>bitOr</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
+  <td><code>Int, Int</code></td>
   <td><code>Int</code></td>
   <td>integer whose binary representation is the bitwise OR of the inputs</td>
  </tr><tr id="bitNot">
@@ -2704,17 +2704,17 @@ end test
   <td>integer whose binary representation is the bitwise complement of the input</td>
  </tr><tr id="bitXor">
   <td><el-method>bitXor</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
+  <td><code>Int, Int</code></td>
   <td><code>Int</code></td>
   <td>integer whose binary representation is the bitwise XOR of the inputs</td>
  </tr><tr id="bitShiftL">
   <td><el-method>bitShiftL</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
+  <td><code>Int, Int</code></td>
   <td><code>Int</code></td>
   <td>integer bit shifted to the left by the value of the second argument,<br>i.e. multiplied by 2 to the power of the second argument</td>
  </tr><tr id="bitShiftR">
   <td><el-method>bitShiftR</el-method></td>
-  <td><el-type>Int, Int</el-type></td>
+  <td><code>Int, Int</code></td>
   <td><code>Int</code></td>
   <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the power of the second argument</td>
  </tr>
