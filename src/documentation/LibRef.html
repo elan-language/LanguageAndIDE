@@ -570,7 +570,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-instr>set</el-instr> instruction and a valid index value in square brackets:</p>
+<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-instr>change variable</el-instr> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>set aList[ix] to "Smith"</code></li>
 </ul>
@@ -2096,7 +2096,7 @@ end main
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
 <li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
-To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-kw>try...catch</el-kw> instruction like this (where <code>ElanRuntimeError</code> is a Class provided by Elan for this purpose):</li>
+To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-instr>try...catch</el-instr> instruction like this (where <code>ElanRuntimeError</code> is a Class provided by Elan for this purpose):</li>
 
 <codeblock>
 main
@@ -2127,7 +2127,7 @@ or you could make the code offer the user options: to save again, or to continue
 <img src="images/Html_1.png" width="250" height="200">
 
 <p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
-    (using <el-instr>call</el-instr> <el-method>print</el-method>() or any of the print procedures)
+    (using <el-instr>call procedure</el-instr> <el-method>print</el-method>() or any of the print procedures)
     will be overlaid on top of this.</p>
 
 <p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
@@ -2561,7 +2561,7 @@ end main
 <p>These methods may be referenced from within a function.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
-<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable</el-instr> declaration or a <el-instr>set</el-instr> assignment, either on their own or within a more complex expression.</p>
+<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable definition</el-instr> declaration or a <el-instr>change variable</el-instr> assignment, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
 
 <table class="tableMethod">

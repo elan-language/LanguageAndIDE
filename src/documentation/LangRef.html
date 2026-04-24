@@ -20,7 +20,7 @@
 <p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
  i.e. its value can be varied. In Elan, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
 <ul>
- <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-instr>variable</el-instr> instruction and re-assigned with a <el-instr>set</el-instr> instruction or,
+ <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-instr>variable definition</el-instr> instruction and re-assigned with a <el-instr>change variable</el-instr> instruction or,
  for <a href="LibRef.html#StandardDataStructures">mutable data structures</a>, there are methods for their update.</li>
  <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-instr>constant</el-instr> instruction, and then cannot be re-assigned.
  There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
@@ -39,7 +39,7 @@ are passed around in a running program:</p>
  <code>Integer</code>, <code>Float</code>, <code>Boolean</code></li>
  <li><b id="ReferenceType">Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
- any user-defined Type such as the name of an <el-kw>Abstract class</el-kw>, <el-instr>Class</el-instr> or <el-instr>Interface</el-instr>.</li>
+ any user-defined Type such as the name of an <el-instr>Abstract class</el-instr>, <el-instr>Class</el-instr> or <el-instr>Interface</el-instr>.</li>
 </ul>
 
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
@@ -98,7 +98,7 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><el-instr>enum</el-instr> <code>Name</code></a></td>
   <td><a href="#class"><el-topic>Class</el-topic><br><el-instr>class</el-instr> <code>Name</code></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-kw>abstract class</el-kw> <code>Name</code></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-instr>abstract class</el-instr> <code>Name</code></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><el-instr>interface</el-instr> <code>Name</code></a></td>
  </tr><tr>
   <td>Other</td>
@@ -139,7 +139,7 @@ with all the same property values except for specific changes that you want to m
   <td>values are set only at compile time</td></tr>
  <tr><td><a href="#constant_let"><el-instr>constant</el-instr> (local)</a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
   <td>values are set at execution</td></tr>
- <tr><td><a href="#variable"><el-instr>variable</el-instr></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#variable"><el-instr>variable definition</el-instr></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>values are set at execution</td></tr>
  <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
   <td>formal input argument<br> of function, procedure or lambda</td></tr>
@@ -215,7 +215,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#function"><el-instr>function</el-instr></a>,
  <a href="#test"><el-instr>test</el-instr></a>,
  <a href="#class"><el-instr>class</el-instr></a>,
- <a href="#abstract_class"><el-kw>abstract class</el-kw></a>,
+ <a href="#abstract_class"><el-instr>abstract class</el-instr></a>,
  <a href="#interface"><el-instr>interface</el-instr></a>,
  <a href="#constant"><el-instr>constant</el-instr></a> and
  <a href="#enum"><el-instr>enum</el-instr></a>.
@@ -223,13 +223,13 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div id="Method"></div>
 <ul>
  <li><el-instr>main</el-instr>, <el-instr>procedure</el-instr> and <el-instr>function</el-instr> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions</a> within them.</li>
- <li><el-instr>test</el-instr> also contains instructions, in particular the <a href="#assert"><el-instr>assert</el-instr></a> instruction for testing functions during development of your program.</li>
- <li><el-instr>class</el-instr>, <el-kw>abstract class</el-kw>, and <el-instr>interface</el-instr> define data structures and these always contain <a href="#Member">members</a>.</li>
+ <li><el-instr>test</el-instr> also contains instructions, in particular the <a href="#assert"><el-instr>assert equal</el-instr></a> instruction for testing functions during development of your program.</li>
+ <li><el-instr>class</el-instr>, <el-instr>abstract class</el-instr>, and <el-instr>interface</el-instr> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-instr>constant</el-instr> and <el-instr>enum</el-instr> do not contain any further instructions: only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
    <li>If one <el-instr>constant</el-instr> is used in the definition of another constant, the first must be declared above the second.</li>
-   <li>An <el-kw>abstract class</el-kw> must be declared above any <el-instr>class</el-instr> that inherits from it.</li>
+   <li>An <el-instr>abstract class</el-instr> must be declared above any <el-instr>class</el-instr> that inherits from it.</li>
   </ul>
 </ul>
 
@@ -255,13 +255,13 @@ end main
 </div></div>
 
 <h2 id="procedure"><el-instr>procedure</el-instr></h2>
-<p id="Argument">A <el-instr>procedure</el-instr> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><el-instr>call</el-instr></a> instruction.</p>
+<p id="Argument">A <el-instr>procedure</el-instr> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><el-instr>call procedure</el-instr></a> instruction.</p>
 <p>Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p> Unlike a function:</p>
 <ul>
  <li>a procedure can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
  <li>a procedure does not return a value.</li>
- <li>a procedure's parameter named values (that are mutable) may be changed <i>inside</i> the procedure, but they do not affect the value of arguments in the <el-instr>call</el-instr> instruction outside the procedure.</li>
+ <li>a procedure's parameter named values (that are mutable) may be changed <i>inside</i> the procedure, but they do not affect the value of arguments in the <el-instr>call procedure</el-instr> instruction outside the procedure.</li>
  <li>to pass a changed parameter back to its calling argument, it must have been called <a href="#CallByRef"><i>by reference</i></a>.</li>
 </ul>
 <p>The instructions within a procedure can therefore:</p>
@@ -381,10 +381,10 @@ end function</codeblock>
 
 <h2 id="test"><el-instr>test</el-instr></h2>
 <p>A <el-instr>test</el-instr> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
-<p>Without having to run your program, the <el-instr>assert</el-instr> instructions show whether your assertions pass or fail.
+<p>Without having to run your program, the <el-instr>assert equal</el-instr> instructions show whether your assertions pass or fail.
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-instr>assert</el-instr> instructions that test a function</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-instr>assert equal</el-instr> instructions that test a function</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <code>binarySearch</code> on four test lists</p>
 <codeblock>
@@ -415,9 +415,9 @@ end test
  <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test.
  You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
  <li><el-instr>test</el-instr> instructions may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <el-instr>test</el-instr> instruction may contain any number of <el-instr>assert</el-instr> instructions. The test runner is part of the IDE and it automatically attempts to run all <el-instr>assert</el-instr> instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-instr>assert</el-instr> failure) then execution of the test will stop and remaining <el-instr>assert</el-instr>s will be shown as 'not run'.</li>
- <li>In addition to <el-instr>assert</el-instr> instructions, a <el-instr>test</el-instr> may contain any other instructions that may be added into a <el-instr>function</el-instr>.</li>
- <li>All <el-instr>assert</el-instr> statements should be at the top level within the <el-instr>test</el-instr> instruction; none may be put into a loop structure.</li>
+ <li>A <el-instr>test</el-instr> instruction may contain any number of <el-instr>assert equal</el-instr> instructions. The test runner is part of the IDE and it automatically attempts to run all <el-instr>assert equal</el-instr> instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-instr>assert equal</el-instr> failure) then execution of the test will stop and remaining <el-instr>assert equal</el-instr>s will be shown as 'not run'.</li>
+ <li>In addition to <el-instr>assert equal</el-instr> instructions, a <el-instr>test</el-instr> may contain any other instructions that may be added into a <el-instr>function</el-instr>.</li>
+ <li>All <el-instr>assert equal</el-instr> statements should be at the top level within the <el-instr>test</el-instr> instruction; none may be put into a loop structure.</li>
 </ul>
 
 <h3 class="no-TOC">Testing Float values</h3>
@@ -431,7 +431,7 @@ end test
 
 <h3 class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
-<p>In the last <el-instr>assert</el-instr> shown below, note how testing can also be done against an expected error message.</p>
+<p>In the last <el-instr>assert equal</el-instr> shown below, note how testing can also be done against an expected error message.</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <codeblock>
 test test_list
@@ -468,7 +468,7 @@ end test
 
 <h3 class="no-TOC" id="ignore">Ignoring tests</h3>
 <p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code></a>.</p>
-<p>Even when <el-instr>test</el-instr>s or <el-instr>assert</el-instr>s are <code>ghosted</code>, all the tests will be run and their status shown, but
+<p>Even when <el-instr>test</el-instr>s or <el-instr>assert equal</el-instr>s are <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <div class="accordion">
@@ -510,7 +510,7 @@ end test
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
 <h3 class="no-TOC">Defining a Class</h3>
-<p>A Class is instantiated using the keyword <el-instr>class</el-instr> followed by the Class name, and optional <el-instr>inherits</el-instr> to refer to a <el-instr>class</el-instr> or <el-kw>abstract class</el-kw> defined above in the program.</p>
+<p>A Class is instantiated using the keyword <el-instr>class</el-instr> followed by the Class name, and optional <el-instr>inherits</el-instr> to refer to a <el-instr>class</el-instr> or <el-instr>abstract class</el-instr> defined above in the program.</p>
 <p>A Class definition must include properties, a <el-instr>constructor</el-instr> and at least one method called <el-method>toString</el-method>.</p>
 <p>Its properties must all be initialised in the <el-instr>constructor</el-instr>.</p>
 <p>It may contain functions and procedure methods.</p>
@@ -596,15 +596,15 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any Class that inherits from it.</li>
-  <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <code>class</code> inherits from may not contain duplicates of any <code>abstract</code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <code>interface</code>s inherited by the<code> interface</code>s and/or classes that need them.</li>
+  <li>An <el-instr>abstract class</el-instr> must be declared in the code above any Class that inherits from it.</li>
+  <li>The <el-instr>abstract class</el-instr> (if any) and the interfaces (if any) that a concrete <code>class</code> inherits from may not contain duplicates of any <code>abstract</code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <code>interface</code>s inherited by the<code> interface</code>s and/or classes that need them.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <code>A</code> inherits from Type <code>B</code>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-  <li>The various 'super-Types' (<el-kw>abstract class</el-kw> and <el-instr>interface</el-instr>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+  <li>The various 'super-Types' (<el-instr>abstract class</el-instr> and <el-instr>interface</el-instr>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
 <li>See also example in <a href="#interface"><el-instr>Interface</el-instr></a></li>
 </ul>
 
-<h2 id="abstract_class"><el-kw>abstract class</el-kw></h2>
-<p>An <el-kw>abstract class</el-kw> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
+<h2 id="abstract_class"><el-instr>abstract class</el-instr></h2>
+<p>An <el-instr>abstract class</el-instr> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
 <li>a <el-instr>property</el-instr> </li>
 <li>a <code>function</code></li>
@@ -613,9 +613,9 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <p>As with a concrete Class, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p>You may also define abstract methods on an <el-kw>abstract class</el-kw>, i.e. <code>abstract property</code>, <code>abstract function</code>, <code>abstract procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
+<p>You may also define abstract methods on an <el-instr>abstract class</el-instr>, i.e. <code>abstract property</code>, <code>abstract function</code>, <code>abstract procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
 <p><code>abstract function calculateDiscount() as Float</code></p>
-<p>If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
+<p>If you wish to have several subclasses of an <el-instr>abstract class</el-instr> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-instr>abstract</el-instr> on the superclass.</li>
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
@@ -623,7 +623,7 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 </ul>
 
 <h2 id="interface"><el-instr>interface</el-instr></h2>
-<p>An <el-instr>interface</el-instr> is similar to an <el-kw>abstract class</el-kw>, with the difference that it may define only abstract members. The advantage of using an <el-instr>interface</el-instr> instead of an <el-kw>abstract class</el-kw> is that a concrete <el-instr>class</el-instr> can inherit from multiple interfaces.</p>
+<p>An <el-instr>interface</el-instr> is similar to an <el-instr>abstract class</el-instr>, with the difference that it may define only abstract members. The advantage of using an <el-instr>interface</el-instr> instead of an <el-instr>abstract class</el-instr> is that a concrete <el-instr>class</el-instr> can inherit from multiple interfaces.</p>
 <p>An <el-instr>interface</el-instr> may inherit only from other interfaces.</p>
 <p>Important: An <el-instr>interface</el-instr> must not re-declare abstract interfaces that are defined in any interface it inherits from, directly or indirectly.</p>
 
@@ -632,9 +632,9 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <code>blackjack.elan</code> of:</p>
 <ul>
- <li>inheritance from <el-instr>interface</el-instr> <code>Player</code> to <el-kw>abstract class</el-kw> <code>Automated</code>
+ <li>inheritance from <el-instr>interface</el-instr> <code>Player</code> to <el-instr>abstract class</el-instr> <code>Automated</code>
   and to <el-instr>class</el-instr> <code>HumanPlayer</code>, and</li>
- <li>inheritance from <el-kw>abstract class</el-kw> <code>Automated</code> to concrete <el-instr>class</el-instr> <code>Dealer</code></li>
+ <li>inheritance from <el-instr>abstract class</el-instr> <code>Automated</code> to concrete <el-instr>class</el-instr> <code>Dealer</code></li>
  <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their
  abstract declarations.</li>
 </ul>
@@ -682,7 +682,7 @@ end class
  Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
 <p>A global constant is defined by a literal of an immutable value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
  <code>String</code>.</p>
-<p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-instr>variable</el-instr>. See <a href="#constant_structure">Constant data structure</a>.</p>
+<p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-instr>variable definition</el-instr>. See <a href="#constant_structure">Constant data structure</a>.</p>
 <p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
 <p>A global constant can be defined by reference to a previously defined global constant or to a system constant,
  but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
@@ -743,21 +743,21 @@ end main
 
 <p>Member instructions (also referred to simply as 'members') are located within an
  <el-instr>interface</el-instr>,
- <el-kw>abstract class</el-kw> or
+ <el-instr>abstract class</el-instr> or
  (concrete) <el-instr>class</el-instr>.
 The <code>new code</code> prompt will offer a context appropriate subset of the following member instructions:</p>
 <p>
- <a href="#abstract_property"><el-kw>abstract property</el-kw></a>,
- <a href="#abstract_function"><el-kw>abstract function</el-kw></a>,
- <a href="#abstract_procedure"><el-kw>abstract procedure</el-kw></a>,
+ <a href="#abstract_property"><el-instr>abstract property</el-instr></a>,
+ <a href="#abstract_function"><el-instr>abstract function</el-instr></a>,
+ <a href="#abstract_procedure"><el-instr>abstract procedure</el-instr></a>,
  <a href="#property"><el-instr>property</el-instr></a>,
  <a href="#function"><el-instr>function</el-instr> method</a>,
  <a href="#procedure_method"><el-instr>procedure</el-instr> method</a> and
  <a href="#constructor"><el-instr>constructor</el-instr></a>,
 </p>together with these 'private' versions:<p>
- <a href="#private"><el-kw>private property</el-kw></a>,
- <a href="#private"><el-kw>private function</el-kw></a> and
- <a href="#private"><el-kw>private procedure</el-kw></a>.
+ <a href="#private"><el-instr>private property</el-instr></a>,
+ <a href="#private"><el-instr>private function</el-instr></a> and
+ <a href="#private"><el-instr>private procedure</el-instr></a>.
 </p>
 
 <p>This table shows which kinds of property, function, procedure and constructor are applicable to the various kinds of Class.</p>
@@ -770,23 +770,23 @@ The <code>new code</code> prompt will offer a context appropriate subset of the 
  </tr><tr>
   <td width="150"></td>
   <td width="40"><a href="#interface"><el-instr>interface</el-instr></a></td>
-  <td width="40"><a href="#abstract_class"><el-kw>abstract class</el-kw></a></td>
+  <td width="40"><a href="#abstract_class"><el-instr>abstract class</el-instr></a></td>
   <td width="40"><a href="#class"><el-instr>class</el-instr></a></td>
   <td></td>
  </tr><tr>
-  <td><a href="#abstract_property"><el-kw>abstract property</el-kw></a></td>
+  <td><a href="#abstract_property"><el-instr>abstract property</el-instr></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
   <td></td>
  </tr><tr>
-  <td><a href="#abstract_function"><el-kw>abstract function</el-kw></a></td>
+  <td><a href="#abstract_function"><el-instr>abstract function</el-instr></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
   <td>prototype for function reference only</td>
  </tr><tr>
-  <td><a href="#abstract_procedure"><el-kw>abstract procedure</el-kw></a></td>
+  <td><a href="#abstract_procedure"><el-instr>abstract procedure</el-instr></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
@@ -810,19 +810,19 @@ The <code>new code</code> prompt will offer a context appropriate subset of the 
   <td>&#x2714;</td>
   <td></td>
  </tr><tr>
-  <td><a href="#private"><el-kw>private property</el-kw></a></td>
+  <td><a href="#private"><el-instr>private property</el-instr></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
   <td></td>
  </tr><tr>
-  <td><a href="#private"><el-kw>private function</el-kw></a></td>
+  <td><a href="#private"><el-instr>private function</el-instr></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
   <td></td>
  </tr><tr>
-  <td><a href="#private"><el-kw>private procedure</el-kw></a></td>
+  <td><a href="#private"><el-instr>private procedure</el-instr></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
@@ -836,13 +836,13 @@ The <code>new code</code> prompt will offer a context appropriate subset of the 
  </tr>
 </table>
 
-<h2 id="abstract_property"><el-kw>abstract property</el-kw></h2>
+<h2 id="abstract_property"><el-instr>abstract property</el-instr></h2>
 <p>An abstract property may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
-<h2 id="abstract_function"><el-kw>abstract function</el-kw></h2>
+<h2 id="abstract_function"><el-instr>abstract function</el-instr></h2>
 <p>An abstract function method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
-<h2 id="abstract_procedure"><el-kw>abstract procedure</el-kw></h2>
+<h2 id="abstract_procedure"><el-instr>abstract procedure</el-instr></h2>
 <p>An abstract procedure method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="property"><el-instr>property</el-instr></h2>
@@ -885,7 +885,7 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 
 <h2 id="private"><el-instr>private</el-instr> (property, function, procedure)</h2>
 <p>A <el-instr>property</el-instr> may be marked <el-instr>private</el-instr>, in which case it is visible only to code within the Class and,
-if defined on an <el-kw>abstract class</el-kw>, within its subclasses.
+if defined on an <el-instr>abstract class</el-instr>, within its subclasses.
  This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
 This action is a toggle used both to set and to remove the modifier <el-instr>private</el-instr>.</p>
 <ul>
@@ -937,26 +937,26 @@ end class
 <h1 id="StatementInstructions">Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the imperative keywords used in the methods (procedural logic) of a program, and are:</p>
 <p>
- <a href="#assert"><el-instr>assert</el-instr></a>,
- <a href="#call"><el-instr>call</el-instr></a>,
+ <a href="#assert"><el-instr>assert equal</el-instr></a>,
+ <a href="#call"><el-instr>call procedure</el-instr></a>,
  <a href="#call"><el-instr>constant</el-instr></a>,
  <a href="#for"><el-instr>for</el-instr></a>,
  <a href="#if"><el-instr>if</el-instr></a>,
- <a href="#set"><el-instr>set</el-instr></a>,
- <a href="#throw"><el-instr>throw</el-instr></a>,
- <a href="#try"><el-instr>try</el-instr></a>,
- <a href="#variable"><el-instr>variable</el-instr></a>,
- <a href="#while"><el-instr>while</el-instr></a>.
+ <a href="#set"><el-instr>change variable</el-instr></a>,
+ <a href="#throw"><el-instr>throw exception</el-instr></a>,
+ <a href="#try"><el-instr>try ... catch</el-instr></a>,
+ <a href="#variable"><el-instr>variable definition</el-instr></a>,
+ <a href="#while"><el-instr>while loop</el-instr></a>.
 </p>
 
-<h2 id="assert"><el-instr>assert</el-instr></h2>
-<p>The <el-instr>assert</el-instr> instruction is used only within a <a href="#test"><el-instr>test</el-instr></a>,
+<h2 id="assert"><el-instr>assert equal</el-instr></h2>
+<p>The <el-instr>assert equal</el-instr> instruction is used only within a <a href="#test"><el-instr>test</el-instr></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
- In Elan, you can get equivalent functionality by throwing an <b>exception</b>, as described in the <a href="#throw"><el-instr>throw</el-instr></a> instruction.</p>
+ In Elan, you can get equivalent functionality by throwing an <b>exception</b>, as described in the <a href="#throw"><el-instr>throw exception</el-instr></a> instruction.</p>
 
-<h2 id="call"><el-instr>call</el-instr></h2>
-<p>The <el-instr>call</el-instr> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
+<h2 id="call"><el-instr>call procedure</el-instr></h2>
+<p>The <el-instr>call procedure</el-instr> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
@@ -984,10 +984,10 @@ which is the mechanism for running unit tests during program development, not du
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
  They can change the contents of any mutable object passed in as an argument.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
-  To enforce this, <el-instr>call</el-instr> instructions are not allowed in functions.</p>
-<p>There is a limit to the complexity of a <el-instr>call</el-instr> instruction.
+  To enforce this, <el-instr>call procedure</el-instr> instructions are not allowed in functions.</p>
+<p>There is a limit to the complexity of a <el-instr>call procedure</el-instr> instruction.
  Only one dot is allowed in the <code>procedure name</code> field, or two dots if the first word is <el-instr>property</el-instr>.
- If you need anything more complicated, use a <el-instr>set</el-instr> instruction on the line above.
+ If you need anything more complicated, use a <el-instr>change variable</el-instr> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
 <h2 id="constant_let"><el-instr>constant</el-instr> (local)</h2>
@@ -1002,8 +1002,8 @@ which is the mechanism for running unit tests during program development, not du
   constant t set to "Total = "
 </codeblock>
 
-<p>Like a <el-instr>variable</el-instr>, a <el-instr>constant</el-instr> may be used only within a routine, but unlike a variable its value may not be changed with a <el-instr>set</el-instr> instruction.</p>
-<p>It is recommended that you always use <el-instr>constant</el-instr> in preference to <el-instr>variable</el-instr>, unless you need to be able to re-assign its value.</p>
+<p>Like a <el-instr>variable definition</el-instr>, a <el-instr>constant</el-instr> may be used only within a routine, but unlike a variable its value may not be changed with a <el-instr>change variable</el-instr> instruction.</p>
+<p>It is recommended that you always use <el-instr>constant</el-instr> in preference to <el-instr>variable definition</el-instr>, unless you need to be able to re-assign its value.</p>
 <p>You can define a <el-instr>constant</el-instr> in a loop, so that the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
 whose return value is put into a variable. See <a href="#constant_structure">Constant data structures</a>.</p>
@@ -1014,7 +1014,7 @@ whose return value is put into a variable. See <a href="#constant_structure">Con
 <div id="step"></div>
 <p>The construct <code>for p in q</code>  specifies looping through a sequence of
  characters in a <code>String</code> or items in a <code>List</code>.
-The forms of the <el-instr>for</el-instr> loop are:</p>
+The forms of the <el-instr>for loop</el-instr> are:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id> is of Type <code>String</code> and the subject <el-id>q</el-id> is of Type <code>String</code>:<br>
  <codeblock>
@@ -1101,10 +1101,10 @@ end main
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Technical note about the <el-instr>for</el-instr> loop variable</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Technical note about the <el-instr>for loop</el-instr> variable</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; The <el-instr>for</el-instr> instruction creates its own working copy of the values through which to loop sequentially.
-So even if the loop variable is changed in any way within the <el-instr>for</el-instr> loop, this will not affect the items it refers to and  processes.</p>
+So even if the loop variable is changed in any way within the <el-instr>for loop</el-instr>, this will not affect the items it refers to and  processes.</p>
 <p>It is  therefore recommended never to re-assign the loop variable within the loop.</p>
 <hr>
 </div></div>
@@ -1114,7 +1114,7 @@ So even if the loop variable is changed in any way within the <el-instr>for</el-
 <div id="else"></div>
 <div id="elif"></div>
 <h2 id="if_statement"><el-instr>if</el-instr> (instruction)</h2>
-<p>The <el-kw>if..then..else..elif..</el-kw> construct specifies which of several code sequences is to be executed next.</p>
+<p>The <el-instr>if..then..else..elif..</el-instr> construct specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li> It is structured like this (<el-instr>elif</el-instr> is the Elan keyword for 'else if'):<br>
  <el-instr>if</el-instr> <code>condition</code> <el-instr>then</el-instr><br>
@@ -1123,7 +1123,7 @@ So even if the loop variable is changed in any way within the <el-instr>for</el-
  &nbsp;&nbsp;<code>instructions</code><br>
  <el-instr>else</el-instr><br>
  &nbsp;&nbsp;<code>instructions</code><br>
- <el-kw>end if</el-kw></li>
+ <el-instr>end if</el-instr></li>
  <li>The conditions are Boolean values or expressions.</li>
  <li><el-instr>elif</el-instr> and <el-instr>else</el-instr> clauses are optional.</li>
  <li>You can add as many <el-instr>elif</el-instr> clauses as you wish, but only one unconditional <el-instr>else</el-instr> which, if present, must be last.</li>
@@ -1155,21 +1155,21 @@ end if
 <hr>
 </div></div>
 
-<h2 id="set"><el-instr>set</el-instr></h2>
-<p>The <el-instr>set</el-instr><code>..</code>to<code>..</code> instruction assigns a new value to an existing <el-instr>variable</el-instr> (mutable) named value.</p>
+<h2 id="set"><el-instr>change variable</el-instr></h2>
+<p>The <el-instr>change variable</el-instr><code>..</code>to<code>..</code> instruction assigns a new value to an existing <el-instr>variable definition</el-instr> (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
-<p>A <el-instr>set</el-instr> instruction may not assign a new value to a parameter within a procedure.</p>
+<p>A <el-instr>change variable</el-instr> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference</a></p>
 
-<h2 id="throw"><el-instr>throw</el-instr> (exception)</h2>
-<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <el-instr>throw</el-instr> instruction
+<h2 id="throw"><el-instr>throw exception</el-instr> (exception)</h2>
+<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <el-instr>throw exception</el-instr> instruction
  which defines an explanatory string.</p>
 
-<p>For the program to retain control when an exception is raised, use the <a href="#try"><el-instr>try</el-instr></a> instruction.</p>
+<p>For the program to retain control when an exception is raised, use the <a href="#try"><el-instr>try ... catch</el-instr></a> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example using <el-instr>throw</el-instr></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-instr>throw exception</el-instr></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To stop the program if a value calculated in a function is out of range:</p>
@@ -1193,14 +1193,14 @@ end function
 </div></div>
 
 <div id="catch"></div>
-<h2 id="try"><el-instr>try</el-instr></h2>
-<p>You can enclose code in a <el-kw>try..catch</el-kw> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
+<h2 id="try"><el-instr>try ... catch</el-instr></h2>
+<p>You can enclose code in a <el-instr>try..catch</el-instr> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files</a>.</p>
-<p>You can also use a <el-instr>test</el-instr> to check whether another piece of code might throw an exception by wrapping it in a <el-kw>try..catch</el-kw> instruction.</p>
+<p>You can also use a <el-instr>test</el-instr> to check whether another piece of code might throw an exception by wrapping it in a <el-instr>try..catch</el-instr> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>try..catch</el-kw></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>try..catch</el-instr></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Use a <el-instr>test</el-instr> to catch an error in a function:</p>
@@ -1249,8 +1249,8 @@ end function
 <hr>
 </div></div>
 
-<h2 id="variable"><el-instr>variable</el-instr></h2>
-<p>The <el-instr>variable</el-instr><code>..</code>set to<code>..</code>
+<h2 id="variable"><el-instr>variable definition</el-instr></h2>
+<p>The <el-instr>variable definition</el-instr><code>..</code>set to<code>..</code>
 instruction declares and initialises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
 <p>The initial value is given by a following expression. For example:</p>
 
@@ -1258,10 +1258,10 @@ instruction declares and initialises a mutable named valued. The name defined mu
   variable note set to 440
 </codeblock>
 
-<h2 id="while"><el-instr>while</el-instr></h2>
-<p>The <el-kw>while <code>condition</code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
+<h2 id="while"><el-instr>while loop</el-instr></h2>
+<p>The <el-instr>while <code>condition</code>..end while</el-instr> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if <code>condition</code> is <code>true</code>.</p>
-<p><code>condition</code> is either a <code>Boolean</code> <el-instr>variable</el-instr> or an expression that evaluates to a Boolean value.</p>
+<p><code>condition</code> is either a <code>Boolean</code> <el-instr>variable definition</el-instr> or an expression that evaluates to a Boolean value.</p>
 <p>When <code>condition</code> is <code>true</code> the enclosed code is executed;
  when <code>false</code> the loop is bypassed. For example:</p>
 
@@ -1412,7 +1412,7 @@ end function
 <p>Equality testing of these Value Types uses the <el-instr>is</el-instr> and <el-instr>isnt</el-instr> keywords between two values and returns a <code>Boolean</code> result:</p>
 <ul>
  <li><el-instr>isnt</el-instr> returns the opposite of <el-instr>is</el-instr>.</li>
- <li><code>(a is b)</code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
+ <li><code>(a is b)</code> returns <el-instr><el-id>true</el-id></el-instr>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
  The only exception is that if one argument is of Type <code>Float</code> and the other is of Type <code>Int</code>,
   then <el-instr>is</el-instr> will return <el-id>true</el-id> (and <el-instr>isnt</el-instr> will return <el-id>false</el-id>) if their values are the same,
   i.e. they are the same whole number.</li>
@@ -1510,7 +1510,7 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>if</el-instr> expression:</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice of <el-instr>variable</el-instr> assignments (the brackets around the first <el-instr>if</el-instr> expression are optional):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice of <el-instr>variable definition</el-instr> assignments (the brackets around the first <el-instr>if</el-instr> expression are optional):</p>
 
 <codeblock>variable c set to 1160</codeblock>
 <codeblock>set c to (if c < 1160 then c + 40 else c - 1160)</codeblock>
@@ -1527,7 +1527,7 @@ end function
   return if attempt[n] is "*" then attempt elif isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-instr>if</el-instr> expression in a <el-instr>call</el-instr> <el-method>print</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-instr>if</el-instr> expression in a <el-instr>call procedure</el-instr> <el-method>print</el-method>:</p>
 <codeblock>
 main
   constant p set to unicode(0x03c0)
@@ -1602,7 +1602,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  <p>Arises when 'dot calling' a member (method or property) that does not exist on the Type of the named value or expression before the dot.</p>
 
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
- <p>A function (or function method) is to be used within an expression, not via a <el-instr>call</el-instr> instruction.</p>
+ <p>A function (or function method) is to be used within an expression, not via a <el-instr>call procedure</el-instr> instruction.</p>
 
 <h3 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h3>
  <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
@@ -1613,7 +1613,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
 
 <h3 id="CannotUseLikeAFunction" class="no-TOC">Cannot call procedure ... within an expression</h3>
- <p>A procedure may be used only within a <el-instr>call</el-instr> instruction.</p>
+ <p>A procedure may be used only within a <el-instr>call procedure</el-instr> instruction.</p>
 
 <h3 id="CannotCallAsAMethod" class="no-TOC">Cannot invoke ... as a method</h3>
  <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
@@ -1626,8 +1626,8 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
- <p>The Type specified after the <el-instr>call</el-instr> keyword cannot be instantiated. Either the Type is inapplicable,
- or it is an <el-kw>abstract class</el-kw> or <el-instr>interface</el-instr>.</p>
+ <p>The Type specified after the <el-instr>call procedure</el-instr> keyword cannot be instantiated. Either the Type is inapplicable,
+ or it is an <el-instr>abstract class</el-instr> or <el-instr>interface</el-instr>.</p>
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
 -->
@@ -1666,7 +1666,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  value or an expression only using <a href="#dotSyntax">dot syntax</a>.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
- <p>The prefix <el-kw>property.</el-kw> may only be used before a property name: not a function name.</p>
+ <p>The prefix <el-instr>property.</el-instr> may only be used before a property name: not a function name.</p>
 
 <h3 id="MissingParameterCompileError" class="no-TOC">Missing argument(s) ...</h3>
  <p>The method being called expects more arguments than have been provided.</p>
@@ -1803,18 +1803,18 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 <h3 id="AssertActualField" class="no-TOC">'computed value' field in an assert instruction</h3>
  <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
  just a named value or a function evaluation. Generally, if you want to use a more
- complex expression, it is better to evaluate it in a preceding <el-instr>variable</el-instr>
- instruction and then use the named value in the 'actual' field of the <el-instr>assert</el-instr>
+ complex expression, it is better to evaluate it in a preceding <el-instr>variable definition</el-instr>
+ instruction and then use the named value in the 'actual' field of the <el-instr>assert equal</el-instr>
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
   <li>Any expression involving a binary operator such as <code>+</code>, <el-instr>isnt</el-instr>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <el-instr>is</el-instr> operator within the 'actual' field, because
-  the parser will confuse this with the <el-instr>is</el-instr> keyword that is part of the <el-instr>assert</el-instr> instruction.</li>
+  the parser will confuse this with the <el-instr>is</el-instr> keyword that is part of the <el-instr>assert equal</el-instr> instruction.</li>
  </ul>
 
 <h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
- <p>The first field in a <el-instr>set</el-instr> instruction most commonly takes the name of an existing variable.
+ <p>The first field in a <el-instr>change variable</el-instr> instruction most commonly takes the name of an existing variable.
 
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
 
@@ -1852,10 +1852,10 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
  <p>Valid forms for a procedure call are
  <ul>
-  <li><el-instr>call</el-instr> <el-method>procedureName</el-method>()</li>
-  <li><el-instr>call</el-instr> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><el-instr>call</el-instr> <el-instr>property</el-instr>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><el-instr>call</el-instr> <el-instr>library</el-instr>.<el-method>procedureName</el-method>()</li>
+  <li><el-instr>call procedure</el-instr> <el-method>procedureName</el-method>()</li>
+  <li><el-instr>call procedure</el-instr> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><el-instr>call procedure</el-instr> <el-instr>property</el-instr>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><el-instr>call procedure</el-instr> <el-instr>library</el-instr>.<el-method>procedureName</el-method>()</li>
  </ul>
  The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
  procedure with the same name.</p>
@@ -1890,7 +1890,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 <h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
 <p>Overly complex expressions, for example involving a sequence of open brackets, can result in
 very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
-breaking out parts of it into separate <el-instr>variable</el-instr> instructions; otherwise it might become impossible to add more text.</p>
+breaking out parts of it into separate <el-instr>variable definition</el-instr> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
 
