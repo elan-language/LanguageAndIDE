@@ -313,7 +313,7 @@ end test
 
 <p>When editing and you leave the field, the newline will be implicitly applied in your code.</p>
 <p>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never changed. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</p>
-<p>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#for"><el-kw>for</el-kw></a> loop.</p>
+<p>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#for"><el-instr>for</el-instr></a> loop.</p>
 
 <h3 class="no-TOC" id="DotMethods_String">Function dot methods on a <code>String</code></h3>
 <table class="tableMethod">
@@ -468,8 +468,8 @@ three immutable data structure Types <code>HashSet</code>, <code>Stack</code> an
 <p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no <i>procedure</i> dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
-<p>Since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
-it is also possible to make changes via <el-kw>function</el-kw> dot methods,  which return a copy of the data structure
+<p>Since procedure methods may be called only from within the <el-instr>main</el-instr> routine or a <el-instr>procedure</el-instr>,
+it is also possible to make changes via <el-instr>function</el-instr> dot methods,  which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
@@ -570,7 +570,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-kw>set</el-kw> instruction and a valid index value in square brackets:</p>
+<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-instr>set</el-instr> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>set aList[ix] to "Smith"</code></li>
 </ul>
@@ -692,7 +692,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td><el-instr>lambda</el-instr></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#filter"><el-method>filter</el-method></a> in <a href="#HoFs">HoFs</a></td>
@@ -718,19 +718,19 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the number of items in the List</td>
  </tr><tr id="map_List">
   <td><el-method>map</el-method></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td><el-instr>lambda</el-instr></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td><el-instr>lambda</el-instr></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the maximum of the values returned by a lambda<br>
   see <a href="#maxBy"><el-method>maxBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td><el-instr>lambda</el-instr></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
@@ -741,12 +741,12 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td><el-instr>lambda</el-instr></td>
   <td><code>List</code></td>
   <td>a new list with the items ordered according to the value returned by a lambda</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
-  <td>item of <code>List</code> item's Type,<br><el-kw>lambda</el-kw></td>
+  <td>item of <code>List</code> item's Type,<br><el-instr>lambda</el-instr></td>
   <td>return Type of lambda</td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
@@ -1015,7 +1015,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
     <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
     <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code><code>Stack</code>&lt;of <el-type><code>String</code></el-type>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
     <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a function, or specify it as the <el-kw>return</el-kw> Type.</li>
+    <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a function, or specify it as the <el-instr>return</el-instr> Type.</li>
     <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
     <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
     <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
@@ -1452,7 +1452,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
-<p>A set of SVG shapes is defined in either a <code>List</code>&lt;<el-kw>of</el-kw> <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-kw>of</el-kw> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
+<p>A set of SVG shapes is defined in either a <code>List</code>&lt;<el-instr>of</el-instr> <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-instr>of</el-instr> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><code>VectorGraphic</code> is the abstract superclass of all <code>..VG</code> shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
@@ -1844,7 +1844,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <h3 class="no-TOC">Type name</h3>
 <p>The Type of any function starts with the word <code>Func</code> followed by angle brackets defining the Type of each parameter,
-    then a 'fat arrow' =&gt; and the return Type for that function. This <el-kw>property</el-kw> definition shows the syntax:</p>
+    then a 'fat arrow' =&gt; and the return Type for that function. This <el-instr>property</el-instr> definition shows the syntax:</p>
 
 <codeblock>
   property matchAt as Func<of String, String, Int => Boolean>
@@ -1969,7 +1969,7 @@ end main
  <code>"ArrowUp"</code> etc., function key <code>"Fn"</code>, <code>"AltGraph"</code>, <code>"Meta"</code>, <code>"ContextMenu"</code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
- <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-kw>procedure</el-kw> or in <el-kw>main</el-kw>.</li>
+ <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-instr>procedure</el-instr> or in <el-instr>main</el-instr>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
@@ -2127,7 +2127,7 @@ or you could make the code offer the user options: to save again, or to continue
 <img src="images/Html_1.png" width="250" height="200">
 
 <p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
-    (using <el-kw>call</el-kw> <el-method>print</el-method>() or any of the print procedures)
+    (using <el-instr>call</el-instr> <el-method>print</el-method>() or any of the print procedures)
     will be overlaid on top of this.</p>
 
 <p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
@@ -2561,7 +2561,7 @@ end main
 <p>These methods may be referenced from within a function.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
-<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression.</p>
+<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable</el-instr> declaration or a <el-instr>set</el-instr> assignment, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
 
 <table class="tableMethod">
@@ -2808,7 +2808,7 @@ end test
  <li>they may have a dependency on data that is not provided in an argument</li>
  <li>they may generate side effects, such as changing the screen display or writing to a file</li>
 </ul>
-<p>Because of these properties, system methods maybe used only within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>.
+<p>Because of these properties, system methods maybe used only within the <el-instr>main</el-instr> routine or a <el-instr>procedure</el-instr>.
 They may not be used inside a function that you have defined, because to do so would prevent the function from being pure.</p>
 <p>You cannot write a system method yourself.</p>
 
@@ -2922,7 +2922,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 
 <h2 id="AsRef">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
- This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the name of a function.
+ This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a function.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a function, its name is not followed by round brackets (or arguments), as in this example:
@@ -2944,7 +2944,7 @@ end function
 
 <h1 id="Constants">System constants</h1>
 
-<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-kw>constant</el-kw></a>s,
+<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-instr>constant</el-instr></a>s,
  in that they are mutable named values, though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
@@ -2988,7 +2988,7 @@ end function
  </tr><tr id="false">
   <td><el-id>false</el-id></td>
   <td><code>Boolean</code></td>
-  <td><a href="#Boolean"><el-kw>false</el-kw></a></td>
+  <td><a href="#Boolean"><el-instr>false</el-instr></a></td>
  </tr>
 </table>
 
@@ -3018,7 +3018,7 @@ end function
 <h2>Defining your own HoFs</h2>
 
 <h2>Library functions that process Lists</h2>
-<p>These dot methods are called on any <code>List</code>, or <code>String</code>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see above.</p>
+<p>These dot methods are called on any <code>List</code>, or <code>String</code>. As Higher-order Functions they take either a <el-instr>lambda</el-instr> or a function reference as one of their arguments: see above.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
@@ -3030,7 +3030,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <el-instr>lambda</el-instr> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
 <codeblock>
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
@@ -3042,7 +3042,7 @@ end function
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a function to every item in a <code>List</code>, and return a new List.
-The function to be applied is usually specified as a <el-kw>lambda</el-kw> having a single argument of the Type of the list's items, as in these examples:</p>
+The function to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
@@ -3195,7 +3195,7 @@ end main
 </div></div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
-<p><el-method>orderBy</el-method> takes a <el-kw>lambda</el-kw> that has two arguments of the same Type as that of the <code>List</code> items to be re-ordered
+<p><el-method>orderBy</el-method> takes a <el-instr>lambda</el-instr> that has two arguments of the same Type as that of the <code>List</code> items to be re-ordered
  and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>greater than</i>) for numerics and <i>before</i> (or <i>after</i>) for strings.</p>
 
 <div class="accordion">
