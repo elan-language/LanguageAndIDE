@@ -154,7 +154,7 @@ with all the same property values except for specific changes that you want to m
 <ul>
  <li>It must start with either a lowercase letter or an underscore, followed by any combination ot letters (upper- or lowercase), digits and underscore symbols.</li>
  <li>It must not contain spaces or symbols (other than underscore).</li>
- <li>And you cannot use two identifiers within the same scope that differ only in case, e.g. <el-code>varx</el-code> and <el-code>varX</el-code>.</li>
+ <li>And you cannot use two identifiers within the same scope that differ only in case, e.g. <code>varx</code> and <code>varX</code>.</li>
  <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
  <li>Like all the language's keywords, it is case-sensitive.</li>
 </ul>
@@ -386,7 +386,7 @@ end function</codeblock>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-kw>assert</el-kw> instructions that test a function</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <el-code>binarySearch</el-code> on four test lists</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <code>binarySearch</code> on four test lists</p>
 <codeblock>
 test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
@@ -432,7 +432,7 @@ end test
 <h3 class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
 <p>In the last <el-kw>assert</el-kw> shown below, note how testing can also be done against an expected error message.</p>
-<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><el-code>ghosted</el-code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
+<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <codeblock>
 test test_list
   variable a set to [5, 1, 7]
@@ -467,8 +467,8 @@ end test
 </div></div>
 
 <h3 class="no-TOC" id="ignore">Ignoring tests</h3>
-<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><el-code>ghosting</el-code></a>.</p>
-<p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <el-code>ghosted</el-code>, all the tests will be run and their status shown, but
+<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code></a>.</p>
+<p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <div class="accordion">
@@ -503,7 +503,7 @@ end test
 
 <h3 class="no-TOC">Non-terminating loops and recursion</h3>
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <el-code>test</el-code>.</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
 
 <h2 id="class"><el-kw>class</el-kw></h2>
 <p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>.</p>
@@ -590,16 +590,16 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 
 <h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
 
-  <p>An ordinary <a href="#class">Class</a> (also known as a concrete class) may optionally inherit from just one <a href="#abstract_class"><el-code>abstract class</el-code></a>
+  <p>An ordinary <a href="#class">Class</a> (also known as a concrete class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class</code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
-    The concrete Class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
+    The concrete Class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <code>abstract class</code> or any <code>interface</code>s that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
   <li>An <el-kw>abstract class</el-kw> must be declared in the code above any Class that inherits from it.</li>
-  <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <el-code>class</el-code> inherits from may not contain duplicates of any <el-code>abstract</el-code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <el-code>interface</el-code>s inherited by the<el-code> interface</el-code>s and/or classes that need them.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-code>A</el-code> inherits from Type <el-code>B</el-code>, which inherits from Type <el-code> C</el-code>, which inherits from Type <el-code>A</el-code>.</li>
-  <li>The various 'super-Types' (<el-kw>abstract class</el-kw> and <el-kw>interface</el-kw>) that a concrete <el-code>class</el-code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+  <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <code>class</code> inherits from may not contain duplicates of any <code>abstract</code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <code>interface</code>s inherited by the<code> interface</code>s and/or classes that need them.</li>
+  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <code>A</code> inherits from Type <code>B</code>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
+  <li>The various 'super-Types' (<el-kw>abstract class</el-kw> and <el-kw>interface</el-kw>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
 <li>See also example in <a href="#interface"><el-kw>Interface</el-kw></a></li>
 </ul>
 
@@ -607,18 +607,18 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>An <el-kw>abstract class</el-kw> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
 <li>a <el-kw>property</el-kw> </li>
-<li>a <el-code>function</el-code></li>
-<li>a <el-code>procedure</el-code></li>
+<li>a <code>function</code></li>
+<li>a <code>procedure</code></li>
 </ul>
-<p>As with a concrete Class, any of these members may be made <el-code>private</el-code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
+<p>As with a concrete Class, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p>You may also define abstract methods on an <el-kw>abstract class</el-kw>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> instruction. For example:</p>
+<p>You may also define abstract methods on an <el-kw>abstract class</el-kw>, i.e. <code>abstract property</code>, <code>abstract function</code>, <code>abstract procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
 <p><code>abstract function calculateDiscount() as Float</code></p>
 <p>If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-kw>abstract</el-kw> on the superclass.</li>
-<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <el-code>default</el-code>.</li>
+<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
 
@@ -630,7 +630,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <el-code>blackjack.elan</el-code> of:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <code>blackjack.elan</code> of:</p>
 <ul>
  <li>inheritance from <el-kw>interface</el-kw> <code>Player</code> to <el-kw>abstract class</el-kw> <code>Automated</code>
   and to <el-kw>class</el-kw> <code>HumanPlayer</code>, and</li>
@@ -723,7 +723,7 @@ end function
 You define it with a Type name (so starting with an uppercase letter) followed by a
 number of values (which must be valid <a href="#Identifier">identifiers</a>).
 <p>A reference to an <el-kw>enum</el-kw> by its Type name necessarily holds one of the values.</p>
-<p>Reference to the value in an enum is by using <a href="#dotSyntax">dot syntax</a> <el-code>enumType.enumValue</el-code>.</p>
+<p>Reference to the value in an enum is by using <a href="#dotSyntax">dot syntax</a> <code>enumType.enumValue</code>.</p>
 <p>An <el-kw>enum</el-kw> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
 
 <p>Examples of definition and use:</p>
@@ -745,7 +745,7 @@ end main
  <el-kw>interface</el-kw>,
  <el-kw>abstract class</el-kw> or
  (concrete) <el-kw>class</el-kw>.
-The <el-code>new code</el-code> prompt will offer a context appropriate subset of the following member instructions:</p>
+The <code>new code</code> prompt will offer a context appropriate subset of the following member instructions:</p>
 <p>
  <a href="#abstract_property"><el-kw>abstract property</el-kw></a>,
  <a href="#abstract_function"><el-kw>abstract function</el-kw></a>,
@@ -837,13 +837,13 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
 </table>
 
 <h2 id="abstract_property"><el-kw>abstract property</el-kw></h2>
-<p>An abstract property may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>An abstract property may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="abstract_function"><el-kw>abstract function</el-kw></h2>
-<p>An abstract function method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
 <h2 id="abstract_procedure"><el-kw>abstract procedure</el-kw></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="property"><el-kw>property</el-kw></h2>
 <p>A <el-kw>property</el-kw> is a named value defined on a <el-kw>class</el-kw> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
@@ -865,10 +865,10 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <h2 id=functionMethod"><el-kw>function</el-kw> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
-<li>A <el-code>function</el-code> method is always referenced (used) by code outside the Class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
-<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the Class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the Class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
- This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <code>function</code> method is always referenced (used) by code outside the Class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
+<li>A <code>function</code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the Class as though it were a variable or parameter.</li>
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an <code>abstract class</code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 <li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
  If defined for a Class then, if an instance of the Class is printed, function method <el-method>toString</el-method> will automatically be used.
   Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
@@ -879,8 +879,8 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the Class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the Class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the Class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
- This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an <code>abstract class</code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
@@ -895,7 +895,7 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
 </ul>
 
 <ul>
-<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <el-code>property. </el-code>('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
+<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property. </code>('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
 </ul>
 <codeblock>
 class Game
@@ -986,7 +986,7 @@ which is the mechanism for running unit tests during program development, not du
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
   To enforce this, <el-kw>call</el-kw> instructions are not allowed in functions.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> instruction.
- Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.
+ Only one dot is allowed in the <code>procedure name</code> field, or two dots if the first word is <el-kw>property</el-kw>.
  If you need anything more complicated, use a <el-kw>set</el-kw> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
@@ -1012,7 +1012,7 @@ whose return value is put into a variable. See <a href="#constant_structure">Con
 <h2 id="for"><el-kw>for</el-kw></h2>
 <div id="to"></div>
 <div id="step"></div>
-<p>The construct <el-code><el-kw>for</el-kw> <el-id>p</el-id> <el-kw>in</el-kw> <el-id>q</el-id></el-code>  specifies looping through a sequence of
+<p>The construct <code>for p in q</code>  specifies looping through a sequence of
  characters in a <code>String</code> or items in a <code>List</code>.
 The forms of the <el-kw>for</el-kw> loop are:</p>
 <ul>
@@ -1117,12 +1117,12 @@ So even if the loop variable is changed in any way within the <el-kw>for</el-kw>
 <p>The <el-kw>if..then..else..elif..</el-kw> construct specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li> It is structured like this (<el-kw>elif</el-kw> is the Elan keyword for 'else if'):<br>
- <el-kw>if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
- &nbsp;&nbsp;<el-code>instructions</el-code><br>
- <el-kw>elif</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
- &nbsp;&nbsp;<el-code>instructions</el-code><br>
+ <el-kw>if</el-kw> <code>condition</code> <el-kw>then</el-kw><br>
+ &nbsp;&nbsp;<code>instructions</code><br>
+ <el-kw>elif</el-kw> <code>condition</code> <el-kw>then</el-kw><br>
+ &nbsp;&nbsp;<code>instructions</code><br>
  <el-kw>else</el-kw><br>
- &nbsp;&nbsp;<el-code>instructions</el-code><br>
+ &nbsp;&nbsp;<code>instructions</code><br>
  <el-kw>end if</el-kw></li>
  <li>The conditions are Boolean values or expressions.</li>
  <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
@@ -1156,7 +1156,7 @@ end if
 </div></div>
 
 <h2 id="set"><el-kw>set</el-kw></h2>
-<p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
+<p>The <el-kw>set</el-kw><code>..</code>to<code>..</code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
 <p>A <el-kw>set</el-kw> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
@@ -1187,8 +1187,8 @@ function percent(value as Float, maximum as Float) returns Float
 end function
 </codeblock>
 <p>At runtime, if the condition is met, execution will stop and the display will show:</p>
-<el-code>proportion exceeds 100%</el-code><br>
-<el-code>Error</el-code>
+<code>proportion exceeds 100%</code><br>
+<code>Error</code>
 <hr>
 </div></div>
 
@@ -1250,7 +1250,7 @@ end function
 </div></div>
 
 <h2 id="variable"><el-kw>variable</el-kw></h2>
-<p>The <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>
+<p>The <el-kw>variable</el-kw><code>..</code>set to<code>..</code>
 instruction declares and initialises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
 <p>The initial value is given by a following expression. For example:</p>
 
@@ -1259,11 +1259,11 @@ instruction declares and initialises a mutable named valued. The name defined mu
 </codeblock>
 
 <h2 id="while"><el-kw>while</el-kw></h2>
-<p>The <el-kw>while <el-code>condition</el-code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
- only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
-<p><el-code>condition</el-code> is either a <code>Boolean</code> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
-<p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
- when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
+<p>The <el-kw>while <code>condition</code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
+ only if <code>condition</code> is <code>true</code>.</p>
+<p><code>condition</code> is either a <code>Boolean</code> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
+<p>When <code>condition</code> is <code>true</code> the enclosed code is executed;
+ when <code>false</code> the loop is bypassed. For example:</p>
 
 <codeblock>
 main
@@ -1286,17 +1286,17 @@ end main
 </ul>
 
 <h2 id="literalValue">Literal value</h2>
-<p>A literal value is where a value is written 'literally' in the code, such as <el-code>3.142</el-code>, in contrast to a value that is referred to by a name.</p>
+<p>A literal value is where a value is written 'literally' in the code, such as <code>3.142</code>, in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
 <table>
 <tr><th>Type</th><th>Example of literal</th></tr>
-<tr><td><a href="LibRef.html#Int">Int</a></td><td><el-code>3</el-code></td></tr>
-<tr><td><a href="LibRef.html#Float">Float</a></td><td><el-code>2.0</el-code></td></tr>
+<tr><td><a href="LibRef.html#Int">Int</a></td><td><code>3</code></td></tr>
+<tr><td><a href="LibRef.html#Float">Float</a></td><td><code>2.0</code></td></tr>
 <tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-id>true</el-id></td></tr>
-<tr><td><a href="LibRef.html#String">String</a></td><td><el-code>"Hello"</el-code></td></tr>
-<tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><el-code>(3, "banana")</el-code></td></tr>
-<tr><td><a href="LibRef.html#List">List</a></td><td><el-code>["lemon", "lime", "orange"]</el-code></td></tr>
-<tr><td><a href="LibRef.html#Dictionary">Dictionary</a></td><td><el-code>["a":3, "b":5]</el-code></td></tr>
+<tr><td><a href="LibRef.html#String">String</a></td><td><code>"Hello"</code></td></tr>
+<tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><code>(3, "banana")</code></td></tr>
+<tr><td><a href="LibRef.html#List">List</a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
+<tr><td><a href="LibRef.html#Dictionary">Dictionary</a></td><td><code>["a":3, "b":5]</code></td></tr>
 </table>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures</a> table.<br>
 
@@ -1304,7 +1304,7 @@ end main
 <h2 id="IndexedValue">Indexed values</h2>
 <p>If a named value is of an indexable Type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
  using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
-<p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <el-code>(<el-id>i</el-id>, <el-id>j</el-id> + <el-lit>1</el-lit>)</el-code>.</p>
+<p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
 <p>If the two index values of a range are equal, or the second is smaller than the first,
 then an empty string or list is returned.</p>
 <p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
@@ -1350,8 +1350,8 @@ end main
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
 
 <p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
-<p>For the <el-code> + &minus; * </el-code> operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
-<p>For the <el-code> / </el-code> operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p>For the <code> + &minus; * </code> operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
+<p>For the <code> / </code> operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="power">For raising one value to the power of another, use the syntax in these examples:<br>
 <codeblock>call print(pow(4, 4))</codeblock>
 <codeblock>variable c set to sqrt(pow(a, 2) + pow(b, 2))</codeblock>
@@ -1359,43 +1359,43 @@ end main
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
 <p id="mod"> The operator <el-kw>mod</el-kw> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
 <pre>
-    <el-code>2/3.0</el-code>         &#x27f6;  <el-code>0.666..</el-code>
-    <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
-    <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
-    <el-code>2 &minus; 3</el-code>         &#x27f6;  <el-code>&minus;6</el-code>
-    <el-code>11 mod 3</el-code>   &#x27f6;  <el-code>2</el-code>
+    <code>2/3.0</code>         &#x27f6;  <code>0.666..</code>
+    <code>2*3</code>             &#x27f6;  <code>6</code>
+    <code>2 + 3</code>         &#x27f6;  <code>5</code>
+    <code>2 &minus; 3</code>         &#x27f6;  <code>&minus;6</code>
+    <code>11 mod 3</code>   &#x27f6;  <code>2</code>
 </pre>
 <p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> (which returns an <code>Int</code>):</p>
 <pre>
-    <el-code>(11/3.0).floor()</el-code>       &#x27f6;  <el-code>3</el-code>
-    <el-code>(-11/3.0).floor()</el-code>     &#x27f6; <el-code>&minus;4</el-code>
-    <el-code>divAsInt(11,3)</el-code>            &#x27f6; <el-code>3</el-code>
+    <code>(11/3.0).floor()</code>       &#x27f6;  <code>3</code>
+    <code>(-11/3.0).floor()</code>     &#x27f6; <code>&minus;4</code>
+    <code>divAsInt(11,3)</code>            &#x27f6; <code>3</code>
 </pre>
 <p>Note that rounding is always down.</p>
 
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
 <p>When combining <el-kw>mod</el-kw> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
 <pre>
-    <el-code>(5 + 6) mod 3</el-code>
+    <code>(5 + 6) mod 3</code>
 </pre>
 <p>Note that <el-kw>mod</el-kw> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
  If both arguments are positive, there is no difference.</p>
 <p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
 <pre>
-    <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
+    <code>2*&minus;3</code>           &#x27f6;  <code>&minus;6</code>
 </pre>
 
-<p>The editor automatically puts spaces around the operators <el-code>&plus;</el-code> and <el-code>&minus;</el-code>, but not around <el-code>/</el-code> or <el-code>*</el-code>.
+<p>The editor automatically puts spaces around the operators <code>&plus;</code> and <code>&minus;</code>, but not around <code>/</code> or <code>*</code>.
 This is just to visually reinforce the precedence.</p>
 
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
 <h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
-<p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <code>Boolean</code> result.</p>
-<p><el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
-<el-code>not</el-code> is a unary operator. </p>
-<p>The operator precedence is <el-code>not</el-code> &rarr; <el-code>and</el-code> &rarr; <el-code>or</el-code>, so this
+<p>Logical operators are applied to <code>Boolean</code> arguments and return a <code>Boolean</code> result.</p>
+<p><code>and</code> and <code>or</code> are binary operators<br>
+<code>not</code> is a unary operator. </p>
+<p>The operator precedence is <code>not</code> &rarr; <code>and</code> &rarr; <code>or</code>, so this
 example, which implements an 'exclusive or', need not use brackets and can rely on the operator precedence:</p>
 
 <codeblock>
@@ -1405,14 +1405,14 @@ end function
 </codeblock>
 
 <h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The <el-code>&plus;</el-code> operator is also used for concatenating <code>String</code> values.</p>
+<p>The <code>&plus;</code> operator is also used for concatenating <code>String</code> values.</p>
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
 <p>Equality testing of these Value Types uses the <el-kw>is</el-kw> and <el-kw>isnt</el-kw> keywords between two values and returns a <code>Boolean</code> result:</p>
 <ul>
  <li><el-kw>isnt</el-kw> returns the opposite of <el-kw>is</el-kw>.</li>
- <li><el-code>(<el-id>a</el-id> <el-kw>is</el-kw> <el-id>b</el-id>)</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
+ <li><code>(a is b)</code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
  The only exception is that if one argument is of Type <code>Float</code> and the other is of Type <code>Int</code>,
   then <el-kw>is</el-kw> will return <el-id>true</el-id> (and <el-kw>isnt</el-kw> will return <el-id>false</el-id>) if their values are the same,
   i.e. they are the same whole number.</li>
@@ -1434,10 +1434,10 @@ Two instances which are subclasses of the same abstract Class compare equal only
 <h3 class="no-TOC">Numeric comparison</h3>
 <p>The numeric comparison operators are:</p>
 <pre>
-    <el-code>&gt; </el-code>        for     greater than
-    <el-code>&lt; </el-code>        for     less than
-    <el-code>&gt;=</el-code>        for     greater than or equal to
-    <el-code>&lt;=</el-code>        for     less than or equal to
+    <code>&gt; </code>        for     greater than
+    <code>&lt; </code>        for     less than
+    <code>&gt;=</code>        for     greater than or equal to
+    <code>&lt;=</code>        for     less than or equal to
 </pre>
 <p>Each may be applied between two values of Type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
 <p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String</a>.</p>
@@ -1461,30 +1461,30 @@ end main
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
-System methods may be used only within the <el-code>main</el-code> routine or a <el-code>procedure</el-code>, because they have external dependencies or side effects.</li>
-<li>In the fourth example, <el-code>upperCase</el-code> is a dot method that may be applied to any instance (variable or literal) of Type <code>String</code>.
+System methods may be used only within the <code>main</code> routine or a <code>procedure</code>, because they have external dependencies or side effects.</li>
+<li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of Type <code>String</code>.
 See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
 <h2 id="lambda"><el-kw>lambda</el-kw></h2>
-<p>A <el-code>lambda</el-code> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
-You would typically define a <el-code>lambda</el-code>:</p>
+<p>A <code>lambda</code> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
+You would typically define a <code>lambda</code>:</p>
 <ul>
 <li>when the functionality it defines is needed in only one location:
    typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> or HoF.</li>
 <li>when you need to capture a local variable in the implementation: this is called 'closing around a variable'.</li>
 </ul>
-<p>The syntax for a <el-code>lambda</el-code> is as follows:</p>
+<p>The syntax for a <code>lambda</code> is as follows:</p>
 <ul>
 <li>Start with the keyword <el-kw>lambda</el-kw>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
+<li>The <code>=&gt;</code> symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
-<p>Although a <el-code>lambda</el-code> is commonly defined 'inline' it is also possible
- to assign a <el-code>lambda</el-code> to a named value, so as to reuse it within the scope of that named value.</p>
+<p>Although a <code>lambda</code> is commonly defined 'inline' it is also possible
+ to assign a <code>lambda</code> to a named value, so as to reuse it within the scope of that named value.</p>
 
-Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in a list of Boolean values:
+Example using a <code>lambda</code> to look for <el-id>true</el-id> in a list of Boolean values:
 <codeblock>
 function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
   variable neighbours set to neighbourCells(c)
@@ -1503,7 +1503,7 @@ end function
    <li><el-kw>elif</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
 <li>You can add as many <el-kw>elif</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
   </ul>
- <li>A simpler structure that distinguishes only two possibilities, with the format:<br><el-code><el-kw>if</el-kw>(<code>Boolean</code> expression, return value if <el-id>true</el-id>, return value if <el-id>false</el-id>)</el-code>.</ol>
+ <li>A simpler structure that distinguishes only two possibilities, with the format:<br><code>if(<code>Boolean</code> expression, return value if true, return value if false)</code>.</ol>
 <p>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even when enclosed in brackets.</p>
 </ul>
 
@@ -1550,7 +1550,7 @@ would print these lines to the display:
 <h2 id="new"><el-kw>new</el-kw></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
    or a <a href="#class"> user-defined class</a>, either to assign to a named value, or as part
-  of a more complex expression. Example of use from demo program <el-code>snake_PP.elan</el-code>:</p>
+  of a more complex expression. Example of use from demo program <code>snake_PP.elan</code>:</p>
 
 <codeblock>
   variable headRef set to new AsRef<of List<of Int>>(head)
@@ -1561,10 +1561,10 @@ would print these lines to the display:
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
 <p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
- Your text may contain any characters, except that it must not start with an open square bracket <el-code>[</el-code>.</p>
+ Your text may contain any characters, except that it must not start with an open square bracket <code>[</code>.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well as from the <el-code>new code</el-code> prompt. Every prompt provides a <el-code>comment</el-code> option, namely a # symbol.</p>
+as well as from the <code>new code</code> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1681,7 +1681,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <p>Certain data structure Types, including <code>List</code>, must specify the Type of their members, for example <code>List</code>&lt;<el-kw>of</el-kw> <code>Int</code>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
- for example: <el-code><code>Dictionary</code>&lt;<el-kw>of</el-kw> <code>String</code>, <code>Float</code>&gt;</el-code>.</p>
+ for example: <code><code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;</code>.</p>
 
 <h3 id="MutateCompileError" class="no-TOC">May not re-assign the ...</h3>
  <p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>
@@ -1736,7 +1736,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
   <li>Keywords in all the supported languages.</li>
-  <li>Lowercase versions of Elan Type names, such as <el-code>int, float, string, boolean, list, dictionary</el-code>.
+  <li>Lowercase versions of Elan Type names, such as <code>int, float, string, boolean, list, dictionary</code>.
   It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
   what it does (for a method), or represents (for a named value).</li>
   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
@@ -1752,7 +1752,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
- <el-code><el-id>a</el-id>[&minus;<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
+ <code>a[&minus;3]</code> then this will generate a compile error.
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
@@ -1782,7 +1782,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 <h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one 'main' in a program.</h3>
 
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
- <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <el-code>-</el-code>
+ <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <code>-</code>
  or <el-kw>not</el-kw> successively within an expression.</p>
 
 <h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
@@ -1807,7 +1807,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
-  <li>Any expression involving a binary operator such as <el-code>+</el-code>, <el-kw>isnt</el-kw>, etc.,
+  <li>Any expression involving a binary operator such as <code>+</code>, <el-kw>isnt</el-kw>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
   the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
@@ -1844,7 +1844,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
 
 <h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
  <p>Each parameter definition takes the form:</p>
- <el-code><el-id>name</el-id> <el-kw>as</el-kw> <code>Type</code></el-code>
+ <code>name as <code>Type</code></code>
  <p>The name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
  <p>The Type must follow the rules for a <a href="#TypeName">Type</a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
@@ -1874,7 +1874,7 @@ as well as from the <el-code>new code</el-code> prompt. Every prompt provides a 
  a simple name. Less commonly, it may take the form of a dconstruction of a
  <a href="LibRef.html#deconstructList"><code>List</code></a> or
 <!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutabl</code>e</a> or-->
- <a href="LibRef.html#deconstructTuple"><el-code>Tuple</el-code></a>.</p>
+ <a href="LibRef.html#deconstructTuple"><code>Tuple</code></a>.</p>
 
 <h2>Advisory</h2>
 

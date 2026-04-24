@@ -258,7 +258,7 @@ end test
   <th>details</th>
 </tr><tr>
   <td><code>String</code></td>
-  <td><el-code><el-kw>constant </el-kw><el-id>title</el-id><el-kw> set to </el-kw>"<el-lit>Ulysses</el-lit>"</el-code></td>
+  <td><code>constant title set to "Ulysses"</code></td>
   <td>delimited by double quotes</td>
 </tr><tr>
   <td><code>String</code></td>
@@ -474,7 +474,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
 <p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that Type being specified either explicitly (as in
-<el-code>&lt;<el-kw>of</el-kw> <code>Int</code>&gt;</el-code>), or implicitly if the structure is created using a literal definition.</p>
+<code>&lt;of <code>Int</code>&gt;</code>), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 
 <table class="tableStructure">
@@ -505,18 +505,18 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
  </tr><tr>
   <td>literal definition</td>
-  <td><el-code>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-code></td>
-  <td><el-code>["<el-lit>a</el-lit>":<el-lit>3</el-lit>, "<el-lit>b</el-lit>":<el-lit>5</el-lit>]</el-code></td>
-  <td>Only as converted from a literal <code>List</code><br>e.g. <el-code>["<el-lit>a</el-lit>","<el-lit>b</el-lit>","<el-lit>c</el-lit>"].<el-method>asSet</el-method>()</el-code></td>
+  <td><code>[2, 3, 5, 7, 11]</code></td>
+  <td><code>["a":3, "b":5]</code></td>
+  <td>Only as converted from a literal <code>List</code><br>e.g. <code>["a","b","c"].<el-method>asSet</el-method>()</code></td>
   <td>Not available</td>
   <td>Not available</td>
  </tr><tr>
   <td>create empty</td>
-  <td><el-code>new <code>List</code>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
-  <td><el-code>new <code>Dictionary</code>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
-  <td><el-code>new <code>HashSet</code>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>new <code>Stack</code>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
-  <td><el-code>new <code>Queue</code>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><code>new <code>List</code>&lt;of Type&gt;()</code></td>
+  <td><code>new <code>Dictionary</code>&lt;of keyType, valueType&gt;()</code></td>
+  <td><code>new <code>HashSet</code>&lt;of Type&gt;()</code></td>
+  <td><code>new <code>Stack</code>&lt;of Type&gt;()</code></td>
+  <td><code>new <code>Queue</code>&lt;of Type&gt;()</code></td>
  </tr><tr>
   <td>create initialised
   <td><el-code><el-method>createList</el-method>(<el-lit>number</el-lit>, <el-lit>value</el-lit>)<el-code><br>
@@ -527,14 +527,14 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>Not available</td>
  </tr><tr>
   <td>read by index</td>
-  <td><el-code><el-id>li</el-id>[<el-lit>2</el-lit>]</el-code></td>
-  <td><el-code><el-id>d</el-id>["<el-lit>b</el-lit>"]</el-code></td>
+  <td><code>li[2]</code></td>
+  <td><code>d["b"]</code></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
   <td>read by index range</td>
-  <td><el-code><el-id>li</el-id>.<el-method>subList</el-method>(<el-lit>3</el-lit>, el-lit>5</el-lit>)</el-code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
+  <td><code>li.<el-method>subList</el-method>(3, el-lit>5)</code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
@@ -708,7 +708,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><el-code><code>List</code><of <code>String</code>&gt;</el-code></td>
+  <td><code><code>List</code><of <code>String</code>&gt;</code></td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -1013,7 +1013,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
     <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
-    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code><code>Stack</code>&lt;of <el-type><code>String</code></el-type>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</el-code>.</li>
+    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code><code>Stack</code>&lt;of <el-type><code>String</code></el-type>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
     <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a function, or specify it as the <el-kw>return</el-kw> Type.</li>
     <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
@@ -1173,7 +1173,7 @@ end main
 <hr>
 </div></div>
 <h2 id="Tuple">Tuple</h2>
-<p>A <el-code>Tuple</el-code> is not a value or data structure Type. Rather, it is a small <i>collection</i> of values
+<p>A <code>Tuple</code> is not a value or data structure Type. Rather, it is a small <i>collection</i> of values
 of differing Types held together and referenced by a single identifier.</p>
 <p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
@@ -1194,13 +1194,13 @@ of differing Types held together and referenced by a single identifier.</p>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
 </ul>
 
-<h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
+<h3 class="no-TOC">Defining a <code>Tuple</code></h3>
 <p>A new Tuple is defined by a list of items separated by commas and  enclosed in round brackets:</p>
 
 <code>variable point set to (3, 4)</code>
 <code>variable t set to (3, "apple", true)</code>
 
-<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <el-code>Tuple</el-code></h3>
+<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <code>Tuple</code></h3>
 <p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-id>item_</el-id>N, thus:</p>
 <table class="tablePlain">
 <tr>
@@ -1228,7 +1228,7 @@ end function
 </codeblock>
 <p>Note that the appropriate <el-id>item_</el-id>Ns will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
-<h3 class="no-TOC">Function dot methods on a <el-code>Tuple</el-code></h3>
+<h3 class="no-TOC">Function dot methods on a <code>Tuple</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
@@ -1237,12 +1237,12 @@ end function
   <th>returns</th>
  </tr><tr id="equals_Tuple">
   <td><el-method>equals</el-method></td>
-  <td><el-code>Tuple</el-code></td>
+  <td><code>Tuple</code></td>
   <td><code>Boolean</code></td>
   <td><el-id>true</el-id> if the Types, item values and order all equal those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="notEqualTo_Tuple">
   <td><el-method>notEqualTo</el-method></td>
-  <td><el-code>Tuple</el-code></td>
+  <td><code>Tuple</code></td>
   <td><code>Boolean</code></td>
   <td><el-id>true</el-id> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="toString_Tuple">
@@ -1440,20 +1440,20 @@ end procedure
 So for example the centre of the display is at (50, 37.5).</p>
 <p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
- <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
- <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
- <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
- <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
+ <li id="CircleVG"> <code>CircleVG</code> for &lt;<code>circle../&gt;</code></li>
+ <li id="ImageVG"><code>ImageVG</code> for <code>&lt;image../&gt;</code></li>
+ <li id="LineVG"><code>LineVG</code> for <code>&lt;line../&gt;</code></li>
+ <li id="RectangleVG"><code>RectangleVG</code> for <code>&lt;rect../&gt;</code></li>
 </ul>
-<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <el-code>stroke-width</el-code>
+<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
  is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
-Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
+Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <code>List</code>&lt;<el-kw>of</el-kw> <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-kw>of</el-kw> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
-<p><code>VectorGraphic</code> is the abstract superclass of all <el-code>..VG</el-code> shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
+<p><code>VectorGraphic</code> is the abstract superclass of all <code>..VG</code> shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
 as shown in the table below.</p>
@@ -1767,7 +1767,7 @@ end main
 <h2 id="Random"><code>Random</code></h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods</a> <el-method>random</el-method> or <el-method>randint</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a function.</p>
-<p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
+<p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
 
 <codeblock>variable rand set to new Random()</codeblock>
@@ -1891,7 +1891,7 @@ end function
   <td><el-method>getNumericKey</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <el-code>"-1"</el-code></td>
+  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <code>"-1"</code></td>
  </tr><tr id="input">
   <td><el-method>input</el-method></td>
   <td><code>String</code></td>
@@ -1958,15 +1958,15 @@ end main
 </codeblock>
 <ul>
  <li>When any of these functions (except<el-method> waitForKey</el-method>) is called, the system <i>does not wait for a response</i>, but immediately returns a <code>String</code> or Tuple.</li>
- <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <el-code>"z"</el-code> or <el-code>"@"</el-code>.</li>
- <li><el-method>getNumericKey</el-method> returns a string containing either a digit (<el-code>"0".."9"</el-code>) or, if the last key pressed was not numeric, then <el-code>"-1"</el-code>.
+ <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <code>"z"</code> or <code>"@"</code>.</li>
+ <li><el-method>getNumericKey</el-method> returns a string containing either a digit (<code>"0".."9"</code>) or, if the last key pressed was not numeric, then <code>"-1"</code>.
  A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
- <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <el-code>"Shift"</el-code>,
-  <el-code>"Ctrl"</el-code> or <el-code>"Alt"</el-code> if simultaneously pressed.
+ <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
+  <code>"Ctrl"</code> or <code>"Alt"</code> if simultaneously pressed.
   If no modifier had been pressed, the Tuple's second item will be the empty string. Note that a few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
- <li>Non-printable keys will also be returned as strings, e.g. <el-code>"Home"</el-code>, <el-code>"End"</el-code>, <el-code>"Delete"</el-code>, <el-code>"Tab"</el-code>,
- <el-code>"Backspace"</el-code>, <el-code>"Enter"</el-code>, <el-code>"Escape"</el-code>,
- <el-code>"ArrowUp"</el-code> etc., function key <el-code>"Fn"</el-code>, <el-code>"AltGraph"</el-code>, <el-code>"Meta"</el-code>, <el-code>"ContextMenu"</el-code>, as well as most others.</li>
+ <li>Non-printable keys will also be returned as strings, e.g. <code>"Home"</code>, <code>"End"</code>, <code>"Delete"</code>, <code>"Tab"</code>,
+ <code>"Backspace"</code>, <code>"Enter"</code>, <code>"Escape"</code>,
+ <code>"ArrowUp"</code> etc., function key <code>"Fn"</code>, <code>"AltGraph"</code>, <code>"Meta"</code>, <code>"ContextMenu"</code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
  <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-kw>procedure</el-kw> or in <el-kw>main</el-kw>.</li>
@@ -1998,7 +1998,7 @@ end main
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
   <td><code>TextFileReader</code></td>
-  <td>opens a file system dialog to choose the filename of filetype <el-code>.txt</el-code>  to be read,
+  <td>opens a file system dialog to choose the filename of filetype <code>.txt</code>  to be read,
   and returns a file handle<br>
   see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="createFileForWriting">
@@ -2006,13 +2006,13 @@ end main
   <td><code>String</code></td>
   <td><code>TextFileWriter</code></td>
   <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
-  with or without the default filetype of <el-code>.txt</el-code>, and returns a file handle<br>
+  with or without the default filetype of <code>.txt</code>, and returns a file handle<br>
   see <a href="#TextFileWriter">Writing text files</a></td>
  </tr>
 </table>
 
 <h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
-<p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension <el-code>.txt</el-code>.</p>
+<p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension <code>.txt</code>.</p>
 <p>An instance is created by the system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2050,10 +2050,10 @@ end main
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
-<li><el-code>readWholeFile</el-code> returns a <code>String</code> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
-<li><el-code>readLine</el-code> reads as far as the next newline character (<el-lit>\n</el-lit>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <code>String</code>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <code>String</code> into separate lines.</li>
-<li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
+<li><code>openFileForReading</code> will present the user with a dialog to select the file.</li>
+<li><code>readWholeFile</code> returns a <code>String</code> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
+<li><code>readLine</code> reads as far as the next newline character (\n) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <code>String</code>. If this behaviour is not desired, you can use <code>readWholeFile</code>, which does no trimming, and then parse the resulting <code>String</code> into separate lines.</li>
+<li>Calling <code>file.close</code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <code>readWholeFile</code> because that method automatically closes the file.</li>
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
 
@@ -2091,10 +2091,10 @@ end main
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
-<li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
-<li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
-<li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
+<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
+<li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
+<li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
+<li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
 <li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
 To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-kw>try...catch</el-kw> instruction like this (where <code>ElanRuntimeError</code> is a Class provided by Elan for this purpose):</li>
 
@@ -2151,7 +2151,7 @@ end main
 
 <h2 id="DisplayImageURL">Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an <el-code>http</el-code> or <el-code>https</el-code> URL may be sent to the display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are two techniques:
+<p>An image that can be retrieved with an <code>http</code> or <code>https</code> URL may be sent to the display, though note that other URI schemes, such as in <code>file://host/path</code> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
@@ -2161,7 +2161,7 @@ main
   call displayHtml(pic)
 end main
 </codeblock>
-   <p>The usual <el-code>&lt;img&gt;</el-code> tag attributes are respected, though <el-code>alt</el-code> does not give the expected tooltip when hovering over the image, and <el-code>title</el-code> is only a descriptive comment.</p>
+   <p>The usual <code>&lt;img&gt;</code> tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
  <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures</a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>
@@ -2212,7 +2212,7 @@ end main
 <h1 id="CommonMethods">Common methods</h1>
 <h2 id="CommonDotMethods">Common dot methods</h2>
 
-<p>Click on a Type to go to the Type's function dot methods, or on <el-code><i class="fa">&#xf08e;</i></el-code> to go to the specific method on that Type.</p>
+<p>Click on a Type to go to the Type's function dot methods, or on <code><i class="fa">&#xf08e;</i></code> to go to the specific method on that Type.</p>
 
 <table>
  <tr>
@@ -2419,7 +2419,7 @@ end main
 </ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>
-<p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
+<p>All <code>procedure</code>s are accessed via a <a href="LangRef.html#call"><code>call</code></a> statement.</p>
 
 <h2 id="StandaloneProcedures">Standalone procedures</h2>
 
@@ -2482,12 +2482,12 @@ end main
   <td><el-method>sleep</el-method></td>
   <td><code>Int</code></td>
   <td>(none)</td>
-  <td>pauses the execution of the program for the specified number of seconds,<br> e.g. for a game <el-code>sleep(1.5)</el-code> delays execution for 1.5 seconds</td>
+  <td>pauses the execution of the program for the specified number of seconds,<br> e.g. for a game <code>sleep(1.5)</code> delays execution for 1.5 seconds</td>
 </tr><tr id="sleep_ms">
   <td><el-method>sleep_ms</el-method></td>
   <td><code>Int</code></td>
   <td>(none)</td>
-  <td>pauses the execution of the  program for the specified number of milliseconds,<br> e.g. <el-code>sleep(100)</el-code> delays execution for one tenth of a second</td>
+  <td>pauses the execution of the  program for the specified number of milliseconds,<br> e.g. <code>sleep(100)</code> delays execution for one tenth of a second</td>
  </tr>
 </table>
 
@@ -2746,7 +2746,7 @@ test test_bitwise
 end test
 </codeblock>
 
-<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-id>a</el-id> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives<br><el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two's complement format,<br> the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <code>-14</code> , when a is <code>13</code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><code>00000000000000000000000000001101</code>, and applying <el-method>bitNot</el-method> gives<br><code>11111111111111111111111111110010 </code>which is the value <code>-14 </code>in signed two's complement format,<br> the left-most bit being the sign (<code>0</code> positive, <code>1</code> negative).</p>
 <hr>
 </div></div>
 
@@ -2759,10 +2759,10 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
 <table>
  <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
  <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
- <tr><td><el-code>bitAnd(p,q)</el-code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
- <tr><td><el-code>bitOr(p,q)</el-code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
- <tr><td><el-code>bitNot(p)</el-code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
- <tr><td><el-code>bitXor(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+ <tr><td><code>bitAnd(p,q)</code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+ <tr><td><code>bitOr(p,q)</code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+ <tr><td><code>bitNot(p)</code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+ <tr><td><code>bitXor(p,q)</code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
 </table>
 <hr>
 </div></div>
@@ -2782,7 +2782,7 @@ test test_matchesRegExp
 end test
 </codeblock>
 
-<p>You can convert a valid string without <el-code>/../</el-code> delimiters to a <code>RegExp</code> using function <el-method>asRegExp</el-method>:</p>
+<p>You can convert a valid string without <code>/../</code> delimiters to a <code>RegExp</code> using function <el-method>asRegExp</el-method>:</p>
 <codeblock>
 test test_matchesRegExp
   variable s1 set to "hello"
@@ -2793,7 +2793,7 @@ test test_matchesRegExp
 end test
 </codeblock>
 
-<p>Although it is recommended that literal regular expressions are written with <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
+<p>Although it is recommended that literal regular expressions are written with <code>/../</code> delimiters, the ability to convert a <code>string</code> allows you to input a regular expression into a running program.</p>
 
 <h1 id="SystemMethods">System methods</h1>
 
@@ -2955,15 +2955,15 @@ end function
  </tr><tr id="openBrace">
   <td><el-id>openBrace</el-id></td>
   <td><code>String</code></td>
-  <td><el-code>&nbsp; { </el-code></td>
+  <td><code>&nbsp; { </code></td>
  </tr><tr id="closeBrace">
   <td><el-id>closeBrace</el-id></td>
   <td><code>String</code></td>
-  <td><el-code>&nbsp; } </el-code></td>
+  <td><code>&nbsp; } </code></td>
  </tr><tr id="quotes">
   <td><el-id>quotes</el-id></td>
   <td><code>String</code></td>
-  <td><el-code>&nbsp; &quot; </el-code></td>
+  <td><code>&nbsp; &quot; </code></td>
  </tr>
 </table>
 
@@ -2996,22 +2996,22 @@ end function
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
-    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
-    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
-    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
-    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><el-code>0x0000ff</el-code></td></tr>
-    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
-    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
-    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
+    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x000000</code></td></tr>
+    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><code>0xffffff</code></td></tr>
+    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xff0000</code></td></tr>
+    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x008000</code></td></tr>
+    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><code>0x0000ff</code></td></tr>
+    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xffff00</code></td></tr>
+    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><code>0xa52a2a</code></td></tr>
+    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><code>0x808080</code></td></tr>
     <tr><td><el-id>transparent</el-id> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
 </table>
 <p>A colour is specified as an <code>Int</code> value using one of these methods:</p>
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
  <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
- <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
-    using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
+ <li>a six digit hexadecimal value in the range <code>0x000000</code> &ndash; <code>0xffffff</code>
+    using the same 'RGB' format as used in Html style, for example <code>0xff0000</code> for red.</li>
  <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes.
 </ul>
 
@@ -3030,7 +3030,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
 <codeblock>
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
@@ -3073,7 +3073,7 @@ end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; ["moT", "kciD", "teirraH"]
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example from demo program <el-code>maze-generator.elan</el-code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example from demo program <code>maze-generator.elan</code>:</p>
 <codeblock>
   variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
 </codeblock>
