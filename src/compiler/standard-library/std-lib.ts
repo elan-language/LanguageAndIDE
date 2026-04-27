@@ -445,8 +445,7 @@ export class StdLib {
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async print(@elanAnyType() s: any) {
-    const str = s ? await this.system.toString(s) : `\n`;
-    await this.system.elanInputOutput.print(`${str}\n`);
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
   }
 
   @elanProcedure(["any"], ProcedureOptions.async)
