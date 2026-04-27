@@ -68,7 +68,6 @@ import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { LetStatementAsn } from "../../compiler/syntax-nodes/statements/let-statement-asn";
-import { LocalConstantAsn } from "../../compiler/syntax-nodes/statements/local-constant-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";

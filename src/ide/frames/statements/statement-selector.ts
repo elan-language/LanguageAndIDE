@@ -2,7 +2,6 @@ import {
   assertKeyword,
   callKeyword,
   catchKeyword,
-  constantKeyword,
   elifKeyword,
   elseKeyword,
   forKeyword,
