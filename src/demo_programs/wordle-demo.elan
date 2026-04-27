@@ -6,7 +6,7 @@ constant allValidAnswers set to "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED
 
 main
   while true
-    constant choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
+    variable choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue()
@@ -25,7 +25,7 @@ procedure executeOption(choice as Int)
     call print("Please wait for analysis to complete ...")
     call analyse()
   else
-    constant word set to inputStringWithLimits("Enter word: ", 5, 5).upperCase()
+    variable word set to inputStringWithLimits("Enter word: ", 5, 5).upperCase()
     if allValidAnswers.contains(word) then
       call print($"{word} is a valid answer")
     elif allWords.contains(word) then
@@ -44,7 +44,7 @@ procedure playGame()
     set used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  constant target set to allValidAnswers.split(" ")[randint(0, 2308)]
+  variable target set to allValidAnswers.split(" ")[randint(0, 2308)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)
@@ -190,14 +190,14 @@ procedure analyse()
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  constant solved set to (success/2309.0*100).floor()
-  constant avg set to divAsFloat(weightedSum, success).round(2)
-  constant pc set to "%"
+  variable solved set to (success/2309.0*100).floor()
+  variable avg set to divAsFloat(weightedSum, success).round(2)
+  variable pc set to "%"
   call print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 end procedure
 
 function isUCLetter(k as String) returns Boolean
-  constant unicode set to k.asUnicode()
+  variable unicode set to k.asUnicode()
   return (k.length() is 1) and (unicode > 64) and (unicode < 91)
 end function
 
@@ -260,7 +260,7 @@ end test
 function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
   variable newPossible set to new List<of String>()
   for word in possible
-    constant markForWord set to markAttempt(attempt, word)
+    variable markForWord set to markAttempt(attempt, word)
     if markForWord.equals(mark) then
       set newPossible to newPossible.withAppend(word)
     end if
@@ -282,9 +282,9 @@ function drawGrid(grid as List<of List<of String>>) returns String
   for row in range(0, 6)
     set html to html + "<word>"
     for col in range(0, 5)
-      constant entry set to grid[col][row]
-      constant ch set to if(entry.length() > 0, entry[0], "")
-      constant mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
+      variable entry set to grid[col][row]
+      variable ch set to if(entry.length() > 0, entry[0], "")
+      variable mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
       set html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
     set html to html + "</word>"

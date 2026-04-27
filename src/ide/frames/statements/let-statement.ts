@@ -1,15 +1,15 @@
-import { constantKeyword, setKeyword, toKeyword } from "../../../compiler/elan-keywords";
+import { beKeyword, constantKeyword, letKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class ConstantStatement extends AbstractDefinitionStatement {
+export class LetStatement extends AbstractDefinitionStatement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
   }
 
-  isConstant = true;
+  isConstant = false;
 
   initialKeywords(): string {
     return constantKeyword;
@@ -17,9 +17,9 @@ export class ConstantStatement extends AbstractDefinitionStatement {
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove(`${constantKeyword} `);
+    source.remove(`${letKeyword} `);
     this.name.parseFrom(source);
-    source.remove(` ${setKeyword} ${toKeyword} `);
+    source.remove(` ${beKeyword} `);
     this.expr.parseFrom(source);
     source.removeNewLine();
   }
@@ -29,10 +29,10 @@ export class ConstantStatement extends AbstractDefinitionStatement {
   }
 
   frameSpecificAnnotation(): string {
-    return "constant";
+    return "let";
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${constantKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${letKeyword} ${this.name.renderAsElanSource()} ${beKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

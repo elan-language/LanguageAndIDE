@@ -31,9 +31,9 @@ Function allpoints(p As Coords) As List(Of VectorGraphic)
   For Each xp In range(0, width + 1)
     For Each yp In range(0, height + 1)
       ' scale and centre
-      Const n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
+      Dim n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) ' variable definition
       ' colour depends on how many iterations were done for that point
-      Const col = if(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff))
+      Dim col = if(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
       Dim rect = (New RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) ' variable definition
       vg2 = vg2.withAppend(rect) ' change variable
     Next yp
@@ -47,7 +47,7 @@ Function onepoint(x As Double, y As Double, maxnum As Integer, p As Coords) As I
   Dim b = y ' variable definition
   Dim i = 0 ' variable definition
   While Not done
-    Const c = 2*a*b
+    Dim c = 2*a*b ' variable definition
     a = (a*a - b*b) + p.jx ' change variable
     b = c + p.jy ' change variable
     i = i + 1 ' change variable
@@ -81,7 +81,7 @@ Class Coords
   ' Arrow keys move the virtual camera
   ' eg Arrow Up moves the image down
   Sub checkkeys() ' procedure
-    Const panstep = 10/Me.scale
+    Dim panstep = 10/Me.scale ' variable definition
     Dim jstep = 0.001 ' variable definition
     ' save some CPU by not recalculating until a parameter has been changed
     Dim changed = False ' variable definition

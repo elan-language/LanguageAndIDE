@@ -4,18 +4,18 @@ main
   variable blocks set to createBlockGraphics(black)
   set blocks to createStart(blocks)
   for i in range(0, displayWidth + 1)
-    constant x set to randint(0, 39)
-    constant y set to randint(0, 29)
+    variable x set to randint(0, 39)
+    variable y set to randint(0, 29)
     variable p set to new Point(x, y)
-    constant existing set to getValue(p, blocks)
-    constant setTo set to (random() + 0.7).floor()
+    variable existing set to getValue(p, blocks)
+    variable setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
-      constant colour set to if(setTo is 1, white, black)
+      variable colour set to if(setTo is 1, white, black)
       set blocks[p.x][p.y] to colour
     end if
   end for
   call displayBlocks(blocks)
-  constant name set to input("File name to save: ")
+  variable name set to input("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if
@@ -28,8 +28,8 @@ procedure saveAsFile(name as String, b as List<of List<of Int>>)
   for row in range(0, 30)
     variable line set to ""
     for col in range(0, 40)
-      constant colour set to b[col][row]
-      constant symbol set to if(colour is white, " ", "X")
+      variable colour set to b[col][row]
+      variable symbol set to if(colour is white, " ", "X")
       set line to line + symbol
     end for
     call file.writeLine(line)
@@ -46,7 +46,7 @@ function createStart(b as List<of List<of Int>>) returns List<of List<of Int>>
 end function
 
 function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, width as Int, depth as Int) returns List<of List<of Int>>
-  constant paint set to white
+  variable paint set to white
   variable b2 set to b
   for x in range(startX, startX + width + 1)
     set b2 to withPut(b2, x, startY, paint)
@@ -66,17 +66,17 @@ end function
 # colour: 0 for black, 1 for white
 function okToSet(p as Point, colour as Int, g as List<of List<of Int>>) returns Boolean
   variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
-  constant q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
-  constant q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
-  constant q3 set to isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
-  constant q4 set to isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
+  variable q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
+  variable q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
+  variable q3 set to isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
+  variable q4 set to isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
   return q1 and q2 and q3 and q4
 end function
 
 function getValue(p as Point, b as List<of List<of Int>>) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
-    constant colour set to b[p.x][p.y]
+    variable colour set to b[p.x][p.y]
     set result to if(colour is black, 0, 1)
   end if
   return result
@@ -130,8 +130,8 @@ class Point
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() returns List<of Point>
-    constant x set to this.x
-    constant y set to this.y
+    variable x set to this.x
+    variable y set to this.y
     return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)]
   end function
 

@@ -29,7 +29,6 @@ import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
-import { ConstantStatement } from "./statements/constant-statement";
 import { ParseStatus } from "./status-enums";
 import { CLOSE_BRACKET } from "./symbols";
 
@@ -47,7 +46,7 @@ export class LanguageJava extends LanguageCfamily {
 
   annotation(frame: Frame): string {
     let annotation = this.common_Annotation(frame);
-    if (frame instanceof ConstantGlobal || frame instanceof ConstantStatement) {
+    if (frame instanceof ConstantGlobal) {
       annotation = frame.frameSpecificAnnotation();
     }
     return annotation;
@@ -60,8 +59,6 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ConstantStatement) {
-      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else if (frame instanceof AbstractProperty) {

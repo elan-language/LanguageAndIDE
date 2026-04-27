@@ -21,7 +21,7 @@ static void main() {
 static bool binarySearch(List<String> li, String item) { // function
   var result = false;
   if (li.length() > 0) {
-    final Int mid = divAsInt(li.length(), 2); // constant
+    var mid = divAsInt(li.length(), 2);
     var value = li[mid];
     if (item.equals(value)) {
       result = true; // change variable

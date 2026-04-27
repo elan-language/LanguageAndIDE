@@ -27,7 +27,6 @@ suite("Selector tests", () => {
     const selector = file.getById("select2") as StatementSelector;
     assertOptions(selector, [
       "print",
-      "constant",
       "variable definition",
       "change variable",
       "if",
@@ -148,7 +147,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     assertOptions(s, [
-      "constant",
+      "let statement",
       "variable definition",
       "change variable",
       "if",
@@ -173,7 +172,6 @@ suite("Selector tests", () => {
     const s = new StatementSelector(proc);
     assertOptions(s, [
       "print",
-      "constant",
       "variable definition",
       "change variable",
       "if",
@@ -199,7 +197,7 @@ suite("Selector tests", () => {
     const s = new StatementSelector(test);
     assertOptions(s, [
       "assert equal",
-      "constant",
+      "let statement",
       "variable definition",
       "change variable",
       "if",
@@ -225,7 +223,7 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     assertOptions(s, [
-      "constant",
+      "let statement",
       "variable definition",
       "change variable",
       "if",
@@ -251,7 +249,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     assertOptions(s, [
-      "constant",
+      "let statement",
       "variable definition",
       "change variable",
       "if",
@@ -279,7 +277,6 @@ suite("Selector tests", () => {
     const s = new StatementSelector(ifThen);
     assertOptions(s, [
       "print",
-      "constant",
       "variable definition",
       "change variable",
       "if",
@@ -335,6 +332,6 @@ suite("Selector tests", () => {
     const g = new GlobalSelector(file);
     assertOptions(g, ["# comment"]);
     const s = new StatementSelector(main);
-    assertOptions(s, ["print", "constant", "variable definition", "change variable", "# comment"]);
+    assertOptions(s, ["print", "variable definition", "change variable", "# comment"]);
   });
 });

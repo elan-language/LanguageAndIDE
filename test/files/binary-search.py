@@ -17,7 +17,7 @@ def main() -> None:
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition
   if li.length() > 0:
-    mid = divAsInt(li.length(), 2) # constant
+    mid = divAsInt(li.length(), 2) # variable definition
     value = li[mid] # variable definition
     if item.equals(value):
       result = True # change variable

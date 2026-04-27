@@ -2,11 +2,11 @@ import {
   assertKeyword,
   callKeyword,
   catchKeyword,
-  constantKeyword,
   elifKeyword,
   elseKeyword,
   forKeyword,
   ifKeyword,
+  letKeyword,
   setKeyword,
   throwKeyword,
   tryKeyword,
@@ -35,7 +35,7 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
-      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
+      [letKeyword, "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
       [
         variableKeyword,
         "<b>v</b>ariable definition",
@@ -78,6 +78,8 @@ export class StatementSelector extends AbstractSelector {
       );
     } else if (keyword === assertKeyword) {
       return this.isDirectlyWithinATest();
+    } else if (keyword === letKeyword) {
+      return this.isWithinAFunction() || this.isDirectlyWithinATest();
     } else {
       result = true;
     }

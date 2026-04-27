@@ -615,35 +615,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12345");
   });
 
-  test("Fail_ReassignTheLetIterableWithinLoop", async () => {
-    const code = `${testHeader}
-
-main
-  constant s set to "hello"
-   for ch in s
-    call printNoLine(ch)
-    set s to "fred"
-  end for
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not re-assign the constant 's'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_undefinedCollection", async () => {
     const code = `${testHeader}
 

@@ -1,4 +1,4 @@
-# a5d3e203d56bbf1cf1eb5d04dfae8ba8ee812fcca3ef50bb8af63a3dba28f4a1 Elan 2.0.0-alpha1 valid
+# 87e690195aaceed9474d57c9f94ee0265f0685e0d15fda6bbbf03f5fdd5e5a37 Elan 2.0.0-alpha1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -16,17 +16,17 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  variable g2 set to if(k.equals(""), g, g.withKey(k))
-  variable g3 set to moveSnake(g2)
-  variable g4 set to eatAppleIfPoss(g3)
+  let g2 be if(k.equals(""), g, g.withKey(k))
+  let g3 be moveSnake(g2)
+  let g4 be eatAppleIfPoss(g3)
   return if(gameOver(g4), g4.withIsOn(false), g4)
 end function
 
 function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
-  variable b2 set to graphicsPut(b, g.apple.x, g.apple.y, red)
-  variable b3 set to graphicsPut(b2, g.head.x, g.head.y, green)
-  variable tail set to g.body[0]
-  variable tailColour set to if(tail.equals(g.priorTail), green, white)
+  let b2 be graphicsPut(b, g.apple.x, g.apple.y, red)
+  let b3 be graphicsPut(b2, g.head.x, g.head.y, green)
+  let tail be g.body[0]
+  let tailColour be if(tail.equals(g.priorTail), green, white)
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 end function
 
@@ -40,17 +40,17 @@ function score(g as Game) returns Int
 end function
 
 function moveSnake(g as Game) returns Game
-  variable k set to g.key
-  variable x set to g.head.x
-  variable y set to g.head.y
-  variable newX set to if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
-  variable newY set to if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
+  let k be g.key
+  let x be g.head.x
+  let y be g.head.y
+  let newX be if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
+  let newY be if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
   return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
-  variable tail set to g.body[0]
-  variable moveTail set to g.body.subList(1, g.body.length())
+  let tail be g.body[0]
+  let moveTail be g.body.subList(1, g.body.length())
   return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 end function
 
@@ -63,8 +63,8 @@ function gameOver(g as Game) returns Boolean
 end function
 
 function hasHitEdge(g as Game) returns Boolean
-  constant x set to g.head.x
-  constant y set to g.head.y
+  let x be g.head.x
+  let y be g.head.y
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
 end function
 
@@ -98,14 +98,14 @@ class Game
   end function
 
   function withNewApple() returns Game
-    variable x_rnd2 set to this.rnd.nextInt(0, 39)
-    variable x set to x_rnd2.item_0
-    variable rnd2 set to x_rnd2.item_1
-    variable y_rnd3 set to rnd2.nextInt(0, 29)
-    variable y set to y_rnd3.item_0
-    variable rnd3 set to y_rnd3.item_1
-    variable apple2 set to new Square(x, y)
-    variable g2 set to this.withApple(apple2).withRnd(rnd3)
+    let x_rnd2 be this.rnd.nextInt(0, 39)
+    let x be x_rnd2.item_0
+    let rnd2 be x_rnd2.item_1
+    let y_rnd3 be rnd2.nextInt(0, 29)
+    let y be y_rnd3.item_0
+    let rnd3 be y_rnd3.item_1
+    let apple2 be new Square(x, y)
+    let g2 be this.withApple(apple2).withRnd(rnd3)
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
@@ -182,140 +182,140 @@ class Square
 end class
 
 test test_clockTick
-  variable g1 set to new Game(new Random())
-  variable g2 set to g1.withNewApple()
-  variable g3 set to clockTick(g2, "s")
+  let g1 be new Game(new Random())
+  let g2 be g1.withNewApple()
+  let g3 be clockTick(g2, "s")
   assert g3.head is new Square(22, 16)
   assert g3.body.length() is 2
   assert g3.priorTail is g2.body[0]
   assert g3.isOn is true
-  variable g4 set to g3.withApple(new Square(22, 17))
-  variable g5 set to clockTick(g4, "s")
+  let g4 be g3.withApple(new Square(22, 17))
+  let g5 be clockTick(g4, "s")
   assert g5.body.length() is 3
   assert g5.priorTail is g4.priorTail
   assert g5.isOn is true
-  variable g6 set to g5.withHead(new Square(22, 29))
-  variable g7 set to clockTick(g6, "s")
+  let g6 be g5.withHead(new Square(22, 29))
+  let g7 be clockTick(g6, "s")
   assert g7.isOn is false
 end test
 
 test test_updateGraphics
-  variable blocks set to createBlockGraphics(white)
-  variable g1 set to new Game(new Random())
-  set blocks to updateGraphics(g1, blocks)
-  assert blocks[12][15] is red
-  assert blocks[22][15] is green
-  assert blocks[21][15] is white
-  variable g3 set to clockTick(g1, "d")
-  set blocks to updateGraphics(g3, blocks)
-  assert blocks[12][15] is red
-  assert blocks[22][15] is green
-  assert blocks[23][15] is green
+  let blocks be createBlockGraphics(white)
+  let g1 be new Game(new Random())
+  let blocks2 be updateGraphics(g1, blocks)
+  assert blocks2[12][15] is red
+  assert blocks2[22][15] is green
+  assert blocks2[21][15] is white
+  let g3 be clockTick(g1, "d")
+  let blocks3 be updateGraphics(g3, blocks2)
+  assert blocks3[12][15] is red
+  assert blocks3[22][15] is green
+  assert blocks3[23][15] is green
 end test
 
 test test_testnewApple
-  variable g1 set to new Game(new Random())
+  let g1 be new Game(new Random())
   assert g1.apple is new Square(12, 15)
-  variable g2 set to g1.withNewApple()
+  let g2 be g1.withNewApple()
   assert g2.apple is new Square(12, 15)
-  variable g3 set to g2.withNewApple()
+  let g3 be g2.withNewApple()
   assert g3.apple is new Square(10, 12)
   # test that apple is never over snake
-  variable g4 set to (new Game(new Random()))
-  variable g5 set to g4.withBody([new Square(10, 12)])
-  variable g6 set to g5.withNewApple()
+  let g4 be (new Game(new Random()))
+  let g5 be g4.withBody([new Square(10, 12)])
+  let g6 be g5.withNewApple()
   assert g4.apple is new Square(12, 15)
 end test
 
 test test_score
-  variable g1 set to new Game(new Random())
+  let g1 be new Game(new Random())
   assert score(g1) is 0
-  variable g2 set to g1.withBody([new Square(4, 4), new Square(5, 4)])
+  let g2 be g1.withBody([new Square(4, 4), new Square(5, 4)])
   assert score(g2) is 0
-  variable g3 set to g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
+  let g3 be g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
   assert score(g3) is 1
-  variable g4 set to g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
+  let g4 be g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
   assert score(g4) is 2
 end test
 
 test test_moveSnake
-  variable g1 set to new Game(new Random())
-  variable g2 set to g1.withKey("a")
-  variable g3 set to moveSnake(g2)
+  let g1 be new Game(new Random())
+  let g2 be g1.withKey("a")
+  let g3 be moveSnake(g2)
   assert g3.head is new Square(21, 15)
-  variable g4 set to g1.withKey("d")
-  variable g5 set to moveSnake(g4)
+  let g4 be g1.withKey("d")
+  let g5 be moveSnake(g4)
   assert g5.head is new Square(23, 15)
-  variable g6 set to g1.withKey("w")
-  variable g7 set to moveSnake(g6)
+  let g6 be g1.withKey("w")
+  let g7 be moveSnake(g6)
   assert g7.head is new Square(22, 14)
-  variable g8 set to g1.withKey("s")
-  variable g9 set to moveSnake(g8)
+  let g8 be g1.withKey("s")
+  let g9 be moveSnake(g8)
   assert g9.head is new Square(22, 16)
 end test
 
 test test_eatAppleIfPoss
-  variable g1 set to new Game(new Random())
+  let g1 be new Game(new Random())
   assert g1.body.length() is 2
   # negative case
-  variable g2 set to g1.withApple(new Square(23, 15))
-  variable g3 set to eatAppleIfPoss(g2)
+  let g2 be g1.withApple(new Square(23, 15))
+  let g3 be eatAppleIfPoss(g2)
   assert g3.body.length() is 1
   assert g3.apple is g2.apple
   assert g3.priorTail is g2.body[0]
   # positive case
-  variable g4 set to g2.withHead(new Square(23, 15))
-  variable g5 set to eatAppleIfPoss(g4)
+  let g4 be g2.withHead(new Square(23, 15))
+  let g5 be eatAppleIfPoss(g4)
   assert g5.body.length() is 2
   assert g5.apple is new Square(12, 15)
   assert g5.priorTail is g1.priorTail
 end test
 
 test test_overApple
-  variable g1 set to new Game(new Random())
-  variable g2 set to g1.withApple(new Square(23, 15))
+  let g1 be new Game(new Random())
+  let g2 be g1.withApple(new Square(23, 15))
   assert headOverApple(g2) is false
-  variable g3 set to g2.withHead(new Square(23, 15))
+  let g3 be g2.withHead(new Square(23, 15))
   assert headOverApple(g3) is true
 end test
 
 test test_gameOver
-  variable g1 set to new Game((new Random()))
+  let g1 be new Game((new Random()))
   assert gameOver(g1) is false
-  variable g2 set to g1.withHead(new Square(0, 0))
+  let g2 be g1.withHead(new Square(0, 0))
   assert gameOver(g2) is false
-  variable g3 set to g1.withHead(new Square(40, 15))
+  let g3 be g1.withHead(new Square(40, 15))
   assert gameOver(g3) is true
-  variable g4 set to g1.withHead(new Square(21, 15))
+  let g4 be g1.withHead(new Square(21, 15))
   assert gameOver(g4) is true
 end test
 
 test test_headIsAtEdge
-  variable g1 set to new Game(new Random())
+  let g1 be new Game(new Random())
   assert hasHitEdge(g1) is false
-  variable g2 set to g1.withHead(new Square(40, 15))
+  let g2 be g1.withHead(new Square(40, 15))
   assert hasHitEdge(g2) is true
-  variable g3 set to g1.withHead(new Square(-1, 15))
+  let g3 be g1.withHead(new Square(-1, 15))
   assert hasHitEdge(g3) is true
-  variable g4 set to g1.withHead(new Square(20, 30))
+  let g4 be g1.withHead(new Square(20, 30))
   assert hasHitEdge(g4) is true
-  variable g5 set to g1.withHead(new Square(20, -1))
+  let g5 be g1.withHead(new Square(20, -1))
   assert hasHitEdge(g5) is true
 end test
 
 test test_newSquare
-  variable sq set to new Square(3, 4)
+  let sq be new Square(3, 4)
   assert sq.x is 3
   assert sq.y is 4
 end test
 
 test test_newGame
-  variable rnd set to new Random()
-  variable game set to new Game(rnd)
-  variable totest set to game.rnd.equals(rnd)
+  let rnd be new Random()
+  let game be new Game(rnd)
+  let totest be game.rnd.equals(rnd)
   assert totest is true
   assert game.head is new Square(22, 15)
-  variable body set to game.body
+  let body be game.body
   assert body.length() is 2
   assert body[0] is new Square(20, 15)
   assert body[1] is new Square(21, 15)

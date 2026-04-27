@@ -1,4 +1,4 @@
-# 7b3957801c9fb8d120e510e09d95b4799cb9a2efededbef09f9fc1b4d959cc0c Elan 2.0.0-alpha1 valid
+# 3fe0187234e2753a4f666ca3d5dc88fa19248008bf56f0308f5611ff2afda960 Elan 2.0.0-alpha1 valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -23,9 +23,9 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
   for xp in range(0, width + 1)
     for yp in range(0, height + 1)
       # scale and centre
-      constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
+      variable n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point
-      constant col set to if(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
+      variable col set to if(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
       variable rect set to (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25)
       set vg2 to vg2.withAppend(rect)
     end for
@@ -39,7 +39,7 @@ function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns In
   variable b set to y
   variable i set to 0
   while not done
-    constant c set to 2*a*b
+    variable c set to 2*a*b
     set a to (a*a - b*b) + p.jx
     set b to c + p.jy
     set i to i + 1
@@ -79,7 +79,7 @@ class Coords
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   procedure checkkeys()
-    constant panstep set to 10/this.scale
+    variable panstep set to 10/this.scale
     variable jstep set to 0.001
     # save some CPU by not recalculating until a parameter has been changed
     variable changed set to false

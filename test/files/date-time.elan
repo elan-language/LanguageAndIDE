@@ -1,11 +1,11 @@
-# f94c767035d5edc78beaa2c828123217ad53f3db5eb7a2ea9ac0b02ebd4ad271 Elan 2.0.0-alpha1 valid
+# 0b1e74bba3e7eba7d1c647b6d6b13c825123c2c77263ffe304d4644976fce200 Elan 2.0.0-alpha1 valid
 
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
     set reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
-      constant now set to divAsInt(clock(), 1000)
+      variable now set to divAsInt(clock(), 1000)
       call print(now)
       call print(getDate(now))
     else
@@ -22,24 +22,24 @@ end main
 
 function getDate(unixSecs as Int) returns String
   variable dt set to dateTime(unixSecs)
-  constant hour set to dt.item_0
-  constant minute set to dt.item_1
-  constant second set to dt.item_2
-  constant days set to dt.item_3
-  constant year set to dt.item_4
-  constant weekday set to dt.item_5
-  constant z2 set to "00"
-  constant h set to padLwithZero(hour)
-  constant m set to padLwithZero(minute)
-  constant s set to padLwithZero(second)
+  variable hour set to dt.item_0
+  variable minute set to dt.item_1
+  variable second set to dt.item_2
+  variable days set to dt.item_3
+  variable year set to dt.item_4
+  variable weekday set to dt.item_5
+  variable z2 set to "00"
+  variable h set to padLwithZero(hour)
+  variable m set to padLwithZero(minute)
+  variable s set to padLwithZero(second)
   variable startDays set to getStartDays()
   variable startDaysL set to startDaysList(year, startDays)
   variable month_day set to monthDay(startDaysL, (days mod startDays[12]))
-  constant month set to month_day.item_0
-  constant day set to month_day.item_1
-  constant dayName set to getWeekdayName(weekday)
-  constant d set to padLwithZero(day)
-  constant monthName set to getMonthName(month)
+  variable month set to month_day.item_0
+  variable day set to month_day.item_1
+  variable dayName set to getWeekdayName(weekday)
+  variable d set to padLwithZero(day)
+  variable monthName set to getMonthName(month)
   return $"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 end function
 
@@ -49,17 +49,17 @@ end test
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
   # get separate values from Unix time
-  constant hour set to (divAsInt(divAsInt(unixSecs, 60), 60) mod 24)
-  constant minute set to divAsInt(unixSecs, 60) mod 60
-  constant second set to (unixSecs mod 60)
+  variable hour set to (divAsInt(divAsInt(unixSecs, 60), 60) mod 24)
+  variable minute set to divAsInt(unixSecs, 60) mod 60
+  variable second set to (unixSecs mod 60)
   # days and years from Unix epoch
-  constant unixDay set to divAsInt(unixSecs, daySecs)
-  constant years set to ((unixDay + 1)/365.24).floor()
+  variable unixDay set to divAsInt(unixSecs, daySecs)
+  variable years set to ((unixDay + 1)/365.24).floor()
   # this year and weekday
-  constant year set to unixYear + years
-  constant weekday set to (unixDay + unixWeekday) mod 7
+  variable year set to unixYear + years
+  variable weekday set to (unixDay + unixWeekday) mod 7
   # day number (1-365 or 1-366) in this year
-  constant day set to dayInYear(year, unixDay)
+  variable day set to dayInYear(year, unixDay)
   return (hour, minute, second, day, year, weekday)
 end function
 
@@ -181,7 +181,7 @@ function pad(d as String, p as String, s as String) returns String
   variable sR set to s
   if p.length() > s.length() then
     if d.upperCase().equals("L") then
-      constant ps set to p + s
+      variable ps set to p + s
       set sR to ps.subString(ps.length() - p.length(), ps.length())
     elif d.upperCase().equals("R") then
       set sR to (s + p).subString(0, p.length())

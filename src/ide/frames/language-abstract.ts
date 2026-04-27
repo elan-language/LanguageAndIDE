@@ -22,7 +22,7 @@ import { TypeSimpleOrGeneric } from "./parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
-import { ConstantStatement } from "./statements/constant-statement";
+import { LetStatement } from "./statements/let-statement";
 import { SetStatement } from "./statements/set-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
@@ -44,7 +44,7 @@ export abstract class LanguageAbstract implements Language {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ConstantGlobal ||
-      frame instanceof ConstantStatement ||
+      frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||

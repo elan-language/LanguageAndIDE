@@ -1,11 +1,11 @@
 # cde9ba5a211f599dc5117f96d0748e5d6ef62f7a6f0c5f583f3755518a2d43bb Elan 2.0.0-alpha1 valid
 
 main
-  constant order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
+  variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
   call print("Dragon of order {order}")
-  constant side set to (75/pow(sqrt(2), order))
-  constant corner set to side/12.0/cos(45)
+  variable side set to (75/pow(sqrt(2), order))
+  variable corner set to side/12.0/cos(45)
   variable turns set to left
   for i in range(1, order + 1)
     set turns to setTurns(turns)
@@ -20,7 +20,7 @@ constant left set to "1"
 constant right set to "0"
 
 procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
-  constant p set to (200.0/order).floor()
+  variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
     set turnI to (if(turn.equals(left), 1, -1))

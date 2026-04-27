@@ -1,4 +1,4 @@
-# 6dbe4ab0b0a32b49cbbbb7f0cd898be780443cbb6c117c65130a2399e6adf21f Elan 2.0.0-alpha1 valid
+# 58f7cc2fda80920e9be135b5ac3995bb9f055c94c2d530c56d297f2e834d5229 Elan 2.0.0-alpha1 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -8,7 +8,7 @@
 main
   variable tm set to new TuringMachine(initState, haltState)
   call addRulesForRomanNumeralsInto(tm)
-  constant dec set to inputIntBetween("Enter a year:", 1, 3999)
+  variable dec set to inputIntBetween("Enter a year:", 1, 3999)
   call tm.setTape(dec.toString())
   variable steps set to 0
   while not tm.isHalted()
@@ -82,7 +82,7 @@ class TuringMachine
   end function
 
   procedure write(newSymbol as String)
-    constant hp set to this.headPosition
+    variable hp set to this.headPosition
     set this.tape to this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length())
   end procedure
 
@@ -125,7 +125,7 @@ class Rule
   end constructor
 
   function toString() returns String
-    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{this.move}"
+    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}"
   end function
 
 end class

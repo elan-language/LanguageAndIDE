@@ -25,6 +25,7 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { languageHelper_mathFunctions } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
@@ -42,11 +43,11 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { ConstantStatement } from "./statements/constant-statement";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { LetStatement } from "./statements/let-statement";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
@@ -56,7 +57,6 @@ import { While } from "./statements/while";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
-import { languageHelper_mathFunctions } from "./language-helpers";
 
 export class LanguagePython extends LanguageAbstract {
   static Instance: Language = new LanguagePython();
@@ -74,7 +74,7 @@ export class LanguagePython extends LanguageAbstract {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ConstantGlobal ||
-      frame instanceof ConstantStatement ||
+      frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
@@ -126,7 +126,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof ConstantStatement) {
+    } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;

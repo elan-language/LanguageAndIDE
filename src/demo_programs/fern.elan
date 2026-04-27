@@ -29,10 +29,10 @@ end main
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
   # next pseudo-random number (Grogono parameters)
   variable r2 set to r.nextRandom()
-  constant rValue set to r2.item_0
+  variable rValue set to r2.item_0
   variable rNext set to r2.item_1
   variable nx_ny set to onestep(x, y, rValue)
-  constant nx set to nx_ny.item_0
+  variable nx set to nx_ny.item_0
   variable ny set to nx_ny.item_1
   variable rect set to (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25)
   return (rect, nx, ny, rNext)
@@ -73,14 +73,14 @@ end test
 
 # two approaches to rounding a tuple to N decimal places
 function roundtuple1(n as (Float, Float)) returns (Float, Float)
-  constant a set to n.item_0
-  constant b set to n.item_1
+  variable a set to n.item_0
+  variable b set to n.item_1
   return (a.round(8), b.round(8))
 end function
 
 function roundtuple2(n as (Float, Float)) returns List<of Float>
-  constant a set to n.item_0
-  constant b set to n.item_1
+  variable a set to n.item_0
+  variable b set to n.item_1
   return [a, b].map(lambda x as Float => x.round(8))
 end function
 

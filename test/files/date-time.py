@@ -5,7 +5,7 @@ def main() -> None:
   while not reply.upperCase().equals("Q"):
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # change variable
     if reply.equals(""):
-      now = divAsInt(clock(), 1000) # constant
+      now = divAsInt(clock(), 1000) # variable definition
       print(now)
       print(getDate(now))
     else:
@@ -17,24 +17,24 @@ def main() -> None:
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
-  hour = dt.item_0 # constant
-  minute = dt.item_1 # constant
-  second = dt.item_2 # constant
-  days = dt.item_3 # constant
-  year = dt.item_4 # constant
-  weekday = dt.item_5 # constant
-  z2 = "00" # constant
-  h = padLwithZero(hour) # constant
-  m = padLwithZero(minute) # constant
-  s = padLwithZero(second) # constant
+  hour = dt.item_0 # variable definition
+  minute = dt.item_1 # variable definition
+  second = dt.item_2 # variable definition
+  days = dt.item_3 # variable definition
+  year = dt.item_4 # variable definition
+  weekday = dt.item_5 # variable definition
+  z2 = "00" # variable definition
+  h = padLwithZero(hour) # variable definition
+  m = padLwithZero(minute) # variable definition
+  s = padLwithZero(second) # variable definition
   startDays = getStartDays() # variable definition
   startDaysL = startDaysList(year, startDays) # variable definition
   month_day = monthDay(startDaysL, (days % startDays[12])) # variable definition
-  month = month_day.item_0 # constant
-  day = month_day.item_1 # constant
-  dayName = getWeekdayName(weekday) # constant
-  d = padLwithZero(day) # constant
-  monthName = getMonthName(month) # constant
+  month = month_day.item_0 # variable definition
+  day = month_day.item_1 # variable definition
+  dayName = getWeekdayName(weekday) # variable definition
+  d = padLwithZero(day) # variable definition
+  monthName = getMonthName(month) # variable definition
   return f"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 
 def test_getDate(self) -> None:
@@ -42,17 +42,17 @@ def test_getDate(self) -> None:
 
 def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # get separate values from Unix time
-  hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24) # constant
-  minute = divAsInt(unixSecs, 60) % 60 # constant
-  second = (unixSecs % 60) # constant
+  hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24) # variable definition
+  minute = divAsInt(unixSecs, 60) % 60 # variable definition
+  second = (unixSecs % 60) # variable definition
   # days and years from Unix epoch
-  unixDay = divAsInt(unixSecs, daySecs) # constant
-  years = ((unixDay + 1)/365.24).floor() # constant
+  unixDay = divAsInt(unixSecs, daySecs) # variable definition
+  years = ((unixDay + 1)/365.24).floor() # variable definition
   # this year and weekday
-  year = unixYear + years # constant
-  weekday = (unixDay + unixWeekday) % 7 # constant
+  year = unixYear + years # variable definition
+  weekday = (unixDay + unixWeekday) % 7 # variable definition
   # day number (1-365 or 1-366) in this year
-  day = dayInYear(year, unixDay) # constant
+  day = dayInYear(year, unixDay) # variable definition
   return (hour, minute, second, day, year, weekday)
 
 def test_dateTime(self) -> None:
@@ -152,7 +152,7 @@ def pad(d: str, p: str, s: str) -> str: # function
   sR = s # variable definition
   if p.length() > s.length():
     if d.upperCase().equals("L"):
-      ps = p + s # constant
+      ps = p + s # variable definition
       sR = ps.subString(ps.length() - p.length(), ps.length()) # change variable
     elif d.upperCase().equals("R"):
       sR = (s + p).subString(0, p.length()) # change variable

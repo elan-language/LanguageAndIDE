@@ -67,7 +67,7 @@ import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comm
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
-import { LocalConstantAsn } from "../../compiler/syntax-nodes/statements/local-constant-asn";
+import { LetStatementAsn } from "../../compiler/syntax-nodes/statements/let-statement-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -171,11 +171,11 @@ import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
-import { ConstantStatement } from "../frames/statements/constant-statement";
 import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
+import { LetStatement } from "../frames/statements/let-statement";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
 import { Throw } from "../frames/statements/throw";
@@ -359,8 +359,8 @@ export function transform(
     return varAsn;
   }
 
-  if (node instanceof ConstantStatement) {
-    const letAsn = new LocalConstantAsn(node.getHtmlId(), scope);
+  if (node instanceof LetStatement) {
+    const letAsn = new LetStatementAsn(node.getHtmlId(), scope);
     letAsn.breakpointStatus = node.breakpointStatus;
 
     letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;

@@ -21,7 +21,7 @@ End Sub
 Function binarySearch(li As List(Of String), item As String) As Boolean
   Dim result = False ' variable definition
   If li.length() > 0 Then
-    Const mid = divAsInt(li.length(), 2)
+    Dim mid = divAsInt(li.length(), 2) ' variable definition
     Dim value = li[mid] ' variable definition
     If item.equals(value) Then
       result = True ' change variable

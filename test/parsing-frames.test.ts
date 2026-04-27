@@ -3,12 +3,10 @@ import assert from "assert";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { FileImpl } from "../src/ide/frames/file-impl";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { ConstantStatement } from "../src/ide/frames/statements/constant-statement";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
@@ -73,25 +71,6 @@ suite("Parsing Frame Tests", async () => {
     );
     const m = new MainFrame(fl);
     const setTo = new SetStatement(m);
-    setTo.parseFrom(source);
-    assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
-  });
-
-  test("parse Frames - constant statement 1", () => {
-    const code = "  constant result set to 3 + 4";
-    const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const m = new GlobalFunction(fl);
-    const setTo = new ConstantStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);

@@ -56,7 +56,7 @@ procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of 
       end if
     end for
   end for
-  constant a set to 0
+  variable a set to 0
   call hodge.set(podge)
   call displayBlocks(hodge.value())
   call sleep_ms(50)
@@ -70,17 +70,17 @@ end function
 function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) returns List<of Int>
   # grid wraps around: all cells have the same number of neighbours
   # H and V neighbours(von Neumann)
-  constant sL set to grid[(i - 1 + gW) mod gW][j]
-  constant sR set to grid[(i + 1 + gW) mod gW][j]
-  constant sA set to grid[i][(j - 1 + gH) mod gH]
-  constant sB set to grid[i][(j + 1 + gH) mod gH]
+  variable sL set to grid[(i - 1 + gW) mod gW][j]
+  variable sR set to grid[(i + 1 + gW) mod gW][j]
+  variable sA set to grid[i][(j - 1 + gH) mod gH]
+  variable sB set to grid[i][(j + 1 + gH) mod gH]
   variable neighbourColours set to [sL, sR, sA, sB]
   if vN is false then
     # add diagonal neighbours (Moore)
-    constant sLA set to grid[(i - 1 + gW) mod gW][(j - 1 + gH) mod gH]
-    constant sRA set to grid[(i + 1 + gW) mod gW][(j - 1 + gH) mod gH]
-    constant sLB set to grid[(i - 1 + gW) mod gW][(j + 1 + gH) mod gH]
-    constant sRB set to grid[(i + 1 + gW) mod gW][(j + 1 + gH) mod gH]
+    variable sLA set to grid[(i - 1 + gW) mod gW][(j - 1 + gH) mod gH]
+    variable sRA set to grid[(i + 1 + gW) mod gW][(j - 1 + gH) mod gH]
+    variable sLB set to grid[(i - 1 + gW) mod gW][(j + 1 + gH) mod gH]
+    variable sRB set to grid[(i + 1 + gW) mod gW][(j + 1 + gH) mod gH]
     set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours
