@@ -639,58 +639,6 @@ end main`;
     ]);
   });
 
-  test("Fail_IdShadowsConstant", async () => {
-    const code = `${testHeader}
-
-main
-  constant a set to 1
-  variable a set to 2
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a constant and cannot be re-defined here.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_ConstantShadowsConstant", async () => {
-    const code = `${testHeader}
-
-main
-  constant a set to 1
-  constant a set to 2
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a constant and cannot be re-defined here.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Pass_ParameterShadowsConst", async () => {
     const code = `${testHeader}
 

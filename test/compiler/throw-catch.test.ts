@@ -564,10 +564,10 @@ main
   try
     throw exception "fail"
   catch ElanRuntimeError in e
-    constant b set to 2
+    variable b set to 2
 
   catch ElanRuntimeError in e
-    constant a set to 1
+    variable a set to 1
   end try
 end main`;
 

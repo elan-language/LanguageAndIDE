@@ -78,25 +78,6 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
 
-  test("parse Frames - constant statement 1", () => {
-    const code = "  constant result set to 3 + 4";
-    const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const m = new GlobalFunction(fl);
-    const setTo = new ConstantStatement(m);
-    setTo.parseFrom(source);
-    assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
-  });
-
   test("parse Frames - assert statement 3", () => {
     const code = "  assert foo is 7";
     const source = new CodeSourceFromString(code + "\n");

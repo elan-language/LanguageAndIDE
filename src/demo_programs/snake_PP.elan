@@ -123,7 +123,7 @@ test test_getAdjacentSquare
 end test
 
 test test_directionByKey
-  constant current set to "up"
+  variable current set to "up"
   assert directionByKey(current, "") is "up"
   assert directionByKey(current, "x") is "up"
   assert directionByKey(current, "w") is "up"

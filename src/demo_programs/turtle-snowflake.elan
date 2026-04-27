@@ -12,7 +12,7 @@ end main
 
 procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
-    constant third set to length/3
+    variable third set to length/3
     call drawSide(third, t)
     call t.turn(-60)
     call drawSide(third, t)

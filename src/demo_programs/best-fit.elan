@@ -1,13 +1,13 @@
 # 6f458fa3fe0b94de77a629fdb75fe1a3cce05b6ac044e0cc9888bd36b1e831d5 Elan 2.0.0-alpha valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
-  constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + pow(p.x, 2))
-  constant sumY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
-  constant sumXY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
-  constant n set to points.length()
-  constant a set to (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
-  constant b set to (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
+  let sumXsq be points.reduce(0.0, lambda s as Float, p as Point => s + pow(p.x, 2))
+  let sumY be points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
+  let sumXY be points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
+  let n be points.length()
+  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
   return (a, b)
 end function
 
@@ -32,10 +32,10 @@ function newPoint(x as Float, y as Float) returns Point
 end function
 
 test test_bestFit
-  variable l1 set to [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
-  variable a_b set to bestFitLine(l1)
-  constant a set to a_b.item_0
-  constant b set to a_b.item_1
+  let l1 be [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
+  let a_b be bestFitLine(l1)
+  let a be a_b.item_0
+  let b be a_b.item_1
   assert a.round(3) is 0.766
   assert b.round(3) is 1.093
 end test

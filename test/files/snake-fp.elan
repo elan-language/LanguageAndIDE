@@ -62,8 +62,8 @@ function gameOver(g as Game) returns Boolean
 end function
 
 function hasHitEdge(g as Game) returns Boolean
-  constant x set to g.head.x
-  constant y set to g.head.y
+  let x be g.head.x
+  let y be g.head.y
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
 end function
 
