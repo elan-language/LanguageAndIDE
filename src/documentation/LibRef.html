@@ -474,7 +474,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
 <p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that Type being specified either explicitly (as in
-<code>&lt;of <code>Int</code>&gt;</code>), or implicitly if the structure is created using a literal definition.</p>
+&lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 
 <table class="tableStructure">
@@ -614,7 +614,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><code>variable array3D set to new List<of List<of List&lt;of Float&gt;&gt;&gt;()</code></li>
+<li><code>variable array3D set to new List<of List<of List</code>&lt;of <code>Float&gt;&gt;&gt;()</code></li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
@@ -708,7 +708,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><code><code>List</code><of <code>String</code>&gt;</code></td>
+  <td><code>List</code><of <code>String</code>&gt;</td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -903,7 +903,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 
 <table class="tablePlain"><!--source="set.elan"-->
 <tr>
-<td><code>variable st set to new HashSet&lt;of Int()</code><br>
+<td><code>variable st set to new HashSet</code>&lt;of <code>Int()</code><br>
   <code>set st  to st.addFromList([3, 5, 7])</code><br>
   <code>call print(st.length())</code><br></td>
 <td><br><br>&#x27f6;</td><td><br><br>3</td>
@@ -1013,7 +1013,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
     <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
-    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code><code>Stack</code>&lt;of <code><code>String</code></code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
+    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code>Stack</code>&lt;of <code>String</code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
     <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a function, or specify it as the <el-instr>return</el-instr> Type.</li>
     <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
@@ -1440,10 +1440,10 @@ end procedure
 So for example the centre of the display is at (50, 37.5).</p>
 <p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
- <li id="CircleVG"> <code>CircleVG</code> for &lt;<code>circle../&gt;</code></li>
- <li id="ImageVG"><code>ImageVG</code> for <code>&lt;image../&gt;</code></li>
- <li id="LineVG"><code>LineVG</code> for <code>&lt;line../&gt;</code></li>
- <li id="RectangleVG"><code>RectangleVG</code> for <code>&lt;rect../&gt;</code></li>
+ <li id="CircleVG"> <code>CircleVG</code> for &lt;circle../&gt;</li>
+ <li id="ImageVG"><code>ImageVG</code> for &lt;image../&gt;</li>
+ <li id="LineVG"><code>LineVG</code> for &lt;line../&gt;</li>
+ <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
 <p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
  is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
@@ -1452,7 +1452,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
-<p>A set of SVG shapes is defined in either a <code>List</code>&lt;<el-instr>of</el-instr> <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-instr>of</el-instr> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
+<p>A set of SVG shapes is defined in either a <code>List</code>&lt;of <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-instr>of</el-instr> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><code>VectorGraphic</code> is the abstract superclass of all <code>..VG</code> shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
@@ -1906,7 +1906,7 @@ end function
   If it is not, the prompt is repeated with the relevant limit displayed</td>
  </tr><tr id="inputStringFromOptions">
   <td><el-method>inputStringFromOptions</el-method></td>
-  <td><code>String</code>, <code>List&lt;of String&gt;</code></td>
+  <td><code>String</code>, <code>List</code>&lt;of <code>String&gt;</code></td>
   <td><code>String</code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
   provided it is one of the options in the list.<br>
