@@ -17,19 +17,21 @@ Sub main()
 End Sub
 
 Function clockTick(g As Game, k As String) As Game
-  Dim g2 = if(k.equals(""), g, g.withKey(k)) ' variable definition
-  Dim g3 = moveSnake(g2) ' variable definition
-  Dim g4 = eatAppleIfPoss(g3) ' variable definition
+  Dim g2 = if(k.equals(""), g, g.withKey(k)) ' let
+  Dim g3 = moveSnake(g2) ' let
+  Dim g4 = eatAppleIfPoss(g3) ' let
   Return if(gameOver(g4), g4.withIsOn(False), g4)
 End Function
 
 Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of List(Of Integer))
-  Dim b2 = graphicsPut(b, g.apple.x, g.apple.y, red) ' variable definition
-  Dim b3 = graphicsPut(b2, g.head.x, g.head.y, green) ' variable definition
-  Dim tail = g.body[0] ' variable definition
-  Dim tailColour = if(tail.equals(g.priorTail), green, white) ' variable definition
+  Dim b2 = graphicsPut(b, g.apple.x, g.apple.y, red) ' let
+  Dim b3 = graphicsPut(b2, g.head.x, g.head.y, green) ' let
+  Dim tail = g.body[0] ' let
+  Dim tailColour = if(tail.equals(g.priorTail), green, white) ' let
   Return graphicsPut(b3, tail.x, tail.y, tailColour)
 End Function
+
+' Temporary solution pending creation of withPut as an extension method to ListOfList
 
 Function graphicsPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
   Return graphics.withSet(x, graphics[x].withSet(y, colour))
@@ -40,17 +42,17 @@ Function score(g As Game) As Integer
 End Function
 
 Function moveSnake(g As Game) As Game
-  Dim k = g.key ' variable definition
-  Dim x = g.head.x ' variable definition
-  Dim y = g.head.y ' variable definition
-  Dim newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) ' variable definition
-  Dim newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) ' variable definition
+  Dim k = g.key ' let
+  Dim x = g.head.x ' let
+  Dim y = g.head.y ' let
+  Dim newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) ' let
+  Dim newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) ' let
   Return g.withBody(g.body.withAppend(g.head)).withHead(New Square(newX, newY))
 End Function
 
 Function eatAppleIfPoss(g As Game) As Game
-  Dim tail = g.body[0] ' variable definition
-  Dim moveTail = g.body.subList(1, g.body.length()) ' variable definition
+  Dim tail = g.body[0] ' let
+  Dim moveTail = g.body.subList(1, g.body.length()) ' let
   Return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 End Function
 
@@ -63,8 +65,8 @@ Function gameOver(g As Game) As Boolean
 End Function
 
 Function hasHitEdge(g As Game) As Boolean
-  Const x = g.head.x
-  Const y = g.head.y
+  Dim x = g.head.x ' let
+  Dim y = g.head.y ' let
   Return (x = -1) Or (y = -1) Or (x = 40) Or (y = 30)
 End Function
 
@@ -90,14 +92,14 @@ Class Game
     Return ""
   End Function
   Function withNewApple() As Game
-    Dim x_rnd2 = Me.rnd.nextInt(0, 39) ' variable definition
-    Dim x = x_rnd2.item_0 ' variable definition
-    Dim rnd2 = x_rnd2.item_1 ' variable definition
-    Dim y_rnd3 = rnd2.nextInt(0, 29) ' variable definition
-    Dim y = y_rnd3.item_0 ' variable definition
-    Dim rnd3 = y_rnd3.item_1 ' variable definition
-    Dim apple2 = New Square(x, y) ' variable definition
-    Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' variable definition
+    Dim x_rnd2 = Me.rnd.nextInt(0, 39) ' let
+    Dim x = x_rnd2.item_0 ' let
+    Dim rnd2 = x_rnd2.item_1 ' let
+    Dim y_rnd3 = rnd2.nextInt(0, 29) ' let
+    Dim y = y_rnd3.item_0 ' let
+    Dim rnd3 = y_rnd3.item_1 ' let
+    Dim apple2 = New Square(x, y) ' let
+    Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' let
     Return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
   Function withHead(value As Square) As Game
@@ -161,140 +163,140 @@ Class Square
 End Class
 
 <TestMethod> Sub test_clockTick()
-  Dim g1 = New Game(New Random()) ' variable definition
-  Dim g2 = g1.withNewApple() ' variable definition
-  Dim g3 = clockTick(g2, "s") ' variable definition
+  Dim g1 = New Game(New Random()) ' let
+  Dim g2 = g1.withNewApple() ' let
+  Dim g3 = clockTick(g2, "s") ' let
   Assert.AreEqual(New Square(22, 16), g3.head)
   Assert.AreEqual(2, g3.body.length())
   Assert.AreEqual(g2.body[0], g3.priorTail)
   Assert.AreEqual(True, g3.isOn)
-  Dim g4 = g3.withApple(New Square(22, 17)) ' variable definition
-  Dim g5 = clockTick(g4, "s") ' variable definition
+  Dim g4 = g3.withApple(New Square(22, 17)) ' let
+  Dim g5 = clockTick(g4, "s") ' let
   Assert.AreEqual(3, g5.body.length())
   Assert.AreEqual(g4.priorTail, g5.priorTail)
   Assert.AreEqual(True, g5.isOn)
-  Dim g6 = g5.withHead(New Square(22, 29)) ' variable definition
-  Dim g7 = clockTick(g6, "s") ' variable definition
+  Dim g6 = g5.withHead(New Square(22, 29)) ' let
+  Dim g7 = clockTick(g6, "s") ' let
   Assert.AreEqual(False, g7.isOn)
 End Sub
 
 <TestMethod> Sub test_updateGraphics()
-  Dim blocks = createBlockGraphics(white) ' variable definition
-  Dim g1 = New Game(New Random()) ' variable definition
-  blocks = updateGraphics(g1, blocks) ' change variable
-  Assert.AreEqual(red, blocks[12][15])
-  Assert.AreEqual(green, blocks[22][15])
-  Assert.AreEqual(white, blocks[21][15])
-  Dim g3 = clockTick(g1, "d") ' variable definition
-  blocks = updateGraphics(g3, blocks) ' change variable
-  Assert.AreEqual(red, blocks[12][15])
-  Assert.AreEqual(green, blocks[22][15])
-  Assert.AreEqual(green, blocks[23][15])
+  Dim blocks = createBlockGraphics(white) ' let
+  Dim g1 = New Game(New Random()) ' let
+  Dim blocks2 = updateGraphics(g1, blocks) ' let
+  Assert.AreEqual(red, blocks2[12][15])
+  Assert.AreEqual(green, blocks2[22][15])
+  Assert.AreEqual(white, blocks2[21][15])
+  Dim g3 = clockTick(g1, "d") ' let
+  Dim blocks3 = updateGraphics(g3, blocks2) ' let
+  Assert.AreEqual(red, blocks3[12][15])
+  Assert.AreEqual(green, blocks3[22][15])
+  Assert.AreEqual(green, blocks3[23][15])
 End Sub
 
 <TestMethod> Sub test_testnewApple()
-  Dim g1 = New Game(New Random()) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(New Square(12, 15), g1.apple)
-  Dim g2 = g1.withNewApple() ' variable definition
+  Dim g2 = g1.withNewApple() ' let
   Assert.AreEqual(New Square(12, 15), g2.apple)
-  Dim g3 = g2.withNewApple() ' variable definition
+  Dim g3 = g2.withNewApple() ' let
   Assert.AreEqual(New Square(10, 12), g3.apple)
   ' test that apple is never over snake
-  Dim g4 = (New Game(New Random())) ' variable definition
-  Dim g5 = g4.withBody({New Square(10, 12)}) ' variable definition
-  Dim g6 = g5.withNewApple() ' variable definition
+  Dim g4 = (New Game(New Random())) ' let
+  Dim g5 = g4.withBody({New Square(10, 12)}) ' let
+  Dim g6 = g5.withNewApple() ' let
   Assert.AreEqual(New Square(12, 15), g4.apple)
 End Sub
 
 <TestMethod> Sub test_score()
-  Dim g1 = New Game(New Random()) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(0, score(g1))
-  Dim g2 = g1.withBody({New Square(4, 4), New Square(5, 4)}) ' variable definition
+  Dim g2 = g1.withBody({New Square(4, 4), New Square(5, 4)}) ' let
   Assert.AreEqual(0, score(g2))
-  Dim g3 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4)}) ' variable definition
+  Dim g3 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4)}) ' let
   Assert.AreEqual(1, score(g3))
-  Dim g4 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4), New Square(5, 5)}) ' variable definition
+  Dim g4 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4), New Square(5, 5)}) ' let
   Assert.AreEqual(2, score(g4))
 End Sub
 
 <TestMethod> Sub test_moveSnake()
-  Dim g1 = New Game(New Random()) ' variable definition
-  Dim g2 = g1.withKey("a") ' variable definition
-  Dim g3 = moveSnake(g2) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
+  Dim g2 = g1.withKey("a") ' let
+  Dim g3 = moveSnake(g2) ' let
   Assert.AreEqual(New Square(21, 15), g3.head)
-  Dim g4 = g1.withKey("d") ' variable definition
-  Dim g5 = moveSnake(g4) ' variable definition
+  Dim g4 = g1.withKey("d") ' let
+  Dim g5 = moveSnake(g4) ' let
   Assert.AreEqual(New Square(23, 15), g5.head)
-  Dim g6 = g1.withKey("w") ' variable definition
-  Dim g7 = moveSnake(g6) ' variable definition
+  Dim g6 = g1.withKey("w") ' let
+  Dim g7 = moveSnake(g6) ' let
   Assert.AreEqual(New Square(22, 14), g7.head)
-  Dim g8 = g1.withKey("s") ' variable definition
-  Dim g9 = moveSnake(g8) ' variable definition
+  Dim g8 = g1.withKey("s") ' let
+  Dim g9 = moveSnake(g8) ' let
   Assert.AreEqual(New Square(22, 16), g9.head)
 End Sub
 
 <TestMethod> Sub test_eatAppleIfPoss()
-  Dim g1 = New Game(New Random()) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(2, g1.body.length())
   ' negative case
-  Dim g2 = g1.withApple(New Square(23, 15)) ' variable definition
-  Dim g3 = eatAppleIfPoss(g2) ' variable definition
+  Dim g2 = g1.withApple(New Square(23, 15)) ' let
+  Dim g3 = eatAppleIfPoss(g2) ' let
   Assert.AreEqual(1, g3.body.length())
   Assert.AreEqual(g2.apple, g3.apple)
   Assert.AreEqual(g2.body[0], g3.priorTail)
   ' positive case
-  Dim g4 = g2.withHead(New Square(23, 15)) ' variable definition
-  Dim g5 = eatAppleIfPoss(g4) ' variable definition
+  Dim g4 = g2.withHead(New Square(23, 15)) ' let
+  Dim g5 = eatAppleIfPoss(g4) ' let
   Assert.AreEqual(2, g5.body.length())
   Assert.AreEqual(New Square(12, 15), g5.apple)
   Assert.AreEqual(g1.priorTail, g5.priorTail)
 End Sub
 
 <TestMethod> Sub test_overApple()
-  Dim g1 = New Game(New Random()) ' variable definition
-  Dim g2 = g1.withApple(New Square(23, 15)) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
+  Dim g2 = g1.withApple(New Square(23, 15)) ' let
   Assert.AreEqual(False, headOverApple(g2))
-  Dim g3 = g2.withHead(New Square(23, 15)) ' variable definition
+  Dim g3 = g2.withHead(New Square(23, 15)) ' let
   Assert.AreEqual(True, headOverApple(g3))
 End Sub
 
 <TestMethod> Sub test_gameOver()
-  Dim g1 = New Game((New Random())) ' variable definition
+  Dim g1 = New Game((New Random())) ' let
   Assert.AreEqual(False, gameOver(g1))
-  Dim g2 = g1.withHead(New Square(0, 0)) ' variable definition
+  Dim g2 = g1.withHead(New Square(0, 0)) ' let
   Assert.AreEqual(False, gameOver(g2))
-  Dim g3 = g1.withHead(New Square(40, 15)) ' variable definition
+  Dim g3 = g1.withHead(New Square(40, 15)) ' let
   Assert.AreEqual(True, gameOver(g3))
-  Dim g4 = g1.withHead(New Square(21, 15)) ' variable definition
+  Dim g4 = g1.withHead(New Square(21, 15)) ' let
   Assert.AreEqual(True, gameOver(g4))
 End Sub
 
 <TestMethod> Sub test_headIsAtEdge()
-  Dim g1 = New Game(New Random()) ' variable definition
+  Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(False, hasHitEdge(g1))
-  Dim g2 = g1.withHead(New Square(40, 15)) ' variable definition
+  Dim g2 = g1.withHead(New Square(40, 15)) ' let
   Assert.AreEqual(True, hasHitEdge(g2))
-  Dim g3 = g1.withHead(New Square(-1, 15)) ' variable definition
+  Dim g3 = g1.withHead(New Square(-1, 15)) ' let
   Assert.AreEqual(True, hasHitEdge(g3))
-  Dim g4 = g1.withHead(New Square(20, 30)) ' variable definition
+  Dim g4 = g1.withHead(New Square(20, 30)) ' let
   Assert.AreEqual(True, hasHitEdge(g4))
-  Dim g5 = g1.withHead(New Square(20, -1)) ' variable definition
+  Dim g5 = g1.withHead(New Square(20, -1)) ' let
   Assert.AreEqual(True, hasHitEdge(g5))
 End Sub
 
 <TestMethod> Sub test_newSquare()
-  Dim sq = New Square(3, 4) ' variable definition
+  Dim sq = New Square(3, 4) ' let
   Assert.AreEqual(3, sq.x)
   Assert.AreEqual(4, sq.y)
 End Sub
 
 <TestMethod> Sub test_newGame()
-  Dim rnd = New Random() ' variable definition
-  Dim game = New Game(rnd) ' variable definition
-  Dim totest = game.rnd.equals(rnd) ' variable definition
+  Dim rnd = New Random() ' let
+  Dim game = New Game(rnd) ' let
+  Dim totest = game.rnd.equals(rnd) ' let
   Assert.AreEqual(True, totest)
   Assert.AreEqual(New Square(22, 15), game.head)
-  Dim body = game.body ' variable definition
+  Dim body = game.body ' let
   Assert.AreEqual(2, body.length())
   Assert.AreEqual(New Square(20, 15), body[0])
   Assert.AreEqual(New Square(21, 15), body[1])
