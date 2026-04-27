@@ -1,7 +1,5 @@
 # Python with Elan 2.0.0-alpha1
 
-import enum
-
 # Turing Machine that converts a Year from decimal to roman numerals
 
 # Run the program, enter the number to convert and watch the machine in action.
@@ -16,7 +14,7 @@ def main() -> None:
   tm = TuringMachine(initState, haltState) # variable definition
   addRulesForRomanNumeralsInto(tm) # call procedure
   dec = inputIntBetween("Enter a year:", 1, 3999) # constant
-  tm.setTape(str(dec)) # call procedure
+  tm.setTape(dec.toString()) # call procedure
   steps = 0 # variable definition
   while not tm.isHalted():
     rule = tm.findMatchingRule() # variable definition
@@ -27,9 +25,9 @@ def main() -> None:
     printTab(tm.headPosition - 1, "^") # call procedure
     print(f"Step: {steps}")
     print(f"State: {tm.currentState}")
-    print(f"Rule applied: {str(rule)}")
+    print(f"Rule applied: {rule.toString()}")
     sleep_ms(40) # call procedure
-  print(f"The roman numeral equivalent for {dec} is {tm.tape.strip()}")
+  print(f"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
 
 initState = "init" # constant
 
@@ -55,26 +53,26 @@ class TuringMachine
   def setTape(self: TuringMachine, tape: str) -> None: # procedure
     self.tape = tape # change variable
   def append(self: TuringMachine, rule: Rule) -> None: # procedure
-    self.rules = (self.rules + [(rule)]) # change variable
+    self.rules = self.rules.withAppend(rule) # change variable
   def singleStep(self: TuringMachine) -> None: # procedure
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
   def isHalted(self: TuringMachine) -> bool: # function
-    return self.currentState == (self.haltState)
+    return self.currentState.equals(self.haltState)
   def findMatchingRule(self: TuringMachine) -> Rule: # function
-    matches = self.rules.filter(lambda r: Rule => (r.currentState == (self.currentState)) and (r.currentSymbol == (self.tape[self.headPosition]))) # variable definition
-    if len(matches) == 0:
+    matches = self.rules.filter(lambda r: Rule => (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
+    if matches.length() == 0:
       raise ElanRuntimeError("f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}"")
     return matches.head()
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure
     hp = self.headPosition # constant
-    self.tape = self.tape[0:hp] + newSymbol + self.tape[hp + 1:len(self.tape)] # change variable
+    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # change variable
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure
     self.currentState = rule.nextState # change variable
     self.write(rule.writeSymbol) # call procedure
     if rule.move == Dir.right:
       self.headPosition = self.headPosition + 1 # change variable
-      if self.headPosition >= len(self.tape):
+      if self.headPosition >= self.tape.length():
         self.tape = self.tape + " " # change variable
     else:
       self.headPosition = self.headPosition - 1 # change variable

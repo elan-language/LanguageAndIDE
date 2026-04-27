@@ -15,39 +15,39 @@ def main() -> None:
   print(f"Game Over! Score: {score(game)}")
 
 def clockTick(g: Game, k: str) -> Game: # function
-  g2 = (g if k == ("") else g.withKey(k)) # variable definition
+  g2 = if(k.equals(""), g, g.withKey(k)) # variable definition
   g3 = moveSnake(g2) # variable definition
   g4 = eatAppleIfPoss(g3) # variable definition
-  return (g4.withIsOn(False) if gameOver(g4) else g4)
+  return if(gameOver(g4), g4.withIsOn(False), g4)
 
 def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # variable definition
   b3 = graphicsPut(b2, g.head.x, g.head.y, green) # variable definition
   tail = g.body[0] # variable definition
-  tailColour = (green if tail == (g.priorTail) else white) # variable definition
+  tailColour = if(tail.equals(g.priorTail), green, white) # variable definition
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 
 def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
   return graphics.withSet(x, graphics[x].withSet(y, colour))
 
 def score(g: Game) -> int: # function
-  return len(g.body) - 2
+  return g.body.length() - 2
 
 def moveSnake(g: Game) -> Game: # function
   k = g.key # variable definition
   x = g.head.x # variable definition
   y = g.head.y # variable definition
-  newX = (x - 1 if k == ("a") else (x + 1 if k == ("d") else x)) # variable definition
-  newY = (y - 1 if k == ("w") else (y + 1 if k == ("s") else y)) # variable definition
-  return g.withBody((g.body + [(g.head)])).withHead(Square(newX, newY))
+  newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) # variable definition
+  newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) # variable definition
+  return g.withBody(g.body.withAppend(g.head)).withHead(Square(newX, newY))
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # variable definition
-  moveTail = g.body.subList(1, len(g.body)) # variable definition
-  return (g.withNewApple() if headOverApple(g) else g.withPriorTail(tail).withBody(moveTail))
+  moveTail = g.body.subList(1, g.body.length()) # variable definition
+  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 
 def headOverApple(g: Game) -> bool: # function
-  return g.head == (g.apple)
+  return g.head.equals(g.apple)
 
 def gameOver(g: Game) -> bool: # function
   return g.body.contains(g.head) or hasHitEdge(g)
@@ -78,14 +78,14 @@ class Game
     return ""
   def withNewApple(self: Game) -> Game: # function
     x_rnd2 = self.rnd.nextInt(0, 39) # variable definition
-    x = x_rnd2[0] # variable definition
-    rnd2 = x_rnd2[1] # variable definition
+    x = x_rnd2.item_0 # variable definition
+    rnd2 = x_rnd2.item_1 # variable definition
     y_rnd3 = rnd2.nextInt(0, 29) # variable definition
-    y = y_rnd3[0] # variable definition
-    rnd3 = y_rnd3[1] # variable definition
+    y = y_rnd3.item_0 # variable definition
+    rnd3 = y_rnd3.item_1 # variable definition
     apple2 = Square(x, y) # variable definition
     g2 = self.withApple(apple2).withRnd(rnd3) # variable definition
-    return (g2.withNewApple() if g2.body.contains(apple2) else g2)
+    return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # variable definition
     copyOfThis.head = value # change variable
@@ -256,7 +256,7 @@ def test_newSquare(self) -> None:
 def test_newGame(self) -> None:
   rnd = Random() # variable definition
   game = Game(rnd) # variable definition
-  totest = game.rnd == (rnd) # variable definition
+  totest = game.rnd.equals(rnd) # variable definition
   self.assertEqual(totest, True)
   self.assertEqual(game.head, Square(22, 15))
   body = game.body # variable definition
