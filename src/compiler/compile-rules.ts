@@ -2,8 +2,6 @@ import { AstNode } from "../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
-import { ElanCompilerError } from "./elan-compiler-error";
-
 import {
   CannotCallAFunction,
   CannotCallAsAMethod,
@@ -49,10 +47,12 @@ import {
   UndefinedSymbolCompileError,
 } from "./compile-error";
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
+import { ElanCompilerError } from "./elan-compiler-error";
 import { ReservedWords } from "./reserved-words";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
+import { EnumType } from "./symbols/enum-type";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
@@ -95,9 +95,9 @@ import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
+import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { EnumType } from "./symbols/enum-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -1154,7 +1154,7 @@ export function mustBeUniqueValueInScope(
 }
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LocalConstantAsn) {
+  if (symbol instanceof LocalConstantAsn || symbol instanceof LetStatementAsn) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }

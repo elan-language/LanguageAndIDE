@@ -16,6 +16,7 @@ import {
   functionKeyword,
   ifKeyword,
   interfaceKeyword,
+  letKeyword,
   mainKeyword,
   procedureKeyword,
   propertyKeyword,
@@ -87,6 +88,7 @@ export class Profile {
     whileKeyword,
     forKeyword,
     callKeyword,
+    letKeyword
   ]);
   private statements1_2 = [assertKeyword].concat(this.statements1_1); // to put assert at front, (shown only when within a test)
   private statements1_3 = this.statements1_2;

@@ -24,6 +24,7 @@ export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
+export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
 export const modKeyword = "mod";
@@ -89,6 +90,7 @@ const elanKeywords: string[] = [
   isKeyword,
   isntKeyword,
   lambdaKeyword,
+  letKeyword,
   libraryKeyword,
   mainKeyword,
   modKeyword,
