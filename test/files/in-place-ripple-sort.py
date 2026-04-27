@@ -8,7 +8,7 @@ def main() -> None:
 
 def inPlaceRippleSort(li: list[int]) -> None: # procedure
   hasChanged = True # variable definition
-  lastComp = len(li) - 2 # variable definition
+  lastComp = li.length() - 2 # variable definition
   while hasChanged == True:
     hasChanged = False # change variable
     for i in range(0, lastComp + 1):

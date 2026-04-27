@@ -29,11 +29,11 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
   for xp in range(0, width + 1):
     for yp in range(0, height + 1):
       # scale and centre
-      n = onepoint(((((xp - width)/(2)))/(p.scale - p.xoff)), ((((yp - height)/(2)))/(p.scale - p.yoff)), nmax, p) # variable definition
+      n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) # constant
       # colour depends on how many iterations were done for that point
-      col = (0xffffff if n == nmax else ((n*0x010201) % 0xffffff)) # variable definition
-      rect = (RectangleVG()).withX(((xp)/(2))).withY(((yp)/(2))).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
-      vg2 = (vg2 + [(rect)]) # change variable
+      col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
+      rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
+      vg2 = vg2.withAppend(rect) # change variable
   return vg2
 
 def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
@@ -78,26 +78,26 @@ class Coords
     while not changed:
       k = getKey() # variable definition
       # loop because more than one key may have been pressed
-      while not k == (""):
-        if k == ("z"):
+      while not k.equals(""):
+        if k.equals("z"):
           self.scale = self.scale*1.2 # change variable
-        elif k == ("x"):
+        elif k.equals("x"):
           self.scale = self.scale/1.2 # change variable
-        elif k == ("ArrowUp"):
+        elif k.equals("ArrowUp"):
           self.yoff = self.yoff + panstep # change variable
-        elif k == ("ArrowDown"):
+        elif k.equals("ArrowDown"):
           self.yoff = self.yoff - panstep # change variable
-        elif k == ("ArrowLeft"):
+        elif k.equals("ArrowLeft"):
           self.xoff = self.xoff + panstep # change variable
-        elif k == ("ArrowRight"):
+        elif k.equals("ArrowRight"):
           self.xoff = self.xoff - panstep # change variable
-        elif k == ("g"):
+        elif k.equals("g"):
           self.jx = self.jx + jstep # change variable
-        elif k == ("j"):
+        elif k.equals("j"):
           self.jx = self.jx - jstep # change variable
-        elif k == ("y"):
+        elif k.equals("y"):
           self.jy = self.jy + jstep # change variable
-        elif k == ("h"):
+        elif k.equals("h"):
           self.jy = self.jy - jstep # change variable
           # for autocomplete in the RHS expression, don't type "property"
         else:

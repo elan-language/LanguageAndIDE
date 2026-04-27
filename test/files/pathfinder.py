@@ -1,8 +1,5 @@
 # Python with Elan 2.0.0-alpha1
 
-import enum
-import math
-
 def main() -> None:
   start = Point(5, 5) # variable definition
   destination = Point(34, 24) # variable definition
@@ -28,13 +25,13 @@ def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list
     gr2 = addVisited(gr2, solver.getLastVisited()) # change variable
     displayBlocks(gr2) # call procedure
     sleep_ms(0) # call procedure
-  if solver.getLastVisited() == (destination):
+  if solver.getLastVisited().equals(destination):
     rl = solver.getRouteAndLength() # variable definition
-    route = rl[0] # variable definition
-    length = rl[1] # variable definition
+    route = rl.item_0 # variable definition
+    length = rl.item_1 # variable definition
     gr2 = addRoute(gr2, route) # change variable
     displayBlocks(gr2) # call procedure
-    printNoLine(f"Length of route: {round(length, 2)} ") # call procedure
+    printNoLine(f"Length of route: {length.round(2)} ") # call procedure
   else:
     printNoLine("No path found. ") # call procedure
 
@@ -42,11 +39,11 @@ def createRocksAndNodes(percentRocks: int, rocks: list[Point], nodes: list[Node]
   for x in range(0, 40):
     for y in range(1, 30):
       p = Point(x, y) # variable definition
-      if p == (start):
+      if p.equals(start):
         nodes.append(Node(p, 0, p.minDistTo(dest))) # call procedure
-      elif p == (dest):
+      elif p.equals(dest):
         nodes.append(Node(p, infinity, 0)) # call procedure
-      elif random() < ((percentRocks)/(100)):
+      elif random() < divAsFloat(percentRocks, 100):
         rocks.append(p) # call procedure
       else:
         nodes.append(Node(p, infinity, p.minDistTo(dest))) # call procedure
@@ -70,7 +67,7 @@ def addRoute(gr: list[list[int]], route: list[Point]) -> list[list[int]]: # func
   for p in route:
     graphics = withPut(graphics, p.x, p.y, orange) # change variable
   start = route[0] # variable definition
-  dest = route[len(route) - 1] # variable definition
+  dest = route[route.length() - 1] # variable definition
   graphics = withPut(graphics, start.x, start.y, green) # change variable
   graphics = withPut(graphics, dest.x, dest.y, red) # change variable
   return graphics
@@ -102,7 +99,7 @@ class Solver
   def visitNextPoint(self: Solver) -> None: # procedure
     self.updateNeighbours() # call procedure
     self.current = self.nextNodeToVisit() # change variable
-    if (self.current.isEmpty or (self.current.point == (self.destination))):
+    if (self.current.isEmpty or (self.current.point.equals(self.destination))):
       self.running = False # change variable
     else:
       current = self.current # variable definition
@@ -123,11 +120,11 @@ class Solver
       node = self.getNodeFor(p) # variable definition
       point = node.point # variable definition
       if not point.isEmpty:
-        neighbours = (neighbours + [(node)]) # change variable
+        neighbours = neighbours.withAppend(node) # change variable
     return neighbours
   def getNodeFor(self: Solver, p: Point) -> Node: # function
-    matches = self.nodes.filter(lambda n: Node => n.point == (p)) # variable definition
-    return (matches.head() if len(matches) == 1 else emptyNode())
+    matches = self.nodes.filter(lambda n: Node => n.point.equals(p)) # variable definition
+    return if(matches.length() == 1, matches.head(), emptyNode())
   def getLastVisited(self: Solver) -> Point: # function
     return self.current.point
   def nextNodeToVisit(self: Solver) -> Node: # function
@@ -155,7 +152,7 @@ class Solver
     route = [self.destination] # variable definition
     length = 0.0 # variable definition
     node = self.getNodeFor(self.destination) # variable definition
-    while not node.point == (self.start):
+    while not node.point.equals(self.start):
       previous = node.via # variable definition
       p = node.point # variable definition
       length = length + p.minDistTo(previous) # change variable
@@ -190,7 +187,7 @@ class Node
   def setVia(self: Node, p: Point) -> None: # procedure
     self.via = p # change variable
   def toString(self: Node) -> str: # function
-    return f"[{str(self.point)} {self.visited} {self.distFromStart}]"
+    return f"[{self.point.toString()} {self.visited} {self.distFromStart}]"
 
 
 def emptyPoint() -> Point: # function
@@ -208,9 +205,9 @@ class Point
       self.x = x # change variable
       self.y = y # change variable
   def minDistTo(self: Point, p: Point) -> float: # function
-    return math.sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
+    return sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
   def isAdjacentTo(self: Point, p: Point) -> bool: # function
-    return (self.minDistTo(p) == 1) or (round(self.minDistTo(p), 4) == round(math.sqrt(2), 4))
+    return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == sqrt(2).round(4))
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]

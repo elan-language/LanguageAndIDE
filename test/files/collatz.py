@@ -15,7 +15,7 @@ def main() -> None:
     while x > 1:
       # Collatz sequence
       if (x % 2) == 0:
-        x = divAsInt(x, 2) # set
+        x = divAsInt(x, 2) # change variable
       else:
         x = x*3 + 1 # set
       if x > max:
@@ -24,7 +24,7 @@ def main() -> None:
       # draw what we have got so far, scaled to the canvas
       vg = list[VectorGraphic]() # variable definition
       for i in range(0, p.length() - 1):
-        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # set
+        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # change variable
       displayVectorGraphics(vg) # call procedure
       print(x) # call procedure
       sleep_ms(100) # call procedure

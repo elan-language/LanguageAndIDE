@@ -34,34 +34,34 @@ class Snake
     self.priorTail = self.body[0] # set
     body = self.body # variable definition
     body.append(self.head) # call procedure
-    self.head = self.head.getAdjacentSquare(self.currentDir) # set
+    self.head = self.head.getAdjacentSquare(self.currentDir) # change variable
     if self.head.equals(apple.location):
       apple.newRandomPosition(self) # call procedure
     else:
-      self.body = self.body.subList(1, self.body.length()) # set
+      self.body = self.body.subList(1, self.body.length()) # change variable
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure
-    blocks[self.head.x][self.head.y] = green # set
+    blocks[self.head.x][self.head.y] = green # change variable
     if not self.body[0].equals(self.priorTail):
-      blocks[self.priorTail.x][self.priorTail.y] = white # set
+      blocks[self.priorTail.x][self.priorTail.y] = white # change variable
   def score(self: Snake) -> int: # function
     return self.body.length() - 1
   def bodyCovers(self: Snake, sq: Square) -> bool: # function
     result = False # variable definition
     for seg in self.body:
       if (seg.equals(sq)):
-        result = True # set
+        result = True # change variable
     return result
   def gameOver(self: Snake) -> bool: # function
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
   def setDirection(self: Snake, key: str) -> None: # private procedure
     if key.equals("w"):
-      self.currentDir = Direction.up # set
+      self.currentDir = Direction.up # change variable
     elif key.equals("s"):
-      self.currentDir = Direction.down # set
+      self.currentDir = Direction.down # change variable
     elif key.equals("a"):
-      self.currentDir = Direction.left # set
+      self.currentDir = Direction.left # change variable
     elif key.equals("d"):
-      self.currentDir = Direction.right # set
+      self.currentDir = Direction.right # change variable
 
 
 class Apple

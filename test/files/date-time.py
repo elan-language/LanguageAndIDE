@@ -1,17 +1,11 @@
 # Python with Elan 2.0.0-alpha1
 
-import math
-
-import time
-def clock():
-  return int(time.time()*1000)
-
 def main() -> None:
   reply = "" # variable definition
-  while not reply.upper() == ("Q"):
+  while not reply.upperCase().equals("Q"):
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # change variable
-    if reply == (""):
-      now = math.floor((clock())/(1000)) # variable definition
+    if reply.equals(""):
+      now = divAsInt(clock(), 1000) # variable definition
       print(now)
       print(getDate(now))
     else:
@@ -23,12 +17,12 @@ def main() -> None:
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
-  hour = dt[0] # variable definition
-  minute = dt[1] # variable definition
-  second = dt[2] # variable definition
-  days = dt[3] # variable definition
-  year = dt[4] # variable definition
-  weekday = dt[5] # variable definition
+  hour = dt.item_0 # variable definition
+  minute = dt.item_1 # variable definition
+  second = dt.item_2 # variable definition
+  days = dt.item_3 # variable definition
+  year = dt.item_4 # variable definition
+  weekday = dt.item_5 # variable definition
   z2 = "00" # variable definition
   h = padLwithZero(hour) # variable definition
   m = padLwithZero(minute) # variable definition
@@ -36,8 +30,8 @@ def getDate(unixSecs: int) -> str: # function
   startDays = getStartDays() # variable definition
   startDaysL = startDaysList(year, startDays) # variable definition
   month_day = monthDay(startDaysL, (days % startDays[12])) # variable definition
-  month = month_day[0] # variable definition
-  day = month_day[1] # variable definition
+  month = month_day.item_0 # variable definition
+  day = month_day.item_1 # variable definition
   dayName = getWeekdayName(weekday) # variable definition
   d = padLwithZero(day) # variable definition
   monthName = getMonthName(month) # variable definition
@@ -48,12 +42,12 @@ def test_getDate(self) -> None:
 
 def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # get separate values from Unix time
-  hour = (math.floor((math.floor((unixSecs)/(60)))/(60)) % 24) # variable definition
-  minute = math.floor((unixSecs)/(60)) % 60 # variable definition
+  hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24) # variable definition
+  minute = divAsInt(unixSecs, 60) % 60 # variable definition
   second = (unixSecs % 60) # variable definition
   # days and years from Unix epoch
-  unixDay = math.floor((unixSecs)/(daySecs)) # variable definition
-  years = math.floor(((unixDay + 1)/365.24)) # variable definition
+  unixDay = divAsInt(unixSecs, daySecs) # variable definition
+  years = ((unixDay + 1)/365.24).floor() # variable definition
   # this year and weekday
   year = unixYear + years # variable definition
   weekday = (unixDay + unixWeekday) % 7 # variable definition
@@ -83,7 +77,7 @@ def leap(year: int) -> bool: # function
   leapYear = False # variable definition
   if (year % 4) == 0:
     leapYear = True # change variable
-    if ((year % 100) == 0) and ((math.floor((year)/(100)) % 4) != 0):
+    if ((year % 100) == 0) and ((divAsInt(year, 100) % 4) != 0):
       leapYear = False # change variable
   return leapYear
 
@@ -144,7 +138,7 @@ def getStartDays() -> list[int]: # function
   return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
 
 def padLwithZero(i: int) -> str: # function
-  return pad("L", "00", str(i))
+  return pad("L", "00", i.toString())
 
 def test_padLwithZero(self) -> None:
   self.assertEqual(padLwithZero(1), "01")
@@ -156,12 +150,12 @@ def pad(d: str, p: str, s: str) -> str: # function
   # p: output string pattern of pad characters and of length
   # s: input string
   sR = s # variable definition
-  if len(p) > len(s):
-    if d.upper() == ("L"):
+  if p.length() > s.length():
+    if d.upperCase().equals("L"):
       ps = p + s # variable definition
-      sR = ps[len(ps) - len(p):len(ps)] # change variable
-    elif d.upper() == ("R"):
-      sR = (s + p)[0:len(p)] # change variable
+      sR = ps.subString(ps.length() - p.length(), ps.length()) # change variable
+    elif d.upperCase().equals("R"):
+      sR = (s + p).subString(0, p.length()) # change variable
   return sR
 
 main()

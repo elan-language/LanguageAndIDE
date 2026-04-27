@@ -205,6 +205,9 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   renderFileImportsAsHtml(): string {
+    // Change of plan, disable all imports for the moment too
+    return "";
+
     // no HTML needed here as it is actually only used for export
     let result = "";
     result += this.importEnum ? "import enum\n" : "";
@@ -224,6 +227,9 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   translateExpression(expr: string): string {
+    // Change of plan, disable all the expression translation for the moment
+    return expr;
+
     // add "math." to math library functions
     const regexp = new RegExp(
       `(<el-method>)(${languageHelper_mathFunctions.join("|")})(</el-method>)`,
