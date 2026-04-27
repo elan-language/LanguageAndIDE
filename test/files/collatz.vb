@@ -7,7 +7,7 @@
 Sub main()
   Dim x = 1 ' variable definition
   While x > 0
-    x = inputInt("Enter a starting number (0 to quit)") ' set
+    x = inputInt("Enter a starting number (0 to quit)") ' change variable
     ' Array of the values we have seen so far
     Dim p = {x} ' variable definition
     ' capture the max value so we can scale the graph
@@ -15,25 +15,25 @@ Sub main()
     While x > 1
       ' Collatz sequence
       If (x Mod 2) = 0 Then
-        x = divAsInt(x, 2) ' set
+        x = divAsInt(x, 2) ' change variable
       Else
-        x = x*3 + 1 ' set
+        x = x*3 + 1 ' change variable
       End If
       If x > max Then
-        max = x ' set
+        max = x ' change variable
       End If
       p.append(x) ' call procedure
       ' draw what we have got so far, scaled to the canvas
       Dim vg = New List(Of VectorGraphic)() ' variable definition
       For Each i In range(0, p.length() - 1)
-        vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' set
+        vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' change variable
       Next i
       displayVectorGraphics(vg) ' call procedure
-      print(x) ' call procedure
+      print(x)
       sleep_ms(100) ' call procedure
     End While
   End While
-  print("Finished") ' call procedure
+  print("Finished")
 End Sub
 
 ' scale x.  We pass in p just to get its length

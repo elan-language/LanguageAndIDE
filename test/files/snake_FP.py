@@ -15,16 +15,16 @@ def main() -> None:
   print(f"Game Over! Score: {score(game)}")
 
 def clockTick(g: Game, k: str) -> Game: # function
-  g2 = (g if k == ("") else g.withKey(k)) # let
+  g2 = if(k.equals(""), g, g.withKey(k)) # let
   g3 = moveSnake(g2) # let
   g4 = eatAppleIfPoss(g3) # let
-  return (g4.withIsOn(False) if gameOver(g4) else g4)
+  return if(gameOver(g4), g4.withIsOn(False), g4)
 
 def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # let
   b3 = graphicsPut(b2, g.head.x, g.head.y, green) # let
   tail = g.body[0] # let
-  tailColour = (green if tail == (g.priorTail) else white) # let
+  tailColour = if(tail.equals(g.priorTail), green, white) # let
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 
 # Temporary solution pending creation of withPut as an extension method to ListOfList
@@ -33,23 +33,23 @@ def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[
   return graphics.withSet(x, graphics[x].withSet(y, colour))
 
 def score(g: Game) -> int: # function
-  return len(g.body) - 2
+  return g.body.length() - 2
 
 def moveSnake(g: Game) -> Game: # function
   k = g.key # let
   x = g.head.x # let
   y = g.head.y # let
-  newX = (x - 1 if k == ("a") else (x + 1 if k == ("d") else x)) # let
-  newY = (y - 1 if k == ("w") else (y + 1 if k == ("s") else y)) # let
-  return g.withBody((g.body + [(g.head)])).withHead(Square(newX, newY))
+  newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) # let
+  newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) # let
+  return g.withBody(g.body.withAppend(g.head)).withHead(Square(newX, newY))
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # let
-  moveTail = g.body.subList(1, len(g.body)) # let
-  return (g.withNewApple() if headOverApple(g) else g.withPriorTail(tail).withBody(moveTail))
+  moveTail = g.body.subList(1, g.body.length()) # let
+  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 
 def headOverApple(g: Game) -> bool: # function
-  return g.head == (g.apple)
+  return g.head.equals(g.apple)
 
 def gameOver(g: Game) -> bool: # function
   return g.body.contains(g.head) or hasHitEdge(g)
@@ -80,14 +80,14 @@ class Game
     return ""
   def withNewApple(self: Game) -> Game: # function
     x_rnd2 = self.rnd.nextInt(0, 39) # let
-    x = x_rnd2[0] # let
-    rnd2 = x_rnd2[1] # let
+    x = x_rnd2.item_0 # let
+    rnd2 = x_rnd2.item_1 # let
     y_rnd3 = rnd2.nextInt(0, 29) # let
-    y = y_rnd3[0] # let
-    rnd3 = y_rnd3[1] # let
+    y = y_rnd3.item_0 # let
+    rnd3 = y_rnd3.item_1 # let
     apple2 = Square(x, y) # let
     g2 = self.withApple(apple2).withRnd(rnd3) # let
-    return (g2.withNewApple() if g2.body.contains(apple2) else g2)
+    return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # variable definition
     copyOfThis.head = value # change variable
@@ -258,7 +258,7 @@ def test_newSquare(self) -> None:
 def test_newGame(self) -> None:
   rnd = Random() # let
   game = Game(rnd) # let
-  totest = game.rnd == (rnd) # let
+  totest = game.rnd.equals(rnd) # let
   self.assertEqual(totest, True)
   self.assertEqual(game.head, Square(22, 15))
   body = game.body # let

@@ -14,17 +14,17 @@ Sub main()
     sleep_ms(150) ' call procedure
     snake.clockTick(getKey(), apple) ' call procedure
   End While
-  print($"Game Over! Score: {snake.score()}") ' call procedure
+  print($"Game Over! Score: {snake.score()}")
 End Sub
 
 Class Snake
 
   Sub New()
     Dim tail = New Square(20, 15) ' variable definition
-    Me.currentDir = Direction.right ' set
-    Me.body = {tail} ' set
-    Me.head = tail.getAdjacentSquare(Me.currentDir) ' set
-    Me.priorTail = tail ' set
+    Me.currentDir = Direction.right ' change variable
+    Me.body = {tail} ' change variable
+    Me.head = tail.getAdjacentSquare(Me.currentDir) ' change variable
+    Me.priorTail = tail ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -35,20 +35,20 @@ Class Snake
   Private Property priorTail As Square
   Sub clockTick(key As String, apple As Apple) ' procedure
     Me.setDirection(key) ' call procedure
-    Me.priorTail = Me.body[0] ' set
+    Me.priorTail = Me.body[0] ' change variable
     Dim body = Me.body ' variable definition
     body.append(Me.head) ' call procedure
-    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' set
+    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' change variable
     If Me.head.equals(apple.location) Then
       apple.newRandomPosition(Me) ' call procedure
     Else
-      Me.body = Me.body.subList(1, Me.body.length()) ' set
+      Me.body = Me.body.subList(1, Me.body.length()) ' change variable
     End If
   End Sub
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure
-    blocks[Me.head.x][Me.head.y] = green ' set
+    blocks[Me.head.x][Me.head.y] = green ' change variable
     If Not Me.body[0].equals(Me.priorTail) Then
-      blocks[Me.priorTail.x][Me.priorTail.y] = white ' set
+      blocks[Me.priorTail.x][Me.priorTail.y] = white ' change variable
     End If
   End Sub
   Function score() As Integer
@@ -58,7 +58,7 @@ Class Snake
     Dim result = False ' variable definition
     For Each seg In Me.body
       If (seg.equals(sq)) Then
-        result = True ' set
+        result = True ' change variable
       End If
     Next seg
     Return result
@@ -68,13 +68,13 @@ Class Snake
   End Function
   Private Sub setDirection(key As String) ' private procedure
     If key.equals("w") Then
-      Me.currentDir = Direction.up ' set
+      Me.currentDir = Direction.up ' change variable
     ElseIf key.equals("s") Then
-      Me.currentDir = Direction.down ' set
+      Me.currentDir = Direction.down ' change variable
     ElseIf key.equals("a") Then
-      Me.currentDir = Direction.left ' set
+      Me.currentDir = Direction.left ' change variable
     ElseIf key.equals("d") Then
-      Me.currentDir = Direction.right ' set
+      Me.currentDir = Direction.right ' change variable
     End If
   End Sub
 End Class
@@ -82,7 +82,7 @@ End Class
 Class Apple
 
   Sub New()
-    Me.location = New Square(0, 0) ' set
+    Me.location = New Square(0, 0) ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -91,24 +91,24 @@ Class Apple
   Sub newRandomPosition(snake As Snake) ' procedure
     Dim changePosition = True ' variable definition
     While changePosition
-      Const ranX = randint(0, 39)
-      Const ranY = randint(0, 29)
-      Me.location = New Square(ranX, ranY) ' set
+      Dim ranX = randint(0, 39) ' variable definition
+      Dim ranY = randint(0, 29) ' variable definition
+      Me.location = New Square(ranX, ranY) ' change variable
       If Not snake.bodyCovers(Me.location) Then
-        changePosition = False ' set
+        changePosition = False ' change variable
       End If
     End While
   End Sub
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure
-    blocks[Me.location.x][Me.location.y] = red ' set
+    blocks[Me.location.x][Me.location.y] = red ' change variable
   End Sub
 End Class
 
 Class Square
 
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' set
-    Me.y = y ' set
+    Me.x = x ' change variable
+    Me.y = y ' change variable
   End Sub
   Function toString() As String
     Return ""
@@ -119,13 +119,13 @@ Class Square
     Dim newX = Me.x ' variable definition
     Dim newY = Me.y ' variable definition
     If d = Direction.left Then
-      newX = Me.x - 1 ' set
+      newX = Me.x - 1 ' change variable
     ElseIf d = Direction.right Then
-      newX = Me.x + 1 ' set
+      newX = Me.x + 1 ' change variable
     ElseIf d = Direction.up Then
-      newY = Me.y - 1 ' set
+      newY = Me.y - 1 ' change variable
     ElseIf d = Direction.down Then
-      newY = Me.y + 1 ' set
+      newY = Me.y + 1 ' change variable
     End If
     Return New Square(newX, newY)
   End Function

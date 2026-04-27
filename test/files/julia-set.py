@@ -29,7 +29,7 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
   for xp in range(0, width + 1):
     for yp in range(0, height + 1):
       # scale and centre
-      n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) # constant
+      n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) # variable definition
       # colour depends on how many iterations were done for that point
       col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
       rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
