@@ -34,6 +34,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
   abstract isLocalConstant(): boolean;
   abstract isVariable(): boolean;
+  abstract isLet(): boolean;
 
   getScope() {
     return this.compileScope ?? this.scope;
@@ -57,7 +58,7 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
       lhs,
       rhs,
       this.scope,
-      this.isVariable(),
+      this.isLet() || this.isVariable(),
       this.compileErrors,
       this.fieldId,
     );

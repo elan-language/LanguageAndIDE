@@ -1,4 +1,4 @@
-import { beKeyword, constantKeyword, letKeyword} from "../../../compiler/elan-keywords";
+import { beKeyword, constantKeyword, letKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
@@ -9,7 +9,7 @@ export class LetStatement extends AbstractDefinitionStatement {
     super(parent);
   }
 
-  isConstant = true;
+  isConstant = false;
 
   initialKeywords(): string {
     return constantKeyword;

@@ -18,4 +18,8 @@ export class LocalConstantAsn extends AbstractDefinitionAsn implements ElanSymbo
   isVariable() {
     return false;
   }
+
+  isLet() {
+    return false;
+  }
 }

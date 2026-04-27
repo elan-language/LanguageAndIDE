@@ -1,0 +1,194 @@
+# 557be0a779206ae3d27ee30d2168a3a2c76378eb4e49a0c86abad574208253e3 Elan 2.0.0-alpha1 valid
+
+main
+  variable grid set to createBlockGraphics(white)
+  call fillRandom(grid)
+  while true
+    call displayBlocks(grid)
+    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
+    call nextGeneration(gridRef)
+    set grid to gridRef.value()
+    call sleep_ms(50)
+  end while
+end main
+
+procedure fillRandom(grid as List<of List<of Int>>)
+  for col in range(0, 40)
+    for row in range(0, 30)
+      set grid[col][row] to blackOrWhite(random())
+    end for
+  end for
+end procedure
+
+function blackOrWhite(random as Float) returns Int
+  return if(random > 0.5, white, black)
+end function
+
+function north(cell as (Int, Int)) returns (Int, Int)
+  let x be cell.item_0
+  let y be cell.item_1
+  let y2 be if(y is 0, 29, y - 1)
+  return (x, y2)
+end function
+
+function south(cell as (Int, Int)) returns (Int, Int)
+  let x be  cell.item_0
+  let y be  cell.item_1
+  let y2 be  if(y is 29, 0, y + 1)
+  return (x, y2)
+end function
+
+function east(cell as (Int, Int)) returns (Int, Int)
+  let x be  cell.item_0
+  let y be  cell.item_1
+  let x2 be if(x is 39, 0, x + 1)
+  return (x2, y)
+end function
+
+function west(cell as (Int, Int)) returns (Int, Int)
+  let x be cell.item_0
+  let y be cell.item_1
+  let x2 be if(x is 0, 39, x - 1)
+  return (x2, y)
+end function
+
+function northEast(cell as (Int, Int)) returns (Int, Int)
+  return north(east(cell))
+end function
+
+function northWest(cell as (Int, Int)) returns (Int, Int)
+  return north(west(cell))
+end function
+
+function southEast(cell as (Int, Int)) returns (Int, Int)
+  return south(east(cell))
+end function
+
+function southWest(cell as (Int, Int)) returns (Int, Int)
+  return south(west(cell))
+end function
+
+function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
+  let c be (x, y)
+  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
+end function
+
+function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+  let neighbours be neighbourCells(x, y)
+  return neighbours.filter(lambda cell => grid[cell.item_0][cell.item_1] is black).length()
+end function
+
+function willLive(cell as Int, liveNeighbours as Int) returns Boolean
+  return if(cell is black, (liveNeighbours > 1) and (liveNeighbours < 4), liveNeighbours is 3)
+end function
+
+function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+  let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
+  return if(live, black, white)
+end function
+
+# TODO this could be a function returning new grid. Fiddly as 2D - factor out method for replacement row
+procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
+  variable nextGen set to createBlockGraphics(white)
+  variable grid set to gridRef.value()
+  for x in range(0, 40)
+    for y in range(0, 30)
+      constant colour set to nextCellValue(grid, x, y)
+      set nextGen[x][y] to colour
+    end for
+  end for
+  call gridRef.set(nextGen)
+end procedure
+
+test test_north
+  assert north((3, 4)) is (3, 3)
+  assert north((39, 0)) is (39, 29)
+  assert north((0, 29)) is (0, 28)
+  assert north((39, 29)) is (39, 28)
+end test
+
+test test_south
+  assert south((3, 4)) is (3, 5)
+  assert south((39, 0)) is (39, 1)
+  assert south((0, 29)) is (0, 0)
+  assert south((39, 29)) is (39, 0)
+end test
+
+test test_east
+  assert east((10, 2)) is (11, 2)
+  assert east((39, 0)) is (0, 0)
+  assert east((0, 1)) is (1, 1)
+  assert east((39, 29)) is (0, 29)
+end test
+
+test test_west
+  assert west((3, 4)) is (2, 4)
+  assert west((39, 0)) is (38, 0)
+  assert west((0, 0)) is (39, 0)
+  assert west((0, 29)) is (39, 29)
+end test
+
+test test_northEast
+  assert northEast((3, 4)) is (4, 3)
+  assert northEast((0, 0)) is (1, 29)
+  assert northEast((39, 0)) is (0, 29)
+  assert northEast((0, 29)) is (1, 28)
+  assert northEast((39, 29)) is (0, 28)
+end test
+
+test test_southEast
+  assert southEast((3, 4)) is (4, 5)
+  assert southEast((0, 0)) is (1, 1)
+  assert southEast((39, 0)) is (0, 1)
+  assert southEast((0, 29)) is (1, 0)
+  assert southEast((39, 29)) is (0, 0)
+end test
+
+test test_northWest
+  assert northWest((3, 4)) is (2, 3)
+  assert northWest((0, 0)) is (39, 29)
+  assert northWest((39, 0)) is (38, 29)
+  assert northWest((0, 29)) is (39, 28)
+  assert northWest((39, 29)) is (38, 28)
+end test
+
+test test_southWest
+  assert southWest((3, 4)) is (2, 5)
+  assert southWest((0, 0)) is (39, 1)
+  assert southWest((39, 0)) is (38, 1)
+  assert southWest((0, 29)) is (39, 0)
+  assert southWest((39, 29)) is (38, 0)
+end test
+
+test test_blackOrWhite
+  assert blackOrWhite(0) is black
+  assert blackOrWhite(0.499) is black
+  assert blackOrWhite(0.5) is black
+  assert blackOrWhite(0.501) is white
+  assert blackOrWhite(1) is white
+end test
+
+[ghosted] test test_neighbourCells
+  [ghosted] assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
+end test
+
+test test_willLive
+  assert willLive(white, 0) is false
+  assert willLive(white, 1) is false
+  assert willLive(white, 2) is false
+  assert willLive(white, 3) is true
+  assert willLive(white, 4) is false
+  assert willLive(white, 5) is false
+  assert willLive(white, 6) is false
+  assert willLive(white, 7) is false
+  assert willLive(white, 8) is false
+  assert willLive(black, 0) is false
+  assert willLive(black, 1) is false
+  assert willLive(black, 2) is true
+  assert willLive(black, 3) is true
+  assert willLive(black, 4) is false
+  assert willLive(black, 5) is false
+  assert willLive(black, 6) is false
+  assert willLive(black, 7) is false
+  assert willLive(black, 8) is false
+end test

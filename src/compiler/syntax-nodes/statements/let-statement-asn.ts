@@ -12,10 +12,14 @@ export class LetStatementAsn extends AbstractDefinitionAsn implements ElanSymbol
   }
 
   isLocalConstant() {
-    return true;
+    return false;
   }
 
   isVariable() {
     return false;
+  }
+
+  isLet() {
+    return true;
   }
 }
