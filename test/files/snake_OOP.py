@@ -1,5 +1,7 @@
 # Python with Elan 2.0.0-alpha1
 
+import enum
+
 # Use the W,A,S,D keys to change Snake direction
 
 def main() -> None:
@@ -13,16 +15,16 @@ def main() -> None:
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
     snake.clockTick(getKey(), apple) # call procedure
-  print(f"Game Over! Score: {snake.score()}") # call procedure
+  print(f"Game Over! Score: {snake.score()}")
 
 class Snake
 
   def __init__(self: Snake) -> None:
     tail = Square(20, 15) # variable definition
-    self.currentDir = Direction.right # set
-    self.body = [tail] # set
-    self.head = tail.getAdjacentSquare(self.currentDir) # set
-    self.priorTail = tail # set
+    self.currentDir = Direction.right # change variable
+    self.body = [tail] # change variable
+    self.head = tail.getAdjacentSquare(self.currentDir) # change variable
+    self.priorTail = tail # change variable
   def toString(self: Snake) -> str: # function
     return ""
   currentDir: Direction # private property
@@ -31,63 +33,63 @@ class Snake
   priorTail: Square # private property
   def clockTick(self: Snake, key: str, apple: Apple) -> None: # procedure
     self.setDirection(key) # call procedure
-    self.priorTail = self.body[0] # set
+    self.priorTail = self.body[0] # change variable
     body = self.body # variable definition
     body.append(self.head) # call procedure
-    self.head = self.head.getAdjacentSquare(self.currentDir) # set
-    if self.head.equals(apple.location):
+    self.head = self.head.getAdjacentSquare(self.currentDir) # change variable
+    if self.head == (apple.location):
       apple.newRandomPosition(self) # call procedure
     else:
-      self.body = self.body.subList(1, self.body.length()) # set
+      self.body = self.body.subList(1, len(self.body)) # change variable
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure
-    blocks[self.head.x][self.head.y] = green # set
-    if not self.body[0].equals(self.priorTail):
-      blocks[self.priorTail.x][self.priorTail.y] = white # set
+    blocks[self.head.x][self.head.y] = green # change variable
+    if not self.body[0] == (self.priorTail):
+      blocks[self.priorTail.x][self.priorTail.y] = white # change variable
   def score(self: Snake) -> int: # function
-    return self.body.length() - 1
+    return len(self.body) - 1
   def bodyCovers(self: Snake, sq: Square) -> bool: # function
     result = False # variable definition
     for seg in self.body:
-      if (seg.equals(sq)):
-        result = True # set
+      if (seg == (sq)):
+        result = True # change variable
     return result
   def gameOver(self: Snake) -> bool: # function
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
   def setDirection(self: Snake, key: str) -> None: # private procedure
-    if key.equals("w"):
-      self.currentDir = Direction.up # set
-    elif key.equals("s"):
-      self.currentDir = Direction.down # set
-    elif key.equals("a"):
-      self.currentDir = Direction.left # set
-    elif key.equals("d"):
-      self.currentDir = Direction.right # set
+    if key == ("w"):
+      self.currentDir = Direction.up # change variable
+    elif key == ("s"):
+      self.currentDir = Direction.down # change variable
+    elif key == ("a"):
+      self.currentDir = Direction.left # change variable
+    elif key == ("d"):
+      self.currentDir = Direction.right # change variable
 
 
 class Apple
 
   def __init__(self: Apple) -> None:
-    self.location = Square(0, 0) # set
+    self.location = Square(0, 0) # change variable
   def toString(self: Apple) -> str: # function
     return ""
   location: Square # property
   def newRandomPosition(self: Apple, snake: Snake) -> None: # procedure
     changePosition = True # variable definition
     while changePosition:
-      ranX = randint(0, 39) # constant
-      ranY = randint(0, 29) # constant
-      self.location = Square(ranX, ranY) # set
+      ranX = randint(0, 39) # variable definition
+      ranY = randint(0, 29) # variable definition
+      self.location = Square(ranX, ranY) # change variable
       if not snake.bodyCovers(self.location):
-        changePosition = False # set
+        changePosition = False # change variable
   def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure
-    blocks[self.location.x][self.location.y] = red # set
+    blocks[self.location.x][self.location.y] = red # change variable
 
 
 class Square
 
   def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # set
-    self.y = y # set
+    self.x = x # change variable
+    self.y = y # change variable
   def toString(self: Square) -> str: # function
     return ""
   x: int # property
@@ -96,13 +98,13 @@ class Square
     newX = self.x # variable definition
     newY = self.y # variable definition
     if d == Direction.left:
-      newX = self.x - 1 # set
+      newX = self.x - 1 # change variable
     elif d == Direction.right:
-      newX = self.x + 1 # set
+      newX = self.x + 1 # change variable
     elif d == Direction.up:
-      newY = self.y - 1 # set
+      newY = self.y - 1 # change variable
     elif d == Direction.down:
-      newY = self.y + 1 # set
+      newY = self.y + 1 # change variable
     return Square(newX, newY)
   def hasHitEdge(self: Square) -> bool: # function
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
@@ -140,3 +142,5 @@ def test_square(self) -> None:
   self.assertEqual((Square(3, -1)).hasHitEdge(), True)
   self.assertEqual((Square(40, 3)).hasHitEdge(), True)
   self.assertEqual((Square(3, 30)).hasHitEdge(), True)
+
+main()

@@ -12,9 +12,9 @@ Sub main()
   displayBlocks(gr) ' call procedure
   Dim solver = New Solver(nodes, start, destination) ' variable definition
   While True
-    Const k = inputStringFromOptions(algPrompt, {"a", "d", "h"})
+    Dim k = inputStringFromOptions(algPrompt, {"a", "d", "h"}) ' variable definition
     clearPrintedText() ' call procedure
-    Const alg = getAlgFromLetter(k)
+    Dim alg = getAlgFromLetter(k) ' variable definition
     runSolver(gr, start, destination, rocks, solver, alg) ' call procedure
   End While
 End Sub
@@ -31,7 +31,7 @@ Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Po
   If solver.getLastVisited().equals(destination) Then
     Dim rl = solver.getRouteAndLength() ' variable definition
     Dim route = rl.item_0 ' variable definition
-    Const length = rl.item_1
+    Dim length = rl.item_1 ' variable definition
     gr2 = addRoute(gr2, route) ' change variable
     displayBlocks(gr2) ' call procedure
     printNoLine($"Length of route: {length.round(2)} ") ' call procedure
@@ -171,8 +171,8 @@ Class Solver
   End Function
   Function calculateCost(node As Node) As Double
     Dim cost = 0.0 ' variable definition
-    Const fromStart = node.distFromStart
-    Const estToDest = node.estDistToDest
+    Dim fromStart = node.distFromStart ' variable definition
+    Dim estToDest = node.estDistToDest ' variable definition
     If Me.alg = Algorithm.dijkstra Then
       cost = fromStart ' change variable
     ElseIf Me.alg = Algorithm.aStar Then

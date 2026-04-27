@@ -7,7 +7,7 @@
 static void main() {
   var x = 1;
   while (x > 0) {
-    x = inputInt("Enter a starting number (0 to quit)"); // change variable
+    x = inputInt("Enter a starting number (0 to quit)"); // set
     // Array of the values we have seen so far
     var p = [x];
     // capture the max value so we can scale the graph
@@ -15,25 +15,25 @@ static void main() {
     while (x > 1) {
       // Collatz sequence
       if ((x % 2) == 0) {
-        x = divAsInt(x, 2); // change variable
+        x = divAsInt(x, 2); // set
       } else {
-        x = x*3 + 1; // change variable
+        x = x*3 + 1; // set
       }
       if (x > max) {
-        max = x; // change variable
+        max = x; // set
       }
       p.append(x); // call procedure
       // draw what we have got so far, scaled to the canvas
       var vg = new List<VectorGraphic>();
       foreach (i in range(0, p.length() - 1)) {
-        vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // change variable
+        vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // set
       }
       displayVectorGraphics(vg); // call procedure
-      print(x);
+      print(x); // call procedure
       sleep_ms(100); // call procedure
     }
   }
-  print("Finished");
+  print("Finished"); // call procedure
 }
 
 // scale x.  We pass in p just to get its length

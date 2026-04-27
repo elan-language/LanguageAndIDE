@@ -621,7 +621,7 @@ main
   if a is 1 then
     call printNoLine("")
   else 
-    [ghosted] constant b set to 2
+    [ghosted] variable b set to 2
   end if
 end main`;
 

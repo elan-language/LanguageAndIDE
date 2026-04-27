@@ -13,7 +13,7 @@
 Sub main()
   Dim tm = New TuringMachine(initState, haltState) ' variable definition
   addRulesForRomanNumeralsInto(tm) ' call procedure
-  Const dec = inputIntBetween("Enter a year:", 1, 3999)
+  Dim dec = inputIntBetween("Enter a year:", 1, 3999) ' variable definition
   tm.setTape(dec.toString()) ' call procedure
   Dim steps = 0 ' variable definition
   While Not tm.isHalted()
@@ -75,7 +75,7 @@ Class TuringMachine
     Return matches.head()
   End Function
   Sub write(newSymbol As String) ' procedure
-    Const hp = Me.headPosition
+    Dim hp = Me.headPosition ' variable definition
     Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' change variable
   End Sub
   Sub execute(rule As Rule) ' procedure
@@ -111,7 +111,7 @@ Class Rule
     Me.move = move ' change variable
   End Sub
   Function toString() As String
-    Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{Me.move}"
+    Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumValue(Me.move)}"
   End Function
 End Class
 

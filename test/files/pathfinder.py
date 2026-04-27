@@ -15,9 +15,9 @@ def main() -> None:
   displayBlocks(gr) # call procedure
   solver = Solver(nodes, start, destination) # variable definition
   while True:
-    k = inputStringFromOptions(algPrompt, ["a", "d", "h"]) # constant
+    k = inputStringFromOptions(algPrompt, ["a", "d", "h"]) # variable definition
     clearPrintedText() # call procedure
-    alg = getAlgFromLetter(k) # constant
+    alg = getAlgFromLetter(k) # variable definition
     runSolver(gr, start, destination, rocks, solver, alg) # call procedure
 
 def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list[Point], solver: Solver, alg: Algorithm) -> None: # procedure
@@ -31,7 +31,7 @@ def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list
   if solver.getLastVisited() == (destination):
     rl = solver.getRouteAndLength() # variable definition
     route = rl[0] # variable definition
-    length = rl[1] # constant
+    length = rl[1] # variable definition
     gr2 = addRoute(gr2, route) # change variable
     displayBlocks(gr2) # call procedure
     printNoLine(f"Length of route: {round(length, 2)} ") # call procedure
@@ -142,8 +142,8 @@ class Solver
     return lowestCostNode
   def calculateCost(self: Solver, node: Node) -> float: # function
     cost = 0.0 # variable definition
-    fromStart = node.distFromStart # constant
-    estToDest = node.estDistToDest # constant
+    fromStart = node.distFromStart # variable definition
+    estToDest = node.estDistToDest # variable definition
     if self.alg == Algorithm.dijkstra:
       cost = fromStart # change variable
     elif self.alg == Algorithm.aStar:

@@ -31,9 +31,9 @@ static List<VectorGraphic> allpoints(Coords p) { // function
   foreach (xp in range(0, width + 1)) {
     foreach (yp in range(0, height + 1)) {
       // scale and centre
-      final Int n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p); // constant
+      var n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p);
       // colour depends on how many iterations were done for that point
-      final Int col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)); // constant
+      var col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
       vg2 = vg2.withAppend(rect); // change variable
     }
@@ -47,7 +47,7 @@ static int onepoint(double x, double y, int maxnum, Coords p) { // function
   var b = y;
   var i = 0;
   while (!done) {
-    final Float c = 2*a*b; // constant
+    var c = 2*a*b;
     a = (a*a - b*b) + p.jx; // change variable
     b = c + p.jy; // change variable
     i = i + 1; // change variable
@@ -81,7 +81,7 @@ class Coords {
   // Arrow keys move the virtual camera
   // eg Arrow Up moves the image down
   public void checkkeys() { // procedure
-    final Float panstep = 10/this.scale; // constant
+    var panstep = 10/this.scale;
     var jstep = 0.001;
     // save some CPU by not recalculating until a parameter has been changed
     var changed = false;

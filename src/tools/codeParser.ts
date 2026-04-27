@@ -9,6 +9,7 @@ import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { Language } from "../ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
+import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { MainFrame } from "../ide/frames/globals/main-frame";
 import { LanguageCS } from "../ide/frames/language-cs";
 import { LanguageElan } from "../ide/frames/language-elan";
@@ -16,8 +17,8 @@ import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageVB } from "../ide/frames/language-vb";
 import { Profile } from "../ide/frames/profile";
-import { ConstantStatement } from "../ide/frames/statements/constant-statement";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
+import { VariableStatement } from "../ide/frames/statements/variable-statement";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
@@ -123,7 +124,7 @@ async function parseAsExpression(code: string, l: Language) {
 
   try {
     const mf = new MainFrame(file);
-    const ls = new ConstantStatement(mf);
+    const ls = new VariableStatement(mf);
     const expr = new ExpressionField(ls);
     expr.parseFrom(codeSource);
 
@@ -145,9 +146,8 @@ async function parseAsType(code: string, l: Language) {
   const file = await newFileImpl();
 
   try {
-    const mf = new MainFrame(file);
-    const ls = new ConstantStatement(mf);
-    const expr = new TypeField(ls);
+    const f = new GlobalFunction(file);
+    const expr = new TypeField(f);
     expr.parseFrom(codeSource);
 
     if (expr.readParseStatus() !== ParseStatus.valid) {

@@ -15,7 +15,7 @@ import enum
 def main() -> None:
   tm = TuringMachine(initState, haltState) # variable definition
   addRulesForRomanNumeralsInto(tm) # call procedure
-  dec = inputIntBetween("Enter a year:", 1, 3999) # constant
+  dec = inputIntBetween("Enter a year:", 1, 3999) # variable definition
   tm.setTape(str(dec)) # call procedure
   steps = 0 # variable definition
   while not tm.isHalted():
@@ -67,7 +67,7 @@ class TuringMachine
       raise ElanRuntimeError("f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}"")
     return matches.head()
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure
-    hp = self.headPosition # constant
+    hp = self.headPosition # variable definition
     self.tape = self.tape[0:hp] + newSymbol + self.tape[hp + 1:len(self.tape)] # change variable
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure
     self.currentState = rule.nextState # change variable
@@ -97,7 +97,7 @@ class Rule
     self.writeSymbol = writeSymbol # change variable
     self.move = move # change variable
   def toString(self: Rule) -> str: # function
-    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{self.move}"
+    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
 
 
 Dir = Enum('Dir', 'left, right')

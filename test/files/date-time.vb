@@ -5,7 +5,7 @@ Sub main()
   While Not reply.upperCase().equals("Q")
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' change variable
     If reply.equals("") Then
-      Const now = divAsInt(clock(), 1000)
+      Dim now = divAsInt(clock(), 1000) ' variable definition
       print(now)
       print(getDate(now))
     Else
@@ -22,24 +22,24 @@ End Sub
 
 Function getDate(unixSecs As Integer) As String
   Dim dt = dateTime(unixSecs) ' variable definition
-  Const hour = dt.item_0
-  Const minute = dt.item_1
-  Const second = dt.item_2
-  Const days = dt.item_3
-  Const year = dt.item_4
-  Const weekday = dt.item_5
-  Const z2 = "00"
-  Const h = padLwithZero(hour)
-  Const m = padLwithZero(minute)
-  Const s = padLwithZero(second)
+  Dim hour = dt.item_0 ' variable definition
+  Dim minute = dt.item_1 ' variable definition
+  Dim second = dt.item_2 ' variable definition
+  Dim days = dt.item_3 ' variable definition
+  Dim year = dt.item_4 ' variable definition
+  Dim weekday = dt.item_5 ' variable definition
+  Dim z2 = "00" ' variable definition
+  Dim h = padLwithZero(hour) ' variable definition
+  Dim m = padLwithZero(minute) ' variable definition
+  Dim s = padLwithZero(second) ' variable definition
   Dim startDays = getStartDays() ' variable definition
   Dim startDaysL = startDaysList(year, startDays) ' variable definition
   Dim month_day = monthDay(startDaysL, (days Mod startDays[12])) ' variable definition
-  Const month = month_day.item_0
-  Const day = month_day.item_1
-  Const dayName = getWeekdayName(weekday)
-  Const d = padLwithZero(day)
-  Const monthName = getMonthName(month)
+  Dim month = month_day.item_0 ' variable definition
+  Dim day = month_day.item_1 ' variable definition
+  Dim dayName = getWeekdayName(weekday) ' variable definition
+  Dim d = padLwithZero(day) ' variable definition
+  Dim monthName = getMonthName(month) ' variable definition
   Return $"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 End Function
 
@@ -49,17 +49,17 @@ End Sub
 
 Function dateTime(unixSecs As Integer) As (Integer, Integer, Integer, Integer, Integer, Integer)
   ' get separate values from Unix time
-  Const hour = (divAsInt(divAsInt(unixSecs, 60), 60) Mod 24)
-  Const minute = divAsInt(unixSecs, 60) Mod 60
-  Const second = (unixSecs Mod 60)
+  Dim hour = (divAsInt(divAsInt(unixSecs, 60), 60) Mod 24) ' variable definition
+  Dim minute = divAsInt(unixSecs, 60) Mod 60 ' variable definition
+  Dim second = (unixSecs Mod 60) ' variable definition
   ' days and years from Unix epoch
-  Const unixDay = divAsInt(unixSecs, daySecs)
-  Const years = ((unixDay + 1)/365.24).floor()
+  Dim unixDay = divAsInt(unixSecs, daySecs) ' variable definition
+  Dim years = ((unixDay + 1)/365.24).floor() ' variable definition
   ' this year and weekday
-  Const year = unixYear + years
-  Const weekday = (unixDay + unixWeekday) Mod 7
+  Dim year = unixYear + years ' variable definition
+  Dim weekday = (unixDay + unixWeekday) Mod 7 ' variable definition
   ' day number (1-365 or 1-366) in this year
-  Const day = dayInYear(year, unixDay)
+  Dim day = dayInYear(year, unixDay) ' variable definition
   Return (hour, minute, second, day, year, weekday)
 End Function
 
@@ -183,7 +183,7 @@ Function pad(d As String, p As String, s As String) As String
   Dim sR = s ' variable definition
   If p.length() > s.length() Then
     If d.upperCase().equals("L") Then
-      Const ps = p + s
+      Dim ps = p + s ' variable definition
       sR = ps.subString(ps.length() - p.length(), ps.length()) ' change variable
     ElseIf d.upperCase().equals("R") Then
       sR = (s + p).subString(0, p.length()) ' change variable

@@ -29,30 +29,30 @@ static int blackOrWhite(double random) { // function
 }
 
 static (int, int) north((int, int) cell) { // function
-  final Int x = cell.item_0; // constant
-  final Int y = cell.item_1; // constant
-  final Int y2 = if(y == 0, 29, y - 1); // constant
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var y2 = if(y == 0, 29, y - 1);
   return (x, y2);
 }
 
 static (int, int) south((int, int) cell) { // function
-  final Int x = cell.item_0; // constant
-  final Int y = cell.item_1; // constant
-  final Int y2 = if(y == 29, 0, y + 1); // constant
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var y2 = if(y == 29, 0, y + 1);
   return (x, y2);
 }
 
 static (int, int) east((int, int) cell) { // function
-  final Int x = cell.item_0; // constant
-  final Int y = cell.item_1; // constant
-  final Int x2 = if(x == 39, 0, x + 1); // constant
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var x2 = if(x == 39, 0, x + 1);
   return (x2, y);
 }
 
 static (int, int) west((int, int) cell) { // function
-  final Int x = cell.item_0; // constant
-  final Int y = cell.item_1; // constant
-  final Int x2 = if(x == 0, 39, x - 1); // constant
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var x2 = if(x == 0, 39, x - 1);
   return (x2, y);
 }
 
@@ -80,8 +80,8 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   var count = 0;
   foreach (cell in neighbourCells(x, y)) {
-    final Int cx = cell.item_0; // constant
-    final Int cy = cell.item_1; // constant
+    var cx = cell.item_0;
+    var cy = cell.item_1;
     if (grid[cx][cy] == black) {
       count = count + 1; // change variable
     }
@@ -101,7 +101,7 @@ static bool willLive(int cell, int liveNeighbours) { // function
 
 static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var colour = white;
-  final Boolean live = willLive(grid[x][y], liveNeighbours(grid, x, y)); // constant
+  var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
   if (live) {
     colour = black; // change variable
   }
@@ -113,7 +113,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   var grid = gridRef.value();
   foreach (x in range(0, 40)) {
     foreach (y in range(0, 30)) {
-      final Int colour = nextCellValue(grid, x, y); // constant
+      var colour = nextCellValue(grid, x, y);
       nextGen[x][y] = colour; // change variable
     }
   }

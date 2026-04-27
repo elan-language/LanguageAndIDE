@@ -67,6 +67,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
+      frame instanceof LetStatement ||
       frame instanceof SetStatement ||
       frame instanceof Property ||
       frame instanceof AbstractProperty ||

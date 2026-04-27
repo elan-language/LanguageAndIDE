@@ -518,7 +518,7 @@ main
   try
     throw ElanRuntimeError "fail"
   catch ElanRuntimeError
-    [ghosted] constant a set to 1
+    [ghosted] variable a set to 1
   end try
 end main`;
 

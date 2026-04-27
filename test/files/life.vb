@@ -29,30 +29,30 @@ Function blackOrWhite(random As Double) As Integer
 End Function
 
 Function north(cell As (Integer, Integer)) As (Integer, Integer)
-  Const x = cell.item_0
-  Const y = cell.item_1
-  Const y2 = if(y = 0, 29, y - 1)
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim y2 = if(y = 0, 29, y - 1) ' variable definition
   Return (x, y2)
 End Function
 
 Function south(cell As (Integer, Integer)) As (Integer, Integer)
-  Const x = cell.item_0
-  Const y = cell.item_1
-  Const y2 = if(y = 29, 0, y + 1)
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim y2 = if(y = 29, 0, y + 1) ' variable definition
   Return (x, y2)
 End Function
 
 Function east(cell As (Integer, Integer)) As (Integer, Integer)
-  Const x = cell.item_0
-  Const y = cell.item_1
-  Const x2 = if(x = 39, 0, x + 1)
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim x2 = if(x = 39, 0, x + 1) ' variable definition
   Return (x2, y)
 End Function
 
 Function west(cell As (Integer, Integer)) As (Integer, Integer)
-  Const x = cell.item_0
-  Const y = cell.item_1
-  Const x2 = if(x = 0, 39, x - 1)
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim x2 = if(x = 0, 39, x - 1) ' variable definition
   Return (x2, y)
 End Function
 
@@ -80,8 +80,8 @@ End Function
 Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim count = 0 ' variable definition
   For Each cell In neighbourCells(x, y)
-    Const cx = cell.item_0
-    Const cy = cell.item_1
+    Dim cx = cell.item_0 ' variable definition
+    Dim cy = cell.item_1 ' variable definition
     If grid[cx][cy] = black Then
       count = count + 1 ' change variable
     End If
@@ -101,7 +101,7 @@ End Function
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim colour = white ' variable definition
-  Const live = willLive(grid[x][y], liveNeighbours(grid, x, y))
+  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' variable definition
   If live Then
     colour = black ' change variable
   End If
@@ -113,7 +113,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
   Dim grid = gridRef.value() ' variable definition
   For Each x In range(0, 40)
     For Each y In range(0, 30)
-      Const colour = nextCellValue(grid, x, y)
+      Dim colour = nextCellValue(grid, x, y) ' variable definition
       nextGen[x][y] = colour ' change variable
     Next y
   Next x

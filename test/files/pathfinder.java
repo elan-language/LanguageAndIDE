@@ -12,9 +12,9 @@ static void main() {
   displayBlocks(gr); // call procedure
   var solver = new Solver(nodes, start, destination);
   while (true) {
-    final String k = inputStringFromOptions(algPrompt, ["a", "d", "h"]); // constant
+    var k = inputStringFromOptions(algPrompt, ["a", "d", "h"]);
     clearPrintedText(); // call procedure
-    final Algorithm alg = getAlgFromLetter(k); // constant
+    var alg = getAlgFromLetter(k);
     runSolver(gr, start, destination, rocks, solver, alg); // call procedure
   }
 }
@@ -31,7 +31,7 @@ static void runSolver(List<List<int>> gr, Point start, Point destination, List<P
   if (solver.getLastVisited().equals(destination)) {
     var rl = solver.getRouteAndLength();
     var route = rl.item_0;
-    final Float length = rl.item_1; // constant
+    var length = rl.item_1;
     gr2 = addRoute(gr2, route); // change variable
     displayBlocks(gr2); // call procedure
     printNoLine(String.format("Length of route: % ", length.round(2))); // call procedure
@@ -171,8 +171,8 @@ class Solver {
   }
   public double calculateCost(Node node) { // function
     var cost = 0.0;
-    final Float fromStart = node.distFromStart; // constant
-    final Float estToDest = node.estDistToDest; // constant
+    var fromStart = node.distFromStart;
+    var estToDest = node.estDistToDest;
     if (this.alg == Algorithm.dijkstra) {
       cost = fromStart; // change variable
     } else if (this.alg == Algorithm.aStar) {

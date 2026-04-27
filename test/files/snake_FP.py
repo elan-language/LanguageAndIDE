@@ -1,0 +1,272 @@
+# Python with Elan 2.0.0-alpha1
+
+# Use the W,A,S,D keys to change Snake direction
+
+def main() -> None:
+  blocks = createBlockGraphics(white) # variable definition
+  rnd = Random() # variable definition
+  rnd.initialiseFromClock() # call procedure
+  game = (Game(rnd)).withNewApple() # variable definition
+  while game.isOn:
+    blocks = updateGraphics(game, blocks) # change variable
+    displayBlocks(blocks) # call procedure
+    sleep_ms(150) # call procedure
+    game = clockTick(game, getKey()) # change variable
+  print(f"Game Over! Score: {score(game)}")
+
+def clockTick(g: Game, k: str) -> Game: # function
+  g2 = (g if k == ("") else g.withKey(k)) # let
+  g3 = moveSnake(g2) # let
+  g4 = eatAppleIfPoss(g3) # let
+  return (g4.withIsOn(False) if gameOver(g4) else g4)
+
+def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
+  b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # let
+  b3 = graphicsPut(b2, g.head.x, g.head.y, green) # let
+  tail = g.body[0] # let
+  tailColour = (green if tail == (g.priorTail) else white) # let
+  return graphicsPut(b3, tail.x, tail.y, tailColour)
+
+# Temporary solution pending creation of withPut as an extension method to ListOfList
+
+def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
+  return graphics.withSet(x, graphics[x].withSet(y, colour))
+
+def score(g: Game) -> int: # function
+  return len(g.body) - 2
+
+def moveSnake(g: Game) -> Game: # function
+  k = g.key # let
+  x = g.head.x # let
+  y = g.head.y # let
+  newX = (x - 1 if k == ("a") else (x + 1 if k == ("d") else x)) # let
+  newY = (y - 1 if k == ("w") else (y + 1 if k == ("s") else y)) # let
+  return g.withBody((g.body + [(g.head)])).withHead(Square(newX, newY))
+
+def eatAppleIfPoss(g: Game) -> Game: # function
+  tail = g.body[0] # let
+  moveTail = g.body.subList(1, len(g.body)) # let
+  return (g.withNewApple() if headOverApple(g) else g.withPriorTail(tail).withBody(moveTail))
+
+def headOverApple(g: Game) -> bool: # function
+  return g.head == (g.apple)
+
+def gameOver(g: Game) -> bool: # function
+  return g.body.contains(g.head) or hasHitEdge(g)
+
+def hasHitEdge(g: Game) -> bool: # function
+  x = g.head.x # let
+  y = g.head.y # let
+  return (x == -1) or (y == -1) or (x == 40) or (y == 30)
+
+class Game
+
+  head: Square # property
+  body: list[Square] # property
+  priorTail: Square # property
+  apple: Square # property
+  isOn: bool # property
+  rnd: Random # property
+  key: str # property
+  def __init__(self: Game, rnd: Random) -> None:
+    self.head = Square(22, 15) # change variable
+    self.body = [Square(20, 15), Square(21, 15)] # change variable
+    self.priorTail = Square(0, 0) # change variable
+    self.key = "d" # change variable
+    self.isOn = True # change variable
+    self.apple = Square(12, 15) # change variable
+    self.rnd = rnd # change variable
+  def toString(self: Game) -> str: # function
+    return ""
+  def withNewApple(self: Game) -> Game: # function
+    x_rnd2 = self.rnd.nextInt(0, 39) # let
+    x = x_rnd2[0] # let
+    rnd2 = x_rnd2[1] # let
+    y_rnd3 = rnd2.nextInt(0, 29) # let
+    y = y_rnd3[0] # let
+    rnd3 = y_rnd3[1] # let
+    apple2 = Square(x, y) # let
+    g2 = self.withApple(apple2).withRnd(rnd3) # let
+    return (g2.withNewApple() if g2.body.contains(apple2) else g2)
+  def withHead(self: Game, value: Square) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.head = value # change variable
+    return copyOfThis
+  def withBody(self: Game, value: list[Square]) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.body = value # change variable
+    return copyOfThis
+  def withPriorTail(self: Game, value: Square) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.priorTail = value # change variable
+    return copyOfThis
+  def withApple(self: Game, value: Square) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.apple = value # change variable
+    return copyOfThis
+  def withIsOn(self: Game, value: bool) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.isOn = value # change variable
+    return copyOfThis
+  def withRnd(self: Game, value: Random) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.rnd = value # change variable
+    return copyOfThis
+  def withKey(self: Game, value: str) -> Game: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.key = value # change variable
+    return copyOfThis
+
+
+class Square
+
+  x: int # property
+  y: int # property
+  def __init__(self: Square, x: int, y: int) -> None:
+    self.x = x # change variable
+    self.y = y # change variable
+  def withX(self: Square, value: int) -> Square: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.x = value # change variable
+    return copyOfThis
+  def withY(self: Square, value: int) -> Square: # function
+    copyOfThis = copy(self) # variable definition
+    copyOfThis.y = value # change variable
+    return copyOfThis
+  def toString(self: Square) -> str: # function
+    return f"{self.x}, {self.y}"
+
+
+def test_clockTick(self) -> None:
+  g1 = Game(Random()) # let
+  g2 = g1.withNewApple() # let
+  g3 = clockTick(g2, "s") # let
+  self.assertEqual(g3.head, Square(22, 16))
+  self.assertEqual(g3.body.length(), 2)
+  self.assertEqual(g3.priorTail, g2.body[0])
+  self.assertEqual(g3.isOn, True)
+  g4 = g3.withApple(Square(22, 17)) # let
+  g5 = clockTick(g4, "s") # let
+  self.assertEqual(g5.body.length(), 3)
+  self.assertEqual(g5.priorTail, g4.priorTail)
+  self.assertEqual(g5.isOn, True)
+  g6 = g5.withHead(Square(22, 29)) # let
+  g7 = clockTick(g6, "s") # let
+  self.assertEqual(g7.isOn, False)
+
+def test_updateGraphics(self) -> None:
+  blocks = createBlockGraphics(white) # let
+  g1 = Game(Random()) # let
+  blocks2 = updateGraphics(g1, blocks) # let
+  self.assertEqual(blocks2[12][15], red)
+  self.assertEqual(blocks2[22][15], green)
+  self.assertEqual(blocks2[21][15], white)
+  g3 = clockTick(g1, "d") # let
+  blocks3 = updateGraphics(g3, blocks2) # let
+  self.assertEqual(blocks3[12][15], red)
+  self.assertEqual(blocks3[22][15], green)
+  self.assertEqual(blocks3[23][15], green)
+
+def test_testnewApple(self) -> None:
+  g1 = Game(Random()) # let
+  self.assertEqual(g1.apple, Square(12, 15))
+  g2 = g1.withNewApple() # let
+  self.assertEqual(g2.apple, Square(12, 15))
+  g3 = g2.withNewApple() # let
+  self.assertEqual(g3.apple, Square(10, 12))
+  # test that apple is never over snake
+  g4 = (Game(Random())) # let
+  g5 = g4.withBody([Square(10, 12)]) # let
+  g6 = g5.withNewApple() # let
+  self.assertEqual(g4.apple, Square(12, 15))
+
+def test_score(self) -> None:
+  g1 = Game(Random()) # let
+  self.assertEqual(score(g1), 0)
+  g2 = g1.withBody([Square(4, 4), Square(5, 4)]) # let
+  self.assertEqual(score(g2), 0)
+  g3 = g1.withBody([Square(3, 4), Square(4, 4), Square(5, 4)]) # let
+  self.assertEqual(score(g3), 1)
+  g4 = g1.withBody([Square(3, 4), Square(4, 4), Square(5, 4), Square(5, 5)]) # let
+  self.assertEqual(score(g4), 2)
+
+def test_moveSnake(self) -> None:
+  g1 = Game(Random()) # let
+  g2 = g1.withKey("a") # let
+  g3 = moveSnake(g2) # let
+  self.assertEqual(g3.head, Square(21, 15))
+  g4 = g1.withKey("d") # let
+  g5 = moveSnake(g4) # let
+  self.assertEqual(g5.head, Square(23, 15))
+  g6 = g1.withKey("w") # let
+  g7 = moveSnake(g6) # let
+  self.assertEqual(g7.head, Square(22, 14))
+  g8 = g1.withKey("s") # let
+  g9 = moveSnake(g8) # let
+  self.assertEqual(g9.head, Square(22, 16))
+
+def test_eatAppleIfPoss(self) -> None:
+  g1 = Game(Random()) # let
+  self.assertEqual(g1.body.length(), 2)
+  # negative case
+  g2 = g1.withApple(Square(23, 15)) # let
+  g3 = eatAppleIfPoss(g2) # let
+  self.assertEqual(g3.body.length(), 1)
+  self.assertEqual(g3.apple, g2.apple)
+  self.assertEqual(g3.priorTail, g2.body[0])
+  # positive case
+  g4 = g2.withHead(Square(23, 15)) # let
+  g5 = eatAppleIfPoss(g4) # let
+  self.assertEqual(g5.body.length(), 2)
+  self.assertEqual(g5.apple, Square(12, 15))
+  self.assertEqual(g5.priorTail, g1.priorTail)
+
+def test_overApple(self) -> None:
+  g1 = Game(Random()) # let
+  g2 = g1.withApple(Square(23, 15)) # let
+  self.assertEqual(headOverApple(g2), False)
+  g3 = g2.withHead(Square(23, 15)) # let
+  self.assertEqual(headOverApple(g3), True)
+
+def test_gameOver(self) -> None:
+  g1 = Game((Random())) # let
+  self.assertEqual(gameOver(g1), False)
+  g2 = g1.withHead(Square(0, 0)) # let
+  self.assertEqual(gameOver(g2), False)
+  g3 = g1.withHead(Square(40, 15)) # let
+  self.assertEqual(gameOver(g3), True)
+  g4 = g1.withHead(Square(21, 15)) # let
+  self.assertEqual(gameOver(g4), True)
+
+def test_headIsAtEdge(self) -> None:
+  g1 = Game(Random()) # let
+  self.assertEqual(hasHitEdge(g1), False)
+  g2 = g1.withHead(Square(40, 15)) # let
+  self.assertEqual(hasHitEdge(g2), True)
+  g3 = g1.withHead(Square(-1, 15)) # let
+  self.assertEqual(hasHitEdge(g3), True)
+  g4 = g1.withHead(Square(20, 30)) # let
+  self.assertEqual(hasHitEdge(g4), True)
+  g5 = g1.withHead(Square(20, -1)) # let
+  self.assertEqual(hasHitEdge(g5), True)
+
+def test_newSquare(self) -> None:
+  sq = Square(3, 4) # let
+  self.assertEqual(sq.x, 3)
+  self.assertEqual(sq.y, 4)
+
+def test_newGame(self) -> None:
+  rnd = Random() # let
+  game = Game(rnd) # let
+  totest = game.rnd == (rnd) # let
+  self.assertEqual(totest, True)
+  self.assertEqual(game.head, Square(22, 15))
+  body = game.body # let
+  self.assertEqual(body.length(), 2)
+  self.assertEqual(body[0], Square(20, 15))
+  self.assertEqual(body[1], Square(21, 15))
+  self.assertEqual(game.priorTail, Square(0, 0))
+  self.assertEqual(game.key, "d")
+  self.assertEqual(game.isOn, True)
+
+main()

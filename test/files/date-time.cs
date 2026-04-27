@@ -5,7 +5,7 @@ static void main() {
   while (!reply.upperCase().equals("Q")) {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // change variable
     if (reply.equals("")) {
-      const Int now = divAsInt(clock(), 1000);
+      var now = divAsInt(clock(), 1000);
       print(now);
       print(getDate(now));
     } else {
@@ -22,24 +22,24 @@ static void main() {
 
 static string getDate(int unixSecs) { // function
   var dt = dateTime(unixSecs);
-  const Int hour = dt.item_0;
-  const Int minute = dt.item_1;
-  const Int second = dt.item_2;
-  const Int days = dt.item_3;
-  const Int year = dt.item_4;
-  const Int weekday = dt.item_5;
-  const String z2 = "00";
-  const String h = padLwithZero(hour);
-  const String m = padLwithZero(minute);
-  const String s = padLwithZero(second);
+  var hour = dt.item_0;
+  var minute = dt.item_1;
+  var second = dt.item_2;
+  var days = dt.item_3;
+  var year = dt.item_4;
+  var weekday = dt.item_5;
+  var z2 = "00";
+  var h = padLwithZero(hour);
+  var m = padLwithZero(minute);
+  var s = padLwithZero(second);
   var startDays = getStartDays();
   var startDaysL = startDaysList(year, startDays);
   var month_day = monthDay(startDaysL, (days % startDays[12]));
-  const Int month = month_day.item_0;
-  const Int day = month_day.item_1;
-  const String dayName = getWeekdayName(weekday);
-  const String d = padLwithZero(day);
-  const String monthName = getMonthName(month);
+  var month = month_day.item_0;
+  var day = month_day.item_1;
+  var dayName = getWeekdayName(weekday);
+  var d = padLwithZero(day);
+  var monthName = getMonthName(month);
   return $"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC";
 }
 
@@ -49,17 +49,17 @@ static string getDate(int unixSecs) { // function
 
 static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
   // get separate values from Unix time
-  const Int hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24);
-  const Int minute = divAsInt(unixSecs, 60) % 60;
-  const Int second = (unixSecs % 60);
+  var hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24);
+  var minute = divAsInt(unixSecs, 60) % 60;
+  var second = (unixSecs % 60);
   // days and years from Unix epoch
-  const Int unixDay = divAsInt(unixSecs, daySecs);
-  const Int years = ((unixDay + 1)/365.24).floor();
+  var unixDay = divAsInt(unixSecs, daySecs);
+  var years = ((unixDay + 1)/365.24).floor();
   // this year and weekday
-  const Int year = unixYear + years;
-  const Int weekday = (unixDay + unixWeekday) % 7;
+  var year = unixYear + years;
+  var weekday = (unixDay + unixWeekday) % 7;
   // day number (1-365 or 1-366) in this year
-  const Int day = dayInYear(year, unixDay);
+  var day = dayInYear(year, unixDay);
   return (hour, minute, second, day, year, weekday);
 }
 
@@ -183,7 +183,7 @@ static string pad(string d, string p, string s) { // function
   var sR = s;
   if (p.length() > s.length()) {
     if (d.upperCase().equals("L")) {
-      const String ps = p + s;
+      var ps = p + s;
       sR = ps.subString(ps.length() - p.length(), ps.length()); // change variable
     } else if (d.upperCase().equals("R")) {
       sR = (s + p).subString(0, p.length()); // change variable

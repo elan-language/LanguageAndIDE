@@ -22,27 +22,27 @@ def blackOrWhite(random: float) -> int: # function
   return result
 
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell[0] # constant
-  y = cell[1] # constant
-  y2 = (29 if y == 0 else y - 1) # constant
+  x = cell[0] # variable definition
+  y = cell[1] # variable definition
+  y2 = (29 if y == 0 else y - 1) # variable definition
   return (x, y2)
 
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell[0] # constant
-  y = cell[1] # constant
-  y2 = (0 if y == 29 else y + 1) # constant
+  x = cell[0] # variable definition
+  y = cell[1] # variable definition
+  y2 = (0 if y == 29 else y + 1) # variable definition
   return (x, y2)
 
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell[0] # constant
-  y = cell[1] # constant
-  x2 = (0 if x == 39 else x + 1) # constant
+  x = cell[0] # variable definition
+  y = cell[1] # variable definition
+  x2 = (0 if x == 39 else x + 1) # variable definition
   return (x2, y)
 
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell[0] # constant
-  y = cell[1] # constant
-  x2 = (39 if x == 0 else x - 1) # constant
+  x = cell[0] # variable definition
+  y = cell[1] # variable definition
+  x2 = (39 if x == 0 else x - 1) # variable definition
   return (x2, y)
 
 def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -64,8 +64,8 @@ def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
 def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
   count = 0 # variable definition
   for cell in neighbourCells(x, y):
-    cx = cell[0] # constant
-    cy = cell[1] # constant
+    cx = cell[0] # variable definition
+    cy = cell[1] # variable definition
     if grid[cx][cy] == black:
       count = count + 1 # change variable
   return count
@@ -80,7 +80,7 @@ def willLive(cell: int, liveNeighbours: int) -> bool: # function
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   colour = white # variable definition
-  live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # constant
+  live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
   if live:
     colour = black # change variable
   return colour
@@ -90,7 +90,7 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   grid = gridRef.value() # variable definition
   for x in range(0, 40):
     for y in range(0, 30):
-      colour = nextCellValue(grid, x, y) # constant
+      colour = nextCellValue(grid, x, y) # variable definition
       nextGen[x][y] = colour # change variable
   gridRef.set(nextGen) # call procedure
 

@@ -36,7 +36,6 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
-      [constantKeyword, "constant", (parent: Parent) => this.factory.newConstantStatement(parent)],
       [letKeyword, "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
       [
         variableKeyword,

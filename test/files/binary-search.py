@@ -19,7 +19,7 @@ def main() -> None:
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition
   if len(li) > 0:
-    mid = math.floor((len(li))/(2)) # constant
+    mid = math.floor((len(li))/(2)) # variable definition
     value = li[mid] # variable definition
     if item == (value):
       result = True # change variable

@@ -5,7 +5,7 @@ static void main() {
   while (!reply.upperCase().equals("Q")) {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // change variable
     if (reply.equals("")) {
-      final Int now = divAsInt(clock(), 1000); // constant
+      var now = divAsInt(clock(), 1000);
       print(now);
       print(getDate(now));
     } else {
@@ -22,24 +22,24 @@ static void main() {
 
 static String getDate(int unixSecs) { // function
   var dt = dateTime(unixSecs);
-  final Int hour = dt.item_0; // constant
-  final Int minute = dt.item_1; // constant
-  final Int second = dt.item_2; // constant
-  final Int days = dt.item_3; // constant
-  final Int year = dt.item_4; // constant
-  final Int weekday = dt.item_5; // constant
-  final String z2 = "00"; // constant
-  final String h = padLwithZero(hour); // constant
-  final String m = padLwithZero(minute); // constant
-  final String s = padLwithZero(second); // constant
+  var hour = dt.item_0;
+  var minute = dt.item_1;
+  var second = dt.item_2;
+  var days = dt.item_3;
+  var year = dt.item_4;
+  var weekday = dt.item_5;
+  var z2 = "00";
+  var h = padLwithZero(hour);
+  var m = padLwithZero(minute);
+  var s = padLwithZero(second);
   var startDays = getStartDays();
   var startDaysL = startDaysList(year, startDays);
   var month_day = monthDay(startDaysL, (days % startDays[12]));
-  final Int month = month_day.item_0; // constant
-  final Int day = month_day.item_1; // constant
-  final String dayName = getWeekdayName(weekday); // constant
-  final String d = padLwithZero(day); // constant
-  final String monthName = getMonthName(month); // constant
+  var month = month_day.item_0;
+  var day = month_day.item_1;
+  var dayName = getWeekdayName(weekday);
+  var d = padLwithZero(day);
+  var monthName = getMonthName(month);
   return String.format("%, % % % %:%:% UTC", dayName, d, monthName, year, h, m, s);
 }
 
@@ -49,17 +49,17 @@ static String getDate(int unixSecs) { // function
 
 static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
   // get separate values from Unix time
-  final Int hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24); // constant
-  final Int minute = divAsInt(unixSecs, 60) % 60; // constant
-  final Int second = (unixSecs % 60); // constant
+  var hour = (divAsInt(divAsInt(unixSecs, 60), 60) % 24);
+  var minute = divAsInt(unixSecs, 60) % 60;
+  var second = (unixSecs % 60);
   // days and years from Unix epoch
-  final Int unixDay = divAsInt(unixSecs, daySecs); // constant
-  final Int years = ((unixDay + 1)/365.24).floor(); // constant
+  var unixDay = divAsInt(unixSecs, daySecs);
+  var years = ((unixDay + 1)/365.24).floor();
   // this year and weekday
-  final Int year = unixYear + years; // constant
-  final Int weekday = (unixDay + unixWeekday) % 7; // constant
+  var year = unixYear + years;
+  var weekday = (unixDay + unixWeekday) % 7;
   // day number (1-365 or 1-366) in this year
-  final Int day = dayInYear(year, unixDay); // constant
+  var day = dayInYear(year, unixDay);
   return (hour, minute, second, day, year, weekday);
 }
 
@@ -183,7 +183,7 @@ static String pad(String d, String p, String s) { // function
   var sR = s;
   if (p.length() > s.length()) {
     if (d.upperCase().equals("L")) {
-      final String ps = p + s; // constant
+      var ps = p + s;
       sR = ps.subString(ps.length() - p.length(), ps.length()); // change variable
     } else if (d.upperCase().equals("R")) {
       sR = (s + p).subString(0, p.length()); // change variable

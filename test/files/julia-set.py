@@ -29,9 +29,9 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
   for xp in range(0, width + 1):
     for yp in range(0, height + 1):
       # scale and centre
-      n = onepoint(((((xp - width)/(2)))/(p.scale - p.xoff)), ((((yp - height)/(2)))/(p.scale - p.yoff)), nmax, p) # constant
+      n = onepoint(((((xp - width)/(2)))/(p.scale - p.xoff)), ((((yp - height)/(2)))/(p.scale - p.yoff)), nmax, p) # variable definition
       # colour depends on how many iterations were done for that point
-      col = (0xffffff if n == nmax else ((n*0x010201) % 0xffffff)) # constant
+      col = (0xffffff if n == nmax else ((n*0x010201) % 0xffffff)) # variable definition
       rect = (RectangleVG()).withX(((xp)/(2))).withY(((yp)/(2))).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
       vg2 = (vg2 + [(rect)]) # change variable
   return vg2
@@ -42,7 +42,7 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
   b = y # variable definition
   i = 0 # variable definition
   while not done:
-    c = 2*a*b # constant
+    c = 2*a*b # variable definition
     a = (a*a - b*b) + p.jx # change variable
     b = c + p.jy # change variable
     i = i + 1 # change variable
@@ -71,7 +71,7 @@ class Coords
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   def checkkeys(self: Coords) -> None: # procedure
-    panstep = 10/self.scale # constant
+    panstep = 10/self.scale # variable definition
     jstep = 0.001 # variable definition
     # save some CPU by not recalculating until a parameter has been changed
     changed = False # variable definition

@@ -11,7 +11,7 @@ def main() -> None:
   while not reply.upper() == ("Q"):
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # change variable
     if reply == (""):
-      now = math.floor((clock())/(1000)) # constant
+      now = math.floor((clock())/(1000)) # variable definition
       print(now)
       print(getDate(now))
     else:
@@ -23,24 +23,24 @@ def main() -> None:
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
-  hour = dt[0] # constant
-  minute = dt[1] # constant
-  second = dt[2] # constant
-  days = dt[3] # constant
-  year = dt[4] # constant
-  weekday = dt[5] # constant
-  z2 = "00" # constant
-  h = padLwithZero(hour) # constant
-  m = padLwithZero(minute) # constant
-  s = padLwithZero(second) # constant
+  hour = dt[0] # variable definition
+  minute = dt[1] # variable definition
+  second = dt[2] # variable definition
+  days = dt[3] # variable definition
+  year = dt[4] # variable definition
+  weekday = dt[5] # variable definition
+  z2 = "00" # variable definition
+  h = padLwithZero(hour) # variable definition
+  m = padLwithZero(minute) # variable definition
+  s = padLwithZero(second) # variable definition
   startDays = getStartDays() # variable definition
   startDaysL = startDaysList(year, startDays) # variable definition
   month_day = monthDay(startDaysL, (days % startDays[12])) # variable definition
-  month = month_day[0] # constant
-  day = month_day[1] # constant
-  dayName = getWeekdayName(weekday) # constant
-  d = padLwithZero(day) # constant
-  monthName = getMonthName(month) # constant
+  month = month_day[0] # variable definition
+  day = month_day[1] # variable definition
+  dayName = getWeekdayName(weekday) # variable definition
+  d = padLwithZero(day) # variable definition
+  monthName = getMonthName(month) # variable definition
   return f"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 
 def test_getDate(self) -> None:
@@ -48,17 +48,17 @@ def test_getDate(self) -> None:
 
 def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # get separate values from Unix time
-  hour = (math.floor((math.floor((unixSecs)/(60)))/(60)) % 24) # constant
-  minute = math.floor((unixSecs)/(60)) % 60 # constant
-  second = (unixSecs % 60) # constant
+  hour = (math.floor((math.floor((unixSecs)/(60)))/(60)) % 24) # variable definition
+  minute = math.floor((unixSecs)/(60)) % 60 # variable definition
+  second = (unixSecs % 60) # variable definition
   # days and years from Unix epoch
-  unixDay = math.floor((unixSecs)/(daySecs)) # constant
-  years = math.floor(((unixDay + 1)/365.24)) # constant
+  unixDay = math.floor((unixSecs)/(daySecs)) # variable definition
+  years = math.floor(((unixDay + 1)/365.24)) # variable definition
   # this year and weekday
-  year = unixYear + years # constant
-  weekday = (unixDay + unixWeekday) % 7 # constant
+  year = unixYear + years # variable definition
+  weekday = (unixDay + unixWeekday) % 7 # variable definition
   # day number (1-365 or 1-366) in this year
-  day = dayInYear(year, unixDay) # constant
+  day = dayInYear(year, unixDay) # variable definition
   return (hour, minute, second, day, year, weekday)
 
 def test_dateTime(self) -> None:
@@ -158,7 +158,7 @@ def pad(d: str, p: str, s: str) -> str: # function
   sR = s # variable definition
   if len(p) > len(s):
     if d.upper() == ("L"):
-      ps = p + s # constant
+      ps = p + s # variable definition
       sR = ps[len(ps) - len(p):len(ps)] # change variable
     elif d.upper() == ("R"):
       sR = (s + p)[0:len(p)] # change variable

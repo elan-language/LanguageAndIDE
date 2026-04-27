@@ -13,7 +13,7 @@
 static void main() {
   var tm = new TuringMachine(initState, haltState);
   addRulesForRomanNumeralsInto(tm); // call procedure
-  final Int dec = inputIntBetween("Enter a year:", 1, 3999); // constant
+  var dec = inputIntBetween("Enter a year:", 1, 3999);
   tm.setTape(dec.toString()); // call procedure
   var steps = 0;
   while (!tm.isHalted()) {
@@ -75,7 +75,7 @@ class TuringMachine {
     return matches.head();
   }
   public void write(String newSymbol) { // procedure
-    final Int hp = this.headPosition; // constant
+    var hp = this.headPosition;
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // change variable
   }
   public void execute(Rule rule) { // procedure
@@ -111,7 +111,7 @@ class Rule {
     this.move = move; // change variable
   }
   public String toString() { // function
-    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, this.move);
+    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumValue(this.move));
   }
 }
 

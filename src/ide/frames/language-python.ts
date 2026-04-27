@@ -43,7 +43,6 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { ConstantStatement } from "./statements/constant-statement";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
@@ -75,7 +74,7 @@ export class LanguagePython extends LanguageAbstract {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ConstantGlobal ||
-      frame instanceof ConstantStatement ||
+      frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
@@ -118,8 +117,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()} = ${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ConstantStatement) {
-      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof Else) {
