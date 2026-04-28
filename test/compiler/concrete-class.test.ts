@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Concrete Class", () => {
@@ -775,7 +775,7 @@ class Foo
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    variable copyOfThis set to copy(this)
+    let copyOfThis be copy(this)
     set copyOfThis.p1 to p
     return copyOfThis
   end function
@@ -804,7 +804,7 @@ class Foo {
   p1 = 0;
 
   async withP1(p) {
-    let copyOfThis = _stdlib.copy(this);
+    const copyOfThis = _stdlib.copy(this);
     copyOfThis.p1 = p;
     return copyOfThis;
   }
@@ -857,13 +857,13 @@ class Foo
   property p3 as String
 
   function withP1(p as Int) returns Foo
-    variable copyOfThis set to copy(this)
+    let copyOfThis be copy(this)
     set copyOfThis.p1 to p
     return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
-     variable copyOfThis set to copy(this)
+     let copyOfThis be copy(this)
     set copyOfThis.p2 to p
     return copyOfThis
   end function
@@ -910,13 +910,13 @@ class Foo {
   p3 = "";
 
   async withP1(p) {
-    let copyOfThis = _stdlib.copy(this);
+    const copyOfThis = _stdlib.copy(this);
     copyOfThis.p1 = p;
     return copyOfThis;
   }
 
   async withP2(p) {
-    let copyOfThis = _stdlib.copy(this);
+    const copyOfThis = _stdlib.copy(this);
     copyOfThis.p2 = p;
     return copyOfThis;
   }
@@ -2264,7 +2264,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
+      "'copyOfThis' is a restricted to use within the 'with...' instructionLangRef.html#compile_error",
     ]);
   });
 
@@ -2326,7 +2326,7 @@ class Foo
   property p1 as Int
 
   procedure withP1(p as Int)
-    variable copyOfThis set to copy(this)
+    let copyOfThis be copy(this)
     set cpy.p1 to p
   end procedure
 end class`;
@@ -2342,10 +2342,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_PropertyMustBeInitialised", async () => {

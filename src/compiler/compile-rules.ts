@@ -929,7 +929,7 @@ export function mustConformToCopyOfThisBoilerPlate(
     }
     compileErrors.push(
       new SyntaxCompileError(
-        "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).",
+        "'copyOfThis' is a restricted to use within the 'with...' instruction",
         location,
       ),
     );
