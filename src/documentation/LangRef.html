@@ -36,7 +36,7 @@ it provides a useful discipline in any code. Preferring immutable named values c
 are passed around in a running program:</p>
 <ul>
  <li><b id="ValueType">Value Types</b> that contain a single value, and are passed around directly:<br>
- <code>Integer</code>, <code>Float</code>, <code>Boolean</code></li>
+ <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
  <li><b id="ReferenceType">Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
  any user-defined Type such as the name of an <el-instr>Abstract class</el-instr>, <el-instr>Class</el-instr> or <el-instr>Interface</el-instr>.</li>
@@ -117,7 +117,7 @@ are passed around in a running program:</p>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
  <li><i>or</i> specified in the definition of
  <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
+  <li>data structures whose items have a particular Type, e.g. <code>List</code>&lt;of <code>Int</code>&gt;</li>
   <li><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
   <li><el-instr>return</el-instr> value of a function</li>
   <li><el-instr>property</el-instr> of an <el-instr>interface</el-instr> or <el-instr>class</el-instr></li>
@@ -425,23 +425,24 @@ end test
 
 <codeblock>
 test test_round
-  assert sqrt(2).round(3) is 1.414 pass
+  assert sqrt(2).round(3) is 1.414
 end test
 </codeblock>
 
 <h3 class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
-<p>In the last <el-instr>assert equal</el-instr> shown below, note how testing can also be done against an expected error message.</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <codeblock>
 test test_list
   variable a set to [5, 1, 7]
-  assert a[0] is 5 pass
-  assert a[2] is 7 pass
-  assert a[4] is 0 actual (computed): Out of range index: 4 size: 3
-  assert a[4] is "Out of range index: 4 size: 3" pass
+  assert a[0] is 5
+  assert a[2] is 7
 end test
 </codeblock>
+
+<p>This <el-instr>assert</el-instr> shows how testing can also be done against an expected error message:</p>
+<code>assert a[4] is 0</code> actual (computed): Out of range index: 4 size: 3
+<code>assert a[4] is "Out of range index: 4 size: 3"</code>
 
 <h3 class="no-TOC" >Testing long strings</h3>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
@@ -613,8 +614,8 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <p>As with a concrete Class, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p>You may also define abstract methods on an <el-instr>abstract class</el-instr>, i.e. <code>abstract property</code>, <code>abstract function</code>, <code>abstract procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<p><code>abstract function calculateDiscount() as Float</code></p>
+<p>You may also define abstract methods on an <el-instr>abstract class</el-instr>, i.e. abstract <code>property</code>, abstract <code>function</code>, abstract <code>procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
+<p><code>function calculateDiscount() as Float</code></p>
 <p>If you wish to have several subclasses of an <el-instr>abstract class</el-instr> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-instr>abstract</el-instr> on the superclass.</li>
@@ -837,13 +838,13 @@ The <code>new code</code> prompt will offer a context appropriate subset of the 
 </table>
 
 <h2 id="abstract_property"><el-instr>abstract property</el-instr></h2>
-<p>An abstract property may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="abstract_function"><el-instr>abstract function</el-instr></h2>
-<p>An abstract function method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
 <h2 id="abstract_procedure"><el-instr>abstract procedure</el-instr></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><code>abstract class</code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="property"><el-instr>property</el-instr></h2>
 <p>A <el-instr>property</el-instr> is a named value defined on a <el-instr>class</el-instr> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
@@ -867,7 +868,7 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the Class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <code>function</code> method may directly reference (read only) any <el-instr>property</el-instr> defined on the Class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an <code>abstract class</code>, within its subclasses.
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an abstract <code>class</code>, within its subclasses.
  This is done by selecting the <el-instr>property</el-instr> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 <li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
  If defined for a Class then, if an instance of the Class is printed, function method <el-method>toString</el-method> will automatically be used.
@@ -879,7 +880,7 @@ Properties may be modified only from outside the Class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the Class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-instr>property</el-instr> defined on the Class.</li>
-<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an <code>abstract class</code>, within its subclasses.
+<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the Class and, if defined on an abstract <code>class</code>, within its subclasses.
  This is done by selecting the <el-instr>property</el-instr> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 </ul>
 
@@ -895,7 +896,7 @@ This action is a toggle used both to set and to remove the modifier <el-instr>pr
 </ul>
 
 <ul>
-<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property. </code>('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
+<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property</code>.('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
 </ul>
 <codeblock>
 class Game
@@ -986,7 +987,7 @@ which is the mechanism for running unit tests during program development, not du
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
   To enforce this, <el-instr>call procedure</el-instr> instructions are not allowed in functions.</p>
 <p>There is a limit to the complexity of a <el-instr>call procedure</el-instr> instruction.
- Only one dot is allowed in the <code>procedure name</code> field, or two dots if the first word is <el-instr>property</el-instr>.
+ Only one dot is allowed in the procedure name field, or two dots if the first word is <el-instr>property</el-instr>.
  If you need anything more complicated, use a <el-instr>change variable</el-instr> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
@@ -998,7 +999,7 @@ which is the mechanism for running unit tests during program development, not du
 <codeblock>
   constant tau set to 2*pi
   constant phi set to (1 + sqrt(5))/2
-  constant euro set to "?"
+  constant euro set to "€"
   constant t set to "Total = "
 </codeblock>
 
@@ -1012,7 +1013,7 @@ whose return value is put into a variable. See <a href="#constant_structure">Con
 <h2 id="for"><el-instr>for</el-instr></h2>
 <div id="to"></div>
 <div id="step"></div>
-<p>The construct <code>for p in q</code>  specifies looping through a sequence of
+<p>The construct <code>for p in q</code> specifies looping through a sequence of
  characters in a <code>String</code> or items in a <code>List</code>.
 The forms of the <el-instr>for loop</el-instr> are:</p>
 <ul>
@@ -1038,9 +1039,11 @@ end main
 </codeblock><br>
   puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):</li>
- <codeblock>set basket to ["apple", "banana", "cherry", "date"]</codeblock>
- <codeblock>for fruit in basket</codeblock><br>
-  puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
+<codeblock>
+set basket to ["apple", "banana", "cherry", "date"]
+for fruit in basket
+</codeblock>
+ <br>puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
 </ul>
 <p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of  <el-id>p</el-id>:</p>
 <ul>
@@ -1144,19 +1147,19 @@ So even if the loop variable is changed in any way within the <el-instr>for loop
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
-if item.equals(value) then
-  set result to true
-elif item.isBefore(value) then
-  set result to binarySearch(li[:mid], item)
-else
-  set result to binarySearch(li[mid + 1:], item)
-end if
+    if item.equals(value) then
+      set result to true
+    elif item.isBefore(value) then
+      set result to binarySearch(li.subList(0, mid), item)
+    else
+      set result to binarySearch(li.subList(mid + 1, li.length()), item)
+    end if
 </codeblock>
 <hr>
 </div></div>
 
 <h2 id="set"><el-instr>change variable</el-instr></h2>
-<p>The <el-instr>change variable</el-instr><code>..</code>to<code>..</code> instruction assigns a new value to an existing <el-instr>variable definition</el-instr> (mutable) named value.</p>
+<p>The <el-instr>change variable .. to .. </el-instr> instruction assigns a new value to an existing <el-instr>variable</el-instr> definition (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
 <p>A <el-instr>change variable</el-instr> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
@@ -1338,11 +1341,11 @@ end main
 </codeblock>
 
 <p>would print these lines to the display:</p>
-<pre><el-code>
-   4                            (the value of the list item)
-   [4, 5, 6, 7, 8, 9, 10, 11]   (a new list)
-   [0, 1, 2, 3, 4, 5, 6]        (since the upper bound of a range is <i>exclusive</i>)
-</el-code></pre>
+<pre>
+   <code>4</code>                            (the value of the list item)
+   <code>[4, 5, 6, 7, 8, 9, 10, 11]</code>   (a new list)
+   <code>[0, 1, 2, 3, 4, 5, 6]</code>        (since the upper bound of a range is <i>exclusive</i>)
+</pre>
 
 <div id="operator"></div>
 <h2 id="Operators">Operators</h2>
@@ -1350,26 +1353,28 @@ end main
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
 
 <p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
-<p>For the <code> + &minus; * </code> operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
-<p>For the <code> / </code> operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p>For the  + &minus; *  operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
+<p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <p id="power">For raising one value to the power of another, use the syntax in these examples:<br>
-<codeblock>call print(pow(4, 4))</codeblock>
-<codeblock>variable c set to sqrt(pow(a, 2) + pow(b, 2))</codeblock>
+<codeblock>
+call print(pow(4, 4))
+variable c set to sqrt(pow(a, 2) + pow(b, 2))
+</codeblock>
 
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
 <p id="mod"> The operator <el-instr>mod</el-instr> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
 <pre>
-    <code>2/3.0</code>         &#x27f6;  <code>0.666..</code>
-    <code>2*3</code>             &#x27f6;  <code>6</code>
-    <code>2 + 3</code>         &#x27f6;  <code>5</code>
-    <code>2 &minus; 3</code>         &#x27f6;  <code>&minus;6</code>
-    <code>11 mod 3</code>   &#x27f6;  <code>2</code>
+    2/3.0          &#x27f6;  0.666..
+    2*3             &#x27f6;  6
+    2 + 3          &#x27f6;  5
+    2 &minus; 3          &#x27f6;  &minus;1
+    11 <el-instr>mod</el-instr> 3    &#x27f6;  2
 </pre>
 <p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> (which returns an <code>Int</code>):</p>
 <pre>
-    <code>(11/3.0).floor()</code>       &#x27f6;  <code>3</code>
-    <code>(-11/3.0).floor()</code>     &#x27f6; <code>&minus;4</code>
-    <code>divAsInt(11,3)</code>            &#x27f6; <code>3</code>
+    (11/3.0).<el-method>floor</el-method>()       &#x27f6;  3
+    (-11/3.0).<el-method>floor</el-method>()      &#x27f6; &minus;4
+    <el-method>divAsInt</el-method>(11, 3)      &#x27f6; 3
 </pre>
 <p>Note that rounding is always down.</p>
 
@@ -1382,10 +1387,10 @@ end main
  If both arguments are positive, there is no difference.</p>
 <p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
 <pre>
-    <code>2*&minus;3</code>           &#x27f6;  <code>&minus;6</code>
+    2*&minus;3           &#x27f6;  &minus;6
 </pre>
 
-<p>The editor automatically puts spaces around the operators <code>&plus;</code> and <code>&minus;</code>, but not around <code>/</code> or <code>*</code>.
+<p>The editor automatically puts spaces around the operators &plus; and &minus;, but not around / or *.
 This is just to visually reinforce the precedence.</p>
 
 <div id="and"></div>
@@ -1399,13 +1404,13 @@ This is just to visually reinforce the precedence.</p>
 example, which implements an 'exclusive or', need not use brackets and can rely on the operator precedence:</p>
 
 <codeblock>
-function xor(a as Boolean, b as Boolean) returns Boolean
+function exOr(a as Boolean, b as Boolean) returns Boolean
   return a and not b or b and not a
 end function
 </codeblock>
 
 <h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The <code>&plus;</code> operator is also used for concatenating <code>String</code> values.</p>
+<p>The &plus; operator is also used for concatenating <code>String</code> values.</p>
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
@@ -1422,7 +1427,11 @@ end function
 <h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference Types</h4>
 <p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods</a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
-<li><code>if listA.equals(listB) then</code></li>
+<li>
+<codeblock>
+if listA.equals(listB) then
+end if
+</codeblock></li>
 <li><code>set differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
@@ -1434,10 +1443,10 @@ Two instances which are subclasses of the same abstract Class compare equal only
 <h3 class="no-TOC">Numeric comparison</h3>
 <p>The numeric comparison operators are:</p>
 <pre>
-    <code>&gt; </code>        for     greater than
-    <code>&lt; </code>        for     less than
-    <code>&gt;=</code>        for     greater than or equal to
-    <code>&lt;=</code>        for     less than or equal to
+    &gt;         for     greater than
+    &lt;         for     less than
+    &gt;=        for     greater than or equal to
+    &lt;=        for     less than or equal to
 </pre>
 <p>Each may be applied between two values of Type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
 <p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String</a>.</p>
@@ -1478,7 +1487,7 @@ You would typically define a <code>lambda</code>:</p>
 <ul>
 <li>Start with the keyword <el-instr>lambda</el-instr>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The <code>=&gt;</code> symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
+<li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
 <p>Although a <code>lambda</code> is commonly defined 'inline' it is also possible
@@ -1501,11 +1510,12 @@ end function
   <ul>
    <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
    <li><el-instr>elif</el-instr> and <el-instr>else</el-instr> clauses are optional.</li>
-<li>You can add as many <el-instr>elif</el-instr> clauses as you wish, but only one unconditional <el-instr>else</el-instr> which, if present, must be last.</li>
+   <li>You can add as many <el-instr>elif</el-instr> clauses as you wish, but only one unconditional <el-instr>else</el-instr> which, if present, must be last.</li>
   </ul>
- <li>A simpler structure that distinguishes only two possibilities, with the format:<br><code>if(<code>Boolean</code> expression, return value if true, return value if false)</code>.</ol>
-<p>An <el-instr>if</el-instr> expression may be used within an <el-instr>if</el-instr> expression but will be hard to read even when enclosed in brackets.</p>
+ <li>A simpler form that distinguishes only two possibilities, with the format:<br>
+<code>variable isBigger set to if(a >= b, true, false)</code></li> 
 </ul>
+<p>An <el-instr>if</el-instr> expression may be used within an <el-instr>if</el-instr> expression but will be hard to read even when enclosed in brackets.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>if</el-instr> expression:</h4>
@@ -1561,10 +1571,10 @@ would print these lines to the display:
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
 <p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
- Your text may contain any characters, except that it must not start with an open square bracket <code>[</code>.</p>
+ Your text may contain any characters, except that it must not start with an open square bracket [.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well as from the <code>new code</code> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
+as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1681,7 +1691,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  <p>Certain data structure Types, including <code>List</code>, must specify the Type of their members, for example <code>List</code>&lt;<el-instr>of</el-instr> <code>Int</code>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
- for example: <code><code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;</code>.</p>
+ for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
 
 <h3 id="MutateCompileError" class="no-TOC">May not re-assign the ...</h3>
  <p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>
@@ -1736,7 +1746,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
   <li>Keywords in all the supported languages.</li>
-  <li>Lowercase versions of Elan Type names, such as <code>int, float, string, boolean, list, dictionary</code>.
+  <li>Lowercase versions of Elan Type names, such as <code>Int</code>, <code>Float</code>, <code>String</code>, <code>Boolean</code>, <code>List</code>, <code>Dictionary</code>.
   It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
   what it does (for a method), or represents (for a named value).</li>
   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
@@ -1752,7 +1762,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
- <code>a[&minus;3]</code> then this will generate a compile error.
+ a[&minus;3] then this will generate a compile error.
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
@@ -1782,7 +1792,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 <h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one 'main' in a program.</h3>
 
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
- <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <code>-</code>
+ <p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
  or <el-instr>not</el-instr> successively within an expression.</p>
 
 <h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
@@ -1807,7 +1817,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
  instruction and then use the named value in the 'actual' field of the <el-instr>assert equal</el-instr>
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
-  <li>Any expression involving a binary operator such as <code>+</code>, <el-instr>isnt</el-instr>, etc.,
+  <li>Any expression involving a binary operator such as &plus;, <el-instr>isnt</el-instr>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <el-instr>is</el-instr> operator within the 'actual' field, because
   the parser will confuse this with the <el-instr>is</el-instr> keyword that is part of the <el-instr>assert equal</el-instr> instruction.</li>
@@ -1844,7 +1854,7 @@ as well as from the <code>new code</code> prompt. Every prompt provides a <code>
 
 <h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
  <p>Each parameter definition takes the form:</p>
- <code>name as <code>Type</code></code>
+ name as Type
  <p>The name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
  <p>The Type must follow the rules for a <a href="#TypeName">Type</a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
