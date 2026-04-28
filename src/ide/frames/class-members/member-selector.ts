@@ -11,6 +11,7 @@ import {
   privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
+  withKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
@@ -46,6 +47,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
       [procedureKeyword, "procedure", (_parent: Parent) => this.class.createProcedure()],
       [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
+      [withKeyword, "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
       [
         abstractPropertyKeywords,
         "abstract property",

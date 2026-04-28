@@ -48,6 +48,7 @@ export const toKeyword = "to";
 export const tryKeyword = "try";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
+export const withKeyword = "with";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
@@ -114,6 +115,7 @@ const elanKeywords: string[] = [
   tryKeyword,
   variableKeyword,
   whileKeyword,
+  withKeyword,
 ];
 
 export const ghostedAnnotation = "ghosted";

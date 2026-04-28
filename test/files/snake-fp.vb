@@ -104,37 +104,37 @@ Class Game
   End Function
   Function withHead(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.head = value ' change variable
+    copyOfThis.head = value ' with property update
     Return copyOfThis
   End Function
   Function withBody(value As List(Of Square)) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.body = value ' change variable
+    copyOfThis.body = value ' with property update
     Return copyOfThis
   End Function
   Function withPriorTail(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.priorTail = value ' change variable
+    copyOfThis.priorTail = value ' with property update
     Return copyOfThis
   End Function
   Function withApple(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.apple = value ' change variable
+    copyOfThis.apple = value ' with property update
     Return copyOfThis
   End Function
   Function withIsOn(value As Boolean) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.isOn = value ' change variable
+    copyOfThis.isOn = value ' with property update
     Return copyOfThis
   End Function
   Function withRnd(value As Random) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.rnd = value ' change variable
+    copyOfThis.rnd = value ' with property update
     Return copyOfThis
   End Function
   Function withKey(value As String) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.key = value ' change variable
+    copyOfThis.key = value ' with property update
     Return copyOfThis
   End Function
 End Class
@@ -149,12 +149,12 @@ Class Square
   End Sub
   Function withX(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.x = value ' change variable
+    copyOfThis.x = value ' with property update
     Return copyOfThis
   End Function
   Function withY(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.y = value ' change variable
+    copyOfThis.y = value ' with property update
     Return copyOfThis
   End Function
   Function toString() As String

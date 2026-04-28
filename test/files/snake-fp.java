@@ -104,37 +104,37 @@ class Game {
   }
   public Game withHead(Square value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.head = value; // change variable
+    copyOfThis.head = value // with property update
     return copyOfThis;
   }
   public Game withBody(List<Square> value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.body = value; // change variable
+    copyOfThis.body = value // with property update
     return copyOfThis;
   }
   public Game withPriorTail(Square value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.priorTail = value; // change variable
+    copyOfThis.priorTail = value // with property update
     return copyOfThis;
   }
   public Game withApple(Square value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.apple = value; // change variable
+    copyOfThis.apple = value // with property update
     return copyOfThis;
   }
   public Game withIsOn(bool value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.isOn = value; // change variable
+    copyOfThis.isOn = value // with property update
     return copyOfThis;
   }
   public Game withRnd(Random value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.rnd = value; // change variable
+    copyOfThis.rnd = value // with property update
     return copyOfThis;
   }
   public Game withKey(String value) { // function
     var Game copyOfThis = copy(this); // let
-    copyOfThis.key = value; // change variable
+    copyOfThis.key = value // with property update
     return copyOfThis;
   }
 }
@@ -149,12 +149,12 @@ class Square {
   }
   public Square withX(int value) { // function
     var Square copyOfThis = copy(this); // let
-    copyOfThis.x = value; // change variable
+    copyOfThis.x = value // with property update
     return copyOfThis;
   }
   public Square withY(int value) { // function
     var Square copyOfThis = copy(this); // let
-    copyOfThis.y = value; // change variable
+    copyOfThis.y = value // with property update
     return copyOfThis;
   }
   public String toString() { // function

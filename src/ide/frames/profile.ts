@@ -18,7 +18,8 @@ import {
   setKeyword,
   testKeyword,
   variableKeyword,
-  whileKeyword
+  whileKeyword,
+  withKeyword,
 } from "../../compiler/elan-keywords";
 
 export const defaultUsername = "guest";
@@ -82,6 +83,7 @@ export class Profile {
   private members_procedural: string[] = [];
   private members_oop: string[] = [
     functionKeyword,
+    withKeyword,
     procedureKeyword,
     propertyKeyword,
     withKeyword

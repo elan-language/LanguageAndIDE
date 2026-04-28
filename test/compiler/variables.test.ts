@@ -750,7 +750,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only use 'copyOfThis in statement of form 'variable copyOfThis set to copy(this).LangRef.html#compile_error",
+      "'copyOfThis' is a restricted to use within the 'with...' instructionLangRef.html#compile_error",
     ]);
   });
 
