@@ -12,6 +12,7 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
+  withKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
@@ -51,6 +52,7 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [withKeyword, "with property set", (parent: Parent) => this.factory.newWithPropertySet(parent)],
       [
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,

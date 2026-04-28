@@ -15,6 +15,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { WithPropertySet } from "./statements/with-property-set";
 
 export class StatementFactoryImpl implements StatementFactory {
   public newAssert(parent: Parent): Frame {
@@ -59,6 +60,9 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newWhile(parent: Parent): Frame {
     return new While(parent);
+  }
+  public newWithPropertySet(parent: Parent): Frame {
+    return new WithPropertySet(parent);
   }
   public newComment(parent: Parent): Frame {
     return new CommentStatement(parent);

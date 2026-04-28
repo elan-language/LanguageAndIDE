@@ -15,5 +15,6 @@ export interface StatementFactory {
   newTryCatch(parent: Parent): Frame;
   newVar(parent: Parent): Frame;
   newWhile(parent: Parent): Frame;
+  newWithPropertySet(parent: Parent): Frame;
   newComment(parent: Parent): Frame;
 }
