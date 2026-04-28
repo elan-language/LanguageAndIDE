@@ -19,13 +19,17 @@ import { AbstractClass } from "../globals/abstract-class";
 import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
 import { LetStatement } from "../statements/let-statement";
+import { StatementSelector } from "../statements/statement-selector";
 import { WithPropertyUpdate } from "../statements/with-property-update";
+import { ParseStatus } from "../status-enums";
 
 export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
   isPrivate: boolean = false;
   isAbstract: boolean = false;
   file: File;
+  private letCopyOfThis: LetStatement;
+  private firstWith: WithPropertyUpdate;
 
   constructor(parent: Parent) {
     super(parent);
@@ -35,13 +39,13 @@ export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
     this.returnType.setFieldToKnownValidText(className);
     this.removeChild(this.getChildren()[0]); // remove new code selector
 
-    const letCopyOfThis = new LetStatement(this);
-    letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
-    letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
+    this.letCopyOfThis = new LetStatement(this);
+    this.letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
+    this.letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
         const ret = this.getReturnStatement();
-    this.addChildBefore(letCopyOfThis, ret);
-    const withProp = new WithPropertyUpdate(this);
-    this.addChildBefore(withProp, ret);
+    this.addChildBefore(this.letCopyOfThis, ret);
+    this.firstWith = new WithPropertyUpdate(this);
+    this.addChildBefore(this.firstWith, ret);
     ret.expr.setFieldToKnownValidText("copyOfThis");
   }
 
@@ -50,7 +54,7 @@ export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
   }
 
   getIdPrefix(): string {
-    return "with";
+    return "func";
   }
 
   helpId(): string {
@@ -67,7 +71,7 @@ export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
   }
 
   public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${functionKeyword} {this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
@@ -82,7 +86,21 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
     }
     super.parseTop(source);
   }
+
   parseBottom(source: CodeSource): boolean {
+      source.removeIndent();
+      if (source.isMatchRegEx(/^let \(/)) {
+        this.letCopyOfThis.parseFrom(source);
+        this.removeChild(this.getFirstSelectorAsDirectChild());
+        this.addChildAfter(new StatementSelector(this), this.letCopyOfThis); //So that parsing will continue from the selector *after* the catch
+      }
+      source.removeIndent();
+      if (source.isMatchRegEx(/^with \(/)  && this.firstWith.assignable.readParseStatus() !== ParseStatus.valid) {
+        this.firstWith.parseFrom(source);
+        this.removeChild(this.getFirstSelectorAsDirectChild());
+        this.addChildAfter(new StatementSelector(this), this.letCopyOfThis); //So that parsing will continue from the selector *after* the catch
+      }
+      
     return super.parseBottom(source);
   }
 

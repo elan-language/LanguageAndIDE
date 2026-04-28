@@ -18,7 +18,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
     source.removeIndent();
     source.remove(`${variableKeyword} `);
     this.name.parseFrom(source);
-    source.remove(" set to ");
+    source.remove(` ${setKeyword} ${toKeyword} `);
     this.expr.parseFrom(source);
     source.removeNewLine();
   }

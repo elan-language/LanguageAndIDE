@@ -95,7 +95,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   private isWithinAWithFunctionMethod(): boolean {
-    return this.isWithinContext(this.getParent(), "with");
+    return this.isWithinContext(this.getParent(), "func");
   }
 
 

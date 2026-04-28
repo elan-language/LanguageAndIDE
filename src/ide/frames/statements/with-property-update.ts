@@ -13,8 +13,7 @@ export class WithPropertyUpdate extends SingleLineFrame implements Statement {
   expr: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
-    this.assignable = new AssignableField(this);
-    this.assignable.setPlaceholder("copyOfthis.<i>propertyName</i>");
+    this.assignable = new AssignableField(this, /\s+set\s+/);
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
@@ -25,7 +24,7 @@ export class WithPropertyUpdate extends SingleLineFrame implements Statement {
     source.removeIndent();
     source.remove(`${withKeyword} `);
     this.assignable.parseFrom(source);
-    source.remove(`${setKeyword} ${toKeyword}`);
+    source.remove(` ${setKeyword} ${toKeyword} `);
     this.expr.parseFrom(source);
     source.removeNewLine();
   }

@@ -776,7 +776,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    set copyOfThis.p1 to p
+    with copyOfThis.p1 set to p
     return copyOfThis
   end function
 end class`;
@@ -858,13 +858,13 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    set copyOfThis.p1 to p
+    with copyOfThis.p1 set to p
     return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
      let copyOfThis be copy(this)
-    set copyOfThis.p2 to p
+    with copyOfThis.p2 set to p
     return copyOfThis
   end function
 
@@ -2246,7 +2246,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     variable copyOfThis set to new Foo()
-    set copyOfThis.p1 to p
+    with copyOfThis.p1 set to p
     return copyOfThis
   end function
 end class`;
