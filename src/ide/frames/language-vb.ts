@@ -5,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { WithMethod } from "./class-members/with-method";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -52,6 +53,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { WithPropertyUpdate } from "./statements/with-property-update";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
@@ -76,6 +78,8 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof VariableStatement ||
       frame instanceof ProcedureFrame ||
       frame instanceof LetStatement ||
+      frame instanceof WithMethod ||
+      frame instanceof WithPropertyUpdate ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement
     ) {
@@ -118,6 +122,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof WithPropertyUpdate) {
+      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.MUST_OVERRIDE} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
@@ -138,7 +144,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
-    } else if (frame instanceof FunctionMethod) {
+    } else if (frame instanceof FunctionMethod || frame instanceof WithMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;

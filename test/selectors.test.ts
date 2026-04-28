@@ -96,7 +96,7 @@ suite("Selector tests", () => {
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "procedure", "function", "# comment"]);
+    assertOptions(s, ["property", "procedure", "function", "with method", "# comment"]);
   });
 
   test("Selection Filtering - abstract class", () => {
@@ -114,6 +114,7 @@ suite("Selector tests", () => {
       "property",
       "procedure",
       "function",
+      "with method",
       "abstract property",
       "abstract procedure",
       "abstract function",
@@ -155,6 +156,7 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
+      "with property update",
       "# comment",
     ]);
   });
@@ -231,6 +233,7 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
+      "with property update",
       "# comment",
     ]);
   });
@@ -259,6 +262,7 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
+      "with property update",
       "# comment",
     ]);
   });

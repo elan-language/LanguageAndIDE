@@ -37,7 +37,7 @@ export class WithPropertyUpdate extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "with property set";
+    return "with property update";
   }
 
   renderAsElanSource(): string {
