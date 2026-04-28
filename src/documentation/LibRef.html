@@ -507,16 +507,16 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>literal definition</td>
   <td><code>[2, 3, 5, 7, 11]</code></td>
   <td><code>["a":3, "b":5]</code></td>
-  <td>Only as converted from a literal <code>List</code><br>e.g. <code>["a","b","c"].<el-method>asSet</el-method>()</code></td>
+  <td>Only as converted from a literal <code>List</code><br>e.g. <code>["a","b","c"].asSet()</code></td>
   <td>Not available</td>
   <td>Not available</td>
- </tr><tr>
+ </tr><tr>              
   <td>create empty</td>
-  <td><code>new <code>List</code>&lt;of Type&gt;()</code></td>
-  <td><code>new <code>Dictionary</code>&lt;of keyType, valueType&gt;()</code></td>
-  <td><code>new <code>HashSet</code>&lt;of Type&gt;()</code></td>
-  <td><code>new <code>Stack</code>&lt;of Type&gt;()</code></td>
-  <td><code>new <code>Queue</code>&lt;of Type&gt;()</code></td>
+  <td><code>new List</code>&lt;of Type&gt;()</td>
+  <td><code>new Dictionary</code>&lt;of keyType, valueType&gt;()</td>
+  <td><code>new HashSet</code>&lt;of Type&gt;()</td>
+  <td><code>new Stack</code>&lt;of Type&gt;()</td>
+  <td><code>new Queue</code>&lt;of Type&gt;()</td>
  </tr><tr>
   <td>create initialised
   <td><el-code><el-method>createList</el-method>(<el-lit>number</el-lit>, <el-lit>value</el-lit>)<el-code><br>
@@ -534,7 +534,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>not available</td>
  </tr><tr>
   <td>read by index range</td>
-  <td><code>li.<el-method>subList</el-method>(3, el-lit>5)</code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
+  <td><code>li.subList(3, 5)</code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
@@ -614,7 +614,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><code>variable array3D set to new List<of List<of List</code>&lt;of <code>Float&gt;&gt;&gt;()</code></li>
+<li><code>variable array3D set to new <code>List</code>&lt;of <code>List</code>&lt;of <code>List</code>&lt;of <code>Float</code>&gt;&gt;&gt;()</li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
@@ -903,25 +903,37 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 
 <table class="tablePlain"><!--source="set.elan"-->
 <tr>
-<td><code>variable st set to new HashSet</code>&lt;of <code>Int()</code><br>
-  <code>set st  to st.addFromList([3, 5, 7])</code><br>
-  <code>call print(st.length())</code><br></td>
-<td><br><br>&#x27f6;</td><td><br><br>3</td>
+ <td>
+  <code>variable st set to new HashSet</code>&lt;of <code>Int</code>()<br>
+  <code>set st to st.addFromList([3, 5, 7])</code>
+  <br>call print(st.length())
+  </td><td>
+  <br><br>&#x27f6;
+  </td><td><br><br>3
+ </td>
 </tr><tr>
-<td><code>set st  to st.add(7)</code><br>
-  <code>call print(st.length())</code></td>
-<td><br>&#x27f6;</td><td><br>3</td>
+ <td>
+  <code>set st to st.add(7)</code><br>
+  <code>call print(st.length())</code>
+ </td><td>
+ <br>&#x27f6;
+ </td><td>
+ <br>3
+ </td>
 </tr><tr>
-<td><code>set st  to st.remove(3)</code><br>
+ <td>
+  <code>set st to st.remove(3)</code><br>
   <code>call print(st.length())</code></td>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
-<td><code>set st  to st.remove(3)</code><br>
+ <td>
+  <code>set st to st.remove(3)</code><br>
   <code>call print(st.length())</code></td>
-<td><br>&#x27f6;</td><td><br>2</td>
-</tr><tr>
-<td><code>call print(st)</code></td>
-<td>&#x27f6;</td><td>[5, 7]</td>
+ <td><br>&#x27f6;</td><td><br>2
+ </td></tr>
+<tr>
+ <td><code>call print(st)</code></td>
+ <td>&#x27f6;</td><td>[5, 7]</td>
 </table>
 
 <h3 class="no-TOC" id="Set_functions">Function dot methods on a <code>HashSet</code></h3>
@@ -1194,14 +1206,14 @@ of differing Types held together and referenced by a single identifier.</p>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
 </ul>
 
-<h3 class="no-TOC">Defining a <code>Tuple</code></h3>
-<p>A new Tuple is defined by a list of items separated by commas and  enclosed in round brackets:</p>
+<h3 class="no-TOC">Defining a Tuple</h3>
+<p>A new <code>Tuple</code> is defined by a list of items separated by commas and  enclosed in round brackets:</p>
 
 <code>variable point set to (3, 4)</code>
 <code>variable t set to (3, "apple", true)</code>
 
-<h3 class="no-TOC" id="deconstructTuple">Accessing items in a <code>Tuple</code></h3>
-<p id="item_N">The items in a tuple may be individually addressed by a dot reference and its special properties <el-id>item_</el-id>N, thus:</p>
+<h3 class="no-TOC" id="deconstructTuple">Accessing items in a Tuple</h3>
+<p id="item_N">The items in a <code>tuple</code> may be individually addressed by a dot reference and its special properties <el-id>item_</el-id>N, thus:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -1228,7 +1240,7 @@ end function
 </codeblock>
 <p>Note that the appropriate <el-id>item_</el-id>Ns will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
-<h3 class="no-TOC">Function dot methods on a <code>Tuple</code></h3>
+<h3 class="no-TOC">Function dot methods on a Tuple</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
@@ -1453,7 +1465,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <code>List</code>&lt;of <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-instr>of</el-instr> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
-<p><code>VectorGraphic</code> is the abstract superclass of all <code>..VG</code> shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
+<p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
 as shown in the table below.</p>
@@ -1481,31 +1493,31 @@ Later shapes are positioned in front of earlier ones.</p>
   <td><code>ImageVG</code></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
-  <td>string containing the Html <el-lit>&lt;img&gt;</el-lit> tag filled with the image's URL and attribute values</td>
+  <td>string containing the Html &lt;img&gt; tag filled with the image's URL and attribute values</td>
  </tr><tr id="asSVG_Circle"><div  id="asSVG"></div>
   <td><el-method>asSVG</el-method></td>
   <td><code>CircleVG</code></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
-  <td>string containing the SVG <el-lit>&lt;circle&gt;</el-lit> tag filled with the circle's attribute values</td>
+  <td>string containing the SVG &lt;circle&gt; tag filled with the circle's attribute values</td>
  </tr><tr id="asSVG_Image">
   <td><el-method>asSVG</el-method></td>
   <td><code>ImageVG</code></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
-  <td>string containing the SVG <el-lit>&lt;image&gt;</el-lit> tag filled with the image's URL and attribute values</td>
+  <td>string containing the SVG &lt;image&gt; tag filled with the image's URL and attribute values</td>
  </tr><tr id="asSVG_Line">
   <td><el-method>asSVG</el-method></td>
   <td><code>LineVG</code></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
-  <td>string containing the SVG <el-lit>&lt;line&gt;</el-lit> tag filled with the line's attribute values</td>
+  <td>string containing the SVG &lt;line&gt; tag filled with the line's attribute values</td>
  </tr><tr id="asSVG_Ractangle">
   <td><el-method>asSVG</el-method></td>
   <td><code>RectangleVG</code></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
-  <td>string containing the SVG <el-lit>&lt;rectangle&gt;</el-lit> tag filled with the rectangle's attribute values</td>
+  <td>string containing the SVG &lt;rectangle&gt; tag filled with the rectangle's attribute values</td>
  </tr>
 </table>
 
@@ -1800,13 +1812,13 @@ If you need another random value, you use the returned <code>Random</code> on wh
   <th>returns</th>
  </tr><tr id="next">
   <td><el-method>next</el-method></td>
-  <td><code>Float, Float</code></td>
-  <td>2-Tuple:<br>(<code>Float, Random</code>)</td>
+  <td><code>Float</code>, <code>Float</code></td>
+  <td>2-Tuple:<br>(<code>Float</code>, <code>Random</code>)</td>
   <td>random <code>Float</code> value in the range of the arguments, and<br>new instance of <code>Random</code> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
-  <td><code>Int, Int</code></td>
-  <td>2-Tuple:<br>(<code>Int, Random</code>)</td>
+  <td><code>Int</code>, <code>Int</code></td>
+  <td>2-Tuple:<br>(<code>Int</code>, <code>Random</code>)</td>
   <td>random <code>Int</code> value in the range of the arguments, and<br>new instance of <code>Random</code> for subsequent use</td>
  </tr>
 </table>
@@ -1846,9 +1858,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <p>The Type of any function starts with the word <code>Func</code> followed by angle brackets defining the Type of each parameter,
     then a 'fat arrow' =&gt; and the return Type for that function. This <el-instr>property</el-instr> definition shows the syntax:</p>
 
-<codeblock>
-  property matchAt as Func<of String, String, Int => Boolean>
-</codeblock>
+<code>property matchAt as Func<of String, String, Int => Boolean></code>
 
 <p>This example defines the Type for a function that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a function definition like this:</p>
 
@@ -1906,7 +1916,7 @@ end function
   If it is not, the prompt is repeated with the relevant limit displayed</td>
  </tr><tr id="inputStringFromOptions">
   <td><el-method>inputStringFromOptions</el-method></td>
-  <td><code>String</code>, <code>List</code>&lt;of <code>String&gt;</code></td>
+  <td><code>String</code>, <code>List</code>&lt;of <code>String</code>&gt;</td>
   <td><code>String</code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
   provided it is one of the options in the list.<br>
@@ -1958,8 +1968,8 @@ end main
 </codeblock>
 <ul>
  <li>When any of these functions (except<el-method> waitForKey</el-method>) is called, the system <i>does not wait for a response</i>, but immediately returns a <code>String</code> or Tuple.</li>
- <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <code>"z"</code> or <code>"@"</code>.</li>
- <li><el-method>getNumericKey</el-method> returns a string containing either a digit (<code>"0".."9"</code>) or, if the last key pressed was not numeric, then <code>"-1"</code>.
+ <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. "z" or "@".</li>
+ <li><el-method>getNumericKey</el-method> returns a string containing either a digit ("0".."9") or, if the last key pressed was not numeric, then "-1".
  A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
  <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
   <code>"Ctrl"</code> or <code>"Alt"</code> if simultaneously pressed.
@@ -1998,7 +2008,7 @@ end main
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
   <td><code>TextFileReader</code></td>
-  <td>opens a file system dialog to choose the filename of filetype <code>.txt</code>  to be read,
+  <td>opens a file system dialog to choose the filename of filetype .txt to be read,
   and returns a file handle<br>
   see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="createFileForWriting">
@@ -2006,13 +2016,13 @@ end main
   <td><code>String</code></td>
   <td><code>TextFileWriter</code></td>
   <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
-  with or without the default filetype of <code>.txt</code>, and returns a file handle<br>
+  with or without the default filetype of .txt, and returns a file handle<br>
   see <a href="#TextFileWriter">Writing text files</a></td>
  </tr>
 </table>
 
 <h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
-<p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension <code>.txt</code>.</p>
+<p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension .txt.</p>
 <p>An instance is created by the system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2151,7 +2161,7 @@ end main
 
 <h2 id="DisplayImageURL">Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an <code>http</code> or <code>https</code> URL may be sent to the display, though note that other URI schemes, such as in <code>file://host/path</code> to access an image from your local file system, are not supported. Here are two techniques:
+<p>An image that can be retrieved with an <code>http</code> or <code>https</code> URL may be sent to the display, though note that other URI schemes, such as in file://host/path to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
@@ -2161,7 +2171,7 @@ main
   call displayHtml(pic)
 end main
 </codeblock>
-   <p>The usual <code>&lt;img&gt;</code> tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
+   <p>The usual &lt;img&gt; tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
  <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures</a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>
@@ -2212,14 +2222,14 @@ end main
 <h1 id="CommonMethods">Common methods</h1>
 <h2 id="CommonDotMethods">Common dot methods</h2>
 
-<p>Click on a Type to go to the Type's function dot methods, or on <code><i class="fa">&#xf08e;</i></code> to go to the specific method on that Type.</p>
+<p>Click on a Type to go to the Type's function dot methods, or on &#xf08e; to go to the specific method on that Type.</p>
 
 <table>
  <tr>
   <th>Dot method</th>
   <th colspan="3"> Value Type</th>
   <th colspan="6">Reference Type</th>
-  <th>Tuple</th>
+  <th><code>Tuple</code></th>
  </tr><tr><!---->
   <td></td>
   <td><a href="#Int"><code>Int</code></a></td>
