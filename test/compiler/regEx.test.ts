@@ -222,4 +222,28 @@ end main`;
       "Argument types. Expected: regExp (RegExp), Provided: String.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_IllFormedRegex", async () => {
+    const code = `${testHeader}
+
+main
+  variable r set to /[/
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Invalid regular expression: /[/: Unterminated character classLibRef.html#RegExpFunctions",
+    ]);
+  });
 });
