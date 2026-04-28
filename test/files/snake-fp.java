@@ -103,37 +103,37 @@ class Game {
     return if(g2.body.contains(apple2), g2.withNewApple(), g2);
   }
   public Game withHead(Square value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.head = value; // change variable
     return copyOfThis;
   }
   public Game withBody(List<Square> value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.body = value; // change variable
     return copyOfThis;
   }
   public Game withPriorTail(Square value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.priorTail = value; // change variable
     return copyOfThis;
   }
   public Game withApple(Square value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.apple = value; // change variable
     return copyOfThis;
   }
   public Game withIsOn(bool value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.isOn = value; // change variable
     return copyOfThis;
   }
   public Game withRnd(Random value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.rnd = value; // change variable
     return copyOfThis;
   }
   public Game withKey(String value) { // function
-    var copyOfThis = copy(this);
+    var Game copyOfThis = copy(this); // let
     copyOfThis.key = value; // change variable
     return copyOfThis;
   }
@@ -148,12 +148,12 @@ class Square {
     this.y = y; // change variable
   }
   public Square withX(int value) { // function
-    var copyOfThis = copy(this);
+    var Square copyOfThis = copy(this); // let
     copyOfThis.x = value; // change variable
     return copyOfThis;
   }
   public Square withY(int value) { // function
-    var copyOfThis = copy(this);
+    var Square copyOfThis = copy(this); // let
     copyOfThis.y = value; // change variable
     return copyOfThis;
   }

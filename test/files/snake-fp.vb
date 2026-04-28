@@ -103,37 +103,37 @@ Class Game
     Return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
   Function withHead(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.head = value ' change variable
     Return copyOfThis
   End Function
   Function withBody(value As List(Of Square)) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.body = value ' change variable
     Return copyOfThis
   End Function
   Function withPriorTail(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.priorTail = value ' change variable
     Return copyOfThis
   End Function
   Function withApple(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.apple = value ' change variable
     Return copyOfThis
   End Function
   Function withIsOn(value As Boolean) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.isOn = value ' change variable
     Return copyOfThis
   End Function
   Function withRnd(value As Random) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.rnd = value ' change variable
     Return copyOfThis
   End Function
   Function withKey(value As String) As Game
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.key = value ' change variable
     Return copyOfThis
   End Function
@@ -148,12 +148,12 @@ Class Square
     Me.y = y ' change variable
   End Sub
   Function withX(value As Integer) As Square
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.x = value ' change variable
     Return copyOfThis
   End Function
   Function withY(value As Integer) As Square
-    Dim copyOfThis = copy(Me) ' variable definition
+    Dim copyOfThis = copy(Me) ' let
     copyOfThis.y = value ' change variable
     Return copyOfThis
   End Function

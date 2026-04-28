@@ -89,31 +89,31 @@ class Game
     g2 = self.withApple(apple2).withRnd(rnd3) # let
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.head = value # change variable
     return copyOfThis
   def withBody(self: Game, value: list[Square]) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.body = value # change variable
     return copyOfThis
   def withPriorTail(self: Game, value: Square) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.priorTail = value # change variable
     return copyOfThis
   def withApple(self: Game, value: Square) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.apple = value # change variable
     return copyOfThis
   def withIsOn(self: Game, value: bool) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.isOn = value # change variable
     return copyOfThis
   def withRnd(self: Game, value: Random) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.rnd = value # change variable
     return copyOfThis
   def withKey(self: Game, value: str) -> Game: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.key = value # change variable
     return copyOfThis
 
@@ -126,11 +126,11 @@ class Square
     self.x = x # change variable
     self.y = y # change variable
   def withX(self: Square, value: int) -> Square: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.x = value # change variable
     return copyOfThis
   def withY(self: Square, value: int) -> Square: # function
-    copyOfThis = copy(self) # variable definition
+    copyOfThis = copy(self) # let
     copyOfThis.y = value # change variable
     return copyOfThis
   def toString(self: Square) -> str: # function
