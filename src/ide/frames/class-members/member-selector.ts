@@ -85,7 +85,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.class_members.includes(keyword) || keyword === this.getCommentMarker();
+    return this.profile.members.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
