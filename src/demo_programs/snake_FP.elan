@@ -111,43 +111,43 @@ class Game
 
   function withHead(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.head to value
+    with copyOfThis.head set to value
     return copyOfThis
   end function
 
   function withBody(value as List<of Square>) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.body to value
+    with copyOfThis.body set to value
     return copyOfThis
   end function
 
   function withPriorTail(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.priorTail to value
+    with copyOfThis.priorTail set to value
     return copyOfThis
   end function
 
   function withApple(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.apple to value
+    with copyOfThis.apple set to value
     return copyOfThis
   end function
 
   function withIsOn(value as Boolean) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.isOn to value
+    with copyOfThis.isOn set to value
     return copyOfThis
   end function
 
   function withRnd(value as Random) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.rnd to value
+    with copyOfThis.rnd set to value
     return copyOfThis
   end function
 
   function withKey(value as String) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.key to value
+    with copyOfThis.key set to value
     return copyOfThis
   end function
 
@@ -165,13 +165,13 @@ class Square
 
   function withX(value as Int) returns Square
     let copyOfThis be copy(this)
-    set copyOfThis.x to value
+    with copyOfThis.x set to value
     return copyOfThis
   end function
 
   function withY(value as Int) returns Square
     let copyOfThis be copy(this)
-    set copyOfThis.y to value
+    with copyOfThis.y set to value
     return copyOfThis
   end function
 

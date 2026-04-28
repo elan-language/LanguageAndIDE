@@ -12,6 +12,7 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
+  withKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
@@ -51,6 +52,7 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [withKeyword, "with property update", (parent: Parent) => this.factory.newWithPropertyUpdate(parent)],
       [
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
@@ -80,6 +82,8 @@ export class StatementSelector extends AbstractSelector {
       return this.isDirectlyWithinATest();
     } else if (keyword === letKeyword) {
       return this.isWithinAFunction() || this.isDirectlyWithinATest();
+    } else if (keyword === withKeyword) {
+      return this.isWithinAWithFunctionMethod();
     } else {
       result = true;
     }
@@ -89,6 +93,11 @@ export class StatementSelector extends AbstractSelector {
   private isWithinAFunction(): boolean {
     return this.isWithinContext(this.getParent(), "func");
   }
+
+  private isWithinAWithFunctionMethod(): boolean {
+    return this.isWithinContext(this.getParent(), "func");
+  }
+
 
   private isDirectlyWithinATest(): boolean {
     return this.getParent().getIdPrefix() === "test";

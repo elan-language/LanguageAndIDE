@@ -5,8 +5,11 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { AbstractField } from "./abstract-field";
 
 export class AssignableField extends AbstractField {
-  constructor(holder: Frame) {
+  private delimiter: RegExp;
+
+  constructor(holder: Frame, delimiter = /(\s+to\s+)|\r|\n/) {
     super(holder);
+    this.delimiter = delimiter;
     this.setPlaceholder("<i>variable</i>");
   }
 
@@ -22,7 +25,7 @@ export class AssignableField extends AbstractField {
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
-    source.readUntil(/(\s+to\s+)|\r|\n/);
+    source.readUntil(this.delimiter);
 
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml();

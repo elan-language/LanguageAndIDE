@@ -26,6 +26,7 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
+  withKeyword,
 } from "../../compiler/elan-keywords";
 
 export const defaultUsername = "guest";
@@ -88,7 +89,8 @@ export class Profile {
     whileKeyword,
     forKeyword,
     callKeyword,
-    letKeyword
+    letKeyword,
+    withKeyword,
   ]);
   private statements1_2 = [assertKeyword].concat(this.statements1_1); // to put assert at front, (shown only when within a test)
   private statements1_3 = this.statements1_2;
@@ -101,6 +103,7 @@ export class Profile {
   private class_members2_0: string[] = [
     constructorKeyword, // Can be removed when it is added to template
     functionKeyword,
+    withKeyword,
     procedureKeyword,
     propertyKeyword,
   ];
