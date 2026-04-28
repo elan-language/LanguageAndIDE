@@ -1274,6 +1274,14 @@ export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], loca
   compileErrors.push(new SyntaxCompileError("Unsupported operation.", location));
 }
 
+export function mustBeValidRegExp(
+  message: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new SyntaxCompileError(message, location, "LibRef.html#RegExpFunctions"));
+}
+
 const compilerAssertions = true;
 
 export function compilerAssert(condition: boolean, message: string) {

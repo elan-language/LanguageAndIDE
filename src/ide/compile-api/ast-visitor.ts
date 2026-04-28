@@ -699,7 +699,7 @@ export function transform(
   }
 
   if (node instanceof LitRegExp) {
-    return new LiteralRegExAsn(node.matchedText, fieldId);
+    return new LiteralRegExAsn(node.matchedText, fieldId, scope);
   }
 
   if (node instanceof IdentifierDef) {
