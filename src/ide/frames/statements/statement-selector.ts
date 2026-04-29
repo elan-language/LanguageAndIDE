@@ -49,7 +49,7 @@ export class StatementSelector extends AbstractSelector {
       [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
       [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
       [callKeyword, "c", "<b>c</b>all procedure", (parent: Parent) => this.factory.newCall(parent, "")],
-      [tryKeyword, "y", "tr<b>y</b> ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
+      [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "t", "<b>t</b>hrow exception", (parent: Parent) => this.factory.newThrow(parent)],
       [
