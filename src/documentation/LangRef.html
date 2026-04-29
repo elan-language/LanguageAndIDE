@@ -107,7 +107,7 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code></td>
-  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><code>Func</code></a></td>
+  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func</a></td>
   <td><a href="LibRef.html#Maybe"><el-topic>Maybe</el-topic><br><code>Maybe</code></a></td>
   </tr>
 </table>
@@ -135,16 +135,14 @@ with all the same property values except for specific changes that you want to m
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
  <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><el-instr>constant</el-instr> (global)</a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+ <tr><td><a href="#constant"><el-instr>constant</el-instr></a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
   <td>values are set only at compile time</td></tr>
- <tr><td><a href="#constant_let"><el-instr>constant</el-instr> (local)</a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td>values are set at execution</td></tr>
  <tr><td><a href="#variable"><el-instr>variable definition</el-instr></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>values are set at execution</td></tr>
  <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
-  <td>formal input argument<br> of function, procedure or lambda</td></tr>
+  <td>formal input argument<br> of <el-instr>function</el-instr>, <el-instr>procedure</el-instr> or <el-instr>lambda</el-instr></td></tr>
  <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td>formal input and output argument<br> of function, procedure or lambda</td></tr>
+  <td>formal input and output argument<br> of <el-instr>function</el-instr>, <el-instr>procedure</el-instr> or <el-instr>lambda</el-instr></td></tr>
 </table>
 
 <h2 id="Identifier">Identifiers and Type names</h2>
@@ -168,7 +166,7 @@ with all the same property values except for specific changes that you want to m
 <h2 id="Scope">Scope and name qualification</h2>
 <p>'Scope' in the table above refers to where in your code a named value is accessible.
  <a href="#constant">Global <el-instr>constant</el-instr>s</a> and <a href="#enum"><el-instr>enum</el-instr>s</a>, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
- Every other kind of named value is <i>local</i> and restricted to the procedure or function within which it is defined.</p>
+ Every other kind of named value is <i>local</i> and restricted to the <el-instr>procedure</el-instr> or <el-instr>function</el-instr> within which it is defined.</p>
 <p>Local named values can have the same name as a global <el-instr>constant</el-instr>, <el-instr>function</el-instr>, or <el-instr>procedure</el-instr> (which are all defined at global level or are in the standard library).
  In such cases, when the name is used within the same method, then it will refer to the local definition.
  If you have done this, but then need to access the <el-instr>constant</el-instr>, <el-instr>function</el-instr>, or <el-instr>procedure</el-instr> with the same name,
@@ -188,14 +186,13 @@ with all the same property values except for specific changes that you want to m
  <code>variable  point set to (3, 7)</code><br>
  <code>variable  x set to point.item_0</code></li>
  <li>To refer to a value in an <el-instr>enum</el-instr>, e.g.to pick one of the values in the <el-instr>enum</el-instr> <code>Suit</code>:<br>
- <code>enum Suit spades, hearts diamonds, clubs</code><br>
+ <codeblock>enum Suit spades, hearts diamonds, clubs</codeblock><br>
  <code>variable  s set to Suit.spades</code></li>
-<li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a function or procedure.
+<li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <el-instr>function</el-instr> or <el-instr>procedure</el-instr>.
 The global value may then be referred to by prefixing the variable name with the keyword <el-instr>global</el-instr> and a dot. In this example, a call to the function
-returns the value of the global constant and not the value of the local constant of the same name:
+returns the value of the global constant and not the value of the local variable of the same name:
 <codeblock>
 constant maxHits set to 20
-
 function hits() returns Int
   constant maxHits set to 99
   return global.maxHits
@@ -233,8 +230,8 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
   </ul>
 </ul>
 
-<h2 id="main"><el-instr>main</el-instr></h2>
-<p>A program must have a <el-instr>main</el-instr> method, sometimes called its main routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-instr>main</el-instr> method, either as a coding exercise or for subsequent use within another program.</p>
+<h2 id="main">main</h2>
+<p>A program must have a <el-instr>main</el-instr> method, sometimes called its <b>main</b> routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-instr>main</el-instr> method, either as a coding exercise or for subsequent use within another program.</p>
 <p>The <el-instr>main</el-instr> method defines the start point of a program when it is run (executed).</p>
 <p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
 <p>It may delegate work to one or more <a href="#procedure">procedures</a> or <a href="#function">functions</a>.</p>
@@ -259,12 +256,12 @@ end main
 <p>Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p> Unlike a function:</p>
 <ul>
- <li>a procedure can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
- <li>a procedure does not return a value.</li>
- <li>a procedure's parameter named values (that are mutable) may be changed <i>inside</i> the procedure, but they do not affect the value of arguments in the <el-instr>call procedure</el-instr> instruction outside the procedure.</li>
+ <li>a <el-instr>procedure</el-instr> can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
+ <li>a <el-instr>procedure</el-instr> does not return a value.</li>
+ <li>a <el-instr>procedure</el-instr>'s parameter named values (that are mutable) may be changed <i>inside</i> the <el-instr>procedure</el-instr>, but they do not affect the value of arguments in the <el-instr>call procedure</el-instr> instruction outside the <el-instr>procedure</el-instr>.</li>
  <li>to pass a changed parameter back to its calling argument, it must have been called <a href="#CallByRef"><i>by reference</i></a>.</li>
 </ul>
-<p>The instructions within a procedure can therefore:</p>
+<p>The instructions within a <el-instr>procedure</el-instr> can therefore:</p>
 <ul>
  <li>include calls to other procedures, or to itself if <a href="#recursion">recursion</a> is required.</li>
  <li>include data input methods and other system functions such as for random number generation.</li>
@@ -273,7 +270,7 @@ end main
 <ul>
  <li>to execute an action:<br>
  <code>call print(aList)</code></li>
- <li>to apply a procedure to a value using <a href="dotSyntax">dot syntax</a>:<br>
+ <li>to apply a <el-instr>procedure</el-instr> to a value using <a href="dotSyntax">dot syntax</a>:<br>
  <code>call aList.removeAt(4)</code></li>
 </ul>
 <p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
@@ -313,7 +310,7 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of call by reference</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <el-method>main</el-method>,
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <el-instr>main</el-instr>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
 <codeblock>
 main
@@ -384,25 +381,25 @@ end function</codeblock>
 <p>Without having to run your program, the <el-instr>assert equal</el-instr> instructions show whether your assertions pass or fail.
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-instr>assert equal</el-instr> instructions that test a function</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-instr>assert equal</el-instr> instructions that test a <el-instr>function</el-instr></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <code>binarySearch</code> on four test lists</p>
 <codeblock>
 test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
-  assert binarySearch(li1, "lemon") is true pass
-  assert binarySearch(li1, "lime") is true pass
-  assert binarySearch(li1, "orange") is true pass
-  assert binarySearch(li1, "pear") is false pass
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
   variable li2 set to ["lemon", "orange"]
-  assert binarySearch(li2, "lemon") is true pass
-  assert binarySearch(li2, "orange") is true pass
-  assert binarySearch(li2, "pear") is false pass
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
   variable li3 set to ["lemon"]
-  assert binarySearch(li3, "lemon") is true pass
-  assert binarySearch(li3, "lime") is false pass
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
   variable li4 set to new List<of String>()
-  assert binarySearch(li4, "pear") is false pass
+  assert binarySearch(li4, "pear") is false
 end test
 </codeblock>
 <hr>
@@ -441,8 +438,12 @@ end test
 </codeblock>
 
 <p>This <el-instr>assert</el-instr> shows how testing can also be done against an expected error message:</p>
-<code>assert a[4] is 0</code> actual (computed): Out of range index: 4 size: 3
-<code>assert a[4] is "Out of range index: 4 size: 3"</code>
+<codeblock>
+test test_message
+  assert a[4] is 0
+  assert a[4] is "Out of range index: 4 size: 3"
+end test
+</codeblock>
 
 <h3 class="no-TOC" >Testing long strings</h3>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
@@ -608,8 +609,8 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <p>An <el-instr>abstract class</el-instr> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
 <li>a <el-instr>property</el-instr> </li>
-<li>a <code>function</code></li>
-<li>a <code>procedure</code></li>
+<li>a <el-instr>function</el-instr></li>
+<li>a <el-instr>procedure</el-instr></li>
 </ul>
 <p>As with a concrete Class, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
@@ -677,18 +678,17 @@ end class
 <hr>
 </div></div>
 
-<h2 id="constant"><el-instr>constant</el-instr> (global)</h2>
-<p>There are two uses of the <el-instr>constant</el-instr> instruction: this one at global level, the other local in a routine and described under <a href="#constant_let">constant (local)</a>.</p>
-<p>A global <el-instr>constant</el-instr> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
+<h2 id="constant"><el-instr>constant</el-instr> </h2>
+<p>A <el-instr>constant</el-instr> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
  Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
-<p>A global constant is defined by a literal of an immutable value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
+<p>A <el-instr>constant</el-instr> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
  <code>String</code>.</p>
-<p>A 'constant' data structure can be defined by using a function which is then referenced to make the structure available in a <el-instr>variable definition</el-instr>. See <a href="#constant_structure">Constant data structure</a>.</p>
-<p>Global constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
-<p>A global constant can be defined by reference to a previously defined global constant or to a system constant,
+<p>A 'constant' data structure can be defined by using a <el-instr>function</el-instr> which is then referenced to make the structure available in a <el-instr>variable definition</el-instr>. See <a href="#constant_structure">Constant data structure</a>.</p>
+<p>Constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
+<p>A constant can be defined by reference to a previously defined constant or to a system constant,
  but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
-<p>Examples of literal definitions of the valid Types of global constant:</p>
+<p>Examples of literal definitions of the valid Types of constant:</p>
 
 <codeblock>
 constant maxHits set to 10
@@ -700,9 +700,9 @@ constant warningMsg set to "Limit reached"
 </codeblock>
 
 <h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
-<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
+<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a <el-instr>function</el-instr>
 whose return value is put into a variable.</p>
-<p>These examples define a constant list and a constant dictionary of colours in indexable variables:</p>
+<p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours in indexable variables:</p>
 
 <codeblock>
 main
@@ -724,16 +724,15 @@ end function
 You define it with a Type name (so starting with an uppercase letter) followed by a
 number of values (which must be valid <a href="#Identifier">identifiers</a>).
 <p>A reference to an <el-instr>enum</el-instr> by its Type name necessarily holds one of the values.</p>
-<p>Reference to the value in an enum is by using <a href="#dotSyntax">dot syntax</a> <code>enumType.enumValue</code>.</p>
+<p>Reference to the value in an <el-instr>enum</el-instr> is by using <a href="#dotSyntax">dot syntax</a> enumType.enumValue.</p>
 <p>An <el-instr>enum</el-instr> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
 
 <p>Examples of definition and use:</p>
 <codeblock>
-enum Suit spades, hearts, diamonds, clubs ? an enum for use in the following constant colours
+enum Suit spades, hearts, diamonds, clubs
 enum Action stand, draw
 enum Outcome undecided, win, lose, draw, winDouble
 enum Status pending, playing, standing, blackjack, bust
-
 main
   variable status set to Status.pending
 end main
@@ -746,7 +745,7 @@ end main
  <el-instr>interface</el-instr>,
  <el-instr>abstract class</el-instr> or
  (concrete) <el-instr>class</el-instr>.
-The <code>new code</code> prompt will offer a context appropriate subset of the following member instructions:</p>
+The <b>new code</b> prompt will offer a context appropriate subset of the following member instructions:</p>
 <p>
  <a href="#abstract_property"><el-instr>abstract property</el-instr></a>,
  <a href="#abstract_function"><el-instr>abstract function</el-instr></a>,
@@ -761,7 +760,7 @@ The <code>new code</code> prompt will offer a context appropriate subset of the 
  <a href="#private"><el-instr>private procedure</el-instr></a>.
 </p>
 
-<p>This table shows which kinds of property, function, procedure and constructor are applicable to the various kinds of Class.</p>
+<p>This table shows which kinds of <el-instr>property</el-instr>, <el-instr>function</el-instr>, <el-instr>procedure</el-instr> and <el-instr>constructor</el-instr> are applicable to the various kinds of Class.</p>
 <table class="tableType">
  <tr>
   <th></th>
@@ -940,7 +939,6 @@ end class
 <p>
  <a href="#assert"><el-instr>assert equal</el-instr></a>,
  <a href="#call"><el-instr>call procedure</el-instr></a>,
- <a href="#call"><el-instr>constant</el-instr></a>,
  <a href="#for"><el-instr>for</el-instr></a>,
  <a href="#if"><el-instr>if</el-instr></a>,
  <a href="#set"><el-instr>change variable</el-instr></a>,
@@ -990,25 +988,6 @@ which is the mechanism for running unit tests during program development, not du
  Only one dot is allowed in the procedure name field, or two dots if the first word is <el-instr>property</el-instr>.
  If you need anything more complicated, use a <el-instr>change variable</el-instr> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
-
-<h2 id="constant_let"><el-instr>constant</el-instr> (local)</h2>
-<p>There are two uses of the <el-instr>constant</el-instr> instruction: this one local to a routine, the other global to the program and described under <a href="#constant">constant (global)</a>.</p>
-<p>The local <el-instr>constant</el-instr> instruction declares and initialises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
-<p>The initial value is given by a following literal or expression as in these examples:</p>
-
-<codeblock>
-  constant tau set to 2*pi
-  constant phi set to (1 + sqrt(5))/2
-  constant euro set to "€"
-  constant t set to "Total = "
-</codeblock>
-
-<p>Like a <el-instr>variable definition</el-instr>, a <el-instr>constant</el-instr> may be used only within a routine, but unlike a variable its value may not be changed with a <el-instr>change variable</el-instr> instruction.</p>
-<p>It is recommended that you always use <el-instr>constant</el-instr> in preference to <el-instr>variable definition</el-instr>, unless you need to be able to re-assign its value.</p>
-<p>You can define a <el-instr>constant</el-instr> in a loop, so that the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
-<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a function
-whose return value is put into a variable. See <a href="#constant_structure">Constant data structures</a>.</p>
-
 
 <h2 id="for"><el-instr>for</el-instr></h2>
 <div id="to"></div>
@@ -1470,30 +1449,30 @@ end main
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
-System methods may be used only within the <code>main</code> routine or a <code>procedure</code>, because they have external dependencies or side effects.</li>
+System methods may be used only within the <el-instr>main</el-instr> routine or a <el-instr>procedure</el-instr>, because they have external dependencies or side effects.</li>
 <li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of Type <code>String</code>.
 See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
 <h2 id="lambda"><el-instr>lambda</el-instr></h2>
-<p>A <code>lambda</code> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
-You would typically define a <code>lambda</code>:</p>
+<p>A <el-instr>lambda</el-instr> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
+You would typically define a <el-instr>lambda</el-instr>:</p>
 <ul>
 <li>when the functionality it defines is needed in only one location:
    typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> or HoF.</li>
 <li>when you need to capture a local variable in the implementation: this is called 'closing around a variable'.</li>
 </ul>
-<p>The syntax for a <code>lambda</code> is as follows:</p>
+<p>The syntax for a <el-instr>lambda</el-instr> is as follows:</p>
 <ul>
 <li>Start with the keyword <el-instr>lambda</el-instr>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
 <li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
-<p>Although a <code>lambda</code> is commonly defined 'inline' it is also possible
- to assign a <code>lambda</code> to a named value, so as to reuse it within the scope of that named value.</p>
+<p>Although a <el-instr>lambda</el-instr> is commonly defined 'inline' it is also possible
+ to assign a <el-instr>lambda</el-instr> to a named value, so as to reuse it within the scope of that named value.</p>
 
-Example using a <code>lambda</code> to look for <el-id>true</el-id> in a list of Boolean values:
+Example using a <el-instr>lambda</el-instr> to look for <el-id>true</el-id> in a list of Boolean values:
 <codeblock>
 function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
   variable neighbours set to neighbourCells(c)
@@ -1540,7 +1519,7 @@ end function
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-instr>if</el-instr> expression in a <el-instr>call procedure</el-instr> <el-method>print</el-method>:</p>
 <codeblock>
 main
-  constant p set to unicode(0x03c0)
+  variable p set to unicode(0x03c0)
   call testPi(p, 3)
   call testPi(p, 4)
 end main
@@ -1574,7 +1553,7 @@ Rather, a comment contains information <em>about</em> the program, intended to b
  Your text may contain any characters, except that it must not start with an open square bracket [.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
+as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1616,7 +1595,7 @@ as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides 
 
 <h3 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h3>
  <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
- either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the main routine.</p>
+ either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <el-instr>main</el-instr> routine.</p>
 
 <h3 id="IsDeprecated" class="no-TOC">Code change required ...</h3>
  <p>Indicates that a library method or Class has been changed since the version in which your Elan code was written. The link in the
@@ -1758,7 +1737,7 @@ as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides 
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
  const, continue, curry, debugger, default, delete, dictionary, do, double, error, eval, export, extends, final, finally, float, goto, ignore, implements,
  instanceof, int, into, list, long, match, myclass, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
- short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, xor, yield</el-code></p>
+ short, static, string, super, switch, system, synchronized, throws, todo, transient, tuple, typeof, void, volatile, var, when, xor, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
@@ -1789,7 +1768,7 @@ as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides 
  <p>You cannot defined an <el-instr>out</el-instr> parameter in a function (because that would
  imply the possibility of creating a side effect).</p>
 
-<h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one 'main' in a program.</h3>
+<h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one <el-instr>main</el-instr> in a program.</h3>
 
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
@@ -1884,7 +1863,7 @@ as well as from the <el-instr>new code</el-instr> prompt. Every prompt provides 
  a simple name. Less commonly, it may take the form of a dconstruction of a
  <a href="LibRef.html#deconstructList"><code>List</code></a> or
 <!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutabl</code>e</a> or-->
- <a href="LibRef.html#deconstructTuple"><code>Tuple</code></a>.</p>
+ <a href="LibRef.html#deconstructTuple">Tuple</a>.</p>
 
 <h2>Advisory</h2>
 
