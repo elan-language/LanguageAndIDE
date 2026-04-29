@@ -194,7 +194,7 @@ returns the value of the global constant and not the value of the local variable
 <codeblock>
 constant maxHits set to 20
 function hits() returns Int
-  constant maxHits set to 99
+  variable maxHits set to 99
   return global.maxHits
 end function
 </codeblock>
@@ -319,9 +319,8 @@ main
   call changeArg(argRef)
   call print(argRef.value())
 end main
-
 procedure changeArg(pointer as AsRef<of String>)
-  constant r set to pointer.value()
+  variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
 </codeblock>
@@ -456,11 +455,9 @@ end test
 
 <codeblock>
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
-
 function setInStyle(s as String) returns String
   return "<style>" + s + "<style>"
 end function
-
 test test_setInStyle
   assert setInStyle(sGW) is "<style>" + sGW + "</style>" s found at [146] (expected: /)
 end test
@@ -551,29 +548,24 @@ class Apple
   constructor()
     set this.location to new Square(0, 0)
   end constructor
-
   function toString() returns String
     return ""
   end function
-
   property location as Square
-
   procedure newRandomPosition(snake as Snake)
     variable changePosition set to true
     while changePosition
-      constant ranX set to randint(0, 39)
-      constant ranY set to randint(0, 29)
+      variable ranX set to randint(0, 39)
+      variable ranY set to randint(0, 29)
       set this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
         set changePosition to false
       end if
     end while
   end procedure
-
   procedure updateBlocks(blocks as List<of List<of Int>>)
     set blocks[this.location.x][this.location.y] to red
   end procedure
-
 end class
 </codeblock>
 <hr>

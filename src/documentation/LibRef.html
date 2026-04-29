@@ -453,8 +453,10 @@ end test
 <p>And, for the area of a circle:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>constant r set to 2.0</codeblock>
-  <code>call print($"area = {(pi*r*r).round(2)}")</code>
+<codeblock>
+  variable r set to 2.0
+  call print($"area = {(pi*r*r).round(2)}")
+</codeblock>
  <td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
@@ -1423,9 +1425,7 @@ main
     call t.turn(120)
   end for
 end main
-
 constant side set to 100
-
 procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
     variable third set to length/3
