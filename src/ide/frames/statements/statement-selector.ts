@@ -8,6 +8,7 @@ import {
   ifKeyword,
   letKeyword,
   setKeyword,
+  testKeyword,
   throwKeyword,
   tryKeyword,
   variableKeyword,
@@ -52,7 +53,6 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
-      [withKeyword, "with property update", (parent: Parent) => this.factory.newWithPropertyUpdate(parent)],
       [
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
@@ -62,7 +62,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.statements.includes(keyword) || keyword === this.getCommentMarker();
+    return this.profile.statements.includes(keyword) || this.profile.statementsInFunction.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
@@ -72,18 +72,10 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix() === tryKeyword;
-    } else if (keyword === callKeyword || keyword === "print") {
-      result = !(
-        this.isWithinAFunction() ||
-        this.isDirectlyWithinATest() ||
-        this.isWithinAConstructor()
-      );
     } else if (keyword === assertKeyword) {
-      return this.isDirectlyWithinATest();
-    } else if (keyword === letKeyword) {
-      return this.isWithinAFunction() || this.isDirectlyWithinATest();
-    } else if (keyword === withKeyword) {
-      return this.isWithinAWithFunctionMethod();
+      result = parent.getIdPrefix() === testKeyword;
+    } else if (this.isWithinAFunction()) {
+      result = this.profile.statementsInFunction.includes(keyword) || keyword === this.getCommentMarker();
     } else {
       result = true;
     }

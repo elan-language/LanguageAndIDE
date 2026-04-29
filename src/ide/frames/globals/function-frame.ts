@@ -66,17 +66,14 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   parseBottom(source: CodeSource): boolean {
     let result = false;
-    const keyword = `${returnKeyword} `;
     source.removeIndent();
-    if (source.isMatch(keyword)) {
-      this.getReturnStatement().parseFrom(source);
+    if (source.isMatch(`${returnKeyword} `)) {
+      const ret = this.getLastChild() as ReturnStatement;
+      ret.parseFrom(source);
       source.removeNewLine().removeIndent();
       this.parseStandardEnding(source, `${endKeyword} ${functionKeyword}`);
       result = true;
     }
     return result;
-  }
-  protected getReturnStatement(): ReturnStatement {
-    return this.getChildren().filter((s) => isReturnStatement(s))[0];
   }
 }

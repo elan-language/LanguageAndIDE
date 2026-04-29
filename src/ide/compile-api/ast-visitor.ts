@@ -87,7 +87,6 @@ import { Constructor } from "../frames/class-members/constructor";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
-import { WithMethod } from "../frames/class-members/with-method";
 import { AbstractField } from "../frames/fields/abstract-field";
 import { ArgListField } from "../frames/fields/arg-list-field";
 import { InheritsFromField } from "../frames/fields/inherits-from-field";
@@ -183,7 +182,6 @@ import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { While } from "../frames/statements/while";
-import { WithPropertyUpdate } from "../frames/statements/with-property-update";
 import { ParseStatus } from "../frames/status-enums";
 
 export function transformMany(
@@ -371,7 +369,7 @@ export function transform(
     return letAsn;
   }
 
-  if (node instanceof SetStatement || node instanceof WithPropertyUpdate) {
+  if (node instanceof SetStatement) {
     const setAsn = new SetAsn(node.getHtmlId(), scope);
     setAsn.breakpointStatus = node.breakpointStatus;
 
@@ -488,7 +486,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof WithMethod || node instanceof FunctionMethod) {
+  if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
     functionAsn.private = node.isPrivate;
