@@ -41,40 +41,46 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
       [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
       [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
       [procedureKeyword, "c", "pro<b>c</b>edure", (_parent: Parent) => this.class.createProcedure()],
       [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
-      [withKeyword, "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
+      [withKeyword, "w", "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
       [
         abstractPropertyKeywords,
+        "",
         "abstract property",
         (_parent: Parent) => this.class.createAbstractProperty(),
       ],
       [
         abstractProcedureKeywords,
+        "",
         "abstract procedure",
         (_parent: Parent) => this.class.createAbstractProcedure(),
       ],
       [
         abstractFunctionKeywords,
+        "",
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
       ],
       [
         privatePropertyKeywords,
+        "",
         "private property",
         (_parent: Parent) => this.class.createProperty(true),
       ],
       [
         privateProcedureKeywords,
+        "",
         "private procedure",
         (_parent: Parent) => this.class.createProcedure(true),
       ],
       [
         privateFunctionKeywords,
+        "",
         "private function",
         (_parent: Parent) => this.class.createFunction(true),
       ],

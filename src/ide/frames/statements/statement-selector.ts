@@ -32,7 +32,7 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
       [assertKeyword, "a", "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
