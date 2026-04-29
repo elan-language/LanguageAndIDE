@@ -12,13 +12,13 @@
 </head>
 <body>
 
-<H1>Elan 2.0</H1>
+<h1>Elan 2.0</h1>
 <ul>
-    <li>It applies the technology and philosophy of Elan to coding in Python, VB, C#, and Java</li>
-    <li>It can convert code instantly between these languages</li>
+    <li>It applies the technology and philosophy of Elan to coding in Python, VB, C#, and Java.</li>
+    <li>It can convert code instantly between these languages.</li>
     <li>Code in all languages is saved as a .elan file in a language neutral format, called the 'Reference Language'. 
         Only .elan files may be loaded into the IDE,  
-        though after loading they will then automatically translated into the target language, 
+        though after loading they will then be automatically translated into the target language, 
         which is saved in the 'header comment' of the file.</li>
     <li>You may 'export' code (via the File menu) as, for example, a .py file, for loading into a different IDE.
         Note that the exported code may still be using Elan library methods and Types. 
@@ -64,13 +64,13 @@
             <li>provides a common language for kinds of instruction such as 'variable', 'constant', 'set', 'procedure', 'function'</li>
         </ul>
     </li>
-    <li>Has a built-in library that works identically in all languages</li>
-    <li>Provides four kinds of graphics &ndash;  Turtle, Block, Vector, and Html &ndash; that work identically in all languages</li>
-    <li>Has a simple, but powerful, debugger</li>
-    <li>Offers integrated documentation that is linked directly from the code</li>
-    <li>Supports integrated worksheets</li>
-    <li>Is guaranteed '100% AI-free`</li>
-    <li>Deliberately prevents pasting in .py, .vb, .cs, or .java, code from an external source</li>
+    <li>Has a built-in library that works identically in all languages.</li>
+    <li>Provides four kinds of graphics &ndash;  Turtle, Block, Vector, and Html &ndash; that work identically in all languages.</li>
+    <li>Has a simple, but powerful, debugger.</li>
+    <li>Offers integrated documentation that is linked directly from the code.</li>
+    <li>Supports integrated worksheets.</li>
+    <li>Is guaranteed '100% AI-free`.</li>
+    <li>Deliberately prevents pasting in .py, .vb, .cs, or .java, code from an external source.</li>
 </ul>  
 
 <h2 id="commandments">The 10 commandments of good programming</h2>
@@ -101,7 +101,7 @@
 <p>These restrictions exist to ensure that all code generated within the Elan IDE may be automatically
     translated with 100% correctness from any one supported language into any other.</p>
 <p>It is not necessary to <i>know</i> these rules, because there is either no mechanism to break them or
-    you will receive a clear message if you do. Each of these restrictions exists to prevent 
+    you will receive a clear message if you try to. Each of these restrictions exists to prevent 
     use of coding features that are supported in some languages, 
     but have no equivalent syntax in at least one other.
     The surprising thing, we suggest, is how <i>few</i> such restrictions are necessary.
@@ -110,13 +110,13 @@
     <li>Loops
         <ul>
             <li>The 'for each' syntax is used even for a traditional 'for' loop, by means of the <el-method>range</el-method> method.</li>
-            <li>A 'repeat...until' loop must be implemented using the 'while' loop syntax</li>
+            <li>A 'repeat...until' loop must be implemented using the 'while' loop syntax.</li>
         </ul>
     </li>
     <li>Literal strings
         <ul>
-            <li>are always bounded by double quotes: "apple"</li>
-            <li>'interpolated strings' use the syntax specific to each language (for Java that is the <code>String.format</code> method).</code></li>
+            <li>are always bounded by double quotes: "apple".</li>
+            <li>'interpolated strings' use the syntax specific to each language (for Java that is the <code>String.format</code> method).</li>
         </ul>
     </li>
     <li>Identifiers
@@ -129,26 +129,26 @@
     <li>Operators
         <ul>
             <li>Two <i>integers</i> may not be divided using '/'. You use the <el-method>divAsInt</el-method> or <el-method>divAsFloat</el-method> depending on the result you need.</li>
-            <li>The equality operator may be used <i>only for numeric or Boolean Types</i>.
+            <li>The equality operators <code>is</code> and <code>isnt</code> may be used <i>only for numeric or Boolean Types</i>.
                 To test equality of strings, and all other Types, you must use the <el-method>equals</el-method> or <el-method>notEqualTo</el-method> function.</li>
-            <li>The 'power' operator '^' is not recognised for any language, You use the <el-method>pow</el-method> function instead.</li>
+            <li>The 'power' operator '^' is not recognised for any language: you use the <el-method>pow</el-method> function instead.</li>
         </ul>
     </li>
     <li>Indexing
         <ul>
             <li>A 2D array is implemented as a list of lists, and accessed with double index e.g. [3][4],
-                but it may be initialised (like an an array) using any of: <el-method>createList</el-method>, <el-method>createListOfLists</el-method>, or <el-method>createBlockGraphics</el-method></li>
-            <li>An index value cannot be negative</li>
+                but it may be initialised (like an an array) using any of: <el-method>createList</el-method>, <el-method>createListOfLists</el-method>, or <el-method>createBlockGraphics</el-method>.</li>
+            <li>An index value cannot be negative.</li>
         </ul>
     </li>
 
-    <li>Exceptions/errors. You cannot access the exception <i>instance</i> within a <el-code>catch</el-code> clause(s).
+    <li>Exceptions and errors. You cannot access the exception <i>instance</i> within a <el-code>catch</el-code> clause(s).
     </li>
 
     <li>Tuples. Items are accessed by e.g. <code>myTuple.item_0</code>, <code>myTuple.item_1</code>. They may
     not be accessed by index, nor is 'tuple deconstruction' (into separate variables) supported.</li>
 
-    <li>Passing by reference is possible only within a <i>procedure</i> and to do this you use the <code>Ref</code> Type
+    <li>Passing by reference is possible only within a <i>procedure</i> and to do this you use the <code>AsRef</code> Type
     which acts like a wrapper around the instance of interest.</li>
 </ul>
 
