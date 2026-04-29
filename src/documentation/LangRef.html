@@ -230,7 +230,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
   </ul>
 </ul>
 
-<h2 id="main">main</h2>
+<h2 id="main"><el-instr>main</el-instr></h2>
 <p>A program must have a <el-instr>main</el-instr> method, sometimes called its <b>main</b> routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-instr>main</el-instr> method, either as a coding exercise or for subsequent use within another program.</p>
 <p>The <el-instr>main</el-instr> method defines the start point of a program when it is run (executed).</p>
 <p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
@@ -601,7 +601,7 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
   <li>An <el-instr>abstract class</el-instr> must be declared in the code above any Class that inherits from it.</li>
   <li>The <el-instr>abstract class</el-instr> (if any) and the interfaces (if any) that a concrete <code>class</code> inherits from may not contain duplicates of any <code>abstract</code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <code>interface</code>s inherited by the<code> interface</code>s and/or classes that need them.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <code>A</code> inherits from Type <code>B</code>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-  <li>The various 'super-Types' (<el-instr>abstract class</el-instr> and <el-instr>interface</el-instr>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+  <li>The super-Types (<el-instr>abstract class</el-instr> and <el-instr>interface</el-instr>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
 <li>See also example in <a href="#interface"><el-instr>Interface</el-instr></a></li>
 </ul>
 
@@ -632,7 +632,7 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-instr>interface</el-instr></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <code>blackjack.elan</code> of:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <b>blackjack</b> of:</p>
 <ul>
  <li>inheritance from <el-instr>interface</el-instr> <code>Player</code> to <el-instr>abstract class</el-instr> <code>Automated</code>
   and to <el-instr>class</el-instr> <code>HumanPlayer</code>, and</li>
@@ -992,8 +992,12 @@ which is the mechanism for running unit tests during program development, not du
 <h2 id="for"><el-instr>for</el-instr></h2>
 <div id="to"></div>
 <div id="step"></div>
-<p>The construct <code>for p in q</code> specifies looping through a sequence of
- characters in a <code>String</code> or items in a <code>List</code>.
+<p>The construct
+<codeblock>
+  for p in q
+  end for
+</codeblock>
+specifies looping through a sequence of characters in a <code>String</code> or items in a <code>List</code>.
 The forms of the <el-instr>for loop</el-instr> are:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id> is of Type <code>String</code> and the subject <el-id>q</el-id> is of Type <code>String</code>:<br>
@@ -1144,7 +1148,7 @@ So even if the loop variable is changed in any way within the <el-instr>for loop
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference</a></p>
 
-<h2 id="throw"><el-instr>throw exception</el-instr> (exception)</h2>
+<h2 id="throw"><el-instr>throw exception</el-instr></h2>
 <p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <el-instr>throw exception</el-instr> instruction
  which defines an explanatory string.</p>
 
@@ -1232,13 +1236,11 @@ end function
 </div></div>
 
 <h2 id="variable"><el-instr>variable definition</el-instr></h2>
-<p>The <el-instr>variable definition</el-instr><code>..</code>set to<code>..</code>
-instruction declares and initialises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
-<p>The initial value is given by a following expression. For example:</p>
-
-<codeblock>
-  variable note set to 440
-</codeblock>
+<p>The <el-instr>variable definition</el-instr> .. set to .. instruction declares and initialises
+ a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
+<p>The initial value is given by a following expression. For example:
+  <code>variable note set to 440</code>
+</p>
 
 <h2 id="while"><el-instr>while loop</el-instr></h2>
 <p>The <el-instr>while <code>condition</code>..end while</el-instr> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
