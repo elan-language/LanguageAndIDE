@@ -1,5 +1,8 @@
 import {
+  abstractFunctionKeywords,
   abstractKeyword,
+  abstractProcedureKeywords,
+  abstractPropertyKeywords,
   assertKeyword,
   callKeyword,
   classKeyword,
@@ -28,11 +31,7 @@ export const defaultUsername = "guest";
 
 export class Profile {
   constructor(prof: string) {
-     if (prof === "procedural") {
-      this.globals = this.globals_procedural;
-      this.statements = this.statements_procedural;
-      this.members = this.members_procedural;
-    } else if (prof === "oop") {
+     if (prof === "oop") {
       this.globals = this.globals_oop;
       this.members = this.members_oop;
       this.statements = this.statements_oop;
@@ -40,10 +39,14 @@ export class Profile {
       this.globals = this.globals_functional;
       this.members = this.members_functional;
       this.statements = this.statements_functional;
-    } else {
+    } else if (prof === "all") {
       this.globals = this.globals_all;
-      this.statements = this.statements_all;
       this.members = this.members_all;
+      this.statements = this.statements_all;
+    } else {
+      this.globals = this.globals_procedural;
+      this.statements = this.statements_procedural;
+      this.members = this.members_procedural;
     }
   }
 
@@ -80,7 +83,9 @@ export class Profile {
     functionKeyword,
     procedureKeyword,
     propertyKeyword,
-    abstractKeyword
+    abstractFunctionKeywords,
+    abstractProcedureKeywords,
+    abstractPropertyKeywords,
   ];
   private members_functional: string[] = [
     functionKeyword,

@@ -6,9 +6,6 @@ import {
   commentMarker,
   constructorKeyword,
   functionKeyword,
-  privateFunctionKeywords,
-  privateProcedureKeywords,
-  privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
   withKeyword,
@@ -62,21 +59,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         abstractFunctionKeywords,
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
-      ],
-      [
-        privatePropertyKeywords,
-        "private property",
-        (_parent: Parent) => this.class.createProperty(true),
-      ],
-      [
-        privateProcedureKeywords,
-        "private procedure",
-        (_parent: Parent) => this.class.createProcedure(true),
-      ],
-      [
-        privateFunctionKeywords,
-        "private function",
-        (_parent: Parent) => this.class.createFunction(true),
       ],
       [
         this.getCommentMarker(),
