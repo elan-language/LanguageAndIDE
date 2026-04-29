@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Concrete Class", () => {
@@ -776,7 +776,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    with copyOfThis.p1 set to p
+    set copyOfThis.p1 to p
     return copyOfThis
   end function
 end class`;
@@ -858,13 +858,13 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    with copyOfThis.p1 set to p
+    set copyOfThis.p1 to p
     return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
      let copyOfThis be copy(this)
-    with copyOfThis.p2 set to p
+    set copyOfThis.p2 to p
     return copyOfThis
   end function
 
@@ -2246,7 +2246,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     variable copyOfThis set to new Foo()
-    with copyOfThis.p1 set to p
+    set copyOfThis.p1 to p
     return copyOfThis
   end function
 end class`;

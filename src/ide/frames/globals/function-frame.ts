@@ -7,7 +7,6 @@ import {
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
-import { isReturnStatement } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -66,17 +65,14 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   parseBottom(source: CodeSource): boolean {
     let result = false;
-    const keyword = `${returnKeyword} `;
     source.removeIndent();
-    if (source.isMatch(keyword)) {
-      this.getReturnStatement().parseFrom(source);
+    if (source.isMatch(`${returnKeyword} `)) {
+      const ret = this.getLastChild() as ReturnStatement;
+      ret.parseFrom(source);
       source.removeNewLine().removeIndent();
       this.parseStandardEnding(source, `${endKeyword} ${functionKeyword}`);
       result = true;
     }
     return result;
-  }
-  protected getReturnStatement(): ReturnStatement {
-    return this.getChildren().filter((s) => isReturnStatement(s))[0];
   }
 }
