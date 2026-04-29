@@ -32,13 +32,13 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     return [
-      [mainKeyword, "<b>m</b>ain", (_parent: Parent) => this.file.createMain()],
-      [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
-      [testKeyword, "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
-      [procedureKeyword, "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],
-      [constantKeyword, "constant", (_parent: Parent) => this.file.createConstant()],
-      [enumKeyword, "<b>e</b>num", (_parent: Parent) => this.file.createEnum()],
-      [classKeyword, "class", (_parent: Parent) => this.file.createConcreteClass()],
+      [mainKeyword, "m", "<b>m</b>ain", (_parent: Parent) => this.file.createMain()],
+      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
+      [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
+      [procedureKeyword, "p", "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],
+      [constantKeyword, "c", "<b>c</b>onstant", (_parent: Parent) => this.file.createConstant()],
+      [enumKeyword, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum()],
+      [classKeyword, "s", "clas<b>s</b>", (_parent: Parent) => this.file.createConcreteClass()],
       [
         abstractKeyword,
         "<b>a</b>bstract class",
@@ -46,6 +46,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       ],
       [interfaceKeyword, "<b>i</b>nterface", (_parent: Parent) => this.file.createInterface()],
       [
+        this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.file.createGlobalComment(),

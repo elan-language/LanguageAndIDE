@@ -43,10 +43,10 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
 
   defaultOptions(): [string, string, (parent: Parent) => Frame][] {
     return [
-      [constructorKeyword, "constructor", (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
-      [procedureKeyword, "procedure", (_parent: Parent) => this.class.createProcedure()],
-      [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
+      [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
+      [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
+      [procedureKeyword, "c", "pro<b>c</b>edure", (_parent: Parent) => this.class.createProcedure()],
+      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
       [withKeyword, "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
       [
         abstractPropertyKeywords,
@@ -79,6 +79,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         (_parent: Parent) => this.class.createFunction(true),
       ],
       [
+        this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.class.createComment(),
