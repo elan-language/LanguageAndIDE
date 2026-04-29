@@ -5,7 +5,6 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { WithMethod } from "./class-members/with-method";
 import { ParamListField } from "./fields/param-list-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -55,7 +54,6 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
-import { WithPropertyUpdate } from "./statements/with-property-update";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
@@ -85,8 +83,6 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
-      frame instanceof WithMethod ||
-      frame instanceof WithPropertyUpdate ||
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractProperty
@@ -142,9 +138,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}("${frame.text.renderAsHtml()}")`;
     } else if (frame instanceof VariableStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof WithPropertyUpdate) {
-      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
-    } 
+    }
     return html;
   }
 
@@ -162,9 +156,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
-      html = ``;
-    } else if (frame instanceof FunctionMethod || frame instanceof WithMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `Enum syntax not yet implemented for Python`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
@@ -174,14 +166,13 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
-      this.importEnum = false;
-      this.importMath = false; // reset at start of file
-      this.polyfillsUsed = {};
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
+    } else if (frame instanceof Property) {
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
-    } else if (frame instanceof Property) {
-      html = ``;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsHtml()}</el-method>(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}:`;
     } else if (frame instanceof TryStatement) {

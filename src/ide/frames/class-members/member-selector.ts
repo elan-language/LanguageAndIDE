@@ -63,7 +63,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
       ],
-      [
+            [
         privatePropertyKeywords,
         "private property",
         (_parent: Parent) => this.class.createProperty(true),
@@ -87,7 +87,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.class_members.includes(keyword) || keyword === this.getCommentMarker();
+    return this.profile.members.includes(keyword) || keyword === this.getCommentMarker();
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

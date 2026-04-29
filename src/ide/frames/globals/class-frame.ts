@@ -12,7 +12,6 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { WithMethod } from "../class-members/with-method";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -50,6 +49,9 @@ import {
 } from "../parent-helpers";
 import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
+import { LetStatement } from "../statements/let-statement";
+import { ReturnStatement } from "../statements/return-statement";
+import { SetStatement } from "../statements/set-statement";
 import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
@@ -227,7 +229,22 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new FunctionMethod(this, priv);
   }
   createWithMethod(): Frame {
-    return new WithMethod(this);
+    const wm = new FunctionMethod(this, false);
+    wm.name.setPlaceholder("<i>withPropertyName</i>");
+    const className: string = this.name.text;
+    wm.returnType.setFieldToKnownValidText(className);
+    const defaultSelector = wm.getFirstSelectorAsDirectChild();
+    const letCopyOfThis = new LetStatement(this);
+    letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
+    letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
+    wm.addChildBefore(letCopyOfThis, defaultSelector);
+    const firstProp = new SetStatement(this);
+    firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
+    wm.addChildBefore(firstProp, defaultSelector);
+    const ret = wm.getLastChild() as ReturnStatement;
+    ret.expr.setFieldToKnownValidText("copyOfThis");
+    wm.removeChild(defaultSelector);
+    return wm;
   }
   createProperty(priv: boolean = false): Frame {
     return new Property(this, priv);

@@ -17,7 +17,7 @@ import { StatementSelector } from "../src/ide/frames/statements/statement-select
 import { While } from "../src/ide/frames/statements/while";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { transforms } from "./compiler/compiler-test-helpers";
 import { emptyMainOnly } from "./model-generating-functions";
 import { assertOptions, key, selectOption } from "./testHelpers";
 
@@ -61,10 +61,10 @@ suite("Selector tests", () => {
     assert.equal(v, "  variable  set to ");
   });
 
-  test("Selection Filtering - globals", () => {
+  test("Selection Filtering - globals - all", () => {
     const f = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("all"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -85,7 +85,20 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Filtering - members", () => {
+  test("Selection Filtering - globals - procedural", () => {
+    const f = new FileImpl(
+      hash,
+      new Profile("procedural"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const g = new GlobalSelector(f);
+    assertOptions(g, ["main", "function", "test", "procedure", "constant", "# comment"]);
+  });
+
+  test("Selection Filtering - globals - no profile specified", () => {
     const f = new FileImpl(
       hash,
       new Profile(""),
@@ -94,15 +107,42 @@ suite("Selector tests", () => {
       new StdLib(new StubInputOutput()),
       false,
     );
+    const g = new GlobalSelector(f);
+    assertOptions(g, ["main", "function", "test", "procedure", "constant", "# comment"]);
+  });
+
+  test("Selection Filtering - members - oop", () => {
+    const f = new FileImpl(
+      hash,
+      new Profile("oop"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "procedure", "function", "with method", "# comment"]);
+    assertOptions(s, ["property", "procedure", "function", "# comment"]);
+  });
+
+  test("Selection Filtering - members - functional", () => {
+    const f = new FileImpl(
+      hash,
+      new Profile("functional"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const c = new ConcreteClass(f);
+    const s = new MemberSelector(c);
+    assertOptions(s, ["property", "function", "with method", "# comment"]);
   });
 
   test("Selection Filtering - abstract class", () => {
     const f = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("oop"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -114,7 +154,6 @@ suite("Selector tests", () => {
       "property",
       "procedure",
       "function",
-      "with method",
       "abstract property",
       "abstract procedure",
       "abstract function",
@@ -125,7 +164,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - interface", () => {
     const f = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("oop"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -136,10 +175,10 @@ suite("Selector tests", () => {
     assertOptions(s, ["abstract property", "abstract procedure", "abstract function", "# comment"]);
   });
 
-  test("Selection Context - in a Function", () => {
+  test("Selection Context - in a Function - functional", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -156,7 +195,29 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
+      "# comment",
+    ]);
+  });
+
+  test("Selection Context - in a Function - no profile", () => {
+    const fl = new FileImpl(
+      hash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const func = new GlobalFunction(fl);
+    const s = new StatementSelector(func);
+    assertOptions(s, [
+      "variable definition",
+      "change variable",
+      "if",
+      "while loop",
+      "for loop",
+      "try ... catch",
+      "throw exception",
       "# comment",
     ]);
   });
@@ -186,10 +247,10 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Context - in a Test", () => {
+  test("Selection Context - in a Test - functional", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -211,10 +272,34 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Context - deeper nesting 1", () => {
+  test("Selection Context - in a Test - no profile", () => {
     const fl = new FileImpl(
       hash,
       new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const test = new TestFrame(fl);
+    const s = new StatementSelector(test);
+    assertOptions(s, [
+      "assert equal",
+      "variable definition",
+      "change variable",
+      "if",
+      "while loop",
+      "for loop",
+      "try ... catch",
+      "throw exception",
+      "# comment",
+    ]);
+  });
+
+  test("Selection Context - deeper nesting  - functional", () => {
+    const fl = new FileImpl(
+      hash,
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -233,15 +318,14 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
       "# comment",
     ]);
   });
 
-  test("Selection Context - deeper nesting 2", () => {
+  test("Selection Context - deeper nesting 2 - all", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("all"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -262,7 +346,6 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
       "# comment",
     ]);
   });
@@ -295,7 +378,7 @@ suite("Selector tests", () => {
     ]);
   });
 
-  ignore_test("Selection Context - if main deleted main option is shown", () => {
+  test("Selection Context - if main deleted main option is shown", () => {
     const fl = new FileImpl(
       hash,
       new Profile(""),
@@ -306,36 +389,33 @@ suite("Selector tests", () => {
     );
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
-    assertOptions(gs, [
-      "main",
-      "function",
-      "test",
-      "procedure",
-      "constant",
-      "enum",
-      "class",
-      "abstract class",
-      "interface",
-      "# comment",
-    ]);
+    assertOptions(gs, ["main", "function", "test", "procedure", "constant", "# comment"]);
   });
 
-  test("Selection Filtering - profile 1.0", () => {
+  test("Selection Filtering - profile=functional", () => {
     const file = new FileImpl(
       hash,
-      new Profile("1.0"),
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
       false,
     );
-    const globSel = file.getFirstChild();
-    const main = new MainFrame(file);
-    file.addChildBefore(main, globSel);
+    const g = file.getFirstSelectorAsDirectChild() as GlobalSelector;
+    const func = new GlobalFunction(file);
+    file.addChildBefore(func, g);
     file.updateAllParseStatus();
-    const g = new GlobalSelector(file);
-    assertOptions(g, ["# comment"]);
-    const s = new StatementSelector(main);
-    assertOptions(s, ["print", "variable definition", "change variable", "# comment"]);
+    const s = func.getFirstSelectorAsDirectChild();
+    assertOptions(s, [
+      "let statement",
+      "variable definition",
+      "change variable",
+      "if",
+      "while loop",
+      "for loop",
+      "try ... catch",
+      "throw exception",
+      "# comment",
+    ]);
   });
 });
