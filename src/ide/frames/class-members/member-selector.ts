@@ -41,44 +41,51 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [constructorKeyword, "constructor", (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, "property", (_parent: Parent) => this.class.createProperty()],
-      [procedureKeyword, "procedure", (_parent: Parent) => this.class.createProcedure()],
-      [functionKeyword, "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
-      [withKeyword, "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
+      [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
+      [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
+      [procedureKeyword, "c", "pro<b>c</b>edure", (_parent: Parent) => this.class.createProcedure()],
+      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.class.createFunction()],
+      [withKeyword, "w", "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
       [
         abstractPropertyKeywords,
+        "",
         "abstract property",
         (_parent: Parent) => this.class.createAbstractProperty(),
       ],
       [
         abstractProcedureKeywords,
+        "",
         "abstract procedure",
         (_parent: Parent) => this.class.createAbstractProcedure(),
       ],
       [
         abstractFunctionKeywords,
+        "",
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
       ],
             [
         privatePropertyKeywords,
+        "",
         "private property",
         (_parent: Parent) => this.class.createProperty(true),
       ],
       [
         privateProcedureKeywords,
+        "",
         "private procedure",
         (_parent: Parent) => this.class.createProcedure(true),
       ],
       [
         privateFunctionKeywords,
+        "",
         "private function",
         (_parent: Parent) => this.class.createFunction(true),
       ],
       [
+        this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.class.createComment(),

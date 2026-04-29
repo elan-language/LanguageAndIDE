@@ -31,27 +31,29 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [assertKeyword, "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
-      ["print", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
-      [letKeyword, "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
+      [assertKeyword, "a", "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
+      ["print", "p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
+      [letKeyword, "l",  "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
       [
         variableKeyword,
+        "v", 
         "<b>v</b>ariable definition",
         (parent: Parent) => this.factory.newVar(parent),
       ],
-      [setKeyword, "change variable", (parent: Parent) => this.factory.newSet(parent)],
-      [ifKeyword, "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
-      [elifKeyword, "else if", (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, "else", (parent: Parent) => this.factory.newElse(parent)],
-      [whileKeyword, "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
-      [forKeyword, "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
-      [callKeyword, "call procedure", (parent: Parent) => this.factory.newCall(parent, "")],
-      [tryKeyword, "try ... catch", (parent: Parent) => this.factory.newTryCatch(parent)],
+      [setKeyword, "r", "<b>r</b>e-assign variable", (parent: Parent) => this.factory.newSet(parent)],
+      [ifKeyword, "i", "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)], 
+      [elifKeyword, "s", "el<b>s</b>e if", (parent: Parent) => this.factory.newElif(parent)],
+      [elseKeyword, "e", "<b>e</b>lse", (parent: Parent) => this.factory.newElse(parent)],
+      [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
+      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [callKeyword, "c", "<b>c</b>all procedure", (parent: Parent) => this.factory.newCall(parent, "")],
+      [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
-      [throwKeyword, "throw exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [throwKeyword, "t", "<b>t</b>hrow exception", (parent: Parent) => this.factory.newThrow(parent)],
       [
+        this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (parent: Parent) => this.factory.newComment(parent),

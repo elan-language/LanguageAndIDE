@@ -39,15 +39,15 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [string, string, (parent: Parent) => Frame][];
+  abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame][];
   abstract profileAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(userEntry: boolean): [string, string, (parent: Parent) => Frame][] {
+  optionsFilteredByContext(userEntry: boolean): [string, string, string, (parent: Parent) => Frame][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByProfile(userEntry: boolean): [string, string, (parent: Parent) => Frame][] {
+  optionsFilteredByProfile(userEntry: boolean): [string, string, string, (parent: Parent) => Frame][] {
     return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
   }
 
@@ -79,14 +79,8 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  optionsMatchingUserInput(match: string): [string, string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByProfile(true).filter((o) => o[0].startsWith(match));
-  }
-
-  getCompletion(): string {
-    return this.optionsMatchingUserInput(this.text)
-      .map((o) => o[0])
-      .reduce((soFar, kw) => `${soFar} ${this.adjusted(kw, this.text, soFar)}`, "");
+  optionsMatchingUserInput(match: string): [string, string, string, (parent: Parent) => Frame][] {
+    return this.optionsFilteredByProfile(true).filter((o) => o[1] === match);
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -103,7 +97,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   addFrame(keyword: string, pendingChars: string): Frame {
-    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][2];
+    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][3];
     const parent = this.getParent();
     const newFrame: Frame = func(parent);
     parent.addChildBefore(newFrame, this);
@@ -321,7 +315,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         this.addFrame(name, "");
         return true;
       };
-      const html = `${o[1]}`;
+      const html = `${o[2]}`;
       map.set(name, [html, action]);
     });
     map.set("paste", ["separator paste <span class='kb'>Ctrl+v</span>", this.paste]);

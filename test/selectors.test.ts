@@ -28,12 +28,12 @@ suite("Selector tests", () => {
     assertOptions(selector, [
       "print",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
       "call procedure",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -189,11 +189,11 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "let statement",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -212,11 +212,11 @@ suite("Selector tests", () => {
     const s = new StatementSelector(func);
     assertOptions(s, [
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -236,12 +236,12 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "print",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
       "call procedure",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -262,11 +262,11 @@ suite("Selector tests", () => {
       "assert equal",
       "let statement",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -286,11 +286,11 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "assert equal",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -312,11 +312,11 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "let statement",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -338,13 +338,13 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "let statement",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "else if",
       "else",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -365,14 +365,14 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "print",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "else if",
       "else",
       "while loop",
       "for loop",
       "call procedure",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
@@ -409,11 +409,11 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "let statement",
       "variable definition",
-      "change variable",
+      "re-assign variable",
       "if",
       "while loop",
       "for loop",
-      "try ... catch",
+      "try",
       "throw exception",
       "# comment",
     ]);
