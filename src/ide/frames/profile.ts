@@ -17,6 +17,8 @@ import {
   propertyKeyword,
   setKeyword,
   testKeyword,
+  throwKeyword,
+  tryKeyword,
   variableKeyword,
   whileKeyword,
   withKeyword,
@@ -50,7 +52,7 @@ export class Profile {
   statementsInFunction: string[] = [];
   members: string[] = [];
 
-  private globals_procedural = [mainKeyword, "print", functionKeyword, testKeyword, constantKeyword, procedureKeyword];
+  private globals_procedural = [mainKeyword, "print", functionKeyword, testKeyword, constantKeyword, procedureKeyword, tryKeyword, throwKeyword];
   private globals_oop = this.globals_procedural.concat([classKeyword, abstractKeyword, interfaceKeyword, enumKeyword]);
   private globals_functional = this.globals_oop;
   private globals_all = this.globals_oop;
@@ -65,7 +67,9 @@ export class Profile {
     elseKeyword,
     whileKeyword,
     forKeyword,
-    callKeyword
+    callKeyword,
+    tryKeyword,
+    throwKeyword,
   ];
   private statements_oop = this.statements_procedural;
   private statements_functional = this.statements_procedural.concat([letKeyword]);
@@ -76,6 +80,7 @@ export class Profile {
     functionKeyword,
     procedureKeyword,
     propertyKeyword,
+    abstractKeyword
   ];
   private members_functional: string[] = [
     functionKeyword,

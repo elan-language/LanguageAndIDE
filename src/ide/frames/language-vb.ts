@@ -148,6 +148,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()})${this.implements(frame)}`;
     } else if (frame instanceof TestFrame) {

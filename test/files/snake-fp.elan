@@ -1,4 +1,4 @@
-# c5f1f8853d716992badf394fc622e69754096783eed175f746eb534072482517 Elan 2.0.0-alpha1 valid
+# 702c0b0c171690e55a992df0cc886bb0891704117cb3f61ae3b3875bfa57d0e0 Elan 2.0.0-alpha1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -111,43 +111,43 @@ class Game
 
   function withHead(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.head set to value
+    set copyOfThis.head to value
     return copyOfThis
   end function
 
   function withBody(value as List<of Square>) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.body set to value
+    set copyOfThis.body to value
     return copyOfThis
   end function
 
   function withPriorTail(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.priorTail set to value
+    set copyOfThis.priorTail to value
     return copyOfThis
   end function
 
   function withApple(value as Square) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.apple set to value
+    set copyOfThis.apple to value
     return copyOfThis
   end function
 
   function withIsOn(value as Boolean) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.isOn set to value
+    set copyOfThis.isOn to value
     return copyOfThis
   end function
 
   function withRnd(value as Random) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.rnd set to value
+    set copyOfThis.rnd to value
     return copyOfThis
   end function
 
   function withKey(value as String) returns Game
     let copyOfThis be copy(this)
-    set copyOfThis.key set to value
+    set copyOfThis.key to value
     return copyOfThis
   end function
 
@@ -165,13 +165,13 @@ class Square
 
   function withX(value as Int) returns Square
     let copyOfThis be copy(this)
-    set copyOfThis.x set to value
+    set copyOfThis.x to value
     return copyOfThis
   end function
 
   function withY(value as Int) returns Square
     let copyOfThis be copy(this)
-    set copyOfThis.y set to value
+    set copyOfThis.y to value
     return copyOfThis
   end function
 

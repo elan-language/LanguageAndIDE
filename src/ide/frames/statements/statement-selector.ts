@@ -8,7 +8,6 @@ import {
   ifKeyword,
   letKeyword,
   setKeyword,
-  testKeyword,
   throwKeyword,
   tryKeyword,
   variableKeyword,
@@ -64,23 +63,44 @@ export class StatementSelector extends AbstractSelector {
     return this.profile.statements.includes(keyword) || this.profile.statementsInFunction.includes(keyword) || keyword === this.getCommentMarker();
   }
 
-  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
+validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
     if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix() === tryKeyword;
+    } else if (keyword === callKeyword || keyword === "print") {
+      result = !(
+        this.isWithinAFunction() ||
+        this.isDirectlyWithinATest() ||
+        this.isWithinAConstructor()
+      );
     } else if (keyword === assertKeyword) {
-      result = parent.getIdPrefix() === testKeyword;
-    } else if (keyword === "print" || keyword === callKeyword) {
-      result = this.isWithinContext(parent, "proc") || this.isWithinContext(parent, "proc"); 
+      return this.isDirectlyWithinATest();
     } else if (keyword === letKeyword) {
-      result = this.isWithinContext(parent, "func");
+      return this.isWithinAFunction() || this.isDirectlyWithinATest();
     } else {
       result = true;
     }
     return result;
+  }
+
+  private isWithinAFunction(): boolean {
+    return this.isWithinContext(this.getParent(), "func");
+  }
+
+  private isWithinAWithFunctionMethod(): boolean {
+    return this.isWithinContext(this.getParent(), "func");
+  }
+
+
+  private isDirectlyWithinATest(): boolean {
+    return this.getParent().getIdPrefix() === "test";
+  }
+
+  private isWithinAConstructor(): boolean {
+    return this.isWithinContext(this.getParent(), "constructor");
   }
 
   private isWithinContext(parent: Parent, parentPrefix: string): boolean {
@@ -88,6 +108,5 @@ export class StatementSelector extends AbstractSelector {
       ? true
       : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }
-
   outerHtmlTag: string = "el-statement";
 }

@@ -156,22 +156,23 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof Enum) {
-      html = ``;
-    } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod) {
+      html = `Enum syntax not yet implemented for Python`;
+    } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
-    } else if (frame instanceof GlobalProcedure ||  frame instanceof ProcedureMethod) {
+    } else if (frame instanceof GlobalProcedure) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
     } else if (frame instanceof MainFrame) {
-      this.importEnum = false;
-      this.importMath = false; // reset at start of file
-      this.polyfillsUsed = {};
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {
-      html = ``;
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsHtml()}</el-method>(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}:`;
     } else if (frame instanceof TryStatement) {

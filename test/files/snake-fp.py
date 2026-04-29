@@ -90,31 +90,31 @@ class Game
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.head = value # with property update
+    copyOfThis.head = value # change variable
     return copyOfThis
   def withBody(self: Game, value: list[Square]) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.body = value # with property update
+    copyOfThis.body = value # change variable
     return copyOfThis
   def withPriorTail(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.priorTail = value # with property update
+    copyOfThis.priorTail = value # change variable
     return copyOfThis
   def withApple(self: Game, value: Square) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.apple = value # with property update
+    copyOfThis.apple = value # change variable
     return copyOfThis
   def withIsOn(self: Game, value: bool) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.isOn = value # with property update
+    copyOfThis.isOn = value # change variable
     return copyOfThis
   def withRnd(self: Game, value: Random) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.rnd = value # with property update
+    copyOfThis.rnd = value # change variable
     return copyOfThis
   def withKey(self: Game, value: str) -> Game: # function
     copyOfThis = copy(self) # let
-    copyOfThis.key = value # with property update
+    copyOfThis.key = value # change variable
     return copyOfThis
 
 
@@ -127,11 +127,11 @@ class Square
     self.y = y # change variable
   def withX(self: Square, value: int) -> Square: # function
     copyOfThis = copy(self) # let
-    copyOfThis.x = value # with property update
+    copyOfThis.x = value # change variable
     return copyOfThis
   def withY(self: Square, value: int) -> Square: # function
     copyOfThis = copy(self) # let
-    copyOfThis.y = value # with property update
+    copyOfThis.y = value # change variable
     return copyOfThis
   def toString(self: Square) -> str: # function
     return f"{self.x}, {self.y}"

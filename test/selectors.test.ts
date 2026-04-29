@@ -114,7 +114,6 @@ suite("Selector tests", () => {
       "property",
       "procedure",
       "function",
-      "with method",
       "abstract property",
       "abstract procedure",
       "abstract function",
@@ -156,7 +155,6 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
       "# comment",
     ]);
   });
@@ -233,7 +231,6 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
       "# comment",
     ]);
   });
@@ -262,7 +259,6 @@ suite("Selector tests", () => {
       "for loop",
       "try ... catch",
       "throw exception",
-      "with property update",
       "# comment",
     ]);
   });
@@ -320,22 +316,30 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Filtering - profile 1.0", () => {
+  test("Selection Filtering - profile=functional", () => {
     const file = new FileImpl(
       hash,
-      new Profile("1.0"),
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
       false,
     );
-    const globSel = file.getFirstChild();
-    const main = new MainFrame(file);
-    file.addChildBefore(main, globSel);
+    const g = file.getFirstSelectorAsDirectChild() as GlobalSelector;
+    const func = new GlobalFunction(file);
+    file.addChildBefore(func, g);
     file.updateAllParseStatus();
-    const g = new GlobalSelector(file);
-    assertOptions(g, ["# comment"]);
-    const s = new StatementSelector(main);
-    assertOptions(s, ["print", "variable definition", "change variable", "# comment"]);
+    const s = func.getFirstSelectorAsDirectChild();
+    assertOptions(s, [
+      "let statement",
+      "variable definition",
+      "change variable",
+      "if",
+      "while loop",
+      "for loop",
+      "try ... catch",
+      "throw exception",
+      "# comment",
+    ]);
   });
 });
