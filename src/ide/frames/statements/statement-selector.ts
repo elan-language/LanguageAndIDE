@@ -13,7 +13,6 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
-  withKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
@@ -74,29 +73,14 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix() === tryKeyword;
     } else if (keyword === assertKeyword) {
       result = parent.getIdPrefix() === testKeyword;
-    } else if (this.isWithinAFunction()) {
-      result = this.profile.statementsInFunction.includes(keyword) || keyword === this.getCommentMarker();
+    } else if (keyword === "print" || keyword === callKeyword) {
+      result = this.isWithinContext(parent, "proc") || this.isWithinContext(parent, "proc"); 
+    } else if (keyword === letKeyword) {
+      result = this.isWithinContext(parent, "func");
     } else {
       result = true;
     }
     return result;
-  }
-
-  private isWithinAFunction(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
-  }
-
-  private isWithinAWithFunctionMethod(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
-  }
-
-
-  private isDirectlyWithinATest(): boolean {
-    return this.getParent().getIdPrefix() === "test";
-  }
-
-  private isWithinAConstructor(): boolean {
-    return this.isWithinContext(this.getParent(), "constructor");
   }
 
   private isWithinContext(parent: Parent, parentPrefix: string): boolean {

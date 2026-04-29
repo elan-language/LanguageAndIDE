@@ -26,21 +26,22 @@ export const defaultUsername = "guest";
 
 export class Profile {
   constructor(prof: string) {
-    if (prof === "oop") {
+     if (prof === "procedural") {
+      this.globals = this.globals_procedural;
+      this.statements = this.statements_procedural;
+      this.members = this.members_procedural;
+    } else if (prof === "oop") {
       this.globals = this.globals_oop;
       this.members = this.members_oop;
       this.statements = this.statements_oop;
-      this.statementsInFunction = this.statementsInFunction_oop;
     } else if (prof === "functional") {
       this.globals = this.globals_functional;
       this.members = this.members_functional;
       this.statements = this.statements_functional;
-      this.statementsInFunction = this.statementsInFunction_functional;
     } else {
-      this.globals = this.globals_procedural;
-      this.statements = this.statements_procedural;
-      this.members = this.members_procedural;
-      this.statementsInFunction = this.statementsInFunction_procedural;
+      this.globals = this.globals_all;
+      this.statements = this.statements_all;
+      this.members = this.members_all;
     }
   }
 
@@ -52,6 +53,7 @@ export class Profile {
   private globals_procedural = [mainKeyword, "print", functionKeyword, testKeyword, constantKeyword, procedureKeyword];
   private globals_oop = this.globals_procedural.concat([classKeyword, abstractKeyword, interfaceKeyword, enumKeyword]);
   private globals_functional = this.globals_oop;
+  private globals_all = this.globals_oop;
 
   private statements_procedural = [
     assertKeyword,
@@ -67,18 +69,7 @@ export class Profile {
   ];
   private statements_oop = this.statements_procedural;
   private statements_functional = this.statements_procedural.concat([letKeyword]);
-
-  private statementsInFunction_procedural = [
-    variableKeyword, 
-    setKeyword, 
-    ifKeyword,
-    elifKeyword,
-    elseKeyword,
-    whileKeyword,
-    forKeyword,
-  ];
-  private statementsInFunction_oop = this.statementsInFunction_procedural;
-  private statementsInFunction_functional = [letKeyword];
+  private statements_all = this.statements_functional;
   
   private members_procedural: string[] = [];
   private members_oop: string[] = [
@@ -91,4 +82,5 @@ export class Profile {
     propertyKeyword,
     withKeyword
   ];
+  private members_all: string[] = this.members_oop.concat([withKeyword]);
 }
