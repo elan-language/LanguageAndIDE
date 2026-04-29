@@ -150,7 +150,7 @@ cause the browser tab to be closed.</p>
 <el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
 </el-code></li>
 The first comment in a file (which shows the software version) is automatically created and cannot be edited, deleted or moved.</li>
- <li><b>'new code' prompts</b> look like this:
+ <li><b>new code</b> prompts look like this:
 <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> procedure function test constant enum record class abstract interface #</div></el-select>
 </el-global></el-code>
 or, when selected:
@@ -169,7 +169,7 @@ Other instructions are entered by clicking on them in this menu.
  </li>
 </ul>
 
-<p>Comments and 'new code' prompts are <i>not</i> instructions. They do not alter the program's behaviour, though they are treated by the editor <i>like</i> instructions.</p>
+<p>Comments and <b>new code</b> prompts are <i>not</i> instructions. They do not alter the program's behaviour, though they are treated by the editor <i>like</i> instructions.</p>
 
 <h3 id="SelectInstructions">To select instructions</h3>
 
@@ -204,10 +204,10 @@ Other instructions are entered by clicking on them in this menu.
  <h3 class="acc-title" tabindex="0">Context menu</h3>
  <div class="acc-body">
 <p>When you have selected an instruction by clicking on its keyword (turning its background blue), some immediate actions are available from
-its <b>context menu</b> which is opened either by clicking the right mouse button on the keyword, or by keying <b>Ctrl+m</b>. The commonest context menu
+its <b>context menu</b> which is opened either by clicking the right mouse button on the keyword, or by keying <b>Ctrl+m</b>. The commonest <b>context menu</b>
 shows these options, any one of which may then be clicked on to do the action:</p>
 <img src="images/contextMenu_standard.png" width="203" height="167">
-<p>The context menu shows only those actions which are relevant to that instruction in its context.</p>
+<p>The <b>context menu</b> shows only those actions which are relevant to that instruction in its context.</p>
 <p>The following is a list all possible menu items with key equivalents where applicable:</p>
 <table style="tableMenu">
  <tr><th width="150px">do</th><th width="100px">undo</th><th width="100px">keyboard</th></tr>
@@ -246,11 +246,11 @@ shows these options, any one of which may then be clicked on to do the action:</
  <div class="accordion">
  <h3 class="acc-title" tabindex="0" id="InsertInstructions">Insert a new instruction...</h3>
  <div class="acc-body">
-<p>If there is already a 'new code' prompt where you want to insert an instruction, refer to the description under <a href="#BrowseCode">Browse code</a> above.</p>
+<p>If there is already a <b>new code</b> prompt where you want to insert an instruction, refer to the description under <a href="#BrowseCode">Browse code</a> above.</p>
 <p>Otherwise, select an instruction <i>adjacent</i> to where you want to add the new one and <i>either</i>:</p>
 <ul>
- <li>key <b>Enter</b> to insert a 'new code' prompt <i>below</i> it, <i>or</i></li>
- <li>key <b>Shift+Enter</b> to insert a 'new code' prompt <i>above</i> it.</li>
+ <li>key <b>Enter</b> to insert a <b>new code</b> prompt <i>below</i> it, <i>or</i></li>
+ <li>key <b>Shift+Enter</b> to insert a <b>new code</b> prompt <i>above</i> it.</li>
 </ul>
 </div></div>
 
@@ -262,8 +262,8 @@ shows these options, any one of which may then be clicked on to do the action:</
  <tr><td>one or more (adjacent) existing instructions</td><td>select the instructions then <b>Ctrl+Delete</b>, <b>Ctrl+Backspace</b> or <b>Ctrl+x</b>
  </td><td>deleting a compound instruction will delete all its contained instructions</td></tr>
  <tr><td>a just-created instruction</td><td><b>Backspace</b></td><td>this works only if no fields have been entered or 'child' instructions added</td></tr>
- <tr><td>a 'new code' prompt that is not needed</td><td>delete the same way as an instruction</td><td></td></tr>
- <tr><td>all 'new code' prompts</td><td>Click on the <b>Trim</b> button or <b>Alt+t</b></td><td>removes all 'new code' prompts <i>except</i> in places where further instructions are required<br>
+ <tr><td>a <b>new code</b> prompt that is not needed</td><td>delete the same way as an instruction</td><td></td></tr>
+ <tr><td>all <b>new code</b> prompts</td><td>Click on the <b>Trim</b> button or <b>Alt+t</b></td><td>removes all <b>new code</b> prompts <i>except</i> in places where further instructions are required<br>
   (for example so as not to leave an empty loop)</td></tr>
  </table>
  </div>
@@ -300,7 +300,7 @@ shows these options, any one of which may then be clicked on to do the action:</
  <li>To move one or more successive instructions to a new location within the program:
  <ul>
  <li>Select the instructions to be cut, then key <b>Ctrl+x</b>.</li>
- <li>Create, or select, a 'new code' prompt where you want to paste in the cut instructions.</li>
+ <li>Create, or select, a <b>new code</b> prompt where you want to paste in the cut instructions.</li>
  <li>Key <b>Ctrl+v</b> to paste.</li>
  </ul>
 <li>Note that the pasted instructions must be compatible with their
@@ -323,7 +323,7 @@ To restore the cut instructions to their original context, use <el-code>undo</el
  while leaving the ghosted code fully formatted.</p>
 <ul>
  <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, an entire <el-kw>procedure</el-kw> or a <el-kw>test</el-kw>) to be ghosted.</li>
- <li><b>Ctrl+m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the context menu.</li>
+ <li><b>Ctrl+m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the <b>context menu</b>.</li>
  <li>The instruction will be displayed in pale colours.</li>
  <li>The ghosted code will then be ignored by the compiler and, for ghosted tests, by the test runner. This means, for example, that you can create two different implementations
  of the same function and compare them, as long as one of them is ghosted.</li>
@@ -369,8 +369,8 @@ To restore the cut instructions to their original context, use <el-code>undo</el
  <p>When run using <b>debug</b> the program will automatically pause at every breakpoint, and the in-scope named values will be listed in the <b>Info</b> pane.</p>
  <table>
  <tr><th>To...</th><th>Keyboard<br> shortcut</th><th>Mouse<br> gesture</th></tr>
- <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td><b>Ctrl+m</b> on a selected instruction keyword then select <b>set breakpoint</b></td><td><b>right-click</b> for context menu, then select <b>set breakpoint</b></td></tr>
- <tr><td>clear existing breakpoints</td><td><b>Ctrl+m</b> on a selected instruction keyword, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td><td><b>right-click</b> for context menu, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td></tr>
+ <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td><b>Ctrl+m</b> on a selected instruction keyword then select <b>set breakpoint</b></td><td><b>right-click</b> for <b>context menu</b>, then select <b>set breakpoint</b></td></tr>
+ <tr><td>clear existing breakpoints</td><td><b>Ctrl+m</b> on a selected instruction keyword, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td><td><b>right-click</b> for <b>context menu</b>, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td></tr>
  </table>
 </div></div>
 
