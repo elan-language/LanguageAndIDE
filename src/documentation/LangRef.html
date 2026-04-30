@@ -240,7 +240,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a <el-instr>main</el-instr> method</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; A <el-instr>main</el-instr> method</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; A <el-instr>main</el-instr> method</p>
 <codeblock>
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
@@ -278,7 +278,7 @@ end main
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of procedure</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Procedure to order a list of integers:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 <codeblock>
 procedure inPlaceRippleSort(li as List<of Int>)
   variable hasChanged set to true
@@ -310,7 +310,7 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of call by reference</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <el-instr>main</el-instr>,
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <el-instr>main</el-instr>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
 <codeblock>
 main
@@ -351,14 +351,14 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; The function definition:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The function definition:</p>
 <codeblock>
 function score(g as Game) returns Int
   return g.body.length() - 2
 end function
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reference to the function:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Reference to the function:</p>
 <codeblock>
 main
   variable g set to new Game()
@@ -382,7 +382,7 @@ end function</codeblock>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-instr>assert equal</el-instr> instructions that test a <el-instr>function</el-instr></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <code>binarySearch</code> on four test lists</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <code>binarySearch</code> on four test lists</p>
 <codeblock>
 test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
@@ -451,7 +451,7 @@ end test
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of testing long strings</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reporting the first character at which the actual (computed) and expected strings differ:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Reporting the first character at which the actual (computed) and expected strings differ:</p>
 
 <codeblock>
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
@@ -473,7 +473,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples of ghosting tests</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an entire test:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Ghosting an entire test:</p>
 
 <codeblock>
 [ghosted] test test_overApple
@@ -486,7 +486,7 @@ end test
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an assert:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Ghosting an assert:</p>
 
 <codeblock>
 test test_overApple
@@ -542,7 +542,7 @@ end class
 <h4 class="no-TOC acc-title" tabindex="0">Example Class definition</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Apple:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
 <codeblock>
 class Apple
   constructor()
@@ -624,7 +624,7 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-instr>interface</el-instr></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <b>blackjack</b> of:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from a version of program <b>blackjack</b> of:</p>
 <ul>
  <li>inheritance from <el-instr>interface</el-instr> <code>Player</code> to <el-instr>abstract class</el-instr> <code>Automated</code>
   and to <el-instr>class</el-instr> <code>HumanPlayer</code>, and</li>
@@ -1039,7 +1039,7 @@ end main
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>for</el-instr></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Function to reverse a <code>String</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
 <codeblock>
 function reverse(s as String) returns String
   variable sReturn set to ""
@@ -1051,7 +1051,7 @@ end function
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print the first item in a <code>List</code> and then each item in it:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To print the first item in a <code>List</code> and then each item in it:</p>
 <codeblock>
 main
   variable names set to ["Tom", "Dick", "Harriet"]
@@ -1063,7 +1063,7 @@ end main
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print first the keys and then the values from a <code>Dictionary</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To print first the keys and then the values from a <code>Dictionary</code>:</p>
 <codeblock>
 main
   variable di set to ["A":1, "B":2, "C":3]
@@ -1081,7 +1081,7 @@ end main
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Technical note about the <el-instr>for loop</el-instr> variable</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; The <el-instr>for</el-instr> instruction creates its own working copy of the values through which to loop sequentially.
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The <el-instr>for</el-instr> instruction creates its own working copy of the values through which to loop sequentially.
 So even if the loop variable is changed in any way within the <el-instr>for loop</el-instr>, this will not affect the items it refers to and  processes.</p>
 <p>It is  therefore recommended never to re-assign the loop variable within the loop.</p>
 <hr>
@@ -1111,7 +1111,7 @@ So even if the loop variable is changed in any way within the <el-instr>for loop
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>if</el-instr> instruction</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Simple choice between equality and inequality:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Simple choice between equality and inequality:</p>
 <codeblock>
   if head is apple then
     call setAppleToRandomPosition(apple, body)
@@ -1120,7 +1120,7 @@ So even if the loop variable is changed in any way within the <el-instr>for loop
   end if
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
     if item.equals(value) then
       set result to true
@@ -1150,7 +1150,7 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-instr>throw exception</el-instr></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To stop the program if a value calculated in a function is out of range:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
 <codeblock>
 main
   call print($"{percent(23, 20)}" + "%")
@@ -1181,7 +1181,7 @@ end function
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>try..catch</el-instr></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Use a <el-instr>test</el-instr> to catch an error in a function:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Use a <el-instr>test</el-instr> to catch an error in a function:</p>
 <codeblock>
 test test_try_1
   try
@@ -1194,7 +1194,7 @@ end test
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To check an error message and, if unexpected, throw the exception up:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To check an error message and, if unexpected, throw the exception up:</p>
 <codeblock>
 test test_try_2
   try
@@ -1209,7 +1209,7 @@ end test
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To stop the program if one of two points has negative <i>x</i> or <i>y</i>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points has negative <i>x</i> or <i>y</i>:</p>
 <codeblock>
 main
   variable a set to (-1.0, 2.0)
@@ -1493,24 +1493,24 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-instr>if</el-instr> expression:</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice of <el-instr>variable definition</el-instr> assignments (the brackets around the first <el-instr>if</el-instr> expression are optional):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice of <el-instr>variable definition</el-instr> assignments (the brackets around the first <el-instr>if</el-instr> expression are optional):</p>
 
 <codeblock>variable c set to 1160</codeblock>
 <codeblock>set c to (if c < 1160 then c + 40 else c - 1160)</codeblock>
 <codeblock>variable d set to if c < 580 then c - 40 else c + 60</codeblock>
 
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-instr>return</el-instr> instruction:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <el-instr>return</el-instr> instruction:</p>
 <codeblock>
   return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-instr>elif</el-instr> clause:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using <el-instr>elif</el-instr> clause:</p>
 <codeblock>
   return if attempt[n] is "*" then attempt elif isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using the simpler <el-instr>if</el-instr> expression in a <el-instr>call procedure</el-instr> <el-method>print</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the simpler <el-instr>if</el-instr> expression in a <el-instr>call procedure</el-instr> <el-method>print</el-method>:</p>
 <codeblock>
 main
   variable p set to unicode(0x03c0)
