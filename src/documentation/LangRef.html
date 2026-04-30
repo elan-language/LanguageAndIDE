@@ -186,7 +186,7 @@ with all the same property values except for specific changes that you want to m
  <code>variable  point set to (3, 7)</code><br>
  <code>variable  x set to point.item_0</code></li>
  <li>To refer to a value in an <el-instr>enum</el-instr>, e.g.to pick one of the values in the <el-instr>enum</el-instr> <code>Suit</code>:<br>
- <codeblock>enum Suit spades, hearts diamonds, clubs</codeblock><br>
+ <code>enum Suit spades, hearts diamonds, clubs</code><br>
  <code>variable  s set to Suit.spades</code></li>
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <el-instr>function</el-instr> or <el-instr>procedure</el-instr>.
 The global value may then be referred to by prefixing the variable name with the keyword <el-instr>global</el-instr> and a dot. In this example, a call to the function
@@ -608,7 +608,7 @@ you can refer to this instance with the keyword <el-instr>this</el-instr>, as sh
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-instr>abstract class</el-instr>, i.e. abstract <code>property</code>, abstract <code>function</code>, abstract <code>procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<p><code>function calculateDiscount() as Float</code></p>
+<p><code>function calculateDiscount(d as Float)</code></p>
 <p>If you wish to have several subclasses of an <el-instr>abstract class</el-instr> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-instr>abstract</el-instr> on the superclass.</li>
