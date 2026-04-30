@@ -31,6 +31,7 @@ export const defaultUsername = "guest";
 
 export class Profile {
   constructor(prof: string) {
+    this.name = prof;
      if (prof === "oop") {
       this.globals = this.globals_oop;
       this.members = this.members_oop;
@@ -49,6 +50,8 @@ export class Profile {
       this.members = this.members_procedural;
     }
   }
+
+  name: string;
 
   globals: string[] = [];
   statements: string[] = [];
