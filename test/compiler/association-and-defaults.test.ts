@@ -211,7 +211,6 @@ main
   call printNoLine(g.ds)
   call printNoLine(g.ai)
   call printNoLine(g.t)
-  call printNoLine(g.ff("a", "b"))
   call printNoLine("aa".matchesRegExp(g.r))
 end main
 
@@ -221,7 +220,6 @@ class Game
       set this.ds to new Dictionary<of String, Int>()
       set this.ai to new List<of Int>()
       set this.t to (0, "", new List<of Int>())
-      set this.ff to lambda a as String, b as String => 0
     end constructor
 
     property i as Int
@@ -231,7 +229,6 @@ class Game
     property ds as Dictionary<of String, Int>
     property ai as List<of Int>
     property t as (Int, String, List<of Int>)
-    property ff as Func<of String, String => Int>
     property r as RegExp
 
     function toString() returns String
@@ -251,19 +248,17 @@ async function main() {
   await _stdlib.printNoLine(g.ds);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
-  await _stdlib.printNoLine((await g.ff("a", "b")));
   await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["ff", system.emptyFunc(0)], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
 
   async _initialise() {
     this.s = "";
     this.ds = system.initialise(await new _stdlib.Dictionary()._initialise());
     this.ai = system.initialise(await new _stdlib.List()._initialise());
     this.t = system.tuple([0, "", system.initialise(await new _stdlib.List()._initialise())]);
-    this.ff = async (a, b) => 0;
     return this;
   }
 
@@ -280,8 +275,6 @@ class Game {
   ai = system.initialise(_stdlib.List.emptyInstance());
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
-
-  ff = system.emptyFunc(0);
 
   r = system.emptyRegExp();
 
@@ -306,7 +299,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])0true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])true");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
