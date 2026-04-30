@@ -5,6 +5,7 @@ import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { GlobalComment } from "../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { Profile } from "../src/ide/frames/profile";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
@@ -13,7 +14,6 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "./testHelpers";
-import { Profile } from "../src/ide/frames/profile";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
@@ -314,17 +314,17 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key("a"));
     expr.processKey(key(" "));
     assert.equal(expr.text, "lambda a ");
-    assert.equal(expr.getCompletion(), "as <i>Type</i> => <i>value or expression</i>");
+    assert.equal(expr.getCompletion(), "<i>value or expression</i>");
     expr.processKey(key("Tab"));
-    assert.equal(expr.text, "lambda a as ");
+    assert.equal(expr.text, "lambda a");
     assert.equal(expr.getCompletion(), "<i>Type</i> => <i>value or expression</i>");
     expr.processKey(key("I"));
     expr.processKey(key("n"));
     expr.processKey(key("t"));
-    assert.equal(expr.text, "lambda a as Int");
+    assert.equal(expr.text, "lambda a");
     assert.equal(expr.getCompletion(), " => <i>value or expression</i>");
     expr.processKey(key("Enter"));
-    assert.equal(expr.text, "lambda a as Int => ");
+    assert.equal(expr.text, "lambda a => ");
   });
   test("End of field marker automatically skips to next field #496", () => {
     const file = new FileImpl(

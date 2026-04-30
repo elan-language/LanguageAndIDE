@@ -172,7 +172,7 @@ suite("Parsing - Completions", () => {
     );
   });
   test("Lambda", () => {
-    testCompletion(new Lambda(f), "lambda x as Int => x*x", ParseStatus.valid, "");
+    testCompletion(new Lambda(f), "lambda x => x*x", ParseStatus.valid, "");
     testCompletion(
       new Lambda(f),
       "lambda ",
@@ -181,19 +181,19 @@ suite("Parsing - Completions", () => {
     );
     testCompletion(
       new Lambda(f),
-      "lambda x as Int ",
+      "lambda x ",
       ParseStatus.incomplete,
       "=> <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(f),
-      "lambda x as Int,",
+      "lambda x,",
       ParseStatus.incomplete,
       "<i>name</i> as <i>Type</i> => <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(f),
-      "lambda x as Int =",
+      "lambda x =",
       ParseStatus.incomplete,
       "> <i>value or expression</i>",
     );

@@ -161,7 +161,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
+    variable matches set to this.nodes.filter(lambda n => n.point.equals(p))
     return if(matches.length() is 1, matches.head(), emptyNode())
   end function
 
@@ -172,7 +172,7 @@ class Solver
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to emptyNode()
-    variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    variable possibilities set to this.nodes.filter(lambda nd => (not nd.visited) and (nd.distFromStart < infinity))
     for nd in possibilities
       variable cost set to this.calculateCost(nd)
       if cost < lowestCostSoFar then

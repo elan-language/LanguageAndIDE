@@ -3,23 +3,23 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedCSIs,
+    assertExportedJavaIs,
+    assertExportedPythonIs,
+    assertExportedVBis,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testCSHeader,
+    testHash,
+    testHeader,
+    testJavaHeader,
+    testPythonHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Variables", () => {
@@ -338,7 +338,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 2]
-  variable b set to a.map(lambda x as Int => x)
+  variable b set to a.map(lambda x => x)
   set b to [1, 2]
   call printNoLine(b)
 end main`;

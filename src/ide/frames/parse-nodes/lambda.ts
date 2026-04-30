@@ -4,9 +4,9 @@ import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
+import { IdentifierDef } from "./identifier-def";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
-import { ParamDefNode } from "./param-def-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
@@ -20,11 +20,11 @@ export class Lambda extends AbstractSequence {
     if (text.trim().length > 0) {
       this.addElement(new KeywordNode(this.file, lambdaKeyword));
       this.addElement(new SpaceNode(this.file, Space.required));
-      const paramList = () => new CSV(this.file, () => new ParamDefNode(this.file), 1);
+      const paramList = () => new CSV(this.file, () => new IdentifierDef(this.file), 1);
       const sp = () => new SpaceNode(this.file, Space.required);
       const paramListSp = new Sequence(this.file, [paramList, sp]);
       this.params = new OptionalNode(this.file, paramListSp);
-      this.params.setSyntaxCompletionWhenEmpty("<i>name</i> as <i>Type</i>, ...");
+      this.params.setSyntaxCompletionWhenEmpty("<i>name</i>, ...");
       this.addElement(this.params);
       const arrow = new PunctuationNode(this.file, ARROW);
       this.addElement(arrow);

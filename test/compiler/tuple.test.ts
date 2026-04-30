@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Tuple", () => {
@@ -154,7 +154,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [(1,2)]
-  variable t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  variable t set to a.reduce((1, 1), lambda i, j => j)
   variable fst set to t.item_0
   call printNoLine(fst)
 end main`;

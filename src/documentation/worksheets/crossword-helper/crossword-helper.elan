@@ -3,15 +3,15 @@
 main
   variable w set to words.split(" ")
   variable len set to inputIntBetween("Enter number of characters?", 2, 15)
-  set w to w.filter(lambda w as String => w.length() <= len)
+  set w to w.filter(lambda w => w.length() <= len)
   variable rgx set to inputStringWithLimits("Enter {len} characters to match, using a . for 'unknown'", len, len).lowerCase().asRegExp()
-  set w to w.filter(lambda w as String => w.matchesRegExp(rgx))
+  set w to w.filter(lambda w => w.matchesRegExp(rgx))
   variable a set to inputStringFromOptions("Clue is an anagram? (y/n)", ["y", "n"])
   if a is "y" then
     variable source set to input("Enter word(s) to match as anagram:")
-    variable letters set to source.split("").filter(lambda l as String => l isnt " ").join("")
+    variable letters set to source.split("").filter(lambda l => l isnt " ").join("")
     variable anagram set to sortLettersOfWord(source.trim())
-    set w to w.filter(lambda w as String => sortLettersOfWord(w) is anagram)
+    set w to w.filter(lambda w => sortLettersOfWord(w) is anagram)
   end if
   variable output set to w.join("\n")
   call print($"{w.length()} matching words:\n{w}")

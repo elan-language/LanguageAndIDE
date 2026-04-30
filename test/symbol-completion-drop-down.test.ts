@@ -5,10 +5,10 @@ import { Profile } from "../src/ide/frames/profile";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import {
-  assertAutocompletes,
-  assertSymbolCompletionMenuStartsWith,
-  assertSymbolCompletionWithString,
-  fileWithPython,
+    assertAutocompletes,
+    assertSymbolCompletionMenuStartsWith,
+    assertSymbolCompletionWithString,
+    fileWithPython,
 } from "./testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
@@ -2587,7 +2587,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
+  call printModified((4, 5), lambda t => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -2613,7 +2613,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "(4, 5), lambda t as (Int, Int) => t.it",
+      "(4, 5), lambda t => t.it",
       expected,
     );
   });
@@ -2622,7 +2622,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(lambda t as Foo => t.bar(), new Foo())
+  call printModified(lambda t => t.bar(), new Foo())
 end main
   
 class Foo
@@ -2648,14 +2648,14 @@ end procedure`;
 
     const expected = [["bar", "bar", "bar("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "args5", "lambda t as Foo => t.b", expected);
+    await assertSymbolCompletionWithString(fileImpl, "args5", "lambda t => t.b", expected);
   });
 
   ignore_test("Pass_lambdaParameter2", async () => {
     const code = `${testHeader}
 
 main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
+  call printModified(new Foo(), lambda t => t.bar())
 end main
   
 class Foo
@@ -2684,7 +2684,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "new Foo(), lambda t as Foo => t.b",
+      "new Foo(), lambda t => t.b",
       expected,
     );
   });
@@ -2693,7 +2693,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
+  call printModified(new Foo(), lambda t => t.bar())
 end main
   
 class Foo
@@ -2722,7 +2722,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "new Foo(), lambda t as Foo => u.b",
+      "new Foo(), lambda t => u.b",
       expected,
     );
   });
@@ -2731,7 +2731,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
+  call printModified(new Foo(), lambda t => t.bar())
 end main
   
 class Foo
@@ -2764,7 +2764,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "new Foo(), lambda t as Foo => t.",
+      "new Foo(), lambda t => t.",
       expected,
     );
   });
@@ -2773,7 +2773,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(new Foo(), lambda aFoo as Foo => aFoo.bar())
+  call printModified(new Foo(), lambda aFoo => aFoo.bar())
 end main
   
 class Foo
@@ -2802,7 +2802,7 @@ end procedure`;
     await assertSymbolCompletionWithString(
       fileImpl,
       "args5",
-      "new Foo(), lambda aFoo as Foo => aF",
+      "new Foo(), lambda aFoo => aF",
       expected,
     );
   });

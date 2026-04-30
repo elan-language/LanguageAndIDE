@@ -62,7 +62,7 @@ test test_setTargetIfGreen
 end test
 
 function evaluateGreens(attempt as String, target as String) returns List<of String>
-  return range(0, 5).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
+  return range(0, 5).reduce([attempt, target], lambda a<of String>, x as Int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
 end function
 
 test test_evaluateGreens
@@ -123,7 +123,7 @@ test test_setTargetIfYellow
 end test
 
 function evaluateYellows(attempt as String, target as String) returns List<of String>
-  return range(0, 5).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
+  return range(0, 5).reduce([attempt, target], lambda a<of String>, x as Int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
 end function
 
 test test_evaluateYellows
@@ -153,7 +153,7 @@ test test_markAttempt
 end test
 
 function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w).equals(mark))
+  return prior.filter(lambda w => markAttempt(attempt, w).equals(mark))
 end function
 
 test test_possibleAnswersAfterAttempt
@@ -165,9 +165,9 @@ end test
 
 function maxWordCountRemainingAfterAttempt(possAnswers as List<of String>, attempt as String) returns Int
   variable d set to new Dictionary<of String, Int>()
-  variable d2 set to possAnswers.reduce(d, lambda dd as Dictionary<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
+  variable d2 set to possAnswers.reduce(d, lambda dd<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
   variable keys set to d2.keys()
-  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  return keys.reduce(0, lambda maxSoFar, mark => if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 end function
 
 function incrementCount(dd as Dictionary<of String, Int>, possAnswer as String, attempt as String) returns Dictionary<of String, Int>
@@ -187,7 +187,7 @@ test test_maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAnswers.map(lambda w => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
@@ -214,7 +214,7 @@ end test
 
 function bestAttempt(possAnswers as List<of String>) returns String
   variable wordCounts set to allRemainingWordCounts(possAnswers)
-  variable best set to wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
+  variable best set to wordCounts.reduce(wordCounts.head(), lambda bestSoFar, newWord => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 

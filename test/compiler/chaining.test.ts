@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Chaining", () => {
@@ -784,7 +784,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, lambda s as Int, x as Int => s + x))
+  call printNoLine(a.filter(lambda x => x > 2).map(lambda x => x * x).reduce(0, lambda s, x => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -817,8 +817,8 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  variable c set to a.subList(0, 5).map(lambda x as Int => x * x)
-  call printNoLine(c.subList(2, c.length()).reduce(0, lambda s as Int, x as Int => s + x))
+  variable c set to a.subList(0, 5).map(lambda x => x * x)
+  call printNoLine(c.subList(2, c.length()).reduce(0, lambda s, x => s + x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

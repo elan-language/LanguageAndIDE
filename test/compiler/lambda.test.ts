@@ -3,16 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("Lambda", () => {
@@ -20,7 +19,7 @@ suite("Lambda", () => {
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x * 3)
+  call printModified(4, lambda x => x * 3)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -60,7 +59,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => global.first(t))
+  call printModified((4, 5), lambda t => global.first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -111,7 +110,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
+  call printModified((4, 5), lambda t => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -151,7 +150,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => x * 5
+  variable l set to lambda x => x * 5
   call printNoLine(l(5))
 end main`;
 
@@ -174,14 +173,14 @@ end main`;
 
 main
   variable foo set to new Foo()
-  call foo.setP1(lambda x as Int => x)
+  call foo.setP1(lambda x => x)
   variable v set to foo.p1(5)
   call printNoLine(v)
 end main
 
 class Foo
   constructor()
-    set this.p1 to lambda x as Int => 0
+    set this.p1 to lambda x => 0
   end constructor
   function toString() returns String
     return ""
@@ -212,7 +211,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => x * 5
+  variable l set to lambda x => x * 5
   call printNoLine(l(5) + 5)
 end main`;
 
@@ -239,7 +238,7 @@ main
 end main
     
 function getFunc() returns Func<of Int => Int>
-  return lambda x as Int => x * 5
+  return lambda x => x * 5
 end function`;
 
     const fileImpl = new FileImpl(
@@ -314,7 +313,7 @@ main
 end main
     
 function getFunc(x as Int) returns Func<of List<of Int> => List<of Int>>
-  return lambda y as List<of Int> => [x * y[0]]
+  return lambda y<of Int> => [x * y[0]]
 end function`;
 
     const fileImpl = new FileImpl(
@@ -335,8 +334,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Func<of Int => Int> => x(2)
-  call printNoLine(l(lambda x as Int => 2 * x))
+  variable l set to lambda x<of Int => Int> => x(2)
+  call printNoLine(l(lambda x => 2 * x))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -362,7 +361,7 @@ main
 end main
     
 function getFunc() returns Func<of Int => Int>
-  return lambda x as Int => x * 5
+  return lambda x => x * 5
 end function`;
 
     const fileImpl = new FileImpl(
@@ -383,7 +382,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x.toString())
+  call printModified(4, lambda x => x.toString())
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -411,7 +410,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified("4", lambda x as Int => x + 3)
+  call printModified("4", lambda x => x + 3)
 end main
 
 procedure printModified(i as String, f as Func<of Int => Int>)
@@ -439,7 +438,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x)
+  call printModified(4, lambda x => x)
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)
@@ -523,7 +522,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  variable aa set to lambda x as Int => aa
+  variable aa set to lambda x => aa
 end main`;
 
     const fileImpl = new FileImpl(
@@ -544,7 +543,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => if(x is 1, x, l(x-1))
+  variable l set to lambda x => if(x is 1, x, l(x-1))
 end main`;
 
     const fileImpl = new FileImpl(
