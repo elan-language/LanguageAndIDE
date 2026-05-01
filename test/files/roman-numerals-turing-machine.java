@@ -115,7 +115,7 @@ class Rule {
   }
 }
 
-enum Dir left, right
+enum Dir {left, right}
 
 // rename this method and define new transition rules to solve a different problem
 

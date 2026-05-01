@@ -215,7 +215,11 @@ class Point
     return f"{self.x},{self.y}"
 
 
-Algorithm = Enum('Algorithm', 'dijkstra, aStar, heuristic')
+class Algorithm(Enum):
+  dijkstra = 1
+  aStar = 2
+  heuristic = 3
+
 
 # 'infinity' need only be larger than longest possible route
 

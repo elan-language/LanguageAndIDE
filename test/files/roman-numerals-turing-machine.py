@@ -98,7 +98,10 @@ class Rule
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
 
 
-Dir = Enum('Dir', 'left, right')
+class Dir(Enum):
+  left = 1
+  right = 2
+
 
 # rename this method and define new transition rules to solve a different problem
 

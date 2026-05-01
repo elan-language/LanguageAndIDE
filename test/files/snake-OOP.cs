@@ -134,7 +134,7 @@ class Square {
   }
 }
 
-enum Direction up, down, left, right
+enum Direction {up, down, left, right}
 
 [TestMethod] static void test_snake() {
   var snake = new Snake();
