@@ -98,7 +98,6 @@ main
 end main
 </codeblock>
 <img src="images/bigIntegers.png" width="285" height="471">
-</ul>
 <hr>
 </div></div>
 
@@ -129,7 +128,7 @@ Its Type is <code>Float</code>.
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="ceiling">
+ </tr><tr id="ceiling_Float">
   <td><el-method>ceiling</el-method></td>
   <td>(none)</td>
   <td><code>Int</code></td>
@@ -139,17 +138,17 @@ Its Type is <code>Float</code>.
   <td><code>Float</code></td>
   <td><code>Boolean</code></td>
   <td><el-id>true</el-id> if floating point number and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="floor">
+ </tr><tr id="floor_Float">
   <td><el-method>floor</el-method></td>
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the first integral value smaller than or equal to the argument's<br>floating point value</td>
- </tr><tr id="isInfinite">
+ </tr><tr id="isInfinite_Float">
   <td><el-method>isInfinite</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
   <td><el-id>true</el-id> if value would be infinite, e.g. after division by zero<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="isNaN">
+ </tr><tr id="isNaN_Float">
   <td><el-method>isNaN</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
@@ -159,7 +158,7 @@ Its Type is <code>Float</code>.
   <td><code>Float</code></td>
   <td><code>Boolean</code></td>
   <td><el-id>true</el-id> if floating point number and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
- </tr><tr id="round">
+ </tr><tr id="round_Float">
   <td><el-method>round</el-method></td>
   <td><code>Int</code></td>
   <td><code>Float</code></td>
@@ -396,7 +395,7 @@ end test
  </tr><tr id="split">
   <td><el-method>split</el-method></td>
   <td><code>String</code></td>
-  <td><code>List</code>&lt;of <code>String</code>&gt;</td>
+  <td><codeblock>List<of String></codeblock></td>
   <td>a <code>List</code> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="subString">
@@ -444,8 +443,7 @@ end test
 <tr>
  <td><codeblock>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
   <codeblock>call print(message) </codeblock>
-
-</td><td>
+ </td>
  <td><br>&#x27f6;</td>
  <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
 </tr>
@@ -457,7 +455,7 @@ end test
   variable r set to 2.0
   call print($"area = {(pi*r*r).round(2)}")
 </codeblock>
- <td><br>&#x27f6;</td>
+ </td><td><br>&#x27f6;</td>
  <td><br>area = 12.57<br></td>
  </tr>
 </table>
@@ -520,9 +518,9 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>new <code>Stack</code>&lt;of Type&gt;()</td>
   <td>new <code>Queue</code>&lt;of Type&gt;()</td>
  </tr><tr>
-  <td>create initialised
-  <td><el-code><el-method>createList</el-method>(<el-lit>number</el-lit>, <el-lit>value</el-lit>)<el-code><br>
-  <el-code><el-method>createListOfLists</el-method>(<el-lit>cols</el-lit>, <el-lit>rows</el-lit>, <el-lit>value</el-lit>)<el-code></td>
+  <td>create initialised</td>
+  <td><code>createList(number, value)</code><br>
+  <code>createListOfLists(cols, rows, value)</code>
   <td>Not available</td>
   <td>Not available</td>
   <td>Not available</td>
@@ -568,7 +566,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>Method <a href="#createList"><el-method>createList</el-method></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
   <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
- <code>variable aList set to new List<of String>()</code><br>
+ <code>variable aList set to new List</code>&lt;of <code>String</code>>()<br>
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
@@ -710,7 +708,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><code>List</code><of <code>String</code>&gt;</td>
+  <td><code>List></code>&lt; of <code>String</code>&gt;</td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -882,7 +880,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
  </tr><tr id="withRemoveAt_Dictionary">
   <td><el-method>withRemoveAt</el-method></td>
-  <td>item of Dictionary key's Type></td>
+  <td>item of Dictionary key's Type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the <i>key:value</i> pair removed from the specified key</td>
  </tr>
@@ -898,7 +896,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </ul>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the Type of its members must be specified in the form
- <code>HashSet<of String></code>.</p>
+ <code>HashSet</code>&lt;of <code>String</code>&gt;</p>
 <p>You can add members: individually with <el-method>add</el-method>, or multiply with <el-method>addFromList</el-method>.
 And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
 <p>Example of creating a Set from a literal List and changing its content:</p>
@@ -931,11 +929,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  <td>
   <code>set st to st.remove(3)</code><br>
   <code>call print(st.length())</code></td>
- <td><br>&#x27f6;</td><td><br>2
- </td></tr>
-<tr>
+ <td><br>&#x27f6;</td><td><br>2</td>
+</tr><tr>
  <td><code>call print(st)</code></td>
  <td>&#x27f6;</td><td>[5, 7]</td>
+</tr>
 </table>
 
 <h3 class="no-TOC" id="Set_functions">Function dot methods on a <code>HashSet</code></h3>
@@ -1026,7 +1024,8 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <div id="Queue"></div>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
-    <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
+    <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
+   The names of the methods for adding and removing items are different, but there are also common methods.</li>
     <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code>Stack</code>&lt;of <code>String</code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
     <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <el-instr>function</el-instr>, or specify it as the <el-instr>return</el-instr> Type.</li>
@@ -1492,31 +1491,31 @@ Later shapes are positioned in front of earlier ones.</p>
   <td><el-method>asHtml</el-method></td>
   <td><code>ImageVG</code></td>
   <td>none</td>
-  <td><el-type>String<el-type></td>
+  <td><code>String<code></td>
   <td>string containing the Html &lt;img&gt; tag filled with the image's URL and attribute values</td>
  </tr><tr id="asSVG_Circle"><div  id="asSVG"></div>
   <td><el-method>asSVG</el-method></td>
   <td><code>CircleVG</code></td>
   <td>none</td>
-  <td><el-type>String<el-type></td>
+  <td><code>String</code></td>
   <td>string containing the SVG &lt;circle&gt; tag filled with the circle's attribute values</td>
  </tr><tr id="asSVG_Image">
   <td><el-method>asSVG</el-method></td>
   <td><code>ImageVG</code></td>
   <td>none</td>
-  <td><el-type>String<el-type></td>
+  <td><code>String</code></td>
   <td>string containing the SVG &lt;image&gt; tag filled with the image's URL and attribute values</td>
  </tr><tr id="asSVG_Line">
   <td><el-method>asSVG</el-method></td>
   <td><code>LineVG</code></td>
   <td>none</td>
-  <td><el-type>String<el-type></td>
+  <td><code>String<code></td>
   <td>string containing the SVG &lt;line&gt; tag filled with the line's attribute values</td>
  </tr><tr id="asSVG_Ractangle">
   <td><el-method>asSVG</el-method></td>
   <td><code>RectangleVG</code></td>
   <td>none</td>
-  <td><el-type>String<el-type></td>
+  <td><code>String<code></td>
   <td>string containing the SVG &lt;rectangle&gt; tag filled with the rectangle's attribute values</td>
  </tr>
 </table>
@@ -1529,7 +1528,7 @@ together with the procedure and function methods provided to alter their values 
   <th colspan="2">Property</th>
   <th colspan="4">Vector graphic shape</th>
   <th colspan="2">Property</th>
-  <th colspan="2">Method
+  <th colspan="2">Method</th>
  </tr><tr>
   <th>name</th>
   <th>Type</th>
@@ -1858,7 +1857,9 @@ just as you would specify the Type of every parameter and the return Type for th
 <p>The Type of any <el-instr>function</el-instr> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
     then a 'fat arrow' =&gt; and the return Type for that <el-instr>function</el-instr>. This <el-instr>property</el-instr> definition shows the syntax:</p>
 
-<code>property matchAt as Func<of String, String, Int => Boolean></code>
+<codeblock>
+  property matchAt as Func<of String, String, Int => Boolean>
+</codeblock>
 
 <p>This example defines the Type for a <el-instr>function</el-instr> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <el-instr>function</el-instr> definition like this:</p>
 
@@ -2161,7 +2162,8 @@ end main
 
 <h2 id="DisplayImageURL">Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an <code>http</code> or <code>https</code> URL may be sent to the display, though note that other URI schemes, such as in file://host/path to access an image from your local file system, are not supported. Here are two techniques:
+<p>An image that can be retrieved with an <b>http</b> or <b>https</b> URL may be sent to the display, though note that other URI schemes,
+such as in <b>file://host/path</b> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
@@ -2244,8 +2246,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="ceiling"><el-method>ceiling</el-method></td>
-  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#ceiling"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2280,8 +2282,8 @@ end main
   <td><a href="#equals_Tuple"><i class="fa">&#xf08e;</i></a></td>
  </tr><tr><!---->
   <td id="floor"><el-method>floor</el-method></td>
-  <td><a href="#floor"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#floor"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2304,8 +2306,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isInfinite"><el-method>isInfinite</el-method></td>
-  <td><a href="#isIntinite"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isInfinite"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2316,8 +2318,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isNan"><el-method>isNan</el-method></td>
-  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isNaN"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2364,8 +2366,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="round"><el-method>round</el-method></td>
-  <td><a href="#round"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#round"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#round_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#round_Float"><i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2545,7 +2547,7 @@ end main
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; For numeric output, it is preferable to right-align the columns, e.g. when listing powers of 9: :</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; For numeric output, it is preferable to right-align the columns, e.g. when listing powers of 9:</p>
 <codeblock>
 main
   variable tab set to 10
@@ -2885,12 +2887,12 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   with each item therein initialised to the value in the third argument</td>
  </tr><tr id="max">
   <td><el-method>max</el-method></td>
-  <td><code>List</code>&lt;of <code>Int</code>&gt;</el-code> or<br> <code>List</code>&lt;of <code>Float</code>&gt;</td>
+  <td><code>List</code>&lt;of <code>Int</code>&gt; or<br> <code>List</code>&lt;of <code>Float</code>&gt;</td>
   <td><code>Int</code> or<br> <code>Float</code></td>
   <td>the maximum value found in the List</td>
  </tr><tr id="min">
   <td><el-method>min</el-method></td>
-  <td><code>List</code>&lt;of <code>Int</code>&gt;</el-code> or<br> <code>List</code>&lt;of <code>Float</code>&gt;</td>
+  <td><code>List</code>&lt;of <code>Int</code>&gt; or<br> <code>List</code>&lt;of <code>Float</code>&gt;</td>
   <td><code>Int</code> or<br> <code>Float</code></td>
   <td>the minimum value found in the List</td>
  </tr><tr id="range">
@@ -3022,8 +3024,8 @@ end function
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
  <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
- <li>a six digit hexadecimal value in the range <code>0x000000</code> &ndash; <code>0xffffff</code>
-    using the same 'RGB' format as used in Html style, for example <code>0xff0000</code> for red.</li>
+ <li>a six digit hexadecimal value in the range <el-lit>0x000000</el-lit> &ndash; <el-lit>0xffffff</el-lit>
+    using the same 'RGB' format as used in Html style, for example <el-lit>0xff0000</el-lit> for red.</li>
  <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes.
 </ul>
 
