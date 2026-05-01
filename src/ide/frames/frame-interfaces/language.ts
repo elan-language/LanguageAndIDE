@@ -1,4 +1,4 @@
-import { Enum } from "../globals/enum";
+import { EnumValuesField } from "../fields/enum-values-field";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -41,7 +41,7 @@ export interface Language {
   newInstanceAsHtml(node: NewInstance): string;
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
-  enumValuesListAsHtml(frame: Enum): string;
+  enumValuesListAsHtml(field: EnumValuesField): string;
 
   MOD: string;
   EQUAL: string;

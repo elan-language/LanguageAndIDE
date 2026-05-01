@@ -29,4 +29,18 @@ export class EnumValuesField extends AbstractField {
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml();
   }
+
+  override renderAsHtml(): string {
+    let result = "";
+    if (this.isSelected()) {
+      result = super.renderAsHtml();
+    } else {
+      result = this.getFile().language().enumValuesListAsHtml(this);
+    }
+    return result;
+  }
+
+  default_renderAsHtml(): string {
+    return super.renderAsHtml();
+  }
 }

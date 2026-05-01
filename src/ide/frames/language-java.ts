@@ -1,11 +1,11 @@
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
-import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
@@ -138,8 +138,8 @@ export class LanguageJava extends LanguageCfamily {
     return `<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>${definingString}</el-lit>", ${csv})`;
   }
 
-  override enumValuesListAsHtml(frame: Enum): string {
-    return this.c_langs_enumValuesListAsHtml(frame);
+  override enumValuesListAsHtml(field: EnumValuesField): string {
+    return this.c_langs_enumValuesListAsHtml(field);
   }
 
   standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {

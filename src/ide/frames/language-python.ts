@@ -5,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { ParamListField } from "./fields/param-list-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -115,7 +116,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${this.enumValuesListAsHtml(frame)}`;
+      html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
@@ -187,8 +188,8 @@ export class LanguagePython extends LanguageAbstract {
     return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
   }
 
-  override enumValuesListAsHtml(frame: Enum): string {
-    return languageHelper_enumValuesList(frame, EnumValuesFormat.multiline, 1, "");
+  override enumValuesListAsHtml(field: EnumValuesField): string {
+    return languageHelper_enumValuesList(field, EnumValuesFormat.multiline, 1, "");
   }
 
   renderBottomAsHtml(_frame: Frame): string {

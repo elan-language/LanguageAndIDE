@@ -1,34 +1,41 @@
+import { EnumValuesField } from "./fields/enum-values-field";
 import { ClassFrame } from "./globals/class-frame";
-import { Enum } from "./globals/enum";
 import { EnumValuesList } from "./parse-nodes/enum-values-list";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
+import { ParseStatus } from "./status-enums";
 
 export enum EnumValuesFormat {csv, multiline}
 
 export function languageHelper_enumValuesList(
-   frame: Enum,
+   field: EnumValuesField,
    format: EnumValuesFormat,
    startingNumber: number,
    ending: string  //Used only by VB 'End Enum', otherwise ""
 ): string {
-  const field = frame.values;
-  const values = field.getRootNode() as EnumValuesList;
   let result = "";
-  if (field.isSelected()) {
-    result = field.renderAsHtml();
-  } else {
-    if (format === EnumValuesFormat.csv) {
-      result = field.renderAsHtml();
-    } else { //format is multiline
-      result = "<br>";
-      const rawValues = values.matchedText.split(", ");
-      for (let i = 0; i < rawValues.length; i++) {
-        const value = rawValues[i];
-        const line = `  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit><br>`;
-        result += line;
+  if (field.readParseStatus() === ParseStatus.incomplete && field.text === "") {
+    result = field.default_renderAsHtml();
+  }
+  if (field.readParseStatus() === ParseStatus.valid) {
+    const values = field.getRootNode() as EnumValuesList;  
+    if (field.isSelected() || field.getHolder().isSelected()) {
+      result = field.default_renderAsHtml();
+    } else {
+      if (format === EnumValuesFormat.csv) {
+        result = field.default_renderAsHtml();
+      } else { //format is multiline
+        result = "<br>";
+        if (values.isValid()) {
+          const rawValues = values.matchedText.split(",");
+          for (let i = 0; i < rawValues.length; i++) {
+            const value = rawValues[i].trim();
+            const line = `  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit><br>`;
+            result += line;
+          }
+        }
       }
+      result += ending;
     }
-    result += ending;
   }
   return result;
 }

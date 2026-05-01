@@ -6,6 +6,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -322,8 +323,8 @@ export class LanguageElan extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
-  enumValuesListAsHtml(frame: Enum): string {
-    return languageHelper_enumValuesList(frame, EnumValuesFormat.csv, 0, "");
+  enumValuesListAsHtml(field: EnumValuesField): string {
+    return languageHelper_enumValuesList(field, EnumValuesFormat.csv, 0, "");
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

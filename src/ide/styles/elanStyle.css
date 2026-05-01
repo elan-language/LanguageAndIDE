@@ -139,16 +139,15 @@ el-header, el-main, el-proc, el-func, el-class, el-global, el-test {
 }
 
 /* Globals and members, generally, to have v. space after */
-el-class el-proc, el-class el-func, el-class, el-class el-constructor, el-class el-member {
+el-class el-proc, el-class el-func, el-class, el-class el-constructor, el-class el-member, el-enum {
     display: block;
     padding-bottom: 1ch;
 }
 
 
-/* Only the last of consecutive properties, constants, enums, or imported globals, should have exta v. space */
+/* Only the last of consecutive properties, constants should have exta v. space */
 el-prop:has(+ :not(el-prop)), 
-el-const:has(+ :not(el-const)), 
-el-enum:has(+ :not(el-enum)) {
+el-const:has(+ :not(el-const)) {
     display: block;
     padding-bottom: 1ch;
 }

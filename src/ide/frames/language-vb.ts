@@ -5,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -103,7 +104,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${this.enumValuesListAsHtml(frame)}`;
+      html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.SINGLE_QUOTE} <el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
@@ -345,8 +346,8 @@ export class LanguageVB extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
-  override enumValuesListAsHtml(frame: Enum): string {
-    return languageHelper_enumValuesList(frame, EnumValuesFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
+  override enumValuesListAsHtml(field: EnumValuesField): string {
+    return languageHelper_enumValuesList(field, EnumValuesFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
   }
 
   inheritance(frame: ClassFrame): string {
