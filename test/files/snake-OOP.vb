@@ -134,7 +134,12 @@ Class Square
   End Function
 End Class
 
-Enum Direction up, down, left, right
+Enum Direction 
+  up = 0
+  down = 1
+  left = 2
+  right = 3
+End Enum
 
 <TestMethod> Sub test_snake()
   Dim snake = New Snake() ' variable definition

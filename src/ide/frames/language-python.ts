@@ -25,7 +25,7 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { languageHelper_mathFunctions } from "./language-helpers";
+import { EnumValuesFormat, languageHelper_enumValuesList, languageHelper_mathFunctions } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
@@ -95,18 +95,11 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      html = `<el-comment>@abstractmethod</el-comment><br>
-<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>
-&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-comment>@abstractmethod</el-comment><br>
-<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>
-&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProperty) {
-      html = html = `<el-comment>@property</el-comment><br>
-<el-comment>@abstractmethod</el-comment><br>
-<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>
-&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = html = `<el-comment>@property</el-comment><br><el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
@@ -122,8 +115,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
-      this.importEnum = true;
-      html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
+      html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${this.enumValuesListAsHtml(frame)}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
@@ -155,8 +147,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
-    } else if (frame instanceof Enum) {
-      html = `Enum syntax not yet implemented for Python`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof GlobalProcedure) {
@@ -195,6 +185,10 @@ export class LanguagePython extends LanguageAbstract {
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
+  }
+
+  override enumValuesListAsHtml(frame: Enum): string {
+    return languageHelper_enumValuesList(frame, EnumValuesFormat.multiline, 1, "");
   }
 
   renderBottomAsHtml(_frame: Frame): string {

@@ -1,7 +1,7 @@
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { EnumValuesNode } from "../parse-nodes/enum-values-node";
+import { EnumValuesList } from "../parse-nodes/enum-values-list";
 import { AbstractField } from "./abstract-field";
 
 export class EnumValuesField extends AbstractField {
@@ -20,7 +20,7 @@ export class EnumValuesField extends AbstractField {
     return "enumVals";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new EnumValuesNode(this.getFile());
+    this.rootNode = new EnumValuesList(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

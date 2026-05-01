@@ -108,7 +108,12 @@ class Square
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
 
 
-Direction = Enum('Direction', 'up, down, left, right')
+class Direction(Enum):
+  up = 1
+  down = 2
+  left = 3
+  right = 4
+
 
 def test_snake(self) -> None:
   snake = Snake() # variable definition

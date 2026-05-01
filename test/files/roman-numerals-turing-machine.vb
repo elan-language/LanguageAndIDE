@@ -115,7 +115,10 @@ Class Rule
   End Function
 End Class
 
-Enum Dir left, right
+Enum Dir 
+  left = 0
+  right = 1
+End Enum
 
 ' rename this method and define new transition rules to solve a different problem
 

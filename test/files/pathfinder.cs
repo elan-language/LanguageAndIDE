@@ -265,7 +265,7 @@ class Point {
   }
 }
 
-enum Algorithm dijkstra, aStar, heuristic
+enum Algorithm {dijkstra, aStar, heuristic}
 
 // 'infinity' need only be larger than longest possible route
 

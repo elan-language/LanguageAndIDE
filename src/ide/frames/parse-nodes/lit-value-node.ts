@@ -1,6 +1,6 @@
 import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { EnumVal } from "./enum-val";
+import { EnumValUse } from "./enum-val-use";
 import { LitBoolean } from "./lit-boolean";
 import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
@@ -18,7 +18,7 @@ export class LitValueNode extends AbstractAlternatives {
     this.alternatives.push(new LitInt(this.file));
     this.alternatives.push(new LitFloat(this.file));
     this.alternatives.push(new LitString(this.file));
-    this.alternatives.push(new EnumVal(this.file));
+    this.alternatives.push(new EnumValUse(this.file));
     this.alternatives.push(new LitRegExp(this.file));
     super.parseText(text);
   }

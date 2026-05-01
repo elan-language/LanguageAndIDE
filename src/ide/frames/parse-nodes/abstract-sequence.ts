@@ -4,7 +4,7 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { File } from "../frame-interfaces/file";
 
 export abstract class AbstractSequence extends AbstractParseNode {
-  private elements: ParseNode[] = [];
+  public elements: ParseNode[] = [];
 
   constructor(file: File) {
     super(file);
