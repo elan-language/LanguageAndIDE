@@ -5,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -93,7 +94,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-punc>} </el-punc><el-kw>${this.ELSE}<el-punc> {</el-punc>`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${this.enumValuesListAsHtml(frame)}}`;
+      html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${frame.values.renderAsHtml()}}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
@@ -260,7 +261,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return `<el-kw>${this.NEW_INSTANCE_PREFIX} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 
-  c_langs_enumValuesListAsHtml(frame: Enum): string {
-      return languageHelper_enumValuesList(frame, EnumValuesFormat.csv, 0, "");
+  c_langs_enumValuesListAsHtml(field: EnumValuesField): string {
+      return languageHelper_enumValuesList(field, EnumValuesFormat.csv, 0, "");
   }
 }

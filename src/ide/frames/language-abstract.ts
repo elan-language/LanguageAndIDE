@@ -1,12 +1,12 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
+import { EnumValuesField } from "./fields/enum-values-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
-import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
@@ -72,7 +72,7 @@ export abstract class LanguageAbstract implements Language {
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
-  abstract enumValuesListAsHtml(frame: Enum): string;
+  abstract enumValuesListAsHtml(field: EnumValuesField): string
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
