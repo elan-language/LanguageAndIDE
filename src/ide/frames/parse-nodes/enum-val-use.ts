@@ -5,7 +5,7 @@ import { IdentifierUse } from "./identifier-use";
 import { PunctuationNode } from "./punctuation-node";
 import { TypeNameQualifiedNode } from "./type-name-qualified-node";
 
-export class EnumVal extends AbstractSequence {
+export class EnumValUse extends AbstractSequence {
   type: TypeNameQualifiedNode | undefined;
   val: IdentifierUse | undefined;
 

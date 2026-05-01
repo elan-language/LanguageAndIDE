@@ -23,7 +23,7 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { languageHelper_inheritance } from "./language-helpers";
+import { EnumValuesFormat, languageHelper_enumValuesList, languageHelper_inheritance } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -103,7 +103,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
+      html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${this.enumValuesListAsHtml(frame)}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.SINGLE_QUOTE} <el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
@@ -345,13 +345,16 @@ export class LanguageVB extends LanguageAbstract {
     return this.default_typeTupleAsHtml(node);
   }
 
+  override enumValuesListAsHtml(frame: Enum): string {
+    return languageHelper_enumValuesList(frame, EnumValuesFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
+  }
+
   inheritance(frame: ClassFrame): string {
     return languageHelper_inheritance(
       frame,
       this.INHERITS,
       this.IMPLEMENTS,
-      `
-<br>&nbsp;&nbsp;`,
+      `<br>&nbsp;&nbsp;`,
     );
   }
 

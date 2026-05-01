@@ -23,6 +23,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
+import { EnumValuesFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -319,6 +320,10 @@ export class LanguageElan extends LanguageAbstract {
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  enumValuesListAsHtml(frame: Enum): string {
+    return languageHelper_enumValuesList(frame, EnumValuesFormat.csv, 0, "");
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

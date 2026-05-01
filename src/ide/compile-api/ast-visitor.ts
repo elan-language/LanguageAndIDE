@@ -117,8 +117,8 @@ import { CSV } from "../frames/parse-nodes/csv";
 import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
 import { DottedTerm } from "../frames/parse-nodes/dotted-term";
-import { EnumVal } from "../frames/parse-nodes/enum-val";
-import { EnumValuesNode } from "../frames/parse-nodes/enum-values-node";
+import { EnumValUse } from "../frames/parse-nodes/enum-val-use";
+import { EnumValuesList } from "../frames/parse-nodes/enum-values-list";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
@@ -412,7 +412,7 @@ export function transform(
     return enumAsn;
   }
 
-  if (node instanceof EnumValuesNode) {
+  if (node instanceof EnumValuesList) {
     const enumValues = new EnumValuesAsn(fieldId, scope);
 
     enumValues.values = transformMany(node, fieldId, scope);
@@ -937,7 +937,7 @@ export function transform(
     return new IfExprAsn(condition, trueExpression, falseExpression, fieldId, scope);
   }
 
-  if (node instanceof EnumVal) {
+  if (node instanceof EnumValUse) {
     const id = node.val!.matchedText;
     const type = new EnumType(node.type!.matchedText);
 

@@ -265,7 +265,7 @@ Class Point
   End Function
 End Class
 
-Enum Algorithm dijkstra, aStar, heuristic
+Enum Algorithm dijkstra, aStar, heuristicEnd
 
 ' 'infinity' need only be larger than longest possible route
 

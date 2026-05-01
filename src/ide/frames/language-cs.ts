@@ -5,10 +5,10 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
+import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
-
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -131,6 +131,10 @@ export class LanguageCS extends LanguageCfamily {
 
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  override enumValuesListAsHtml(frame: Enum): string {
+    return this.c_langs_enumValuesListAsHtml(frame);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
