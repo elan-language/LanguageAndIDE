@@ -473,8 +473,8 @@ it is also possible to make changes via <el-instr>function</el-instr> dot method
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
-<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that Type being specified either explicitly (as in
-&lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
+<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that Type being specified either explicitly
+ (as in &lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 
 <table class="tableStructure">
@@ -566,7 +566,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>Method <a href="#createList"><el-method>createList</el-method></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
   <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
- <code>variable aList set to new List</code>&lt;of <code>String</code>>()<br>
+ <codeblock>variable aList set to new List<of String>()</codeblock><br>
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
@@ -614,7 +614,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><code>variable array3D set to new List</code>&lt;of List&lt;of List&lt;of Float&gt;&gt;&gt;()</li>
+<li><codeblock>variable array3D set to new List<of List<of List<of Float>>>()</codeblock></li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
