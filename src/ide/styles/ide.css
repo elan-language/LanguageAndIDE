@@ -662,3 +662,12 @@ a.menu-item:hover:visited
   margin-left: 1.12em;
   display: block;
 }
+
+/* Make the demos in the menu appear or disappear depending on the profile */
+/* First hide anything with a profile */
+div.demo-file.procedural, div.demo-file.oop, div.demo-file.functional { display: none; }
+/* And then make them reappear if their profile(s) matches our current profile */
+body.procedural div.demo-file.procedural { display: revert; }
+body.oop div.demo-file.oop { display: revert; }
+body.functional div.demo-file.functional { display: revert; }
+
