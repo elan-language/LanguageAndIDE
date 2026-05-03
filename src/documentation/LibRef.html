@@ -71,7 +71,7 @@
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>A literal integer or a named value of Type <code>Int</code> may
-always be passed into a <el-instr>function</el-instr> or <el-instr>procedure</el-instr> that is expecting a <code>Float</code>.</li>
+always be passed into a <b>function</b> or <b>procedure</b> that is expecting a <code>Float</code>.</li>
  <li>The <code>Int</code> type is <i>intended</i> to represent whole numbers
 in the range:</li>
   <li><ul>
@@ -180,7 +180,7 @@ Its Type is <code>Float</code>.
   </ul></li>
  <li>A variable that has been defined as being of Type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
-    It may, however, be converted into an <code>Int</code> before passing, using the function <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
+    It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of Type <code>Float</code>, but initialise it with an integer value, then add <el-lit>.0</el-lit> on the end of the whole number, as in:<br>
  <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
@@ -274,7 +274,7 @@ end test
 <p>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and '&pound;' can be input.</p>
 <p>You cannot use Alt+numeric-keypad to enter accented letters or other special characters in the extended ASCII range (0x80 to 0xff).</p>
 <p>You can, however, copy any text from outside Elan and paste it into a string, whether ASCII, extended ASCII or UTF-8 encoded.</p>
-<p>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal, by means of function <a href="#unicode"><el-method>unicode</el-method></a>:</p>
+<p>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal, by means of <b>function</b> <a href="#unicode"><el-method>unicode</el-method></a>:</p>
 
 <table class="tablePlain">
 <tr>
@@ -291,7 +291,7 @@ end test
 </tr>
 </table>
 
-<p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields</a>).</p>
+<p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields</a>).</p>
 
 <h3 class="no-TOC">Manipulating strings</h3>
 
@@ -311,8 +311,8 @@ end test
 </table>
 
 <p>When editing and you leave the field, the newline will be implicitly applied in your code.</p>
-<p>As in most languages, strings are <i>immutable</i>. When you apply any operation or <el-instr>function</el-instr> with the intent of modifying an existing string, the existing string is never changed. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</p>
-<p>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#for"><el-instr>for</el-instr></a> loop.</p>
+<p>As in most languages, strings are <i>immutable</i>. When you apply any operation or <b>function</b> with the intent of modifying an existing <code>String</code>, the existing <code>String</code> is never changed. Instead, the operation or <b>function</b> will return a new <code>String</code> that is based on the original, but with the specified differences.</p>
+<p>You can loop through a <code>String</code> picking each of its characters sequentially using the <a href="LangRef.html#for"><b>for loop</b>.</p>
 
 <h3 class="no-TOC" id="DotMethods_String">Function dot methods on a <code>String</code></h3>
 <table class="tableMethod">
@@ -331,7 +331,7 @@ end test
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the Unicode value of the <i>first</i> character of the string<br>
-   (To convert a Unicode value into a string, use function <a href="#unicode"><el-method>unicode</el-method></a>)</td>
+   (To convert a Unicode value into a string, use <b>function</b> <a href="#unicode"><el-method>unicode</el-method></a>)</td>
  </tr><tr id="contains_String">
   <td><el-method>contains</el-method></td>
   <td>(none)</td>
@@ -468,8 +468,8 @@ three immutable data structure Types <code>HashSet</code>, <code>Stack</code> an
 <p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <el-instr>procedure</el-instr> dot methods defined for each structure Type.</p>
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no <el-instr>procedure</el-instr> dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
-<p>Since procedure methods may be called only from within the <el-instr>main</el-instr> routine or a <el-instr>procedure</el-instr>,
-it is also possible to make changes via <el-instr>function</el-instr> dot methods,  which return a copy of the data structure
+<p>Since procedure methods may be called only from within the <b>main</b> routine or a <b>procedure</b>,
+it is also possible to make changes via <b>function</b> dot methods,  which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
@@ -708,7 +708,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><code>List></code>&lt; of <code>String</code>&gt;</td>
+  <td><code>List<of String>()</code></td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -1028,7 +1028,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
    The names of the methods for adding and removing items are different, but there are also common methods.</li>
     <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code>Stack</code>&lt;of <code>String</code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
     <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <el-instr>function</el-instr>, or specify it as the <el-instr>return</el-instr> Type.</li>
+    <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <el-instr>return</el-instr> Type.</li>
     <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
     <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
     <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
@@ -1192,7 +1192,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <p>The items in a Tuple may be literal or named values.</p>
 <p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
-<p>A <el-instr>function</el-instr> may return a Tuple.</p>
+<p>A <b>function</b> may return a <b>Tuple</b>.</p>
 <p>A Tuple differs from a List in that:</p>
 <ul>
  <li>A Tuple may hold items of <i>different</i> Types.</li>
@@ -1203,7 +1203,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <p>Common uses include:</p>
 <ul>
  <li>Holding a pair of <i>x,y</i> coordinates (each of Type <code>Float</code>) as a single unit.</li>
- <li>Allowing a <el-instr>function</el-instr> to pass back a result comprised of both a message in a <code>String</code> and a <code>Boolean</code> indicating whether the operation was successful.</li>
+ <li>Allowing a <b>function</b> to pass back a result comprised of both a message in a <code>String</code> and a <code>Boolean</code> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
 </ul>
 
@@ -1233,7 +1233,7 @@ end main
  </tr>
 </table>
 
-<p>And where p1 and p2 represent points each with 2-Tuples containing two <code>Float</code> values, this <el-instr>function</el-instr> returns the distance between them:</p>
+<p>And where p1 and p2 represent points each with 2-Tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
 <codeblock>
 function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
@@ -1469,7 +1469,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
-in a <el-instr>function</el-instr>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
+in a <b>function</b>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
 <p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours</a>.
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
 <p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
@@ -1491,9 +1491,9 @@ Later shapes are positioned in front of earlier ones.</p>
   <td><el-method>asHtml</el-method></td>
   <td><code>ImageVG</code></td>
   <td>none</td>
-  <td><code>String<code></td>
+  <td><code>String</code></td>
   <td>string containing the Html &lt;img&gt; tag filled with the image's URL and attribute values</td>
- </tr><tr id="asSVG_Circle"><div  id="asSVG"></div>
+ </tr><tr id="asSVG_Circle"><div id="asSVG"></div>
   <td><el-method>asSVG</el-method></td>
   <td><code>CircleVG</code></td>
   <td>none</td>
@@ -1509,20 +1509,20 @@ Later shapes are positioned in front of earlier ones.</p>
   <td><el-method>asSVG</el-method></td>
   <td><code>LineVG</code></td>
   <td>none</td>
-  <td><code>String<code></td>
+  <td><code>String</code></td>
   <td>string containing the SVG &lt;line&gt; tag filled with the line's attribute values</td>
  </tr><tr id="asSVG_Ractangle">
   <td><el-method>asSVG</el-method></td>
   <td><code>RectangleVG</code></td>
   <td>none</td>
-  <td><code>String<code></td>
+  <td><code>String</code></td>
   <td>string containing the SVG &lt;rectangle&gt; tag filled with the rectangle's attribute values</td>
  </tr>
 </table>
 
 <h3 class="no-TOC" id="VG_properties">Properties of Vector graphic shapes</h3>
 <p>This table lists the properties of the Vector graphic shapes and their default values,
-together with the procedure and function methods provided to alter their values in a given instance.</p>
+together with the <b>procedure</b> and <b>function</b> methods provided to alter their values in a given instance.</p>
 <table class="tableProperty">
  <tr>
   <th colspan="2">Property</th>
@@ -1777,14 +1777,14 @@ end main
 
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
-<p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods</a> <el-method>random</el-method> or <el-method>randint</el-method> within a <el-instr>function</el-instr> because they create unseen side effects. You <i>may</i> use those system methods outside the <el-instr>function</el-instr> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <el-instr>function</el-instr>.</p>
-<p>It is, however, possible to create and use random numbers within a <el-instr>function</el-instr>, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
-<p>You start by getting a seed random number in your <el-instr>main</el-instr> or in a <el-instr>procedure</el-instr> using method <el-method>initialiseFromClock</el-method>:</p>
+<p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods</a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
+<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
+<p>You start by getting a seed random number in your <<b>el-instr>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 
 <codeblock>variable rand set to new Random()</codeblock>
 <codeblock>call rand.initialiseFromClock()</codeblock>
 
-<p>Then, in a <el-instr>function</el-instr>, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <code>Random</code> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <code>Random</code>.
+<p>Then, in a <b>function>/b>, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <code>Random</code> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <code>Random</code>.
 If you need another random value, you use the returned <code>Random</code> on which to apply the dot method again.</p>
 <p>Avoid applying <el-method>next</el-method> or <el-method>nextInt</el-method> more than once on the same <code>Random</code> because they will return the same values.</p>
 <p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using <code>Random</code> <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
@@ -1826,7 +1826,7 @@ If you need another random value, you use the returned <code>Random</code> on wh
 <h4 class="no-TOC acc-title" tabindex="0">Example using <code>Random</code></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice in a <el-instr>function</el-instr>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice in a function:</p>
 
 <codeblock>
 main
@@ -1848,20 +1848,20 @@ end function
 </div></div>
 
 <h2 id="Func">Func</h2>
-<p>A <el-instr>function</el-instr> may be passed as an argument into another <el-instr>function</el-instr> (or a <el-instr>procedure</el-instr>), or returned as the result of calling another <el-instr>function</el-instr>.
+<p>A <b>function>/b> may be passed as an argument into another <b>function>/b> (or a <el-instr>procedure</el-instr>), or returned as the result of calling another <b>function>/b>.
 This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in Functional Programming.</p>
-<p>To define a <el-instr>function</el-instr> that takes in another <el-instr>function</el-instr> as a parameter, or returns a <el-instr>function</el-instr>, you need to specify the Type of the <el-instr>function</el-instr>,
-just as you would specify the Type of every parameter and the return Type for the <el-instr>function</el-instr>. </p>
+<p>To define a <b>function>/b> that takes in another <b>function>/b> as a parameter, or returns a <b>function>/b>, you need to specify the Type of the <b>function>/b>,
+just as you would specify the Type of every parameter and the return Type for the <b>function>/b>. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any <el-instr>function</el-instr> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
-    then a 'fat arrow' =&gt; and the return Type for that <el-instr>function</el-instr>. This <el-instr>property</el-instr> definition shows the syntax:</p>
+<p>The Type of any <b>function>/b> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
+    then a 'fat arrow' =&gt; and the return Type for that <b>function>/b>. This <el-instr>property</el-instr> definition shows the syntax:</p>
 
 <codeblock>
   property matchAt as Func<of String, String, Int => Boolean>
 </codeblock>
 
-<p>This example defines the Type for a <el-instr>function</el-instr> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <el-instr>function</el-instr> definition like this:</p>
+<p>This example defines the Type for a <b>function>/b> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <b>function>/b> definition like this:</p>
 
 <codeblock>
 function matchAt(a as String, b as String, p as Int) returns Boolean
@@ -1980,7 +1980,7 @@ end main
  <code>"ArrowUp"</code> etc., function key <code>"Fn"</code>, <code>"AltGraph"</code>, <code>"Meta"</code>, <code>"ContextMenu"</code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
- <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-instr>procedure</el-instr> or in <el-instr>main</el-instr>.</li>
+ <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-instr>procedure</el-instr> or in <b>main</b>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
@@ -2572,7 +2572,7 @@ end main
 <p>User-defined Classes may have procedures that can be applied to their Class instances.
 
 <h1 id="LibraryMethods">Library methods</h1>
-<p>These methods may be referenced from within a <el-instr>function</el-instr>.</p>
+<p>These methods may be referenced from within a <b>function>/b>.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
 <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable definition</el-instr> declaration or a <el-instr>change variable</el-instr> assignment, either on their own or within a more complex expression.</p>
@@ -2822,8 +2822,8 @@ end test
  <li>they may have a dependency on data that is not provided in an argument</li>
  <li>they may generate side effects, such as changing the screen display or writing to a file</li>
 </ul>
-<p>Because of these properties, system methods maybe used only within the <el-instr>main</el-instr> routine or a <el-instr>procedure</el-instr>.
-They may not be used inside a <el-instr>function</el-instr> that you have defined, because to do so would prevent the <el-instr>function</el-instr> from being pure.</p>
+<p>Because of these properties, system methods maybe used only within the <b>main</b> routine or a <b>procedure</b>.
+They may not be used inside a <b>function>/b> that you have defined, because to do so would prevent the <b>function>/b> from being pure.</p>
 <p>You cannot write a system method yourself.</p>
 
 <h2 id="IOMethods">Input/output</h2>
@@ -2833,9 +2833,9 @@ They may not be used inside a <el-instr>function</el-instr> that you have define
 </ul>
 
 <h2 id="MiscMethods">Clock and random numbers</h2>
-Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <el-instr>function</el-instr> because
+Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function>/b> because
  of their dependence on external factors, i.e. they are subject to side effects.<br>
- To obtain random numbers within a <el-instr>function</el-instr>, use Type <a href="#Random"><code>Random</code></a>.
+ To obtain random numbers within a <b>function>/b>, use Type <a href="#Random"><code>Random</code></a>.
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -2923,7 +2923,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 </div></div>
 
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
-<p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another <el-instr>function</el-instr> as a parameter, or (less commonly) that returns a reference to another <el-instr>function</el-instr> as its result. </p>
+<p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another <b>function>/b> as a parameter, or (less commonly) that returns a reference to another <b>function>/b> as its result. </p>
 
 <h2>Standard HoFs</h2>
 <p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely
@@ -2935,11 +2935,11 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
 
 <h2 id="AsRef">Passing a function as a reference</h2>
-<p>To use a higher-order function (HoF), you have to pass in a reference to a <el-instr>function</el-instr>.
- This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a <el-instr>function</el-instr>.
+<p>To use a higher-order function (HoF), you have to pass in a reference to a <b>function>/b>.
+ This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a <b>function>/b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
-<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <el-instr>function</el-instr>, its name is not followed by round brackets (or arguments), as in this example:
+<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function>/b>, its name is not followed by round brackets (or arguments), as in this example:
 
 <codeblock>
 class Pupil
@@ -3055,8 +3055,8 @@ end function
 </div></div>
 
 <h3 class="no-TOC" id="map">map</h3>
-<p>The function <el-method>map</el-method> is used to apply a <el-instr>function</el-instr> to every item in a <code>List</code>, and return a new List.
-The <el-instr>function</el-instr> to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
+<p>The function <el-method>map</el-method> is used to apply a <b>function>/b> to every item in a <code>List</code>, and return a new List.
+The <b>function>/b> to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
@@ -3108,21 +3108,21 @@ end main
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
 <ol>
- <li>The initial, or 'seed', value, of the Type that you wish to be returned by the <el-instr>function</el-instr> specified in the second argument..
+ <li>The initial, or 'seed', value, of the Type that you wish to be returned by the <b>function>/b> specified in the second argument..
  For example, if you were finding the sum of a list of Type <code>Float</code>, the initial seed value
  would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
  value would be an empty Dictionary of the correct Types.</li>
- <li>The <el-instr>function</el-instr> or lambda to be applied, which itself requires two arguments:
+ <li>The <b>function>/b> or lambda to be applied, which itself requires two arguments:
 <ol>
  <li>The accumulating value, which is therefore of the same Type as the initial seed value.
- (This will be the return value of the <el-instr>function</el-instr> or <el-instr>lambda</el-instr>).</li>
- <li>The item to which the <el-instr>function</el-instr> is applied, which is therefore of the same Type
+ (This will be the return value of the <b>function>/b> or <el-instr>lambda</el-instr>).</li>
+ <li>The item to which the <b>function>/b> is applied, which is therefore of the same Type
    as the items in the input list.</li>
  </ol>
  </li>
 </ol>
-<p>In other words, the specified <el-instr>function</el-instr> or <el-instr>lambda</el-instr> is applied to each itme of the input List in turn, in each case passing in the current value
-  of the result. The <el-instr>function</el-instr> makes use of both to generate a <i>new</i> value for the result, replacing the current one
+<p>In other words, the specified <b>function>/b> or <el-instr>lambda</el-instr> is applied to each itme of the input List in turn, in each case passing in the current value
+  of the result. The <b>function>/b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
   for application to the next item. This is best understood by looking at the examples.</p>
 
 <div class="accordion">
@@ -3179,7 +3179,7 @@ end main
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <code>List</code>.
-They take a <el-instr>function</el-instr> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <el-instr>function</el-instr>.</p>
+They take a <b>function>/b> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <b>function>/b>.</p>
 <p>For simply finding the maximum or minimum value in a <code>List</code>, you can use
 <a href="#max"><el-method>max</el-method></a>,
 <a href="#min"><el-method>min</el-method></a>.</p>
