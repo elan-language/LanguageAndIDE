@@ -65,6 +65,10 @@ const vbButton = document.getElementById("vb-language") as HTMLDivElement;
 const csButton = document.getElementById("cs-language") as HTMLDivElement;
 const javaButton = document.getElementById("java-language") as HTMLDivElement;
 const elanButton = document.getElementById("elan-language") as HTMLDivElement;
+const profileMenu = document.getElementById("profile-menu") as HTMLDivElement;
+const proceduralButton = document.getElementById("profile-procedural") as HTMLDivElement;
+const oopButton = document.getElementById("profile-oop") as HTMLDivElement;
+const functionalButton = document.getElementById("profile-functional") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
@@ -76,6 +80,7 @@ const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 const languageButton = document.getElementById("language") as HTMLButtonElement;
+const profileButton = document.getElementById("profile") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
@@ -122,6 +127,8 @@ const worksheetTab = document.getElementById("worksheet-tab");
 const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
 const closePreferencesDialogButton = document.getElementById("confirmBtn");
 const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
+
+const docBody = document.getElementsByTagName("body")[0] as HTMLBodyElement;
 
 const elanInputOutput = new WebInputOutput();
 
@@ -245,6 +252,7 @@ class IDEViewModel implements IIDEViewModel {
           clearDisplayButton,
           fileButton,
           languageButton,
+          profileButton,
           loadButton,
           saveAsStandaloneButton,
           preferencesButton,
@@ -261,6 +269,7 @@ class IDEViewModel implements IIDEViewModel {
 
       this.enable(fileButton, "File actions");
       this.enable(languageButton, "Language");
+      this.enable(profileButton, "Profile");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
       this.enable(newButton, "Clear the current code and start afresh");
@@ -836,6 +845,19 @@ elanButton?.addEventListener("click", async (_event: Event) => {
   await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner, false);
 });
 
+async function profileEventHandler(this: HTMLDivElement, _event: MouseEvent) {
+  const oldProfileName = codeViewModel.getProfile()?.name || "";
+  const profileName = this.id.replace("profile-", "");
+  await codeViewModel.setProfile(new Profile(profileName));
+  profileButton.textContent = this.textContent;
+  const bodyClassList = docBody.classList;
+  bodyClassList.remove(oldProfileName);
+  bodyClassList.add(profileName);
+}
+proceduralButton?.addEventListener("click", profileEventHandler);
+oopButton?.addEventListener("click", profileEventHandler);
+functionalButton?.addEventListener("click", profileEventHandler);
+
 loadButton.addEventListener("click", chooser(getUploader(), false));
 
 appendButton.addEventListener("click", chooser(getAppender(), true));
@@ -854,6 +876,26 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
   const code = await codeViewModel.renderAsSource();
   const bEncoded = btoa(code);
   const url = new URL(window.location.href);
+
+  const urlParams: { [propName: string]: { default: string; current: string } } = {
+    profile: { default: "procedural", current: codeViewModel.getProfile()?.name || "procedural" },
+    lang: { default: "elan", current: codeViewModel.getLanguage().languageHtmlClass },
+    cvd: { default: "colourScheme", current: codeViewModel.getCss() ?? "colourScheme" },
+  };
+
+  for (const p in urlParams) {
+    const e = urlParams[p];
+    if (e.default === e.current) {
+      // The url was derived from window.location.href
+      // so it may already have params which we don't want,
+      // if a setting has been changed to the default
+      // since the page was loaded.
+      url.searchParams.delete(p);
+    } else {
+      url.searchParams.set(p, e.current);
+    }
+  }
+
   url.searchParams.set("code", bEncoded);
   const urlAsString = url.toString();
 
@@ -883,6 +925,8 @@ for (const elem of demoFiles) {
 
 preferencesButton.addEventListener("click", (event: Event) => {
   if (!isDisabled(event)) {
+    // in case it was set via the cvd parameter in the URL when the page was loaded
+    useCvdTickbox.checked = codeViewModel.getCss() === "cvd-colourScheme";
     // otherwise it can pick up click and close immediately
     setTimeout(() => dialog.showModal(), 1);
   }
@@ -890,7 +934,9 @@ preferencesButton.addEventListener("click", (event: Event) => {
 
 closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
   if (!isDisabled(event)) {
-    changeCss(useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme");
+    const newCss = useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme";
+    changeCss(newCss);
+    codeViewModel.setCss(newCss);
     dialog.close();
   }
 });
@@ -970,11 +1016,13 @@ demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 languageButton.addEventListener("click", handleClickDropDownButton);
+profileButton.addEventListener("click", handleClickDropDownButton);
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 languageButton.addEventListener("keydown", handleKeyDropDownButton);
+profileButton.addEventListener("keydown", handleKeyDropDownButton);
 
 demosMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
@@ -988,11 +1036,15 @@ worksheetMenu.addEventListener("keydown", (e) =>
 languageMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
+profileMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
 languageMenu.addEventListener("click", () => collapseMenu(languageButton, false));
+profileMenu.addEventListener("click", () => collapseMenu(profileButton, false));
 
 displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
 infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
@@ -1012,7 +1064,7 @@ window.addEventListener("message", async (m) => {
 
 if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   const sp = new URL(window.location.href).searchParams;
-  const param = sp.get("profile") || "";
+  const param = sp.get("profile") || "procedural";
   const profile = new Profile(param);
   setup(profile);
 } else {
@@ -1055,7 +1107,14 @@ async function setup(p: Profile) {
 
   if (cvd) {
     changeCss("cvd-colourScheme");
+    codeViewModel.setCss("cvd-colourScheme");
   }
+
+  // add "procedural", "oop" or "functional" to body
+  // to control which demos are visible
+  docBody.classList.add(p.name);
+  // and set the text on the button to match
+  profileButton.textContent = document.getElementById("profile-" + p.name)!.textContent;
 
   if (code) {
     await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner, code);

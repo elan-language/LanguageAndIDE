@@ -42,6 +42,7 @@ system.stdlib = stdlib; // to allow injection
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
   private profile?: Profile = undefined;
+  private cvdCss?: string = undefined;
 
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
@@ -61,6 +62,19 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   setProfile(p: Profile) {
     this.profile = p;
+    this.file?.setProfile(p);
+  }
+
+  getProfile() {
+    return this.profile;
+  }
+
+  setCss(stylesheet: string): void {
+    this.cvdCss = stylesheet;
+  }
+
+  getCss() {
+    return this.cvdCss;
   }
 
   set fileName(fn: string) {
