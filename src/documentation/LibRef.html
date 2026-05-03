@@ -1784,7 +1784,7 @@ end main
 <codeblock>variable rand set to new Random()</codeblock>
 <codeblock>call rand.initialiseFromClock()</codeblock>
 
-<p>Then, in a <b>function>/b>, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <code>Random</code> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <code>Random</code>.
+<p>Then, in a <b>function</b>, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <code>Random</code> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <code>Random</code>.
 If you need another random value, you use the returned <code>Random</code> on which to apply the dot method again.</p>
 <p>Avoid applying <el-method>next</el-method> or <el-method>nextInt</el-method> more than once on the same <code>Random</code> because they will return the same values.</p>
 <p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using <code>Random</code> <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
@@ -1848,20 +1848,20 @@ end function
 </div></div>
 
 <h2 id="Func">Func</h2>
-<p>A <b>function>/b> may be passed as an argument into another <b>function>/b> (or a <el-instr>procedure</el-instr>), or returned as the result of calling another <b>function>/b>.
+<p>A <b>function</b> may be passed as an argument into another <b>function</b> (or a <el-instr>procedure</el-instr>), or returned as the result of calling another <b>function</b>.
 This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in Functional Programming.</p>
-<p>To define a <b>function>/b> that takes in another <b>function>/b> as a parameter, or returns a <b>function>/b>, you need to specify the Type of the <b>function>/b>,
-just as you would specify the Type of every parameter and the return Type for the <b>function>/b>. </p>
+<p>To define a <b>function</b> that takes in another <b>function</b> as a parameter, or returns a <b>function</b>, you need to specify the Type of the <b>function</b>,
+just as you would specify the Type of every parameter and the return Type for the <b>function</b>. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any <b>function>/b> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
-    then a 'fat arrow' =&gt; and the return Type for that <b>function>/b>. This <el-instr>property</el-instr> definition shows the syntax:</p>
+<p>The Type of any <b>function</b> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
+    then a 'fat arrow' =&gt; and the return Type for that <b>function</b>. This <el-instr>property</el-instr> definition shows the syntax:</p>
 
 <codeblock>
   property matchAt as Func<of String, String, Int => Boolean>
 </codeblock>
 
-<p>This example defines the Type for a <b>function>/b> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <b>function>/b> definition like this:</p>
+<p>This example defines the Type for a <b>function</b> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <b>function</b> definition like this:</p>
 
 <codeblock>
 function matchAt(a as String, b as String, p as Int) returns Boolean
@@ -2572,7 +2572,7 @@ end main
 <p>User-defined Classes may have procedures that can be applied to their Class instances.
 
 <h1 id="LibraryMethods">Library methods</h1>
-<p>These methods may be referenced from within a <b>function>/b>.</p>
+<p>These methods may be referenced from within a <b>function</b>.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
 <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable definition</el-instr> declaration or a <el-instr>change variable</el-instr> assignment, either on their own or within a more complex expression.</p>
@@ -2823,7 +2823,7 @@ end test
  <li>they may generate side effects, such as changing the screen display or writing to a file</li>
 </ul>
 <p>Because of these properties, system methods maybe used only within the <b>main</b> routine or a <b>procedure</b>.
-They may not be used inside a <b>function>/b> that you have defined, because to do so would prevent the <b>function>/b> from being pure.</p>
+They may not be used inside a <b>function</b> that you have defined, because to do so would prevent the <b>function</b> from being pure.</p>
 <p>You cannot write a system method yourself.</p>
 
 <h2 id="IOMethods">Input/output</h2>
@@ -2833,9 +2833,9 @@ They may not be used inside a <b>function>/b> that you have defined, because to 
 </ul>
 
 <h2 id="MiscMethods">Clock and random numbers</h2>
-Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function>/b> because
+Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function</b> because
  of their dependence on external factors, i.e. they are subject to side effects.<br>
- To obtain random numbers within a <b>function>/b>, use Type <a href="#Random"><code>Random</code></a>.
+ To obtain random numbers within a <b>function</b>, use Type <a href="#Random"><code>Random</code></a>.
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -2923,7 +2923,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 </div></div>
 
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
-<p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another <b>function>/b> as a parameter, or (less commonly) that returns a reference to another <b>function>/b> as its result. </p>
+<p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another <b>function</b> as a parameter, or (less commonly) that returns a reference to another <b>function</b> as its result. </p>
 
 <h2>Standard HoFs</h2>
 <p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely
@@ -2935,11 +2935,11 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
 
 <h2 id="AsRef">Passing a function as a reference</h2>
-<p>To use a higher-order function (HoF), you have to pass in a reference to a <b>function>/b>.
- This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a <b>function>/b>.
+<p>To use a higher-order function (HoF), you have to pass in a reference to a <b>function</b>.
+ This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
-<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function>/b>, its name is not followed by round brackets (or arguments), as in this example:
+<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function</b>, its name is not followed by round brackets (or arguments), as in this example:
 
 <codeblock>
 class Pupil
@@ -3055,8 +3055,8 @@ end function
 </div></div>
 
 <h3 class="no-TOC" id="map">map</h3>
-<p>The function <el-method>map</el-method> is used to apply a <b>function>/b> to every item in a <code>List</code>, and return a new List.
-The <b>function>/b> to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
+<p>The function <el-method>map</el-method> is used to apply a <b>function</b> to every item in a <code>List</code>, and return a new List.
+The <b>function</b> to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
@@ -3108,21 +3108,21 @@ end main
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
 <ol>
- <li>The initial, or 'seed', value, of the Type that you wish to be returned by the <b>function>/b> specified in the second argument..
+ <li>The initial, or 'seed', value, of the Type that you wish to be returned by the <b>function</b> specified in the second argument..
  For example, if you were finding the sum of a list of Type <code>Float</code>, the initial seed value
  would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
  value would be an empty Dictionary of the correct Types.</li>
- <li>The <b>function>/b> or lambda to be applied, which itself requires two arguments:
+ <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
 <ol>
  <li>The accumulating value, which is therefore of the same Type as the initial seed value.
- (This will be the return value of the <b>function>/b> or <el-instr>lambda</el-instr>).</li>
- <li>The item to which the <b>function>/b> is applied, which is therefore of the same Type
+ (This will be the return value of the <b>function</b> or <el-instr>lambda</el-instr>).</li>
+ <li>The item to which the <b>function</b> is applied, which is therefore of the same Type
    as the items in the input list.</li>
  </ol>
  </li>
 </ol>
-<p>In other words, the specified <b>function>/b> or <el-instr>lambda</el-instr> is applied to each itme of the input List in turn, in each case passing in the current value
-  of the result. The <b>function>/b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
+<p>In other words, the specified <b>function</b> or <el-instr>lambda</el-instr> is applied to each itme of the input List in turn, in each case passing in the current value
+  of the result. The <b>function</b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
   for application to the next item. This is best understood by looking at the examples.</p>
 
 <div class="accordion">
@@ -3179,7 +3179,7 @@ end main
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <code>List</code>.
-They take a <b>function>/b> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <b>function>/b>.</p>
+They take a <b>function</b> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <b>function</b>.</p>
 <p>For simply finding the maximum or minimum value in a <code>List</code>, you can use
 <a href="#max"><el-method>max</el-method></a>,
 <a href="#min"><el-method>min</el-method></a>.</p>
