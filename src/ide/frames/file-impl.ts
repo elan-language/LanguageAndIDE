@@ -117,7 +117,7 @@ export class FileImpl implements File {
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
-    public readonly profile: Profile,
+    public profile: Profile,
     private userName: string | undefined,
     private readonly transform: Transforms,
     stdLib: StdLib,
@@ -173,6 +173,10 @@ export class FileImpl implements File {
 
   getProfile(): Profile {
     return this.profile;
+  }
+
+  setProfile(p: Profile) {
+    this.profile = p;
   }
 
   getChildren(): Frame[] {

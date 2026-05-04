@@ -9,7 +9,7 @@
         <link href="favicon.ico" rel="icon" />
         <title>Elan</title>
     </head>
-    <body class="procedural">
+    <body>
         <a href="documentation/index.html" style="display:none">Documentation</a> <!-- Direct link for search engines -->
         <div id="lhs">
             <div id="code-controls">
@@ -27,9 +27,9 @@
                         <div class="demo-file menu-item" tabindex="-1" id="demo/maze-generator.elan">Maze generator</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/pathfinder.elan">Pathfinder</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/roman-numerals-turing-machine.elan">Roman Numerals Turing Machine</div>
-                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_PP.elan">Snake</div>
-                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_OOP.elan">Snake - object-oriented</div>
-                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_FP.elan">Snake - functional</div>
+                        <div class="demo-file menu-item procedural" tabindex="-1" id="demo/snake_PP.elan">Snake</div>
+                        <div class="demo-file menu-item oop" tabindex="-1" id="demo/snake_OOP.elan">Snake - object-oriented</div>
+                        <div class="demo-file menu-item functional" tabindex="-1" id="demo/snake_FP.elan">Snake - functional</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-spiral.elan">Turtle Spiral</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-snowflake.elan">Turtle Snowflake</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/turtle_dragon.elan">Turtle Dragon</div>
@@ -68,6 +68,15 @@
                     </div>
                 </div>
 
+                <div class="dropdown">
+                    <button id="profile" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="profile-menu"></button>
+                    <div id="profile-menu" class="dropdown-content" hidden>
+                        <div class="plain menu-item" tabindex="-1" id="profile-procedural">Procedural</div>
+                        <div class="plain menu-item" tabindex="-1" id="profile-oop">Object Oriented</div>
+                        <div class="plain menu-item" tabindex="-1" id="profile-functional">Functional</div>
+                    </div>
+                </div>
+
                 <dialog id="preferences-dialog">
                     <form>
                         <div>
@@ -75,7 +84,7 @@
                             <input type="checkbox" id="use-cvd" name="cvd" value="use-cvd">
                         </div>
                         <div>
-                            <button id="confirmBtn">confirm</button>
+                            <button id="confirmBtn" type="button">confirm</button>
                         </div>
                     </form>
                 </dialog>
