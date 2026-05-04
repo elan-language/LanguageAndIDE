@@ -1,14 +1,15 @@
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
+import { languageHelper_inheritance } from "./language-helpers";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -72,10 +73,8 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
-  inheritance(frame: ClassFrame): string {
-    return frame.doesInherit()
-      ? `: ${frame.inheritance.renderAsHtml()}`
-      : `${frame.inheritance.renderAsHtml()}`;
+  inheritance(field: InheritsFromField): string{
+    return languageHelper_inheritance(field, " ", "extends", "","","");
   }
 
   renderBottomAsHtml(frame: Frame): string {

@@ -1,10 +1,10 @@
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -80,8 +80,8 @@ export class LanguageJava extends LanguageCfamily {
     return html;
   }
 
-  inheritance(frame: ClassFrame): string {
-    return languageHelper_inheritance(frame, this.EXTENDS, this.IMPLEMENTS, " ");
+  inheritance(field: InheritsFromField): string{
+    return languageHelper_inheritance(field, " ", this.EXTENDS, " ", this.IMPLEMENTS, "");
   }
 
   renderBottomAsHtml(frame: Frame): string {

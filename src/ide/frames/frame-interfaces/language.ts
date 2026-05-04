@@ -1,4 +1,5 @@
 import { EnumValuesField } from "../fields/enum-values-field";
+import { InheritsFromField } from "../fields/inherits-from-field";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -42,6 +43,7 @@ export interface Language {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
   enumValuesListAsHtml(field: EnumValuesField): string;
+  inheritance(field: InheritsFromField): string;
 
   MOD: string;
   EQUAL: string;

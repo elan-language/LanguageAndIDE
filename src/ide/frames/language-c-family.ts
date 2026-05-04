@@ -11,7 +11,6 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
-import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
@@ -22,7 +21,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { EnumValuesFormat, languageHelper_enumValuesList } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -130,9 +129,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)} {`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)} {`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {
@@ -148,7 +147,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)} {`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof TryStatement) {
@@ -158,8 +157,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     }
     return html;
   }
-
-  abstract inheritance(frame: ClassFrame): string;
 
   common_renderBottomAsHtml(frame: Frame): string {
     return frame ? `<el-punc>}<el-punc>` : ``;
@@ -262,6 +259,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   }
 
   c_langs_enumValuesListAsHtml(field: EnumValuesField): string {
-      return languageHelper_enumValuesList(field, EnumValuesFormat.csv, 0, "");
+      return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 }

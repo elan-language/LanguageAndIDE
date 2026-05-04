@@ -31,4 +31,18 @@ export class InheritsFromField extends AbstractField {
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml();
   }
+
+  override renderAsHtml(): string {
+    let result = "";
+    if (this.isSelected()) {
+      result = super.renderAsHtml();
+    } else {
+      result = this.getFile().language().inheritance(this);
+    }
+    return result;
+  }
+
+  default_renderAsHtml(): string {
+    return super.renderAsHtml();
+  }
 }
