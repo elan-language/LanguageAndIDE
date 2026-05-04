@@ -846,13 +846,18 @@ elanButton?.addEventListener("click", async (_event: Event) => {
 });
 
 async function profileEventHandler(this: HTMLDivElement, _event: MouseEvent) {
-  const oldProfileName = codeViewModel.getProfile()?.name || "";
-  const profileName = this.id.replace("profile-", "");
-  await codeViewModel.setProfile(new Profile(profileName));
-  profileButton.textContent = this.textContent;
-  const bodyClassList = docBody.classList;
-  bodyClassList.remove(oldProfileName);
-  bodyClassList.add(profileName);
+  // Changing the profile clears the current code
+  if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
+    const oldProfileName = codeViewModel.getProfile()?.name || "";
+    const profileName = this.id.replace("profile-", "");
+    await codeViewModel.setProfile(new Profile(profileName));
+    codeViewModel.recreateFile(ideViewModel, true);
+    await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
+    profileButton.textContent = this.textContent;
+    const bodyClassList = docBody.classList;
+    bodyClassList.remove(oldProfileName);
+    bodyClassList.add(profileName);
+  }
 }
 proceduralButton?.addEventListener("click", profileEventHandler);
 oopButton?.addEventListener("click", profileEventHandler);
