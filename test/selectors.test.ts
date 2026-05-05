@@ -78,7 +78,7 @@ suite("Selector tests", () => {
       "procedure",
       "k constant",
       "enum",
-      "class",
+      "concrete class",
       "abstract class",
       "interface",
       "# comment",
@@ -122,7 +122,7 @@ suite("Selector tests", () => {
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "procedure", "function", "# comment"]);
+    assertOptions(s, ["property", "procedure method", "function method", "# comment"]);
   });
 
   test("Selection Filtering - members - functional", () => {
@@ -136,7 +136,7 @@ suite("Selector tests", () => {
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "function", "with method", "# comment"]);
+    assertOptions(s, ["property", "function method", "with method", "# comment"]);
   });
 
   test("Selection Filtering - abstract class", () => {
@@ -152,8 +152,8 @@ suite("Selector tests", () => {
     const s = new MemberSelector(c);
     assertOptions(s, [
       "property",
-      "procedure",
-      "function",
+      "procedure method",
+      "function method",
       "abstract property",
       "abstract procedure",
       "abstract function",
