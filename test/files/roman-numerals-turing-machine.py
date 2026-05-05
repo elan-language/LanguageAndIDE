@@ -102,7 +102,6 @@ class Dir(Enum):
   left = 1
   right = 2
 
-
 # rename this method and define new transition rules to solve a different problem
 
 def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure

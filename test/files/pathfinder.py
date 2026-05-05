@@ -220,7 +220,6 @@ class Algorithm(Enum):
   aStar = 2
   heuristic = 3
 
-
 # 'infinity' need only be larger than longest possible route
 
 infinity = 2000.0 # constant

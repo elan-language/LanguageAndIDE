@@ -350,7 +350,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return languageHelper_enumValuesList(field, LineFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
+    return languageHelper_enumValuesList(field, LineFormat.multiline, 0, `<br><el-kw>${this.END} ${this.ENUM}</el-kw>`);
   }
 
   inheritsFromTextAsHtml(field: InheritsFromField): string{
