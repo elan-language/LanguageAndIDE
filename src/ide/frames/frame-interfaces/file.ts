@@ -46,6 +46,7 @@ export interface File extends Parent {
   getNextId(): number;
   getFactory(): StatementFactory;
   getProfile(): Profile;
+  setProfile(p: Profile): void;
 
   indent(): string;
   expandCollapseAll(): void;
