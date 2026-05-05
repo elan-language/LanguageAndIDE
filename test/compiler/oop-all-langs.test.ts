@@ -92,33 +92,33 @@ end class`;
     await assertObjectCodeExecutes(fileImpl, "");
     const pythonCode = `${testPythonHeader}
 
-class Foo(ABC)
+class Foo(ABC) # abstract class
 
   @abstractmethod
 def method_Foo() -> int:
   pass # abstract function
 
 
-class Foo1(Foo)
+class Foo1(Foo) # abstract class
 
   prop_Foo1: str # property
 
 
-class I1(ABC)
+class I1(ABC) # interface
 
   @abstractmethod
 def method_I1() -> int:
   pass # abstract function
 
 
-class I2(ABC)
+class I2(ABC) # interface
 
   @abstractmethod
 def method_I2() -> int:
   pass # abstract function
 
 
-class I3(I2)
+class I3(I2) # interface
 
   @property
 @abstractmethod
@@ -126,7 +126,7 @@ def prop_I3(self: I3) -> int:
   pass # abstract property
 
 
-class Yon(I3, Foo1, I2)
+class Yon(I3, Foo1, I2) # class
 
   def __init__(self: Yon) -> None:
     self.prop_Foo1 = "" # change variable
