@@ -33,7 +33,7 @@ initState = "init" # constant
 
 haltState = "halt" # constant
 
-class TuringMachine
+class TuringMachine # class
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
     self.tape = "" # change variable
@@ -81,7 +81,7 @@ class TuringMachine
         self.headPosition = 0 # change variable
 
 
-class Rule
+class Rule # class
 
   currentState: str # property
   currentSymbol: str # property
@@ -101,7 +101,6 @@ class Rule
 class Dir(Enum):
   left = 1
   right = 2
-
 
 # rename this method and define new transition rules to solve a different problem
 

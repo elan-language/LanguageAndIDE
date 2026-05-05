@@ -7,6 +7,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -24,7 +25,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { EnumValuesFormat, languageHelper_enumValuesList } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -125,21 +126,25 @@ export class LanguageElan extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
-    } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod) {
+    } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
-    } else if (frame instanceof GlobalProcedure || frame instanceof ProcedureMethod) {
+    } else if (frame instanceof GlobalProcedure) {
       html = `<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${this.inheritance(frame)}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof TestFrame) {
@@ -152,10 +157,9 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  private inheritance(frame: ClassFrame): string {
-    return frame.doesInherit()
-      ? ` <el-kw>${this.INHERITS}</el-kw> ${frame.inheritance.renderAsHtml()}`
-      : ` ${frame.inheritance.renderAsHtml()}`;
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+    const frame = field.getHolder() as ClassFrame;
+    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}` : ``;
   }
 
   renderTopAsExport(_frame: Frame): string {
@@ -324,7 +328,7 @@ export class LanguageElan extends LanguageAbstract {
   }
 
   enumValuesListAsHtml(field: EnumValuesField): string {
-    return languageHelper_enumValuesList(field, EnumValuesFormat.csv, 0, "");
+    return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 
   standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

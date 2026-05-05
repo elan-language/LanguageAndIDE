@@ -30,7 +30,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected _placeholder: string = "";
   protected placeholderIsCode: boolean = false;
   protected useHtmlTags: boolean = false;
-  protected htmlId: string = "";
+  public htmlId: string = "";
   protected selected: boolean = false;
   private focused: boolean = false;
   private _classes = new Array<string>();

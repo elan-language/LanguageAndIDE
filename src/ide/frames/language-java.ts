@@ -1,6 +1,7 @@
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -9,11 +10,11 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
-import { languageHelper_inheritance } from "./language-helpers";
 import { Alternatives } from "./parse-nodes/alternatives";
 import { CommaNode } from "./parse-nodes/comma-node";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
@@ -80,8 +81,30 @@ export class LanguageJava extends LanguageCfamily {
     return html;
   }
 
-  inheritance(frame: ClassFrame): string {
-    return languageHelper_inheritance(frame, this.EXTENDS, this.IMPLEMENTS, " ");
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+      const frame = field.getHolder() as ClassFrame;
+      const node = field.getRootNode()! as InheritanceNode;
+      let result = "";
+      if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
+        const inheritsKw = `<el-kw>${this.EXTENDS}</el-kw> `;
+        const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw> `;
+        const abstractClasses = node.getAbstractClassNames();
+        if (abstractClasses.length > 0) {
+          const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
+          const csvTypes = typesAsHtml.join(", ");  
+          result += ` ${inheritsKw}${csvTypes}`;
+        }
+        const interfaces = node.getInterfaceNames();
+        if (interfaces.length > 0) {
+          const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
+          const csvTypes = typesAsHtml.join(", ");
+          const keyWord = frame.isInterface ? inheritsKw : implementsKw;
+          result += ` ${keyWord}${csvTypes}`;
+        }
+      } else {
+        result = field.default_renderasHtml();
+      }
+      return result;
   }
 
   renderBottomAsHtml(frame: Frame): string {

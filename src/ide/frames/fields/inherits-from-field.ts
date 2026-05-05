@@ -31,4 +31,19 @@ export class InheritsFromField extends AbstractField {
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml();
   }
+
+  override renderAsHtml(): string {
+    let result = "";
+    if (this.isSelected()) {
+      result = ` ${super.renderAsHtml()}`;
+    } else {
+      const textAsHtml = this.getFile().language().inheritsFromTextAsHtml(this);
+      result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${textAsHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    }
+    return result;
+  }
+
+  default_renderasHtml(): string {
+    return super.renderAsHtml();
+  }
 }

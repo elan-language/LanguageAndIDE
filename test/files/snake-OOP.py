@@ -15,7 +15,7 @@ def main() -> None:
     snake.clockTick(getKey(), apple) # call procedure
   print(f"Game Over! Score: {snake.score()}")
 
-class Snake
+class Snake # class
 
   def __init__(self: Snake) -> None:
     tail = Square(20, 15) # variable definition
@@ -64,7 +64,7 @@ class Snake
       self.currentDir = Direction.right # change variable
 
 
-class Apple
+class Apple # class
 
   def __init__(self: Apple) -> None:
     self.location = Square(0, 0) # change variable
@@ -83,7 +83,7 @@ class Apple
     blocks[self.location.x][self.location.y] = red # change variable
 
 
-class Square
+class Square # class
 
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # change variable
@@ -113,7 +113,6 @@ class Direction(Enum):
   down = 2
   left = 3
   right = 4
-
 
 def test_snake(self) -> None:
   snake = Snake() # variable definition

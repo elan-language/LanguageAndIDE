@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -24,9 +25,10 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { EnumValuesFormat, languageHelper_enumValuesList, languageHelper_inheritance } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -53,6 +55,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
@@ -132,9 +135,9 @@ export class LanguageVB extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
+      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
@@ -146,7 +149,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${this.inheritance(frame)}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
@@ -347,17 +350,36 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return languageHelper_enumValuesList(field, EnumValuesFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
+    return languageHelper_enumValuesList(field, LineFormat.multiline, 0, `<br><el-kw>${this.END} ${this.ENUM}</el-kw>`);
   }
 
-  inheritance(frame: ClassFrame): string {
-    return languageHelper_inheritance(
-      frame,
-      this.INHERITS,
-      this.IMPLEMENTS,
-      `<br>&nbsp;&nbsp;`,
-    );
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+    const frame = field.getHolder() as ClassFrame;
+    const node = field.getRootNode()! as InheritanceNode;
+    let result = ``;
+    if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
+      const inheritsKw = `<el-kw>${this.INHERITS}</el-kw>`;
+      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw>`;
+      const abstractClasses = node.getAbstractClassNames();
+      if (abstractClasses.length > 0) {
+        const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");  
+        result += `<br>&nbsp;&nbsp;${inheritsKw} ${csvTypes}`;
+      }
+      const interfaces = node.getInterfaceNames();
+      if (interfaces.length > 0) {
+        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");
+        const keyWord = frame.isInterface ? inheritsKw : implementsKw;
+        result +=  `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
+      }
+      result += `<br>`;
+    } else {
+      result = field.default_renderasHtml();
+    }
+    return result;
   }
+
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);
