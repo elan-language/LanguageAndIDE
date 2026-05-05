@@ -6,6 +6,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { ParamListField } from "./fields/param-list-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -26,7 +27,7 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { EnumValuesFormat, languageHelper_enumValuesList, languageHelper_mathFunctions } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList, languageHelper_mathFunctions } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
@@ -81,6 +82,9 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof CallStatement ||
       frame instanceof SetStatement ||
       frame instanceof CatchStatement ||
+      frame instanceof ConcreteClass ||
+      frame instanceof AbstractClass ||
+      frame instanceof InterfaceFrame ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
@@ -138,12 +142,9 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      const inheritance = frame.doesInherit()
-        ? `(${frame.inheritance.renderAsHtml()})`
-        : `${frame.inheritance.renderAsHtml()}`;
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${inheritance}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof For) {
@@ -155,7 +156,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.abstractInheritance(frame)}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof Property) {
@@ -174,22 +175,24 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  abstractInheritance(frame: ClassFrame): string {
-    const inheritance = frame.inheritance.renderAsHtml();
-    return frame.doesInherit()
-      ? `(<el-type>ABC</el-type>, ${inheritance})`
-      : frame.isSelected()
-        ? `(<el-type>ABC</el-type>${inheritance})`
-        : `(<el-type>ABC</el-type>)`;
-  }
-
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return languageHelper_enumValuesList(field, EnumValuesFormat.multiline, 1, "");
+    return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
+  }
+ 
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+    let result = "";
+    const frame = field.getHolder() as ClassFrame;
+    if (frame.doesInherit()) {
+      result = `(${field.default_renderasHtml()})`;
+    } else if (frame.isAbstract) {
+      result = `(<el-type>ABC</el-type>)`;
+    }
+    return result;
   }
 
   renderBottomAsHtml(_frame: Frame): string {

@@ -33,7 +33,7 @@ initState = "init" # constant
 
 haltState = "halt" # constant
 
-class TuringMachine
+class TuringMachine # class
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
     self.tape = "" # change variable
@@ -81,7 +81,7 @@ class TuringMachine
         self.headPosition = 0 # change variable
 
 
-class Rule
+class Rule # class
 
   currentState: str # property
   currentSymbol: str # property

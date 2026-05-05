@@ -491,7 +491,7 @@ def main() -> None:
   x = Foo() # variable definition
   printNoLine(x.p1) # call procedure
 
-class Foo
+class Foo # class
 
   def __init__(self: Foo) -> None:
     self.p1 = 0.1 # change variable

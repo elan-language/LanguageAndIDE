@@ -1,74 +1,69 @@
 import { EnumValuesField } from "./fields/enum-values-field";
+import { InheritsFromField } from "./fields/inherits-from-field";
 import { ClassFrame } from "./globals/class-frame";
-import { EnumValuesList } from "./parse-nodes/enum-values-list";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParseStatus } from "./status-enums";
 
-export enum EnumValuesFormat {csv, multiline}
+export enum LineFormat {inline, multiline}
 
 export function languageHelper_enumValuesList(
    field: EnumValuesField,
-   format: EnumValuesFormat,
+   format: LineFormat,
    startingNumber: number,
    ending: string  //Used only by VB 'End Enum', otherwise ""
 ): string {
   let result = "";
-  if (field.readParseStatus() === ParseStatus.incomplete && field.text === "") {
-    result = field.default_renderAsHtml();
-  }
   if (field.readParseStatus() === ParseStatus.valid) {
-    const values = field.getRootNode() as EnumValuesList;  
-    if (field.isSelected() || field.getHolder().isSelected()) {
-      result = field.default_renderAsHtml();
-    } else {
-      if (format === EnumValuesFormat.csv) {
-        result = field.default_renderAsHtml();
-      } else { //format is multiline
-        result = "<br>";
-        if (values.isValid()) {
-          const rawValues = values.matchedText.split(",");
-          for (let i = 0; i < rawValues.length; i++) {
-            const value = rawValues[i].trim();
-            const line = `  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit><br>`;
-            result += line;
-          }
+      if (format === LineFormat.multiline) {
+        result = `<el-field id="${field.htmlId}"><br>`;
+        const rawValues = field.getRootNode()!.matchedText.split(",");
+        for (let i = 0; i < rawValues.length; i++) {
+          const value = rawValues[i].trim();
+          const line = `  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit><br>`;
+          result += line;
         }
+      } else {
+         result = field.default_renderAsHtml();
       }
-      result += ending;
-    }
+      result += `${ending}</el-field>` ;
+  } else {
+    result = field.default_renderAsHtml();
   }
   return result;
 }
 
 export function languageHelper_inheritance(
-  frame: ClassFrame,
+  field: InheritsFromField,
+  start: string,
   inheritsWord: string,
-  implementsWord: string,
   joiner: string,
+  implementsWord: string,
+  finish: string
 ): string {
-  const node = frame.inheritance.getRootNode()! as InheritanceNode;
-  const field = frame.inheritance;
-  const hasSupertype = frame.doesInherit();
+  const frame = field.getHolder() as ClassFrame;
+  const node = field.getRootNode()! as InheritanceNode;
   let result = "";
-  if (field.isSelected()) {
-    result = ` ${field.renderAsHtml()}`;
-  } else if (frame.isSelected() && !hasSupertype) {
-     result = `${field.renderAsHtml()}`;
-  } else if (hasSupertype && node.isValid()) {
-    //TODO:  If frame is an interface, then any interface supertypes should be 'extend/inherit' rather than 'implements`
+  if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
+    const inheritsKw = inheritsWord === "" ? "" : `<el-kw>${inheritsWord}</el-kw> `;
+    const implementsKw = implementsWord === "" ? "" : `<el-kw>${implementsWord}</el-kw> `;
+    result = `<el-field id="${field.htmlId}">${start}`;
     const abstractClasses = node.getAbstractClassNames();
     if (abstractClasses.length > 0) {
       const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
       const csvTypes = typesAsHtml.join(", ");
-      result = `${joiner}<el-kw>${inheritsWord}</el-kw> ${csvTypes}`;
+
+      result += `${joiner}${inheritsKw}${csvTypes}`;
     }
     const interfaces = node.getInterfaceNames();
     if (interfaces.length > 0) {
       const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
       const csvTypes = typesAsHtml.join(", ");
-      const keyWord = frame.isInterface ? inheritsWord : implementsWord;
+      const keyWord = frame.isInterface ? inheritsKw : implementsKw;
       result += `${joiner}<el-kw>${keyWord}</el-kw> ${csvTypes}`;
     }
+    result += `${finish}</el-field>`;
+  } else {
+    result = field.default_renderasHtml();
   }
   return result;
 }

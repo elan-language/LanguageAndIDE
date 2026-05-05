@@ -50,7 +50,7 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
       done = True # change variable
   return i
 
-class Coords
+class Coords # class
 
   def __init__(self: Coords) -> None:
     # number of cells per unit distance on complex plane

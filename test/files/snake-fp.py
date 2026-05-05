@@ -59,7 +59,7 @@ def hasHitEdge(g: Game) -> bool: # function
   y = g.head.y # let
   return (x == -1) or (y == -1) or (x == 40) or (y == 30)
 
-class Game
+class Game # class
 
   head: Square # property
   body: list[Square] # property
@@ -118,7 +118,7 @@ class Game
     return copyOfThis
 
 
-class Square
+class Square # class
 
   x: int # property
   y: int # property
