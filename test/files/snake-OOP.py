@@ -114,7 +114,6 @@ class Direction(Enum):
   left = 3
   right = 4
 
-
 def test_snake(self) -> None:
   snake = Snake() # variable definition
   # bodyCovers

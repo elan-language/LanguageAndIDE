@@ -10,24 +10,21 @@ export function languageHelper_enumValuesList(
    field: EnumValuesField,
    format: LineFormat,
    startingNumber: number,
-   ending: string  //Used only by VB 'End Enum', otherwise ""
+   ending: string
 ): string {
   let result = "";
   if (field.readParseStatus() === ParseStatus.valid) {
-      if (format === LineFormat.multiline) {
-        result = `<el-field id="${field.htmlId}"><br>`;
-        const rawValues = field.getRootNode()!.matchedText.split(",");
-        for (let i = 0; i < rawValues.length; i++) {
-          const value = rawValues[i].trim();
-          const line = `  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit><br>`;
-          result += line;
-        }
-      } else {
-         result = field.default_renderAsHtml();
+    if (format === LineFormat.multiline) {
+      const rawValues = field.getRootNode()!.matchedText.split(",");
+      for (let i = 0; i < rawValues.length; i++) {
+        const value = rawValues[i].trim();
+        const line = `<br>  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit>`;
+        result += line;
       }
-      result += `${ending}</el-field>` ;
-  } else {
-    result = field.default_renderAsHtml();
+      result += ending;
+    } else {
+      result = field.default_renderAsHtml();
+    }
   }
   return result;
 }
