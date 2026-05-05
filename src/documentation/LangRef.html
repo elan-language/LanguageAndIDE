@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="../ide/styles/colourScheme.css">
 <link rel="stylesheet" href="../ide/styles/documentation.css">
 <link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<!-- Font Awesome has external link symbol at U+F08E (in Unicode Private Use Area)    -->
+<!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="favicon.ico">
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
@@ -106,7 +109,7 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code></a></td>
-  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code></td>
+  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code></a></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func</a></td>
   <td><a href="LibRef.html#Maybe"><el-topic>Maybe</el-topic><br><code>Maybe</code></a></td>
   </tr>
@@ -118,7 +121,7 @@ are passed around in a running program:</p>
  <li><i>or</i> specified in the definition of
  <ul>
   <li>data structures whose items have a particular Type, e.g. <code>List</code>&lt;of <code>Int</code>&gt;</li>
-  <li><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
+  <li><a href="#Parameter">parameters</a> of functions and procedures</li>
   <li><b>return</b> value of a function</li>
   <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>class</b></li>
  </ul></li>
@@ -134,14 +137,14 @@ with all the same property values except for specific changes that you want to m
 <p>This table shows which named values can be re-assigned and/or mutated depending on how they were defined:</p>
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
- <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><b>constant</b></a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with 'set'</th><th>mutate</th><th>scope</th></tr>
+ <tr><td><a href="#constant"><b>constant</b></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
   <td>values are set only at compile time</td></tr>
- <tr><td><a href="#variable"><b>variable definition</b></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#variable"><b>variable definition</b></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>values are set at execution</td></tr>
- <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
   <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
- <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+ <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
   <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
 </table>
 
@@ -172,7 +175,7 @@ with all the same property values except for specific changes that you want to m
  If you have done this, but then need to access the <b>constant</b>, <b>function</b>, or <b>procedure</b> with the same name,
  then you prefix the name with a <i>dot qualifier</i> of either <b>global.</b> or <b>library.</b> as appropriate</p>
 
-<h2 id="dotSyntax">Dot syntax</h3>
+<h2 id="dotSyntax">Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
  <li>To apply a function method to a named value, e.g. to obtain the length of a <code>String s</code> using a library method:<br>
@@ -183,15 +186,12 @@ with all the same property values except for specific changes that you want to m
  library methods:<br>
  <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <codeblock>
-  variable  point set to (3, 7)
-  variable  x set to point.item_0
+ <code>variable  point set to (3, 7)</code><br>
+ <code>variable  x set to point.item_0</code>
 </codeblock></li>
- <li>To refer to a value in an <b>enum</b>, e.g.to pick one of the values in the <b>enum</b> <code>Suit</code>:<br>
-<codeblock>
-  enum Suit spades, hearts diamonds, clubs
-  variable  s set to Suit.spades
-</codeblock></li>
+ <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
+  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
+  <code>variable suit set to Suit.spades</code></li>
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <b>function</b> or <b>procedure</b>.
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
@@ -202,7 +202,7 @@ function hits() returns Int
   return global.maxHits                                      „
 end function
 </codeblock>
-A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b>.
+<p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
@@ -304,9 +304,9 @@ end procedure
 <hr>
 </div></div>
 
-<div id="AsRef"</div> 
-<div id="set_Ref"</div> 
-<div id="value_Ref"</div> 
+<div id="AsRef"></div>
+<div id="set_Ref"></div>
+<div id="value_Ref"></div> 
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
@@ -525,18 +525,14 @@ main
   variable x set to new Thing()
   call print(x.names.toString())
 end main
-
 class Thing
   property names as List<of String>
-
   constructor()
     set this.names to createList(6, "X")
   end constructor
-
   function toString() returns String
     return ""
   end function
-
 end class
 </codeblock>
 
@@ -576,7 +572,7 @@ end class
 </div></div>
 
 <h3 class="no-TOC" id="this"><b>this</b></h3>
-If in the code of class <code>A</code> you want to invoke a method in class <code>S</code> <i>and</i> pass to it the current instance of <code>A</code>,
+<p>If in the code of class <code>A</code> you want to invoke a method in class <code>S</code> <i>and</i> pass to it the current instance of <code>A</code>,
 you can refer to this instance with the keyword <b>this</b>, as shown by this line in demo program <b>snake - object-oriented</b>:</p>
 
 <codeblock>
@@ -719,24 +715,63 @@ function getSuitColours() returns Dictionary<of String, Int>
 end function
 </codeblock>
 
+<div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
-You define it with a Type name (so starting with an uppercase letter) followed by a
-number of values (which must be valid <a href="#Identifier">identifiers</a>).
-<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the values.</p>
-<p>Reference to the value in an <b>enum</b> is by using <a href="#dotSyntax">dot syntax</a> enumType.enumValue.</p>
+It is used to provide a fixed set of options that are self-explanatory, and the references to its
+'values' are checked at compile time.</p>
+<p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
+number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers</a>.
+<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the 'values'.</p>
+<p>Reference to the value in an <b>enum</b> is by using <a href="#dotSyntax">dot syntax</a> with method <el-method>enumValue</el-method>.</p>
 <p>An <b>enum</b> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
-
-<p>Examples of definition and use:</p>
+<p>Examples of <b>enum</b> definitions:</p>
 <codeblock>
 enum Suit spades, hearts, diamonds, clubs
 enum Action stand, draw
 enum Outcome undecided, win, lose, draw, winDouble
+</codeblock>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To retrieve a valid 'value':</p>
+<codeblock>
 enum Status pending, playing, standing, blackjack, bust
 main
-  variable status set to Status.pending
+  variable state set to Status.pending
 end main
 </codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To get an option from an abbreviation (in demo program pathfinder.elan):</p>
+<codeblock>
+enum Algorithm dijkstra, aStar, heuristic
+function getAlgFromLetter(letter as String) returns Algorithm
+  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
+  return algs[letter]
+end function
+</codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A function to turn a direction through 90&deg; clockwise:</p>
+<codeblock>
+enum Compass north, east, south, west
+function clockwise(d as Compass) returns Compass
+  variable newDir set to Compass.north
+  if d.equals(Compass.north) then
+    set newDir to Compass.east
+  elif d.equals(Compass.east) then
+    set newDir to Compass.south
+  elif d.equals(Compass.south) then
+    set newDir to Compass.west
+  end if
+  return newDir
+end function
+</codeblock>
+<hr>
+</div></div>
 
 <div id="Member"></div>
 <h1 id="MemberInstructions">Member instructions</h1>
@@ -847,7 +882,9 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
 
 <h2 id="property"><b>property</b></h2>
 <p>A <b>property</b> is a named value defined on a <b>class</b> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
- and a Type (which may be another class name), for example:</p>
+ and a Type (which may be another class name).</p>
+<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method</a>.</p>
+<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
 <codeblock>
 class Game
   property height as Int
@@ -863,11 +900,7 @@ class Game
 end class
 </codeblock>
 
-<p>It may be given an initial value within a <b>constructor</b>.
-</p>A <b>property</b> may be read, but not written to.
-Properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method</a>.</p>
-
-<h2 id=functionMethod"><b>function</b> method</h2>
+<h2 id="unctionMethod"><b>function</b> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
@@ -907,7 +940,6 @@ class Game
   constructor(board as Board)
     set property.board to board
   end constructor
-
   procedure setHeight(height as Int)
     set property.height to height
   end procedure
@@ -932,11 +964,8 @@ class Square
 end class
 </codeblock>
 
-<p>then it may be instantiated like this:</p>
-
-<code>
-  variable tail set to new Square(20, 15)
-</code>
+<p>then it may be instantiated like this:<br>
+<code>variable tail set to new Square(20, 15)</code><el-instr></p></el-instr>
 
 <div id="statement"></div>
 <h1 id="StatementInstructions">Statement instructions</h1>
@@ -1002,13 +1031,14 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
-    if item.equals(value) then
-      set result to true
-    elif item.isBefore(value) then
-      set result to binarySearch(li.subList(0, mid), item)
-    else
-      set result to binarySearch(li.subList(mid + 1, li.length()), item)
-    end if
+  variable result set to false
+  if item.equals(value) then
+    set result to true
+  elif item.isBefore(value) then
+    set result to binarySearch(li.subList(0, mid), item)
+  else
+    set result to binarySearch(li.subList(mid + 1, li.length()), item)
+  end if
 </codeblock>
 <hr>
 </div></div>
@@ -1019,7 +1049,6 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <p><code>condition</code> is either a <code>Boolean</code> <b>variable definition</b> or an expression that evaluates to a Boolean value.</p>
 <p>When <code>condition</code> is <code>true</code> the enclosed code is executed;
  when <code>false</code> the loop is bypassed. For example:</p>
-
 <codeblock>
 main
   variable file set to openFileForReading()
@@ -1041,44 +1070,39 @@ end main
 specifies looping through a sequence of characters in a <code>String</code> or items in a <code>List</code>.
 The forms of the <b>for loop</b> are:</p>
 <ul>
- <li>The loop variable <el-id>p</el-id> is of Type <code>String</code> and the subject <el-id>q</el-id> is of Type <code>String</code>:<br>
- <codeblock>
-main
-  set title to "Winnie the Pooh"</codeblock>
+ <li>The loop variable <el-id>p</el-id> and the subject <el-id>q</el-id> are both of Type <code>String</code>:<br>
+<codeblock>
+  variable title set to "Winnie the Pooh"
   for ch in title
     call print(ch)
   end for
-end main
- </codeblock>
-<br>
+</codeblock>
   puts each character in <el-id>title</el-id> in turn into <code>String</code> <el-id>ch</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):<br>
- <codeblock>
-main
-  set primes to [2, 3, 5, 7, 11]</codeblock>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):
+<codeblock>
+  variable primes set to [2, 3, 5, 7, 11]
   for n in primes
     call print(n)
   end for
-end main
-</codeblock><br>
-  puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):</li>
-<codeblock>
-set basket to ["apple", "banana", "cherry", "date"]
-for fruit in basket
 </codeblock>
- <br>puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
+  puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):
+<codeblock>
+  variable basket to ["apple", "banana", "cherry", "date"]
+  for fruit in basket
+    call print(fruit)
+  end for
+</codeblock>
+  puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
 </ul>
-<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of  <el-id>p</el-id>:</p>
+<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of the loop variable:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id>'s value is limited to a range:</li>
 <codeblock>
-main
   variable numbers set to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   for n in range(3, 8)
     call print(n)
   end for
-end main
 </codeblock><br>
   gives values with which to index into the List <el-id>numbers</el-id>.</li>
 </ul>
@@ -1140,18 +1164,18 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
-<li>a procedure that you have defined at the global level</li>
-  <code>call fillRandom(grid)</code>
-<li>a procedure method on an object of a class that you have defined</li>
-  <code>call apple.newRandomPosition(snake)</code>
-  <code>call property.hand.draw()</code>
-<li>a procedure method that belongs to the same class as the procedure that you are calling from</li>
-  <code>call updateNeighbours()</code>
-<li>a procedure provided by the standard library</li>
-  <code>call sleep_ms(2000)</code>
-<li>a procedure method on an object of a Type provided by the standard library</li>
-  <code>call vg.append(rect)</code>
-  <code>call property.cards.append(card)</code>
+<li>a procedure that you have defined at the global level<br>
+  <code>call fillRandom(grid)</code></li>
+<li>a procedure method on an object of a class that you have defined<br>
+  <code>call apple.newRandomPosition(snake)</code><br>
+  <code>call property.hand.draw()</code></li>
+<li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
+  <code>call updateNeighbours()</code></li>
+<li>a procedure provided by the standard library<br>
+  <code>call sleep_ms(2000)</code></li>
+<li>a procedure method on an object of a Type provided by the standard library<br>
+  <code>call vg.append(rect)</code><br>
+  <code>call property.cards.append(card)</code></li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1300,6 +1324,9 @@ then an empty string or list is returned.</p>
 <a href="LibRef.html#put_List"><el-method>put</el-method></a>.</p>
 
 <p>Example of using indexing on a string:</p>
+<table class=tablePlain">
+<tr>
+ <td>
 <codeblock>
 main
   variable a set to "Hello world!"
@@ -1308,14 +1335,15 @@ main
   call print(a.subString(0, 7))
 end main
 </codeblock>
-<p>would print these lines to the display:</p>
-<pre><el-code>
-   o
-   o world!
-   Hello w     (since the upper bound of a range is <i>exclusive</i>)
-</el-code></pre>
+ </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><br>o<br>o world!<br>Hello w &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
 
 <p>And on a list:</p>
+<table class=tablePlain">
+<tr>
+ <td>
 <codeblock>
 main
   variable li set to new List<of Int>()
@@ -1325,13 +1353,10 @@ main
   call print(li.subList(0, 7))
 end main
 </codeblock>
-
-<p>would print these lines to the display:</p>
-<pre>
-   <code>4</code>                            (the value of the list item)
-   <code>[4, 5, 6, 7, 8, 9, 10, 11]</code>   (a new list)
-   <code>[0, 1, 2, 3, 4, 5, 6]</code>        (since the upper bound of a range is <i>exclusive</i>)
-</pre>
+ </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><br>4 &nbsp;&nbsp;&nbsp; (the value of the list item)<br>[4, 5, 6, 7, 8, 9, 10, 11] &nbsp;&nbsp;&nbsp; (a new list)<br>[0, 1, 2, 3, 4, 5, 6] &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
 
 <div id="operator"></div>
 <h2 id="Operators">Operators</h2>
@@ -1376,7 +1401,7 @@ variable c set to sqrt(pow(a, 2) + pow(b, 2))
     2*&minus;3           &#x27f6;  &minus;6
 </pre>
 
-<p>The editor automatically puts spaces around the operators &plus; and &minus;, but not around / or *.
+<p>The editor automatically puts spaces around the operators + and &minus;, but not around / or *.
 This is just to visually reinforce the precedence.</p>
 
 <div id="and"></div>
@@ -1396,7 +1421,7 @@ end function
 </codeblock>
 
 <h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The &plus; operator is also used for concatenating <code>String</code> values.</p>
+<p>The + perator is also used for concatenating <code>String</code> values.</p>
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
@@ -1439,8 +1464,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<codeblock>set x to (a > b) and (b < c)</codeblock>
-<codeblock>set x to (a + b) > (c - d)</codeblock>
+<code>set x to (a > b) and (b < c)</code><br>
+<code>set x to (a + b) > (c - d)</code>
 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
@@ -1497,10 +1522,10 @@ end function
    <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
    <li><b>elif</b> and <b>else</b> clauses are optional.</li>
    <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
-  </ul>
- <li>A simpler form that distinguishes only two possibilities, with the format:<br>
+  </ul></li>
+  <li>A simpler form that distinguishes only two possibilities, with the format:<br>
 <code>variable isBigger set to if(a >= b, true, false)</code></li> 
-</ul>
+</ol>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but will be hard to read even when enclosed in brackets.</p>
 
 <div class="accordion">
@@ -1803,7 +1828,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  instruction and then use the named value in the 'actual' field of the <b>assert equal</b>
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
-  <li>Any expression involving a binary operator such as &plus;, <b>isnt</b>, etc.,
+  <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
   the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert equal</b> instruction.</li>
@@ -1853,7 +1878,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
   <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
   <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
  </ul>
- The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
  procedure with the same name.</p>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
@@ -1889,10 +1914,9 @@ very slow parsing. We strongly recommend that you you simplify the contents of t
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
-
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
-<script>
+<script type="">
   var accordions = document.getElementsByclassName("acc-title");
   for (const item of accordions) {
     item.addEventListener("click", function() {

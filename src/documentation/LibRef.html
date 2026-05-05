@@ -97,7 +97,7 @@ main
   end for
 end main
 </codeblock>
-<img src="images/bigIntegers.png" width="285" height="471">
+<p><img src="images/bigIntegers.png" width="285" height="471" alt="big integers"></p>
 <hr>
 </div></div>
 
@@ -312,9 +312,9 @@ end test
 
 <p>When editing and you leave the field, the newline will be implicitly applied in your code.</p>
 <p>As in most languages, strings are <i>immutable</i>. When you apply any operation or <b>function</b> with the intent of modifying an existing <code>String</code>, the existing <code>String</code> is never changed. Instead, the operation or <b>function</b> will return a new <code>String</code> that is based on the original, but with the specified differences.</p>
-<p>You can loop through a <code>String</code> picking each of its characters sequentially using the <a href="LangRef.html#for"><b>for loop</b>.</p>
+<p>You can loop through a <code>String</code> picking each of its characters sequentially using the <a href="LangRef.html#for"><b>for loop</b></a>.</p>
 
-<h3 class="no-TOC" id="DotMethods_String">Function dot methods on a <code>String</code></h3>
+<h3 class="no-TOC" id="DotMethods_String">Function dot methods on a String</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1024,14 +1024,16 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <div id="Queue"></div>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
-    <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
-   The names of the methods for adding and removing items are different, but there are also common methods.</li>
-    <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <code>Stack</code>&lt;of <code>String</code>&gt;, <code>Queue</code>&lt;of <code>Int</code>&gt;, <code>Stack</code>&lt;of (<code>Float</code>, <code>Float</code>)&gt;, <code>Queue</code>&lt;of <code>Square</code>&gt;</code>.</li>
-    <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <el-instr>return</el-instr> Type.</li>
-    <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
-    <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
-    <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
+ <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
+ The names of the methods for adding and removing items are different, but there are also common methods.</li>
+ <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax.
+ The Type is specified in the form shown below e.g. <code>Stack<of String></code>, <code>Queue<of Int></code>.</li>
+ <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
+ as they can continue to expand (eventually until the computer's memory limit is reached).</li>
+ <li>The same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> Type.</li>
+ <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
+ <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
+ <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
 </ul>
 
 <h3 class="no-TOC" id="Stack_functions">Function dot methods on a <code>Stack</code></h3>
@@ -1410,7 +1412,7 @@ main
   end for
 end main
 </codeblock>
-<img src="images/turtleSquare.png" width="270" height="290">
+<p><img src="images/turtleSquare.png" width="270" height="290" alt="Turtle square"></p>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a fractal snowflake, using a <el-instr>procedure</el-instr> and recursion:</p>
 <codeblock>
@@ -1440,7 +1442,7 @@ procedure drawSide(length as Float, t as Turtle)
   end if
 end procedure
 </codeblock>
-<p><img src="images/turtleSnowflake.png" width="270" height="295" ></p>
+<p><img src="images/turtleSnowflake.png" width="270" height="295" alt="Turtle snowflake"></p>
 <hr>
 </div></div>
 
@@ -1493,7 +1495,7 @@ Later shapes are positioned in front of earlier ones.</p>
   <td>none</td>
   <td><code>String</code></td>
   <td>string containing the Html &lt;img&gt; tag filled with the image's URL and attribute values</td>
- </tr><tr id="asSVG_Circle"><div id="asSVG"></div>
+ </tr><tr id="asSVG_Circle">
   <td><el-method>asSVG</el-method></td>
   <td><code>CircleVG</code></td>
   <td>none</td>
@@ -1705,7 +1707,7 @@ main
   call displayVectorGraphics(vg)
 end main
 </codeblock>
-<p><img src="images/VG_circle.png" width="200" height="200" ></p>
+<p><img src="images/VG_circle.png" width="200" height="200" alt="circle"></p>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle that changes between red and green every second:</p>
@@ -2122,7 +2124,7 @@ main
   end try
 end main
 </codeblock>
-or you could make the code offer the user options: to save again, or to continue without saving.
+<p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
 <h2 id="RenderHtml">Rendering Html in the display</h2>
@@ -2135,7 +2137,7 @@ or you could make the code offer the user options: to save again, or to continue
 </codeblock>
 
 <p>will produce:</p>
-<img src="images/Html_1.png" width="250" height="200">
+<p><img src="images/Html_1.png" width="250" height="200" alt="Html 1"></p>
 
 <p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
     (using <el-instr>call procedure</el-instr> <el-method>print</el-method>() or any of the print procedures)
@@ -2158,7 +2160,7 @@ end main
 </codeblock>
 
 <p>will produce:</p>
-<img src="images/Html_2.png" width="275" height="200">
+<p><img src="images/Html_2.png" width="275" height="200" alt="Html 2"></p>
 
 <h2 id="DisplayImageURL">Displaying images from URLs</h2>
 
@@ -2422,7 +2424,7 @@ end main
  <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <code>Float</code> values, but they can accept <code>Int</code> values without raising an error.</li>
  <li>The length of a <code>Dictionary</code> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
 <table class="tablePlain">
-  <tr><code>call print(dict.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
+  <tr><td><code>call print(dict.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
 </table></li>
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
@@ -3232,9 +3234,9 @@ end main
 &nbsp;&nbsp;&#x27f6; [Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice]
 <hr>
 </div></div>
-
+<hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
-<script>
+<script type="">
   var accordions = document.getElementsByClassName("acc-title");
   for (const item of accordions) {
     item.addEventListener("click", function() {
