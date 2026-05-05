@@ -35,14 +35,15 @@ export class InheritsFromField extends AbstractField {
   override renderAsHtml(): string {
     let result = "";
     if (this.isSelected()) {
-      result = super.renderAsHtml();
+      result = ` ${super.renderAsHtml()}`;
     } else {
-      result = this.getFile().language().inheritance(this);
+      const textAsHtml = this.getFile().language().inheritsFromTextAsHtml(this);
+      result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${textAsHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
     }
     return result;
   }
 
-  default_renderAsHtml(): string {
+  default_renderasHtml(): string {
     return super.renderAsHtml();
   }
 }

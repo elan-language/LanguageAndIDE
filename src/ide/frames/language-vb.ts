@@ -12,6 +12,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -24,9 +25,10 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList, languageHelper_inheritance } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
@@ -53,6 +55,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
@@ -350,16 +353,33 @@ export class LanguageVB extends LanguageAbstract {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 0, `<el-kw>${this.END} ${this.ENUM}</el-kw>`);
   }
 
-  inheritance(field: InheritsFromField): string{
-    return languageHelper_inheritance(
-      field,
-      ``,
-      this.INHERITS,
-      `<br>&nbsp;&nbsp;`,
-      this.IMPLEMENTS,
-      `<br>`,
-    );
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+    const frame = field.getHolder() as ClassFrame;
+    const node = field.getRootNode()! as InheritanceNode;
+    let result = ``;
+    if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
+      const inheritsKw = `<el-kw>${this.INHERITS}</el-kw> `;
+      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw> `;
+      const abstractClasses = node.getAbstractClassNames();
+      if (abstractClasses.length > 0) {
+        const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");  
+        result += `<br>&nbsp;&nbsp;${inheritsKw}${csvTypes}`;
+      }
+      const interfaces = node.getInterfaceNames();
+      if (interfaces.length > 0) {
+        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
+        const csvTypes = typesAsHtml.join(", ");
+        const keyWord = frame.isInterface ? inheritsKw : implementsKw;
+        result +=  `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
+      }
+      result += `<br>`;
+    } else {
+      result = field.default_renderasHtml();
+    }
+    return result;
   }
+
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);

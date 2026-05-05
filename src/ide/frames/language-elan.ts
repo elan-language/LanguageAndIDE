@@ -13,6 +13,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
+import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -24,7 +25,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList, languageHelper_inheritance } from "./language-helpers";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
@@ -152,8 +153,9 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  inheritance(field: InheritsFromField): string{
-    return languageHelper_inheritance(field, " ", "inherits", "", "", "");
+  inheritsFromTextAsHtml(field: InheritsFromField): string{
+    const frame = field.getHolder() as ClassFrame;
+    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}` : ``;
   }
 
   renderTopAsExport(_frame: Frame): string {

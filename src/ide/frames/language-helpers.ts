@@ -63,7 +63,7 @@ export function languageHelper_inheritance(
     }
     result += `${finish}</el-field>`;
   } else {
-    result = field.default_renderAsHtml();
+    result = field.default_renderasHtml();
   }
   return result;
 }

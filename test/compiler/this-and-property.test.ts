@@ -516,7 +516,7 @@ Sub main()
   printNoLine(x.p1) ' call procedure
 End Sub
 
-Class Foo
+Class Foo 
 
   Sub New()
     Me.p1 = 0.1 ' change variable

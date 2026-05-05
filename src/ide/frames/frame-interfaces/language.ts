@@ -43,7 +43,7 @@ export interface Language {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
   enumValuesListAsHtml(field: EnumValuesField): string;
-  inheritance(field: InheritsFromField): string;
+  inheritsFromTextAsHtml(field: InheritsFromField): string;
 
   MOD: string;
   EQUAL: string;
