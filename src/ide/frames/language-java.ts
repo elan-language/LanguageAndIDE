@@ -1,4 +1,3 @@
-import { start } from "repl";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
@@ -100,7 +99,7 @@ export class LanguageJava extends LanguageCfamily {
           const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
           const csvTypes = typesAsHtml.join(", ");
           const keyWord = frame.isInterface ? inheritsKw : implementsKw;
-          result += ` ${keyWord} ${csvTypes}`;
+          result += ` ${keyWord}${csvTypes}`;
         }
       } else {
         result = field.default_renderasHtml();

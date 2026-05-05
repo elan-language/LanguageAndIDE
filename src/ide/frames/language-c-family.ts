@@ -129,9 +129,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {
@@ -147,7 +147,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()} {`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof TryStatement) {

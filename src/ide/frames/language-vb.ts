@@ -135,9 +135,9 @@ export class LanguageVB extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.MUST_INHERIT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof For) {
@@ -149,7 +149,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
@@ -358,13 +358,13 @@ export class LanguageVB extends LanguageAbstract {
     const node = field.getRootNode()! as InheritanceNode;
     let result = ``;
     if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
-      const inheritsKw = `<el-kw>${this.INHERITS}</el-kw> `;
-      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw> `;
+      const inheritsKw = `<el-kw>${this.INHERITS}</el-kw>`;
+      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw>`;
       const abstractClasses = node.getAbstractClassNames();
       if (abstractClasses.length > 0) {
         const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
         const csvTypes = typesAsHtml.join(", ");  
-        result += `<br>&nbsp;&nbsp;${inheritsKw}${csvTypes}`;
+        result += `<br>&nbsp;&nbsp;${inheritsKw} ${csvTypes}`;
       }
       const interfaces = node.getInterfaceNames();
       if (interfaces.length > 0) {
