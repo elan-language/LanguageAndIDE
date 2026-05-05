@@ -82,6 +82,10 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof CallStatement ||
       frame instanceof SetStatement ||
       frame instanceof CatchStatement ||
+      frame instanceof ConcreteClass ||
+      frame instanceof AbstractClass ||
+      frame instanceof InterfaceFrame ||
+      frame instanceof Enum ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
