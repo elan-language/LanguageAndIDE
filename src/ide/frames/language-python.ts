@@ -85,7 +85,6 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
       frame instanceof InterfaceFrame ||
-      frame instanceof Enum ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
@@ -121,7 +120,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>): ${frame.values.renderAsHtml()}`;
+      html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
