@@ -76,7 +76,7 @@ suite("Selector tests", () => {
       "function",
       "test",
       "procedure",
-      "constant",
+      "k constant",
       "enum",
       "class",
       "abstract class",
@@ -95,7 +95,7 @@ suite("Selector tests", () => {
       false,
     );
     const g = new GlobalSelector(f);
-    assertOptions(g, ["main", "function", "test", "procedure", "constant", "# comment"]);
+    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "# comment"]);
   });
 
   test("Selection Filtering - globals - no profile specified", () => {
@@ -108,7 +108,7 @@ suite("Selector tests", () => {
       false,
     );
     const g = new GlobalSelector(f);
-    assertOptions(g, ["main", "function", "test", "procedure", "constant", "# comment"]);
+    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "# comment"]);
   });
 
   test("Selection Filtering - members - oop", () => {
@@ -389,7 +389,7 @@ suite("Selector tests", () => {
     );
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
-    assertOptions(gs, ["main", "function", "test", "procedure", "constant", "# comment"]);
+    assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "# comment"]);
   });
 
   test("Selection Filtering - profile=functional", () => {
