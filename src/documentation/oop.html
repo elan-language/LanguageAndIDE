@@ -53,7 +53,7 @@ end class
 
 <p>This example illustrates an important principle of OOP: an object-oriented program should largely consist of the definition of types, the names and definitions of which
     correspond to entities in program's 'domain'. Here the domain is a game of 'snake' - which incorporate the concepts of a snake, an apple, and many squares.
-    The program <i>might/i> included classes to represent, game, player, board, and others. 
+    The program <i>might</i> included classes to represent, game, player, board, and others. 
         The decision as to which entities from the domain should represented in code comes with experience - based on how much value would be added to the program by 
         defining such a class - and some programmers will opt for more than others.
          The important principle is that each class should sound familiar to someone who is familiar with the problem domain (in this case: with the game of 'snake') but
@@ -94,39 +94,122 @@ end class
 In both cases the keyword <code>this</code> refers to the current instance (i.e. the instance to which the code is applied). It is followed by a dot and the name of the property - an example of 'dot syntax'.</p>
 
 <h3>Constructor</h3>
+<p>Each class must define one, and only one, constructor. The role of the constructor is to 'initialise' (set the initial values) of the properties. 
+    The constructor is called each time an instance of a class is created. 
+    In the constructor for <code>Square</code>:
 
-<p>When a new instance of a particular class is created like this, it uses the 'constructor' defined in the class to initialise the instance. </p>
+<codeblock>
+  constructor(x as Int, y as Int)
+    set this.x to x
+    set this.y to y
+  end constructor
+</codeblock>   
+
+<p>the value of the properties <code>x</code> and <code>y</code> are set to the values defined by the two parameters. Although the parameters have the same names as the properties they 
+ambiguity is avoided because the <i>property</i> is always prefixed by <code>this</code>.</p>
+
+<p>The constructor for <code>Snake</code> does not define any parameters, because a snake is instantiated only once within each game, and always to the same size and initial position: </p>
+
+<codeblock>
+constructor()
+    variable tail set to new Square(20, 15)
+    set this.currentDir to Direction.right
+    set this.body to [tail]
+    set this.head to tail.getAdjacentSquare(this.currentDir)
+    set this.priorTail to tail
+end constructor
+</codeblock>
+
+<p>Note, however, that within the constructor, it creates a new instance of <code>Square</code>, passing in the arguments <code>20</code> and <code>15</code>, which the square's constructor requires.
+    It also makes used of <el-method>getAdjacentSquare</p> which is an example of using a method - which we shall explore next.
+
+<h3>Methods</h3>
+<p>The properties on a class define the <i>state</i> of an instance; the methods define its <i>behaviour</i>. Methods on a concrete class have two distinct forms: <b>function method</b> and <b>procedure method</b>.
+These mirror the distinction between a (global) <b>function</b> and <b>procedure</b>. A function is a 'query' that returns information based on the parameters that are supplied to it, 
+but in the case of a <b>function method</b> (defined within a class), in addition to the parameter values, it has access to the property values of the instance - which is legitimate because it is only ever called
+via that instance. Thus, in the example above, <el-method>getAdjacentSquare</el-method> is invoked <i>on</i> the variable <code>tail</code> (an instance of <code>/code>.Square</code></code.Square>, and is passed
+the value of <code>currentDir</code> as an argument. Looking at the definition of <el-method>getAdjacentSquare</el-method> within the class <code>Square</code>:</p>
+
+<codeblock>
+function getAdjacentSquare(d as Direction) returns Square
+    variable newX set to this.x
+    variable newY set to this.y
+    if d is Direction.left then
+        set newX to this.x - 1
+    elif d is Direction.right then
+        set newX to this.x + 1
+    elif d is Direction.up then
+        set newY to this.y - 1
+    elif d is Direction.down then
+        set newY to this.y + 1
+    end if
+    return new Square(newX, newY)
+end function
+</codeblock>
+
+<p>we see that the direction (assigned to the parameter <code>d</code>) is used together with the square's <code>x</code> and <code>y</code> properties to identify the coordinates 
+    <code>newX</code> and <code>newY</code> for the adjacent square in the specified direction, and use those to create and return a new instance of <code>Square</code> with
+those two new coordinates.</p>
+
+<p>Similarly a <b>procedure method</b> is like a global <b>procedure</b> except that it is defined within a class, is accessed only via an instance of that class, using dot syntax, and also
+has internal access to the properties of that instance. Both kinds of procedure may be thought of as 'commands': they make changes to the state of the system. 
+A common use of <b>procedure method</b>s is to change the values of one or more properties and/or to make changes outside the object. 
+The method <el-method>newRandomPosition</el-method> defined on the class <code>Apple</code>:</p> 
+
+<codeblock>
+procedure newRandomPosition(snake as Snake)
+    variable changePosition set to true
+    while changePosition
+        variable ranX set to randint(0, 39)
+        variable ranY set to randint(0, 29)
+        set this.location to new Square(ranX, ranY)
+        if not snake.bodyCovers(this.location) then
+        set changePosition to false
+        end if
+    end while
+end procedure
+</codeblock>
+
+<p>changes the <code>location</code> to a new <code>Square</code> - which requires it to be a procedure method. 
+    (A second reason is that it uses the system method <el-method>randint</el-method> - which depends upon, and changes, data held in the system.)
+    Note that this procedure method makes use of the function method <code>bodyCovers</code>, defined on <code>Snake</code>.
+    
+    <p>A function method may also use other function methods and global functions, but may not call any procedure, whether global or procedure method.</p>
+
+<h3>toString method</h3>
+
+<p>Every class must define a function method named <el-method>toString</el-method>, which defines no parameters and returns a <code>String</code>. The returned string is considered to be a <i>representation</i> of the instance: 
+    <el-method>toString</el-method> is called automatically when an instance printed, or is used within a field in an interpolated string. The string might be as generic as 'a Person', use one or
+more properties to identify the instance as e.g 'Charlie Smith', or even list, or summarise all the data held by the object.</p>
+
 
 <h2>Creating a new concrete class</h2>
 <p>A new concrete class is added into your code, at global level, with the <b>concrete class</b> instruction. 
-You must complete the template, by giving the class a name, which must start with a capital letter (because a class defines a type), followed by any alphabetic or numeric characters, or underlines.</p>
+    The template includes an empty constructor, and a default implementation of <el-method>toString</el-method>:</p>
 
-<h2></h2>Constructor
-Every concrete class must have one, and only one, constructor. A new class is created with a constructor (which may not be deleted), into which you may add instructions to be executed when an instance is created. You may also define parameters, which must be supplied when creating a new instance and are typically used to initialise some or all of the properties. For example
-<codeblock> class with constructor
-Function methods, and external functions may may be used within the constructor, but procedure methods may not – so the call instruction is not offered within the constructor.
-Properties
-Properties are defined with a name – starting lower-case letter – and a type.
-Properties are by default publicly visible (readable) but are modifiable only from within the class.
-When referring to a property within the class, the property name must be prefixed as shown here:
-<codeblock> showing both reading & writing a property using ‘this’ or equivalent.
-Every property – unless of a numeric type (which defaults to 0) or  Boolean type (which defaults to false) must be initialised within the constructor.
-Methods
-Elan distinguishes function methods from procedure methods, in the same way that it distinguishes global functions from global procedures. 
-Function method
-Is subject to the same rules as a global function, except that it may read properties defined on the same object.
-May not modify the object itself, nor create any externally-visible side effect.
-<el-method>toString</el-method> is a specific function method that every concrete class must have. It returns a textual representation of an object instances – which may be any valid string. By default, the implementation returns ‘undefined’ – but this may be edited to reflect to specify the name of the class – for example `a Fruit` - or, typically using an interpolated string to use the value of of one or more of the instances properties – for example: 
 <codeblock>
-Procedure method
-May change the value of one or more of the object’s properties
-May generate externally visible side effects, such as printing to the screen
-May depend upon the system – for example for user input
-May be called only from within another procedure method (on the same object, or another object), or a global procedure, or main
-Python: Special note on the self parameter
-Private members
-A property, function method, procedure
-Inheritance
+class Name
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "undefined"
+  end function
+
+end class
+</codeblock>
+
+<p>You must complete the template, by giving the class a name, which must start with a capital letter (because a class defines a type), followed by any alphabetic or numeric characters, or underlines.
+In <el-method>toString</el-method> you should, at some point, replace <code>"undefined"</code> with something more specific.</p>
+
+<p>Then via the <b>new code</b> prompt, which will offer you the appropriate options, add properties and methods. All properties must be initialised in the constructor, 
+    except those of types <code>Int</code>, <code>Float</code>, which take on the default values of the type - although such properties may optionally be initialised to different values.
+    Note in particular that properties of type <code>String</code> must be initialised, even if only to an empty string <code>""</code>.
+</p>
+
+
+<h1>Inheritance</h1>
 A concrete class may inherit from a single abstract class, and/or from one or more interfaces.  It may not inherit from more than one abstract class. Nor may it inherit from another concrete class.
 Abstract class
 An abstract class may not be instantiate directly, and hence neither needs, nor allows, a constructor.
