@@ -18,6 +18,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
   }
   isPrivate: boolean = false;
 
+  override isDeletable(): boolean {
+    return false;
+  }
+
   isOnAbstractClass(): boolean {
     return false;
   }
