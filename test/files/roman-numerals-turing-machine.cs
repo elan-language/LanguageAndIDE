@@ -19,7 +19,7 @@ static void main() {
   while (!tm.isHalted()) {
     var rule = tm.findMatchingRule();
     tm.singleStep(); // call procedure
-    steps = steps + 1; // change variable
+    steps = steps + 1; // re-assign variable
     clearPrintedText(); // call procedure
     print(tm.tape);
     printTab(tm.headPosition - 1, "^"); // call procedure
@@ -38,14 +38,14 @@ const String haltState = "halt"
 class TuringMachine {
 
   public TuringMachine(string initialState, string haltState) {
-    this.tape = ""; // change variable
-    this.initialState = initialState; // change variable
-    this.haltState = haltState; // change variable
-    this.rules = new List<Rule>(); // change variable
-    this.currentState = initialState; // change variable
-    this.headPosition = 0; // change variable
+    this.tape = ""; // re-assign variable
+    this.initialState = initialState; // re-assign variable
+    this.haltState = haltState; // re-assign variable
+    this.rules = new List<Rule>(); // re-assign variable
+    this.currentState = initialState; // re-assign variable
+    this.headPosition = 0; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
   public string initialState {get; private set;} // property
@@ -54,43 +54,43 @@ class TuringMachine {
   public string haltState {get; private set;} // property
   public List<Rule> rules {get; private set;} // property
   public string tape {get; private set;} // property
-  public void setTape(string tape) { // procedure
-    this.tape = tape; // change variable
+  public void setTape(string tape) { // procedure method
+    this.tape = tape; // re-assign variable
   }
-  public void append(Rule rule) { // procedure
-    this.rules = this.rules.withAppend(rule); // change variable
+  public void append(Rule rule) { // procedure method
+    this.rules = this.rules.withAppend(rule); // re-assign variable
   }
-  public void singleStep() { // procedure
+  public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
   }
-  public bool isHalted() { // function
+  public bool isHalted() { // function method
     return this.currentState.equals(this.haltState);
   }
-  public Rule findMatchingRule() { // function
+  public Rule findMatchingRule() { // function method
     var matches = this.rules.filter(lambda Rule r => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError($"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}")
     }
     return matches.head();
   }
-  public void write(string newSymbol) { // procedure
+  public void write(string newSymbol) { // procedure method
     var hp = this.headPosition;
-    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // change variable
+    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // re-assign variable
   }
-  public void execute(Rule rule) { // procedure
-    this.currentState = rule.nextState; // change variable
+  public void execute(Rule rule) { // procedure method
+    this.currentState = rule.nextState; // re-assign variable
     this.write(rule.writeSymbol); // call procedure
     if (rule.move == Dir.right) {
-      this.headPosition = this.headPosition + 1; // change variable
+      this.headPosition = this.headPosition + 1; // re-assign variable
       if (this.headPosition >= this.tape.length()) {
-        this.tape = this.tape + " "; // change variable
+        this.tape = this.tape + " "; // re-assign variable
       }
     } else {
-      this.headPosition = this.headPosition - 1; // change variable
+      this.headPosition = this.headPosition - 1; // re-assign variable
       if (this.headPosition < 0) {
-        this.tape = " " + this.tape; // change variable
-        this.headPosition = 0; // change variable
+        this.tape = " " + this.tape; // re-assign variable
+        this.headPosition = 0; // re-assign variable
       }
     }
   }
@@ -104,13 +104,13 @@ class Rule {
   public string writeSymbol {get; private set;} // property
   public Dir move {get; private set;} // property
   public Rule(string currentState, string currentSymbol, string nextState, string writeSymbol, Dir move) {
-    this.currentState = currentState; // change variable
-    this.currentSymbol = currentSymbol; // change variable
-    this.nextState = nextState; // change variable
-    this.writeSymbol = writeSymbol; // change variable
-    this.move = move; // change variable
+    this.currentState = currentState; // re-assign variable
+    this.currentSymbol = currentSymbol; // re-assign variable
+    this.nextState = nextState; // re-assign variable
+    this.writeSymbol = writeSymbol; // re-assign variable
+    this.move = move; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}";
   }
 }

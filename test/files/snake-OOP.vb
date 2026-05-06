@@ -21,10 +21,10 @@ Class Snake
 
   Sub New()
     Dim tail = New Square(20, 15) ' variable definition
-    Me.currentDir = Direction.right ' change variable
-    Me.body = {tail} ' change variable
-    Me.head = tail.getAdjacentSquare(Me.currentDir) ' change variable
-    Me.priorTail = tail ' change variable
+    Me.currentDir = Direction.right ' re-assign variable
+    Me.body = {tail} ' re-assign variable
+    Me.head = tail.getAdjacentSquare(Me.currentDir) ' re-assign variable
+    Me.priorTail = tail ' re-assign variable
   End Sub
   Function toString() As String
     Return ""
@@ -33,22 +33,22 @@ Class Snake
   Private Property head As Square
   Private Property body As List(Of Square)
   Private Property priorTail As Square
-  Sub clockTick(key As String, apple As Apple) ' procedure
+  Sub clockTick(key As String, apple As Apple) ' procedure method
     Me.setDirection(key) ' call procedure
-    Me.priorTail = Me.body[0] ' change variable
+    Me.priorTail = Me.body[0] ' re-assign variable
     Dim body = Me.body ' variable definition
     body.append(Me.head) ' call procedure
-    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' change variable
+    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' re-assign variable
     If Me.head.equals(apple.location) Then
       apple.newRandomPosition(Me) ' call procedure
     Else
-      Me.body = Me.body.subList(1, Me.body.length()) ' change variable
+      Me.body = Me.body.subList(1, Me.body.length()) ' re-assign variable
     End If
   End Sub
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure
-    blocks[Me.head.x][Me.head.y] = green ' change variable
+  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
+    blocks[Me.head.x][Me.head.y] = green ' re-assign variable
     If Not Me.body[0].equals(Me.priorTail) Then
-      blocks[Me.priorTail.x][Me.priorTail.y] = white ' change variable
+      blocks[Me.priorTail.x][Me.priorTail.y] = white ' re-assign variable
     End If
   End Sub
   Function score() As Integer
@@ -58,7 +58,7 @@ Class Snake
     Dim result = False ' variable definition
     For Each seg In Me.body
       If (seg.equals(sq)) Then
-        result = True ' change variable
+        result = True ' re-assign variable
       End If
     Next seg
     Return result
@@ -66,15 +66,15 @@ Class Snake
   Function gameOver() As Boolean
     Return Me.bodyCovers(Me.head) Or Me.head.hasHitEdge()
   End Function
-  Private Sub setDirection(key As String) ' private procedure
+  Private Sub setDirection(key As String) ' private procedure method
     If key.equals("w") Then
-      Me.currentDir = Direction.up ' change variable
+      Me.currentDir = Direction.up ' re-assign variable
     ElseIf key.equals("s") Then
-      Me.currentDir = Direction.down ' change variable
+      Me.currentDir = Direction.down ' re-assign variable
     ElseIf key.equals("a") Then
-      Me.currentDir = Direction.left ' change variable
+      Me.currentDir = Direction.left ' re-assign variable
     ElseIf key.equals("d") Then
-      Me.currentDir = Direction.right ' change variable
+      Me.currentDir = Direction.right ' re-assign variable
     End If
   End Sub
 End Class
@@ -82,33 +82,33 @@ End Class
 Class Apple
 
   Sub New()
-    Me.location = New Square(0, 0) ' change variable
+    Me.location = New Square(0, 0) ' re-assign variable
   End Sub
   Function toString() As String
     Return ""
   End Function
   Property location As Square
-  Sub newRandomPosition(snake As Snake) ' procedure
+  Sub newRandomPosition(snake As Snake) ' procedure method
     Dim changePosition = True ' variable definition
     While changePosition
       Dim ranX = randint(0, 39) ' variable definition
       Dim ranY = randint(0, 29) ' variable definition
-      Me.location = New Square(ranX, ranY) ' change variable
+      Me.location = New Square(ranX, ranY) ' re-assign variable
       If Not snake.bodyCovers(Me.location) Then
-        changePosition = False ' change variable
+        changePosition = False ' re-assign variable
       End If
     End While
   End Sub
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure
-    blocks[Me.location.x][Me.location.y] = red ' change variable
+  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
+    blocks[Me.location.x][Me.location.y] = red ' re-assign variable
   End Sub
 End Class
 
 Class Square
 
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' change variable
-    Me.y = y ' change variable
+    Me.x = x ' re-assign variable
+    Me.y = y ' re-assign variable
   End Sub
   Function toString() As String
     Return ""
@@ -119,13 +119,13 @@ Class Square
     Dim newX = Me.x ' variable definition
     Dim newY = Me.y ' variable definition
     If d = Direction.left Then
-      newX = Me.x - 1 ' change variable
+      newX = Me.x - 1 ' re-assign variable
     ElseIf d = Direction.right Then
-      newX = Me.x + 1 ' change variable
+      newX = Me.x + 1 ' re-assign variable
     ElseIf d = Direction.up Then
-      newY = Me.y - 1 ' change variable
+      newY = Me.y - 1 ' re-assign variable
     ElseIf d = Direction.down Then
-      newY = Me.y + 1 ' change variable
+      newY = Me.y + 1 ' re-assign variable
     End If
     Return New Square(newX, newY)
   End Function

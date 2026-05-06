@@ -11,15 +11,15 @@ static void inPlaceRippleSort(List<int> li) { // procedure
   var hasChanged = true;
   var lastComp = li.length() - 2;
   while (hasChanged == true) {
-    hasChanged = false; // change variable
+    hasChanged = false; // re-assign variable
     foreach (i in range(0, lastComp + 1)) {
       if (li[i] > li[i + 1]) {
         var temp = li[i];
-        li[i] = li[i + 1]; // change variable
-        li[i + 1] = temp; // change variable
-        hasChanged = true; // change variable
+        li[i] = li[i + 1]; // re-assign variable
+        li[i + 1] = temp; // re-assign variable
+        hasChanged = true; // re-assign variable
       }
     }
-    lastComp = lastComp - 1; // change variable
+    lastComp = lastComp - 1; // re-assign variable
   }
 }

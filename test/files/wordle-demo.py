@@ -16,17 +16,17 @@ def executeOption(choice: int) -> None: # procedure
   if choice == 1:
     print("Reduce screen magnification if you can't see all the keys")
     playGame() # call procedure
-  elif choice == 2:
+  elif choice == 2: # else if
     print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter")
     playReverseGame() # call procedure
-  elif choice == 3:
+  elif choice == 3: # else if
     print("Please wait for analysis to complete ...")
     analyse() # call procedure
   else:
     word = inputStringWithLimits("Enter word: ", 5, 5).upperCase() # constant
     if allValidAnswers.contains(word):
       print(f"{word} is a valid answer")
-    elif allWords.contains(word):
+    elif allWords.contains(word): # else if
       print(f"{word} is not a valid answer, but is a valid guess word")
     else:
       print(f"{word} is not a recognised word")
@@ -36,7 +36,7 @@ def playGame() -> None: # procedure
   initialiseGrid(grid) # call procedure
   used = Dictionary[str, str]() # variable definition
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-    used[letter] = " " # change variable
+    used[letter] = " " # re-assign variable
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
   target = allValidAnswers.split(" ")[randint(0, 2308)] # constant
   attemptNo = 0 # variable definition
@@ -45,8 +45,8 @@ def playGame() -> None: # procedure
     enterAttempt(attemptNo, grid, used) # call procedure
     solvedRef = AsRef[bool](solved) # variable definition
     colourAttempt(attemptNo, grid, target, solvedRef, used) # call procedure
-    solved = solvedRef.value() # change variable
-    attemptNo = attemptNo + 1 # change variable
+    solved = solvedRef.value() # re-assign variable
+    attemptNo = attemptNo + 1 # re-assign variable
   clearPrintedText() # call procedure
   if solved:
     print("Well done!")
@@ -64,17 +64,17 @@ def enterAttempt(attemptNo: int, grid: list[list[str]], used: Dictionary[str, st
   while chNo <= 5:
     k = waitForKey().upperCase() # variable definition
     if (k.equals("BACKSPACE")) and (chNo > 0):
-      chNo = chNo - 1 # change variable
-      grid[chNo][attemptNo] = "" # change variable
-      word = word # change variable
+      chNo = chNo - 1 # re-assign variable
+      grid[chNo][attemptNo] = "" # re-assign variable
+      word = word # re-assign variable
       clearPrintedText() # call procedure
-    elif (chNo < 5) and isUCLetter(k):
-      grid[chNo][attemptNo] = k # change variable
-      chNo = chNo + 1 # change variable
-      word = word + k # change variable
-    elif (chNo == 5) and (k.equals("ENTER")):
+    elif (chNo < 5) and isUCLetter(k): # else if
+      grid[chNo][attemptNo] = k # re-assign variable
+      chNo = chNo + 1 # re-assign variable
+      word = word + k # re-assign variable
+    elif (chNo == 5) and (k.equals("ENTER")): # else if
       if allWords.contains(word):
-        chNo = chNo + 1 # change variable
+        chNo = chNo + 1 # re-assign variable
       else:
         print("Invalid word")
     displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
@@ -85,9 +85,9 @@ def colourAttempt(attemptNo: int, grid: list[list[str]], target: str, solved: As
   for i in range(0, 5):
     letter = grid[i][attemptNo] # variable definition
     mark = marks[i] # variable definition
-    grid[i][attemptNo] = letter + mark # change variable
+    grid[i][attemptNo] = letter + mark # re-assign variable
     if mark.isAfter(used[letter]):
-      used[letter] = mark # change variable
+      used[letter] = mark # re-assign variable
   if marks.equals("22222"):
     solved.set(True) # call procedure
   displayHtml(drawGrid(grid) + drawKeyboard(used)) # call procedure
@@ -101,22 +101,22 @@ def playReverseGame() -> None: # procedure
   attempt = "ARISE" # variable definition
   while (attemptNo < 6) and (not solved):
     for i in range(0, 5):
-      grid[i][attemptNo] = attempt[i] # change variable
+      grid[i][attemptNo] = attempt[i] # re-assign variable
     displayHtml(drawGrid(grid)) # call procedure
     mark = "" # variable definition
     markRef = AsRef[str](mark) # variable definition
     enterMark(attemptNo, grid, markRef) # call procedure
-    mark = markRef.value() # change variable
+    mark = markRef.value() # re-assign variable
     if mark.equals("22222"):
-      solved = True # change variable
+      solved = True # re-assign variable
     else:
-      attemptNo = attemptNo + 1 # change variable
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark) # change variable
+      attemptNo = attemptNo + 1 # re-assign variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark) # re-assign variable
     if possible.length() == 0:
       print("No possible answer matches marks so far. Press any key to continue")
-      attemptNo = 6 # change variable
+      attemptNo = 6 # re-assign variable
     else:
-      attempt = possible[divAsInt(possible.length(), 2)] # change variable
+      attempt = possible[divAsInt(possible.length(), 2)] # re-assign variable
 
 def enterMark(attemptNo: int, grid: list[list[str]], markRef: AsRef[str]) -> None: # procedure
   mark = markRef.value() # variable definition
@@ -125,17 +125,17 @@ def enterMark(attemptNo: int, grid: list[list[str]], markRef: AsRef[str]) -> Non
   while chNo <= 5:
     k = waitForKey().upperCase() # variable definition
     if (k.equals("BACKSPACE")) and (chNo > 0):
-      chNo = chNo - 1 # change variable
+      chNo = chNo - 1 # re-assign variable
       entry = grid[chNo][attemptNo] # variable definition
-      grid[chNo][attemptNo] = entry[0] # change variable
-      mark = mark.subString(0, chNo) # change variable
-    elif (chNo < 5) and "012".contains(k):
+      grid[chNo][attemptNo] = entry[0] # re-assign variable
+      mark = mark.subString(0, chNo) # re-assign variable
+    elif (chNo < 5) and "012".contains(k): # else if
       ch = grid[chNo][attemptNo] # variable definition
-      grid[chNo][attemptNo] = ch + k # change variable
-      chNo = chNo + 1 # change variable
-      mark = mark + k # change variable
-    elif (chNo == 5) and (k.equals("ENTER")):
-      chNo = chNo + 1 # change variable
+      grid[chNo][attemptNo] = ch + k # re-assign variable
+      chNo = chNo + 1 # re-assign variable
+      mark = mark + k # re-assign variable
+    elif (chNo == 5) and (k.equals("ENTER")): # else if
+      chNo = chNo + 1 # re-assign variable
     displayHtml(drawGrid(grid)) # call procedure
   markRef.set(mark) # call procedure
 
@@ -148,16 +148,16 @@ def analyse() -> None: # procedure
     attempt = "RAISE" # variable definition
     attempts = 0 # variable definition
     while (not mark.equals("22222")):
-      attempts = attempts + 1 # change variable
-      mark = markAttempt(attempt, word) # change variable
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark) # change variable
-      attempt = possible[0] # change variable
-    outcomes[attempts] = outcomes[attempts] + 1 # change variable
+      attempts = attempts + 1 # re-assign variable
+      mark = markAttempt(attempt, word) # re-assign variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark) # re-assign variable
+      attempt = possible[0] # re-assign variable
+    outcomes[attempts] = outcomes[attempts] + 1 # re-assign variable
   success = 0 # variable definition
   weightedSum = 0 # variable definition
   for i in range(1, 7):
-    success = success + outcomes[i] # change variable
-    weightedSum = weightedSum + (i*outcomes[i]) # change variable
+    success = success + outcomes[i] # re-assign variable
+    weightedSum = weightedSum + (i*outcomes[i]) # re-assign variable
   clearPrintedText() # call procedure
   solved = (success/2309.0*100).floor() # constant
   avg = divAsFloat(weightedSum, success).round(2) # constant
@@ -178,7 +178,7 @@ def test_isUCLetter(self) -> None:
 def getWord(attemptNo: int, grid: list[list[str]]) -> str: # function
   guessWord = "" # variable definition
   for i in range(0, 5):
-    guessWord = guessWord + grid[i][attemptNo] # change variable
+    guessWord = guessWord + grid[i][attemptNo] # re-assign variable
   return guessWord
 
 def setChar(word: str, n: int, newChar: str) -> str: # function
@@ -193,12 +193,12 @@ def markAttempt(attempt: str, target: str) -> str: # function
   unused = target # variable definition
   for n in range(0, 5):
     if attempt[n].equals(unused[n]):
-      mark = setChar(mark, n, "2") # change variable
-      unused = setChar(unused, n, " ") # change variable
+      mark = setChar(mark, n, "2") # re-assign variable
+      unused = setChar(unused, n, " ") # re-assign variable
   for n in range(0, 5):
     if (not mark[n].equals("2")) and unused.contains(attempt[n]):
-      mark = setChar(mark, n, "1") # change variable
-      unused = setChar(unused, unused.indexOf(attempt[n]), " ") # change variable
+      mark = setChar(mark, n, "1") # re-assign variable
+      unused = setChar(unused, unused.indexOf(attempt[n]), " ") # re-assign variable
   return mark
 
 def test_markAttempt(self) -> None:
@@ -218,7 +218,7 @@ def possibleAnswersAfterAttempt(possible: list[str], attempt: str, mark: str) ->
   for word in possible:
     markForWord = markAttempt(attempt, word) # constant
     if markForWord.equals(mark):
-      newPossible = newPossible.withAppend(word) # change variable
+      newPossible = newPossible.withAppend(word) # re-assign variable
   return newPossible
 
 def test_possibleAnswersAfterAttempt(self) -> None:
@@ -232,22 +232,22 @@ def test_possibleAnswersAfterAttempt(self) -> None:
 def drawGrid(grid: list[list[str]]) -> str: # function
   html = f"<style>{style}</style> <grid>" # variable definition
   for row in range(0, 6):
-    html = html + "<word>" # change variable
+    html = html + "<word>" # re-assign variable
     for col in range(0, 5):
       entry = grid[col][row] # constant
       ch = if(entry.length() > 0, entry[0], "") # constant
       mark = if(entry.length() > 1, entry.subString(1, entry.length()), "") # constant
-      html = html + f"<ch class='_{mark}'>{ch}</ch>" # change variable
-    html = html + "</word>" # change variable
+      html = html + f"<ch class='_{mark}'>{ch}</ch>" # re-assign variable
+    html = html + "</word>" # re-assign variable
   return html + "</grid>"
 
 def drawKeyboard(used: Dictionary[str, str]) -> str: # function
   html = "<keyboard><div>" # variable definition
   for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM":
     if k.equals("-"):
-      html = html + "</div><div>" # change variable
+      html = html + "</div><div>" # re-assign variable
     else:
-      html = html + f"<key class='_{used[k]}'>{k}</key>" # change variable
+      html = html + f"<key class='_{used[k]}'>{k}</key>" # re-assign variable
   return html + "<key></key></div></keyboard>"
 
 style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" # constant
