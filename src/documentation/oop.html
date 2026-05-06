@@ -127,7 +127,7 @@ end constructor
 <p>The properties on a class define the <i>state</i> of an instance; the methods define its <i>behaviour</i>. Methods on a concrete class have two distinct forms: <b>function method</b> and <b>procedure method</b>.
 These mirror the distinction between a (global) <b>function</b> and <b>procedure</b>. A function is a 'query' that returns information based on the parameters that are supplied to it, 
 but in the case of a <b>function method</b> (defined within a class), in addition to the parameter values, it has access to the property values of the instance - which is legitimate because it is only ever called
-via that instance. Thus, in the example above, <el-method>getAdjacentSquare</el-method> is invoked <i>on</i> the variable <code>tail</code> (an instance of <code>/code>.Square</code></code.Square>, and is passed
+via that instance. Thus, in the example above, <el-method>getAdjacentSquare</el-method> is invoked <i>on</i> the variable <code>tail</code> (an instance of <code>Square</code>), and is passed
 the value of <code>currentDir</code> as an argument. Looking at the definition of <el-method>getAdjacentSquare</el-method> within the class <code>Square</code>:</p>
 
 <codeblock>

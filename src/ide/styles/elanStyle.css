@@ -1,3 +1,7 @@
+code, codeblock {
+  white-space: normal; /* to overwrite the setting in documentation.css which is for viewing untransformed by document authors */
+}
+
 .code * {
     font-family: consolas, monospace;
     font-size: 11pt;
