@@ -6,7 +6,7 @@ Sub main()
   While Not done
     Dim wanted = input("What type of fruit do you want ('x' to exit)? ") ' variable definition
     If wanted.equals("x") Then
-      done = True ' change variable
+      done = True ' re-assign variable
     Else
       Dim result = binarySearch(fruit, wanted) ' variable definition
       If result Then
@@ -24,11 +24,11 @@ Function binarySearch(li As List(Of String), item As String) As Boolean
     Dim mid = divAsInt(li.length(), 2) ' variable definition
     Dim value = li[mid] ' variable definition
     If item.equals(value) Then
-      result = True ' change variable
+      result = True ' re-assign variable
     ElseIf item.isBefore(value) Then
-      result = binarySearch(li.subList(0, mid), item) ' change variable
+      result = binarySearch(li.subList(0, mid), item) ' re-assign variable
     Else
-      result = binarySearch(li.subList(mid + 1, li.length()), item) ' change variable
+      result = binarySearch(li.subList(mid + 1, li.length()), item) ' re-assign variable
     End If
   End If
   Return result

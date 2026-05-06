@@ -35,7 +35,7 @@ static List<VectorGraphic> allpoints(Coords p) { // function
       // colour depends on how many iterations were done for that point
       var col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
-      vg2 = vg2.withAppend(rect); // change variable
+      vg2 = vg2.withAppend(rect); // re-assign variable
     }
   }
   return vg2;
@@ -48,11 +48,11 @@ static int onepoint(double x, double y, int maxnum, Coords p) { // function
   var i = 0;
   while (!done) {
     var c = 2*a*b;
-    a = (a*a - b*b) + p.jx; // change variable
-    b = c + p.jy; // change variable
-    i = i + 1; // change variable
+    a = (a*a - b*b) + p.jx; // re-assign variable
+    b = c + p.jy; // re-assign variable
+    i = i + 1; // re-assign variable
     if ((i >= maxnum) || ((a*a + b*b) > 4)) {
-      done = true; // change variable
+      done = true; // re-assign variable
     }
   }
   return i;
@@ -62,15 +62,15 @@ class Coords {
 
   public Coords() {
     // number of cells per unit distance on complex plane
-    this.scale = 100; // change variable
+    this.scale = 100; // re-assign variable
     // centered on the screen to start
-    this.xoff = 0; // change variable
-    this.yoff = 0; // change variable
+    this.xoff = 0; // re-assign variable
+    this.yoff = 0; // re-assign variable
     // Julia set parameters
-    this.jx = -0.512; // change variable
-    this.jy = 0.521; // change variable
+    this.jx = -0.512; // re-assign variable
+    this.jy = 0.521; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
   public double scale {get; private set;} // property
@@ -80,7 +80,7 @@ class Coords {
   public double jy {get; private set;} // property
   // Arrow keys move the virtual camera
   // eg Arrow Up moves the image down
-  public void checkkeys() { // procedure
+  public void checkkeys() { // procedure method
     var panstep = 10/this.scale;
     var jstep = 0.001;
     // save some CPU by not recalculating until a parameter has been changed
@@ -90,33 +90,33 @@ class Coords {
       // loop because more than one key may have been pressed
       while (!k.equals("")) {
         if (k.equals("z")) {
-          this.scale = this.scale*1.2; // change variable
+          this.scale = this.scale*1.2; // re-assign variable
         } else if (k.equals("x")) {
-          this.scale = this.scale/1.2; // change variable
+          this.scale = this.scale/1.2; // re-assign variable
         } else if (k.equals("ArrowUp")) {
-          this.yoff = this.yoff + panstep; // change variable
+          this.yoff = this.yoff + panstep; // re-assign variable
         } else if (k.equals("ArrowDown")) {
-          this.yoff = this.yoff - panstep; // change variable
+          this.yoff = this.yoff - panstep; // re-assign variable
         } else if (k.equals("ArrowLeft")) {
-          this.xoff = this.xoff + panstep; // change variable
+          this.xoff = this.xoff + panstep; // re-assign variable
         } else if (k.equals("ArrowRight")) {
-          this.xoff = this.xoff - panstep; // change variable
+          this.xoff = this.xoff - panstep; // re-assign variable
         } else if (k.equals("g")) {
-          this.jx = this.jx + jstep; // change variable
+          this.jx = this.jx + jstep; // re-assign variable
         } else if (k.equals("j")) {
-          this.jx = this.jx - jstep; // change variable
+          this.jx = this.jx - jstep; // re-assign variable
         } else if (k.equals("y")) {
-          this.jy = this.jy + jstep; // change variable
+          this.jy = this.jy + jstep; // re-assign variable
         } else if (k.equals("h")) {
-          this.jy = this.jy - jstep; // change variable
+          this.jy = this.jy - jstep; // re-assign variable
           // for autocomplete in the RHS expression, don't type "property"
         } else {
           // ignore erroneous key presses
         }
         // there is no harm in recalculating even if an invalid key was pressed
-        changed = true; // change variable
+        changed = true; // re-assign variable
         // another key may have been pressed
-        k = getKey(); // change variable
+        k = getKey(); // re-assign variable
       }
       sleep_ms(10); // call procedure
     }

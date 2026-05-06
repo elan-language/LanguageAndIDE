@@ -6,7 +6,7 @@ static void main() {
   while (!done) {
     var wanted = input("What type of fruit do you want ('x' to exit)? ");
     if (wanted.equals("x")) {
-      done = true; // change variable
+      done = true; // re-assign variable
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
@@ -24,11 +24,11 @@ static bool binarySearch(List<String> li, String item) { // function
     var mid = divAsInt(li.length(), 2);
     var value = li[mid];
     if (item.equals(value)) {
-      result = true; // change variable
+      result = true; // re-assign variable
     } else if (item.isBefore(value)) {
-      result = binarySearch(li.subList(0, mid), item); // change variable
+      result = binarySearch(li.subList(0, mid), item); // re-assign variable
     } else {
-      result = binarySearch(li.subList(mid + 1, li.length()), item); // change variable
+      result = binarySearch(li.subList(mid + 1, li.length()), item); // re-assign variable
     }
   }
   return result;

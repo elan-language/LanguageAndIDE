@@ -28,7 +28,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "";
+    return "if";
   }
 
   outerHtmlTag: string = "el-statement";

@@ -44,13 +44,13 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { ReAssignVariable } from "./statements/re-assign-variable";
 import { ReturnStatement } from "./statements/return-statement";
-import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -81,7 +81,7 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof LetStatement ||
       frame instanceof CallStatement ||
-      frame instanceof SetStatement
+      frame instanceof ReAssignVariable
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -102,7 +102,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof Elif) {
+    } else if (frame instanceof ElseIf) {
       html = `<el-kw>${this.ELSEIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}`;
@@ -116,7 +116,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof SetStatement) {
+    } else if (frame instanceof ReAssignVariable) {
       html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;

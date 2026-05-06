@@ -171,13 +171,13 @@ import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
-import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
+import { ElseIf } from "../frames/statements/elseIf";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { LetStatement } from "../frames/statements/let-statement";
+import { ReAssignVariable } from "../frames/statements/re-assign-variable";
 import { ReturnStatement } from "../frames/statements/return-statement";
-import { SetStatement } from "../frames/statements/set-statement";
 import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";
 import { VariableStatement } from "../frames/statements/variable-statement";
@@ -369,7 +369,7 @@ export function transform(
     return letAsn;
   }
 
-  if (node instanceof SetStatement) {
+  if (node instanceof ReAssignVariable) {
     const setAsn = new SetAsn(node.getHtmlId(), scope);
     setAsn.breakpointStatus = node.breakpointStatus;
 
@@ -561,7 +561,7 @@ export function transform(
     return ifAsn;
   }
 
-  if (node instanceof Elif) {
+  if (node instanceof ElseIf) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;

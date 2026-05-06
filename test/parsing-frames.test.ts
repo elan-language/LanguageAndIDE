@@ -7,13 +7,13 @@ import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { Profile } from "../src/ide/frames/profile";
+import { ReAssignVariable } from "../src/ide/frames/statements/re-assign-variable";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -33,7 +33,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainFrame(fl);
-    const setTo = new SetStatement(m);
+    const setTo = new ReAssignVariable(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -52,7 +52,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainFrame(fl);
-    const setTo = new SetStatement(m);
+    const setTo = new ReAssignVariable(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -70,7 +70,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainFrame(fl);
-    const setTo = new SetStatement(m);
+    const setTo = new ReAssignVariable(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
