@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertExportedCSIs,
+    assertExportedJavaIs,
+    assertExportedPythonIs,
+    assertExportedVBis,
+    assertObjectCodeExecutes,
+    assertParses,
+    assertStatusIsValid,
+    testCSHeader,
+    testHash,
+    testHeader,
+    testJavaHeader,
+    testPythonHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("OOP all languages", () => {
@@ -126,18 +126,18 @@ def prop_I3(self: I3) -> int:
   pass # abstract property
 
 
-class Yon(I3, Foo1, I2) # class
+class Yon(I3, Foo1, I2) # concrete class
 
   def __init__(self: Yon) -> None:
-    self.prop_Foo1 = "" # change variable
+    self.prop_Foo1 = "" # re-assign variable
   prop_I3: int # property
-  def method_Foo(self: Yon) -> int: # function
+  def method_Foo(self: Yon) -> int: # function method
     return 0
-  def method_I1(self: Yon) -> int: # function
+  def method_I1(self: Yon) -> int: # function method
     return 0
-  def method_I2(self: Yon) -> int: # function
+  def method_I2(self: Yon) -> int: # function method
     return 0
-  def toString(self: Yon) -> str: # function
+  def toString(self: Yon) -> str: # function method
     return self.prop_Foo1
 
 
@@ -181,7 +181,7 @@ Class Yon
 
 
   Sub New()
-    Me.prop_Foo1 = "" ' change variable
+    Me.prop_Foo1 = "" ' re-assign variable
   End Sub
   Property prop_I3 As Integer
   Overrides Function method_Foo() As Integer
@@ -229,19 +229,19 @@ interface I3: I2 {
 class Yon: I3, Foo1, I2 {
 
   public Yon() {
-    this.prop_Foo1 = ""; // change variable
+    this.prop_Foo1 = ""; // re-assign variable
   }
   public int prop_I3 {get; private set;} // property
-  public override int method_Foo() { // function
+  public override int method_Foo() { // function method
     return 0;
   }
-  public int method_I1() { // function
+  public int method_I1() { // function method
     return 0;
   }
-  public int method_I2() { // function
+  public int method_I2() { // function method
     return 0;
   }
-  public string toString() { // function
+  public string toString() { // function method
     return this.prop_Foo1;
   }
 }
@@ -277,19 +277,19 @@ interface I3 extends I2 {
 class Yon extends Foo1 implements I3, I2 {
 
   public Yon() {
-    this.prop_Foo1 = ""; // change variable
+    this.prop_Foo1 = ""; // re-assign variable
   }
   public int prop_I3; // property
-  public  int method_Foo() { // function
+  public  int method_Foo() { // function method
     return 0;
   }
-  public int method_I1() { // function
+  public int method_I1() { // function method
     return 0;
   }
-  public int method_I2() { // function
+  public int method_I2() { // function method
     return 0;
   }
-  public String toString() { // function
+  public String toString() { // function method
     return this.prop_Foo1;
   }
 }

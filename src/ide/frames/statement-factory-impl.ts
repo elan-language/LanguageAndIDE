@@ -5,12 +5,12 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
-import { SetStatement } from "./statements/set-statement";
+import { ReAssignVariable } from "./statements/re-assign-variable";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -31,7 +31,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new CatchStatement(parent);
   }
   public newElif(parent: Parent): Frame {
-    return new Elif(parent);
+    return new ElseIf(parent);
   }
   public newElse(parent: Parent): Frame {
     return new Else(parent);
@@ -46,7 +46,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new LetStatement(parent);
   }
   public newSet(parent: Parent): Frame {
-    return new SetStatement(parent);
+    return new ReAssignVariable(parent);
   }
   public newThrow(parent: Parent): Frame {
     return new Throw(parent);

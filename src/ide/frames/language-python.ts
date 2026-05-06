@@ -45,13 +45,13 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { ReAssignVariable } from "./statements/re-assign-variable";
 import { ReturnStatement } from "./statements/return-statement";
-import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -78,9 +78,10 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ConstantGlobal ||
       frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
+      frame instanceof ElseIf ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
-      frame instanceof SetStatement ||
+      frame instanceof ReAssignVariable ||
       frame instanceof CatchStatement ||
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
@@ -115,7 +116,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()} = ${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof Elif) {
+    } else if (frame instanceof ElseIf) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
@@ -129,7 +130,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof SetStatement) {
+    } else if (frame instanceof ReAssignVariable) {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}("${frame.text.renderAsHtml()}")`;
