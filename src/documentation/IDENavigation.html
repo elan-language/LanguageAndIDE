@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../ide/styles/colourScheme.css" >
 <link rel="stylesheet" href="../ide/styles/documentation.css">
 <link rel="stylesheet" href="../ide/styles/elanStyle.css">
@@ -12,68 +12,73 @@
 <title>Elan IDE Navigation</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 <script type="text/javascript" src="doc-scripts.js"></script>
+<script type="text/javascript" src="accordion.js"></script>
 </head>
 <body id="top">
 <div class="docTitle">IDE controls & keyboard shortcuts</div>
 
-<div class="accordion" id="LaunchIDE">
-<h2 class="acc-title" tabindex="0" id="LaunchIDE">Launch the IDE</h2>
+<div class="accordion">
+<h2 class="acc-title" id="LaunchIDE">Launch the IDE</h2>
 <div class="acc-body">
 <p>Use a compatible browser (currently Chrome, Chromium and Edge) and one of these links, depending on which language
 you want the IDE to open in:</p>
 <ul>
- <li><a href="https://elan-lang.org"><b>Reference Language</b> (Elan) <i class="fa">&#xf08e;</i></a> &ndash; <el-code>https://elan-lang.org</el-code></li>
- <li><a href="https://elan-lang.org?lang=python"><b>Python</b> <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=python</el-code></li>
- <li><a href="https://elan-lang.org?lang=vb"><b>VB.NET</b> <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=vb</el-code></li>
- <li><a href="https://elan-lang.org?lang=cs"><b>C#</b> <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=cs</el-code></li>
- <li><a href="https://elan-lang.org?lang=java"><b>Java</b> <i class="fa">&#xf08e;</i></a>&ndash; <el-code>https://elan-lang.org?lang=java</el-code></li>
+ <li><a href="https://elan-lang.org"><b>Reference Language</b> (Elan) <i class="fa">&#xf08e;</i></a> &ndash; https://elan-lang.org</li>
+ <li><a href="https://elan-lang.org?lang=python"><b>Python</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=python</li>
+ <li><a href="https://elan-lang.org?lang=vb"><b>VB.NET</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=vb</li>
+ <li><a href="https://elan-lang.org?lang=cs"><b>C#</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=cs</li>
+ <li><a href="https://elan-lang.org?lang=java"><b>Java</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=java</li>
 </ul>
-<div class="accordion" id="CustomiseIDE">
-<h3 class="acc-title" tabindex="0">Customising the IDE</h3>
+
+<div class="accordion">
+<h3 class="acc-title" id="CustomiseIDE">Customising the IDE</h3>
 <div class="acc-body">
 
 <p>To customise start-up, you add further options after <b>?</b> in the URL, separated by <b>&</b> and including no spaces, for example:</p>
 <ul>
  <li>To specify a profile that reflects limits to the use of the IDE<br>
- <el-code>https://elan-lang.org?profile=1.0</el-code></li>
+ <code>https://elan-lang.org?profile=1.0</code></li>
  <li>To specify both a language and a CVD option:<br>
- <el-code>https://elan-lang.org?lang=python&cvd=1</el-code></li>
+ <code>https://elan-lang.org?lang=python&cvd=1</code></li>
 </ul>
 
-<div class="accordion" id="Profile">
-<h3 class="acc-title" tabindex="0">Profiles</h3>
+<div class="accordion">
+<h3 class="acc-title" id="Profile">Profiles</h3>
 <div class="acc-body">
 
-<p>The teacher may wish to limit the range of language constructs presented to a pupil, and this is done by defining an appropriate <el-code>profile</el-code> in the URL given to the pupil.
-If no <el-code>profile</el-code> is specified, then the full language is available.</p>
+<p>The teacher may wish to limit the range of language constructs presented to a pupil, and this is done by defining an appropriate profile in the URL given to the pupil.
+If no profile is specified, then the full language is available.</p>
+<ul>
+ <li>For an object-oriented profile, profile=oop</li>
+ <li>For a functional programming, profile=fp</li>
+</ul>
+<!--
 <ul>
  <li><b>Procedural programming</b>
  <ul>
- <li><el-code>profile=1.0</el-code> limits the programmer to instructions <el-instr>print</el-instr>, <el-kw>constant</el-kw>, <el-kw>variable</el-kw>, <el-kw>set</el-kw> and <el-kw>comment</el-kw>.</li>
- <li><el-code>profile=1.1</el-code> adds <el-kw>if</el-kw>, <el-kw>while</el-kw>, <el-kw>for</el-kw> and <el-kw>call</el-kw>.</li>
- <li><el-code>profile=1.2</el-code> adds user-defined <el-kw>function</el-kw>, <el-kw>test</el-kw> and <el-kw>constant</el-kw>.</li>
- <li><el-code>profile=1.3</el-code> adds user-defined <el-kw>procedure</el-kw>.</li>
- <li><el-code>profile=1.4</el-code> adds <el-kw>try</el-kw>, <el-kw>catch</el-kw>, <el-kw>throw</el-kw>.</li>
+ <li>profile=1.0 limits the programmer to instructions <b>constant</b>, <b>print</b>, <b>variable definition</b>, <b>re-assign variable</b> and <b>comment</b>.</li>
+ <li>profile=1.1 adds <b>if</b>, <b>while loop</b>, <b>for loop</b> and <b>call procedure</b>.</li>
+ <li>profile=1.2 adds user-defined <b>function</b>, <b>test</b> and <b>enum</b>.</li>
+ <li>profile=1.3 adds user-defined <b>procedure</b>.</li>
+ <li>profile=1.4 adds <b>try</b>, <b>throw exception</b>.</li>
  </ul>
 </li><li><b>Object-oriented programming</b>
  <ul>
- <li><el-code>profile=2.0</el-code> adds to the above <el-kw>class</el-kw>, <el-kw>property</el-kw>, <el-kw>function</el-kw> method and <el-kw>procedure</el-kw> method.</li>
- <li><el-code>profile=2.1</el-code> adds <el-kw>abstract class</el-kw>
- and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
- <li><el-code>profile=2.2</el-code> adds <el-kw>interface</el-kw>
- and abstract versions of <el-kw>property</el-kw>, <el-kw>function</el-kw> and <el-kw>procedure</el-kw>.</li>
+ <li>profile=2.0 adds to the above <b>class</b>, <b>property</b>, <b>function</b> method and <b>procedure</b> method.</li>
+ <li>profile=2.1 adds <b>abstract class</b>
+ and abstract versions of <b>property</b>, <b>function</b> and <b>procedure</b>.</li>
+ <li>profile=2.2 adds <b>interface</b></li>
  </ul>
 </li><li><b>Functional programming</b>
  <ul>
  <li>(To be decided)</li>
  </ul></li>
 </ul>
-</div></div>
-</div></div>
+-->
 </div></div>
 
 <div class="accordion">
-<h2 class="acc-title" tabindex="0" id="Navigation">Navigate around the IDE</h2>
+<h2 class="acc-title" id="Navigation">Navigate around the IDE</h2>
 <div class="acc-body">
  <p>Watch the video: <a href="videos/navigate-ide.html">Navigate around the IDE</a></p>
  <p><i>Always use the browser in 'full screen mode' &ndash; it makes more space available and is safer.</i></p>
@@ -93,12 +98,12 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
 </div></div>
 
 <div class="accordion">
-<h2 class="acc-title" tabindex="0" id="Programs">Load, run, and save programs</h2>
+<h2 class="acc-title" id="Programs">Load, run, and save programs</h2>
 <div class="acc-body">
 <p>Watch the video: <a href="videos/load-run-save.html">Load, run, and save programs</a></p>
 
 <div class="accordion">
-<h3 class="acc-title" tabindex="0">Loading and saving</h3>
+<h3 class="acc-title">Loading and saving</h3>
 <div class="acc-body">
 <p>To access the <b>demo</b> or <b>file</b> menus via the keyboard:</p>
 <ul>
@@ -111,21 +116,21 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
 <table>
  <tr><th>Intention</th><th>Menu action</th><th>Notes</th></tr>
  <tr><td>load a <b>demo</b> program</td><td><b>demo</b> then select desired program</td><td></td></tr>
- <tr><td><b>load</b> a program file</td><td><b>file > load</b></td><td>if the editor contains unsaved code, you will be warned</td></tr>
- <tr><td><b>append</b> a file to the current code in the editor</td><td><b>file > append</b></td><td>external code is always appended <i>to the end</i> of the current code, but may then be moved</td></tr>
- <tr><td>auto <b>save</b> a program file</td><td><b>file > auto save</b></td><td>any subsequent edits will be saved to the file (whenever the code parses)</td></tr>
- <tr><td><b>cancel</b> auto-saving</td><td><b>file > cancel auto save</b></td><td>this action appears only after setting up <b>auto save</b></td></tr>
- <tr><td><b>save</b> a program manually</td><td><b>file > manual save</b></td><td>saves the code to file but does <i>not</i> automatically save subsequent changes</td></tr>
- <tr><td>create a <b>standalone</b> Html page incorporating your program</td><td><b>file > save as standalone</b></td><td>the saved .html file contains the compiled program, and will run automatically when opened</td></tr>
+ <tr><td><b>load</b> a program file</td><td><b>file &gt; load</b></td><td>if the editor contains unsaved code, you will be warned</td></tr>
+ <tr><td><b>append</b> a file to the current code in the editor</td><td><b>file &gt; append</b></td><td>external code is always appended <i>to the end</i> of the current code, but may then be moved</td></tr>
+ <tr><td>auto <b>save</b> a program file</td><td><b>file &gt; auto save</b></td><td>any subsequent edits will be saved to the file (whenever the code parses)</td></tr>
+ <tr><td><b>cancel</b> auto-saving</td><td><b>file &gt; cancel auto save</b></td><td>this action appears only after setting up <b>auto save</b></td></tr>
+ <tr><td><b>save</b> a program manually</td><td><b>file &gt; manual save</b></td><td>saves the code to file but does <i>not</i> automatically save subsequent changes</td></tr>
+ <tr><td>create a <b>standalone</b> Html page incorporating your program</td><td><b>file &gt; save as standalone</b></td><td>the saved .html file contains the compiled program, and will run automatically when opened</td></tr>
 </table>
 </div></div>
 
 <div class="accordion">
-<h3 class="acc-title" tabindex="0">Running and stopping programs</h3>
+<h3 class="acc-title">Running and stopping programs</h3>
 <div class="acc-body">
 <table>
  <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
- <tr><td><b><u>r</u></b>un a program</td><td><b>Ctrl+r</b></td><td>Click on '<b><u>r</u></b>un' button</td><td>disabled if there are any <b>parse</b> or <b>compile</b> issues.</b></tr>
+ <tr><td><b><u>r</u></b>un a program</td><td><b>Ctrl+r</b></td><td>Click on '<b><u>r</u></b>un' button</td><td>disabled if there are any <b>parse</b> or <b>compile</b> issues.</tr>
  <tr><td><b><u>s</u></b>top a program that is running</td><td><b>Ctrl+s</b></td><td>Click on '<b><u>s</u></b>top' button</td><td>Enabled only when the program is running</td></tr>
 </table>
 <p>If your program is doing intensive processing between interactions with you through the IDE, then clicking on the '<b><u>s</u></b>top' button may not have an immediate effect.
@@ -136,34 +141,28 @@ cause the browser tab to be closed.</p>
 </div></div>
 
 <div class="accordion">
-<h2 class="acc-title" tabindex="0" id="BrowseCode">Browse code</h2>
+<h2 class="acc-title" id="BrowseCode">Browse code</h2>
 <div class="acc-body">
 
 <p>Watch the video: <a href="videos/browse-code.html">Browse code</a></p>
 <p>The code shown in the editor has three types:</p>
 <ul>
- <li><b>Instructions</b> begin with a <el-kw>blue</el-kw> keyword as in:
- <el-code><el-statement id="let8" tabindex="0"><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement></el-code></li>
- <li>
- <b>Comments</b> are green and start with a hash <el-comment>#</el-comment> which is optionally followed by text:
-<el-code source="promptNewCode.elan">
-<el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
-</el-code></li>
-The first comment in a file (which shows the software version) is automatically created and cannot be edited, deleted or moved.</li>
- <li><b>new code</b> prompts look like this:
-<el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> procedure function test constant enum record class abstract interface #</div></el-select>
-</el-global></el-code>
-or, when selected:
-<el-code source="prompt.elan">
-<el-statement contenteditable="" spellcheck="false" class="selected focused ok empty" id="select12" tabindex="-1"><el-top class="newcode">press Enter, or <i>right</i>-click here, to view options</el-top></el-statement>
-</el-code><br>
-and, on pressing <b>Enter</b> or <i>right click</i>, this menu appears:<br>
-<img src="images/promptMenu.png" width="400"><br>
+ <li><b>Instructions</b> begin with a blue keyword as in:<br>
+ <code>variable name set to "Alice"</code></li>
+ <li><b>Comments</b> are green and start with a hash # which is optionally followed by text:<br>
+<code># A program to investigate the Collatz Conjecture</code></li>
+ <li>The first comment in a file (which shows the software version) is automatically created and cannot be edited, deleted or moved.</li>
+ <li><b>new code</b> prompts look like this:<br>
+<img src="images/newCode.png" width="100" alt="new code"><br>
+or, when selected, like this:<br>
+<img src="images/promptNewCode.png" width="400" alt="new code"><br>
+and, on pressing <b>Enter</b> or <b>right click</b>, this menu appears:<br>
+<img src="images/promptMenu.png" width="200" alt="context menu"><br>
 which means that a second press of <b>Enter</b> will choose the (top) <b>print</b> option and a further <b>Enter</b>
 will supply the procedure call:<br>
-<el-code><el-kw>call</el-kw> <el-method>print</el-method>(<i>any</i>)</el-code><br>
+<code>call print(<i>any</i>)</code><br>
 soliciting values and literals to be printed.<br>
-The <b>change variable</b> option inserts a <el-kw>set</el-kw> instruction.<br>
+The <b>re-assign variable</b> option inserts a <code>set</code> instruction.<br>
 The initial letters shown in <b>bold</b> indicate the single letter that can be used from the keyboard for that instruction.
 Other instructions are entered by clicking on them in this menu.
  </li>
@@ -190,23 +189,23 @@ Other instructions are entered by clicking on them in this menu.
 </div></div>
 
 <div class="accordion">
- <h2 class="acc-title" tabindex="0" id="CreateInstructions">Create new instructions</h2>
+ <h2 class="acc-title" id="CreateInstructions">Create new instructions</h2>
  <div class="acc-body">
  <p>Watch the video: <a href="videos/create-new-instructions.html">Create New Instructions</a></p>
  </div>
 </div>
 
 <div class="accordion">
- <h2 class="acc-title" tabindex="0" id="EditInstructions">Edit instructions</h2>
+ <h2 class="acc-title" id="EditInstructions">Edit instructions</h2>
  <div class="acc-body">
 
  <div class="accordion">
- <h3 class="acc-title" tabindex="0">Context menu</h3>
+ <h3 class="acc-title">Context menu</h3>
  <div class="acc-body">
 <p>When you have selected an instruction by clicking on its keyword (turning its background blue), some immediate actions are available from
 its <b>context menu</b> which is opened either by clicking the right mouse button on the keyword, or by keying <b>Ctrl+m</b>. The commonest <b>context menu</b>
 shows these options, any one of which may then be clicked on to do the action:</p>
-<img src="images/contextMenu_standard.png" width="203" height="167">
+<img src="images/contextMenu_standard.png" width="203" height="167" alt="context menu">
 <p>The <b>context menu</b> shows only those actions which are relevant to that instruction in its context.</p>
 <p>The following is a list all possible menu items with key equivalents where applicable:</p>
 <table style="tableMenu">
@@ -229,7 +228,7 @@ shows these options, any one of which may then be clicked on to do the action:</
  </div></div>
 
  <div class="accordion">
- <h3 class="acc-title" tabindex="0">Select and edit a field</h3>
+ <h3 class="acc-title">Select and edit a field</h3>
  <table class="acc-body">
   <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
   <tr><td>select <i>any field</i> within an instruction</td><td></td><td><b>click</b> anywhere on the text, or placeholder, for that field.</td><td>Text cursor will be placed at the end of the field</td></tr>
@@ -244,7 +243,7 @@ shows these options, any one of which may then be clicked on to do the action:</
  </table>
  </div>
  <div class="accordion">
- <h3 class="acc-title" tabindex="0" id="InsertInstructions">Insert a new instruction...</h3>
+ <h3 class="acc-title" id="InsertInstructions">Insert a new instruction</h3>
  <div class="acc-body">
 <p>If there is already a <b>new code</b> prompt where you want to insert an instruction, refer to the description under <a href="#BrowseCode">Browse code</a> above.</p>
 <p>Otherwise, select an instruction <i>adjacent</i> to where you want to add the new one and <i>either</i>:</p>
@@ -255,7 +254,7 @@ shows these options, any one of which may then be clicked on to do the action:</
 </div></div>
 
 <div class="accordion">
-<h3 class="acc-title" tabindex="0">Delete ...</h3>
+<h3 class="acc-title">Delete ...</h3>
 
  <table class="acc-body">
  <tr><th>To delete</th><th>Keyboard shortcut</th><th>Notes</th></tr>
@@ -269,10 +268,10 @@ shows these options, any one of which may then be clicked on to do the action:</
  </div>
 
  <div class="accordion">
- <h3 class="acc-title" tabindex="0" id="UndoRedo">Undo or redo a recent change</h3>
+ <h3 class="acc-title" id="UndoRedo">Undo or redo a recent change</h3>
  <div class="acc-body">
- The editor retains previous versions of your code in its stack, but <i>only when it has been parsed as valid</i>. The code is saved internally,
- and also to file if auto-save is selected.
+ <p>The editor retains previous versions of your code in its stack, but <i>only when it has been parsed as valid</i>. The code is saved internally,
+ and also to file if auto-save is selected.</p>
 
  <table>
  <tr><th>Action</th><th>Using the keyboard</th><th>Using the mouse</th></tr>
@@ -283,7 +282,7 @@ shows these options, any one of which may then be clicked on to do the action:</
  </div>
 
  <div class="accordion">
- <h3 class="acc-title" tabindex="0" id="MoveInstructions">Move instructions up or down within the same block</h3>
+ <h3 class="acc-title" id="MoveInstructions">Move instructions up or down within the same block</h3>
  <div class="acc-body">
 <ul>
  <li>Select the instructions, then key <b>Ctrl+&darr;</b> or <b>Ctrl+&uarr;</b>.</li>
@@ -294,7 +293,7 @@ shows these options, any one of which may then be clicked on to do the action:</
 </div></div>
 
 <div class="accordion">
-<h3 class="acc-title" tabindex="0">Cut and paste</h3>
+<h3 class="acc-title">Cut and paste</h3>
 <div class="acc-body">
 <ul>
  <li>To move one or more successive instructions to a new location within the program:
@@ -303,33 +302,31 @@ shows these options, any one of which may then be clicked on to do the action:</
  <li>Create, or select, a <b>new code</b> prompt where you want to paste in the cut instructions.</li>
  <li>Key <b>Ctrl+v</b> to paste.</li>
  </ul>
-<li>Note that the pasted instructions must be compatible with their
+ <li>Note that the pasted instructions must be compatible with their
 new context, i.e. all of the instructions <i>could</i> have been created there in the first place.
 If they are incompatible, no paste will take place and you will see a pop-up advisory message.
-To restore the cut instructions to their original context, use <el-code>undo</el-code>.</li>
+To restore the cut instructions to their original context, use undo.</li>
  <li>To copy or move text between two <i>fields</i> in the program, or between program fields and external text:</li>
- <ul>
  <li>Use the usual select highlight text (<b>Ctrl+a</b> for all of a field) and <b>Ctrl+c</b> to copy or <b>Ctrl+x</b> to cut,
- and then <b>Ctrl+v</b> to paste it in. </li>
- </ul>
- </ul>
+ and then <b>Ctrl+v</b> to paste it in.</li>
+</ul>
 </div></div>
 
  <div class="accordion">
- <h3 class="acc-title" tabindex="0" id="Ghosting">Ghosting</h3>
+ <h3 class="acc-title" id="Ghosting">Ghosting</h3>
  <div class="acc-body">
 <p>Instead of being able to 'comment out' code that you wish to retain but not execute,
  there is a method for 'ghosting' sections of code with much the same effect,
  while leaving the ghosted code fully formatted.</p>
 <ul>
- <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, an entire <el-kw>procedure</el-kw> or a <el-kw>test</el-kw>) to be ghosted.</li>
- <li><b>Ctrl+m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the <b>context menu</b>.</li>
+ <li>Select the single instruction (which may be a compound one, e.g. a <b>while loop</b>, an entire <b>procedure</b> or a <b>test</b>) to be ghosted.</li>
+ <li><b>Ctrl+m</b> or right-click on the instruction keyword, and choose ghost from the <b>context menu</b>.</li>
  <li>The instruction will be displayed in pale colours.</li>
  <li>The ghosted code will then be ignored by the compiler and, for ghosted tests, by the test runner. This means, for example, that you can create two different implementations
  of the same function and compare them, as long as one of them is ghosted.</li>
  <li>You can ghost code that does not compile, but you should not ghost code that does not parse: the ghosting will work, but
  you will not then be able to get the program as a whole to parse, and will have to unghost it again to fix it.</li>
- <li>To restore a ghosted instruction, <b>Ctrl+m</b> or right-click on it and choose <el-code>unghost</el-code>.</li>
+ <li>To restore a ghosted instruction, <b>Ctrl+m</b> or right-click on it and choose unghost.</li>
  <li>Ghosted code can be copied, moved or deleted but, to edit ghosted code, you must unghost it first.</li>
  <li>A program containing ghosted code can be saved.</li>
  <li>Code containing ghosted instructions can be ghosted at a higher level, and remains ghosted when the higher level is unghosted.</li>
@@ -338,7 +335,7 @@ To restore the cut instructions to their original context, use <el-code>undo</el
 </div></div>
 
 <div class="accordion">
- <h2 class="acc-title" tabindex="0" id="Debugging">Debugging programs</h2>
+ <h2 class="acc-title" id="Debugging">Debugging programs</h2>
  <div class="acc-body">
 
  <p>Watch the video: <a href="videos/debug.html">Debugging programs</a></p>
@@ -354,8 +351,8 @@ To restore the cut instructions to their original context, use <el-code>undo</el
  </table>
 
  <h3>Browsing named values</h3>
- <p>Whenever the program is paused, all named values (variables, parameters and <el-code>let</el-code> values)
- that are currently in scope have their values automatically listed in the <b>Info</b> pane..
+ <p>Whenever the program is paused, all named values (variables, parameters and constant values)
+ that are currently in scope have their values automatically listed in the <b>Info</b> pane.
  This list may be browsed as follows:</p>
  <table>
   <tr><th>To...</th><th>Keyboard<br> shortcut</th><th>Mouse<br> gesture</th></tr>
@@ -375,12 +372,12 @@ To restore the cut instructions to their original context, use <el-code>undo</el
 </div></div>
 
 <div class="accordion">
-<h2 class="acc-title" tabindex="0" id="MacOS">Apple macOS specific</h2>
+<h2 class="acc-title" id="MacOS">Apple macOS specific</h2>
 <p class="acc-body">Where a keyboard shortcut is shown with the <b>Ctrl</b> control key, users of Apple's macOS should use the &#x2318; <b>Command</b> key instead.</p>
 </div>
 
 <div class="accordion">
-<h2 class="acc-title" tabindex="0" id="ColourScheme">Colour scheme for CVD</h2>
+<h2 class="acc-title" id="ColourScheme">Colour scheme for CVD</h2>
 <div class="acc-body"><p>There are two ways in which to change the colour scheme for users
 with CVD:</p>
 <ul>
@@ -393,20 +390,5 @@ with CVD:</p>
 </div></div>
 
 <h2></h2><!-- for final rule -->
-
-<script>
- var accordions = document.getElementsByClassName("acc-title");
- for (const item of accordions) {
- item.addEventListener("click", function() {
-  item.parentElement.classList.toggle("active");
- });
- item.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-  item.parentElement.classList.toggle("active");
-  }
- });
- }
-</script>
-
 </body>
 </html>
