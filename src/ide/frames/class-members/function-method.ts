@@ -42,7 +42,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
 
   frameSpecificAnnotation(): string {
     const priv = this.isPrivate ? "private " : "";
-    return `${priv}function`;
+    return `${priv}function method`;
   }
 
   public override renderAsElanSource(): string {

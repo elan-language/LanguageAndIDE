@@ -196,15 +196,14 @@ suite("Editing Frames", () => {
     assert.equal(file.getChildren().length, 1);
     assert.equal(file.getFirstChild(), sel);
   });
-  test("Delete frame - delete constructor", () => {
+  test("Delete frame - cannot delete constructor", () => {
     const file = classWithConstructor();
     const cls = file.getById("class1") as ConcreteClass;
     assert.equal(cls.getChildren().length, 3);
     const con = file.getById("constructor5") as Constructor;
     con.select(true, false);
     con.processKey(ctrl_del());
-    assert.equal(cls.getChildren().length, 2);
-    assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
+    assert.equal(cls.getChildren().length, 3);
   });
 
   test("#644 cutting statement when there is already a selector following", async () => {

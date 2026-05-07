@@ -44,7 +44,7 @@ export class ConcreteClass extends ClassFrame {
   }
 
   frameSpecificAnnotation(): string {
-    return "class";
+    return "concrete class";
   }
 
   public renderAsElanSource(): string {

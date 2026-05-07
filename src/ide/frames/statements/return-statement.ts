@@ -34,7 +34,7 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "";
+    return "return";
   }
 
   renderAsElanSource(): string {

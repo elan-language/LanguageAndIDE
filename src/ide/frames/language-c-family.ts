@@ -36,13 +36,13 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
+import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { ReAssignVariable } from "./statements/re-assign-variable";
 import { ReturnStatement } from "./statements/return-statement";
-import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -69,7 +69,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
       frame instanceof LetStatement ||
-      frame instanceof SetStatement ||
+      frame instanceof ReAssignVariable ||
       frame instanceof Property ||
       frame instanceof AbstractProperty ||
       frame instanceof AbstractProcedure ||
@@ -88,7 +88,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-punc>}</el-punc> <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Elif) {
+    } else if (frame instanceof ElseIf) {
       html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof Else) {
       html = `<el-punc>} </el-punc><el-kw>${this.ELSE}<el-punc> {</el-punc>`;
@@ -100,7 +100,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.VAR} </el-kw><el-type>${frame.expr.getElanType()} </el-type>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     }else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
-    } else if (frame instanceof SetStatement) {
+    } else if (frame instanceof ReAssignVariable) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;

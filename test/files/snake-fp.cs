@@ -8,10 +8,10 @@ static void main() {
   rnd.initialiseFromClock(); // call procedure
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
-    blocks = updateGraphics(game, blocks); // change variable
+    blocks = updateGraphics(game, blocks); // re-assign variable
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
-    game = clockTick(game, getKey()); // change variable
+    game = clockTick(game, getKey()); // re-assign variable
   }
   print($"Game Over! Score: {score(game)}");
 }
@@ -80,18 +80,18 @@ class Game {
   public Random rnd {get; private set;} // property
   public string key {get; private set;} // property
   public Game(Random rnd) {
-    this.head = new Square(22, 15); // change variable
-    this.body = [new Square(20, 15), new Square(21, 15)]; // change variable
-    this.priorTail = new Square(0, 0); // change variable
-    this.key = "d"; // change variable
-    this.isOn = true; // change variable
-    this.apple = new Square(12, 15); // change variable
-    this.rnd = rnd; // change variable
+    this.head = new Square(22, 15); // re-assign variable
+    this.body = [new Square(20, 15), new Square(21, 15)]; // re-assign variable
+    this.priorTail = new Square(0, 0); // re-assign variable
+    this.key = "d"; // re-assign variable
+    this.isOn = true; // re-assign variable
+    this.apple = new Square(12, 15); // re-assign variable
+    this.rnd = rnd; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
-  public Game withNewApple() { // function
+  public Game withNewApple() { // function method
     var (Int, Random) x_rnd2 = this.rnd.nextInt(0, 39); // let
     var Int x = x_rnd2.item_0; // let
     var Random rnd2 = x_rnd2.item_1; // let
@@ -102,39 +102,39 @@ class Game {
     var Game g2 = this.withApple(apple2).withRnd(rnd3); // let
     return if(g2.body.contains(apple2), g2.withNewApple(), g2);
   }
-  public Game withHead(Square value) { // function
+  public Game withHead(Square value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.head = value; // change variable
+    copyOfThis.head = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withBody(List<Square> value) { // function
+  public Game withBody(List<Square> value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.body = value; // change variable
+    copyOfThis.body = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withPriorTail(Square value) { // function
+  public Game withPriorTail(Square value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.priorTail = value; // change variable
+    copyOfThis.priorTail = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withApple(Square value) { // function
+  public Game withApple(Square value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.apple = value; // change variable
+    copyOfThis.apple = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withIsOn(bool value) { // function
+  public Game withIsOn(bool value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.isOn = value; // change variable
+    copyOfThis.isOn = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withRnd(Random value) { // function
+  public Game withRnd(Random value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.rnd = value; // change variable
+    copyOfThis.rnd = value; // re-assign variable
     return copyOfThis;
   }
-  public Game withKey(string value) { // function
+  public Game withKey(string value) { // function method
     var Game copyOfThis = copy(this); // let
-    copyOfThis.key = value; // change variable
+    copyOfThis.key = value; // re-assign variable
     return copyOfThis;
   }
 }
@@ -144,20 +144,20 @@ class Square {
   public int x {get; private set;} // property
   public int y {get; private set;} // property
   public Square(int x, int y) {
-    this.x = x; // change variable
-    this.y = y; // change variable
+    this.x = x; // re-assign variable
+    this.y = y; // re-assign variable
   }
-  public Square withX(int value) { // function
+  public Square withX(int value) { // function method
     var Square copyOfThis = copy(this); // let
-    copyOfThis.x = value; // change variable
+    copyOfThis.x = value; // re-assign variable
     return copyOfThis;
   }
-  public Square withY(int value) { // function
+  public Square withY(int value) { // function method
     var Square copyOfThis = copy(this); // let
-    copyOfThis.y = value; // change variable
+    copyOfThis.y = value; // re-assign variable
     return copyOfThis;
   }
-  public string toString() { // function
+  public string toString() { // function method
     return $"{this.x}, {this.y}";
   }
 }

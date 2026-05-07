@@ -33,7 +33,7 @@ export class StatementSelector extends AbstractSelector {
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [assertKeyword, "a", "<b>a</b>ssert equal", (parent: Parent) => this.factory.newAssert(parent)],
+      [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
       [letKeyword, "l",  "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
       [
@@ -51,7 +51,7 @@ export class StatementSelector extends AbstractSelector {
       [callKeyword, "c", "<b>c</b>all procedure", (parent: Parent) => this.factory.newCall(parent, "")],
       [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
-      [throwKeyword, "t", "<b>t</b>hrow exception", (parent: Parent) => this.factory.newThrow(parent)],
+      [throwKeyword, "t", "<b>t</b>hrow", (parent: Parent) => this.factory.newThrow(parent)],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),

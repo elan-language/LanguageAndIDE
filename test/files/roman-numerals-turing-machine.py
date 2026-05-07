@@ -19,7 +19,7 @@ def main() -> None:
   while not tm.isHalted():
     rule = tm.findMatchingRule() # variable definition
     tm.singleStep() # call procedure
-    steps = steps + 1 # change variable
+    steps = steps + 1 # re-assign variable
     clearPrintedText() # call procedure
     print(tm.tape)
     printTab(tm.headPosition - 1, "^") # call procedure
@@ -33,16 +33,16 @@ initState = "init" # constant
 
 haltState = "halt" # constant
 
-class TuringMachine # class
+class TuringMachine # concrete class
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
-    self.tape = "" # change variable
-    self.initialState = initialState # change variable
-    self.haltState = haltState # change variable
-    self.rules = list[Rule]() # change variable
-    self.currentState = initialState # change variable
-    self.headPosition = 0 # change variable
-  def toString(self: TuringMachine) -> str: # function
+    self.tape = "" # re-assign variable
+    self.initialState = initialState # re-assign variable
+    self.haltState = haltState # re-assign variable
+    self.rules = list[Rule]() # re-assign variable
+    self.currentState = initialState # re-assign variable
+    self.headPosition = 0 # re-assign variable
+  def toString(self: TuringMachine) -> str: # function method
     return ""
   initialState: str # property
   currentState: str # property
@@ -50,38 +50,38 @@ class TuringMachine # class
   haltState: str # property
   rules: list[Rule] # property
   tape: str # property
-  def setTape(self: TuringMachine, tape: str) -> None: # procedure
-    self.tape = tape # change variable
-  def append(self: TuringMachine, rule: Rule) -> None: # procedure
-    self.rules = self.rules.withAppend(rule) # change variable
-  def singleStep(self: TuringMachine) -> None: # procedure
+  def setTape(self: TuringMachine, tape: str) -> None: # procedure method
+    self.tape = tape # re-assign variable
+  def append(self: TuringMachine, rule: Rule) -> None: # procedure method
+    self.rules = self.rules.withAppend(rule) # re-assign variable
+  def singleStep(self: TuringMachine) -> None: # procedure method
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
-  def isHalted(self: TuringMachine) -> bool: # function
+  def isHalted(self: TuringMachine) -> bool: # function method
     return self.currentState.equals(self.haltState)
-  def findMatchingRule(self: TuringMachine) -> Rule: # function
+  def findMatchingRule(self: TuringMachine) -> Rule: # function method
     matches = self.rules.filter(lambda r: Rule => (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
       raise ElanRuntimeError("f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}"")
     return matches.head()
-  def write(self: TuringMachine, newSymbol: str) -> None: # procedure
+  def write(self: TuringMachine, newSymbol: str) -> None: # procedure method
     hp = self.headPosition # variable definition
-    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # change variable
-  def execute(self: TuringMachine, rule: Rule) -> None: # procedure
-    self.currentState = rule.nextState # change variable
+    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # re-assign variable
+  def execute(self: TuringMachine, rule: Rule) -> None: # procedure method
+    self.currentState = rule.nextState # re-assign variable
     self.write(rule.writeSymbol) # call procedure
     if rule.move == Dir.right:
-      self.headPosition = self.headPosition + 1 # change variable
+      self.headPosition = self.headPosition + 1 # re-assign variable
       if self.headPosition >= self.tape.length():
-        self.tape = self.tape + " " # change variable
+        self.tape = self.tape + " " # re-assign variable
     else:
-      self.headPosition = self.headPosition - 1 # change variable
+      self.headPosition = self.headPosition - 1 # re-assign variable
       if self.headPosition < 0:
-        self.tape = " " + self.tape # change variable
-        self.headPosition = 0 # change variable
+        self.tape = " " + self.tape # re-assign variable
+        self.headPosition = 0 # re-assign variable
 
 
-class Rule # class
+class Rule # concrete class
 
   currentState: str # property
   currentSymbol: str # property
@@ -89,12 +89,12 @@ class Rule # class
   writeSymbol: str # property
   move: Dir # property
   def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
-    self.currentState = currentState # change variable
-    self.currentSymbol = currentSymbol # change variable
-    self.nextState = nextState # change variable
-    self.writeSymbol = writeSymbol # change variable
-    self.move = move # change variable
-  def toString(self: Rule) -> str: # function
+    self.currentState = currentState # re-assign variable
+    self.currentSymbol = currentSymbol # re-assign variable
+    self.nextState = nextState # re-assign variable
+    self.writeSymbol = writeSymbol # re-assign variable
+    self.move = move # re-assign variable
+  def toString(self: Rule) -> str: # function method
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
 
 

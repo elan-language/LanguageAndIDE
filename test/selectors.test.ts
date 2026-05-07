@@ -34,7 +34,7 @@ suite("Selector tests", () => {
       "for loop",
       "call procedure",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -194,7 +194,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -217,7 +217,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -242,7 +242,7 @@ suite("Selector tests", () => {
       "for loop",
       "call procedure",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -259,7 +259,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     assertOptions(s, [
-      "assert equal",
+      "assert",
       "let statement",
       "variable definition",
       "re-assign variable",
@@ -267,7 +267,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -284,14 +284,14 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     assertOptions(s, [
-      "assert equal",
+      "assert",
       "variable definition",
       "re-assign variable",
       "if",
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -317,7 +317,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -345,7 +345,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -373,7 +373,7 @@ suite("Selector tests", () => {
       "for loop",
       "call procedure",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });
@@ -414,7 +414,7 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "try",
-      "throw exception",
+      "throw",
       "# comment",
     ]);
   });

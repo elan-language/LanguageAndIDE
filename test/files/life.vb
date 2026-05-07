@@ -7,7 +7,7 @@ Sub main()
     displayBlocks(grid) ' call procedure
     Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition
     nextGeneration(gridRef) ' call procedure
-    grid = gridRef.value() ' change variable
+    grid = gridRef.value() ' re-assign variable
     sleep_ms(50) ' call procedure
   End While
 End Sub
@@ -15,7 +15,7 @@ End Sub
 Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
   For Each col In range(0, 40)
     For Each row In range(0, 30)
-      grid[col][row] = blackOrWhite(random()) ' change variable
+      grid[col][row] = blackOrWhite(random()) ' re-assign variable
     Next row
   Next col
 End Sub
@@ -23,7 +23,7 @@ End Sub
 Function blackOrWhite(random As Double) As Integer
   Dim result = black ' variable definition
   If random > 0.5 Then
-    result = white ' change variable
+    result = white ' re-assign variable
   End If
   Return result
 End Function
@@ -83,7 +83,7 @@ Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As In
     Dim cx = cell.item_0 ' variable definition
     Dim cy = cell.item_1 ' variable definition
     If grid[cx][cy] = black Then
-      count = count + 1 ' change variable
+      count = count + 1 ' re-assign variable
     End If
   Next cell
   Return count
@@ -92,9 +92,9 @@ End Function
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
   Dim result = False ' variable definition
   If cell = black Then
-    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' change variable
+    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' re-assign variable
   Else
-    result = liveNeighbours = 3 ' change variable
+    result = liveNeighbours = 3 ' re-assign variable
   End If
   Return result
 End Function
@@ -103,7 +103,7 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
   Dim colour = white ' variable definition
   Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' variable definition
   If live Then
-    colour = black ' change variable
+    colour = black ' re-assign variable
   End If
   Return colour
 End Function
@@ -114,7 +114,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
   For Each x In range(0, 40)
     For Each y In range(0, 30)
       Dim colour = nextCellValue(grid, x, y) ' variable definition
-      nextGen[x][y] = colour ' change variable
+      nextGen[x][y] = colour ' re-assign variable
     Next y
   Next x
   gridRef.set(nextGen) ' call procedure

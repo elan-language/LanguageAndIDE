@@ -3,23 +3,23 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedCSIs,
+    assertExportedJavaIs,
+    assertExportedPythonIs,
+    assertExportedVBis,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testCSHeader,
+    testHash,
+    testHeader,
+    testJavaHeader,
+    testPythonHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -491,19 +491,19 @@ def main() -> None:
   x = Foo() # variable definition
   printNoLine(x.p1) # call procedure
 
-class Foo # class
+class Foo # concrete class
 
   def __init__(self: Foo) -> None:
-    self.p1 = 0.1 # change variable
+    self.p1 = 0.1 # re-assign variable
   p1: float # property
   p2: float # private property
-  def proc1(self: Foo) -> None: # procedure
+  def proc1(self: Foo) -> None: # procedure method
 
-  def proc2(self: Foo, a: str) -> None: # private procedure
+  def proc2(self: Foo, a: str) -> None: # private procedure method
 
-  def f1(self: Foo, a: int) -> int: # private function
+  def f1(self: Foo, a: int) -> int: # private function method
     return a
-  def toString(self: Foo) -> str: # function
+  def toString(self: Foo) -> str: # function method
     return ""
 
 
@@ -519,14 +519,14 @@ End Sub
 Class Foo
 
   Sub New()
-    Me.p1 = 0.1 ' change variable
+    Me.p1 = 0.1 ' re-assign variable
   End Sub
   Property p1 As Double
   Private Property p2 As Double
-  Sub proc1() ' procedure
+  Sub proc1() ' procedure method
 
   End Sub
-  Private Sub proc2(a As String) ' private procedure
+  Private Sub proc2(a As String) ' private procedure method
 
   End Sub
   Private Function f1(a As Integer) As Integer
@@ -548,20 +548,20 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // change variable
+    this.p1 = 0.1; // re-assign variable
   }
   public double p1 {get; private set;} // property
   private double p2 {get; private set;} // private property
-  public void proc1() { // procedure
+  public void proc1() { // procedure method
 
   }
-  private void proc2(string a) { // private procedure
+  private void proc2(string a) { // private procedure method
 
   }
-  private int f1(int a) { // private function
+  private int f1(int a) { // private function method
     return a;
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
 }
@@ -577,20 +577,20 @@ static void main() {
 class Foo {
 
   public Foo() {
-    this.p1 = 0.1; // change variable
+    this.p1 = 0.1; // re-assign variable
   }
   public double p1; // property
   private double p2; // private property
-  public void proc1() { // procedure
+  public void proc1() { // procedure method
 
   }
-  private void proc2(String a) { // private procedure
+  private void proc2(String a) { // private procedure method
 
   }
-  private int f1(int a) { // private function
+  private int f1(int a) { // private function method
     return a;
   }
-  public String toString() { // function
+  public String toString() { // function method
     return "";
   }
 }

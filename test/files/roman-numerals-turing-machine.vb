@@ -19,7 +19,7 @@ Sub main()
   While Not tm.isHalted()
     Dim rule = tm.findMatchingRule() ' variable definition
     tm.singleStep() ' call procedure
-    steps = steps + 1 ' change variable
+    steps = steps + 1 ' re-assign variable
     clearPrintedText() ' call procedure
     print(tm.tape)
     printTab(tm.headPosition - 1, "^") ' call procedure
@@ -38,12 +38,12 @@ Const haltState = "halt"
 Class TuringMachine
 
   Sub New(initialState As String, haltState As String)
-    Me.tape = "" ' change variable
-    Me.initialState = initialState ' change variable
-    Me.haltState = haltState ' change variable
-    Me.rules = New List(Of Rule)() ' change variable
-    Me.currentState = initialState ' change variable
-    Me.headPosition = 0 ' change variable
+    Me.tape = "" ' re-assign variable
+    Me.initialState = initialState ' re-assign variable
+    Me.haltState = haltState ' re-assign variable
+    Me.rules = New List(Of Rule)() ' re-assign variable
+    Me.currentState = initialState ' re-assign variable
+    Me.headPosition = 0 ' re-assign variable
   End Sub
   Function toString() As String
     Return ""
@@ -54,13 +54,13 @@ Class TuringMachine
   Property haltState As String
   Property rules As List(Of Rule)
   Property tape As String
-  Sub setTape(tape As String) ' procedure
-    Me.tape = tape ' change variable
+  Sub setTape(tape As String) ' procedure method
+    Me.tape = tape ' re-assign variable
   End Sub
-  Sub append(rule As Rule) ' procedure
-    Me.rules = Me.rules.withAppend(rule) ' change variable
+  Sub append(rule As Rule) ' procedure method
+    Me.rules = Me.rules.withAppend(rule) ' re-assign variable
   End Sub
-  Sub singleStep() ' procedure
+  Sub singleStep() ' procedure method
     Dim rule = Me.findMatchingRule() ' variable definition
     Me.execute(rule) ' call procedure
   End Sub
@@ -74,23 +74,23 @@ Class TuringMachine
     End If
     Return matches.head()
   End Function
-  Sub write(newSymbol As String) ' procedure
+  Sub write(newSymbol As String) ' procedure method
     Dim hp = Me.headPosition ' variable definition
-    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' change variable
+    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' re-assign variable
   End Sub
-  Sub execute(rule As Rule) ' procedure
-    Me.currentState = rule.nextState ' change variable
+  Sub execute(rule As Rule) ' procedure method
+    Me.currentState = rule.nextState ' re-assign variable
     Me.write(rule.writeSymbol) ' call procedure
     If rule.move = Dir.right Then
-      Me.headPosition = Me.headPosition + 1 ' change variable
+      Me.headPosition = Me.headPosition + 1 ' re-assign variable
       If Me.headPosition >= Me.tape.length() Then
-        Me.tape = Me.tape + " " ' change variable
+        Me.tape = Me.tape + " " ' re-assign variable
       End If
     Else
-      Me.headPosition = Me.headPosition - 1 ' change variable
+      Me.headPosition = Me.headPosition - 1 ' re-assign variable
       If Me.headPosition < 0 Then
-        Me.tape = " " + Me.tape ' change variable
-        Me.headPosition = 0 ' change variable
+        Me.tape = " " + Me.tape ' re-assign variable
+        Me.headPosition = 0 ' re-assign variable
       End If
     End If
   End Sub
@@ -104,11 +104,11 @@ Class Rule
   Property writeSymbol As String
   Property move As Dir
   Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
-    Me.currentState = currentState ' change variable
-    Me.currentSymbol = currentSymbol ' change variable
-    Me.nextState = nextState ' change variable
-    Me.writeSymbol = writeSymbol ' change variable
-    Me.move = move ' change variable
+    Me.currentState = currentState ' re-assign variable
+    Me.currentSymbol = currentSymbol ' re-assign variable
+    Me.nextState = nextState ' re-assign variable
+    Me.writeSymbol = writeSymbol ' re-assign variable
+    Me.move = move ' re-assign variable
   End Sub
   Function toString() As String
     Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumValue(Me.move)}"

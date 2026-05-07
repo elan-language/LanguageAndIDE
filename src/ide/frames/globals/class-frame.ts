@@ -50,8 +50,8 @@ import {
 import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
+import { ReAssignVariable } from "../statements/re-assign-variable";
 import { ReturnStatement } from "../statements/return-statement";
-import { SetStatement } from "../statements/set-statement";
 import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
@@ -238,7 +238,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
     letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
     wm.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new SetStatement(this);
+    const firstProp = new ReAssignVariable(this);
     firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
     wm.addChildBefore(firstProp, defaultSelector);
     const ret = wm.getLastChild() as ReturnStatement;
