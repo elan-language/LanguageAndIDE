@@ -101,7 +101,7 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum Name</code></a></td>
+  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum Name value1, value2</code></a></td>
   <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class Name</code></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><code>abstract class Name</code></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><code>interface Name</code></a></td>
@@ -163,7 +163,7 @@ with all the same property values except for specific changes that you want to m
 </ul>
 
 <h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <code>List</code>)  or user-defined (e.g. <code>Myclass</code>), is named like an identifier but
+<p>Every Type, whether system (e.g. <code>List</code>)  or user-defined (e.g. <code>class MyClass</code>), is named like an identifier but
  with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
 
 <div id="global"></div>
@@ -180,7 +180,7 @@ with all the same property values except for specific changes that you want to m
 <h2 id="dotSyntax">Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of a <code>String s</code> using a library method:<br>
+ <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
  <code>variable  n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
  <code>call  li.initialise(10,0)</code></li>
@@ -201,7 +201,7 @@ returns the value of the global constant and not the value of the local variable
 constant maxHits set to 20
 function hits() returns Int
   variable maxHits set to 99
-  return global.maxHits                                      „
+  return global.maxHits
 end function
 </codeblock>
 <p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
@@ -308,7 +308,7 @@ end procedure
 
 <div id="AsRef"></div>
 <div id="set_Ref"></div>
-<div id="value_Ref"></div> 
+<div id="value_Ref"></div>
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
@@ -345,8 +345,8 @@ end procedure
 and the Type of the value that will be returned.</p>
 <p id="return">
 A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
-and there can be only one <b>return</b> instruction in a function. 
-You follow the <b>return</b> instruction with the value to be returned by the function. 
+and there can be only one <b>return</b> instruction in a function.
+You follow the <b>return</b> instruction with the value to be returned by the function.
 This may be an expression that will be evaluated before returning. For example:</p>
 <codeblock>
 function foo(a as Int, b as Int) returns Boolean
@@ -574,7 +574,7 @@ end class
 </div></div>
 
 <h3 class="no-TOC" id="this"><b>this</b></h3>
-<p>If in the code of class <code>A</code> you want to invoke a method in class <code>S</code> <i>and</i> pass to it the current instance of <code>A</code>,
+<p>If in the code of <code>class A</code> you want to invoke a method in <code>class S</code> <i>and</i> pass to it the current instance of <code>A</code>,
 you can refer to this instance with the keyword <b>this</b>, as shown by this line in demo program <b>snake - object-oriented</b>:</p>
 
 <codeblock>
@@ -586,7 +586,7 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
 
-  <p>A <a href="#class">concrete class</a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class</code></a>
+  <p>A <a href="#class">concrete class</a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class A</code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
 
@@ -611,7 +611,7 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 
 <p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
 <codeblock>
-function calculateDiscount(d as Float)
+function calculateDiscount(d as Float) returns Float 
 end function
 </codeblock>
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -729,7 +729,7 @@ number of 'values' (separated by commas) which must all be valid <a href="#Ident
 <p>Examples of <b>enum</b> definitions:</p>
 <codeblock>
 enum Suit spades, hearts, diamonds, clubs
-enum Action stand, draw
+
 enum Outcome undecided, win, lose, draw, winDouble
 </codeblock>
 
@@ -909,7 +909,6 @@ class Game
   property head as Square
   property body as List<of Square>
   constructor()
-
   end constuctor
   function toString() returns String
     return "undefined"
@@ -922,7 +921,7 @@ end class
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an <code>abstract class</code>, within its subclasses.
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on <code>abstract class A</code>, within its subclasses.
  This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 <li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
@@ -1018,6 +1017,7 @@ elif x < 3 then
   set x to 3
 else
   set x to 0
+end if
 </codeblock>
 </li>
  <li>The conditions, one of which is shown above enclosed in brackets, are Boolean values or expressions.</li>
@@ -1097,10 +1097,10 @@ The forms of the <b>for loop</b> are:</p>
   puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):
 <codeblock>
-  variable basket to ["apple", "banana", "cherry", "date"]
-  for fruit in basket
-    call print(fruit)
-  end for
+variable basket set to ["apple", "banana", "cherry", "date"]
+for fruit in basket
+  call print(fruit)
+end for
 </codeblock>
   puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
 </ul>
@@ -1309,8 +1309,11 @@ which is the mechanism for running unit tests during program development, not du
 <p>You can declare a such a constant within a loop, so that the named value gets a new value each time it is executed, but its value cannot be changed in any other way.</p>
 <p>Unlike a <a href="#constant">global constant</a>, the value assigned in a <b>let statement</b> may be any value, literal or expression:</p>
 <codeblock>
+function numbers() returns (Float, Float)
   let tau be 2*pi
   let phi be (1 + sqrt(5))/2
+  return (tau, phi)
+end function
 </codeblock>
 
 <h1 id="Expression">Expressions</h1>
@@ -1549,7 +1552,7 @@ end function
    <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
   </ul></li>
   <li>A simpler form that distinguishes only two possibilities, with the format:<br>
-<code>variable isBigger set to if(a >= b, true, false)</code></li> 
+<code>variable isBigger set to if(a >= b, true, false)</code></li>
 </ol>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but will be hard to read even when enclosed in brackets.</p>
 
