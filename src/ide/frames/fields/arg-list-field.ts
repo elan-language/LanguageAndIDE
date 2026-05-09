@@ -91,8 +91,16 @@ export class ArgListField extends AbstractField {
   override parseCurrentText(): void {
     super.parseCurrentText();
     if (this.readParseStatus() === ParseStatus.invalid && this.text.endsWith(")")) {
+      const oldText = this.text;
       this.text = this.text.slice(0, this.text.length - 1);
       super.parseCurrentText();
+      if (this.readParseStatus() !== ParseStatus.valid) {
+        // Keep the change if the parse status is now "valid".
+        // It may be "invalid" or "incomplete" now.
+        // Put the bracket back if removing it didn't help, as it spoils the cursor positioning
+        // when editing in the middle of a field that ends in ")".
+        this.text = oldText;
+      }
     }
   }
 }
