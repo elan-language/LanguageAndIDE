@@ -35,7 +35,7 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
 
   frameSpecificAnnotation(): string {
     const priv = this.isPrivate ? "private " : "";
-    return `${priv}procedure`;
+    return `${priv}procedure method`;
   }
 
   public override renderAsElanSource(): string {

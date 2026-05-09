@@ -25,7 +25,7 @@ import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { LetStatement } from "./statements/let-statement";
-import { SetStatement } from "./statements/set-statement";
+import { ReAssignVariable } from "./statements/re-assign-variable";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
@@ -50,7 +50,7 @@ export abstract class LanguageAbstract implements Language {
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
-      frame instanceof SetStatement
+      frame instanceof ReAssignVariable
     ) {
       annotation = frame.frameSpecificAnnotation();
     }

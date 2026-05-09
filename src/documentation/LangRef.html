@@ -1,13 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../ide/styles/colourScheme.css">
 <link rel="stylesheet" href="../ide/styles/documentation.css">
 <link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<!-- Font Awesome has external link symbol at U+F08E (in Unicode Private Use Area)    -->
+<!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="favicon.ico">
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 <script type="text/javascript" src="doc-scripts.js"></script>
+<script type="text/javascript" src="accordion.js"></script>
 </head>
 <body id="top">
 <div class="docTitle">Elan Language Reference</div>
@@ -39,7 +44,7 @@ are passed around in a running program:</p>
  <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
  <li><b id="ReferenceType">Reference Types</b> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
- any user-defined Type such as the name of an <b>abstract class</b>, <b>class</b> or <b>interface</b>.</li>
+ any user-defined Type such as the name of an <b>abstract class</b>, <b>concrete class</b> or <b>interface</b>.</li>
 </ul>
 
 <p>This table lists the value Types and the standard data structure Types in Elan, each linking to its definition and further details:</p>
@@ -96,8 +101,8 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum Name</code></a></td>
-  <td><a href="#class"><el-topic>Class</el-topic><br><code>class Name</code></a></td>
+  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum Name value1, value2</code></a></td>
+  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class Name</code></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><code>abstract class Name</code></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><code>interface Name</code></a></td>
  </tr><tr>
@@ -106,7 +111,7 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code></a></td>
-  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code></td>
+  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code></a></td>
   <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func</a></td>
   <td><a href="LibRef.html#Maybe"><el-topic>Maybe</el-topic><br><code>Maybe</code></a></td>
   </tr>
@@ -118,9 +123,9 @@ are passed around in a running program:</p>
  <li><i>or</i> specified in the definition of
  <ul>
   <li>data structures whose items have a particular Type, e.g. <code>List</code>&lt;of <code>Int</code>&gt;</li>
-  <li><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
+  <li><a href="#Parameter">parameters</a> of functions and procedures</li>
   <li><b>return</b> value of a function</li>
-  <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>class</b></li>
+  <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>concrete class</b></li>
  </ul></li>
 </ul>
 
@@ -134,14 +139,14 @@ with all the same property values except for specific changes that you want to m
 <p>This table shows which named values can be re-assigned and/or mutated depending on how they were defined:</p>
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
- <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><b>constant</b></a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with 'set'</th><th>mutate</th><th>scope</th></tr>
+ <tr><td><a href="#constant"><b>constant</b></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
   <td>values are set only at compile time</td></tr>
- <tr><td><a href="#variable"><b>variable definition</b></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#variable"><b>variable definition</b></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>values are set at execution</td></tr>
- <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#Parameter">parameter (by value)</a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
   <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
- <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+ <tr><td><a href="#Parameter">parameter</a> (by reference)</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
   <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
 </table>
 
@@ -158,7 +163,7 @@ with all the same property values except for specific changes that you want to m
 </ul>
 
 <h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <code>List</code>)  or user-defined (e.g. <code>Myclass</code>), is named like an identifier but
+<p>Every Type, whether system (e.g. <code>List</code>)  or user-defined (e.g. <code>class MyClass</code>), is named like an identifier but
  with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
 
 <div id="global"></div>
@@ -172,10 +177,10 @@ with all the same property values except for specific changes that you want to m
  If you have done this, but then need to access the <b>constant</b>, <b>function</b>, or <b>procedure</b> with the same name,
  then you prefix the name with a <i>dot qualifier</i> of either <b>global.</b> or <b>library.</b> as appropriate</p>
 
-<h2 id="dotSyntax">Dot syntax</h3>
+<h2 id="dotSyntax">Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of a <code>String s</code> using a library method:<br>
+ <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
  <code>variable  n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
  <code>call  li.initialise(10,0)</code></li>
@@ -183,15 +188,12 @@ with all the same property values except for specific changes that you want to m
  library methods:<br>
  <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <codeblock>
-  variable  point set to (3, 7)
-  variable  x set to point.item_0
+ <code>variable  point set to (3, 7)</code><br>
+ <code>variable  x set to point.item_0</code>
 </codeblock></li>
- <li>To refer to a value in an <b>enum</b>, e.g.to pick one of the values in the <b>enum</b> <code>Suit</code>:<br>
-<codeblock>
-  enum Suit spades, hearts diamonds, clubs
-  variable  s set to Suit.spades
-</codeblock></li>
+ <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
+  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
+  <code>variable suit set to Suit.spades</code></li>
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <b>function</b> or <b>procedure</b>.
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
@@ -199,10 +201,10 @@ returns the value of the global constant and not the value of the local variable
 constant maxHits set to 20
 function hits() returns Int
   variable maxHits set to 99
-  return global.maxHits                                      „
+  return global.maxHits
 end function
 </codeblock>
-A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b>.
+<p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
@@ -215,7 +217,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#procedure"><b>procedure</b></a>,
  <a href="#function"><b>function</b></a>,
  <a href="#test"><b>test</b></a>,
- <a href="#class"><b>class</b></a>,
+ <a href="#class"><b>concrete class</b></a>,
  <a href="#abstract_class"><b>abstract class</b></a>,
  <a href="#interface"><b>interface</b></a>,
  <a href="#constant"><b>constant</b></a> and
@@ -225,12 +227,12 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <ul>
  <li><b>main</b>, <b>procedure</b> and <b>function</b> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions</a> within them.</li>
  <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert equal</b></a> instruction for testing functions during development of your program.</li>
- <li><b>class</b>, <b>abstract class</b>, and <b>interface</b> define data structures and these always contain <a href="#Member">members</a>.</li>
+ <li><b>concrete class</b>, <b>abstract class</b>, and <b>interface</b> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><b>constant</b> and <b>enum</b> do not contain any further instructions: only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
    <li>If one <b>constant</b> is used in the definition of another constant, the first must be declared above the second.</li>
-   <li>An <b>abstract class</b> must be declared above any <b>class</b> that inherits from it.</li>
+   <li>An <b>abstract class</b> must be declared above any <b>concrete class</b> that inherits from it.</li>
   </ul>
 </ul>
 
@@ -242,7 +244,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <p>There may not be more than one <b>main</b> in a program file, and the Global prompt will not show <b>main</b> as an option when one already exists in the file.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a <b>main</b> method</h4>
+<h4 class="no-TOC acc-title">Example of a <b>main</b> method</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; A <b>main</b> method</p>
 <codeblock>
@@ -280,7 +282,7 @@ end main
 <p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of procedure</h4>
+<h4 class="no-TOC acc-title">Example of procedure</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 <codeblock>
@@ -304,15 +306,15 @@ end procedure
 <hr>
 </div></div>
 
-<div id="AsRef"</div> 
-<div id="set_Ref"</div> 
-<div id="value_Ref"</div> 
+<div id="AsRef"></div>
+<div id="set_Ref"></div>
+<div id="value_Ref"></div>
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of call by reference</h4>
+<h4 class="no-TOC acc-title">Example of call by reference</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
@@ -343,8 +345,8 @@ end procedure
 and the Type of the value that will be returned.</p>
 <p id="return">
 A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
-and there can be only one <b>return</b> instruction in a function. 
-You follow the <b>return</b> instruction with the value to be returned by the function. 
+and there can be only one <b>return</b> instruction in a function.
+You follow the <b>return</b> instruction with the value to be returned by the function.
 This may be an expression that will be evaluated before returning. For example:</p>
 <codeblock>
 function foo(a as Int, b as Int) returns Boolean
@@ -353,7 +355,7 @@ end function
 </codeblock>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
+<h4 class="no-TOC acc-title">Example of a function and reference to it</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The function definition:</p>
 <codeblock>
@@ -384,7 +386,7 @@ end function</codeblock>
 <p>Without having to run your program, the <b>assert equal</b> instructions show whether your assertions pass or fail.
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <b>assert equal</b> instructions that test a <b>function</b></h4>
+<h4 class="no-TOC acc-title">Example of a set of <b>assert equal</b> instructions that test a <b>function</b></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <code>binarySearch</code> on four test lists</p>
 <codeblock>
@@ -453,7 +455,7 @@ end test
  <i>first</i> character at which  the actual (computed) and expected strings differ.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of testing long strings</h4>
+<h4 class="no-TOC acc-title">Example of testing long strings</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Reporting the first character at which the actual (computed) and expected strings differ:</p>
 
@@ -475,7 +477,7 @@ end test
 the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of ghosting tests</h4>
+<h4 class="no-TOC acc-title">Examples of ghosting tests</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Ghosting an entire test:</p>
 
@@ -508,42 +510,38 @@ end test
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
 
-<h2 id="class"><b>class</b></h2>
-<p>A <b>class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b></a>.</p>
+<h2 id="class"><b>concrete class</b></h2>
+<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b></a>.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
-<h3 class="no-TOC">Defining a class</h3>
-<p>A class is instantiated using the keyword <b>class</b> followed by the class name, and optional <b>inherits</b> to refer to a <b>class</b> or <b>abstract class</b> defined above in the program.</p>
+<h3 class="no-TOC">Defining a concrete class</h3>
+<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
 <p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
 <p>Its properties must all be initialised in the <b>constructor</b>.</p>
 <p>It may contain functions and procedure methods.</p>
 <p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
 <p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
-<p>A simple demonstration of a class is:</p>
+<p>A simple demonstration of a concrete class is:</p>
 <codeblock>
 main
   variable x set to new Thing()
   call print(x.names.toString())
 end main
-
 class Thing
   property names as List<of String>
-
   constructor()
     set this.names to createList(6, "X")
   end constructor
-
   function toString() returns String
     return ""
   end function
-
 end class
 </codeblock>
 
-<p>Here is an example of <b>class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
+<p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example class definition</h4>
+<h4 class="no-TOC acc-title">Example concrete class definition</h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
@@ -576,7 +574,7 @@ end class
 </div></div>
 
 <h3 class="no-TOC" id="this"><b>this</b></h3>
-If in the code of class <code>A</code> you want to invoke a method in class <code>S</code> <i>and</i> pass to it the current instance of <code>A</code>,
+<p>If in the code of <code>class A</code> you want to invoke a method in <code>class S</code> <i>and</i> pass to it the current instance of <code>A</code>,
 you can refer to this instance with the keyword <b>this</b>, as shown by this line in demo program <b>snake - object-oriented</b>:</p>
 
 <codeblock>
@@ -588,35 +586,34 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
 
-  <p>An ordinary <a href="#class">class</a> (also known as a concrete class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class</code></a>
+  <p>A <a href="#class">concrete class</a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class A</code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
-    The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <code>abstract class</code> or any <code>interface</code>s that it inherits from, directly or indirectly.</p>
+    The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
-  <li>The <b>abstract class</b> (if any) and the interfaces (if any) that a concrete <code>class</code> inherits from may not contain duplicates of any <code>abstract</code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <code>interface</code>s inherited by the<code> interface</code>s and/or classes that need them.</li>
+  <li>The <b>abstract class</b> (if any) and the <b>interface</b>s (if any) that a <b>concrete class</b> inherits from may not contain duplicates of any abstract member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <b>interface</b>s inherited by the interfaces and/or classes that need them.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <code>A</code> inherits from Type <code>B</code>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-  <li>The super-Types (<b>abstract class</b> and <b>interface</b>) that a concrete <code>class</code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+  <li>The super-Types (<b>abstract class</b> and <b>interface</b>) that a <b>concrete class</b> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
 <li>See also example in <a href="#interface"><b>interface</b></a></li>
 </ul>
 
 <h2 id="abstract_class"><b>abstract class</b></h2>
-<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
+<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
 <ul>
 <li>a <b>property</b> </li>
 <li>a <b>function</b></li>
 <li>a <b>procedure</b></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
+<p>As with a <b>concrete class</b>, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p>You may also define abstract methods on an <b>abstract class</b>, i.e. abstract <code>property</code>, abstract <code>function</code>, abstract <code>procedure</code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<p>
+<p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
 <codeblock>
-function calculateDiscount(d as Float)
+function calculateDiscount(d as Float) returns Float 
 end function
-</codeblock></p>
+</codeblock>
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <b>abstract</b> on the superclass.</li>
@@ -625,20 +622,19 @@ end function
 </ul>
 
 <h2 id="interface"><b>interface</b></h2>
-<p>An <b>interface</b> is similar to an <b>abstract class</b>, with the difference that it may define only abstract members. The advantage of using an <b>interface</b> instead of an <b>abstract class</b> is that a concrete <b>class</b> can inherit from multiple interfaces.</p>
+<p>An <b>interface</b> is similar to an <b>abstract class</b>, with the difference that it may define only abstract members. The advantage of using an <b>interface</b> instead of an <b>abstract class</b> is that a <b>concrete class</b> can inherit from multiple interfaces.</p>
 <p>An <b>interface</b> may inherit only from other interfaces.</p>
 <p>Important: An <b>interface</b> must not re-declare abstract interfaces that are defined in any interface it inherits from, directly or indirectly.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example using <b>interface</b></h4>
+<h4 class="no-TOC acc-title">Example using <b>interface</b></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from a version of program <b>blackjack</b> of:</p>
 <ul>
  <li>inheritance from <b>interface</b> <code>Player</code> to <b>abstract class</b> <code>Automated</code>
-  and to <b>class</b> <code>HumanPlayer</code>, and</li>
- <li>inheritance from <b>abstract class</b> <code>Automated</code> to concrete <b>class</b> <code>Dealer</code></li>
- <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their
- abstract declarations.</li>
+  and to <b>concrete class</b> <code>HumanPlayer</code>, and</li>
+ <li>inheritance from <b>abstract class</b> <code>Automated</code> to <b>concrete class</b> <code>Dealer</code></li>
+ <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their abstract declarations.</li>
 </ul>
 <codeblock>
 interface Player
@@ -696,6 +692,7 @@ constant turquoise set to 0x00ced1
 constant liveCell set to black
 constant speedOfLight set to 299792.458
 constant gameOver set to true
+constant euro set to "€"
 constant warningMsg set to "Limit reached"
 </codeblock>
 
@@ -719,24 +716,67 @@ function getSuitColours() returns Dictionary<of String, Int>
 end function
 </codeblock>
 
+<div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
-You define it with a Type name (so starting with an uppercase letter) followed by a
-number of values (which must be valid <a href="#Identifier">identifiers</a>).
-<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the values.</p>
-<p>Reference to the value in an <b>enum</b> is by using <a href="#dotSyntax">dot syntax</a> enumType.enumValue.</p>
+It is used to provide a fixed set of options that are self-explanatory, and the references to its
+those options (its 'values') are checked at compile time.</p>
+<p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
+number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers</a>.
+<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the 'values'.</p>
+<p>Reference to the value in an <b>enum</b> is made by using <a href="#dotSyntax">dot syntax</a> with method <el-method>enumValue</el-method>.</p>
 <p>An <b>enum</b> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
-
-<p>Examples of definition and use:</p>
+<p>Examples of <b>enum</b> definitions:</p>
 <codeblock>
 enum Suit spades, hearts, diamonds, clubs
-enum Action stand, draw
+
 enum Outcome undecided, win, lose, draw, winDouble
+</codeblock>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of use</h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To retrieve a valid 'value':</p>
+<codeblock>
 enum Status pending, playing, standing, blackjack, bust
 main
-  variable status set to Status.pending
+  variable state set to Status.pending
 end main
 </codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To get a valid option from an abbreviation (in demo program pathfinder.elan):</p>
+<codeblock>
+enum Algorithm dijkstra, aStar, heuristic
+function getAlgFromLetter(letter as String) returns Algorithm
+  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
+  return algs[letter]
+end function
+</codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A function to turn directions held in an <b>enum</b> through 90&deg; clockwise:</p>
+<codeblock>
+enum Compass north, east, south, west
+main
+ variable dir set to Compass.south
+ call print(enumValue(clockwise(dir))
+end main
+function clockwise(d as Compass) returns Compass
+  variable newDir set to Compass.north
+  if d.equals(Compass.north) then
+    set newDir to Compass.east
+  elif d.equals(Compass.east) then
+    set newDir to Compass.south
+  elif d.equals(Compass.south) then
+    set newDir to Compass.west
+  end if
+  return newDir
+end function
+</codeblock>
+<hr>
+</div></div>
 
 <div id="Member"></div>
 <h1 id="MemberInstructions">Member instructions</h1>
@@ -744,7 +784,7 @@ end main
 <p>Member instructions (also referred to simply as 'members') are located within an
  <b>interface</b>,
  <b>abstract class</b> or
- (concrete) <b>class</b>.
+  <b>concrete class</b>.
 The <b>new code</b> prompt offers a context appropriate subset of the following member instructions:</p>
 <p>
  <a href="#abstract_property"><b>abstract property</b></a>,
@@ -771,7 +811,7 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
   <td width="150"></td>
   <td width="40"><a href="#interface"><b>interface</b></a></td>
   <td width="40"><a href="#abstract_class"><b>abstract class</b></a></td>
-  <td width="40"><a href="#class"><b>class</b></a></td>
+  <td width="40"><a href="#class"><b>concrete class</b></a></td>
   <td></td>
  </tr><tr>
   <td><a href="#abstract_property"><b>abstract property</b></a></td>
@@ -836,18 +876,32 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
  </tr>
 </table>
 
-<h2 id="abstract_property"><b>abstract property</b></h2>
-<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<h2 id="constructor"><b>constructor</b></h2>
+<p>A <b>concrete class</b> may have an optional <b>constructor</b> so as to:</p>
+<ul>
+ <li>initialise properties with fixed values</li>
+ <li>define parameters which are used to initialise properties</li>
+</ul>
+<p>If a <b>concrete class</b>'s <b>constructor</b defines parameters then, when the class is instantiated (using <b>new</b>), the values of
+the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
 
-<h2 id="abstract_function"><b>abstract function</b></h2>
-<p>An abstract function method may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+<codeblock>
+class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+end class
+</codeblock>
 
-<h2 id="abstract_procedure"><b>abstract procedure</b></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstract_class">abstract <code>class</code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
+<p>then it may be instantiated like this:<br>
+<code>variable tail set to new Square(20, 15)</code></p>
 
 <h2 id="property"><b>property</b></h2>
-<p>A <b>property</b> is a named value defined on a <b>class</b> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
- and a Type (which may be another class name), for example:</p>
+<p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
+ and a Type (which may be another class name).</p>
+<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method</a>.</p>
+<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
 <codeblock>
 class Game
   property height as Int
@@ -855,7 +909,6 @@ class Game
   property head as Square
   property body as List<of Square>
   constructor()
-
   end constuctor
   function toString() returns String
     return "undefined"
@@ -863,16 +916,12 @@ class Game
 end class
 </codeblock>
 
-<p>It may be given an initial value within a <b>constructor</b>.
-</p>A <b>property</b> may be read, but not written to.
-Properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method</a>.</p>
-
-<h2 id=functionMethod"><b>function</b> method</h2>
+<h2 id="unctionMethod"><b>function</b> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an <code>abstract class</code>, within its subclasses.
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on <code>abstract class A</code>, within its subclasses.
  This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 <li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
@@ -887,6 +936,15 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an abstract <code>class</code>, within its subclasses.
  This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 </ul>
+
+<h2 id="abstract_property"><b>abstract property</b></h2>
+<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class"><b>abstract class</b></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+
+<h2 id="abstract_function"><b>abstract function</b></h2>
+<p>An abstract function method may be defined only on an <a href="#abstract_class"><b>abstract class</b></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+
+<h2 id="abstract_procedure"><b>abstract procedure</b></h2>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><b>abstract class</b></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="private"><b>private</b> (property, function, procedure)</h2>
 <p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
@@ -907,36 +965,11 @@ class Game
   constructor(board as Board)
     set property.board to board
   end constructor
-
   procedure setHeight(height as Int)
     set property.height to height
   end procedure
 end class
 </codeblock>
-
-<h2 id="constructor"><b>constructor</b></h2>
-<p>A (concrete) class may have an optional <b>constructor</b> so as to:</p>
-<ul>
- <li>initialise properties with fixed values</li>
- <li>define parameters which are used to initialise properties</li>
-</ul>
-<p>If a class does define a constructor, and the constructor defines parameters, then when the class is instantiated (using <b>new</b>) the values of
-the correct Type must be provided. For example, if the class <code>Square</code> has this constructor:</p>
-
-<codeblock>
-class Square
-  constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
-  end constructor
-end class
-</codeblock>
-
-<p>then it may be instantiated like this:</p>
-
-<code>
-  variable tail set to new Square(20, 15)
-</code>
 
 <div id="statement"></div>
 <h1 id="StatementInstructions">Statement instructions</h1>
@@ -945,12 +978,12 @@ end class
  <a href="#variable"><b>variable definition</b></a>,
  <a href="#set"><b>re-assign variable</b></a>,
  <a href="#if"><b>if</b></a>,
- <a href="#while"><b>while loop</b></a>.
+ <a href="#while"><b>while loop</b></a>,
  <a href="#for"><b>for loop</b></a>,
  <a href="#call"><b>call procedure</b></a>,
  <a href="#try"><b>try</b></a>,
  <a href="#throw"><b>throw exception</b></a>
- and, within a test, <a href="#assert"><b>assert equal</b></a>,
+ and, within a test, <a href="#assert"><b>assert equal</b></a>.
 </p>
 
 <h2 id="variable"><b>variable definition</b></h2>
@@ -972,24 +1005,29 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <div id="else"></div>
 <div id="elif"></div>
 <h2 id="if_statement"><b>if</b> (instruction)</h2>
-<p>The <b>if..then..else..elif..</b> construct specifies which of several code sequences is to be executed next.</p>
+<p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
- <li> It is structured like this (<b>elif</b> is the Elan keyword for 'else if'):<br>
- <b>if</b> <code>condition</code> <b>then</b><br>
- &nbsp;&nbsp;<code>instructions</code><br>
- <b>elif</b> <code>condition</code> <b>then</b><br>
- &nbsp;&nbsp;<code>instructions</code><br>
- <b>else</b><br>
- &nbsp;&nbsp;<code>instructions</code><br>
- <b>end if</b></li>
- <li>The conditions are Boolean values or expressions.</li>
+ <li>It is structured like this (where <code>elif</code> is the Elan keyword for <b>else if</b>):
+<codeblock>
+if (x < 1) then
+  set x to 1
+elif x < 2 then
+  set x to 2
+elif x < 3 then
+  set x to 3
+else
+  set x to 0
+end if
+</codeblock>
+</li>
+ <li>The conditions, one of which is shown above enclosed in brackets, are Boolean values or expressions.</li>
  <li><b>elif</b> and <b>else</b> clauses are optional.</li>
  <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
 </ul>
-<p>See also <a href="#if_expression"><b>if</b> (expression)</a> for using the related <b>if</b>  to return a value.</p>
+<p>See also <a href="#if_expression"><b>if</b> (expression)</a> for using the related <b>if</b> to return a value.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <b>if</b> instruction</h4>
+<h4 class="no-TOC acc-title">Examples using <b>if</b> instruction</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Simple choice between equality and inequality:</p>
 <codeblock>
@@ -1002,24 +1040,24 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
-    if item.equals(value) then
-      set result to true
-    elif item.isBefore(value) then
-      set result to binarySearch(li.subList(0, mid), item)
-    else
-      set result to binarySearch(li.subList(mid + 1, li.length()), item)
-    end if
+  variable result set to false
+  if item.equals(value) then
+    set result to true
+  elif item.isBefore(value) then
+    set result to binarySearch(li.subList(0, mid), item)
+  else
+    set result to binarySearch(li.subList(mid + 1, li.length()), item)
+  end if
 </codeblock>
 <hr>
 </div></div>
 
 <h2 id="while"><b>while loop</b></h2>
-<p>The <b>while <code>condition</code>..end while</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
- only if <code>condition</code> is <code>true</code>.</p>
-<p><code>condition</code> is either a <code>Boolean</code> <b>variable definition</b> or an expression that evaluates to a Boolean value.</p>
-<p>When <code>condition</code> is <code>true</code> the enclosed code is executed;
- when <code>false</code> the loop is bypassed. For example:</p>
-
+<p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
+ only if some condition is <el-id>true</el-id>.</p>
+<p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
+<p>When the condition is <el-id>true</el-id> the enclosed code is executed;
+ when <el-id>false</el-id> the loop is bypassed. For example:</p>
 <codeblock>
 main
   variable file set to openFileForReading()
@@ -1041,51 +1079,46 @@ end main
 specifies looping through a sequence of characters in a <code>String</code> or items in a <code>List</code>.
 The forms of the <b>for loop</b> are:</p>
 <ul>
- <li>The loop variable <el-id>p</el-id> is of Type <code>String</code> and the subject <el-id>q</el-id> is of Type <code>String</code>:<br>
- <codeblock>
-main
-  set title to "Winnie the Pooh"</codeblock>
+ <li>The loop variable <el-id>p</el-id> and the subject <el-id>q</el-id> are both of Type <code>String</code>:<br>
+<codeblock>
+  variable title set to "Winnie the Pooh"
   for ch in title
     call print(ch)
   end for
-end main
- </codeblock>
-<br>
+</codeblock>
   puts each character in <el-id>title</el-id> in turn into <code>String</code> <el-id>ch</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):<br>
- <codeblock>
-main
-  set primes to [2, 3, 5, 7, 11]</codeblock>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):
+<codeblock>
+  variable primes set to [2, 3, 5, 7, 11]
   for n in primes
     call print(n)
   end for
-end main
-</codeblock><br>
-  puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):</li>
-<codeblock>
-set basket to ["apple", "banana", "cherry", "date"]
-for fruit in basket
 </codeblock>
- <br>puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
+  puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
+ <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):
+<codeblock>
+variable basket set to ["apple", "banana", "cherry", "date"]
+for fruit in basket
+  call print(fruit)
+end for
+</codeblock>
+  puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
 </ul>
-<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of  <el-id>p</el-id>:</p>
+<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method></a> to specify integer values of the loop variable:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id>'s value is limited to a range:</li>
 <codeblock>
-main
   variable numbers set to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   for n in range(3, 8)
     call print(n)
   end for
-end main
-</codeblock><br>
+</codeblock>
   gives values with which to index into the List <el-id>numbers</el-id>.</li>
 </ul>
 <p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <b>for</b></h4>
+<h4 class="no-TOC acc-title">Examples using <b>for</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
@@ -1128,7 +1161,7 @@ end main
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Technical note about the <b>for loop</b> variable</h4>
+<h4 class="no-TOC acc-title">Technical note about the <b>for loop</b> variable</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
 So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect the items it refers to and  processes.</p>
@@ -1140,18 +1173,18 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
-<li>a procedure that you have defined at the global level</li>
-  <code>call fillRandom(grid)</code>
-<li>a procedure method on an object of a class that you have defined</li>
-  <code>call apple.newRandomPosition(snake)</code>
-  <code>call property.hand.draw()</code>
-<li>a procedure method that belongs to the same class as the procedure that you are calling from</li>
-  <code>call updateNeighbours()</code>
-<li>a procedure provided by the standard library</li>
-  <code>call sleep_ms(2000)</code>
-<li>a procedure method on an object of a Type provided by the standard library</li>
-  <code>call vg.append(rect)</code>
-  <code>call property.cards.append(card)</code>
+<li>a procedure that you have defined at the global level<br>
+  <code>call fillRandom(grid)</code></li>
+<li>a procedure method on an object of a class that you have defined<br>
+  <code>call apple.newRandomPosition(snake)</code><br>
+  <code>call property.hand.draw()</code></li>
+<li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
+  <code>call updateNeighbours()</code></li>
+<li>a procedure provided by the standard library<br>
+  <code>call sleep_ms(2000)</code></li>
+<li>a procedure method on an object of a Type provided by the standard library<br>
+  <code>call vg.append(rect)</code><br>
+  <code>call property.cards.append(card)</code></li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1173,54 +1206,58 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 
 <div id="catch"></div>
 <h2 id="try"><b>try</b></h2>
-<p>You can enclose code in a <b>try..catch</b> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
+<p>You can enclose code in a <b>try</b> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files</a>.</p>
-<p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try..catch</b> instruction.</p>
+<p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <b>try..catch</b></h4>
+<h4 class="no-TOC acc-title">Examples using <b>try..catch</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Use a <b>test</b> to catch an error in a function:</p>
 <codeblock>
 test test_try_1
   try
-    call foo()
+    variable x set to foo(0)
     call print("not caught")
-catch exception in e
-    call print(e)
+  catch ElanRuntimeError
+    call print("runtime error")
   end try
 end test
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To check an error message and, if unexpected, throw the exception up:</p>
-<codeblock>
-test test_try_2
-  try
-    call foo()
-    call print("not caught")
-  catch exception in e
-    if not (e.equals("an expected message")) then
-      throw exception e
-    end if
-  end try
-end test
-</codeblock>
-<hr>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points has negative <i>x</i> or <i>y</i>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To check a function input, and throw an exception up:</p>
 <codeblock>
 main
-  variable a set to (-1.0, 2.0)
-  variable b set to (3.0, 6.0)
+  try
+    variable t set to foo(true)
+    call print("no error")
+  catch CustomError
+    call print("error")
+  end try
+end main
+function foo(f as Boolean) returns Boolean
+  if f then
+    throw CustomError "error in foo()"
+  end if
+  return f
+end function
+</codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points (each a Tuple) has negative <i>x</i> or <i>y</i>:</p>
+<codeblock>
+main
+  variable a set to (1.0, 2.0)
+  variable b set to (3.0, -6.0)
   variable fQ set to firstQuadrant(a, b)
 end main
 
 function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
   if (a.item_0 < 0) or (a.item_1 < 0) or (b.item_0 < 0) or (b.item_1 < 0) then
-    throw ElanRuntimeError $"point ({a}) or ({b}) is not in the first quadrant"
+    throw CustomError $"point ({a}) or ({b}) is not in the first quadrant"
   end if
   return 0
 end function
@@ -1232,10 +1269,10 @@ end function
 <p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw exception</b> instruction
  which defines an explanatory string.</p>
 
-<p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try ... catch</b></a> instruction.</p>
+<p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b></a> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example using <b>throw exception</b></h4>
+<h4 class="no-TOC acc-title">Example using <b>throw exception</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
@@ -1263,6 +1300,21 @@ end function
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
  In Elan, you can get equivalent functionality by throwing an <b>exception</b>, as described in the <a href="#throw"><b>throw exception</b></a> instruction.</p>
+
+<h2 id="constant_let"><b>let statement</b></h2>
+<p>Of particular importance in Functional Programming is providing for constant values within a function.</p>
+<p>The <b>let statement</b> instruction declares and initialises an immutable named value whose scope is confined to the function.</p>
+<p>The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
+<p>It is recommended that you always use a <b>let statement</b> in preference to a <b>variable definition</b>, unless you need to be able to re-assign its value.</p>
+<p>You can declare a such a constant within a loop, so that the named value gets a new value each time it is executed, but its value cannot be changed in any other way.</p>
+<p>Unlike a <a href="#constant">global constant</a>, the value assigned in a <b>let statement</b> may be any value, literal or expression:</p>
+<codeblock>
+function numbers() returns (Float, Float)
+  let tau be 2*pi
+  let phi be (1 + sqrt(5))/2
+  return (tau, phi)
+end function
+</codeblock>
 
 <h1 id="Expression">Expressions</h1>
 <p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
@@ -1300,6 +1352,9 @@ then an empty string or list is returned.</p>
 <a href="LibRef.html#put_List"><el-method>put</el-method></a>.</p>
 
 <p>Example of using indexing on a string:</p>
+<table class="tablePlain">
+<tr>
+ <td>
 <codeblock>
 main
   variable a set to "Hello world!"
@@ -1308,14 +1363,15 @@ main
   call print(a.subString(0, 7))
 end main
 </codeblock>
-<p>would print these lines to the display:</p>
-<pre><el-code>
-   o
-   o world!
-   Hello w     (since the upper bound of a range is <i>exclusive</i>)
-</el-code></pre>
+ </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><br>o<br>o world!<br>Hello w &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
 
 <p>And on a list:</p>
+<table class="tablePlain">
+<tr>
+ <td>
 <codeblock>
 main
   variable li set to new List<of Int>()
@@ -1325,13 +1381,10 @@ main
   call print(li.subList(0, 7))
 end main
 </codeblock>
-
-<p>would print these lines to the display:</p>
-<pre>
-   <code>4</code>                            (the value of the list item)
-   <code>[4, 5, 6, 7, 8, 9, 10, 11]</code>   (a new list)
-   <code>[0, 1, 2, 3, 4, 5, 6]</code>        (since the upper bound of a range is <i>exclusive</i>)
-</pre>
+ </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><br>4 &nbsp;&nbsp;&nbsp; (the value of the list item)<br>[4, 5, 6, 7, 8, 9, 10, 11] &nbsp;&nbsp;&nbsp; (a new list)<br>[0, 1, 2, 3, 4, 5, 6] &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
 
 <div id="operator"></div>
 <h2 id="Operators">Operators</h2>
@@ -1376,7 +1429,7 @@ variable c set to sqrt(pow(a, 2) + pow(b, 2))
     2*&minus;3           &#x27f6;  &minus;6
 </pre>
 
-<p>The editor automatically puts spaces around the operators &plus; and &minus;, but not around / or *.
+<p>The editor automatically puts spaces around the operators + and &minus;, but not around / or *.
 This is just to visually reinforce the precedence.</p>
 
 <div id="and"></div>
@@ -1396,7 +1449,7 @@ end function
 </codeblock>
 
 <h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The &plus; operator is also used for concatenating <code>String</code> values.</p>
+<p>The + perator is also used for concatenating <code>String</code> values.</p>
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
@@ -1439,8 +1492,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<codeblock>set x to (a > b) and (b < c)</codeblock>
-<codeblock>set x to (a + b) > (c - d)</codeblock>
+<code>set x to (a > b) and (b < c)</code><br>
+<code>set x to (a + b) > (c - d)</code>
 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
@@ -1497,14 +1550,14 @@ end function
    <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
    <li><b>elif</b> and <b>else</b> clauses are optional.</li>
    <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
-  </ul>
- <li>A simpler form that distinguishes only two possibilities, with the format:<br>
-<code>variable isBigger set to if(a >= b, true, false)</code></li> 
-</ul>
+  </ul></li>
+  <li>A simpler form that distinguishes only two possibilities, with the format:<br>
+<code>variable isBigger set to if(a >= b, true, false)</code></li>
+</ol>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but will be hard to read even when enclosed in brackets.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <b>if</b> expression:</h4>
+<h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice of <b>variable definition</b> assignments (the brackets around the first <b>if</b> expression are optional):</p>
 
@@ -1546,7 +1599,7 @@ would print these lines to the display:
 <h2 id="new"><b>new</b></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
    or a <a href="#class"> user-defined class</a>, either to assign to a named value, or as part
-  of a more complex expression. Example of use from demo program <code>snake_PP.elan</code>:</p>
+  of a more complex expression. Example of use from demo program snake_PP.elan:</p>
 
 <codeblock>
   variable headRef set to new AsRef<of List<of Int>>(head)
@@ -1803,7 +1856,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  instruction and then use the named value in the 'actual' field of the <b>assert equal</b>
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
-  <li>Any expression involving a binary operator such as &plus;, <b>isnt</b>, etc.,
+  <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
   the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert equal</b> instruction.</li>
@@ -1853,7 +1906,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
   <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
   <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
  </ul>
- The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
  procedure with the same name.</p>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
@@ -1889,21 +1942,7 @@ very slow parsing. We strongly recommend that you you simplify the contents of t
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
-
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
-<script>
-  var accordions = document.getElementsByclassName("acc-title");
-  for (const item of accordions) {
-    item.addEventListener("click", function() {
-      item.parentElement.classList.toggle("active");
-    });
-    item.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        item.parentElement.classList.toggle("active");
-      }
-    });
-  }
-</script>
 </body>
 </html>

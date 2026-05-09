@@ -21,60 +21,60 @@ class Snake {
 
   public Snake() {
     var tail = new Square(20, 15);
-    this.currentDir = Direction.right; // change variable
-    this.body = [tail]; // change variable
-    this.head = tail.getAdjacentSquare(this.currentDir); // change variable
-    this.priorTail = tail; // change variable
+    this.currentDir = Direction.right; // re-assign variable
+    this.body = [tail]; // re-assign variable
+    this.head = tail.getAdjacentSquare(this.currentDir); // re-assign variable
+    this.priorTail = tail; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
   private Direction currentDir {get; private set;} // private property
   private Square head {get; private set;} // private property
   private List<Square> body {get; private set;} // private property
   private Square priorTail {get; private set;} // private property
-  public void clockTick(string key, Apple apple) { // procedure
+  public void clockTick(string key, Apple apple) { // procedure method
     this.setDirection(key); // call procedure
-    this.priorTail = this.body[0]; // change variable
+    this.priorTail = this.body[0]; // re-assign variable
     var body = this.body;
     body.append(this.head); // call procedure
-    this.head = this.head.getAdjacentSquare(this.currentDir); // change variable
+    this.head = this.head.getAdjacentSquare(this.currentDir); // re-assign variable
     if (this.head.equals(apple.location)) {
       apple.newRandomPosition(this); // call procedure
     } else {
-      this.body = this.body.subList(1, this.body.length()); // change variable
+      this.body = this.body.subList(1, this.body.length()); // re-assign variable
     }
   }
-  public void updateBlocks(List<List<int>> blocks) { // procedure
-    blocks[this.head.x][this.head.y] = green; // change variable
+  public void updateBlocks(List<List<int>> blocks) { // procedure method
+    blocks[this.head.x][this.head.y] = green; // re-assign variable
     if (!this.body[0].equals(this.priorTail)) {
-      blocks[this.priorTail.x][this.priorTail.y] = white; // change variable
+      blocks[this.priorTail.x][this.priorTail.y] = white; // re-assign variable
     }
   }
-  public int score() { // function
+  public int score() { // function method
     return this.body.length() - 1;
   }
-  public bool bodyCovers(Square sq) { // function
+  public bool bodyCovers(Square sq) { // function method
     var result = false;
     foreach (seg in this.body) {
       if ((seg.equals(sq))) {
-        result = true; // change variable
+        result = true; // re-assign variable
       }
     }
     return result;
   }
-  public bool gameOver() { // function
+  public bool gameOver() { // function method
     return this.bodyCovers(this.head) || this.head.hasHitEdge();
   }
-  private void setDirection(string key) { // private procedure
+  private void setDirection(string key) { // private procedure method
     if (key.equals("w")) {
-      this.currentDir = Direction.up; // change variable
+      this.currentDir = Direction.up; // re-assign variable
     } else if (key.equals("s")) {
-      this.currentDir = Direction.down; // change variable
+      this.currentDir = Direction.down; // re-assign variable
     } else if (key.equals("a")) {
-      this.currentDir = Direction.left; // change variable
+      this.currentDir = Direction.left; // re-assign variable
     } else if (key.equals("d")) {
-      this.currentDir = Direction.right; // change variable
+      this.currentDir = Direction.right; // re-assign variable
     }
   }
 }
@@ -82,54 +82,54 @@ class Snake {
 class Apple {
 
   public Apple() {
-    this.location = new Square(0, 0); // change variable
+    this.location = new Square(0, 0); // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
   public Square location {get; private set;} // property
-  public void newRandomPosition(Snake snake) { // procedure
+  public void newRandomPosition(Snake snake) { // procedure method
     var changePosition = true;
     while (changePosition) {
       var ranX = randint(0, 39);
       var ranY = randint(0, 29);
-      this.location = new Square(ranX, ranY); // change variable
+      this.location = new Square(ranX, ranY); // re-assign variable
       if (!snake.bodyCovers(this.location)) {
-        changePosition = false; // change variable
+        changePosition = false; // re-assign variable
       }
     }
   }
-  public void updateBlocks(List<List<int>> blocks) { // procedure
-    blocks[this.location.x][this.location.y] = red; // change variable
+  public void updateBlocks(List<List<int>> blocks) { // procedure method
+    blocks[this.location.x][this.location.y] = red; // re-assign variable
   }
 }
 
 class Square {
 
   public Square(int x, int y) {
-    this.x = x; // change variable
-    this.y = y; // change variable
+    this.x = x; // re-assign variable
+    this.y = y; // re-assign variable
   }
-  public string toString() { // function
+  public string toString() { // function method
     return "";
   }
   public int x {get; private set;} // property
   public int y {get; private set;} // property
-  public Square getAdjacentSquare(Direction d) { // function
+  public Square getAdjacentSquare(Direction d) { // function method
     var newX = this.x;
     var newY = this.y;
     if (d == Direction.left) {
-      newX = this.x - 1; // change variable
+      newX = this.x - 1; // re-assign variable
     } else if (d == Direction.right) {
-      newX = this.x + 1; // change variable
+      newX = this.x + 1; // re-assign variable
     } else if (d == Direction.up) {
-      newY = this.y - 1; // change variable
+      newY = this.y - 1; // re-assign variable
     } else if (d == Direction.down) {
-      newY = this.y + 1; // change variable
+      newY = this.y + 1; // re-assign variable
     }
     return new Square(newX, newY);
   }
-  public bool hasHitEdge() { // function
+  public bool hasHitEdge() { // function method
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
   }
 }

@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class Elif extends SingleLineFrame implements Statement {
+export class ElseIf extends SingleLineFrame implements Statement {
   isStatement: boolean = true;
   hasIf: boolean = true;
   condition: ExpressionField;
@@ -35,7 +35,7 @@ export class Elif extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "elif";
+    return "else if";
   }
 
   indent() {

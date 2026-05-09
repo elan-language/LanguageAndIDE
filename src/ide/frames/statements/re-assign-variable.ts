@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class SetStatement extends SingleLineFrame implements Statement {
+export class ReAssignVariable extends SingleLineFrame implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
@@ -38,7 +38,7 @@ export class SetStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "change variable";
+    return "re-assign variable";
   }
 
   renderAsElanSource(): string {
