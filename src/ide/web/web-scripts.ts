@@ -821,6 +821,9 @@ newButton?.addEventListener("click", async (event: Event) => {
 
       codeViewModel.recreateFile(ideViewModel, true);
       await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
+      // Update the empty code hash, we may have changed languages since the page was loaded.
+      // This is still not 100% watertight in the face of changing languages and deleting code.
+      codeViewModel.saveEmptyCodeHash();
     }
   }
 });
@@ -901,7 +904,10 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
     }
   }
 
-  url.searchParams.set("code", bEncoded);
+  // Only include the code if it is not an empty file
+  if (!codeViewModel.isEmptyCodeHash()) {
+    url.searchParams.set("code", bEncoded);
+  }
   const urlAsString = url.toString();
 
   if (urlAsString.length < 2000) {
@@ -1121,11 +1127,14 @@ async function setup(p: Profile) {
   // and set the text on the button to match
   profileButton.textContent = document.getElementById("profile-" + p.name)!.textContent;
 
+  codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
+  await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
+  // make record of the hash of the empty code for the chosen language
+  // before we (optionally) overwrite the empty code with something non-empty
+  // see copyAsUrlButton above
+  codeViewModel.saveEmptyCodeHash();
   if (code) {
     await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner, code);
-  } else {
-    codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
-    await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
   }
 }
 
