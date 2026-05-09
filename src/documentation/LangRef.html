@@ -465,7 +465,8 @@ function setInStyle(s as String) returns String
   return "<style>" + s + "<style>"
 end function
 test test_setInStyle
-  assert setInStyle(sGW) is "<style>" + sGW + "</style>" s found at [146] (expected: /)
+  assert setInStyle(sGW) is "<style>" + sGW + "</style>"
+  # assert fail message will be "s found at [146] {expected: /)"
 end test
 </codeblock>
 <hr>
@@ -611,7 +612,8 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 
 <p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
 <codeblock>
-function calculateDiscount(d as Float) returns Float 
+function calculateDiscount(d as Float) returns Float
+  return discount
 end function
 </codeblock>
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -636,6 +638,7 @@ end function
  <li>inheritance from <b>abstract class</b> <code>Automated</code> to <b>concrete class</b> <code>Dealer</code></li>
  <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their abstract declarations.</li>
 </ul>
+enum Act stand, draw
 <codeblock>
 interface Player
   abstract property hand as Hand
@@ -649,17 +652,15 @@ abstract class Automated inherits Player
   procedure changeScoreBy(amount as Int)
     set property.score to property.score + amount
   end procedure
-end class
+end abstract class
 
 class Dealer inherits Automated
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
   function getAction() returns Action
-  return if property.hand.total < 17
-    then Action.draw
-    else Action.stand
-    end function
+    return if((property.hand.total < 17), Act.draw, Act.stand)
+  end function
 end class
 
 class HumanPlayer inherits Player
@@ -729,7 +730,6 @@ number of 'values' (separated by commas) which must all be valid <a href="#Ident
 <p>Examples of <b>enum</b> definitions:</p>
 <codeblock>
 enum Suit spades, hearts, diamonds, clubs
-
 enum Outcome undecided, win, lose, draw, winDouble
 </codeblock>
 

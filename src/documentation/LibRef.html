@@ -1858,7 +1858,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <h3 class="no-TOC">Type name</h3>
 <p>The Type of any <b>function</b> starts with the word <code>Func</code> followed by angle brackets defining the Type of each parameter,
-    then a 'fat arrow' =&gt; and the return Type for that <b>function</b>. This <b>property</b> definition shows the syntax:</p>
+    then =&gt; (a 'fat arrow') and the return Type for that <b>function</b>. This <b>property</b> definition shows the syntax:</p>
 
 <codeblock>
   property matchAt as Func<of String, String, Int => Boolean>
@@ -1868,7 +1868,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <codeblock>
 function matchAt(a as String, b as String, p as Int) returns Boolean
-  return if a[p].equals(b[p]) then true else false
+  return if(a[p].equals(b[p]), true, false)
 end function
 </codeblock>
 
