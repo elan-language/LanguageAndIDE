@@ -43,6 +43,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
   private profile?: Profile = undefined;
   private cvdCss?: string = undefined;
+  private emptyCodeHash?: string = undefined;
 
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
@@ -75,6 +76,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   getCss() {
     return this.cvdCss;
+  }
+
+  // Called when we have just loaded some empty code
+  // so that we can tell later whether the current code is the same.
+  // The hash varies with the different languages
+  saveEmptyCodeHash() {
+    this.emptyCodeHash = this.currentHash;
+  }
+
+  // find out if the current code is empty
+  isEmptyCodeHash() {
+    return this.currentHash === this.emptyCodeHash;
   }
 
   set fileName(fn: string) {
@@ -731,8 +744,13 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
     if (this.file?.setLanguage(l) || always) {
+      const wasEmptyCode = this.isEmptyCodeHash();
       vm.setDisplayLanguage(l);
       await this.refreshAndDisplay(vm, tr, true, false);
+      if (wasEmptyCode) {
+        // save the new hash signifying empty for this language
+        this.saveEmptyCodeHash();
+      }
     }
   }
 
