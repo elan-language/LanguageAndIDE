@@ -638,8 +638,8 @@ end function
  <li>inheritance from <b>abstract class</b> <code>Automated</code> to <b>concrete class</b> <code>Dealer</code></li>
  <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their abstract declarations.</li>
 </ul>
-enum Act stand, draw
 <codeblock>
+enum Act stand, draw
 interface Player
   abstract property hand as Hand
   abstract procedure changeScoreBy(amount as Int)
@@ -693,7 +693,7 @@ constant turquoise set to 0x00ced1
 constant liveCell set to black
 constant speedOfLight set to 299792.458
 constant gameOver set to true
-constant euro set to "€"
+constant euro set to 0x20ac 
 constant warningMsg set to "Limit reached"
 </codeblock>
 
