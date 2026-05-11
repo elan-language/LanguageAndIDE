@@ -1087,7 +1087,7 @@ window.addEventListener("hashchange", async () => {
   let param = sp.get("profile") ?? "procedural";
 
   // We are going to wipe the code in all cases
-  // and we want to make no changes at all if they cancel
+  // and we want to make no changes at all if the user cancels
   if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
     changeCss(cvd);
     codeViewModel.setCss(cvd);
