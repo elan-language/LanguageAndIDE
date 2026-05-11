@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>Introduction to OOP in Elan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
+    <link href="../ide/styles/documentation.css" rel="stylesheet">
+    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+    <link href="favicon.ico" rel="icon">
+    <script type="text/javascript" src="doc-scripts.js"></script>
+</head>
+<body>
+
+<p>To undertake object-oriented programming (OOP) in Elan, you should first be reasonably familiar with procedural programming in Elan. 
+Then, switch to the <b>Object Oriented</b> profile from the menu at the top of the IDE. 
+This still allows you to do procedural programming, but changes two things: </p>
+
+<ul>
+<li>The list of demo programs will now show only programs that use OOP. 
+    A very good place to start is to look at the <b>Snake object-oriented</b> demo, which is functionally identical to the (procedural) original, but it written using OOP design and coding patterns.</li>
+<li>the new code selectors will offer additional instructions. 
+    At the global level, it will offer: concrete class, abstract class, interface, and enum all of which are used to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>. 
+    (Enums are not usually considered to be part of OOP, but because an enum is a very simple form of user-defined type, it has been included in the same profile.)
+    And within a concrete class, abstract class, or, interface, the new code prompt will show an entirely new list of instructions, collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+</ul>
+
+<h1>If you already understand OOP but are new to coding with Elan...</h1>
+Be aware that Elan imposes a set of rules on the use of OOP, and which Elan enforces for all the supported languages - even though the individual languages, when used outside Elan, might not impose those constraints.
+These constraints are all good discipline: recognised by experts in OOP. So learning OOP within Elan will give you a better understanding and lead to fewer problems.
+
+<p>Before trying to writ</p>
+
+<h1>Exploring the 'Snake </h1>
+
+In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes:
+
+Only the 'signature' of each class is shown <i>here</i> - not the instructions within the classes:
+
+<codeblock>
+class Snake
+
+end class
+
+class Apple
+
+end class
+
+class Square
+
+end class
+</codeblock>
+
+<p>This example illustrates an important principle of OOP: an object-oriented program should largely consist of the definition of types, the names and definitions of which
+    correspond to entities in program's 'domain'. Here the domain is a game of 'snake' - which incorporate the concepts of a snake, an apple, and many squares.
+    The program <i>might</i> included classes to represent, game, player, board, and others. 
+        The decision as to which entities from the domain should represented in code comes with experience - based on how much value would be added to the program by 
+        defining such a class - and some programmers will opt for more than others.
+         The important principle is that each class should sound familiar to someone who is familiar with the problem domain (in this case: with the game of 'snake') but
+         is not necessarily a programmer.</p>
+
+<h2>Instances</h2>
+<p>Each concrete class may be thought of as a template, from which one or more 'instances' are created. 
+    It is valid to define a concrete class that is instantiated only once
+    within the program, but <i>most</i> classes that you define should be instantiated multiple times. When a class is instantiated, the instance is assigned to a variable,
+    and we can see two (of more) separate examples of this from Snake here:</p>
+
+<codeblock>variable snake set to new Snake()</codeblock>
+
+<codeblock>variable tail set to new Square(20, 15)</codeblock>
+
+<h2>Members</h2>
+<p>Each concrete classes contains other instructions., collectively known as the 'members' of the class. The following different kinds of members can be seen:</p>
+
+<h3>Property</h3>
+
+<p>Most classes define several properties. 
+        A property has name (like a variable) and a type, which might be a standard simple type or data structure, but can also be a user-defined type - which indicates that
+    the property contains a reference to an instance of that type. (This pattern is often referred to as an 'association' between instances. Like a variable, the value of
+    a property may change during the program run. However, <i>each instance</i> holds its own value for each of the properties defined on its class.
+    
+    Here are some examples of
+    properties being defined (the examples are taken from different classes), showing the name and type of each:
+
+<codeblock>property x as Int</codeblock> taken from <code>Square</code>
+<codeblock>property location as Square</codeblock> taken from <code>Apple</code>
+<codeblock>private property body as List&lt;of Square&gt;</codeblock> taken from <code>Snake</code>
+
+<p><i>Within the same class</i> the value of a property may be read, or written to using the following syntax (taken from <code>Snake</code>):</p>
+
+<codeblock>set this.priorTail to this.body[0]</codeblock>
+
+<p>where the value of the property named <code>priorTail</code> is being changed to hold the first element from the list of squares held in the property named <code>body</code>. 
+In both cases the keyword <code>this</code> refers to the current instance (i.e. the instance to which the code is applied). It is followed by a dot and the name of the property - an example of 'dot syntax'.</p>
+
+<h3>Constructor</h3>
+<p>Each class must define one, and only one, constructor. The role of the constructor is to 'initialise' (set the initial values) of the properties. 
+    The constructor is called each time an instance of a class is created. 
+    In the constructor for <code>Square</code>:
+
+<codeblock>
+  constructor(x as Int, y as Int)
+    set this.x to x
+    set this.y to y
+  end constructor
+</codeblock>   
+
+<p>the value of the properties <code>x</code> and <code>y</code> are set to the values defined by the two parameters. Although the parameters have the same names as the properties they 
+ambiguity is avoided because the <i>property</i> is always prefixed by <code>this</code>.</p>
+
+<p>The constructor for <code>Snake</code> does not define any parameters, because a snake is instantiated only once within each game, and always to the same size and initial position: </p>
+
+<codeblock>
+constructor()
+    variable tail set to new Square(20, 15)
+    set this.currentDir to Direction.right
+    set this.body to [tail]
+    set this.head to tail.getAdjacentSquare(this.currentDir)
+    set this.priorTail to tail
+end constructor
+</codeblock>
+
+<p>Note, however, that within the constructor, it creates a new instance of <code>Square</code>, passing in the arguments <code>20</code> and <code>15</code>, which the square's constructor requires.
+    It also makes used of <el-method>getAdjacentSquare</p> which is an example of using a method - which we shall explore next.
+
+<h3>Methods</h3>
+<p>The properties on a class define the <i>state</i> of an instance; the methods define its <i>behaviour</i>. Methods on a concrete class have two distinct forms: <b>function method</b> and <b>procedure method</b>.
+These mirror the distinction between a (global) <b>function</b> and <b>procedure</b>. A function is a 'query' that returns information based on the parameters that are supplied to it, 
+but in the case of a <b>function method</b> (defined within a class), in addition to the parameter values, it has access to the property values of the instance - which is legitimate because it is only ever called
+via that instance. Thus, in the example above, <el-method>getAdjacentSquare</el-method> is invoked <i>on</i> the variable <code>tail</code> (an instance of <code>Square</code>), and is passed
+the value of <code>currentDir</code> as an argument. Looking at the definition of <el-method>getAdjacentSquare</el-method> within the class <code>Square</code>:</p>
+
+<codeblock>
+function getAdjacentSquare(d as Direction) returns Square
+    variable newX set to this.x
+    variable newY set to this.y
+    if d is Direction.left then
+        set newX to this.x - 1
+    elif d is Direction.right then
+        set newX to this.x + 1
+    elif d is Direction.up then
+        set newY to this.y - 1
+    elif d is Direction.down then
+        set newY to this.y + 1
+    end if
+    return new Square(newX, newY)
+end function
+</codeblock>
+
+<p>we see that the direction (assigned to the parameter <code>d</code>) is used together with the square's <code>x</code> and <code>y</code> properties to identify the coordinates 
+    <code>newX</code> and <code>newY</code> for the adjacent square in the specified direction, and use those to create and return a new instance of <code>Square</code> with
+those two new coordinates.</p>
+
+<p>Similarly a <b>procedure method</b> is like a global <b>procedure</b> except that it is defined within a class, is accessed only via an instance of that class, using dot syntax, and also
+has internal access to the properties of that instance. Both kinds of procedure may be thought of as 'commands': they make changes to the state of the system. 
+A common use of <b>procedure method</b>s is to change the values of one or more properties and/or to make changes outside the object. 
+The method <el-method>newRandomPosition</el-method> defined on the class <code>Apple</code>:</p> 
+
+<codeblock>
+procedure newRandomPosition(snake as Snake)
+    variable changePosition set to true
+    while changePosition
+        variable ranX set to randint(0, 39)
+        variable ranY set to randint(0, 29)
+        set this.location to new Square(ranX, ranY)
+        if not snake.bodyCovers(this.location) then
+        set changePosition to false
+        end if
+    end while
+end procedure
+</codeblock>
+
+<p>changes the <code>location</code> to a new <code>Square</code> - which requires it to be a procedure method. 
+    (A second reason is that it uses the system method <el-method>randint</el-method> - which depends upon, and changes, data held in the system.)
+    Note that this procedure method makes use of the function method <code>bodyCovers</code>, defined on <code>Snake</code>.
+    
+    <p>A function method may also use other function methods and global functions, but may not call any procedure, whether global or procedure method.</p>
+
+<h3>toString method</h3>
+
+<p>Every class must define a function method named <el-method>toString</el-method>, which defines no parameters and returns a <code>String</code>. The returned string is considered to be a <i>representation</i> of the instance: 
+    <el-method>toString</el-method> is called automatically when an instance printed, or is used within a field in an interpolated string. The string might be as generic as 'a Person', use one or
+more properties to identify the instance as e.g 'Charlie Smith', or even list, or summarise all the data held by the object.</p>
+
+
+<h2>Creating a new concrete class</h2>
+<p>A new concrete class is added into your code, at global level, with the <b>concrete class</b> instruction. 
+    The template includes an empty constructor, and a default implementation of <el-method>toString</el-method>:</p>
+
+<codeblock>
+class Name
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "undefined"
+  end function
+
+end class
+</codeblock>
+
+<p>You must complete the template, by giving the class a name, which must start with a capital letter (because a class defines a type), followed by any alphabetic or numeric characters, or underlines.
+In <el-method>toString</el-method> you should, at some point, replace <code>"undefined"</code> with something more specific.</p>
+
+<p>Then via the <b>new code</b> prompt, which will offer you the appropriate options, add properties and methods. All properties must be initialised in the constructor, 
+    except those of types <code>Int</code>, <code>Float</code>, which take on the default values of the type - although such properties may optionally be initialised to different values.
+    Note in particular that properties of type <code>String</code> must be initialised, even if only to an empty string <code>""</code>.
+</p>
+
+
+<h1>Inheritance</h1>
+A concrete class may inherit from a single abstract class, and/or from one or more interfaces.  It may not inherit from more than one abstract class. Nor may it inherit from another concrete class.
+Abstract class
+An abstract class may not be instantiate directly, and hence neither needs, nor allows, a constructor.
+It may define the following types of member
+-	Property, Function method, Procedure method
+-	Abstract Property, abstract function, abstract
+Intro
+What is OOP and its advantages
+Allows you to work with custom data structures that represent the domain of your application in a way that it easier to read, write, and modify.
+Example: Snake OOP vs. Snake Procedural
+Particularly well suited to simulations and games, graphics, or complex business applications – give examples of objects.
+You can define and use objects where needed within a procedural programming, but the OOP paradigm means using the ‘object model’ as the primary design pattern.
+Class and instance
+The example programs
+We will be referring to the following demo programs: …
+Class defines type and may be thought of as a template, used to create one or more instances.
+Class is defined in one place
+And instantiated, and subsequently used, in other places
+Example of Snake OOP
+Snake
+Defined here (the code within the definition is not shown here)
+Instantiated here and assigned to variable named snake
+Apple
+Defined here (the code within the definition is not shown here)
+Instantiated here and assigned to the variable named apple
+Square
+Instantiated many times to show each segment of the snake’s body and the apple. Whenever the snake moves a new instance of Square is added to the front (the ‘head’) and the one at the tail end is discarded.
+Class definition
+Adding a new class
+Select class from new code menu – at global (file) level show
+You must give it a name. Because a class defines a type the name must start with a capital letter. Examples of valid class names including use of camel case.
+Within the class, two members are defined in the template (because every class must have them both) : a constructor and a toString method. If you look at each of the classes in Snake_OOP you will see that each has these somewhere, but with some additions/modifications.
+Properties
+Almost all classes define one or more properties – which define the data items. Each has a name and type. See examples
+Properties are like variables, except that they are associated separately with each instance. Thus the class X might define a property y, which will contain z1 for one instance, and z2 for another.
+Properties are defined within a class using the the property instruction. Example
+A property of a numeric type (float or integer) will automatically be initialised to the value 0, and a Boolean type to false. All other properties must be explicitly initialised within the constructor. Whenever a value is specified for a property, it is done with a change variable instruction. In the following example the property x is initialised to …. 
+Or you can allow value(s to be specified as parameters in the constructor, and then these values are used within the constructor to initialise one or more properties, for example:
+If the constructor defines parameters (as above) then appropriate values must be provided when you create a new instance. For example:
+Then, you can read the properties of an object instance that is held in 
+Using property values within the toString method
+ToString is a function method that returns a string, but takes no parameters. However, like other methods it can make use of the instance’s properties
+To string is used:
+-	When printing an object e.g.
+-	Referencing an object within an interpolated string e.g.
+By default the toString returns ‘undefined’. You can edit this so that it returns `a student` but it is often more useful more useful to return a string that is derived from one or more of the instances properties, for example:
+-	Returning a single identifier
+-	Returning type plus identifier
+-	Summarising all the properties  
+Updating properties of an object
+Although you can read the value of an ordinary property from code that it outside the class (for example in main) you cannot directly update a property from outside the class. For example, if you try to write this code:
+
+You will get the error Xxx
+If you want to be able to update an property from code outside  you need to write a method
+Private property
+What this looks like
+What it means
+Encapsulation and information hiding 
+Associations
+Basic types e.g. numbers, strings, Boolean
+Single association
+Other UDT (class) or less-commonly another instance of the same type e.g. Best friend 
+Multiple association
+List of value types, or of associated objects - referrerd
+Optional association
+Methods
+A method (more completely called an ‘instance method’) is a function or procedure that is defined within a class.
+These methods (unless defined as private) can be  
+Function methods
+Think of them as queries on the object. They can return information from object’s 
+Procedure methods
+Make changes to the object and/or depend upon the system. So they f
+
+</body>
+</html>
