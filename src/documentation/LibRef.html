@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../ide/styles/colourScheme.css">
 <link rel="stylesheet" href="../ide/styles/documentation.css">
 <link rel="stylesheet" href="../ide/styles/elanStyle.css">
@@ -11,6 +12,7 @@
 <title>Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 <script type="text/javascript" src="doc-scripts.js"></script>
+<script type="text/javascript" src="accordion.js"></script>
 </head>
 <body id="top">
 <div class="docTitle">Elan Library Reference</div>
@@ -465,8 +467,8 @@ end test
 <p>Elan has two mutable data structure Types <code>List</code> and <code>Dictionary</code>, and
 three immutable data structure Types <code>HashSet</code>, <code>Stack</code> and <code>Queue</code>.</p>
 <p>The contents of these structures are referred to as items (or sometimes elements).</p>
-<p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various <el-instr>procedure</el-instr> dot methods defined for each structure Type.</p>
-<p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no <el-instr>procedure</el-instr> dot methods defined for them:
+<p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various procedure dot methods defined for each structure Type.</p>
+<p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no procedure dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
 <p>Since procedure methods may be called only from within the <b>main</b> routine or a <b>procedure</b>,
 it is also possible to make changes via <b>function</b> dot methods,  which return a copy of the data structure
@@ -570,7 +572,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <el-instr>change variable</el-instr> instruction and a valid index value in square brackets:</p>
+<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <b>re-assign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>set aList[ix] to "Smith"</code></li>
 </ul>
@@ -692,7 +694,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
-  <td><el-instr>lambda</el-instr></td>
+  <td><code>lambda</code></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#filter"><el-method>filter</el-method></a> in <a href="#HoFs">HoFs</a></td>
@@ -708,7 +710,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><code>List<of String>()</code></td>
+  <td><code>List<of String></code></td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -718,19 +720,19 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the number of items in the List</td>
  </tr><tr id="map_List">
   <td><el-method>map</el-method></td>
-  <td><el-instr>lambda</el-instr></td>
+  <td><code>lambda</code></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
-  <td><el-instr>lambda</el-instr></td>
+  <td><code>lambda</code></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the maximum of the values returned by a lambda<br>
   see <a href="#maxBy"><el-method>maxBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
-  <td><el-instr>lambda</el-instr></td>
+  <td><code>lambda</code></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
@@ -741,12 +743,12 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
-  <td><el-instr>lambda</el-instr></td>
+  <td><code>lambda</code></td>
   <td><code>List</code></td>
   <td>a new list with the items ordered according to the value returned by a lambda</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
-  <td>item of <code>List</code> item's Type,<br><el-instr>lambda</el-instr></td>
+  <td>item of <code>List</code> item's Type,<br><code>lambda</code></td>
   <td>return Type of lambda</td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
@@ -1414,7 +1416,7 @@ end main
 </codeblock>
 <p><img src="images/turtleSquare.png" width="270" height="290" alt="Turtle square"></p>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a fractal snowflake, using a <el-instr>procedure</el-instr> and recursion:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a fractal snowflake, using a procedure and recursion:</p>
 <codeblock>
 main
   variable t set to new Turtle()
@@ -1465,7 +1467,8 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
-<p>A set of SVG shapes is defined in either a <code>List</code>&lt;of <code>VectorGraphic</code>&gt; or a <code>List</code> of any specific Type of <code>VectorGraphic</code> (e.g. <code>List</code>&lt;<el-instr>of</el-instr> <code>CircleVG</code>&gt;) by using the <code>List</code> <el-method>append</el-method> method.</p>
+<p>A set of SVG shapes is defined in either a <code>List<of VectorGraphic></code> or a <code>List</code> of any specific Type of <code>VectorGraphic</code>
+ (e.g. <code>List<of CircleVG></code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
@@ -1781,11 +1784,9 @@ end main
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods</a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
 <p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
-<p>You start by getting a seed random number in your <<b>el-instr>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
-
-<codeblock>variable rand set to new Random()</codeblock>
-<codeblock>call rand.initialiseFromClock()</codeblock>
-
+<p>You start by getting a seed random number in your <<b>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
+<code>variable rand set to new Random()</code><br>
+<code>call rand.initialiseFromClock()</code>
 <p>Then, in a <b>function</b>, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <code>Random</code> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <code>Random</code>.
 If you need another random value, you use the returned <code>Random</code> on which to apply the dot method again.</p>
 <p>Avoid applying <el-method>next</el-method> or <el-method>nextInt</el-method> more than once on the same <code>Random</code> because they will return the same values.</p>
@@ -1850,14 +1851,14 @@ end function
 </div></div>
 
 <h2 id="Func">Func</h2>
-<p>A <b>function</b> may be passed as an argument into another <b>function</b> (or a <el-instr>procedure</el-instr>), or returned as the result of calling another <b>function</b>.
+<p>A <b>function</b> may be passed as an argument into another <b>function</b> (or a <b>procedure</b>), or returned as the result of calling another <b>function</b>.
 This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in Functional Programming.</p>
 <p>To define a <b>function</b> that takes in another <b>function</b> as a parameter, or returns a <b>function</b>, you need to specify the Type of the <b>function</b>,
 just as you would specify the Type of every parameter and the return Type for the <b>function</b>. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any <b>function</b> starts with the word <el-instr>Func</el-instr> followed by angle brackets defining the Type of each parameter,
-    then a 'fat arrow' =&gt; and the return Type for that <b>function</b>. This <el-instr>property</el-instr> definition shows the syntax:</p>
+<p>The Type of any <b>function</b> starts with the word <code>Func</code> followed by angle brackets defining the Type of each parameter,
+    then =&gt; (a 'fat arrow') and the return Type for that <b>function</b>. This <b>property</b> definition shows the syntax:</p>
 
 <codeblock>
   property matchAt as Func<of String, String, Int => Boolean>
@@ -1867,7 +1868,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <codeblock>
 function matchAt(a as String, b as String, p as Int) returns Boolean
-  return if a[p].equals(b[p]) then true else false
+  return if(a[p].equals(b[p]), true, false)
 end function
 </codeblock>
 
@@ -1982,7 +1983,7 @@ end main
  <code>"ArrowUp"</code> etc., function key <code>"Fn"</code>, <code>"AltGraph"</code>, <code>"Meta"</code>, <code>"ContextMenu"</code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
- <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <el-instr>procedure</el-instr> or in <b>main</b>.</li>
+ <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <b>procedure</b> or in <b>main</b>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
@@ -1999,6 +2000,7 @@ main
 end main
 </codeblock>
 
+
 <h2 id="FileInputOutput">Text file input/output</h2>
 <p>Reading or writing a text file requires that you <b>open</b> (for reading) or <b>create</b> (for writing) a file using these system methods:</p>
 <table class="tableMethod">
@@ -2007,13 +2009,6 @@ end main
   <th>argument<br>Types</th>
   <th>return<br>Class</th>
   <th>action</th>
- </tr><tr id="openFileForReading">
-  <td><el-method>openFileForReading</el-method></td>
-  <td>(none)</td>
-  <td><code>TextFileReader</code></td>
-  <td>opens a file system dialog to choose the filename of filetype .txt to be read,
-  and returns a file handle<br>
-  see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="createFileForWriting">
   <td><el-method>createFileForWriting</el-method></td>
   <td><code>String</code></td>
@@ -2021,8 +2016,71 @@ end main
   <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
   with or without the default filetype of .txt, and returns a file handle<br>
   see <a href="#TextFileWriter">Writing text files</a></td>
+ </tr><tr id="openFileForReading">
+  <td><el-method>openFileForReading</el-method></td>
+  <td>(none)</td>
+  <td><code>TextFileReader</code></td>
+  <td>opens a file system dialog to choose the filename of filetype .txt to be read,
+  and returns a file handle<br>
+  see <a href="#TextFileReader">Reading text files</a></td>
  </tr>
 </table>
+
+<h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
+<p>The <code>TextFileWriter</code> Class is used to write textual data to a file.</p>
+<p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
+<p>The available procedure methods are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="writeLine">
+  <td><el-method>writeLine</el-method></td>
+  <td><code>String</code></td>
+  <td>writes the string to the buffer</td>
+ </tr><tr id="writeWholeFile">
+  <td><el-method>writeWholeFile</el-method></td>
+  <td><code>String</code></td>
+  <td>writes the string to the buffer and then outputs the buffer to the file system</td>
+ </tr><tr id="saveAndClose">
+  <td><el-method>saveAndClose</el-method></td>
+  <td>none</td>
+  <td>writes the buffer to the file system</td>
+ </tr>
+</table>
+
+<p>These methods may be used to write a whole file in one go:</p>
+<codeblock>
+main
+  variable file set to createFileForWriting("myFile.txt")
+  call file.writeWholeFile("Text line 1\nText line 2")
+end main
+</codeblock>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
+<li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
+<li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
+<li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
+<li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
+To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <b>try</b> instruction like this (where <code>CustomError</code> is a Class provided by Elan for this purpose):
+<codeblock>
+main
+  variable file set to createFileForWriting("squares.txt")
+  for i in range(1, (101))
+    call file.writeLine($"{i*i}")
+  end for
+  try
+    call file.saveAndClose()
+  catch CustomError
+    call print("Save cancelled")
+  end try
+end main
+</codeblock>
+or you could make the code offer the user options: to save again, or to continue without saving.</li>
+</ul>
 
 <h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
 <p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension .txt.</p>
@@ -2070,62 +2128,6 @@ end main
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
 
-<h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
-<p>The <code>TextFileWriter</code> Class is used to write textual data to a file.</p>
-<p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
-<p>The available procedure methods are:</p>
-<table class="tableMethod">
- <tr>
-  <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
-  <th>action</th>
- </tr><tr id="writeLine">
-  <td><el-method>writeLine</el-method></td>
-  <td><code>String</code></td>
-  <td>writes the string to the buffer</td>
- </tr><tr id="writeWholeFile">
-  <td><el-method>writeWholeFile</el-method></td>
-  <td><code>String</code></td>
-  <td>writes the string to the buffer and then outputs the buffer to the file system</td>
- </tr><tr id="saveAndClose">
-  <td><el-method>saveAndClose</el-method></td>
-  <td>none</td>
-  <td>writes the buffer to the file system</td>
- </tr>
-</table>
-
-<p>These methods may be used to write a whole file in one go:</p>
-<codeblock>
-main
-  variable file set to createFileForWriting("myFile.txt")
-  call file.writeWholeFile("Text line 1\nText line 2")
-end main
-</codeblock>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
-<li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
-<li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
-<li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
-<li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
-To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <el-instr>try...catch</el-instr> instruction like this (where <code>ElanRuntimeError</code> is a Class provided by Elan for this purpose):</li>
-
-<codeblock>
-main
-  variable file set to createFileForWriting("squares.txt")
-  for i in range(1, (101))
-    call file.writeLine($"{i*i}")
-  end for
-  try
-    call file.saveAndClose()
-  catch ElanRuntimeError
-    call print("Save cancelled")
-  end try
-end main
-</codeblock>
-<p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
-</ul>
 
 <h2 id="RenderHtml">Rendering Html in the display</h2>
 <p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
@@ -2140,7 +2142,7 @@ end main
 <p><img src="images/Html_1.png" width="250" height="200" alt="Html 1"></p>
 
 <p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
-    (using <el-instr>call procedure</el-instr> <el-method>print</el-method>() or any of the print procedures)
+    (using <b>call procedure</b> <el-method>print</el-method>() or any of the print procedures)
     will be overlaid on top of this.</p>
 
 <p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
@@ -2531,7 +2533,6 @@ end main
  <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="LibRef.html#InterpolatedString">interpolated strings</a>]<br>[defining a <a href="LibRef.html#Tuple">2-Tuple</a>]<br>true<br>42</td>
  </tr>
 </table>
-</ul>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure <el-method>printTab</el-method> helps in the layout of information printed to the display, e.g. when printing columns of data:</p>
@@ -2577,7 +2578,7 @@ end main
 <p>These methods may be referenced from within a <b>function</b>.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
-<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-instr>variable definition</el-instr> declaration or a <el-instr>change variable</el-instr> assignment, either on their own or within a more complex expression.</p>
+<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or a <b>re-assign variable</b>, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
 
 <table class="tableMethod">
@@ -2774,7 +2775,7 @@ end test
 so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here:</p>
 <table>
  <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
- <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
+ <tr><th></th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
  <tr><td><code>bitAnd(p,q)</code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
  <tr><td><code>bitOr(p,q)</code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
  <tr><td><code>bitNot(p)</code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
@@ -2938,7 +2939,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 
 <h2 id="AsRef">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a <b>function</b>.
- This can be either a <a href="LangRef.html#lambda"><el-instr>lambda</el-instr></a> or the name of a <b>function</b>.
+ This can be either a <a href="LangRef.html#lambda"><code>lambda</code></a> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function</b>, its name is not followed by round brackets (or arguments), as in this example:
@@ -2960,7 +2961,7 @@ end function
 
 <h1 id="Constants">System constants</h1>
 
-<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-instr>constant</el-instr></a>s,
+<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <b>constant</b> </a>,
  in that they are mutable named values, though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
@@ -3000,11 +3001,11 @@ end function
  </tr><tr id="true">
   <td><el-id>true</el-id></td>
   <td><code>Boolean</code></td>
-  <td><a href="#Boolean"><el-id>true</el-id></a></td>
+  <td><a href="#Boolean"><code>true</code></a></td>
  </tr><tr id="false">
   <td><el-id>false</el-id></td>
   <td><code>Boolean</code></td>
-  <td><a href="#Boolean"><el-instr>false</el-instr></a></td>
+  <td><a href="#Boolean"><code>false</code></a></td>
  </tr>
 </table>
 
@@ -3034,7 +3035,7 @@ end function
 <h2>Defining your own HoFs</h2>
 
 <h2>Library functions that process Lists</h2>
-<p>These dot methods are called on any <code>List</code>, or <code>String</code>. As Higher-order Functions they take either a <el-instr>lambda</el-instr> or a function reference as one of their arguments: see above.</p>
+<p>These dot methods are called on any <code>List</code>, or <code>String</code>. As Higher-order Functions they take either a lambda</b></code> or a <b>function</b> reference as one of their arguments: see above.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
@@ -3046,7 +3047,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <el-instr>lambda</el-instr> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
 <codeblock>
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
@@ -3058,7 +3059,7 @@ end function
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a <b>function</b> to every item in a <code>List</code>, and return a new List.
-The <b>function</b> to be applied is usually specified as a <el-instr>lambda</el-instr> having a single argument of the Type of the list's items, as in these examples:</p>
+The <b>function</b> to be applied is usually specified as a <code>lambda</code> having a single argument of the Type of the list's items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
@@ -3117,13 +3118,13 @@ end main
  <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
 <ol>
  <li>The accumulating value, which is therefore of the same Type as the initial seed value.
- (This will be the return value of the <b>function</b> or <el-instr>lambda</el-instr>).</li>
+ (This will be the return value of the <b>function</b> or <code>lambda</code>).</li>
  <li>The item to which the <b>function</b> is applied, which is therefore of the same Type
    as the items in the input list.</li>
  </ol>
  </li>
 </ol>
-<p>In other words, the specified <b>function</b> or <el-instr>lambda</el-instr> is applied to each itme of the input List in turn, in each case passing in the current value
+<p>In other words, the specified <b>function</b> or <code>lambda</code> is applied to each itme of the input List in turn, in each case passing in the current value
   of the result. The <b>function</b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
   for application to the next item. This is best understood by looking at the examples.</p>
 
@@ -3210,7 +3211,7 @@ end main
 </div></div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
-<p><el-method>orderBy</el-method> takes a <el-instr>lambda</el-instr> that has two arguments of the same Type as that of the <code>List</code> items to be re-ordered
+<p><el-method>orderBy</el-method> takes a <code>lambda</code> that has two arguments of the same Type as that of the <code>List</code> items to be re-ordered
  and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>greater than</i>) for numerics and <i>before</i> (or <i>after</i>) for strings.</p>
 
 <div class="accordion">
@@ -3236,18 +3237,5 @@ end main
 </div></div>
 <hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
-<script type="">
-  var accordions = document.getElementsByClassName("acc-title");
-  for (const item of accordions) {
-    item.addEventListener("click", function() {
-      item.parentElement.classList.toggle("active");
-    });
-    item.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        item.parentElement.classList.toggle("active");
-      }
-    });
-  }
-</script>
 </body>
 </html>
