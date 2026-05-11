@@ -1,4 +1,4 @@
-# f586d53d9626251ecd0d82f782a61b9fbadc6ae8f5ca086b97566c8575e487d0 Elan 2.0.0-alpha1 valid
+# 9c0306793c5dab04f597adcc7f3e11e959de2348afd909d56a8e6a1d3925fe33 Elan 2.0.0-alpha1 valid
 
 main
   variable a set to 3
@@ -26,6 +26,6 @@ main
   else
   end if
   try
-  catch ElanRuntimeException
+  catch e as ElanRuntimeException
   end try
 end main

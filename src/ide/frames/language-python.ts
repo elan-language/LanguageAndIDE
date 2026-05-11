@@ -111,7 +111,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()}:`;
+      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.variable.renderAsHtml()}:`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -624,6 +624,7 @@ def clock():
     return result;
   }
 
+  private AS = "as";
   private DEF = "def";
   private CLASS = "class";
   private ELIF = "elif";
