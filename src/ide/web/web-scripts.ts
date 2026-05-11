@@ -891,23 +891,22 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
     cvd: { default: "colourScheme", current: codeViewModel.getCss() ?? "colourScheme" },
   };
 
+  // Use a URLSearchParams object even though the values are going to end up in the fragment identifier.
+  // We use the same encoding as URLSearchParams, ie name1=value1&name2=value2
+  const sp = new URLSearchParams();
   for (const p in urlParams) {
     const e = urlParams[p];
-    if (e.default === e.current) {
-      // The url was derived from window.location.href
-      // so it may already have params which we don't want,
-      // if a setting has been changed to the default
-      // since the page was loaded.
-      url.searchParams.delete(p);
-    } else {
-      url.searchParams.set(p, e.current);
+    if (e.default !== e.current) {
+      // Only include values which are not the default
+      sp.set(p, e.current);
     }
   }
 
   // Only include the code if it is not an empty file
   if (!codeViewModel.isEmptyCodeHash()) {
-    url.searchParams.set("code", bEncoded);
+    sp.set("code", bEncoded);
   }
+  url.hash = sp.toString(); // it adds the "#" for us
   const urlAsString = url.toString();
 
   if (urlAsString.length < 2000) {
@@ -1073,9 +1072,61 @@ window.addEventListener("message", async (m) => {
   await ideViewModel.messageHandler(m, codeViewModel, fileManager, testRunner);
 });
 
+// The user may edit the URL and press Enter and expect the page to change
+window.addEventListener("hashchange", async () => {
+  let fragId = new URL(window.location.href).hash;
+  // It may be an empty string, in which case we want an empty URLSearchParams.
+  fragId = fragId.length > 0 ? fragId.substring(1) : "";
+  const sp = new URLSearchParams(fragId);
+
+  // Slightly different logic from initial load in that values have to be set
+  // for every parameter (except code) even if it is the default value
+  const lang = sp.get("lang") ?? "elan";
+  const cvd = sp.get("cvd") ?? "colourScheme";
+  const code = sp.get("code");
+  let param = sp.get("profile") ?? "procedural";
+
+  // We are going to wipe the code in all cases
+  // and we want to make no changes at all if they cancel
+  if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
+    changeCss(cvd);
+    codeViewModel.setCss(cvd);
+
+    await codeViewModel.changeLanguage(getLanguageByClass(lang), ideViewModel, testRunner, false);
+
+    if (!document.getElementById("profile-" + param)) {
+      // invalid profile name
+      param = "procedural";
+    }
+    const oldProfileName = codeViewModel.getProfile()?.name || "";
+    const profileName = param;
+
+    await codeViewModel.setProfile(new Profile(profileName));
+    profileButton.textContent = document.getElementById("profile-" + profileName)!.textContent;
+    const bodyClassList = docBody.classList;
+    bodyClassList.remove(oldProfileName);
+    bodyClassList.add(profileName);
+    // reset to blank code even if overwriting after
+    codeViewModel.recreateFile(ideViewModel, true);
+    await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
+    codeViewModel.saveEmptyCodeHash();
+    if (code) {
+      await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner, code);
+    }
+  }
+});
+
 if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
-  const sp = new URL(window.location.href).searchParams;
-  const param = sp.get("profile") || "procedural";
+  let fragId = new URL(window.location.href).hash;
+  // It may be an empty string, in which case we want an empty URLSearchParams.
+  fragId = fragId.length > 0 ? fragId.substring(1) : "";
+  const sp = new URLSearchParams(fragId);
+
+  let param = sp.get("profile") || "procedural";
+  if (!document.getElementById("profile-" + param)) {
+    // invalid profile name
+    param = "procedural";
+  }
   const profile = new Profile(param);
   setup(profile);
 } else {
@@ -1111,7 +1162,10 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
 async function setup(p: Profile) {
   fileManager.reset();
   codeViewModel.setProfile(p);
-  const sp = new URL(window.location.href).searchParams;
+  let fragId = new URL(window.location.href).hash;
+  // It may be an empty string, in which case we want an empty URLSearchParams.
+  fragId = fragId.length > 0 ? fragId.substring(1) : "";
+  const sp = new URLSearchParams(fragId);
   const lang = sp.get("lang") ?? "";
   const cvd = sp.get("cvd");
   const code = sp.get("code");
@@ -1129,7 +1183,7 @@ async function setup(p: Profile) {
 
   codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
-  // make record of the hash of the empty code for the chosen language
+  // make a record of the hash of the empty code for the chosen language
   // before we (optionally) overwrite the empty code with something non-empty
   // see copyAsUrlButton above
   codeViewModel.saveEmptyCodeHash();
