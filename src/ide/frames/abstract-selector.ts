@@ -43,11 +43,15 @@ export abstract class AbstractSelector extends AbstractFrame {
   abstract profileAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(userEntry: boolean): [string, string, string, (parent: Parent) => Frame][] {
+  optionsFilteredByContext(
+    userEntry: boolean,
+  ): [string, string, string, (parent: Parent) => Frame][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByProfile(userEntry: boolean): [string, string, string, (parent: Parent) => Frame][] {
+  optionsFilteredByProfile(
+    userEntry: boolean,
+  ): [string, string, string, (parent: Parent) => Frame][] {
     return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
   }
 

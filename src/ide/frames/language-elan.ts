@@ -157,9 +157,11 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string{
+  inheritsFromTextAsHtml(field: InheritsFromField): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}` : ``;
+    return frame.doesInherit()
+      ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}`
+      : ``;
   }
 
   renderTopAsExport(_frame: Frame): string {

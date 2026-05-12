@@ -27,7 +27,11 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList, languageHelper_mathFunctions } from "./language-helpers";
+import {
+  LineFormat,
+  languageHelper_enumValuesList,
+  languageHelper_mathFunctions,
+} from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { ListNode } from "./parse-nodes/list-node";
@@ -105,7 +109,8 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof AbstractProcedure) {
       html = `<el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProperty) {
-      html = html = `<el-comment>@property</el-comment><br><el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html =
+        html = `<el-comment>@property</el-comment><br><el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
@@ -184,8 +189,8 @@ export class LanguagePython extends LanguageAbstract {
   override enumValuesListAsHtml(field: EnumValuesField): string {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
- 
-  inheritsFromTextAsHtml(field: InheritsFromField): string{
+
+  inheritsFromTextAsHtml(field: InheritsFromField): string {
     let result = "";
     const frame = field.getHolder() as ClassFrame;
     if (frame.doesInherit()) {

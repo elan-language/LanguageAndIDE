@@ -19,7 +19,7 @@ export class VariableAsn extends AbstractDefinitionAsn implements ElanSymbol {
     return true;
   }
 
-    isLet() {
+  isLet() {
     return false;
   }
 }

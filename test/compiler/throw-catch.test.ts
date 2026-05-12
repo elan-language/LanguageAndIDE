@@ -349,7 +349,7 @@ main
     call foo()
     call printNoLine("not caught")
   catch e as ElanRuntimeError
-    variable s set to e
+    variable s set to e.toString()
     call printNoLine(s)
   end try
 end main
@@ -366,7 +366,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let s = e;
+    let s = (await _stdlib.toString(e));
     await _stdlib.printNoLine(s);
     }
     else {

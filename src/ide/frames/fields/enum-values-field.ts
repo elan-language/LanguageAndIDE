@@ -37,7 +37,6 @@ export class EnumValuesField extends AbstractField {
     } else {
       const textAsHtml = this.getFile().language().enumValuesListAsHtml(this);
       result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${textAsHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
-
     }
     return result;
   }
