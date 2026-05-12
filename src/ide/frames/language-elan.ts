@@ -83,7 +83,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof CallStatement) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} ${frame.exceptionType.renderAsHtml()}`;
+      html = `<el-kw>${this.CATCH} ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -157,9 +157,11 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string{
+  inheritsFromTextAsHtml(field: InheritsFromField): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}` : ``;
+    return frame.doesInherit()
+      ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}`
+      : ``;
   }
 
   renderTopAsExport(_frame: Frame): string {

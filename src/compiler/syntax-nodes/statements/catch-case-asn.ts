@@ -6,6 +6,7 @@ import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
+import { EmptyAsn } from "../empty-asn";
 
 export class CatchCaseAsn extends BreakpointAsn {
   constructor(
@@ -15,6 +16,8 @@ export class CatchCaseAsn extends BreakpointAsn {
   ) {
     super(fieldId, scope);
   }
+
+  variable: AstNode = EmptyAsn.Instance;
 
   getCurrentScope(): Scope {
     return this.compileScope ?? this;
@@ -30,7 +33,7 @@ export class CatchCaseAsn extends BreakpointAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}if (e instanceof ${scope}${type.symbolId}) {
+    return `${this.indent()}if (${this.variable.compile()} instanceof ${scope}${type.symbolId}) {
 ${compileNodes(this.compileChildren)}
 ${this.indent()}}`;
   }
@@ -48,7 +51,7 @@ ${this.indent()}}`;
 
   getOuterScope() {
     // need to get scope of TryStatement
-    return this.getCurrentScope().getParentScope();
+    return this.getCurrentScope();
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {

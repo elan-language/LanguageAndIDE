@@ -595,7 +595,7 @@ export function transform(
     const catchAsn = new CatchCaseAsn(type!, node.getHtmlId(), scope);
     catchAsn.breakpointStatus = node.breakpointStatus;
 
-    //catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
+    catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
     return catchAsn;
   }
 

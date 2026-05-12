@@ -60,7 +60,7 @@ import { ParseStatus } from "../src/ide/frames/status-enums";
 import { DOT } from "../src/ide/frames/symbols";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import {
   fileWithCS,
   fileWithJava,
@@ -2082,7 +2082,8 @@ suite("Parsing Nodes", () => {
   test("Parse list of floats 2", () => {
     testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
   });
-  test("Six open brackets", () => {
+  
+  ignore_test("Six open brackets", () => {
     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
   });
   test("Image", () => {

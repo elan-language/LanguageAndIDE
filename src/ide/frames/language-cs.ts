@@ -73,11 +73,10 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string{
+  inheritsFromTextAsHtml(field: InheritsFromField): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? `: ${field.default_renderasHtml()}` : ``;
   }
-
 
   renderBottomAsHtml(frame: Frame): string {
     return this.common_renderBottomAsHtml(frame);

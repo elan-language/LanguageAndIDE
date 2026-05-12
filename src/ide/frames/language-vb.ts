@@ -350,10 +350,15 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return languageHelper_enumValuesList(field, LineFormat.multiline, 0, `<br><el-kw>${this.END} ${this.ENUM}</el-kw>`);
+    return languageHelper_enumValuesList(
+      field,
+      LineFormat.multiline,
+      0,
+      `<br><el-kw>${this.END} ${this.ENUM}</el-kw>`,
+    );
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string{
+  inheritsFromTextAsHtml(field: InheritsFromField): string {
     const frame = field.getHolder() as ClassFrame;
     const node = field.getRootNode()! as InheritanceNode;
     let result = ``;
@@ -363,7 +368,7 @@ export class LanguageVB extends LanguageAbstract {
       const abstractClasses = node.getAbstractClassNames();
       if (abstractClasses.length > 0) {
         const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
-        const csvTypes = typesAsHtml.join(", ");  
+        const csvTypes = typesAsHtml.join(", ");
         result += `<br>&nbsp;&nbsp;${inheritsKw} ${csvTypes}`;
       }
       const interfaces = node.getInterfaceNames();
@@ -371,7 +376,7 @@ export class LanguageVB extends LanguageAbstract {
         const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
         const csvTypes = typesAsHtml.join(", ");
         const keyWord = frame.isInterface ? inheritsKw : implementsKw;
-        result +=  `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
+        result += `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
       }
       result += `<br>`;
     } else {
@@ -379,7 +384,6 @@ export class LanguageVB extends LanguageAbstract {
     }
     return result;
   }
-
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);

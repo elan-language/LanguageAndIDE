@@ -13,7 +13,7 @@ def main() -> None:
         td = int(reply) # variable definition
         if td >= 0:
           print(getDate(td))
-      except ElanRuntimeError: # catch
+      except ElanRuntimeError as e: # catch
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition

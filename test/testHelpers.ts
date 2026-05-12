@@ -143,15 +143,19 @@ export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string
         updateTestFileNew(htmlFile, actualHtml);
       }
       if (pythonFile !== "") {
+        pythonFile = pythonFile.replace("out\\", "");
         updateTestFileNew(pythonFile, actualPython);
       }
       if (vbFile !== "") {
+        vbFile = vbFile.replace("out\\", "");
         updateTestFileNew(vbFile, actualVB);
       }
       if (csFile !== "") {
+        csFile = csFile.replace("out\\", "");
         updateTestFileNew(csFile, actualCS);
       }
       if (javaFile !== "") {
+        javaFile = javaFile.replace("out\\", "");
         updateTestFileNew(javaFile, actualJava);
       }
       throw new Error("Files updated");
