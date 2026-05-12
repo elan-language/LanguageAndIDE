@@ -161,7 +161,7 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call printNoLine("Foo")
   end try
 end main
@@ -216,8 +216,8 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch CustomError
-    call printNoLine("Foo")
+  catch e as CustomError
+    call printNoLine(e)
   end try
 end main
 
@@ -233,7 +233,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.CustomError) {
-    await _stdlib.printNoLine("Foo");
+    await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -273,8 +273,8 @@ main
     variable y set to x[1]
     variable z set to y.p1
     call printNoLine("not caught")
-  catch ElanRuntimeError
-    call printNoLine("Out of range index: 1 size: 0")
+  catch e as ElanRuntimeError
+    call printNoLine(e)
   end try
 end main
 
@@ -299,7 +299,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine("Out of range index: 1 size: 0");
+    await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -348,8 +348,8 @@ main
   try
     call foo()
     call printNoLine("not caught")
-  catch ElanRuntimeError
-    variable s set to "Foo"
+  catch e as ElanRuntimeError
+    variable s set to e
     call printNoLine(s)
   end try
 end main
@@ -366,7 +366,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let s = "Foo";
+    let s = e;
     await _stdlib.printNoLine(s);
     }
     else {
@@ -405,7 +405,7 @@ main
   try
     variable a set to 1
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     variable a set to "fail"
     call printNoLine(a)
   end try
@@ -462,7 +462,7 @@ main
   variable a set to 1
   try
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call printNoLine(a)
   end try
 end main
@@ -517,7 +517,7 @@ main
   variable a set to 1
   try
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     [ghosted] variable a set to 1
   end try
 end main`;
@@ -563,10 +563,10 @@ main
   variable a set to 1
   try
     throw exception "fail"
-  catch ElanRuntimeError in e
+  catch e as ElanRuntimeError
     variable b set to 2
 
-  catch ElanRuntimeError in e
+  catch e as ElanRuntimeError
     variable a set to 1
   end try
 end main`;
@@ -679,7 +679,7 @@ main
   try
     variable a set to 1
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call printNoLine(a)
   end try
 end main
@@ -711,7 +711,7 @@ main
   variable a set to 1
   try
     throw ElanRuntimeError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     variable a set to e
     call printNoLine(a)
   end try
@@ -734,7 +734,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'e' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error"]);
   });
 
   test("Fail_ThrowWrongType", async () => {
@@ -743,7 +743,7 @@ end procedure`;
 main
   try
     throw FooException "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call printNoLine("")
   end try
 end main
@@ -781,7 +781,7 @@ end class`;
 main
   try
     throw CustomError "fail"
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call printNoLine("caught")
   end try
 end main`;
@@ -808,7 +808,7 @@ end main`;
 main
   try
     throw CustomError "fail"
-  catch FooException
+  catch e as FooException
     call printNoLine("")
   end try
 end main

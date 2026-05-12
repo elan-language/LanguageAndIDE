@@ -20,10 +20,11 @@ export class TryAsn extends CompoundAsn {
       if (c instanceof CatchCaseAsn) {
         if (!currentCatch) {
           currentCatch = new CatchAsn(this.fieldId, this);
+          currentCatch.variable = c.variable;
           tryChildren.push(currentCatch);
         }
         currentCaseCatch = c;
-        currentCaseCatch.setCompileScope(this);
+        currentCaseCatch.setCompileScope(currentCatch);
         currentCatch.addChild(c);
       } else if (currentCaseCatch) {
         if (c instanceof BreakpointAsn) {

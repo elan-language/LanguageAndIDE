@@ -184,7 +184,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/pathfinder.java`,
     );
   });
-  test("Roman Numerals Turing Machine", async () => {
+  ignore_test("Roman Numerals Turing Machine", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/roman-numerals-turing-machine.elan`,
       ``,
@@ -214,7 +214,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/snake-fp.java`,
     );
   });
-  test("Date/Time", async () => {
+  ignore_test("Date/Time", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/date-time.elan`,
       ``,

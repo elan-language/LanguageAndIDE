@@ -473,7 +473,7 @@ end main
 main
   try
     call print("")
-  catch ElanRuntimeError
+  catch e as ElanRuntimeError
     call print("")
   end try
 end main

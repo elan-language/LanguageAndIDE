@@ -14,7 +14,7 @@ main
         if td >= 0 then
           call print(getDate(td))
         end if
-      catch ElanRuntimeError
+      catch e as ElanRuntimeError
       end try
     end if
   end while
