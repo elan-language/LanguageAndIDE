@@ -35,6 +35,24 @@ export class Random {
 
   private v: number;
 
+    @elanFunction([], FunctionOptions.pure, ElanClass(Random))
+  next(): Random {
+    const gen2 = this.system!.initialise(new Random());;
+    gen2.u = 36969 * (this.u % 65536) + this.u / 65536;
+    gen2.v = 18000 * (this.v % 65536) + this.v / 65536;
+    return gen2;
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanFloat)
+  asFloat() {
+    return this.lo32(this.lo32(this.u * 65536) + this.v + 1) * 2.328306435454494e-10;
+  }
+
+  @elanFunction(["min", "max"], FunctionOptions.pure, ElanInt)
+  asInt(@elanIntType() min: number, @elanIntType() max: number) {
+    return Math.floor(this.asFloat() * (max - min + 1) + min);
+  }
+
   @elanFunction([], FunctionOptions.pure, ElanTuple([ElanFloat, ElanClass(Random)]))
   nextRandom() {
     return this.nextImpl();
