@@ -32,7 +32,7 @@ export const defaultUsername = "guest";
 export class Profile {
   constructor(prof: string) {
     this.name = prof;
-     if (prof === "oop") {
+    if (prof === "oop") {
       this.globals = this.globals_oop;
       this.members = this.members_oop;
       this.statements = this.statements_oop;
@@ -58,16 +58,30 @@ export class Profile {
   statementsInFunction: string[] = [];
   members: string[] = [];
 
-  private globals_procedural = [mainKeyword, "print", functionKeyword, testKeyword, constantKeyword, procedureKeyword, tryKeyword, throwKeyword];
-  private globals_oop = this.globals_procedural.concat([classKeyword, abstractKeyword, interfaceKeyword, enumKeyword]);
+  private globals_procedural = [
+    mainKeyword,
+    "print",
+    functionKeyword,
+    testKeyword,
+    constantKeyword,
+    procedureKeyword,
+    tryKeyword,
+    throwKeyword,
+  ];
+  private globals_oop = this.globals_procedural.concat([
+    classKeyword,
+    abstractKeyword,
+    interfaceKeyword,
+    enumKeyword,
+  ]);
   private globals_functional = this.globals_oop;
   private globals_all = this.globals_oop;
 
   private statements_procedural = [
     assertKeyword,
-    "print", 
-    variableKeyword, 
-    setKeyword, 
+    "print",
+    variableKeyword,
+    setKeyword,
     ifKeyword,
     elifKeyword,
     elseKeyword,
@@ -80,7 +94,7 @@ export class Profile {
   private statements_oop = this.statements_procedural;
   private statements_functional = this.statements_procedural.concat([letKeyword]);
   private statements_all = this.statements_functional;
-  
+
   private members_procedural: string[] = [];
   private members_oop: string[] = [
     functionKeyword,
@@ -90,10 +104,6 @@ export class Profile {
     abstractProcedureKeywords,
     abstractPropertyKeywords,
   ];
-  private members_functional: string[] = [
-    functionKeyword,
-    propertyKeyword,
-    withKeyword
-  ];
+  private members_functional: string[] = [functionKeyword, propertyKeyword, withKeyword];
   private members_all: string[] = this.members_oop.concat([withKeyword]);
 }

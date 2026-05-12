@@ -35,20 +35,35 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "p", "<b>p</b>rint", (parent: Parent) => this.factory.newCall(parent, "print")],
-      [letKeyword, "l",  "<b>l</b>et statement", (parent: Parent) => this.factory.newLetStatement(parent)],
+      [
+        letKeyword,
+        "l",
+        "<b>l</b>et statement",
+        (parent: Parent) => this.factory.newLetStatement(parent),
+      ],
       [
         variableKeyword,
-        "v", 
+        "v",
         "<b>v</b>ariable definition",
         (parent: Parent) => this.factory.newVar(parent),
       ],
-      [setKeyword, "r", "<b>r</b>e-assign variable", (parent: Parent) => this.factory.newSet(parent)],
-      [ifKeyword, "i", "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)], 
+      [
+        setKeyword,
+        "r",
+        "<b>r</b>e-assign variable",
+        (parent: Parent) => this.factory.newSet(parent),
+      ],
+      [ifKeyword, "i", "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
       [elifKeyword, "s", "el<b>s</b>e if", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "e", "<b>e</b>lse", (parent: Parent) => this.factory.newElse(parent)],
       [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
       [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
-      [callKeyword, "c", "<b>c</b>all procedure", (parent: Parent) => this.factory.newCall(parent, "")],
+      [
+        callKeyword,
+        "c",
+        "<b>c</b>all procedure",
+        (parent: Parent) => this.factory.newCall(parent, ""),
+      ],
       [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [throwKeyword, "t", "<b>t</b>hrow", (parent: Parent) => this.factory.newThrow(parent)],
@@ -62,10 +77,14 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.statements.includes(keyword) || this.profile.statementsInFunction.includes(keyword) || keyword === this.getCommentMarker();
+    return (
+      this.profile.statements.includes(keyword) ||
+      this.profile.statementsInFunction.includes(keyword) ||
+      keyword === this.getCommentMarker()
+    );
   }
 
-validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
     if (keyword === elseKeyword || keyword === elifKeyword) {
@@ -95,7 +114,6 @@ validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
   private isWithinAWithFunctionMethod(): boolean {
     return this.isWithinContext(this.getParent(), "func");
   }
-
 
   private isDirectlyWithinATest(): boolean {
     return this.getParent().getIdPrefix() === "test";

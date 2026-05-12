@@ -4,13 +4,16 @@ import { ClassFrame } from "./globals/class-frame";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParseStatus } from "./status-enums";
 
-export enum LineFormat {inline, multiline}
+export enum LineFormat {
+  inline,
+  multiline,
+}
 
 export function languageHelper_enumValuesList(
-   field: EnumValuesField,
-   format: LineFormat,
-   startingNumber: number,
-   ending: string
+  field: EnumValuesField,
+  format: LineFormat,
+  startingNumber: number,
+  ending: string,
 ): string {
   let result = "";
   if (field.readParseStatus() === ParseStatus.valid) {
@@ -18,7 +21,7 @@ export function languageHelper_enumValuesList(
       const rawValues = field.getRootNode()!.matchedText.split(",");
       for (let i = 0; i < rawValues.length; i++) {
         const value = rawValues[i].trim();
-        const line = `<br>  <el-id>${value}</el-id> = <el-lit>${i+startingNumber}</el-lit>`;
+        const line = `<br>  <el-id>${value}</el-id> = <el-lit>${i + startingNumber}</el-lit>`;
         result += line;
       }
       result += ending;
@@ -35,7 +38,7 @@ export function languageHelper_inheritance(
   inheritsWord: string,
   joiner: string,
   implementsWord: string,
-  finish: string
+  finish: string,
 ): string {
   const frame = field.getHolder() as ClassFrame;
   const node = field.getRootNode()! as InheritanceNode;

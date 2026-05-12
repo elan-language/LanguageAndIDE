@@ -73,7 +73,7 @@ export abstract class LanguageAbstract implements Language {
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
-  abstract enumValuesListAsHtml(field: EnumValuesField): string
+  abstract enumValuesListAsHtml(field: EnumValuesField): string;
   abstract inheritsFromTextAsHtml(field: InheritsFromField): string;
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
