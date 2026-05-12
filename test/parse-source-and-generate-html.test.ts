@@ -206,12 +206,12 @@ suite("Parse source and generate Html", () => {
   });
   test("Snake FP", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
-      `./out/test/files/snake-fp.elan`,
+      `./out/test/files/snake_FP.elan`,
       ``,
-      `./out/test/files/snake-fp.py`,
-      `./out/test/files/snake-fp.vb`,
-      `./out/test/files/snake-fp.cs`,
-      `./out/test/files/snake-fp.java`,
+      `./out/test/files/snake_FP.py`,
+      `./out/test/files/snake_FP.vb`,
+      `./out/test/files/snake_FP.cs`,
+      `./out/test/files/snake_FP.java`,
     );
   });
   ignore_test("Date/Time", async () => {
