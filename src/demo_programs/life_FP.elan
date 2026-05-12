@@ -1,24 +1,18 @@
-# 557be0a779206ae3d27ee30d2168a3a2c76378eb4e49a0c86abad574208253e3 Elan 2.0.0-alpha1 valid
+# 3476aac82edca067abb3667fed7b92cdd09f727f400af29d5af072c7e10f3420 Elan 2.0.0-alpha1 valid
 
 main
   variable grid set to createBlockGraphics(white)
-  call fillRandom(grid)
-  while true
-    call displayBlocks(grid)
-    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
-    call nextGeneration(gridRef)
-    set grid to gridRef.value()
-    call sleep_ms(50)
-  end while
-end main
-
-procedure fillRandom(grid as List<of List<of Int>>)
   for col in range(0, 40)
     for row in range(0, 30)
       set grid[col][row] to blackOrWhite(random())
     end for
   end for
-end procedure
+  while true
+    call displayBlocks(grid)
+    set grid to nextGrid(grid)
+    call sleep_ms(50)
+  end while
+end main
 
 function blackOrWhite(random as Float) returns Int
   return if(random > 0.5, white, black)
@@ -32,15 +26,15 @@ function north(cell as (Int, Int)) returns (Int, Int)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
-  let x be  cell.item_0
-  let y be  cell.item_1
-  let y2 be  if(y is 29, 0, y + 1)
+  let x be cell.item_0
+  let y be cell.item_1
+  let y2 be if(y is 29, 0, y + 1)
   return (x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
-  let x be  cell.item_0
-  let y be  cell.item_1
+  let x be cell.item_0
+  let y be cell.item_1
   let x2 be if(x is 39, 0, x + 1)
   return (x2, y)
 end function
@@ -75,7 +69,7 @@ end function
 
 function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   let neighbours be neighbourCells(x, y)
-  return neighbours.filter(lambda cell => grid[cell.item_0][cell.item_1] is black).length()
+  return neighbours.filter(lambda c as (Int, Int) => grid[c.item_0][c.item_1] is black).length()
 end function
 
 function willLive(cell as Int, liveNeighbours as Int) returns Boolean
@@ -87,18 +81,16 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
   return if(live, black, white)
 end function
 
-# TODO this could be a function returning new grid. Fiddly as 2D - factor out method for replacement row
-procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
-  variable nextGen set to createBlockGraphics(white)
-  variable grid set to gridRef.value()
-  for x in range(0, 40)
-    for y in range(0, 30)
-      variable colour set to nextCellValue(grid, x, y)
-      set nextGen[x][y] to colour
-    end for
-  end for
-  call gridRef.set(nextGen)
-end procedure
+function nextGrid(grid as List<of List<of Int>>) returns List<of List<of Int>>
+  let cols be range(0, 40)
+  return cols.map(lambda x as Int => nextColumn(grid, x))
+end function
+
+function nextColumn(grid as List<of List<of Int>>, x as Int) returns List<of Int>
+  let col be grid[x]
+  let rows be range(0, 30)
+  return rows.map(lambda y as Int => nextCellValue(grid, x, y))
+end function
 
 test test_north
   assert north((3, 4)) is (3, 3)
@@ -168,8 +160,10 @@ test test_blackOrWhite
   assert blackOrWhite(1) is white
 end test
 
-[ghosted] test test_neighbourCells
-  [ghosted] assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
+test test_neighbourCells
+  assert neighbourCells(3, 4) is [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
+  assert neighbourCells(0, 0) is [(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)]
+  assert neighbourCells(39, 29) is [(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)]
 end test
 
 test test_willLive
