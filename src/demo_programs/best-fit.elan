@@ -1,4 +1,4 @@
-# 6f458fa3fe0b94de77a629fdb75fe1a3cce05b6ac044e0cc9888bd36b1e831d5 Elan 2.0.0-alpha valid
+# 13ad4f145d68c7034adf1c7757eae960ea6877546f204ebf86ab6b29e1b2d5e8 Elan 2.0.0-alpha1 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -22,7 +22,7 @@ class Point
   end constructor
 
   function toString() returns String
-    return ""
+    return $"Point {this.x}, {this.y}"
   end function
 
 end class

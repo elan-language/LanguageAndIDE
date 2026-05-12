@@ -1,4 +1,4 @@
-# 87e690195aaceed9474d57c9f94ee0265f0685e0d15fda6bbbf03f5fdd5e5a37 Elan 2.0.0-alpha1 valid
+# 9e02d4f11f2d806007cff3715904a83b3d8e359a7ba7b6c4d4eef5c711495966 Elan 2.0.0-alpha1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -98,12 +98,10 @@ class Game
   end function
 
   function withNewApple() returns Game
-    let x_rnd2 be this.rnd.nextInt(0, 39)
-    let x be x_rnd2.item_0
-    let rnd2 be x_rnd2.item_1
-    let y_rnd3 be rnd2.nextInt(0, 29)
-    let y be y_rnd3.item_0
-    let rnd3 be y_rnd3.item_1
+    let x be this.rnd.asInt(0, 39)
+    let rnd2 be this.rnd.nextGen()
+    let y be rnd2.asInt(0, 29)
+    let rnd3 be rnd2.nextGen()
     let apple2 be new Square(x, y)
     let g2 be this.withApple(apple2).withRnd(rnd3)
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)

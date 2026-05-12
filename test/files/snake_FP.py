@@ -79,12 +79,10 @@ class Game # concrete class
   def toString(self: Game) -> str: # function method
     return ""
   def withNewApple(self: Game) -> Game: # function method
-    x_rnd2 = self.rnd.nextInt(0, 39) # let
-    x = x_rnd2.item_0 # let
-    rnd2 = x_rnd2.item_1 # let
-    y_rnd3 = rnd2.nextInt(0, 29) # let
-    y = y_rnd3.item_0 # let
-    rnd3 = y_rnd3.item_1 # let
+    x = self.rnd.asInt(0, 39) # let
+    rnd2 = self.rnd.nextGen() # let
+    y = rnd2.asInt(0, 29) # let
+    rnd3 = rnd2.nextGen() # let
     apple2 = Square(x, y) # let
     g2 = self.withApple(apple2).withRnd(rnd3) # let
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)

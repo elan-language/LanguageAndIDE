@@ -92,12 +92,10 @@ Class Game
     Return ""
   End Function
   Function withNewApple() As Game
-    Dim x_rnd2 = Me.rnd.nextInt(0, 39) ' let
-    Dim x = x_rnd2.item_0 ' let
-    Dim rnd2 = x_rnd2.item_1 ' let
-    Dim y_rnd3 = rnd2.nextInt(0, 29) ' let
-    Dim y = y_rnd3.item_0 ' let
-    Dim rnd3 = y_rnd3.item_1 ' let
+    Dim x = Me.rnd.asInt(0, 39) ' let
+    Dim rnd2 = Me.rnd.nextGen() ' let
+    Dim y = rnd2.asInt(0, 29) ' let
+    Dim rnd3 = rnd2.nextGen() ' let
     Dim apple2 = New Square(x, y) ' let
     Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' let
     Return if(g2.body.contains(apple2), g2.withNewApple(), g2)
