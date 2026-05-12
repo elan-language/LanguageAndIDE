@@ -1,12 +1,9 @@
-# 3476aac82edca067abb3667fed7b92cdd09f727f400af29d5af072c7e10f3420 Elan 2.0.0-alpha1 valid
+# 05818d3179fae27694454ddff57d2d22503787b71360ba1bbe61c4112f59894a Elan 2.0.0-alpha1 valid
 
 main
-  variable grid set to createBlockGraphics(white)
-  for col in range(0, 40)
-    for row in range(0, 30)
-      set grid[col][row] to blackOrWhite(random())
-    end for
-  end for
+  variable rng set to new Random()
+  call rng.initialiseFromClock()
+  variable grid set to initialGrid(rng)
   while true
     call displayBlocks(grid)
     set grid to nextGrid(grid)
@@ -14,8 +11,36 @@ main
   end while
 end main
 
-function blackOrWhite(random as Float) returns Int
-  return if(random > 0.5, white, black)
+function initialGrid(rng as Random) returns List<of List<of Int>>
+  let grid be new List<of List<of Int>>()
+  let cols be range(0, 40)
+  return cols.reduce((grid, rng), appendCol).item_0
+end function
+
+function appendCol(tup as (List<of List<of Int>>, Random), c as Int) returns (List<of List<of Int>>, Random)
+  let grid be tup.item_0
+  let rng be tup.item_1
+  let tup2 be initialCol(rng)
+  let col be tup2.item_0
+  let rng2 be tup2.item_1
+  let grid2 be grid.withAppend(col)
+  return (grid2, rng2)
+end function
+
+function initialCol(rng as Random) returns (List<of Int>, Random)
+  let col be new List<of Int>()
+  let rows be range(0, 30)
+  return rows.reduce((col, rng), appendCell)
+end function
+
+function appendCell(tup as (List<of Int>, Random), row as Int) returns (List<of Int>, Random)
+  let col be tup.item_0
+  let rng be tup.item_1
+  return (col.withAppend(blackOrWhite(rng)), rng.next())
+end function
+
+function blackOrWhite(rng as Random) returns Int
+  return if(rng.asFloat() > 0.5, white, black)
 end function
 
 function north(cell as (Int, Int)) returns (Int, Int)
@@ -153,11 +178,14 @@ test test_southWest
 end test
 
 test test_blackOrWhite
-  assert blackOrWhite(0) is black
-  assert blackOrWhite(0.499) is black
-  assert blackOrWhite(0.5) is black
-  assert blackOrWhite(0.501) is white
-  assert blackOrWhite(1) is white
+  let rng0 be new Random()
+  let rng1 be rng0.next()
+  let rng2 be rng1.next()
+  let rng3 be rng2.next()
+  assert blackOrWhite(rng0) is black
+  assert blackOrWhite(rng1) is white
+  assert blackOrWhite(rng2) is black
+  assert blackOrWhite(rng3) is black
 end test
 
 test test_neighbourCells
@@ -185,4 +213,47 @@ test test_willLive
   assert willLive(black, 6) is false
   assert willLive(black, 7) is false
   assert willLive(black, 8) is false
+end test
+
+function testGrid() returns List<of List<of Int>>
+  return initialGrid(new Random())
+end function
+
+test test_initialGrid
+  let grid be testGrid()
+  assert grid[0][0] is black
+  assert grid[1][0] is white
+  assert grid[2][0] is white
+  assert grid[0][1] is white
+  assert grid[1][1] is black
+  assert grid[2][1] is white
+  assert grid[0][2] is black
+  assert grid[1][2] is black
+  assert grid[2][2] is black
+end test
+
+test test_liveNeighbours
+  let grid be testGrid()
+  let live be liveNeighbours(grid, 1, 1)
+  assert live is 4
+end test
+
+test test_nextCellValue
+  let grid be testGrid()
+  let nxt be nextCellValue(grid, 1, 1)
+  assert nxt is white
+end test
+
+test test_nextGrid
+  let prev be testGrid()
+  let grid be nextGrid(prev)
+  assert grid[0][0] is black
+  assert grid[1][0] is black
+  assert grid[2][0] is white
+  assert grid[0][1] is white
+  assert grid[1][1] is white
+  assert grid[2][1] is white
+  assert grid[0][2] is white
+  assert grid[1][2] is white
+  assert grid[2][2] is white
 end test
