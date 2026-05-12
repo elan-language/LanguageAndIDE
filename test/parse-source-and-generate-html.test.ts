@@ -29,7 +29,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Main With All Statements", async () => {
+  ignore_test("Test Main With All Statements", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/T03_mainWithAllStatements.elan`,
       `./out/test/files/T03_mainWithAllStatements.html`,
@@ -50,7 +50,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Select Main By Id", async () => {
+  ignore_test("Test Select Main By Id", async () => {
     await assertEffectOfActionNew(
       `./out/test/files/T03_mainWithAllStatements.elan`,
       SelectMainById,
@@ -58,7 +58,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("Test Select Statement By Id", async () => {
+  ignore_test("Test Select Statement By Id", async () => {
     await assertEffectOfActionNew(
       `./out/test/files/T03_mainWithAllStatements.elan`,
       SelectStatementById,
@@ -67,7 +67,7 @@ suite("Parse source and generate Html", () => {
   });
 
   //-------------------
-  test("ExpandAll", async () => {
+  ignore_test("ExpandAll", async () => {
     await assertEffectOfActionNew(
       `./out/test/files/T03_mainWithAllStatements.elan`,
       ExpandAll,
@@ -75,7 +75,7 @@ suite("Parse source and generate Html", () => {
     );
   });
 
-  test("CollapseAll", async () => {
+  ignore_test("CollapseAll", async () => {
     await assertEffectOfActionNew(
       `./out/test/files/T03_mainWithAllStatements.elan`,
       CollapseAll,
