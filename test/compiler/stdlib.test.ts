@@ -786,9 +786,8 @@ main
   variable val set to 0
   call rnd.initialiseFromClock()
   for i in range(1, 10001)
-    variable t set to rnd.nextInt(0, 1)
-    set val to t.item_0
-    set rnd to t.item_1
+    set val to rnd.asInt(0, 1)
+    set rnd to rnd.nextGen()
     call results.put(val, results[val] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -805,9 +804,8 @@ async function main() {
   rnd.initialiseFromClock();
   const elan_iterfor15 = [..._stdlib.range(1, 10001)];
   for (const i of elan_iterfor15) {
-    let t = rnd.nextInt(0, 1);
-    val = t[0];
-    rnd = t[1];
+    val = rnd.asInt(0, 1);
+    rnd = rnd.nextGen();
     results.put(val, system.safeIndex(results, val) + 1);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
@@ -842,9 +840,8 @@ main
   variable rnd set to new Random()
   variable val set to 0
   for i in range(1, 10001)
-    variable t set to rnd.nextInt(3, 5)
-    set val to t.item_0
-    set rnd to t.item_1
+    set val to rnd.asInt(3, 5)
+    set rnd to rnd.nextGen()
     call results.put(val, results[val] + 1)
   end for
   for i in range(0, 7)
@@ -862,13 +859,12 @@ async function main() {
   let val = 0;
   const elan_iterfor12 = [..._stdlib.range(1, 10001)];
   for (const i of elan_iterfor12) {
-    let t = rnd.nextInt(3, 5);
-    val = t[0];
-    rnd = t[1];
+    val = rnd.asInt(3, 5);
+    rnd = rnd.nextGen();
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  const elan_iterfor28 = [..._stdlib.range(0, 7)];
-  for (const i of elan_iterfor28) {
+  const elan_iterfor25 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterfor25) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -915,7 +911,7 @@ main
 end main
 
 function rollDice(rnd as Random) returns (Int, Random)
-  return rnd.nextInt(1, 6)
+  return (rnd.asInt(1, 6), rnd.nextGen())
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -940,7 +936,7 @@ async function main() {
 }
 
 async function rollDice(rnd) {
-  return rnd.nextInt(1, 6);
+  return system.tuple([rnd.asInt(1, 6), rnd.nextGen()]);
 }
 global["rollDice"] = rollDice;
 return [main, _tests];}`;

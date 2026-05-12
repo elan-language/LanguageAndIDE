@@ -7,7 +7,6 @@ import {
   ElanInt,
   elanIntType,
   elanProcedure,
-  ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -36,7 +35,7 @@ export class Random {
   private v: number;
 
     @elanFunction([], FunctionOptions.pure, ElanClass(Random))
-  next(): Random {
+  nextGen(): Random {
     const gen2 = this.system!.initialise(new Random());;
     gen2.u = 36969 * (this.u % 65536) + this.u / 65536;
     gen2.v = 18000 * (this.v % 65536) + this.v / 65536;
@@ -53,28 +52,8 @@ export class Random {
     return Math.floor(this.asFloat() * (max - min + 1) + min);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanTuple([ElanFloat, ElanClass(Random)]))
-  nextRandom() {
-    return this.nextImpl();
-  }
-
-  nextImpl(): [number, Random] {
-    const value = this.lo32(this.lo32(this.u * 65536) + this.v + 1) * 2.328306435454494e-10;
-    const rnd2 = this.system!.initialise(new Random());
-    rnd2.u = 36969 * (this.u % 65536) + this.u / 65536;
-    rnd2.v = 18000 * (this.v % 65536) + this.v / 65536;
-    return [value, rnd2];
-  }
-
   private lo32(n: number): number {
     return n % 4294967296;
-  }
-
-  @elanFunction(["min", "max"], FunctionOptions.pure, ElanTuple([ElanInt, ElanClass(Random)]))
-  nextInt(@elanIntType() min: number, @elanIntType() max: number) {
-    const [float, rnd2] = this.nextImpl();
-    const value = Math.floor(float * (max - min + 1) + min);
-    return [value, rnd2];
   }
 
   @elanProcedure([])

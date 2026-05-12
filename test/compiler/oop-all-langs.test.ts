@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertExportedCSIs,
-    assertExportedJavaIs,
-    assertExportedPythonIs,
-    assertExportedVBis,
-    assertObjectCodeExecutes,
-    assertParses,
-    assertStatusIsValid,
-    testCSHeader,
-    testHash,
-    testHeader,
-    testJavaHeader,
-    testPythonHeader,
-    testVBHeader,
-    transforms,
+  assertExportedCSIs,
+  assertExportedJavaIs,
+  assertExportedPythonIs,
+  assertExportedVBis,
+  assertObjectCodeExecutes,
+  assertParses,
+  assertStatusIsValid,
+  testCSHeader,
+  testHash,
+  testHeader,
+  testJavaHeader,
+  testPythonHeader,
+  testVBHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("OOP all languages", () => {

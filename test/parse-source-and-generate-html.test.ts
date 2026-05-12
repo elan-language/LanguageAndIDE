@@ -234,4 +234,34 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/julia-set.java`,
     );
   });
+  test("Life_FP", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/life_FP.elan`,
+      ``,
+      `./out/test/files/life_FP.py`,
+      `./out/test/files/life_FP.vb`,
+      `./out/test/files/life_FP.cs`,
+      `./out/test/files/life_FP.java`,
+    );
+  });
+  test("Fern", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/fern.elan`,
+      ``,
+      `./out/test/files/fern.py`,
+      `./out/test/files/fern.vb`,
+      `./out/test/files/fern.cs`,
+      `./out/test/files/fern.java`,
+    );
+  });
+    test("Wordle Solver", async () => {
+    await assertGeneratesHtmlSourceAndExportFiles(
+      `./out/test/files/wordle-solver.elan`,
+      ``,
+      `./out/test/files/wordle-solver.py`,
+      `./out/test/files/wordle-solver.vb`,
+      `./out/test/files/wordle-solver.cs`,
+      `./out/test/files/wordle-solver.java`,
+    );
+  });
 });

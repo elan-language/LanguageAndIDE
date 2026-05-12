@@ -115,7 +115,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
-      html = `${frame.name.renderAsHtml()} = ${frame.value.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()}`;
     } else if (frame instanceof ElseIf) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof Else) {

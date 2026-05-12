@@ -1,0 +1,259 @@
+' VB.NET with Elan 2.0.0-alpha1
+
+Sub main()
+  Dim rng = New Random() ' variable definition
+  rng.initialiseFromClock() ' call procedure
+  Dim grid = initialGrid(rng) ' variable definition
+  While True
+    displayBlocks(grid) ' call procedure
+    grid = nextGrid(grid) ' re-assign variable
+    sleep_ms(50) ' call procedure
+  End While
+End Sub
+
+Function initialGrid(rng As Random) As List(Of List(Of Integer))
+  Dim grid = New List(Of List(Of Integer))() ' let
+  Dim cols = range(0, 40) ' let
+  Return cols.reduce((grid, rng), appendCol).item_0
+End Function
+
+Function appendCol(tup As (List(Of List(Of Integer)), Random), c As Integer) As (List(Of List(Of Integer)), Random)
+  Dim grid = tup.item_0 ' let
+  Dim rng = tup.item_1 ' let
+  Dim tup2 = initialCol(rng) ' let
+  Dim col = tup2.item_0 ' let
+  Dim rng2 = tup2.item_1 ' let
+  Dim grid2 = grid.withAppend(col) ' let
+  Return (grid2, rng2)
+End Function
+
+Function initialCol(rng As Random) As (List(Of Integer), Random)
+  Dim col = New List(Of Integer)() ' let
+  Dim rows = range(0, 30) ' let
+  Return rows.reduce((col, rng), appendCell)
+End Function
+
+Function appendCell(tup As (List(Of Integer), Random), row As Integer) As (List(Of Integer), Random)
+  Dim col = tup.item_0 ' let
+  Dim rng = tup.item_1 ' let
+  Return (col.withAppend(blackOrWhite(rng)), rng.nextGen())
+End Function
+
+Function blackOrWhite(rng As Random) As Integer
+  Return if(rng.asFloat() > 0.5, white, black)
+End Function
+
+Function north(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim y2 = if(y = 0, 29, y - 1) ' let
+  Return (x, y2)
+End Function
+
+Function south(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim y2 = if(y = 29, 0, y + 1) ' let
+  Return (x, y2)
+End Function
+
+Function east(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim x2 = if(x = 39, 0, x + 1) ' let
+  Return (x2, y)
+End Function
+
+Function west(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim x2 = if(x = 0, 39, x - 1) ' let
+  Return (x2, y)
+End Function
+
+Function northEast(cell As (Integer, Integer)) As (Integer, Integer)
+  Return north(east(cell))
+End Function
+
+Function northWest(cell As (Integer, Integer)) As (Integer, Integer)
+  Return north(west(cell))
+End Function
+
+Function southEast(cell As (Integer, Integer)) As (Integer, Integer)
+  Return south(east(cell))
+End Function
+
+Function southWest(cell As (Integer, Integer)) As (Integer, Integer)
+  Return south(west(cell))
+End Function
+
+Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
+  Dim c = (x, y) ' let
+  Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
+End Function
+
+Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+  Dim neighbours = neighbourCells(x, y) ' let
+  Return neighbours.filter(lambda c As (Integer, Integer) => grid[c.item_0][c.item_1] = black).length()
+End Function
+
+Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
+  Return if(cell = black, (liveNeighbours > 1) And (liveNeighbours < 4), liveNeighbours = 3)
+End Function
+
+Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' let
+  Return if(live, black, white)
+End Function
+
+Function nextGrid(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
+  Dim cols = range(0, 40) ' let
+  Return cols.map(lambda x As Integer => nextColumn(grid, x))
+End Function
+
+Function nextColumn(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
+  Dim col = grid[x] ' let
+  Dim rows = range(0, 30) ' let
+  Return rows.map(lambda y As Integer => nextCellValue(grid, x, y))
+End Function
+
+<TestMethod> Sub test_north()
+  Assert.AreEqual((3, 3), north((3, 4)))
+  Assert.AreEqual((39, 29), north((39, 0)))
+  Assert.AreEqual((0, 28), north((0, 29)))
+  Assert.AreEqual((39, 28), north((39, 29)))
+End Sub
+
+<TestMethod> Sub test_south()
+  Assert.AreEqual((3, 5), south((3, 4)))
+  Assert.AreEqual((39, 1), south((39, 0)))
+  Assert.AreEqual((0, 0), south((0, 29)))
+  Assert.AreEqual((39, 0), south((39, 29)))
+End Sub
+
+<TestMethod> Sub test_east()
+  Assert.AreEqual((11, 2), east((10, 2)))
+  Assert.AreEqual((0, 0), east((39, 0)))
+  Assert.AreEqual((1, 1), east((0, 1)))
+  Assert.AreEqual((0, 29), east((39, 29)))
+End Sub
+
+<TestMethod> Sub test_west()
+  Assert.AreEqual((2, 4), west((3, 4)))
+  Assert.AreEqual((38, 0), west((39, 0)))
+  Assert.AreEqual((39, 0), west((0, 0)))
+  Assert.AreEqual((39, 29), west((0, 29)))
+End Sub
+
+<TestMethod> Sub test_northEast()
+  Assert.AreEqual((4, 3), northEast((3, 4)))
+  Assert.AreEqual((1, 29), northEast((0, 0)))
+  Assert.AreEqual((0, 29), northEast((39, 0)))
+  Assert.AreEqual((1, 28), northEast((0, 29)))
+  Assert.AreEqual((0, 28), northEast((39, 29)))
+End Sub
+
+<TestMethod> Sub test_southEast()
+  Assert.AreEqual((4, 5), southEast((3, 4)))
+  Assert.AreEqual((1, 1), southEast((0, 0)))
+  Assert.AreEqual((0, 1), southEast((39, 0)))
+  Assert.AreEqual((1, 0), southEast((0, 29)))
+  Assert.AreEqual((0, 0), southEast((39, 29)))
+End Sub
+
+<TestMethod> Sub test_northWest()
+  Assert.AreEqual((2, 3), northWest((3, 4)))
+  Assert.AreEqual((39, 29), northWest((0, 0)))
+  Assert.AreEqual((38, 29), northWest((39, 0)))
+  Assert.AreEqual((39, 28), northWest((0, 29)))
+  Assert.AreEqual((38, 28), northWest((39, 29)))
+End Sub
+
+<TestMethod> Sub test_southWest()
+  Assert.AreEqual((2, 5), southWest((3, 4)))
+  Assert.AreEqual((39, 1), southWest((0, 0)))
+  Assert.AreEqual((38, 1), southWest((39, 0)))
+  Assert.AreEqual((39, 0), southWest((0, 29)))
+  Assert.AreEqual((38, 0), southWest((39, 29)))
+End Sub
+
+<TestMethod> Sub test_blackOrWhite()
+  Dim rng0 = New Random() ' let
+  Dim rng1 = rng0.nextGen() ' let
+  Dim rng2 = rng1.nextGen() ' let
+  Dim rng3 = rng2.nextGen() ' let
+  Assert.AreEqual(black, blackOrWhite(rng0))
+  Assert.AreEqual(white, blackOrWhite(rng1))
+  Assert.AreEqual(black, blackOrWhite(rng2))
+  Assert.AreEqual(black, blackOrWhite(rng3))
+End Sub
+
+<TestMethod> Sub test_neighbourCells()
+  Assert.AreEqual({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4))
+  Assert.AreEqual({(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)}, neighbourCells(0, 0))
+  Assert.AreEqual({(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)}, neighbourCells(39, 29))
+End Sub
+
+<TestMethod> Sub test_willLive()
+  Assert.AreEqual(False, willLive(white, 0))
+  Assert.AreEqual(False, willLive(white, 1))
+  Assert.AreEqual(False, willLive(white, 2))
+  Assert.AreEqual(True, willLive(white, 3))
+  Assert.AreEqual(False, willLive(white, 4))
+  Assert.AreEqual(False, willLive(white, 5))
+  Assert.AreEqual(False, willLive(white, 6))
+  Assert.AreEqual(False, willLive(white, 7))
+  Assert.AreEqual(False, willLive(white, 8))
+  Assert.AreEqual(False, willLive(black, 0))
+  Assert.AreEqual(False, willLive(black, 1))
+  Assert.AreEqual(True, willLive(black, 2))
+  Assert.AreEqual(True, willLive(black, 3))
+  Assert.AreEqual(False, willLive(black, 4))
+  Assert.AreEqual(False, willLive(black, 5))
+  Assert.AreEqual(False, willLive(black, 6))
+  Assert.AreEqual(False, willLive(black, 7))
+  Assert.AreEqual(False, willLive(black, 8))
+End Sub
+
+Function testGrid() As List(Of List(Of Integer))
+  Return initialGrid(New Random())
+End Function
+
+<TestMethod> Sub test_initialGrid()
+  Dim grid = testGrid() ' let
+  Assert.AreEqual(black, grid[0][0])
+  Assert.AreEqual(white, grid[1][0])
+  Assert.AreEqual(white, grid[2][0])
+  Assert.AreEqual(white, grid[0][1])
+  Assert.AreEqual(black, grid[1][1])
+  Assert.AreEqual(white, grid[2][1])
+  Assert.AreEqual(black, grid[0][2])
+  Assert.AreEqual(black, grid[1][2])
+  Assert.AreEqual(black, grid[2][2])
+End Sub
+
+<TestMethod> Sub test_liveNeighbours()
+  Dim grid = testGrid() ' let
+  Dim live = liveNeighbours(grid, 1, 1) ' let
+  Assert.AreEqual(4, live)
+End Sub
+
+<TestMethod> Sub test_nextCellValue()
+  Dim grid = testGrid() ' let
+  Dim nxt = nextCellValue(grid, 1, 1) ' let
+  Assert.AreEqual(white, nxt)
+End Sub
+
+<TestMethod> Sub test_nextGrid()
+  Dim prev = testGrid() ' let
+  Dim grid = nextGrid(prev) ' let
+  Assert.AreEqual(black, grid[0][0])
+  Assert.AreEqual(black, grid[1][0])
+  Assert.AreEqual(white, grid[2][0])
+  Assert.AreEqual(white, grid[0][1])
+  Assert.AreEqual(white, grid[1][1])
+  Assert.AreEqual(white, grid[2][1])
+  Assert.AreEqual(white, grid[0][2])
+  Assert.AreEqual(white, grid[1][2])
+  Assert.AreEqual(white, grid[2][2])
+End Sub
