@@ -215,12 +215,8 @@ End Sub
   Assert.AreEqual(False, willLive(black, 8))
 End Sub
 
-Function testGrid() As List(Of List(Of Integer))
-  Return initialGrid(New Random())
-End Function
-
 <TestMethod> Sub test_initialGrid()
-  Dim grid = testGrid() ' let
+  Dim grid = initialGrid(New Random()) ' let
   Assert.AreEqual(black, grid[0][0])
   Assert.AreEqual(white, grid[1][0])
   Assert.AreEqual(white, grid[2][0])
@@ -233,19 +229,19 @@ End Function
 End Sub
 
 <TestMethod> Sub test_liveNeighbours()
-  Dim grid = testGrid() ' let
+  Dim grid = initialGrid(New Random()) ' let
   Dim live = liveNeighbours(grid, 1, 1) ' let
   Assert.AreEqual(4, live)
 End Sub
 
 <TestMethod> Sub test_nextCellValue()
-  Dim grid = testGrid() ' let
+  Dim grid = initialGrid(New Random()) ' let
   Dim nxt = nextCellValue(grid, 1, 1) ' let
   Assert.AreEqual(white, nxt)
 End Sub
 
 <TestMethod> Sub test_nextGrid()
-  Dim prev = testGrid() ' let
+  Dim prev = initialGrid(New Random()) ' let
   Dim grid = nextGrid(prev) ' let
   Assert.AreEqual(black, grid[0][0])
   Assert.AreEqual(black, grid[1][0])

@@ -215,12 +215,8 @@ static List<int> nextColumn(List<List<int>> grid, int x) { // function
   assertEquals(false, willLive(black, 8))
 }
 
-static List<List<int>> testGrid() { // function
-  return initialGrid(new Random());
-}
-
 @Test static void test_initialGrid() {
-  var grid = testGrid(); // let
+  var grid = initialGrid(new Random()); // let
   assertEquals(black, grid[0][0])
   assertEquals(white, grid[1][0])
   assertEquals(white, grid[2][0])
@@ -233,19 +229,19 @@ static List<List<int>> testGrid() { // function
 }
 
 @Test static void test_liveNeighbours() {
-  var grid = testGrid(); // let
+  var grid = initialGrid(new Random()); // let
   var live = liveNeighbours(grid, 1, 1); // let
   assertEquals(4, live)
 }
 
 @Test static void test_nextCellValue() {
-  var grid = testGrid(); // let
+  var grid = initialGrid(new Random()); // let
   var nxt = nextCellValue(grid, 1, 1); // let
   assertEquals(white, nxt)
 }
 
 @Test static void test_nextGrid() {
-  var prev = testGrid(); // let
+  var prev = initialGrid(new Random()); // let
   var grid = nextGrid(prev); // let
   assertEquals(black, grid[0][0])
   assertEquals(black, grid[1][0])

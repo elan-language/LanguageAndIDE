@@ -1,4 +1,4 @@
-# c60a1ea8b890208308b11ba77b1aab531ecfa161cb13bcceafebfec988020203 Elan 2.0.0-alpha1 valid
+# 7b578466d33d626482ed3ccc7b7febf0c318c8fe0e13cc0a62b0ab4cd17ed14d Elan 2.0.0-alpha1 valid
 
 main
   variable rng set to new Random()
@@ -215,12 +215,8 @@ test test_willLive
   assert willLive(black, 8) is false
 end test
 
-function testGrid() returns List<of List<of Int>>
-  return initialGrid(new Random())
-end function
-
 test test_initialGrid
-  let grid be testGrid()
+  let grid be initialGrid(new Random())
   assert grid[0][0] is black
   assert grid[1][0] is white
   assert grid[2][0] is white
@@ -233,19 +229,19 @@ test test_initialGrid
 end test
 
 test test_liveNeighbours
-  let grid be testGrid()
+  let grid be initialGrid(new Random())
   let live be liveNeighbours(grid, 1, 1)
   assert live is 4
 end test
 
 test test_nextCellValue
-  let grid be testGrid()
+  let grid be initialGrid(new Random())
   let nxt be nextCellValue(grid, 1, 1)
   assert nxt is white
 end test
 
 test test_nextGrid
-  let prev be testGrid()
+  let prev be initialGrid(new Random())
   let grid be nextGrid(prev)
   assert grid[0][0] is black
   assert grid[1][0] is black
