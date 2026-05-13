@@ -734,7 +734,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ThrowWrongType", async () => {

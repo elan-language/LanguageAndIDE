@@ -1,10 +1,10 @@
 import { ignore_test } from "../compiler/compiler-test-helpers";
 import { assertEffectOfActionNew, assertGeneratesHtmlSourceAndExportFiles } from "../testHelpers";
 import {
-    CollapseAll,
-    ExpandAll,
-    SelectMainById,
-    SelectStatementById,
+  CollapseAll,
+  ExpandAll,
+  SelectMainById,
+  SelectStatementById,
 } from "./model-generating-functions";
 
 suite("Parse source and generate Html", () => {
@@ -254,7 +254,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/fern.java`,
     );
   });
-    test("Wordle Solver", async () => {
+  test("Wordle Solver", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/wordle-solver.elan`,
       ``,

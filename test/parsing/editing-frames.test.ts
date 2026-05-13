@@ -15,26 +15,26 @@ import { ReturnStatement } from "../../src/ide/frames/statements/return-statemen
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import {
-    createTestRunner,
-    ctrl_backspace,
-    ctrl_del,
-    ctrl_down,
-    ctrl_up,
-    ctrl_x,
-    del,
-    enter,
-    key,
-    loadFileAsModelNew,
-    shift_tab,
-    tab,
+  createTestRunner,
+  ctrl_backspace,
+  ctrl_del,
+  ctrl_down,
+  ctrl_up,
+  ctrl_x,
+  del,
+  enter,
+  key,
+  loadFileAsModelNew,
+  shift_tab,
+  tab,
 } from "../testHelpers";
 import {
-    classWithConstructor,
-    emptyFunctionOnly,
-    emptyMainOnly,
-    oneConstant,
-    T00_emptyFile,
-    twoConstants,
+  classWithConstructor,
+  emptyFunctionOnly,
+  emptyMainOnly,
+  oneConstant,
+  T00_emptyFile,
+  twoConstants,
 } from "./model-generating-functions";
 
 suite("Editing Frames", () => {
