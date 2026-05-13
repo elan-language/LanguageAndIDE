@@ -35,7 +35,7 @@ suite("Demo compile", () => {
   test("test life", async () => {
     await testElanProgram(`./out/test/demo_programs/life.elan`);
   });
-    test("test life_FP", async () => {
+  test("test life_FP", async () => {
     await testElanProgram(`./out/test/demo_programs/life_FP.elan`);
   });
   test("test maze-generator", async () => {
@@ -81,7 +81,7 @@ suite("Demo compile", () => {
   test("test date-time", async () => {
     await testElanProgram(`./out/test/demo_programs/date-time.elan`);
   });
-    test("test ferne", async () => {
+  test("test ferne", async () => {
     await testElanProgram(`./out/test/demo_programs/fern.elan`);
   });
   //Worksheet loaded code

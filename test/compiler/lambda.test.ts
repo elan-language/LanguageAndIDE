@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Lambda", () => {
@@ -19,7 +19,7 @@ suite("Lambda", () => {
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x => x * 3)
+  call printModified(4, lambda x as Int => x * 3)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -59,7 +59,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t => global.first(t))
+  call printModified((4, 5), lambda t as (Int, Int) => global.first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -110,7 +110,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t => t.item_0)
+  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -382,7 +382,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x => x.toString())
+  call printModified(4, lambda x as Int => x.toString())
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -410,7 +410,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified("4", lambda x => x + 3)
+  call printModified("4", lambda x as Int => x + 3)
 end main
 
 procedure printModified(i as String, f as Func<of Int => Int>)
@@ -438,7 +438,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x => x)
+  call printModified(4, lambda x as Int => x)
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)
@@ -560,4 +560,3 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 });
-

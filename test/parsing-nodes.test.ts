@@ -2082,7 +2082,7 @@ suite("Parsing Nodes", () => {
   test("Parse list of floats 2", () => {
     testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
   });
-  
+
   ignore_test("Six open brackets", () => {
     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
   });
