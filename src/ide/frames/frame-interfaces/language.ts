@@ -1,5 +1,6 @@
 import { EnumValuesField } from "../fields/enum-values-field";
 import { InheritsFromField } from "../fields/inherits-from-field";
+import { Lambda } from "../parse-nodes/lambda";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -35,6 +36,7 @@ export interface Language {
   addNodesForParamDef(node: ParamDefNode): void;
   addNodesForTypeGeneric(node: TypeGenericNode): void;
   addNodesForTypeTuple(node: TypeTupleNode): void;
+  addNodesForLambda(node: Lambda): void;
   standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   paramDefAsHtml(node: ParamDefNode): string;
@@ -44,6 +46,7 @@ export interface Language {
   typeTupleAsHtml(node: TypeTupleNode): string;
   enumValuesListAsHtml(field: EnumValuesField): string;
   inheritsFromTextAsHtml(field: InheritsFromField): string;
+  lambdaAsHtml(node: Lambda): string;
 
   MOD: string;
   EQUAL: string;

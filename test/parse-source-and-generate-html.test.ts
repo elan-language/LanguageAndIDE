@@ -254,7 +254,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/fern.java`,
     );
   });
-    test("Wordle Solver", async () => {
+  test("Wordle Solver", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/wordle-solver.elan`,
       ``,

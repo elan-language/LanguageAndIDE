@@ -1,4 +1,4 @@
-import { asKeyword, ofKeyword } from "../../compiler/elan-keywords";
+import { asKeyword, lambdaKeyword, ofKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -27,13 +27,17 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
+import { ExprNode } from "./parse-nodes/expr-node";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { Lambda } from "./parse-nodes/lambda";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
+import { OptionalNode } from "./parse-nodes/optional-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
@@ -55,9 +59,10 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 import { TokenType } from "./symbol-completion-helpers";
-import { GT, LT } from "./symbols";
+import { ARROW, GT, LT } from "./symbols";
 
 export class LanguageElan extends LanguageAbstract {
+
   private constructor() {
     super();
   }
@@ -327,6 +332,24 @@ export class LanguageElan extends LanguageAbstract {
   }
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
+  }
+
+  addNodesForLambda(node: Lambda): void {
+    node.addElement(new KeywordNode(node.file, lambdaKeyword));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
+    const sp = () => new SpaceNode(node.file, Space.required);
+    const paramListSp = new Sequence(node.file, [paramList, sp]);
+    node.params = new OptionalNode(node.file, paramListSp);
+    node.addElement(node.params);
+    node.addElement(new PunctuationNode(node.file, ARROW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.expr = new ExprNode(node.file);
+    node.addElement(node.expr);
+  }
+
+  lambdaAsHtml(node: Lambda): string {
+    return `<el-kw>${lambdaKeyword}</el-kw> ${node.params!.renderAsHtml()}${ARROW} ${node.expr!.renderAsHtml()}`;
   }
 
   enumValuesListAsHtml(field: EnumValuesField): string {

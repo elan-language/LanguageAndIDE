@@ -12,6 +12,7 @@ import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
+import { Lambda } from "./parse-nodes/lambda";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -75,7 +76,8 @@ export abstract class LanguageAbstract implements Language {
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
   abstract enumValuesListAsHtml(field: EnumValuesField): string;
   abstract inheritsFromTextAsHtml(field: InheritsFromField): string;
-
+  abstract lambdaAsHtml(node: Lambda): string;
+   
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
   }
@@ -88,6 +90,7 @@ export abstract class LanguageAbstract implements Language {
   abstract addNodesForNewInstance(node: NewInstance): void;
   abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
   abstract addNodesForTypeTuple(node: TypeTupleNode): void;
+  abstract addNodesForLambda(node: Lambda): void;
   abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {

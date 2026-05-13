@@ -94,7 +94,7 @@ End Function
 
 Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim neighbours = neighbourCells(x, y) ' let
-  Return neighbours.filter(lambda c As (Integer, Integer) => grid[c.item_0][c.item_1] = black).length()
+  Return neighbours.filter(Function (c As (Integer, Integer)) grid[c.item_0][c.item_1] = black).length()
 End Function
 
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
@@ -108,13 +108,13 @@ End Function
 
 Function nextGrid(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
   Dim cols = range(0, 40) ' let
-  Return cols.map(lambda x As Integer => nextColumn(grid, x))
+  Return cols.map(Function (x As Integer) nextColumn(grid, x))
 End Function
 
 Function nextColumn(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
   Dim col = grid[x] ' let
   Dim rows = range(0, 30) ' let
-  Return rows.map(lambda y As Integer => nextCellValue(grid, x, y))
+  Return rows.map(Function (y As Integer) nextCellValue(grid, x, y))
 End Function
 
 <TestMethod> Sub test_north()

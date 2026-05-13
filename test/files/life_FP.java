@@ -94,7 +94,7 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   var neighbours = neighbourCells(x, y); // let
-  return neighbours.filter(lambda (int, int) c => grid[c.item_0][c.item_1] == black).length();
+  return neighbours.filter(((int, int) c) -> grid[c.item_0][c.item_1] == black).length();
 }
 
 static bool willLive(int cell, int liveNeighbours) { // function
@@ -108,13 +108,13 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
 
 static List<List<int>> nextGrid(List<List<int>> grid) { // function
   var cols = range(0, 40); // let
-  return cols.map(lambda int x => nextColumn(grid, x));
+  return cols.map((int x) -> nextColumn(grid, x));
 }
 
 static List<int> nextColumn(List<List<int>> grid, int x) { // function
   var col = grid[x]; // let
   var rows = range(0, 30); // let
-  return rows.map(lambda int y => nextCellValue(grid, x, y));
+  return rows.map((int y) -> nextCellValue(grid, x, y));
 }
 
 @Test static void test_north() {

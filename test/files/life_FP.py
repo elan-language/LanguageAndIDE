@@ -78,7 +78,7 @@ def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
 
 def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
   neighbours = neighbourCells(x, y) # let
-  return neighbours.filter(lambda c: tuple[int, int] => grid[c.item_0][c.item_1] == black).length()
+  return neighbours.filter(lambda c: tuple[int, int]: grid[c.item_0][c.item_1] == black).length()
 
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   return if(cell == black, (liveNeighbours > 1) and (liveNeighbours < 4), liveNeighbours == 3)
@@ -89,12 +89,12 @@ def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
 
 def nextGrid(grid: list[list[int]]) -> list[list[int]]: # function
   cols = range(0, 40) # let
-  return cols.map(lambda x: int => nextColumn(grid, x))
+  return cols.map(lambda x: int: nextColumn(grid, x))
 
 def nextColumn(grid: list[list[int]], x: int) -> list[int]: # function
   col = grid[x] # let
   rows = range(0, 30) # let
-  return rows.map(lambda y: int => nextCellValue(grid, x, y))
+  return rows.map(lambda y: int: nextCellValue(grid, x, y))
 
 def test_north(self) -> None:
   self.assertEqual(north((3, 4)), (3, 3))
