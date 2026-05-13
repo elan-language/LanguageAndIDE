@@ -60,7 +60,7 @@ class TuringMachine # concrete class
   def isHalted(self: TuringMachine) -> bool: # function method
     return self.currentState.equals(self.haltState)
   def findMatchingRule(self: TuringMachine) -> Rule: # function method
-    matches = self.rules.filter(lambda r: Rule => (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
+    matches = self.rules.filter(lambda r: Rule: (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
       raise ElanRuntimeError(f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}")
     return matches.head()
