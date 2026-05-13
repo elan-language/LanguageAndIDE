@@ -68,7 +68,7 @@ Class TuringMachine
     Return Me.currentState.equals(Me.haltState)
   End Function
   Function findMatchingRule() As Rule
-    Dim matches = Me.rules.filter(lambda r As Rule => (r.currentState.equals(Me.currentState)) And (r.currentSymbol.equals(Me.tape[Me.headPosition]))) ' variable definition
+    Dim matches = Me.rules.filter(Function (r As Rule) (r.currentState.equals(Me.currentState)) And (r.currentSymbol.equals(Me.tape[Me.headPosition]))) ' variable definition
     If matches.length() = 0 Then
       Throw New ElanRuntimeError($"No rule matching state {Me.currentState} and symbol {Me.tape[Me.headPosition]}")
     End If

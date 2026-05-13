@@ -68,7 +68,7 @@ class TuringMachine {
     return this.currentState.equals(this.haltState);
   }
   public Rule findMatchingRule() { // function method
-    var matches = this.rules.filter(lambda Rule r => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
+    var matches = this.rules.filter((Rule r) -> (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError(String.format("No rule matching state % and symbol %", this.currentState, this.tape[this.headPosition]))
     }

@@ -60,7 +60,7 @@ export async function assertEffectOfActionNew(
   } catch (e) {
     if (updateTestFiles) {
       // update original not copied 
-      htmlFile = htmlFile.replace("out\\", "");
+      htmlFile = htmlFile.replace("out\/", "");
       updateTestFileNew(htmlFile, actualHtml);
       throw new Error("Files updated");
     } else {
@@ -139,23 +139,23 @@ export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string
 
       updateTestFileNew(sourceFile, actualSource);
       if (htmlFile !== "") {
-        htmlFile = htmlFile.replace("out\\", "");
+        htmlFile = htmlFile.replace("out\/", "");
         updateTestFileNew(htmlFile, actualHtml);
       }
       if (pythonFile !== "") {
-        pythonFile = pythonFile.replace("out\\", "");
+        pythonFile = pythonFile.replace("out\/", "");
         updateTestFileNew(pythonFile, actualPython);
       }
       if (vbFile !== "") {
-        vbFile = vbFile.replace("out\\", "");
+        vbFile = vbFile.replace("out\/", "");
         updateTestFileNew(vbFile, actualVB);
       }
       if (csFile !== "") {
-        csFile = csFile.replace("out\\", "");
+        csFile = csFile.replace("out\/", "");
         updateTestFileNew(csFile, actualCS);
       }
       if (javaFile !== "") {
-        javaFile = javaFile.replace("out\\", "");
+        javaFile = javaFile.replace("out\/", "");
         updateTestFileNew(javaFile, actualJava);
       }
       throw new Error("Files updated");
