@@ -1,25 +1,25 @@
 import assert from "assert";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
-import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { AbstractClass } from "../src/ide/frames/globals/abstract-class";
-import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { GlobalProcedure } from "../src/ide/frames/globals/global-procedure";
-import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
-import { InterfaceFrame } from "../src/ide/frames/globals/interface-frame";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import { Profile } from "../src/ide/frames/profile";
-import { IfStatement } from "../src/ide/frames/statements/if-statement";
-import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
-import { While } from "../src/ide/frames/statements/while";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { FunctionMethod } from "../../src/ide/frames/class-members/function-method";
+import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { AbstractClass } from "../../src/ide/frames/globals/abstract-class";
+import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
+import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
+import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
+import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
+import { InterfaceFrame } from "../../src/ide/frames/globals/interface-frame";
+import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../../src/ide/frames/globals/test-frame";
+import { Profile } from "../../src/ide/frames/profile";
+import { IfStatement } from "../../src/ide/frames/statements/if-statement";
+import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
+import { While } from "../../src/ide/frames/statements/while";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { hash } from "../../src/ide/util";
+import { transforms } from "../compiler/compiler-test-helpers";
 import { emptyMainOnly } from "./model-generating-functions";
-import { assertOptions, key, selectOption } from "./testHelpers";
+import { assertOptions, key, selectOption } from "../testHelpers";
 
 suite("Selector tests", () => {
   test("Options within main", () => {

@@ -1,7 +1,7 @@
 import assert from "assert";
-import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-worksheets";
-import { LanguageElan } from "../src/ide/frames/language-elan";
-import { processInnerCode } from "../src/tools/codeParser";
+import { processWorksheetsInDirectory } from "../../src/build-scripts/preprocess-worksheets";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { processInnerCode } from "../../src/tools/codeParser";
 import {
   processCode,
   processFinals,
@@ -10,9 +10,10 @@ import {
   processLoads,
   processQuestions,
   processSteps,
-} from "../src/tools/markupParser";
-import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
-import { ignore_test } from "./compiler/compiler-test-helpers";
+} from "../../src/tools/markupParser";
+import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../../src/tools/parserConstants";
+import { ignore_test } from "../compiler/compiler-test-helpers";
+
 
 suite("process worksheets", () => {
   ignore_test("process file with header", async () => {

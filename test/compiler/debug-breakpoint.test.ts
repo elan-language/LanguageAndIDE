@@ -1,11 +1,11 @@
-import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { Profile } from "../src/ide/frames/profile";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { asDebugSymbol, assertDebugBreakPoint } from "./testHelpers";
+import { DebugSymbol } from "../../src/compiler/compiler-interfaces/debug-symbol";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { asDebugSymbol, assertDebugBreakPoint } from "../testHelpers";
+import { ignore_test, testHash, testHeader, transforms } from "./compiler-test-helpers";
 
 suite("DebugBreakpoint", () => {
   test("Pass_Main", async () => {

@@ -34,9 +34,9 @@ export class Random {
 
   private v: number;
 
-    @elanFunction([], FunctionOptions.pure, ElanClass(Random))
+  @elanFunction([], FunctionOptions.pure, ElanClass(Random))
   nextGen(): Random {
-    const gen2 = this.system!.initialise(new Random());;
+    const gen2 = this.system!.initialise(new Random());
     gen2.u = 36969 * (this.u % 65536) + this.u / 65536;
     gen2.v = 18000 * (this.v % 65536) + this.v / 65536;
     return gen2;

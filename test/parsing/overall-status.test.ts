@@ -1,12 +1,12 @@
 import assert from "assert";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { TestStatus } from "../src/compiler/test-status";
-import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { Profile } from "../src/ide/frames/profile";
-import { CompileStatus, ParseStatus, RunStatus } from "../src/ide/frames/status-enums";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { TestStatus } from "../../src/compiler/test-status";
+import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
+import { CompileStatus, ParseStatus, RunStatus } from "../../src/ide/frames/status-enums";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 suite("Overall Status Tests", () => {
   test("Pattern for starting from literal program", async () => {
