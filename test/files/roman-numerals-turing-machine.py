@@ -62,7 +62,7 @@ class TuringMachine # concrete class
   def findMatchingRule(self: TuringMachine) -> Rule: # function method
     matches = self.rules.filter(lambda r: Rule => (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
-      raise ElanRuntimeError("f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}"")
+      raise ElanRuntimeError(f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}")
     return matches.head()
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure method
     hp = self.headPosition # variable definition
