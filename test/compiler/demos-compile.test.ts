@@ -1,5 +1,5 @@
-import { ignore_test } from "./compiler/compiler-test-helpers";
-import { testElanProgram } from "./testHelpers";
+import { testElanProgram } from "../testHelpers";
+import { ignore_test } from "./compiler-test-helpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {

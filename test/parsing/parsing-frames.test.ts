@@ -1,19 +1,19 @@
 import assert from "assert";
 
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
-import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
-import { Throw } from "../src/ide/frames/statements/throw";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { Profile } from "../src/ide/frames/profile";
-import { ReAssignVariable } from "../src/ide/frames/statements/re-assign-variable";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../../src/ide/frames/globals/test-frame";
+import { Profile } from "../../src/ide/frames/profile";
+import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
+import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
+import { Throw } from "../../src/ide/frames/statements/throw";
+import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");

@@ -1,15 +1,15 @@
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { Profile } from "../src/ide/frames/profile";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
 import {
   assertAutocompletes,
   assertSymbolCompletionMenuStartsWith,
   assertSymbolCompletionWithString,
   fileWithPython,
-} from "./testHelpers";
+} from "../testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
   test("Pass_LocalVars", async () => {

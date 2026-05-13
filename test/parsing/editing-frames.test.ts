@@ -1,41 +1,41 @@
 import assert from "assert";
 
-import { Constructor } from "../src/ide/frames/class-members/constructor";
-import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
-import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
-import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
-import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
-import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
-import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
-import { ParseStatus } from "../src/ide/frames/status-enums";
+import { Constructor } from "../../src/ide/frames/class-members/constructor";
+import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
+import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
+import { IdentifierField } from "../../src/ide/frames/fields/identifier-field";
+import { InheritsFromField } from "../../src/ide/frames/fields/inherits-from-field";
+import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
+import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
+import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
+import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
+import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
+import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { ReturnStatement } from "../../src/ide/frames/statements/return-statement";
+import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
+import { ParseStatus } from "../../src/ide/frames/status-enums";
 import {
-  classWithConstructor,
-  emptyFunctionOnly,
-  emptyMainOnly,
-  oneConstant,
-  T00_emptyFile,
-  twoConstants,
+    createTestRunner,
+    ctrl_backspace,
+    ctrl_del,
+    ctrl_down,
+    ctrl_up,
+    ctrl_x,
+    del,
+    enter,
+    key,
+    loadFileAsModelNew,
+    shift_tab,
+    tab,
+} from "../testHelpers";
+import {
+    classWithConstructor,
+    emptyFunctionOnly,
+    emptyMainOnly,
+    oneConstant,
+    T00_emptyFile,
+    twoConstants,
 } from "./model-generating-functions";
-import {
-  createTestRunner,
-  ctrl_backspace,
-  ctrl_del,
-  ctrl_down,
-  ctrl_up,
-  ctrl_x,
-  del,
-  enter,
-  key,
-  loadFileAsModelNew,
-  shift_tab,
-  tab,
-} from "./testHelpers";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {

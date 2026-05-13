@@ -1,11 +1,11 @@
 import assert from "assert";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { Regexes } from "../src/ide/frames/fields/regexes";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { Profile } from "../src/ide/frames/profile";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { Regexes } from "../../src/ide/frames/fields/regexes";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Profile } from "../../src/ide/frames/profile";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
   //RegExp

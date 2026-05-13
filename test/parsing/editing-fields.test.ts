@@ -1,19 +1,19 @@
 import assert from "assert";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
-import { GlobalComment } from "../src/ide/frames/globals/global-comment";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { IfStatement } from "../src/ide/frames/statements/if-statement";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { hash } from "../src/ide/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
-import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "./testHelpers";
-import { Profile } from "../src/ide/frames/profile";
-import { ReAssignVariable } from "../src/ide/frames/statements/re-assign-variable";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
+import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
+import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
+import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { Profile } from "../../src/ide/frames/profile";
+import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { IfStatement } from "../../src/ide/frames/statements/if-statement";
+import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { hash } from "../../src/ide/util";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
+import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {

@@ -1,74 +1,74 @@
-import { abstractKeyword } from "../src/compiler/elan-keywords";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { Regexes } from "../src/ide/frames/fields/regexes";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { AbstractSequence } from "../src/ide/frames/parse-nodes/abstract-sequence";
-import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";
-import { BinaryOperation } from "../src/ide/frames/parse-nodes/binary-operation";
-import { BracketedExpression } from "../src/ide/frames/parse-nodes/bracketed-expression";
-import { CommaNode } from "../src/ide/frames/parse-nodes/comma-node";
-import { CSV } from "../src/ide/frames/parse-nodes/csv";
-import { DictionaryNode } from "../src/ide/frames/parse-nodes/dictionary-node";
-import { DotAfter } from "../src/ide/frames/parse-nodes/dot-after";
-import { DottedTerm } from "../src/ide/frames/parse-nodes/dotted-term";
-import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
-import { IdentifierUse } from "../src/ide/frames/parse-nodes/identifier-use";
-import { IfExpr } from "../src/ide/frames/parse-nodes/if-expr";
-import { InstanceNode } from "../src/ide/frames/parse-nodes/instanceNode";
-import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
-import { KeywordNode } from "../src/ide/frames/parse-nodes/keyword-node";
-import { KVPnode } from "../src/ide/frames/parse-nodes/kvp-node";
-import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
-import { ListNode } from "../src/ide/frames/parse-nodes/list-node";
-import { LitBoolean } from "../src/ide/frames/parse-nodes/lit-boolean";
-import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
-import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
-import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
-import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
-import { LitStringInterpolated } from "../src/ide/frames/parse-nodes/lit-string-interpolated";
-import { LitStringInterpolatedInsert } from "../src/ide/frames/parse-nodes/lit-string-interpolated-insert";
-import { LitStringOrdinary } from "../src/ide/frames/parse-nodes/lit-string-ordinary";
-import { LitStringText } from "../src/ide/frames/parse-nodes/lit-string-text";
-import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
-import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
-import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
-import { NewInstance } from "../src/ide/frames/parse-nodes/new-instance";
-import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
-import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
-import { ParamListNode } from "../src/ide/frames/parse-nodes/param-list-node";
-import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
-import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
-import { PunctuationNode } from "../src/ide/frames/parse-nodes/punctuation-node";
-import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
-import { RegExMatchNode } from "../src/ide/frames/parse-nodes/regex-match-node";
-import { SetToClause } from "../src/ide/frames/parse-nodes/set-to-clause";
-import { SpaceNode } from "../src/ide/frames/parse-nodes/space-node";
-import { Term } from "../src/ide/frames/parse-nodes/term";
-import { TermChained } from "../src/ide/frames/parse-nodes/term-chained";
-import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
-import { TermSimpleWithOptIndex } from "../src/ide/frames/parse-nodes/term-simple-with-opt-index";
-import { ThisInstance } from "../src/ide/frames/parse-nodes/this-instance";
-import { TupleNode } from "../src/ide/frames/parse-nodes/tuple-node";
-import { TypeNameQualifiedNode } from "../src/ide/frames/parse-nodes/type-name-qualified-node";
-import { TypeNameUse } from "../src/ide/frames/parse-nodes/type-name-use";
-import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
-import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
-import { TypeTupleNode } from "../src/ide/frames/parse-nodes/type-tuple-node";
-import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression";
-import { Profile } from "../src/ide/frames/profile";
-import { ParseStatus } from "../src/ide/frames/status-enums";
-import { DOT } from "../src/ide/frames/symbols";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { hash } from "../src/ide/util";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { abstractKeyword } from "../../src/compiler/elan-keywords";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { Regexes } from "../../src/ide/frames/fields/regexes";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { AbstractSequence } from "../../src/ide/frames/parse-nodes/abstract-sequence";
+import { BinaryExpression } from "../../src/ide/frames/parse-nodes/binary-expression";
+import { BinaryOperation } from "../../src/ide/frames/parse-nodes/binary-operation";
+import { BracketedExpression } from "../../src/ide/frames/parse-nodes/bracketed-expression";
+import { CommaNode } from "../../src/ide/frames/parse-nodes/comma-node";
+import { CSV } from "../../src/ide/frames/parse-nodes/csv";
+import { DictionaryNode } from "../../src/ide/frames/parse-nodes/dictionary-node";
+import { DotAfter } from "../../src/ide/frames/parse-nodes/dot-after";
+import { DottedTerm } from "../../src/ide/frames/parse-nodes/dotted-term";
+import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
+import { IdentifierUse } from "../../src/ide/frames/parse-nodes/identifier-use";
+import { IfExpr } from "../../src/ide/frames/parse-nodes/if-expr";
+import { InstanceNode } from "../../src/ide/frames/parse-nodes/instanceNode";
+import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
+import { KeywordNode } from "../../src/ide/frames/parse-nodes/keyword-node";
+import { KVPnode } from "../../src/ide/frames/parse-nodes/kvp-node";
+import { Lambda } from "../../src/ide/frames/parse-nodes/lambda";
+import { ListNode } from "../../src/ide/frames/parse-nodes/list-node";
+import { LitBoolean } from "../../src/ide/frames/parse-nodes/lit-boolean";
+import { LitFloat } from "../../src/ide/frames/parse-nodes/lit-float";
+import { LitInt } from "../../src/ide/frames/parse-nodes/lit-int";
+import { LitRegExp } from "../../src/ide/frames/parse-nodes/lit-regExp";
+import { LitString } from "../../src/ide/frames/parse-nodes/lit-string";
+import { LitStringInterpolated } from "../../src/ide/frames/parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedInsert } from "../../src/ide/frames/parse-nodes/lit-string-interpolated-insert";
+import { LitStringOrdinary } from "../../src/ide/frames/parse-nodes/lit-string-ordinary";
+import { LitStringText } from "../../src/ide/frames/parse-nodes/lit-string-text";
+import { LitValueNode } from "../../src/ide/frames/parse-nodes/lit-value-node";
+import { MethodCallNode } from "../../src/ide/frames/parse-nodes/method-call-node";
+import { Multiple } from "../../src/ide/frames/parse-nodes/multiple";
+import { NewInstance } from "../../src/ide/frames/parse-nodes/new-instance";
+import { OptionalNode } from "../../src/ide/frames/parse-nodes/optional-node";
+import { ParamDefNode } from "../../src/ide/frames/parse-nodes/param-def-node";
+import { ParamListNode } from "../../src/ide/frames/parse-nodes/param-list-node";
+import { Space } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
+import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
+import { PunctuationNode } from "../../src/ide/frames/parse-nodes/punctuation-node";
+import { ReferenceNode } from "../../src/ide/frames/parse-nodes/reference-node";
+import { RegExMatchNode } from "../../src/ide/frames/parse-nodes/regex-match-node";
+import { SetToClause } from "../../src/ide/frames/parse-nodes/set-to-clause";
+import { SpaceNode } from "../../src/ide/frames/parse-nodes/space-node";
+import { Term } from "../../src/ide/frames/parse-nodes/term";
+import { TermChained } from "../../src/ide/frames/parse-nodes/term-chained";
+import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
+import { TermSimpleWithOptIndex } from "../../src/ide/frames/parse-nodes/term-simple-with-opt-index";
+import { ThisInstance } from "../../src/ide/frames/parse-nodes/this-instance";
+import { TupleNode } from "../../src/ide/frames/parse-nodes/tuple-node";
+import { TypeNameQualifiedNode } from "../../src/ide/frames/parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
+import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
+import { TypeSimpleOrGeneric } from "../../src/ide/frames/parse-nodes/type-simple-or-generic";
+import { TypeTupleNode } from "../../src/ide/frames/parse-nodes/type-tuple-node";
+import { UnaryExpression } from "../../src/ide/frames/parse-nodes/unary-expression";
+import { Profile } from "../../src/ide/frames/profile";
+import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { DOT } from "../../src/ide/frames/symbols";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { hash } from "../../src/ide/util";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import {
-  fileWithCS,
-  fileWithJava,
-  fileWithPython,
-  fileWithVB,
-  testActiveNodeAndDone,
-  testNodeParse,
-} from "./testHelpers";
+    fileWithCS,
+    fileWithJava,
+    fileWithPython,
+    fileWithVB,
+    testActiveNodeAndDone,
+    testNodeParse,
+} from "../testHelpers";
 
 suite("Parsing Nodes", () => {
   const f = new FileImpl(

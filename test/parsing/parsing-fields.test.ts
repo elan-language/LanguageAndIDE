@@ -1,20 +1,20 @@
 import assert from "assert";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
-import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { ParseStatus } from "../src/ide/frames/status-enums";
-import { StubInputOutput } from "../src/ide/stub-input-output";
-import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
-import { testExtractContextForExpression } from "./testHelpers";
-import { Profile } from "../src/ide/frames/profile";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
+import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
+import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../../src/ide/frames/globals/test-frame";
+import { Profile } from "../../src/ide/frames/profile";
+import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
+import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
+import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { hash } from "../../src/ide/util";
+import { transforms } from "../compiler/compiler-test-helpers";
+import { testExtractContextForExpression } from "../testHelpers";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {

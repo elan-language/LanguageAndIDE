@@ -1,11 +1,11 @@
-import { ignore_test } from "./compiler/compiler-test-helpers";
+import { ignore_test } from "../compiler/compiler-test-helpers";
+import { assertEffectOfActionNew, assertGeneratesHtmlSourceAndExportFiles } from "../testHelpers";
 import {
-  CollapseAll,
-  ExpandAll,
-  SelectMainById,
-  SelectStatementById,
+    CollapseAll,
+    ExpandAll,
+    SelectMainById,
+    SelectStatementById,
 } from "./model-generating-functions";
-import { assertEffectOfActionNew, assertGeneratesHtmlSourceAndExportFiles } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
   test("Test Empty File", async () => {
