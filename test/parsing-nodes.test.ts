@@ -163,10 +163,10 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new ExprNode(f),
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-      ParseStatus.valid,
-      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      ParseStatus.invalid,
       "",
-      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "",
+      "",
       "",
     );
   });

@@ -60,7 +60,7 @@ def test_setTargetIfGreen(self) -> None:
   self.assertEqual(setTargetIfGreen("ABCDE", "AACDE", 0), ".ACDE")
 
 def evaluateGreens(attempt: str, target: str) -> list[str]: # function
-  return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
+  return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
 
 def test_evaluateGreens(self) -> None:
   self.assertEqual(evaluateGreens("ABCDE", "AXXXX"), ["*BCDE", ".XXXX"])
@@ -111,7 +111,7 @@ def test_setTargetIfYellow(self) -> None:
   self.assertEqual(setTargetIfYellow("*BCDE", "*BCDA", 4), "*BCDA")
 
 def evaluateYellows(attempt: str, target: str) -> list[str]: # function
-  return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
+  return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
 
 def test_evaluateYellows(self) -> None:
   self.assertEqual(evaluateYellows("ABCDE", "XAXXX"), ["+____", "X.XXX"])
@@ -137,7 +137,7 @@ def test_markAttempt(self) -> None:
   self.assertEqual(markAttempt("COLON", "GLORY"), "_++__")
 
 def possibleAnswersAfterAttempt(prior: list[str], attempt: str, mark: str) -> list[str]: # function
-  return prior.filter(lambda w: str => markAttempt(attempt, w).equals(mark))
+  return prior.filter(lambda w: str: markAttempt(attempt, w).equals(mark))
 
 def test_possibleAnswersAfterAttempt(self) -> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable definition
@@ -147,9 +147,9 @@ def test_possibleAnswersAfterAttempt(self) -> None:
 
 def maxWordCountRemainingAfterAttempt(possAnswers: list[str], attempt: str) -> int: # function
   d = Dictionary[str, int]() # variable definition
-  d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str => incrementCount(dd, answer, attempt)) # variable definition
+  d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str: incrementCount(dd, answer, attempt)) # variable definition
   keys = d2.keys() # variable definition
-  return keys.reduce(0, lambda maxSoFar: int, mark: str => if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  return keys.reduce(0, lambda maxSoFar: int, mark: str: if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 
 def incrementCount(dd: Dictionary[str, int], possAnswer: str, attempt: str) -> Dictionary[str, int]: # function
   mark = markAttempt(attempt, possAnswer) # variable definition
@@ -166,7 +166,7 @@ def test_maxWordCountRemainingAfterAttempt(self) -> None:
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "XXXXX"), 5)
 
 def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # function
-  return possAnswers.map(lambda w: str => WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAnswers.map(lambda w: str: WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 
 def betterOf(wc1: WordCount, wc2: WordCount, possAnswers: list[str]) -> WordCount: # function
   isBetter = wc2.count < wc1.count # variable definition
@@ -190,7 +190,7 @@ def test_betterOf(self) -> None:
 
 def bestAttempt(possAnswers: list[str]) -> str: # function
   wordCounts = allRemainingWordCounts(possAnswers) # variable definition
-  best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount => betterOf(bestSoFar, newWord, possAnswers)) # variable definition
+  best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount: betterOf(bestSoFar, newWord, possAnswers)) # variable definition
   return best.word
 
 def test_bestAttempt(self) -> None:

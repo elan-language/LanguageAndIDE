@@ -123,14 +123,14 @@ class Solver # concrete class
         neighbours = neighbours.withAppend(node) # re-assign variable
     return neighbours
   def getNodeFor(self: Solver, p: Point) -> Node: # function method
-    matches = self.nodes.filter(lambda n: Node => n.point.equals(p)) # variable definition
+    matches = self.nodes.filter(lambda n: Node: n.point.equals(p)) # variable definition
     return if(matches.length() == 1, matches.head(), emptyNode())
   def getLastVisited(self: Solver) -> Point: # function method
     return self.current.point
   def nextNodeToVisit(self: Solver) -> Node: # function method
     lowestCostSoFar = infinity # variable definition
     lowestCostNode = emptyNode() # variable definition
-    possibilities = self.nodes.filter(lambda nd: Node => (not nd.visited) and (nd.distFromStart < infinity)) # variable definition
+    possibilities = self.nodes.filter(lambda nd: Node: (not nd.visited) and (nd.distFromStart < infinity)) # variable definition
     for nd in possibilities:
       cost = self.calculateCost(nd) # variable definition
       if cost < lowestCostSoFar:

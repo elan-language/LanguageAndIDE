@@ -16,12 +16,14 @@ import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { Lambda } from "./parse-nodes/lambda";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
 import { LitStringText } from "./parse-nodes/lit-string-text";
 import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
+import { OptionalNode } from "./parse-nodes/optional-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
@@ -32,7 +34,7 @@ import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { ParseStatus } from "./status-enums";
-import { CLOSE_BRACKET } from "./symbols";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageJava extends LanguageCfamily {
   static Instance: Language = new LanguageJava();
@@ -145,6 +147,25 @@ export class LanguageJava extends LanguageCfamily {
     return this.c_langs_typeGenericAsHtml(node);
   }
 
+  addNodesForLambda(node: Lambda): void {
+    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
+    const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
+    const sp = () => new SpaceNode(node.file, Space.ignored);
+    const paramListSp = new Sequence(node.file, [paramList, sp]);
+    node.params = new OptionalNode(node.file, paramListSp);
+    node.addElement(node.params);
+    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new PunctuationNode(node.file, this.ARROW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.expr = new ExprNode(node.file);
+    node.addElement(node.expr);
+  }
+
+  lambdaAsHtml(node: Lambda): string {
+    return `(${node.params!.renderAsHtml()}) ${this.ARROW} ${node.expr!.renderAsHtml()}`;
+  }
+
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {
     let definingString = "";
     let csv = "";
@@ -227,6 +248,8 @@ export class LanguageJava extends LanguageCfamily {
   assertStatementFields(frame: AssertStatement): Field[] {
     return this.common_assertStatementFields(frame);
   }
+
+  ARROW: string = "->";
 
   reservedWords: Set<string> = new Set<string>([
     `abstract`,

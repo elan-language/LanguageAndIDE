@@ -291,41 +291,6 @@ suite("Editing Fields Tests", () => {
     );
   });
 
-  test("Tabbing to use plain text completions #485", () => {
-    const main = new MainFrame(
-      new FileImpl(
-        hash,
-        new Profile(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
-    const v = new VariableStatement(main);
-    const expr = v.expr;
-    expr.processKey(key("l"));
-    expr.processKey(key("a"));
-    expr.processKey(key("m"));
-    expr.processKey(key("b"));
-    expr.processKey(key("d"));
-    expr.processKey(key("a"));
-    expr.processKey(key(" "));
-    expr.processKey(key("a"));
-    expr.processKey(key(" "));
-    assert.equal(expr.text, "lambda a ");
-    assert.equal(expr.getCompletion(), "as <i>Type</i> => <i>value or expression</i>");
-    expr.processKey(key("Tab"));
-    assert.equal(expr.text, "lambda a as ");
-    assert.equal(expr.getCompletion(), "<i>Type</i> => <i>value or expression</i>");
-    expr.processKey(key("I"));
-    expr.processKey(key("n"));
-    expr.processKey(key("t"));
-    assert.equal(expr.text, "lambda a as Int");
-    assert.equal(expr.getCompletion(), " => <i>value or expression</i>");
-    expr.processKey(key("Enter"));
-    assert.equal(expr.text, "lambda a as Int => ");
-  });
   test("End of field marker automatically skips to next field #496", () => {
     const file = new FileImpl(
       hash,

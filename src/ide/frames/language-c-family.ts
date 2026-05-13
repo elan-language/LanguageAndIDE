@@ -250,6 +250,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     node.addElement(node.genericTypes);
     node.addElement(new PunctuationNode(node.file, GT));
   }
+
   c_langs_typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
   }

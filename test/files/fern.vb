@@ -87,7 +87,7 @@ End Function
 Function roundtuple2(n As (Double, Double)) As List(Of Double)
   Dim a = n.item_0 ' variable definition
   Dim b = n.item_1 ' variable definition
-  Return {a, b}.map(lambda x As Double => x.round(8))
+  Return {a, b}.map(Function (x As Double) x.round(8))
 End Function
 
 Const scale = 7
