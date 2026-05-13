@@ -348,7 +348,6 @@ export class LanguageVB extends LanguageAbstract {
   lambdaAsHtml(node: Lambda): string {
     return `<el-kw>${this.FUNCTION}</el-kw> (${node.params!.renderAsHtml()}) ${node.expr!.renderAsHtml()}`;
   }
-  
 
   typeGenericAsHtml(node: TypeGenericNode): string {
     return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;

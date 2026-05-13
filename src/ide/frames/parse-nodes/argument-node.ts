@@ -9,11 +9,11 @@ export class ArgumentNode extends AbstractAlternatives {
     this.completionWhenEmpty = "<i>value or expression</i>";
   }
 
-    parseText(text: string): void {
-      if (text.trim().length > 0) {
-        this.alternatives.push(new Lambda(this.file));
-        this.alternatives.push(new ExprNode(this.file));
-        super.parseText(text);
-      }
+  parseText(text: string): void {
+    if (text.trim().length > 0) {
+      this.alternatives.push(new Lambda(this.file));
+      this.alternatives.push(new ExprNode(this.file));
+      super.parseText(text);
     }
+  }
 }

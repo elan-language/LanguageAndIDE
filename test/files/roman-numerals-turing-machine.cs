@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha1
+// C# with Elan 2.0.0-alpha4
 
 // Turing Machine that converts a Year from decimal to roman numerals
 
@@ -70,7 +70,7 @@ class TuringMachine {
   public Rule findMatchingRule() { // function method
     var matches = this.rules.filter(Rule r  => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
-      throw new ElanRuntimeError($"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}")
+      throw new ElanRuntimeError($"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}");
     }
     return matches.head();
   }

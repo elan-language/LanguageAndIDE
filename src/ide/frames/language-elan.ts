@@ -62,7 +62,6 @@ import { TokenType } from "./symbol-completion-helpers";
 import { ARROW, GT, LT } from "./symbols";
 
 export class LanguageElan extends LanguageAbstract {
-
   private constructor() {
     super();
   }
