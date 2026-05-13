@@ -1,4 +1,3 @@
-import { TupleAsn } from "../../../compiler/syntax-nodes/globals/tuple-asn";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Lambda } from "../parse-nodes/lambda";

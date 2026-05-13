@@ -7,7 +7,6 @@ import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";

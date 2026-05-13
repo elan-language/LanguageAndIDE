@@ -13,6 +13,7 @@ import { StringType } from "../src/compiler/symbols/string-type";
 import { UnknownType } from "../src/compiler/symbols/unknown-type";
 import { TestStatus } from "../src/compiler/test-status";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
+import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { AbstractField } from "../src/ide/frames/fields/abstract-field";
 import { FileImpl } from "../src/ide/frames/file-impl";
@@ -36,7 +37,6 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 
 
 // flag to update test files
@@ -165,7 +165,7 @@ export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string
   }
 }
 
-function removeHeader(input: string): string {
+function _removeHeader(input: string): string {
   return input.replace(/^#.*Elan.*\n/, "");
 }
 
