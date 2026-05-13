@@ -143,7 +143,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ReAssignVariable) {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}("${frame.text.renderAsHtml()}")`;
+      html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     }
