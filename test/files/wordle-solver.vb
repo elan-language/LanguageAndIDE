@@ -70,7 +70,7 @@ End Function
 End Sub
 
 Function evaluateGreens(attempt As String, target As String) As List(Of String)
-  Return range(0, 5).reduce({attempt, target}, lambda a As List(Of String), x As Integer => {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
+  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
 End Function
 
 <TestMethod> Sub test_evaluateGreens()
@@ -131,7 +131,7 @@ End Function
 End Sub
 
 Function evaluateYellows(attempt As String, target As String) As List(Of String)
-  Return range(0, 5).reduce({attempt, target}, lambda a As List(Of String), x As Integer => {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
+  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
 End Function
 
 <TestMethod> Sub test_evaluateYellows()
@@ -161,7 +161,7 @@ End Function
 End Sub
 
 Function possibleAnswersAfterAttempt(prior As List(Of String), attempt As String, mark As String) As List(Of String)
-  Return prior.filter(lambda w As String => markAttempt(attempt, w).equals(mark))
+  Return prior.filter(Function (w As String) markAttempt(attempt, w).equals(mark))
 End Function
 
 <TestMethod> Sub test_possibleAnswersAfterAttempt()
@@ -173,9 +173,9 @@ End Sub
 
 Function maxWordCountRemainingAfterAttempt(possAnswers As List(Of String), attempt As String) As Integer
   Dim d = New Dictionary(Of String, Integer)() ' variable definition
-  Dim d2 = possAnswers.reduce(d, lambda dd As Dictionary(Of String, Integer), answer As String => incrementCount(dd, answer, attempt)) ' variable definition
+  Dim d2 = possAnswers.reduce(d, Function (dd As Dictionary(Of String, Integer), answer As String) incrementCount(dd, answer, attempt)) ' variable definition
   Dim keys = d2.keys() ' variable definition
-  Return keys.reduce(0, lambda maxSoFar As Integer, mark As String => if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 End Function
 
 Function incrementCount(dd As Dictionary(Of String, Integer), possAnswer As String, attempt As String) As Dictionary(Of String, Integer)
@@ -195,7 +195,7 @@ End Function
 End Sub
 
 Function allRemainingWordCounts(possAnswers As List(Of String)) As List(Of WordCount)
-  Return possAnswers.map(lambda w As String => New WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  Return possAnswers.map(Function (w As String) New WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 End Function
 
 Function betterOf(wc1 As WordCount, wc2 As WordCount, possAnswers As List(Of String)) As WordCount
@@ -222,7 +222,7 @@ End Sub
 
 Function bestAttempt(possAnswers As List(Of String)) As String
   Dim wordCounts = allRemainingWordCounts(possAnswers) ' variable definition
-  Dim best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar As WordCount, newWord As WordCount => betterOf(bestSoFar, newWord, possAnswers)) ' variable definition
+  Dim best = wordCounts.reduce(wordCounts.head(), Function (bestSoFar As WordCount, newWord As WordCount) betterOf(bestSoFar, newWord, possAnswers)) ' variable definition
   Return best.word
 End Function
 

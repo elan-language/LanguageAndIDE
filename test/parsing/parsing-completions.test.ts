@@ -177,7 +177,13 @@ suite("Parsing - Completions", () => {
       new Lambda(f),
       "lambda ",
       ParseStatus.incomplete,
-      "<i>name</i> as <i>Type</i>, ...=> <i>value or expression</i>",
+      "=> <i>value or expression</i>",
+    );
+    testCompletion(
+      new Lambda(f),
+      "lambda x",
+      ParseStatus.incomplete,
+      " as <i>Type</i> => <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(f),

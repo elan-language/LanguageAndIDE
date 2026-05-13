@@ -79,7 +79,7 @@ def roundtuple1(n: tuple[float, float]) -> tuple[float, float]: # function
 def roundtuple2(n: tuple[float, float]) -> list[float]: # function
   a = n.item_0 # variable definition
   b = n.item_1 # variable definition
-  return [a, b].map(lambda x: float => x.round(8))
+  return [a, b].map(lambda x: float: x.round(8))
 
 scale = 7 # constant
 

@@ -150,7 +150,7 @@ Class Solver
     Return neighbours
   End Function
   Function getNodeFor(p As Point) As Node
-    Dim matches = Me.nodes.filter(lambda n As Node => n.point.equals(p)) ' variable definition
+    Dim matches = Me.nodes.filter(Function (n As Node) n.point.equals(p)) ' variable definition
     Return if(matches.length() = 1, matches.head(), emptyNode())
   End Function
   Function getLastVisited() As Point
@@ -159,7 +159,7 @@ Class Solver
   Function nextNodeToVisit() As Node
     Dim lowestCostSoFar = infinity ' variable definition
     Dim lowestCostNode = emptyNode() ' variable definition
-    Dim possibilities = Me.nodes.filter(lambda nd As Node => (Not nd.visited) And (nd.distFromStart < infinity)) ' variable definition
+    Dim possibilities = Me.nodes.filter(Function (nd As Node) (Not nd.visited) And (nd.distFromStart < infinity)) ' variable definition
     For Each nd In possibilities
       Dim cost = Me.calculateCost(nd) ' variable definition
       If cost < lowestCostSoFar Then

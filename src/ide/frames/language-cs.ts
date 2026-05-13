@@ -10,17 +10,25 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
+import { CSV } from "./parse-nodes/csv";
+import { ExprNode } from "./parse-nodes/expr-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
+import { Lambda } from "./parse-nodes/lambda";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
+import { OptionalNode } from "./parse-nodes/optional-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
+import { ARROW } from "./symbols";
 
 export class LanguageCS extends LanguageCfamily {
+
   private constructor() {
     super();
   }
@@ -116,6 +124,22 @@ export class LanguageCS extends LanguageCfamily {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
     node.addElement(new SpaceNode(node.file, Space.required));
     this.addCommonElementsForNewInstance(node);
+  }
+
+addNodesForLambda(node: Lambda): void {
+    const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
+    const sp = () => new SpaceNode(node.file, Space.required);
+    const paramListSp = new Sequence(node.file, [paramList, sp]);
+    node.params = new OptionalNode(node.file, paramListSp);
+    node.addElement(node.params);
+    node.addElement(new PunctuationNode(node.file, ARROW));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.expr = new ExprNode(node.file);
+    node.addElement(node.expr);
+  }
+
+  lambdaAsHtml(node: Lambda): string {
+    return `${node.params!.renderAsHtml()} ${ARROW} ${node.expr!.renderAsHtml()}`;
   }
 
   newInstanceAsHtml(node: NewInstance): string {

@@ -7,7 +7,6 @@ import {
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -147,21 +146,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test("Pass_AssignALambdaToAVariable", async () => {
+  test("Fail_AssignALambdaToAVariable", async () => {
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => x * 5
+  variable l set to lambda x => x * 5
   call printNoLine(l(5))
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = async (x) => x * 5;
-  await _stdlib.printNoLine((await l(5)));
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -174,25 +165,22 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "25");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_AssignALambdaToAProperty", async () => {
+  test("Fail_AssignALambdaToAProperty", async () => {
     const code = `${testHeader}
 
 main
   variable foo set to new Foo()
-  call foo.setP1(lambda x as Int => x)
+  call foo.setP1(lambda x => x)
   variable v set to foo.p1(5)
   call printNoLine(v)
 end main
 
 class Foo
   constructor()
-    set this.p1 to lambda x as Int => 0
+    set this.p1 to lambda x => 0
   end constructor
   function toString() returns String
     return ""
@@ -205,36 +193,6 @@ class Foo
   property p1 as Func<of Int => Int>
 end class`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let foo = system.initialise(await new Foo()._initialise());
-  await foo.setP1(async (x) => x);
-  let v = (await foo.p1(5));
-  await _stdlib.printNoLine(v);
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)]]);};
-
-  async _initialise() {
-    this.p1 = async (x) => 0;
-    return this;
-  }
-
-  async toString() {
-    return "";
-  }
-
-  async setP1(p) {
-    this.p1 = p;
-  }
-
-  p1 = system.emptyFunc(0);
-
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -246,29 +204,16 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
-    await assertObjectCodeExecutes(fileImpl, "5");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_lambdaInExpression", async () => {
+  test("Fail_lambdaInExpression", async () => {
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => x * 5
+  variable l set to lambda x => x * 5
   call printNoLine(l(5) + 5)
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = async (x) => x * 5;
-  await _stdlib.printNoLine((await l(5)) + 5);
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -281,13 +226,10 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "30");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_ReturnALambda", async () => {
+  test("Fail_ReturnALambda", async () => {
     const code = `${testHeader}
 
 main
@@ -296,21 +238,8 @@ main
 end main
     
 function getFunc() returns Func<of Int => Int>
-  return lambda x as Int => x * 5
+  return lambda x => x * 5
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = (await global.getFunc());
-  await _stdlib.printNoLine((await l(5)));
-}
-
-async function getFunc() {
-  return async (x) => x * 5;
-}
-global["getFunc"] = getFunc;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -323,13 +252,10 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "25");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_ParameterlessLambda", async () => {
+  test("Fail_ParameterlessLambda", async () => {
     const code = `${testHeader}
 
 main
@@ -338,15 +264,6 @@ main
   call printNoLine(l())
 end main`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let x = 3;
-  let l = async () => x * 5;
-  await _stdlib.printNoLine((await l()));
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -358,13 +275,10 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "15");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_ReturnAParameterLessLambda", async () => {
+  test("Fail ReturnAParameterLessLambda", async () => {
     const code = `${testHeader}
 
 main
@@ -376,19 +290,6 @@ function getFunc(x as Int) returns Func<of => Int>
   return lambda => x * 5
 end function`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = (await global.getFunc(5));
-  await _stdlib.printNoLine((await l()));
-}
-
-async function getFunc(x) {
-  return async () => x * 5;
-}
-global["getFunc"] = getFunc;
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -400,13 +301,10 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "25");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_FuncOfMutableType", async () => {
+  test("Fail_FuncOfMutableType", async () => {
     const code = `${testHeader}
 
 main
@@ -415,21 +313,8 @@ main
 end main
     
 function getFunc(x as Int) returns Func<of List<of Int> => List<of Int>>
-  return lambda y as List<of Int> => [x * y[0]]
+  return lambda y<of Int> => [x * y[0]]
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = (await global.getFunc(5));
-  await _stdlib.printNoLine((await l(system.list([5]))));
-}
-
-async function getFunc(x) {
-  return async (y) => system.list([x * system.safeIndex(y, 0)]);
-}
-global["getFunc"] = getFunc;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -442,27 +327,16 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[25]");
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_Lambda WithLambdaParam", async () => {
+  test("Fail_Lambda WithLambdaParam", async () => {
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Func<of Int => Int> => x(2)
-  call printNoLine(l(lambda x as Int => 2 * x))
+  variable l set to lambda x<of Int => Int> => x(2)
+  call printNoLine(l(lambda x => 2 * x))
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let l = async (x) => (await x(2));
-  await _stdlib.printNoLine((await l(async (x) => 2 * x)));
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -475,10 +349,7 @@ return [main, _tests];}`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_ImmediateInvoke", async () => {
@@ -490,7 +361,7 @@ main
 end main
     
 function getFunc() returns Func<of Int => Int>
-  return lambda x as Int => x * 5
+  return lambda x => x * 5
 end function`;
 
     const fileImpl = new FileImpl(
@@ -651,7 +522,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  variable aa set to lambda x as Int => aa
+  variable aa set to lambda x => aa
 end main`;
 
     const fileImpl = new FileImpl(
@@ -665,15 +536,14 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'aa' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_ReturnSameNameAsVariable1", async () => {
     const code = `${testHeader}
 
 main
-  variable l set to lambda x as Int => if(x is 1, x, l(x-1))
+  variable l set to lambda x => if(x is 1, x, l(x-1))
 end main`;
 
     const fileImpl = new FileImpl(
@@ -687,7 +557,6 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'l' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 });

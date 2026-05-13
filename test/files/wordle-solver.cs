@@ -70,7 +70,7 @@ static string setTargetIfGreen(string attempt, string target, int n) { // functi
 }
 
 static List<string> evaluateGreens(string attempt, string target) { // function
-  return range(0, 5).reduce([attempt, target], lambda List<string> a, int x => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)]);
+  return range(0, 5).reduce([attempt, target], List<string> a, int x  => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)]);
 }
 
 [TestMethod] static void test_evaluateGreens() {
@@ -131,7 +131,7 @@ static string setTargetIfYellow(string attempt, string target, int n) { // funct
 }
 
 static List<string> evaluateYellows(string attempt, string target) { // function
-  return range(0, 5).reduce([attempt, target], lambda List<string> a, int x => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)]);
+  return range(0, 5).reduce([attempt, target], List<string> a, int x  => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)]);
 }
 
 [TestMethod] static void test_evaluateYellows() {
@@ -161,7 +161,7 @@ static string markAttempt(string attempt, string target) { // function
 }
 
 static List<string> possibleAnswersAfterAttempt(List<string> prior, string attempt, string mark) { // function
-  return prior.filter(lambda string w => markAttempt(attempt, w).equals(mark));
+  return prior.filter(string w  => markAttempt(attempt, w).equals(mark));
 }
 
 [TestMethod] static void test_possibleAnswersAfterAttempt() {
@@ -173,9 +173,9 @@ static List<string> possibleAnswersAfterAttempt(List<string> prior, string attem
 
 static int maxWordCountRemainingAfterAttempt(List<string> possAnswers, string attempt) { // function
   var d = new Dictionary<string, int>();
-  var d2 = possAnswers.reduce(d, lambda Dictionary<string, int> dd, string answer => incrementCount(dd, answer, attempt));
+  var d2 = possAnswers.reduce(d, Dictionary<string, int> dd, string answer  => incrementCount(dd, answer, attempt));
   var keys = d2.keys();
-  return keys.reduce(0, lambda int maxSoFar, string mark => if(d2[mark] > maxSoFar, d2[mark], maxSoFar));
+  return keys.reduce(0, int maxSoFar, string mark  => if(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 }
 
 static Dictionary<string, int> incrementCount(Dictionary<string, int> dd, string possAnswer, string attempt) { // function
@@ -195,7 +195,7 @@ static Dictionary<string, int> incrementCount(Dictionary<string, int> dd, string
 }
 
 static List<WordCount> allRemainingWordCounts(List<string> possAnswers) { // function
-  return possAnswers.map(lambda string w => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)));
+  return possAnswers.map(string w  => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)));
 }
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<string> possAnswers) { // function
@@ -222,7 +222,7 @@ static WordCount betterOf(WordCount wc1, WordCount wc2, List<string> possAnswers
 
 static string bestAttempt(List<string> possAnswers) { // function
   var wordCounts = allRemainingWordCounts(possAnswers);
-  var best = wordCounts.reduce(wordCounts.head(), lambda WordCount bestSoFar, WordCount newWord => betterOf(bestSoFar, newWord, possAnswers));
+  var best = wordCounts.reduce(wordCounts.head(), WordCount bestSoFar, WordCount newWord  => betterOf(bestSoFar, newWord, possAnswers));
   return best.word;
 }
 

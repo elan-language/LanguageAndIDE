@@ -150,7 +150,7 @@ class Solver {
     return neighbours;
   }
   public Node getNodeFor(Point p) { // function method
-    var matches = this.nodes.filter(lambda Node n => n.point.equals(p));
+    var matches = this.nodes.filter(Node n  => n.point.equals(p));
     return if(matches.length() == 1, matches.head(), emptyNode());
   }
   public Point getLastVisited() { // function method
@@ -159,7 +159,7 @@ class Solver {
   public Node nextNodeToVisit() { // function method
     var lowestCostSoFar = infinity;
     var lowestCostNode = emptyNode();
-    var possibilities = this.nodes.filter(lambda Node nd => (!nd.visited) && (nd.distFromStart < infinity));
+    var possibilities = this.nodes.filter(Node nd  => (!nd.visited) && (nd.distFromStart < infinity));
     foreach (nd in possibilities) {
       var cost = this.calculateCost(nd);
       if (cost < lowestCostSoFar) {
