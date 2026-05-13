@@ -103,7 +103,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof ReAssignVariable) {
       html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
+      html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()});`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
