@@ -62,7 +62,7 @@ export class LanguageJava extends LanguageCfamily {
       html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else if (frame instanceof AbstractProperty) {
@@ -76,7 +76,7 @@ export class LanguageJava extends LanguageCfamily {
   renderTopAsHtml(frame: Frame): string {
     let html = "";
     if (frame instanceof TestFrame) {
-      html = `@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
+      html = `@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}() {`;
     } else {
       html = this.common_renderTopAsHtml(frame);
     }

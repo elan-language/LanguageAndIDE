@@ -83,29 +83,29 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof CallStatement) {
-      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
+      html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-punc>}</el-punc> <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
+      html = `} <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ElseIf) {
-      html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `} <el-kw>${this.ELSE} ${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
     } else if (frame instanceof Else) {
-      html = `<el-punc>} </el-punc><el-kw>${this.ELSE}<el-punc> {</el-punc>`;
+      html = `} <el-kw>${this.ELSE} {`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${frame.values.renderAsHtml()}}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
-      html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+      html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof ReAssignVariable) {
-      html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+      html = `${frame.assignable.renderAsHtml()}<el-kw> = </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()});`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
+      html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.returnType.renderAsHtml()} <el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()});`;
     } else if (frame instanceof AbstractProcedure) {
@@ -135,31 +135,31 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.FOREACH} </el-kw></el-kw>(${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw>) {`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
+      html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method>() {`;
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.TRY}</el-kw><el-punc> {</el-punc>`;
+      html = `<el-kw>${this.TRY}</el-kw> {`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.WHILE}<el-punc> (</el-punc></el-kw>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
+      html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
     }
     return html;
   }
 
   common_renderBottomAsHtml(frame: Frame): string {
-    return frame ? `<el-punc>}<el-punc>` : ``;
+    return frame ? `}` : ``;
   }
 
   common_functionFrameFields(frame: FunctionFrame): Field[] {
