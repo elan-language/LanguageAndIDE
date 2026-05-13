@@ -183,11 +183,8 @@ def test_willLive(self) -> None:
   self.assertEqual(willLive(black, 7), False)
   self.assertEqual(willLive(black, 8), False)
 
-def testGrid() -> list[list[int]]: # function
-  return initialGrid(Random())
-
 def test_initialGrid(self) -> None:
-  grid = testGrid() # let
+  grid = initialGrid(Random()) # let
   self.assertEqual(grid[0][0], black)
   self.assertEqual(grid[1][0], white)
   self.assertEqual(grid[2][0], white)
@@ -199,17 +196,17 @@ def test_initialGrid(self) -> None:
   self.assertEqual(grid[2][2], black)
 
 def test_liveNeighbours(self) -> None:
-  grid = testGrid() # let
+  grid = initialGrid(Random()) # let
   live = liveNeighbours(grid, 1, 1) # let
   self.assertEqual(live, 4)
 
 def test_nextCellValue(self) -> None:
-  grid = testGrid() # let
+  grid = initialGrid(Random()) # let
   nxt = nextCellValue(grid, 1, 1) # let
   self.assertEqual(nxt, white)
 
 def test_nextGrid(self) -> None:
-  prev = testGrid() # let
+  prev = initialGrid(Random()) # let
   grid = nextGrid(prev) # let
   self.assertEqual(grid[0][0], black)
   self.assertEqual(grid[1][0], black)
