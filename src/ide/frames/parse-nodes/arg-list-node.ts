@@ -1,4 +1,3 @@
-
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgumentNode } from "./argument-node";

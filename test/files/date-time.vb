@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha1
+' VB.NET with Elan 2.0.0-alpha4
 
 Sub main()
   Dim reply = "" ' variable definition

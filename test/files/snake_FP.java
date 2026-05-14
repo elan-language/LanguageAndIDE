@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha1
+// Java with Elan 2.0.0-alpha4
 
 // Use the W,A,S,D keys to change Snake direction
 

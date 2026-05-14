@@ -747,7 +747,6 @@ def clock():
     return `<el-kw>${this.LAMBDA}</el-kw> ${node.params!.renderAsHtml()}${COLON} ${node.expr!.renderAsHtml()}`;
   }
 
-
   listNodeAsHtml(node: ListNode): string {
     return `[${node.csv?.renderAsHtml()}]`;
   }

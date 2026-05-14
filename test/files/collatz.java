@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha1
+// Java with Elan 2.0.0-alpha4
 
 // A program to investigate the Collatz Conjecture
 

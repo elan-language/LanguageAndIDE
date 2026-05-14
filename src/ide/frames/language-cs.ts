@@ -28,7 +28,6 @@ import { AssertStatement } from "./statements/assert-statement";
 import { ARROW } from "./symbols";
 
 export class LanguageCS extends LanguageCfamily {
-
   private constructor() {
     super();
   }
@@ -126,7 +125,7 @@ export class LanguageCS extends LanguageCfamily {
     this.addCommonElementsForNewInstance(node);
   }
 
-addNodesForLambda(node: Lambda): void {
+  addNodesForLambda(node: Lambda): void {
     const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
     const sp = () => new SpaceNode(node.file, Space.required);
     const paramListSp = new Sequence(node.file, [paramList, sp]);

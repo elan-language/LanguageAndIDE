@@ -23,20 +23,20 @@ export class Lambda extends AbstractSequence {
       : super.symbolCompletion_keywords();
   }
 
-    renderAsHtml(): string {
-      return this.isValid() || this.isIncomplete()
-        ? this.file.language().lambdaAsHtml(this)
-        : this.matchedText;
-    }
-  
-    renderAsElanSource() {
-      return this.isValid()
-        ? `${lambdaKeyword} ${this.params?.renderAsElanSource()}${ARROW} ${this.expr!.renderAsElanSource()}`
-        : this.matchedText;
-    }
-  
-    override renderAsExport(): string {
-      const lang = this.file.language();
-      return this.isValid() ? removeHtmlTagsAndEscChars(lang.lambdaAsHtml(this)) : this.matchedText;
-    }
+  renderAsHtml(): string {
+    return this.isValid() || this.isIncomplete()
+      ? this.file.language().lambdaAsHtml(this)
+      : this.matchedText;
+  }
+
+  renderAsElanSource() {
+    return this.isValid()
+      ? `${lambdaKeyword} ${this.params?.renderAsElanSource()}${ARROW} ${this.expr!.renderAsElanSource()}`
+      : this.matchedText;
+  }
+
+  override renderAsExport(): string {
+    const lang = this.file.language();
+    return this.isValid() ? removeHtmlTagsAndEscChars(lang.lambdaAsHtml(this)) : this.matchedText;
+  }
 }

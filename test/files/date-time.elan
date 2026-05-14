@@ -1,4 +1,4 @@
-# 0b1e74bba3e7eba7d1c647b6d6b13c825123c2c77263ffe304d4644976fce200 Elan 2.0.0-alpha1 valid
+# be2f474dad25fe0a139975300fca5ed12131c42e94fac64600d5482bf883ea0e Elan 2.0.0-alpha4 valid
 
 main
   variable reply set to ""
@@ -14,7 +14,7 @@ main
         if td >= 0 then
           call print(getDate(td))
         end if
-      catch ElanRuntimeError
+      catch e as ElanRuntimeError
       end try
     end if
   end while

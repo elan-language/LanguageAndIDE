@@ -1,4 +1,4 @@
-# 15af44cdb0cd11c0a62a0c148e829345ed016138d028e69da786aa6d5bc70c18 Elan 2.0.0-alpha valid
+# b22ebc122fc87ae84587d44211ecc04220b17904b9f1b07e67ddd4fc5d86d9dc Elan 2.0.0-alpha4 valid
 
 main
   variable bubbles set to new List<of CircleVG>()
@@ -13,7 +13,7 @@ main
 end main
 
 procedure moveGrowBurst(bubbles as List<of CircleVG>)
-   for b in bubbles
+  for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
       call b.setRadius(0)
@@ -25,5 +25,5 @@ procedure moveGrowBurst(bubbles as List<of CircleVG>)
     end if
   end for
   call displayVectorGraphics(bubbles)
-  call sleep_ms(50)
+  call sleep_ms(5)
 end procedure

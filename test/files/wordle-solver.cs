@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha1
+// C# with Elan 2.0.0-alpha4
 
 // Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
