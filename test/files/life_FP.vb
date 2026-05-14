@@ -17,7 +17,21 @@ Function initialGrid(rng As Random) As List(Of List(Of Integer))
   Return cols.reduce((grid, rng), appendCol).item_0
 End Function
 
+<TestMethod> Sub test_initialGrid()
+  Dim grid = initialGrid(New Random()) ' let
+  Assert.AreEqual(black, grid[0][0])
+  Assert.AreEqual(white, grid[1][0])
+  Assert.AreEqual(white, grid[2][0])
+  Assert.AreEqual(white, grid[0][1])
+  Assert.AreEqual(black, grid[1][1])
+  Assert.AreEqual(white, grid[2][1])
+  Assert.AreEqual(black, grid[0][2])
+  Assert.AreEqual(black, grid[1][2])
+  Assert.AreEqual(black, grid[2][2])
+End Sub
+
 Function appendCol(tup As (List(Of List(Of Integer)), Random), c As Integer) As (List(Of List(Of Integer)), Random)
+  ' 'c' is not used, but is needed for compatibility with function signature for 'reduce'
   Dim grid = tup.item_0 ' let
   Dim rng = tup.item_1 ' let
   Dim tup2 = initialCol(rng) ' let
@@ -27,11 +41,47 @@ Function appendCol(tup As (List(Of List(Of Integer)), Random), c As Integer) As 
   Return (grid2, rng2)
 End Function
 
+<TestMethod> Sub test_appendCol()
+  Dim emptyGrid = New List(Of List(Of Integer))() ' let
+  Dim rng = New Random() ' let
+  Dim result = appendCol((emptyGrid, rng), 0) ' let
+  Dim grid1 = result.item_0 ' let
+  Dim col = grid1[0] ' let
+  Assert.AreEqual(black, col[0])
+  Assert.AreEqual(white, col[1])
+  Assert.AreEqual(black, col[2])
+  Assert.AreEqual(black, col[29])
+  Dim rng2 = result.item_1 ' let
+  Dim result2 = appendCol((grid1, rng2), 1) ' let
+  Dim grid2 = result2.item_0 ' let
+  Dim col2 = grid2[1] ' let
+  Assert.AreEqual(white, col2[0])
+  Assert.AreEqual(black, col2[1])
+  Assert.AreEqual(black, col2[2])
+  Assert.AreEqual(white, col2[29])
+End Sub
+
 Function initialCol(rng As Random) As (List(Of Integer), Random)
   Dim col = New List(Of Integer)() ' let
   Dim rows = range(0, 30) ' let
   Return rows.reduce((col, rng), appendCell)
 End Function
+
+<TestMethod> Sub test_initialCol()
+  Dim rng = New Random() ' let
+  Dim result = initialCol(rng) ' let
+  Dim col = result.item_0 ' let
+  Assert.AreEqual(black, col[0])
+  Assert.AreEqual(white, col[1])
+  Assert.AreEqual(black, col[2])
+  Assert.AreEqual(black, col[29])
+  Dim rng2 = result.item_1 ' let
+  Dim col2 = initialCol(rng2).item_0 ' let
+  Assert.AreEqual(white, col2[0])
+  Assert.AreEqual(black, col2[1])
+  Assert.AreEqual(black, col2[2])
+  Assert.AreEqual(white, col2[29])
+End Sub
 
 Function appendCell(tup As (List(Of Integer), Random), row As Integer) As (List(Of Integer), Random)
   Dim col = tup.item_0 ' let
@@ -39,143 +89,23 @@ Function appendCell(tup As (List(Of Integer), Random), row As Integer) As (List(
   Return (col.withAppend(blackOrWhite(rng)), rng.nextGen())
 End Function
 
+<TestMethod> Sub test_appendCell()
+  Dim rng = New Random() ' let
+  Dim emptyList = New List(Of Integer)() ' let
+  Dim result = appendCell((emptyList, rng), 0) ' let
+  Dim col = result.item_0 ' let
+  Assert.AreEqual(1, col.length())
+  Assert.AreEqual(black, col[0])
+  Dim rng2 = result.item_1 ' let
+  Dim result2 = appendCell((col, rng2), 1) ' let
+  Dim col2 = result2.item_0 ' let
+  Assert.AreEqual(2, col2.length())
+  Assert.AreEqual(white, col2[1])
+End Sub
+
 Function blackOrWhite(rng As Random) As Integer
   Return if(rng.asFloat() > 0.5, white, black)
 End Function
-
-Function north(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim y2 = if(y = 0, 29, y - 1) ' let
-  Return (x, y2)
-End Function
-
-Function south(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim y2 = if(y = 29, 0, y + 1) ' let
-  Return (x, y2)
-End Function
-
-Function east(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim x2 = if(x = 39, 0, x + 1) ' let
-  Return (x2, y)
-End Function
-
-Function west(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim x2 = if(x = 0, 39, x - 1) ' let
-  Return (x2, y)
-End Function
-
-Function northEast(cell As (Integer, Integer)) As (Integer, Integer)
-  Return north(east(cell))
-End Function
-
-Function northWest(cell As (Integer, Integer)) As (Integer, Integer)
-  Return north(west(cell))
-End Function
-
-Function southEast(cell As (Integer, Integer)) As (Integer, Integer)
-  Return south(east(cell))
-End Function
-
-Function southWest(cell As (Integer, Integer)) As (Integer, Integer)
-  Return south(west(cell))
-End Function
-
-Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
-  Dim c = (x, y) ' let
-  Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
-End Function
-
-Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim neighbours = neighbourCells(x, y) ' let
-  Return neighbours.filter(Function (c As (Integer, Integer)) grid[c.item_0][c.item_1] = black).length()
-End Function
-
-Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
-  Return if(cell = black, (liveNeighbours > 1) And (liveNeighbours < 4), liveNeighbours = 3)
-End Function
-
-Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' let
-  Return if(live, black, white)
-End Function
-
-Function nextGrid(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
-  Dim cols = range(0, 40) ' let
-  Return cols.map(Function (x As Integer) nextColumn(grid, x))
-End Function
-
-Function nextColumn(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
-  Dim col = grid[x] ' let
-  Dim rows = range(0, 30) ' let
-  Return rows.map(Function (y As Integer) nextCellValue(grid, x, y))
-End Function
-
-<TestMethod> Sub test_north()
-  Assert.AreEqual((3, 3), north((3, 4)))
-  Assert.AreEqual((39, 29), north((39, 0)))
-  Assert.AreEqual((0, 28), north((0, 29)))
-  Assert.AreEqual((39, 28), north((39, 29)))
-End Sub
-
-<TestMethod> Sub test_south()
-  Assert.AreEqual((3, 5), south((3, 4)))
-  Assert.AreEqual((39, 1), south((39, 0)))
-  Assert.AreEqual((0, 0), south((0, 29)))
-  Assert.AreEqual((39, 0), south((39, 29)))
-End Sub
-
-<TestMethod> Sub test_east()
-  Assert.AreEqual((11, 2), east((10, 2)))
-  Assert.AreEqual((0, 0), east((39, 0)))
-  Assert.AreEqual((1, 1), east((0, 1)))
-  Assert.AreEqual((0, 29), east((39, 29)))
-End Sub
-
-<TestMethod> Sub test_west()
-  Assert.AreEqual((2, 4), west((3, 4)))
-  Assert.AreEqual((38, 0), west((39, 0)))
-  Assert.AreEqual((39, 0), west((0, 0)))
-  Assert.AreEqual((39, 29), west((0, 29)))
-End Sub
-
-<TestMethod> Sub test_northEast()
-  Assert.AreEqual((4, 3), northEast((3, 4)))
-  Assert.AreEqual((1, 29), northEast((0, 0)))
-  Assert.AreEqual((0, 29), northEast((39, 0)))
-  Assert.AreEqual((1, 28), northEast((0, 29)))
-  Assert.AreEqual((0, 28), northEast((39, 29)))
-End Sub
-
-<TestMethod> Sub test_southEast()
-  Assert.AreEqual((4, 5), southEast((3, 4)))
-  Assert.AreEqual((1, 1), southEast((0, 0)))
-  Assert.AreEqual((0, 1), southEast((39, 0)))
-  Assert.AreEqual((1, 0), southEast((0, 29)))
-  Assert.AreEqual((0, 0), southEast((39, 29)))
-End Sub
-
-<TestMethod> Sub test_northWest()
-  Assert.AreEqual((2, 3), northWest((3, 4)))
-  Assert.AreEqual((39, 29), northWest((0, 0)))
-  Assert.AreEqual((38, 29), northWest((39, 0)))
-  Assert.AreEqual((39, 28), northWest((0, 29)))
-  Assert.AreEqual((38, 28), northWest((39, 29)))
-End Sub
-
-<TestMethod> Sub test_southWest()
-  Assert.AreEqual((2, 5), southWest((3, 4)))
-  Assert.AreEqual((39, 1), southWest((0, 0)))
-  Assert.AreEqual((38, 1), southWest((39, 0)))
-  Assert.AreEqual((39, 0), southWest((0, 29)))
-  Assert.AreEqual((38, 0), southWest((39, 29)))
-End Sub
 
 <TestMethod> Sub test_blackOrWhite()
   Dim rng0 = New Random() ' let
@@ -188,11 +118,135 @@ End Sub
   Assert.AreEqual(black, blackOrWhite(rng3))
 End Sub
 
+Function north(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim y2 = if(y = 0, 29, y - 1) ' let
+  Return (x, y2)
+End Function
+
+<TestMethod> Sub test_north()
+  Assert.AreEqual((3, 3), north((3, 4)))
+  Assert.AreEqual((39, 29), north((39, 0)))
+  Assert.AreEqual((0, 28), north((0, 29)))
+  Assert.AreEqual((39, 28), north((39, 29)))
+End Sub
+
+Function south(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim y2 = if(y = 29, 0, y + 1) ' let
+  Return (x, y2)
+End Function
+
+<TestMethod> Sub test_south()
+  Assert.AreEqual((3, 5), south((3, 4)))
+  Assert.AreEqual((39, 1), south((39, 0)))
+  Assert.AreEqual((0, 0), south((0, 29)))
+  Assert.AreEqual((39, 0), south((39, 29)))
+End Sub
+
+Function east(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim x2 = if(x = 39, 0, x + 1) ' let
+  Return (x2, y)
+End Function
+
+<TestMethod> Sub test_east()
+  Assert.AreEqual((11, 2), east((10, 2)))
+  Assert.AreEqual((0, 0), east((39, 0)))
+  Assert.AreEqual((1, 1), east((0, 1)))
+  Assert.AreEqual((0, 29), east((39, 29)))
+End Sub
+
+Function west(cell As (Integer, Integer)) As (Integer, Integer)
+  Dim x = cell.item_0 ' let
+  Dim y = cell.item_1 ' let
+  Dim x2 = if(x = 0, 39, x - 1) ' let
+  Return (x2, y)
+End Function
+
+<TestMethod> Sub test_west()
+  Assert.AreEqual((2, 4), west((3, 4)))
+  Assert.AreEqual((38, 0), west((39, 0)))
+  Assert.AreEqual((39, 0), west((0, 0)))
+  Assert.AreEqual((39, 29), west((0, 29)))
+End Sub
+
+Function northEast(cell As (Integer, Integer)) As (Integer, Integer)
+  Return north(east(cell))
+End Function
+
+<TestMethod> Sub test_northEast()
+  Assert.AreEqual((4, 3), northEast((3, 4)))
+  Assert.AreEqual((1, 29), northEast((0, 0)))
+  Assert.AreEqual((0, 29), northEast((39, 0)))
+  Assert.AreEqual((1, 28), northEast((0, 29)))
+  Assert.AreEqual((0, 28), northEast((39, 29)))
+End Sub
+
+Function northWest(cell As (Integer, Integer)) As (Integer, Integer)
+  Return north(west(cell))
+End Function
+
+<TestMethod> Sub test_northWest()
+  Assert.AreEqual((2, 3), northWest((3, 4)))
+  Assert.AreEqual((39, 29), northWest((0, 0)))
+  Assert.AreEqual((38, 29), northWest((39, 0)))
+  Assert.AreEqual((39, 28), northWest((0, 29)))
+  Assert.AreEqual((38, 28), northWest((39, 29)))
+End Sub
+
+<TestMethod> Sub test_southEast()
+  Assert.AreEqual((4, 5), southEast((3, 4)))
+  Assert.AreEqual((1, 1), southEast((0, 0)))
+  Assert.AreEqual((0, 1), southEast((39, 0)))
+  Assert.AreEqual((1, 0), southEast((0, 29)))
+  Assert.AreEqual((0, 0), southEast((39, 29)))
+End Sub
+
+Function southEast(cell As (Integer, Integer)) As (Integer, Integer)
+  Return south(east(cell))
+End Function
+
+Function southWest(cell As (Integer, Integer)) As (Integer, Integer)
+  Return south(west(cell))
+End Function
+
+<TestMethod> Sub test_southWest()
+  Assert.AreEqual((2, 5), southWest((3, 4)))
+  Assert.AreEqual((39, 1), southWest((0, 0)))
+  Assert.AreEqual((38, 1), southWest((39, 0)))
+  Assert.AreEqual((39, 0), southWest((0, 29)))
+  Assert.AreEqual((38, 0), southWest((39, 29)))
+End Sub
+
+Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
+  Dim c = (x, y) ' let
+  Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
+End Function
+
 <TestMethod> Sub test_neighbourCells()
   Assert.AreEqual({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4))
   Assert.AreEqual({(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)}, neighbourCells(0, 0))
   Assert.AreEqual({(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)}, neighbourCells(39, 29))
 End Sub
+
+Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+  Dim neighbours = neighbourCells(x, y) ' let
+  Return neighbours.filter(Function (c As (Integer, Integer)) grid[c.item_0][c.item_1] = black).length()
+End Function
+
+<TestMethod> Sub test_liveNeighbours()
+  Dim grid = initialGrid(New Random()) ' let
+  Dim live = liveNeighbours(grid, 1, 1) ' let
+  Assert.AreEqual(4, live)
+End Sub
+
+Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
+  Return ((cell = black) And (liveNeighbours > 1) And (liveNeighbours < 4)) Or ((cell = white) And (liveNeighbours = 3))
+End Function
 
 <TestMethod> Sub test_willLive()
   Assert.AreEqual(False, willLive(white, 0))
@@ -215,24 +269,10 @@ End Sub
   Assert.AreEqual(False, willLive(black, 8))
 End Sub
 
-<TestMethod> Sub test_initialGrid()
-  Dim grid = initialGrid(New Random()) ' let
-  Assert.AreEqual(black, grid[0][0])
-  Assert.AreEqual(white, grid[1][0])
-  Assert.AreEqual(white, grid[2][0])
-  Assert.AreEqual(white, grid[0][1])
-  Assert.AreEqual(black, grid[1][1])
-  Assert.AreEqual(white, grid[2][1])
-  Assert.AreEqual(black, grid[0][2])
-  Assert.AreEqual(black, grid[1][2])
-  Assert.AreEqual(black, grid[2][2])
-End Sub
-
-<TestMethod> Sub test_liveNeighbours()
-  Dim grid = initialGrid(New Random()) ' let
-  Dim live = liveNeighbours(grid, 1, 1) ' let
-  Assert.AreEqual(4, live)
-End Sub
+Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' let
+  Return if(live, black, white)
+End Function
 
 <TestMethod> Sub test_nextCellValue()
   Dim grid = initialGrid(New Random()) ' let
@@ -240,16 +280,22 @@ End Sub
   Assert.AreEqual(white, nxt)
 End Sub
 
-<TestMethod> Sub test_nextGrid()
-  Dim prev = initialGrid(New Random()) ' let
-  Dim grid = nextGrid(prev) ' let
-  Assert.AreEqual(black, grid[0][0])
-  Assert.AreEqual(black, grid[1][0])
-  Assert.AreEqual(white, grid[2][0])
-  Assert.AreEqual(white, grid[0][1])
-  Assert.AreEqual(white, grid[1][1])
-  Assert.AreEqual(white, grid[2][1])
-  Assert.AreEqual(white, grid[0][2])
-  Assert.AreEqual(white, grid[1][2])
-  Assert.AreEqual(white, grid[2][2])
+Function nextGrid(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
+  Dim cols = range(0, 40) ' let
+  Return cols.map(Function (x As Integer) nextCol(grid, x))
+End Function
+
+Function nextCol(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
+  Dim col = grid[x] ' let
+  Dim rows = range(0, 30) ' let
+  Return rows.map(Function (y As Integer) nextCellValue(grid, x, y))
+End Function
+
+<TestMethod> Sub test_nextCol()
+  Dim grid = initialGrid(New Random()) ' let
+  Dim col = nextCol(grid, 3) ' let
+  Assert.AreEqual(black, col[0])
+  Assert.AreEqual(black, col[1])
+  Assert.AreEqual(white, col[2])
+  Assert.AreEqual(black, col[29])
 End Sub
