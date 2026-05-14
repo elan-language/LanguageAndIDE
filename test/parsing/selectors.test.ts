@@ -18,8 +18,8 @@ import { While } from "../../src/ide/frames/statements/while";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { transforms } from "../compiler/compiler-test-helpers";
-import { emptyMainOnly } from "./model-generating-functions";
 import { assertOptions, key, selectOption } from "../testHelpers";
+import { emptyMainOnly } from "./model-generating-functions";
 
 suite("Selector tests", () => {
   test("Options within main", () => {
@@ -175,30 +175,6 @@ suite("Selector tests", () => {
     assertOptions(s, ["abstract property", "abstract procedure", "abstract function", "# comment"]);
   });
 
-  test("Selection Context - in a Function - functional", () => {
-    const fl = new FileImpl(
-      hash,
-      new Profile("functional"),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const func = new GlobalFunction(fl);
-    const s = new StatementSelector(func);
-    assertOptions(s, [
-      "let statement",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
-  });
-
   test("Selection Context - in a Function - no profile", () => {
     const fl = new FileImpl(
       hash,
@@ -222,10 +198,49 @@ suite("Selector tests", () => {
     ]);
   });
 
+  test("Selection Context - in a Function - functional", () => {
+    const fl = new FileImpl(
+      hash,
+      new Profile("functional"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const func = new GlobalFunction(fl);
+    const s = new StatementSelector(func);
+    assertOptions(s, ["let statement", "# comment"]);
+  });
+
   test("Selection Context - in a Procedure", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("procedural"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const proc = new GlobalProcedure(fl);
+    const s = new StatementSelector(proc);
+    assertOptions(s, [
+      "print",
+      "variable definition",
+      "re-assign variable",
+      "if",
+      "while loop",
+      "for loop",
+      "call procedure",
+      "try",
+      "throw",
+      "# comment",
+    ]);
+  });
+
+  test("Selection Context - in a Procedure - functional profile", () => {
+    const fl = new FileImpl(
+      hash,
+      new Profile("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -258,18 +273,7 @@ suite("Selector tests", () => {
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
-    assertOptions(s, [
-      "assert",
-      "let statement",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
+    assertOptions(s, ["assert", "let statement", "# comment"]);
   });
 
   test("Selection Context - in a Test - no profile", () => {
@@ -283,17 +287,7 @@ suite("Selector tests", () => {
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
-    assertOptions(s, [
-      "assert",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
+    assertOptions(s, ["assert", "variable definition", "# comment"]);
   });
 
   test("Selection Context - deeper nesting  - functional", () => {
@@ -309,17 +303,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(func);
     const wh = new While(if1);
     const s = new StatementSelector(wh);
-    assertOptions(s, [
-      "let statement",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
+    assertOptions(s, ["let statement", "# comment"]);
   });
 
   test("Selection Context - deeper nesting 2 - all", () => {
@@ -390,32 +374,5 @@ suite("Selector tests", () => {
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
     assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "# comment"]);
-  });
-
-  test("Selection Filtering - profile=functional", () => {
-    const file = new FileImpl(
-      hash,
-      new Profile("functional"),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const g = file.getFirstSelectorAsDirectChild() as GlobalSelector;
-    const func = new GlobalFunction(file);
-    file.addChildBefore(func, g);
-    file.updateAllParseStatus();
-    const s = func.getFirstSelectorAsDirectChild();
-    assertOptions(s, [
-      "let statement",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
   });
 });
