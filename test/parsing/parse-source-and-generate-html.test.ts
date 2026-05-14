@@ -1,4 +1,3 @@
-import { ignore_test } from "../compiler/compiler-test-helpers";
 import { assertGeneratesHtmlSourceAndExportFiles } from "../testHelpers";
 
 suite("Parse source and generate Html", () => {
@@ -102,7 +101,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/snake_FP.java`,
     );
   });
-  ignore_test("Date/Time", async () => {
+  test("Date/Time", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/date-time.elan`,
       ``,
@@ -142,7 +141,7 @@ suite("Parse source and generate Html", () => {
       `./out/test/files/fern.java`,
     );
   });
-  ignore_test("Wordle Solver", async () => {
+  test("Wordle Solver", async () => {
     await assertGeneratesHtmlSourceAndExportFiles(
       `./out/test/files/wordle-solver.elan`,
       ``,

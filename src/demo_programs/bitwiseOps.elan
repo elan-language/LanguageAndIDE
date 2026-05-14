@@ -1,0 +1,13 @@
+# 18e91f33625a896c4bc20541b8af6eaf418c52e82ada3f57fd7ed0c79201fa22 Elan 2.0.0-alpha4 valid
+
+main
+  variable a set to 13
+  variable b set to 30
+  variable anb set to bitAnd(a, b)
+  variable aob set to bitOr(a, b)
+  variable axb set to bitXor(a, b)
+  variable nota set to bitNot(a)
+  variable aL set to bitShiftL(a, 2)
+  variable aR set to bitShiftR(a, 2)
+  call print($"{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}")
+end main
