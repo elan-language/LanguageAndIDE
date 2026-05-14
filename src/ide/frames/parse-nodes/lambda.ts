@@ -3,11 +3,11 @@ import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { OptionalNode } from "./optional-node";
 
 export class Lambda extends AbstractSequence {
-  params: OptionalNode | undefined;
+  params: CSV | undefined;
   expr: ExprNode | undefined;
 
   parseText(text: string): void {
@@ -31,7 +31,7 @@ export class Lambda extends AbstractSequence {
 
   renderAsElanSource() {
     return this.isValid()
-      ? `${lambdaKeyword} ${this.params?.renderAsElanSource()}${ARROW} ${this.expr!.renderAsElanSource()}`
+      ? `${lambdaKeyword} ${this.params?.renderAsElanSource()} ${ARROW} ${this.expr!.renderAsElanSource()}`
       : this.matchedText;
   }
 
