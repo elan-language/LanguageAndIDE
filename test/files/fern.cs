@@ -87,7 +87,7 @@ static (double, double) roundtuple1((double, double) n) { // function
 static List<double> roundtuple2((double, double) n) { // function
   var a = n.item_0;
   var b = n.item_1;
-  return [a, b].map(double x  => x.round(8));
+  return [a, b].map(double x => x.round(8));
 }
 
 const Int scale = 7

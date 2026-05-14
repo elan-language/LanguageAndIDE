@@ -77,11 +77,17 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return (
-      this.profile.statements.includes(keyword) ||
-      this.profile.statementsInFunction.includes(keyword) ||
-      keyword === this.getCommentMarker()
-    );
+    let result = false;
+    if (keyword === this.getCommentMarker()) {
+      result = true;
+    } else if (this.isWithinAFunction()) {
+      result =  this.profile.statementsInFunction.includes(keyword);
+    } else if (this.isWithinATest()) {
+      result = this.profile.statementsInTest.includes(keyword);
+    } else {
+      result= this.profile.statements.includes(keyword);
+    }
+    return result;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
@@ -94,13 +100,13 @@ export class StatementSelector extends AbstractSelector {
     } else if (keyword === callKeyword || keyword === "print") {
       result = !(
         this.isWithinAFunction() ||
-        this.isDirectlyWithinATest() ||
+        this.isWithinATest() ||
         this.isWithinAConstructor()
       );
-    } else if (keyword === assertKeyword) {
-      return this.isDirectlyWithinATest();
     } else if (keyword === letKeyword) {
-      return this.isWithinAFunction() || this.isDirectlyWithinATest();
+      return this.isWithinAFunction() || this.isWithinATest();
+    }else if (keyword === assertKeyword) {
+      return this.isWithinATest();
     } else {
       result = true;
     }
@@ -111,11 +117,7 @@ export class StatementSelector extends AbstractSelector {
     return this.isWithinContext(this.getParent(), "func");
   }
 
-  private isWithinAWithFunctionMethod(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
-  }
-
-  private isDirectlyWithinATest(): boolean {
+  private isWithinATest(): boolean {
     return this.getParent().getIdPrefix() === "test";
   }
 
