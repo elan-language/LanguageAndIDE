@@ -40,11 +40,9 @@ import { Lambda } from "./parse-nodes/lambda";
 import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
-import { OptionalNode } from "./parse-nodes/optional-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { Sequence } from "./parse-nodes/sequence";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
@@ -731,14 +729,10 @@ def clock():
   addNodesForLambda(node: Lambda): void {
     node.addElement(new KeywordNode(node.file, this.LAMBDA));
     node.addElement(new SpaceNode(node.file, Space.required));
-    const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
-    const sp = () => new SpaceNode(node.file, Space.ignored);
-    const paramListSp = new Sequence(node.file, [paramList, sp]);
-    node.params = new OptionalNode(node.file, paramListSp);
+    node.params =  new CSV(node.file, () => new ParamDefNode(node.file), 0);
     node.addElement(node.params);
-    const arrow = new PunctuationNode(node.file, COLON);
-    node.addElement(arrow);
-    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new PunctuationNode(node.file, COLON));
+    node.addElement(new SpaceNode(node.file, Space.added));
     node.expr = new ExprNode(node.file);
     node.addElement(node.expr);
   }

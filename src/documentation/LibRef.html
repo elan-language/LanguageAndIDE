@@ -1830,7 +1830,7 @@ If you need another random value, you use the returned <code>Random</code> on wh
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice in a function:</p>
-
+<p class="noteBox" style="width:180px">This code is not currently valid</p>
 <codeblock>
 main
   variable rnd set to new Random()
@@ -2784,7 +2784,7 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
 <hr>
 </div></div>
 
-<h2 id="RegExpFunctions">RegExp functions</h2>
+<h2 id="RegExp">RegExp functions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now:</p>
     <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
@@ -3124,7 +3124,7 @@ end main
  </ol>
  </li>
 </ol>
-<p>In other words, the specified <b>function</b> or <code>lambda</code> is applied to each itme of the input List in turn, in each case passing in the current value
+<p>In other words, the specified <b>function</b> or <code>lambda</code> is applied to each item of the input List in turn, in each case passing in the current value
   of the result. The <b>function</b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
   for application to the next item. This is best understood by looking at the examples.</p>
 

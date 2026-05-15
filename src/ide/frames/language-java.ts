@@ -23,7 +23,6 @@ import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
 import { LitStringText } from "./parse-nodes/lit-string-text";
 import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
-import { OptionalNode } from "./parse-nodes/optional-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
@@ -149,15 +148,12 @@ export class LanguageJava extends LanguageCfamily {
 
   addNodesForLambda(node: Lambda): void {
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    const paramList = () => new CSV(node.file, () => new ParamDefNode(node.file), 1);
-    const sp = () => new SpaceNode(node.file, Space.ignored);
-    const paramListSp = new Sequence(node.file, [paramList, sp]);
-    node.params = new OptionalNode(node.file, paramListSp);
+    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
     node.addElement(node.params);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new SpaceNode(node.file, Space.added));
     node.addElement(new PunctuationNode(node.file, this.ARROW));
-    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new SpaceNode(node.file, Space.added));
     node.expr = new ExprNode(node.file);
     node.addElement(node.expr);
   }
