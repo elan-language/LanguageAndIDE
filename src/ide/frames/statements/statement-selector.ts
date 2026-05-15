@@ -81,7 +81,7 @@ export class StatementSelector extends AbstractSelector {
     return true;
   }
 
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = true;
     // First apply universal instruction-specific rules
