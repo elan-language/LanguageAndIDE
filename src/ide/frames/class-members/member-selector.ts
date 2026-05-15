@@ -7,6 +7,7 @@ import {
   constructorKeyword,
   functionKeyword,
   privateFunctionKeywords,
+  privateKeyword,
   privateProcedureKeywords,
   privatePropertyKeywords,
   procedureKeyword,
@@ -103,14 +104,16 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     ];
   }
 
-  profileAllows(keyword: string): boolean {
-    return this.profile.members.includes(keyword) || keyword === this.getCommentMarker();
+  profileAllows(_keyword: string): boolean {
+    return true;
   }
 
-  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
-    // Reminder: need to use is... methods rather than instanceof because latter creates circular dependencies
-    let result = false;
-    if (keyword.startsWith(abstractKeyword)) {
+  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+    let result = true;
+    // First apply universal instruction-specific rules
+    if (keyword.startsWith(privateKeyword)) {
+      result = !userEntry;
+    } else if (keyword.startsWith(abstractKeyword)) {
       result = this.class.isAbstract || this.class.isInterface;
     } else if (this.class.isInterface) {
       result = keyword === commentMarker;
@@ -121,8 +124,10 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         keyword === this.getCommentMarker();
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
-    } else {
-      result = true;
+    } else if (keyword === withKeyword) {
+      result = this.profile.isFunctional();
+    } else if (keyword === procedureKeyword) {
+      result = !this.profile.isFunctional();
     }
     return result;
   }

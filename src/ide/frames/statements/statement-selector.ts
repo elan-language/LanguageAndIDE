@@ -2,6 +2,7 @@ import {
   assertKeyword,
   callKeyword,
   catchKeyword,
+  commentMarker,
   elifKeyword,
   elseKeyword,
   forKeyword,
@@ -76,23 +77,14 @@ export class StatementSelector extends AbstractSelector {
     ];
   }
 
-  profileAllows(keyword: string): boolean {
-    let result = false;
-    if (keyword === this.getCommentMarker()) {
-      result = true;
-    } else if (this.isWithinAFunction()) {
-      result =  this.profile.statementsInFunction.includes(keyword);
-    } else if (this.isWithinATest()) {
-      result = this.profile.statementsInTest.includes(keyword);
-    } else {
-      result= this.profile.statements.includes(keyword);
-    }
-    return result;
+  profileAllows(_keyword: string): boolean {
+    return true;
   }
 
-  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
     const parent = this.getParent();
-    let result = false;
+    let result = true;
+    // First apply universal instruction-specific rules
     if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === catchKeyword) {
@@ -104,11 +96,21 @@ export class StatementSelector extends AbstractSelector {
         this.isWithinAConstructor()
       );
     } else if (keyword === letKeyword) {
-      return this.isWithinAFunction() || this.isWithinATest();
-    }else if (keyword === assertKeyword) {
-      return this.isWithinATest();
-    } else {
-      result = true;
+      result = this.isWithinAFunction() || this.isWithinATest();
+    } else if (keyword === assertKeyword) {
+      result = this.isWithinATest();
+    }
+    //Then apply context-specific rules
+    if (this.isWithinATest()) {
+        result = keyword === assertKeyword || keyword === variableKeyword || keyword === letKeyword || keyword === commentMarker;
+    }
+    // Then apply profile rules
+    if (this.profile.isFunctional()) {
+      if (this.isWithinAFunction() && keyword !== commentMarker) {
+        result = keyword === letKeyword || keyword === commentMarker;
+      } else if (this.isWithinATest()) {
+        result = keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
+      }
     }
     return result;
   }
