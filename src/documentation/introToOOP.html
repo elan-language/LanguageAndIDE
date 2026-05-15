@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-    <title>Introduction to OOP in Elan</title>
+    <title>OOP</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../ide/styles/colourScheme.css" rel="stylesheet">
@@ -10,7 +10,12 @@
     <link href="favicon.ico" rel="icon">
     <script type="text/javascript" src="doc-scripts.js"></script>
 </head>
-<body>
+
+<body id="top">
+<div class="docTitle">Introduction to Object-Oriented Programming with Elan</div>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
 
 <p>To undertake object-oriented programming (OOP) in Elan, you should first be reasonably familiar with procedural programming in Elan. 
 Then, switch to the <b>Object Oriented</b> profile from the menu at the top of the IDE. 
@@ -18,11 +23,17 @@ This still allows you to do procedural programming, but changes two things: </p>
 
 <ul>
 <li>The list of demo programs will now show only programs that use OOP. 
-    A very good place to start is to look at the <b>Snake object-oriented</b> demo, which is functionally identical to the (procedural) original, but it written using OOP design and coding patterns.</li>
-<li>the new code selectors will offer additional instructions. 
-    At the global level, it will offer: concrete class, abstract class, interface, and enum all of which are used to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>. 
-    (Enums are not usually considered to be part of OOP, but because an enum is a very simple form of user-defined type, it has been included in the same profile.)
-    And within a concrete class, abstract class, or, interface, the new code prompt will show an entirely new list of instructions, collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    A very good place to start is to look at the <b>Snake - object-oriented</b> demo, which is functionally identical to the (procedural) original, 
+    but it written using OOP design and coding patterns.
+    We will be referring to code within this and other OOP demo programs within this text.</li>
+<li>It will change some of the options available on the <b>new code</b> menus in the editor:
+    <ul>
+    <li>At the global level, it will offer: <b>concrete class</b>, <b>abstract class</b>, <b>interface</b>, and <b>enum</b>. 
+        Each of these allows you to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>.
+        (Enums - which are single-line instructions - are not directly associated with OOP, but because an enum is a very simple form of user-defined type, it is made available in the same profile.)</li>
+    <li><i>Within</i> a <b>concrete class</b>, <b>abstract class</b>, or <b>interface</b>, the <b>new code</b> menu will show an entirely new list of instructions,
+         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    </ul>
 </ul>
 
 <h1>If you already understand OOP but are new to coding with Elan...</h1>
@@ -284,4 +295,3 @@ Procedure methods
 Make changes to the object and/or depend upon the system. So they f
 
 </body>
-</html>

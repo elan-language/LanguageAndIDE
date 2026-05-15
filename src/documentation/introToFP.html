@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>FP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
+    <link href="../ide/styles/documentation.css" rel="stylesheet">
+    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+    <link href="favicon.ico" rel="icon">
+    <script type="text/javascript" src="doc-scripts.js"></script>
+</head>
+
+<body id="top">
+<div class="docTitle">Introduction to Functional Programming with Elan</div>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
+
+<h1>Getting started</h1>
+
+<p>To undertake functional programming (FP) in Elan, 
+    you should first be reasonably familiar with procedural programming (PP) with Elan,
+     and ideally, with object-oriented programming (OOP) with Elan. 
+Then, switch to the <b>Functional</b> profile from the menu at the top of the IDE. 
+This changes two things: </p>
+
+<ul>
+<li>The list of demo programs will now show only programs that use FP. 
+    A very good place to start is to look at the <b>Snake - functional</b> demo, 
+    which is functionally identical to the (procedural) original, but it written using FP design and coding patterns.
+</li>
+<li>It will change some of the options available on the <b>new code</b> menus in the editor:
+    <ul>
+        <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction, is a new instruction named <b>let</b> (plus comments).</li>
+        <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
+        <li>Within a concrete or abstract class, there is a new kind of method named <b>with method</b>. Actually, this is just a template for a specific form
+        of function method which is particularly useful in FP.</li>
+    </ul>
+    The rationale for disallowing some of the instructions you are used to in PP or OOP, and how to use the new instructions, will become clear as you read through this document.
+</ul>
+<p>In the following sections we will be drawing out the principles, patterns, practices of FP with reference to the various FP demo programs</p>
+
+<h1>Principle 1: Functions must be pure</h1>
+
+<p>A 'pure' function observes the following rules:</p>
+
+<ul>
+    <li>The value (which may be a data structure) returned by the function must derived solely, and deterministically, from the data provided as parameters.
+        This means it may not depend on, for example, include instructions that obtain input directly from the user, from a file, or over the network 
+        - though such data may be obtained <i>outside</i> the function and passed in as parameters.
+        Similarly, within the function you cannot make direct use of the system clock or system-generated random numbers. (There is a technique
+        to <a href="#random_fp">generate random numbers</a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)
+    </li>The function may not generate any 'side effects' - meaning changes to the state of the system that may be observed outside the function. 
+    When a function has completed its execution the only legitimate observable effect is the returned value.
+</ul>
+
+<p>Dedicated functional programmming languages - such as Haskell - enforce these rules automatically. Common 'multi-paradigm' languages 
+    - including Python, VB, C#, and Java - do not enforce this rule. However, if any of those languages are used within Elan, then the 
+Elan editor enforces those rules automatically. This means that every function you see within Elan, and every function you have ever written within Elan 
+(in Python, VB, C#, Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>Procedural</b> or <b>Object Oriented</b> profile
+and you are <i>within a function</i> you cannot add a <b>print</b> or <b>call procedure</b>, nor make use of system methods such as <el-method>input</el-method>, 
+<el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
+
+<h2>Principle 2: As much of the code as possible should be in functions</h2>
+
+<p>When using FP in Python, VB, C#, or Java, every program still needs a  main routine, which is necessarily procedural in nature, 
+  because it necessarily has dependencies on the system, and generates side effects such as generating output to a display. 
+  And to avoid your main routine becoming difficult to read, and to avoid duplicated code, you may still define procedures,
+  which also, inherently, use procedural programming - to manage input/output and other system operations. 
+  But the second principle of FP is that the main, and any procedures, should
+  be kept as small as possible. <i>Any code within the main routine or procedures that performs calculation, evaluates logic, or
+    transforms data in any way, should be delegated to functions</i>. Most procedural programs contain <i>some</i> functions, 
+    but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</p>
+
+  <p>This may seem logical when a program is obviously heavily dependent upon calculation, logic, or data transformation 
+    - as, for example, the <b>best-fit</b> and <b>Wordle solver</b> demo programs. But what about an interactive game, where
+    most of the logic is concerned with managing the user input and the display? Consider the two demo programs: <b>Snake - procedural</b>
+    and <b>Snake - procedural</b>. The two programs behave identically when run.
+     We recommend that you take the time to explore the these two programs in detail,but here's a quick summary of the key differences:
+  </p>
+
+    <table class="tableType" id="">
+  <tr>
+    <th></th>
+    <th>Snake - procedural</th>
+    <th>Snake - functional</th>
+  </tr>
+  <tr>
+    <td>Total instructions, excluding tests</td>
+    <td>72</td>
+    <td>115</td>
+  </tr>
+    <tr>
+    <td>Number of procedures, including main</td>
+    <td>4</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Number of functions</td>
+    <td>4</td>
+    <td>21 (incl. function methods within classes)</td>
+  </tr>
+  <tr>
+    <td>Instructions within procedures, including main</td>
+    <td>47 = 65%</td>
+    <td>11 = 10%</td>
+  </tr>
+  <tr>
+    <td>Instructions within functions</td>
+    <td>25 = 35%</td>
+    <td>104 = 90%</td>
+  </tr>
+  </table>
+
+  <h2>Principle 3: Every function can and should be unit-tested</h2>
+
+  <p>The idea of writing automated tests isn't restricted to functional programming. The tests offered by Elan are known as 'unit tests' - they
+    designed to test <i>functions</i>, they are extremely easy to write, and run automatically when the program is loaded from a file, and run
+  again after every edit that results in code that compiles. Unit tests give you huge confidence that your code does what it is supposed to do,
+and that in changing existing - either as a result of de-bugging, or in response to newly-identified requirements - does not break existing
+functionality, resulting in bugs that might not surface to the user for a long time.</p>
+
+  <p>In other environments it is possible to write automated tests that also cover procedures (including the main routine) -
+     these are sometimes referred to as 'end to end tests', or 'UI tests' because they can simulate a user interacting with the program.
+     But such tests are much harder to write than unit tests, and notoriously 'brittle' - meaning that a tiny change to code can break
+     many existing tests and take hours to fix, and such changes even include a routine upgrade to the browser or operating system.
+     Elan does currently support those kind of tests. (Note: <i>outside Elan</i>  Python, VB, C#, and Java, unit testing frameworks 
+     will, theoretically, allow unit-tests to run <i>any</i> method. This can be dangerous - because running the tests might
+     - without your awareness - be updating a file or database, or sending Internet messages. Unit tests are only safe when applied to
+     safe (pure) functions.</p>
+
+    <p>It follows that the higher percentage of a program's total instructions that exist within functions translates to the higher
+      percentage of your code than can be <i>safely</i> unit tests. The table below shows the percentage of instructions covered
+      by tests for the procedural and functional versions of two of the demo programs.</p>
+
+  <table class="tableType" id="">
+  <tr>
+    <th></th>
+    <th>Snake - procedural</th>
+    <th>Snake - functional</th>
+    <th>Life - procedural</th>
+    <th>Life - functional</th>
+  </tr>
+  <tr>
+    <td>Total instructions, excluding tests</td>
+    <td>72</td>
+    <td>115</td>
+    <td>78</td>
+    <td>76</td>
+  </tr>
+  <tr>
+    <td>Instructions covered by tests</td>
+    <td>53%</td>
+    <td>90%</td>
+    <td>73%</td>
+    <td>89.5%</td>
+  </tr>
+  </table>
+
+  <h3>Notes:</h3>
+
+<h2>Principle 4: Internally, functions should return an expression, optionally preceded by 'let' instructions</h2>
+
+
+<h2>Principle 5: Selection is implemented using 'if expressions'</h2>
+- Functions consist of just 'return expression' - optionally preceded by 'let' instructions (like 'variable' but can't be modified)
+  - so 'let' is the only instruction offered within a function
+- Use of conditional expressions instead of if statements
+- Use of recursion instead of loops (one file with multiple classics incl. reverse (using head/tail), merge, factorial, fibonnacci, insertion sort )
+
+<h2>Principle 6: Iteration may be achieved using recursion</h2>
+
+<h2>Principle 7: A function may be passed into, or returned by, another function </3>
+# Higher order functions
+- Use of Hofs 
+  - passing in a function name
+  - defining a lambda
+
+<h2>Principle 8: Data structures should never be mutated</h2>
+- standard data structures
+  - `with` methods return a copy with specified differences
+  - with methods may be chained. (Maybe add graphics into best-fit demo?)
+  - simple examples
+
+- ser-defined types
+  - Classes can only have function methods, no procedures
+  - 'updates' (like strings, or lists) are done by returning a copy with the changes
+  - 'with' instructions are just a special case of a function method, with own template, and code and a 'set' which you should not delete. 
+
+<h3>Patterns and Practices</h3>
+
+<h2 id="random_fp">Generating Random numbers within functions</h2>
+
+<h2>Manipulating 2D lists</h2>
+
+
+</body>
+</html>
