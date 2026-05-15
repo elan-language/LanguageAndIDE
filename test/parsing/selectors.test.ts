@@ -61,30 +61,6 @@ suite("Selector tests", () => {
     assert.equal(v, "  variable  set to ");
   });
 
-  test("Selection Filtering - globals - all", () => {
-    const f = new FileImpl(
-      hash,
-      new Profile("all"),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const g = new GlobalSelector(f);
-    assertOptions(g, [
-      "main",
-      "function",
-      "test",
-      "procedure",
-      "k constant",
-      "enum",
-      "concrete class",
-      "abstract class",
-      "interface",
-      "# comment",
-    ]);
-  });
-
   test("Selection Filtering - globals - procedural", () => {
     const f = new FileImpl(
       hash,
@@ -108,7 +84,18 @@ suite("Selector tests", () => {
       false,
     );
     const g = new GlobalSelector(f);
-    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "# comment"]);
+    assertOptions(g, [
+      "main",
+      "function",
+      "test",
+      "procedure",
+      "k constant",
+      "enum",
+      "concrete class",
+      "abstract class",
+      "interface",
+      "# comment",
+    ]);
   });
 
   test("Selection Filtering - members - oop", () => {
@@ -175,10 +162,10 @@ suite("Selector tests", () => {
     assertOptions(s, ["abstract property", "abstract procedure", "abstract function", "# comment"]);
   });
 
-  test("Selection Context - in a Function - no profile", () => {
+  test("Selection Context - in a Function - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -187,6 +174,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     assertOptions(s, [
+      "let statement",
       "variable definition",
       "re-assign variable",
       "if",
@@ -276,10 +264,10 @@ suite("Selector tests", () => {
     assertOptions(s, ["assert", "let statement", "# comment"]);
   });
 
-  test("Selection Context - in a Test - no profile", () => {
+  test("Selection Context - in a Test - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -287,7 +275,7 @@ suite("Selector tests", () => {
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
-    assertOptions(s, ["assert", "variable definition", "# comment"]);
+    assertOptions(s, ["assert", "let statement", "variable definition", "# comment"]);
   });
 
   test("Selection Context - deeper nesting  - functional", () => {
@@ -362,10 +350,10 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Context - if main deleted main option is shown", () => {
+  test("Selection Context - if main deleted main option is shown - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Profile("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -374,5 +362,29 @@ suite("Selector tests", () => {
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
     assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "# comment"]);
+  });
+
+  test("Selection Filtering - globals - all", () => {
+    const f = new FileImpl(
+      hash,
+      new Profile("all"),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+    );
+    const g = new GlobalSelector(f);
+    assertOptions(g, [
+      "main",
+      "function",
+      "test",
+      "procedure",
+      "k constant",
+      "enum",
+      "concrete class",
+      "abstract class",
+      "interface",
+      "# comment",
+    ]);
   });
 });

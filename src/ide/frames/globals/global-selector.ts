@@ -60,16 +60,19 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     ];
   }
 
-  profileAllows(keyword: string): boolean {
-    return this.profile.globals.includes(keyword) || keyword === this.getCommentMarker();
+  profileAllows(_keyword: string): boolean {
+    return true;
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
-    let result = false;
+    let result = true;
+    // First apply universal instruction-specific rules
     if (keyword === mainKeyword && userEntry) {
       result = !this.file.containsMain();
-    } else {
-      result = true;
+    }
+    // Then apply profile rules
+    if ((this.profile.isProcedural())) {
+      result = keyword !== classKeyword && keyword !== abstractKeyword && keyword !== interfaceKeyword && keyword !== enumKeyword;
     }
     return result;
   }
