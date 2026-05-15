@@ -1,4 +1,4 @@
-# 00c6fb59d6aeba592650d103fae1407200e8cd409b5d561d975fdcead31cd24b Elan 2.0.0-alpha4 valid
+# 6f7ca30bbd0ee1f510b9fc78491a6566928178f23238399aa76f23bb4a91a05b Elan 2.0.0-alpha4 valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -18,6 +18,18 @@ procedure fillRandom(grid as List<of List<of Int>>)
       set grid[col][row] to blackOrWhite(random())
     end for
   end for
+end procedure
+
+procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
+  variable nextGen set to createBlockGraphics(white)
+  variable grid set to gridRef.value()
+  for x in range(0, 40)
+    for y in range(0, 30)
+      variable colour set to nextCellValue(grid, x, y)
+      set nextGen[x][y] to colour
+    end for
+  end for
+  call gridRef.set(nextGen)
 end procedure
 
 function blackOrWhite(random as Float) returns Int
@@ -107,18 +119,6 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
   end if
   return colour
 end function
-
-procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
-  variable nextGen set to createBlockGraphics(white)
-  variable grid set to gridRef.value()
-  for x in range(0, 40)
-    for y in range(0, 30)
-      variable colour set to nextCellValue(grid, x, y)
-      set nextGen[x][y] to colour
-    end for
-  end for
-  call gridRef.set(nextGen)
-end procedure
 
 test test_north
   assert north((3, 4)) is (3, 3)
