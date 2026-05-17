@@ -898,7 +898,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </ul>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the Type of its members must be specified in the form
- <code>HashSet</code>&lt;of <code>String</code>&gt;</p>
+ <code>HashSet<of String></code></p>
 <p>You can add members: individually with <el-method>add</el-method>, or multiply with <el-method>addFromList</el-method>.
 And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
 <p>Example of creating a Set from a literal List and changing its content:</p>
@@ -906,17 +906,21 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tablePlain"><!--source="set.elan"-->
 <tr>
  <td>
-  <code>variable st set to new HashSet</code>&lt;of <code>Int</code>()<br>
-  <code>set st to st.addFromList([3, 5, 7])</code>
-  <br>call print(st.length())
+  <codeblock>
+  variable st set to new HashSet<of Int>()
+  set st to st.addFromList([3, 5, 7])
+  call print(st.length())
+  </codeblock>
   </td><td>
   <br><br>&#x27f6;
   </td><td><br><br>3
  </td>
 </tr><tr>
  <td>
-  <code>set st to st.add(7)</code><br>
-  <code>call print(st.length())</code>
+  <codeblock>
+  set st to st.add(7)
+  call print(st.length())
+  </codeblock>
  </td><td>
  <br>&#x27f6;
  </td><td>
@@ -924,13 +928,17 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  </td>
 </tr><tr>
  <td>
-  <code>set st to st.remove(3)</code><br>
-  <code>call print(st.length())</code></td>
+  <codeblock>
+  set st to st.remove(3)
+  call print(st.length())
+  </codeblock>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
  <td>
-  <code>set st to st.remove(3)</code><br>
-  <code>call print(st.length())</code></td>
+  <codeblock>
+  set st to st.remove(3)
+  call print(st.length())
+  </codeblock>
  <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
  <td><code>call print(st)</code></td>
@@ -2426,13 +2434,13 @@ end main
  <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <code>Float</code> values, but they can accept <code>Int</code> values without raising an error.</li>
  <li>The length of a <code>Dictionary</code> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
 <table class="tablePlain">
-  <tr><td><code>call print(dict.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
+  <tr><td><code>call print(di.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
 </table></li>
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><code>call print (dict.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
- <tr><td><code>call print (dict.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>call print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>call print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
 </ol>
 
