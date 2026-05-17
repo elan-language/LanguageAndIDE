@@ -59,19 +59,15 @@ are passed around in a running program:</p>
   <td></td>
   <td></td>
  </tr><tr>
-  <td>Standard<br>data structures</td>
-  <td></td>
-  <td></td>
-  <td></td>
+  <td rowspan="2">Standard<br>data structures</td>
+  <td rowspan="2"></td>
+  <td rowspan="2"></td>
+  <td rowspan="2"></td>
   <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr>
-  <td>Standard<br>data structures</td>
-  <td></td>
-  <td></td>
-  <td></td>
   <td><a href="LibRef.html#HashSet"><el-topic>Set</el-topic><br><code>HashSet</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf08e;</i></a></td>
@@ -84,7 +80,7 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
   <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List</code>&lt;of <code>List</code>&lt;of Type&gt;&gt; <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List<of List<of Int>></code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
@@ -111,7 +107,7 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#Func"><el-topic>Argument reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf08e;</i></a></td>
   </tr>
 </table>
@@ -119,10 +115,10 @@ are passed around in a running program:</p>
 <p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
 <ul>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
- <li><i>or</i> specified in the definition of
+ <li><i>or</i> specified in the definition of:
  <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List</code><of Int></code></li>
-  <li><parameters of functions and procedures</li>
+  <li>data structures whose items have a particular Type, e.g. <code>List<of Int></code></li>
+  <li>parameters of functions and procedures</li>
   <li><b>return</b> value of a function</li>
   <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>concrete class</b></li>
  </ul></li>
@@ -131,7 +127,7 @@ are passed around in a running program:</p>
 <h2 id="Mutability">Mutability of named values</h2>
 
 <p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
-You can, however, create another instance that is a copy of the original,
+You can, however, create another instance that is a copy of the original
 with all the same property values except for specific changes that you want to make.
  The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
 
@@ -143,9 +139,9 @@ with all the same property values except for specific changes that you want to m
   <td>values are set only at compile time</td></tr>
  <tr><td><a href="#variable"><b>variable definition</b> <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>values are set at execution</td></tr>
- <tr><td><a href="#Parameter">parameter (by value) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+ <tr><td><a href="#Parameter_value">parameter (by value) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
   <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
- <tr><td><a href="#Parameter">parameter (by reference) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+ <tr><td><a href="#Parameter_reference">parameter (by reference) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
   <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
 </table>
 
@@ -183,9 +179,9 @@ with all the same property values except for specific changes that you want to m
  <code>variable  n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
  <code>call  li.initialise(10,0)</code></li>
- <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>game</el-id>) of a class and, in this example to get the length of the property's current string value, using
+ <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>g</el-id>) of class <el-type>Game</el-type> and, in this example, to get the length of the property's current string value, using
  library methods:<br>
- <code>variable  bodyGL set to game.body.toString().length()</code></li>
+ <code>variable  bodyGL set to g.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
  <code>variable  point set to (3, 7)</code><br>
  <code>variable  x set to point.item_0</code>
@@ -257,6 +253,7 @@ end main
 </div></div>
 
 <h2 id="procedure"><b>procedure</b></h2>
+<div id="Parameter_value">
 <p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 <p>Its name must follow  the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p> Unlike a function:</p>
@@ -308,6 +305,7 @@ end procedure
 <div id="AsRef"></div>
 <div id="set_Ref"></div>
 <div id="value_Ref"></div>
+<div id="Parameter_reference"></div>
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
@@ -346,29 +344,39 @@ and the Type of the value that will be returned.</p>
 A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
 and there can be only one <b>return</b> instruction in a function.
 You follow the <b>return</b> instruction with the value to be returned by the function.
-This may be an expression that will be evaluated before returning. For example:</p>
-<codeblock>
-function foo(a as Int, b as Int) returns Boolean
-  return if(pow(a, b) < pow(b, a), true, false)
-end function
-</codeblock>
+This may be an expression that will be evaluated before returning.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a function and reference to it</h4>
+<h4 class="no-TOC acc-title">Examples of functions</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The function definition:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
+<codeblock>
+function binarySearch(li as List<of String>, item as String) returns Boolean
+  variable result set to false
+  if li.length() > 0 then
+    variable mid set to divAsInt(li.length(), 2)
+    variable value set to li[mid]
+    if item.equals(value) then
+      set result to true
+    elif item.isBefore(value) then
+      set result to binarySearch(li.subList(0, mid), item)
+    else
+      set result to binarySearch(li.subList(mid + 1, li.length()), item)
+    end if
+  end if
+  return result
+end function
+</codeblock>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; A function definition and reference to it:</p>
 <codeblock>
 function score(g as Game) returns Int
   return g.body.length() - 2
 end function
-</codeblock>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Reference to the function:</p>
-<codeblock>
 main
   variable g set to new Game()
   call print(score(g))
-  end main
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -378,7 +386,8 @@ main
 <codeblock>
 function factorial(n as Int) returns Int
   return (if(n > 1, n*factorial(n - 1), 1))
-end function</codeblock>
+end function
+</codeblock>
 
 <h2 id="test"><b>test</b></h2>
 <p>A <b>test</b> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
@@ -387,7 +396,7 @@ end function</codeblock>
 <div class="accordion">
 <h4 class="no-TOC acc-title">Example of a set of <b>assert equal</b> instructions that test a <b>function</b></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <code>binarySearch</code> on four test lists</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <el-method>binarySearch</el-method> on four test lists</p>
 <codeblock>
 test test_binarySearch
   variable li1 set to ["lemon", "lime", "orange"]
@@ -444,6 +453,7 @@ end test
 <p>This <b>assert</b> shows how testing can also be done against an expected error message:</p>
 <codeblock>
 test test_message
+  variable a set to [5, 1, 7]
   assert a[4] is 0
   assert a[4] is "Out of range index: 4 size: 3"
 end test
@@ -525,6 +535,7 @@ end test
 <codeblock>
 main
   variable x set to new Thing()
+  call print(x)
   call print(x.names.toString())
 end main
 class Thing
@@ -533,7 +544,7 @@ class Thing
     set this.names to createList(6, "X")
   end constructor
   function toString() returns String
-    return ""
+    return "instance of class Thing"
   end function
 end class
 </codeblock>
@@ -576,13 +587,10 @@ end class
 <h3 class="no-TOC" id="this"><b>this</b></h3>
 <p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
 you can refer to this instance with the keyword <b>this</b>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
+<code> call apple.newRandomPosition(this)</code>
 
-<codeblock>
-  call apple.newRandomPosition(this)
-</codeblock>
-
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>.
-(<el-id>apple</el-id> is an instance of class <code>Apple</code>).</p>
+<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
+<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
 
@@ -625,19 +633,18 @@ end function
 <h2 id="interface"><b>interface</b></h2>
 <p>An <b>interface</b> is similar to an <b>abstract class</b>, with the difference that it may define only abstract members. The advantage of using an <b>interface</b> instead of an <b>abstract class</b> is that a <b>concrete class</b> can inherit from multiple interfaces.</p>
 <p>An <b>interface</b> may inherit only from other interfaces.</p>
-<p>Important: An <b>interface</b> must not re-declare abstract interfaces that are defined in any interface it inherits from, directly or indirectly.</p>
+<p>An <b>interface</b> must not re-declare abstract interfaces that are defined in any interface it inherits from, directly or indirectly.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Example using <b>interface</b></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from a version of program <b>blackjack</b> of:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from some code in demo program <b>blackjack</b> of:</p>
 <ul>
  <li>inheritance from <b>interface</b> <code>Player</code> to <b>abstract class</b> <code>Automated</code>
   and to <b>concrete class</b> <code>HumanPlayer</code>, and</li>
  <li>inheritance from <b>abstract class</b> <code>Automated</code> to <b>concrete class</b> <code>Dealer</code></li>
  <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their abstract declarations.</li>
 </ul>
-<p class="noteBox" style="width:180px">This code is not currently valid</p>
 <codeblock>
 enum PlayerAction stand, draw
 interface Player
@@ -649,26 +656,42 @@ abstract class Automated inherits Player
   property score as Int
   abstract function getAction() returns PlayerAction
   procedure changeScoreBy(amount as Int)
-    set this.score to property.score + amount
+    set this.score to this.score + amount
   end procedure
-end abstract class
+end class
 class Dealer inherits Automated
   constructor(startingPoints as Int)
-    set property.score to startingPoints
+    set this.score to startingPoints
+    set this.hand to this.hand
   end constructor
   function getAction() returns PlayerAction
-    return if((property.hand.total < 17), PlayerAction.draw, PlayerAction.stand)
+    return if((this.hand.total < 17), PlayerAction.draw, PlayerAction.stand)
+  end function
+  function toString() returns String
+    return "a Dealer"
   end function
 end class
 class HumanPlayer inherits Player
-  constructor(startingPoints as Int)
-    set property.score to startingPoints
+  constructor(startingPoints as Int, hand as Hand)
+    set this.hand to hand
   end constructor
+  property hand as Hand
   procedure changeScoreBy(amount as Int)
-    set property.score to property.score + amount
   end procedure
+  function toString() returns String
+    return "a HumanPlayer"
+  end function
 end class
-</codeblock>
+class Hand
+  constructor()
+    set this.total to 0
+  end constructor
+  property total as Int
+  function toString() returns String
+    return "a Hand"
+  end function
+end class
+<codeblock>
 <hr>
 </div></div>
 
@@ -690,7 +713,7 @@ constant turquoise set to 0x00ced1
 constant liveCell set to black
 constant speedOfLight set to 299792.458
 constant gameOver set to true
-constant euro set to 0x20ac 
+constant euro set to 0x20ac
 constant warningMsg set to "Limit reached"
 </codeblock>
 
@@ -757,8 +780,8 @@ end function
 <codeblock>
 enum Compass north, east, south, west
 main
- variable dir set to Compass.south
- call print(enumValue(clockwise(dir))
+  variable dir set to Compass.south
+  call print(enumValue(clockwise(dir)))
 end main
 function clockwise(d as Compass) returns Compass
   variable newDir set to Compass.north
@@ -1000,10 +1023,10 @@ This action is a toggle used both to set and to remove the modifier <b>private</
 <codeblock>
 class Game
   constructor(board as Board)
-    set property.board to board
+    set this.board to board
   end constructor
   procedure setHeight(height as Int)
-    set property.height to height
+    set this.height to height
   end procedure
 end class
 </codeblock>
@@ -1044,7 +1067,7 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <h2 id="if_statement"><b>if</b> (instruction)</h2>
 <p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
- <li>It is structured like this (where <code>elif</code> is the Elan keyword for <b>else if</b>):
+ <li>It is structured like this (where <code>elif</code> is the short form of <b>else if</b>):
 <codeblock>
 if (x < 1) then
   set x to 1
@@ -1077,6 +1100,7 @@ end if
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
+main
   variable result set to false
   if item.equals(value) then
     set result to true
@@ -1085,6 +1109,7 @@ end if
   else
     set result to binarySearch(li.subList(mid + 1, li.length()), item)
   end if
+end main
 </codeblock>
 <hr>
 </div></div>
@@ -1214,14 +1239,14 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   <code>call fillRandom(grid)</code></li>
 <li>a procedure method on an object of a class that you have defined<br>
   <code>call apple.newRandomPosition(snake)</code><br>
-  <code>call property.hand.draw()</code></li>
+  <code>call this.hand.draw()</code></li>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
 <li>a procedure method on an object of a Type provided by the standard library<br>
   <code>call vg.append(rect)</code><br>
-  <code>call property.cards.append(card)</code></li>
+  <code>call this.cards.append(card)</code></li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1242,29 +1267,15 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf08e;</i></a>.</p>
 
 <div id="catch"></div>
-<h2 id="try"><b>try</b></h2>
+<h2 id="try"><b>try .. catch</b></h2>
 <p>You can enclose code in a <b>try</b> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>try..catch</b></h4>
+<h4 class="no-TOC acc-title">Examples using <b>try .. catch</b></h4>
 <div class="acc-body">
-<p class="noteBox" style="width:180px">This code is not currently valid</p>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Use a <b>test</b> to catch an error in a function:</p>
-<codeblock>
-test test_try_1
-  try
-    variable x set to foo(0)
-    call print("not caught")
-  catch ElanRuntimeError
-    call print("runtime error")
-  end try
-end test
-</codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To check a function input, and throw an exception up:</p>
 <codeblock>
@@ -1272,17 +1283,18 @@ main
   try
     variable t set to foo(true)
     call print("no error")
-  catch CustomError
-    call print("error")
+  catch err as CustomError
+    call print(err)
   end try
 end main
-function foo(f as Boolean) returns Boolean
-  if f then
+function foo(torf as Boolean) returns Boolean
+  if torf then
     throw CustomError "error in foo()"
   end if
-  return f
+  return torf
 end function
 </codeblock>
+<p>When foo is given argument <el-id>true</el-id>, output is "error in foo()"; when given <el-id>false</el-id>, output is "no error". </p>
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points (each a Tuple) has negative <i>x</i> or <i>y</i>:</p>
@@ -1292,10 +1304,9 @@ main
   variable b set to (3.0, -6.0)
   variable fQ set to firstQuadrant(a, b)
 end main
-
 function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
   if (a.item_0 < 0) or (a.item_1 < 0) or (b.item_0 < 0) or (b.item_1 < 0) then
-    throw CustomError $"point ({a}) or ({b}) is not in the first quadrant"
+    throw CustomError $"point {a} or (b} is not in the first quadrant"
   end if
   return 0
 end function
@@ -1303,10 +1314,9 @@ end function
 <hr>
 </div></div>
 
-<h2 id="throw"><b>throw exception</b></h2>
-<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw exception</b> instruction
+<h2 id="throw"><b>throw</b> exception</h2>
+<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw</b> instruction
  which defines an explanatory string.</p>
-
 <p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 
 <div class="accordion">
@@ -1318,13 +1328,11 @@ end function
 main
   call print($"{percent(23, 20)}" + "%")
 end main
-
 function percent(value as Float, maximum as Float) returns Float
-  variable r set to 100.0
   if value > maximum then
     throw ElanRuntimeError "proportion exceeds 100%"
   end if
-  return value/maximum*r
+  return value/maximum*100
 end function
 </codeblock>
 <p>At runtime, if the condition is met, execution will stop and the display will show:</p>
@@ -1599,10 +1607,11 @@ end function
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice of <b>variable definition</b> assignments (the brackets around the first <b>if</b> expression are optional):</p>
 
-<codeblock>variable c set to 1160</codeblock>
-<codeblock>set c to (if c < 1160 then c + 40 else c - 1160)</codeblock>
-<codeblock>variable d set to if c < 580 then c - 40 else c + 60</codeblock>
-
+<codeblock>
+  variable c set to 1160
+  set c to if(c < 1160, c + 40, c - 1160)
+  variable d set to if(c < 580, c - 40, c + 60)
+</codeblock>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
@@ -1833,7 +1842,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
   the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
  </ul>
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
- const, continue, curry, debugger, default, delete, dictionary, do, double, error, eval, export, extends, final, finally, float, goto, ignore, implements,
+ const, continue, curry, debugger, default, delete, dict, dictionary, do, double, error, eval, export, extends, final, finally, float, goto, ignore, implements,
  instanceof, int, into, list, long, match, myclass, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
  short, static, string, super, switch, system, synchronized, throws, todo, transient, tuple, typeof, void, volatile, var, when, xor, yield</el-code></p>
 

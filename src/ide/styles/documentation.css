@@ -184,7 +184,7 @@ body *, code, el-code, el-code-block, el-field {
 }
 
 /* display of code translations */
-el-fr {
+el-fr, el-const el-fr {
   display: none;
 }
 
