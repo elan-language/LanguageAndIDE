@@ -43,7 +43,7 @@ are passed around in a running program:</p>
  <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
  <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
- any user-defined Type such as the name of a <code>concrete class</code>, <code>abstract class</code> or <code>interface</code>.</li>
+ any user-defined Type such as the name of a <b>concrete class</b>, <b>abstract class</b> or <b>interface</b>.</li>
 </ul>
 
 <p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
@@ -98,7 +98,7 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><code>abstract class</code>> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><code>abstract class</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><code>interface</code> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr>
   <td>Other</td>
@@ -1067,7 +1067,7 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
 <h2 id="if_statement"><b>if</b> (instruction)</h2>
 <p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
- <li>It is structured like this (where <code>elif</code> is the short form of <b>else if</b>):
+ <li>It is structured like this:
 <codeblock>
 if (x < 1) then
   set x to 1
@@ -1081,8 +1081,8 @@ end if
 </codeblock>
 </li>
  <li>The conditions, one of which is shown above enclosed in brackets, are Boolean values or expressions.</li>
- <li><b>elif</b> and <b>else</b> clauses are optional.</li>
- <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
+ <li><b>else if</b> and <b>else</b> clauses are optional.</li>
+ <li>You can add as many <b>else if</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
 </ul>
 <p>See also <a href="#if_expression"><b>if</b> (expression) <i class="fa">&#xf08e;</i></a> for using the related <b>if</b> to return a value.</p>
 
@@ -1589,38 +1589,29 @@ end function
 
 <h2 id="if_expression"><b>if</b> (expression)</h2>
 
-<p>The <b>if</b> expression has two forms, both of which return a value:</p>
-<ol>
- <li>Similar syntax to the <a href="#if"><b>if</b> instruction <i class="fa">&#xf08e;</i></a>, but is an expression that returns a value.
-  <ul>
-   <li> It specifies which of several expressions is to be evaluated to give the returned value.</li>
-   <li><b>elif</b> and <b>else</b> clauses are optional.</li>
-   <li>You can add as many <b>elif</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
-  </ul></li>
-  <li>A simpler form that distinguishes only two possibilities, with the format:<br>
-<code>variable isBigger set to if(a >= b, true, false)</code></li>
-</ol>
-<p>An <b>if</b> expression may be used within an <b>if</b> expression but will be hard to read even when enclosed in brackets.</p>
+<p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
+<p>Its syntax is shown in this <b>re-assign variable</b> instruction:</p>
+<code>variable isBigger set to if(a >= b, true, false)</code>
+<p>Similarly, but returning an evaluated expression:</p>
+<codeblock>
+  variable d set to if(c < 580, c - 40, c + 60)
+</codeblock>
+<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 500</code>, and <code>c + 60</code> otherwise.</p>
+<p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice of <b>variable definition</b> assignments (the brackets around the first <b>if</b> expression are optional):</p>
-
-<codeblock>
-  variable c set to 1160
-  set c to if(c < 1160, c + 40, c - 1160)
-  variable d set to if(c < 580, c - 40, c + 60)
-</codeblock>
-<hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
-  return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
+function foo() returns Int
+  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+end function
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using <b>elif</b> clause:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using <b>else if</b> clause:</p>
 <codeblock>
-  return if attempt[n] is "*" then attempt elif isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
+  return if((attempt[n] is "*"), attempt elif isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 </codeblock>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the simpler <b>if</b> expression in a <b>call procedure</b> <el-method>print</el-method>:</p>
@@ -1630,16 +1621,15 @@ main
   call testPi(p, 3)
   call testPi(p, 4)
 end main
-
 procedure testPi(p as String, v as Float)
-  call print(if(pi > v, $"so, {p} > {v}", $"and {p} < {v}"))
+  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
 would print these lines to the display:
-<pre><el-code>
-   so &#x03c0 > 3
-   and &#x03c0 < 4
-</el-code></pre>
+<pre>
+   &#x03c0 > 3
+   &#x03c0 < 4
+</pre>
 <hr>
 </div></div>
 
