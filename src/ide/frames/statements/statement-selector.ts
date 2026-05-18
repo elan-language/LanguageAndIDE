@@ -81,7 +81,7 @@ export class StatementSelector extends AbstractSelector {
     return true;
   }
 
-  validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
+  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = true;
     // First apply universal instruction-specific rules
@@ -96,7 +96,7 @@ export class StatementSelector extends AbstractSelector {
         this.isWithinAConstructor()
       );
     } else if (keyword === letKeyword) {
-      result = this.isWithinAFunction() || this.isWithinATest();
+      result = !userEntry && (this.isWithinAFunction() || this.isWithinATest());
     } else if (keyword === assertKeyword) {
       result = this.isWithinATest();
     }
@@ -106,9 +106,9 @@ export class StatementSelector extends AbstractSelector {
     }
     // Then apply profile rules
     if (this.profile.isFunctional()) {
-      if (this.isWithinAFunction() && keyword !== commentMarker) {
+      if (this.isWithinAFunction() && userEntry) {
         result = keyword === letKeyword || keyword === commentMarker;
-      } else if (this.isWithinATest()) {
+      } else if (this.isWithinATest() && userEntry) {
         result = keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
       }
     }

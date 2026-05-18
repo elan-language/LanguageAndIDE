@@ -144,8 +144,8 @@ End Function
 End Sub
 
 Function markAttempt(attempt As String, target As String) As String
-  Dim greens = evaluateGreens(attempt, target) ' variable definition
-  Dim markedAttempt = evaluateYellows(greens[0], greens[1]) ' variable definition
+  Dim greens = evaluateGreens(attempt, target) ' let
+  Dim markedAttempt = evaluateYellows(greens[0], greens[1]) ' let
   Return markedAttempt[0]
 End Function
 
@@ -165,30 +165,30 @@ Function possibleAnswersAfterAttempt(prior As List(Of String), attempt As String
 End Function
 
 <TestMethod> Sub test_possibleAnswersAfterAttempt()
-  Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' variable definition
+  Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' let
   Assert.AreEqual({"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "*____"))
   Assert.AreEqual({"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "+____"))
   Assert.AreEqual({"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"))
 End Sub
 
 Function maxWordCountRemainingAfterAttempt(possAnswers As List(Of String), attempt As String) As Integer
-  Dim d = New Dictionary(Of String, Integer)() ' variable definition
-  Dim d2 = possAnswers.reduce(d, Function (dd As Dictionary(Of String, Integer), answer As String) incrementCount(dd, answer, attempt)) ' variable definition
-  Dim keys = d2.keys() ' variable definition
+  Dim d = New Dictionary(Of String, Integer)() ' let
+  Dim d2 = possAnswers.reduce(d, Function (dd As Dictionary(Of String, Integer), answer As String) incrementCount(dd, answer, attempt)) ' let
+  Dim keys = d2.keys() ' let
   Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 End Function
 
 Function incrementCount(dd As Dictionary(Of String, Integer), possAnswer As String, attempt As String) As Dictionary(Of String, Integer)
-  Dim mark = markAttempt(attempt, possAnswer) ' variable definition
-  Dim keys = dd.keys() ' variable definition
-  Dim count = if(keys.contains(mark), dd[mark], 0) ' variable definition
-  Dim dd2 = dd.withSet(mark, count + 1) ' variable definition
+  Dim mark = markAttempt(attempt, possAnswer) ' let
+  Dim keys = dd.keys() ' let
+  Dim count = if(keys.contains(mark), dd[mark], 0) ' let
+  Dim dd2 = dd.withSet(mark, count + 1) ' let
   Return dd2
 End Function
 
 <TestMethod> Sub test_maxWordCountRemainingAfterAttempt()
-  Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' variable definition
-  Dim d = New Dictionary(Of String, Integer)() ' variable definition
+  Dim prior = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' let
+  Dim d = New Dictionary(Of String, Integer)() ' let
   Assert.AreEqual(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"))
   Assert.AreEqual(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"))
   Assert.AreEqual(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"))
@@ -199,48 +199,48 @@ Function allRemainingWordCounts(possAnswers As List(Of String)) As List(Of WordC
 End Function
 
 Function betterOf(wc1 As WordCount, wc2 As WordCount, possAnswers As List(Of String)) As WordCount
-  Dim isBetter = wc2.count < wc1.count ' variable definition
-  Dim isEqualAndPossAnswer = (wc2.count = wc1.count) And possAnswers.contains(wc2.word) ' variable definition
+  Dim isBetter = wc2.count < wc1.count ' let
+  Dim isEqualAndPossAnswer = (wc2.count = wc1.count) And possAnswers.contains(wc2.word) ' let
   Return if(isBetter Or isEqualAndPossAnswer, wc2, wc1)
 End Function
 
 <TestMethod> Sub test_betterOf()
-  Dim possAnswers = New List(Of String)() ' variable definition
-  Dim b2 = New WordCount("B", 2) ' variable definition
-  Dim a3 = New WordCount("A", 3) ' variable definition
-  Dim a2 = New WordCount("A", 2) ' variable definition
+  Dim possAnswers = New List(Of String)() ' let
+  Dim b2 = New WordCount("B", 2) ' let
+  Dim a3 = New WordCount("A", 3) ' let
+  Dim a2 = New WordCount("A", 2) ' let
   Assert.AreEqual(b2, betterOf(a3, b2, possAnswers))
   Assert.AreEqual(b2, betterOf(b2, a3, possAnswers))
   Assert.AreEqual(b2, betterOf(b2, a2, possAnswers))
   Assert.AreEqual(a2, betterOf(a2, b2, possAnswers))
-  Dim possAnswers2 = {"B"} ' variable definition
+  Dim possAnswers2 = {"B"} ' let
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers2))
-  Dim possAnswers3 = {"B", "A"} ' variable definition
+  Dim possAnswers3 = {"B", "A"} ' let
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers3))
   Assert.AreEqual(a2, betterOf(b2, a2, possAnswers3))
 End Sub
 
 Function bestAttempt(possAnswers As List(Of String)) As String
-  Dim wordCounts = allRemainingWordCounts(possAnswers) ' variable definition
-  Dim best = wordCounts.reduce(wordCounts.head(), Function (bestSoFar As WordCount, newWord As WordCount) betterOf(bestSoFar, newWord, possAnswers)) ' variable definition
+  Dim wordCounts = allRemainingWordCounts(possAnswers) ' let
+  Dim best = wordCounts.reduce(wordCounts.head(), Function (bestSoFar As WordCount, newWord As WordCount) betterOf(bestSoFar, newWord, possAnswers)) ' let
   Return best.word
 End Function
 
 <TestMethod> Sub test_bestAttempt()
-  Dim possAnswers = {"ABCDE", "ABBBB", "EDCBA"} ' variable definition
+  Dim possAnswers = {"ABCDE", "ABBBB", "EDCBA"} ' let
   Assert.AreEqual("EDCBA", bestAttempt(possAnswers))
-  Dim possAnswers2 = {"ABCDE", "ABBBB", "BCDEA"} ' variable definition
+  Dim possAnswers2 = {"ABCDE", "ABBBB", "BCDEA"} ' let
   Assert.AreEqual("BCDEA", bestAttempt(possAnswers2))
 End Sub
 
 Class WordCount
 
-  Property word As String
-  Property count As Integer
   Sub New(word As String, count As Integer)
     Me.word = word ' re-assign variable
     Me.count = count ' re-assign variable
   End Sub
+  Property word As String
+  Property count As Integer
   Function toString() As String
     Return ""
   End Function
