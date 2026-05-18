@@ -1,4 +1,4 @@
-# 43112fe07c33a132aed6721debd20dd4a29b35770576107efe5f6331ed712c21 Elan 2.0.0-alpha valid
+# 5025703a71387c428b8e69edf7aed5e11b5e4a076d7c26038d52a3d13724fe56 Elan 2.0.0-alpha4 valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -91,7 +91,7 @@ function newColour(neighbourColours as List<of Int>, nowColour as Int) returns I
   variable nInfected set to 0
   variable nIll set to 0
   variable sumStates set to colours.indexOf(nowColour)
-   for colour in neighbourColours
+  for colour in neighbourColours
     set sumStates to sumStates + colours.indexOf(colour)
     if colour < healthy then
       set nInfected to nInfected + 1

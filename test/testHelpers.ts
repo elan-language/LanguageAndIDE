@@ -42,134 +42,103 @@ import { getTestRunner } from "./runner";
 // flag to update test files
 const updateTestFiles = false;
 
-export async function assertEffectOfActionNew(
-  sourceFile: string,
-  action: (f: FileImpl) => void,
-  htmlFile: string,
-) {
-  const fl = await loadFileAsModelNew(sourceFile);
-  const htm = loadFileAsHtmlNew(htmlFile);
-
-  action(fl);
-
-  const rendered = await fl.renderAsHtml();
-  const actualHtml = wrap(rendered).replaceAll("\r", "");
-  const expectedHtml = htm.replaceAll("\r", "");
-  try {
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      // update original not copied 
-      htmlFile = htmlFile.replace("out\/", "");
-      updateTestFileNew(htmlFile, actualHtml);
-      throw new Error("Files updated");
-    } else {
-      throw e;
-    }
+export async function assertParsesAndCompilesAndTests(f: FileImpl) {
+  const runner = await createTestRunner();
+  f.refreshParseAndCompileStatuses(false);
+  assert.equal(f.readParseStatus(), ParseStatus.valid, "failed parse");
+  assert.equal(f.readCompileStatus(), CompileStatus.ok, "failed compile");
+  const outcomes = await runner(f.compile());
+  f.refreshTestStatuses(outcomes);
+  const ts = f.readTestStatus();
+  if (ts !== TestStatus.default) {
+    assert.equal(ts, TestStatus.pass, "failed tests");
   }
 }
 
-export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
-  const fl = await loadFileAsModelNew(sourceFile);
+export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
+ 
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
-  let expectedHtml = "";
-  let actualHtml = "";
-  let actualPython = "";
-  let actualVB = "";
-  let actualCS = "";
-  let actualJava = ""; 
-  let expectedPython = "";
-  let expectedVB = "";
-  let expectedCS = "";
-  let expectedJava = ""; 
-  if (htmlFile !== "") {
-    const htm =loadFileAsHtmlNew(htmlFile);
-    const renderedHtml = await fl.renderAsHtml();
-    actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-    expectedHtml = htm.replaceAll("\r", "");
-  }
-  if (pythonFile !== "") {
-    fl.setLanguage(LanguagePython.Instance);
-    actualPython = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedPython = loadFileAsSourceNew(pythonFile).replaceAll("\r", "");
-  }
-
-  if (vbFile !== "") {
-    fl.setLanguage(LanguageVB.Instance);
-    actualVB = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedVB = loadFileAsSourceNew(vbFile).replaceAll("\r", "");
-  }
-
-   if (csFile !== "") {
-    fl.setLanguage(LanguageCS.Instance);
-    actualCS = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedCS = loadFileAsSourceNew(csFile).replaceAll("\r", "");
-  }
-
-   if (javaFile !== "") {
-    fl.setLanguage(LanguageJava.Instance);
-    actualJava = (await fl.renderAsExport()).replaceAll("\r", "");;
-    expectedJava = loadFileAsSourceNew(javaFile).replaceAll("\r", "");
-  }
+  const expectedSource = source.replaceAll("\r", "");
 
   try {
     assert.strictEqual(actualSource, expectedSource);
-    if (htmlFile !== "") {
-      assert.strictEqual(actualHtml, expectedHtml);
-    }
-    if (pythonFile !== "") {
-      assert.strictEqual(actualPython, expectedPython);
-    }
-    if (vbFile !== "") {
-      assert.strictEqual(actualVB, expectedVB);
-    }
-    if (csFile !== "") {
-      assert.strictEqual(actualCS, expectedCS);
-    }
-    if (javaFile !== "") {
-      assert.strictEqual(actualJava, expectedJava);
-    }
-
-   } catch (e) {
+  }
+  catch {
+    let msg = `rendered elan incorrect`;
     if (updateTestFiles) {
       // update original not copied 
-      sourceFile = sourceFile.replace("out\\", "");
+      sourceFile = sourceFile.replace("out\/test", "src");
 
-      updateTestFileNew(sourceFile, actualSource);
-      if (htmlFile !== "") {
-        htmlFile = htmlFile.replace("out\/", "");
-        updateTestFileNew(htmlFile, actualHtml);
-      }
-      if (pythonFile !== "") {
-        pythonFile = pythonFile.replace("out\/", "");
-        updateTestFileNew(pythonFile, actualPython);
-      }
-      if (vbFile !== "") {
-        vbFile = vbFile.replace("out\/", "");
-        updateTestFileNew(vbFile, actualVB);
-      }
-      if (csFile !== "") {
-        csFile = csFile.replace("out\/", "");
-        updateTestFileNew(csFile, actualCS);
-      }
-      if (javaFile !== "") {
-        javaFile = javaFile.replace("out\/", "");
-        updateTestFileNew(javaFile, actualJava);
-      }
-      throw new Error("Files updated");
-    } else {
-      throw e;
+      updateTestFile(sourceFile, actualSource);
+      msg = msg + ": test file updated";
     }
+    throw new Error(msg);
   }
 }
 
-function _removeHeader(input: string): string {
-  return input.replace(/^#.*Elan.*\n/, "");
+export async function assertGeneratesHtml(fl: FileImpl, path: string) {
+  let actualHtml = "";
+  let htmlFile = path + ".html";
+  
+  try {  
+    const renderedHtml = await fl.renderAsHtml();
+    actualHtml = wrap(renderedHtml).replaceAll("\r", "");
+    const htm = loadFileAsHtml(htmlFile);
+    const expectedHtml = htm.replaceAll("\r", "");
+    assert.strictEqual(actualHtml, expectedHtml);
+  }
+  catch {
+    let msg = `rendered html incorrect`;
+    if (updateTestFiles) {
+      // update original not copied 
+      htmlFile = htmlFile.replace("out\/", "");
+
+      updateTestFile(htmlFile, actualHtml);
+      msg = msg + ": test file updated";
+    }
+    throw new Error(msg);
+  }
 }
 
-export function updateTestFileNew(testDoc: string, newContent: string) {
+export async function assertExports(fl: FileImpl, path: string, language: Language) {
+ 
+  let actual = "";
+  let msg = "";
+  let file = path = path + "." + language.defaultFileExtension;
+
+  try {
+    fl.setLanguage(language);
+    
+    actual = (await fl.renderAsExport()).replaceAll("\r", "");;
+    const expected = loadFileAsSource(file).replaceAll("\r", "");
+    assert.strictEqual(actual, expected);
+  }
+  catch {
+    msg = `${language.languageFullName} export incorrect`;
+    if (updateTestFiles) {
+      file = file.replace("out\/", "");
+      updateTestFile(file, actual);
+      msg = msg + ": test file updated";
+    }
+  }
+  return msg;
+}
+
+export async function assertExportsAll(fl: FileImpl, path: string) {
+  let msgs = [];
+
+  msgs.push(await assertExports(fl, path, LanguagePython.Instance));
+  msgs.push(await assertExports(fl, path, LanguageVB.Instance));
+  msgs.push(await assertExports(fl, path, LanguageCS.Instance));
+  msgs.push(await assertExports(fl, path, LanguageJava.Instance));
+
+  if (msgs.some(m => m)) {
+    throw new Error(msgs.join(", "))
+  }
+}
+
+export function updateTestFile(testDoc: string, newContent: string) {
   writeFileSync(testDoc, newContent);
 }
 
@@ -188,17 +157,7 @@ ${html}
 </html>`;
 }
 
-export async function assertFileParsesNew(sourceFile: string) {
-  const fl = await loadFileAsModelNew(sourceFile);
-
-  const renderedSource = await fl.renderAsElanSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
-
-  assert.strictEqual(actualSource, expectedSource);
-}
-
-export function loadFileAsSourceNew(sourceFile: string): string {
+export function loadFileAsSource(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
 }
 
@@ -206,8 +165,8 @@ export function getElanFiles(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter(s => s.endsWith(".elan"));
 }
 
-export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
-  const source = loadFileAsSourceNew(sourceFile);
+export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
+  const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
@@ -217,8 +176,18 @@ export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> 
   return fl;
 }
 
-export function loadFileAsHtmlNew(sourceFile: string): string {
-  return loadFileAsSourceNew(sourceFile);
+export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
+  const sourceFile = `./out/test/demo_programs/${sf}.elan`;
+  const testPath = `./out/test/files/${sf}`;
+  const source = loadFileAsSource(sourceFile);
+  const codeSource = new CodeSourceFromString(source);
+  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  await fl.parseFrom(codeSource);
+  return [fl, source, sourceFile, testPath];
+}
+
+export function loadFileAsHtml(sourceFile: string): string {
+  return loadFileAsSource(sourceFile);
 }
 
 export function assertElementsById(dom: jsdom.JSDOM, id: string, expected: string) {
@@ -686,22 +655,6 @@ export async function createTestRunner() {
   system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);
 }
-
-export async function testElanProgram(pathFromSrc: string) {
-  const f = await loadFileAsModelNew(pathFromSrc);
-  const runner = await createTestRunner();
-  f.refreshParseAndCompileStatuses(false);
-  assert.equal(f.readParseStatus(), ParseStatus.valid);
-  assert.equal(f.readCompileStatus(), CompileStatus.ok);
-  const outcomes = await runner(f.compile());
-  f.refreshTestStatuses(outcomes);
-  const ts = f.readTestStatus();
-  if (ts !== TestStatus.default) {
-    assert.equal(ts, TestStatus.pass);
-  }
-}
-
-
 
 export function asDebugSymbol(name: string, value: any, typeMap : string) {
   return {

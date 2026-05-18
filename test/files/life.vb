@@ -20,6 +20,18 @@ Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
   Next col
 End Sub
 
+Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
+  Dim nextGen = createBlockGraphics(white) ' variable definition
+  Dim grid = gridRef.value() ' variable definition
+  For Each x In range(0, 40)
+    For Each y In range(0, 30)
+      Dim colour = nextCellValue(grid, x, y) ' variable definition
+      nextGen[x][y] = colour ' re-assign variable
+    Next y
+  Next x
+  gridRef.set(nextGen) ' call procedure
+End Sub
+
 Function blackOrWhite(random As Double) As Integer
   Dim result = black ' variable definition
   If random > 0.5 Then
@@ -107,18 +119,6 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
   End If
   Return colour
 End Function
-
-Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
-  Dim nextGen = createBlockGraphics(white) ' variable definition
-  Dim grid = gridRef.value() ' variable definition
-  For Each x In range(0, 40)
-    For Each y In range(0, 30)
-      Dim colour = nextCellValue(grid, x, y) ' variable definition
-      nextGen[x][y] = colour ' re-assign variable
-    Next y
-  Next x
-  gridRef.set(nextGen) ' call procedure
-End Sub
 
 <TestMethod> Sub test_north()
   Assert.AreEqual((3, 3), north((3, 4)))
