@@ -59,7 +59,7 @@ async function parseAsFileWithHeader(code: string, l: Language) {
   return await file.renderAsHtml(true);
 }
 
-async function parseAsFile(code: string, l: Language) {
+export async function parseAsFile(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
   const file = await newFileImpl();
 

@@ -192,6 +192,29 @@ with all the same property values except for specific changes that you want to m
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <b>function</b> or <b>procedure</b>.
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
+
+<b>TEMPORARY EXPERIMENTS WITH CONSTANTS</b>
+
+<p>1:</p>
+
+<code>constant maxHits set to 10</code>
+<p>2:</p>
+
+<codeblock>constant maxHits set to 20</codeblock>
+
+<p>3:</p>
+
+<codeblock>
+constant maxHits set to 30
+</codeblock>
+
+<p>4:</p>
+
+<codeblock>
+constant maxHits set to 40
+constant maxHits set to 50
+</codeblock>
+
 <codeblock>
 constant maxHits set to 20
 function hits() returns Int
