@@ -743,7 +743,7 @@ end function
 It is used to provide a fixed set of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
 <p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
-number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf08e;</i></a>.
+number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf08e;</i></a>.</p>
 <p>A reference to an <b>enum</b> by its Type name necessarily holds one of the 'values'.</p>
 <p>Reference to the value in an <b>enum</b> is made by using <a href="#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> with method <el-method>enumValue</el-method>.</p>
 <p>An <b>enum</b> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
@@ -1385,7 +1385,7 @@ end function
 <tr><td><a href="LibRef.html#List">List <i class="fa">&#xf08e;</i></a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
 <tr><td><a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a></td><td><code>["a":3, "b":5]</code></td></tr>
 </table>
-<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.<br>
+<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.</p>
 
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
@@ -1440,14 +1440,16 @@ end main
 <p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
 <p>For the  + &minus; *  operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
 <p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
-<p id="power">For raising one value to the power of another, use the syntax in these examples:<br>
+<div id="power"></div>
+<p>For raising one value to the power of another, use the syntax in these examples:<br></p>
 <codeblock>
 call print(pow(4, 4))
 variable c set to sqrt(pow(a, 2) + pow(b, 2))
 </codeblock>
 
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
-<p id="mod"> The operator <b>mod</b> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
+<div id="mod"></div>
+<p> The operator <b>mod</b> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
 <table class="tablePlain">
 <tr>
  <td><code>2/3.0</code></td><td>&#x27f6;</td><td>0.666..</td>
