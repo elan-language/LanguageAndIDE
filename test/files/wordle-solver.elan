@@ -232,6 +232,7 @@ class WordCount
   end constructor
 
   property word as String
+
   property count as Int
 
   function toString() returns String
