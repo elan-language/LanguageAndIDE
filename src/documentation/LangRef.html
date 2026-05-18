@@ -193,35 +193,14 @@ with all the same property values except for specific changes that you want to m
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
 
-<b>TEMPORARY EXPERIMENTS WITH CONSTANTS</b>
-
-<p>1:</p>
-
-<code>constant maxHits set to 10</code>
-<p>2:</p>
-
-<codeblock>constant maxHits set to 20</codeblock>
-
-<p>3:</p>
-
-<codeblock>
-constant maxHits set to 30
-</codeblock>
-
-<p>4:</p>
-
-<codeblock>
-constant maxHits set to 40
-constant maxHits set to 50
-</codeblock>
-
-<codeblock>
+<code>
 constant maxHits set to 20
 function hits() returns Int
   variable maxHits set to 99
   return global.maxHits
 end function
-</codeblock>
+</code>
+
 <p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
 </ul>
@@ -730,7 +709,7 @@ end class
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
-<codeblock>
+<code>
 constant maxHits set to 10
 constant turquoise set to 0x00ced1
 constant liveCell set to black
@@ -738,7 +717,7 @@ constant speedOfLight set to 299792.458
 constant gameOver set to true
 constant euro set to 0x20ac
 constant warningMsg set to "Limit reached"
-</codeblock>
+</code>
 
 <h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a <b>function</b>
