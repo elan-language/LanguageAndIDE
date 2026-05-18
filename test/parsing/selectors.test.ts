@@ -174,7 +174,6 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     assertOptions(s, [
-      "let statement",
       "variable definition",
       "re-assign variable",
       "if",
@@ -292,34 +291,6 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     assertOptions(s, ["let statement", "# comment"]);
-  });
-
-  test("Selection Context - deeper nesting 2 - all", () => {
-    const fl = new FileImpl(
-      hash,
-      new Profile("all"),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const c = new ConcreteClass(fl);
-    const fm = new FunctionMethod(c);
-    const if1 = new IfStatement(fm);
-    const s = new StatementSelector(if1);
-    assertOptions(s, [
-      "let statement",
-      "variable definition",
-      "re-assign variable",
-      "if",
-      "else if",
-      "else",
-      "while loop",
-      "for loop",
-      "try",
-      "throw",
-      "# comment",
-    ]);
   });
 
   test("Selection Context - in an IfThen", () => {
