@@ -1471,32 +1471,46 @@ variable c set to sqrt(pow(a, 2) + pow(b, 2))
 
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
 <p id="mod"> The operator <b>mod</b> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
-<pre>
-    2/3.0          &#x27f6;  0.666..
-    2*3             &#x27f6;  6
-    2 + 3          &#x27f6;  5
-    2 &minus; 3          &#x27f6;  &minus;1
-    11 <b>mod</b> 3    &#x27f6;  2
-</pre>
-<p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> (which returns an <code>Int</code>):</p>
-<pre>
-    (11/3.0).<el-method>floor</el-method>()       &#x27f6;  3
-    (-11/3.0).<el-method>floor</el-method>()      &#x27f6; &minus;4
-    <el-method>divAsInt</el-method>(11, 3)      &#x27f6; 3
-</pre>
+<table class="tablePlain">
+<tr>
+ <td><code>2/3.0</code></td><td>&#x27f6;</td><td>0.666..</td>
+</tr><tr>
+ <td><code>2*3</code></td><td>&#x27f6;</td><td>6</td>
+</tr><tr>
+ <td><code>2 + 3</code></td><td>&#x27f6;</td><td>5</td>
+</tr><tr>
+ <td><code>2 &minus; 3</code></td><td>&#x27f6;</td><td>&minus;1</td>
+</tr><tr>
+ <td><code>11 mod 3</code></td><td>&#x27f6;</td><td>2</td>
+</tr>
+</table>
+<p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> on <code>Float</code> arguments (which returns an <code>Int</code>):</p>
+<table class="tablePlain">
+<tr>
+ <td><code>(11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>3</td>
+</tr><tr>
+ <td><code>(-11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>&minus;4</td>
+</tr><tr>
+ <td><code>divAsInt(11.0, 3.0)</code></td><td>&#x27f6;</td><td>3</td>
+</tr>
+</table>
 <p>Note that rounding is always down.</p>
 
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
 <p>When combining <b>mod</b> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
-<pre>
-    <code>(5 + 6) mod 3</code>
-</pre>
+<table class="tablePlain">
+<tr>
+ <td><code>(5 + 6) mod 3</code></td><td>&#x27f6;</td><td>2</td>
+</tr>
+</table>
 <p>Note that <b>mod</b> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
  If both arguments are positive, there is no difference.</p>
 <p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
-<pre>
-    2*&minus;3           &#x27f6;  &minus;6
-</pre>
+<table class="tablePlain">
+<tr>
+ <td><code>2*&minus;3</code></td><td>&#x27f6;</td><td>&minus;6</td>
+</tr>
+</table>
 
 <p>The editor automatically puts spaces around the operators + and &minus;, but not around / or *.
 This is just to visually reinforce the precedence.</p>
@@ -1550,12 +1564,18 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Numeric comparison</h3>
 <p>The numeric comparison operators are:</p>
-<pre>
-    &gt;         for     greater than
-    &lt;         for     less than
-    &gt;=        for     greater than or equal to
-    &lt;=        for     less than or equal to
-</pre>
+<table class="tablePlain">
+<tr>
+ <td><code>&gt;</code></td><td>for</td><td>greater than</td>
+</tr><tr>
+ <td><code>&lt;</code></td><td>for</td><td>less than</td>
+</tr><tr>
+ <td><code>&gt;=</code></td><td>for</td><td>greater than or equal to</td>
+</tr><tr>
+ <td><code>&lt;=</code></td><td>for</td><td>less than or equal to</td>
+</tr>
+</table>
+
 <p>Each may be applied between two values of Type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
 <p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</p>
 
@@ -1619,7 +1639,7 @@ end function
 <codeblock>
   variable d set to if(c < 580, c - 40, c + 60)
 </codeblock>
-<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 500</code>, and <code>c + 60</code> otherwise.</p>
+<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <div class="accordion">
@@ -1638,6 +1658,10 @@ end function
 </codeblock>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the simpler <b>if</b> expression in a <b>call procedure</b> <el-method>print</el-method>:</p>
+
+<table class="tablePlain">
+<tr>
+ <td>
 <codeblock>
 main
   variable p set to unicode(0x03c0)
@@ -1648,11 +1672,9 @@ procedure testPi(p as String, v as Float)
   call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
-would print these lines to the display:
-<pre>
-   &#x03c0 > 3
-   &#x03c0 < 4
-</pre>
+ </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>
+</tr>
+</table>
 <hr>
 </div></div>
 
