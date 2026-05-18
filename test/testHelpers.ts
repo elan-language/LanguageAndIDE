@@ -69,8 +69,115 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlSourceAndExportFiles(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
+export async function assertParsesAndCompilesAndTests(f: FileImpl) {
+  const runner = await createTestRunner();
+  f.refreshParseAndCompileStatuses(false);
+  assert.equal(f.readParseStatus(), ParseStatus.valid, "failed parse");
+  assert.equal(f.readCompileStatus(), CompileStatus.ok, "failed compile");
+  const outcomes = await runner(f.compile());
+  f.refreshTestStatuses(outcomes);
+  const ts = f.readTestStatus();
+  if (ts !== TestStatus.default) {
+    assert.equal(ts, TestStatus.pass, "failed tests");
+  }
+}
+
+export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
+ 
+  const renderedSource = await fl.renderAsElanSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
+  const expectedSource = source.replaceAll("\r", "");
+
+  try {
+    assert.strictEqual(actualSource, expectedSource);
+  }
+  catch {
+    let msg = `rendered elan incorrect`;
+    if (updateTestFiles) {
+      // update original not copied 
+      sourceFile = sourceFile.replace("out\/test", "src");
+
+      updateTestFileNew(sourceFile, actualSource);
+      msg = msg + ": test file updated";
+    }
+    throw new Error(msg);
+  }
+}
+
+export async function assertGeneratesHtml(fl: FileImpl, path: string) {
+  let actualHtml = "";
+  let htmlFile = path + ".html";
+  
+  try {  
+    const renderedHtml = await fl.renderAsHtml();
+    actualHtml = wrap(renderedHtml).replaceAll("\r", "");
+    const htm = loadFileAsHtmlNew(htmlFile);
+    const expectedHtml = htm.replaceAll("\r", "");
+    assert.strictEqual(actualHtml, expectedHtml);
+  }
+  catch {
+    let msg = `rendered html incorrect`;
+    if (updateTestFiles) {
+      // update original not copied 
+      htmlFile = htmlFile.replace("out\/", "");
+
+      updateTestFileNew(htmlFile, actualHtml);
+      msg = msg + ": test file updated";
+    }
+    throw new Error(msg);
+  }
+}
+
+export async function assertExports(fl: FileImpl, path: string, language: Language) {
+ 
+  let actual = "";
+  let msg = "";
+  let file = path = path + "." + language.defaultFileExtension;
+
+  try {
+    fl.setLanguage(language);
+    
+    actual = (await fl.renderAsExport()).replaceAll("\r", "");;
+    const expected = loadFileAsSourceNew(file).replaceAll("\r", "");
+    assert.strictEqual(actual, expected);
+  }
+  catch {
+    msg = `${language.languageFullName} export incorrect`;
+    if (updateTestFiles) {
+      file = file.replace("out\/", "");
+      updateTestFileNew(file, actual);
+      msg = msg + ": test file updated";
+    }
+  }
+  return msg;
+}
+
+export async function assertExportsAll(fl: FileImpl, path: string) {
+  let msgs = [];
+
+  msgs.push(await assertExports(fl, path, LanguagePython.Instance));
+  msgs.push(await assertExports(fl, path, LanguageVB.Instance));
+  msgs.push(await assertExports(fl, path, LanguageCS.Instance));
+  msgs.push(await assertExports(fl, path, LanguageJava.Instance));
+
+  if (msgs.some(m => m)) {
+    throw new Error(msgs.join(", "))
+  }
+}
+
+export async function testElanProgram(sourceFile: string, htmlFile: string, pythonFile = "", vbFile = "", csFile = "", javaFile = "") {
   const fl = await loadFileAsModelNew(sourceFile);
+  const runner = await createTestRunner();
+  fl.refreshParseAndCompileStatuses(false);
+  assert.equal(fl.readParseStatus(), ParseStatus.valid);
+  assert.equal(fl.readCompileStatus(), CompileStatus.ok);
+  const outcomes = await runner(fl.compile());
+  fl.refreshTestStatuses(outcomes);
+  const ts = fl.readTestStatus();
+  if (ts !== TestStatus.default) {
+    assert.equal(ts, TestStatus.pass);
+  }
+
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
@@ -215,6 +322,16 @@ export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> 
     throw new Error(fl.parseError);
   }
   return fl;
+}
+
+export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
+  const sourceFile = `./out/test/demo_programs/${sf}.elan`;
+  const testPath = `./out/test/files/${sf}`;
+  const source = loadFileAsSourceNew(sourceFile);
+  const codeSource = new CodeSourceFromString(source);
+  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  await fl.parseFrom(codeSource);
+  return [fl, source, sourceFile, testPath];
 }
 
 export function loadFileAsHtmlNew(sourceFile: string): string {
@@ -686,22 +803,6 @@ export async function createTestRunner() {
   system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);
 }
-
-export async function testElanProgram(pathFromSrc: string) {
-  const f = await loadFileAsModelNew(pathFromSrc);
-  const runner = await createTestRunner();
-  f.refreshParseAndCompileStatuses(false);
-  assert.equal(f.readParseStatus(), ParseStatus.valid);
-  assert.equal(f.readCompileStatus(), CompileStatus.ok);
-  const outcomes = await runner(f.compile());
-  f.refreshTestStatuses(outcomes);
-  const ts = f.readTestStatus();
-  if (ts !== TestStatus.default) {
-    assert.equal(ts, TestStatus.pass);
-  }
-}
-
-
 
 export function asDebugSymbol(name: string, value: any, typeMap : string) {
   return {

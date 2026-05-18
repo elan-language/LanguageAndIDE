@@ -1,89 +1,218 @@
-import { testElanProgram } from "../testHelpers";
+import {
+  assertExportsAll,
+  assertGeneratesHtml,
+  assertGeneratesSameElanSource,
+  assertParsesAndCompilesAndTests,
+  getFile,
+} from "../testHelpers";
 import { ignore_test } from "./compiler-test-helpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
-    await testElanProgram(`./out/test/demo_programs/best-fit.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("best-fit");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test binary-search", async () => {
-    await testElanProgram(`./out/test/demo_programs/binary-search.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("binary-search");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test bubbles", async () => {
-    await testElanProgram(`./out/test/demo_programs/bubbles.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("bubbles");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test burrow", async () => {
-    await testElanProgram(`./out/test/demo_programs/burrow.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("burrow");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test collatz", async () => {
-    await testElanProgram(`./out/test/demo_programs/collatz.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("collatz");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test fern", async () => {
-    await testElanProgram(`./out/test/demo_programs/fern.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("fern");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   /*   test("test fern-params", async () => {
     await testElanProgram(`./out/test/demo_programs/fern-params.elan`);
   }); Not high enough value to warrant the long time that this test takes*/
+
   test("test in-place-ripple-sort", async () => {
-    await testElanProgram(`./out/test/demo_programs/in-place-ripple-sort.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("in-place-ripple-sort");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test julia-set", async () => {
-    await testElanProgram(`./out/test/demo_programs/julia-set.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("julia-set");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test kaleidoscope", async () => {
-    await testElanProgram(`./out/test/demo_programs/kaleidoscope.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("kaleidoscope");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test life", async () => {
-    await testElanProgram(`./out/test/demo_programs/life.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("life");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test life_FP", async () => {
-    await testElanProgram(`./out/test/demo_programs/life_FP.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("life_FP");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test maze-generator", async () => {
-    await testElanProgram(`./out/test/demo_programs/maze-generator.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("maze-generator");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test password-generator", async () => {
-    await testElanProgram(`./out/test/demo_programs/password-generator.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("password-generator");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test pathfinder", async () => {
-    await testElanProgram(`./out/test/demo_programs/pathfinder.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("pathfinder");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test roman-numerals-turing-machine.elan", async () => {
-    await testElanProgram(`./out/test/demo_programs/roman-numerals-turing-machine.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("roman-numerals-turing-machine");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test snake_FP", async () => {
-    await testElanProgram(`./out/test/demo_programs/snake_FP.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("snake_FP");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test snake_OOP", async () => {
-    await testElanProgram(`./out/test/demo_programs/snake_OOP.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("snake_OOP");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test snake_PP", async () => {
-    await testElanProgram(`./out/test/demo_programs/snake_PP.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("snake_PP");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test turtle-snowflake", async () => {
-    await testElanProgram(`./out/test/demo_programs/turtle-snowflake.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("turtle-snowflake");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test turtle-spiral", async () => {
-    await testElanProgram(`./out/test/demo_programs/turtle-spiral.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("turtle-spiral");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
-    await testElanProgram(`./out/test/demo_programs/wordle-solver.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("wordle-solver");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   ignore_test("test wordle-demo", async () => {
-    await testElanProgram(`./out/test/demo_programs/wordle-demo.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("wordle-demo");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test hodgepodge", async () => {
-    await testElanProgram(`./out/test/demo_programs/hodgepodge.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("hodgepodge");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test turtle_dragon", async () => {
-    await testElanProgram(`./out/test/demo_programs/turtle_dragon.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("turtle_dragon");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
+
   test("test date-time", async () => {
-    await testElanProgram(`./out/test/demo_programs/date-time.elan`);
+    const [fl, source, sourceFile, testPath] = await getFile("date-time");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
   });
-  test("test ferne", async () => {
-    await testElanProgram(`./out/test/demo_programs/fern.elan`);
-  });
+
   //Worksheet loaded code
   // test("test blackjack 1", async () => {
   //   await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan`);

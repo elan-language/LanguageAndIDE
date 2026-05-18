@@ -20,6 +20,18 @@ static void fillRandom(List<List<int>> grid) { // procedure
   }
 }
 
+static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
+  var nextGen = createBlockGraphics(white);
+  var grid = gridRef.value();
+  foreach (x in range(0, 40)) {
+    foreach (y in range(0, 30)) {
+      var colour = nextCellValue(grid, x, y);
+      nextGen[x][y] = colour; // re-assign variable
+    }
+  }
+  gridRef.set(nextGen); // call procedure
+}
+
 static int blackOrWhite(double random) { // function
   var result = black;
   if (random > 0.5) {
@@ -106,18 +118,6 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
     colour = black; // re-assign variable
   }
   return colour;
-}
-
-static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
-  var nextGen = createBlockGraphics(white);
-  var grid = gridRef.value();
-  foreach (x in range(0, 40)) {
-    foreach (y in range(0, 30)) {
-      var colour = nextCellValue(grid, x, y);
-      nextGen[x][y] = colour; // re-assign variable
-    }
-  }
-  gridRef.set(nextGen); // call procedure
 }
 
 [TestMethod] static void test_north() {

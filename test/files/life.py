@@ -15,6 +15,15 @@ def fillRandom(grid: list[list[int]]) -> None: # procedure
     for row in range(0, 30):
       grid[col][row] = blackOrWhite(random()) # re-assign variable
 
+def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
+  nextGen = createBlockGraphics(white) # variable definition
+  grid = gridRef.value() # variable definition
+  for x in range(0, 40):
+    for y in range(0, 30):
+      colour = nextCellValue(grid, x, y) # variable definition
+      nextGen[x][y] = colour # re-assign variable
+  gridRef.set(nextGen) # call procedure
+
 def blackOrWhite(random: float) -> int: # function
   result = black # variable definition
   if random > 0.5:
@@ -84,15 +93,6 @@ def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   if live:
     colour = black # re-assign variable
   return colour
-
-def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
-  nextGen = createBlockGraphics(white) # variable definition
-  grid = gridRef.value() # variable definition
-  for x in range(0, 40):
-    for y in range(0, 30):
-      colour = nextCellValue(grid, x, y) # variable definition
-      nextGen[x][y] = colour # re-assign variable
-  gridRef.set(nextGen) # call procedure
 
 def test_north(self) -> None:
   self.assertEqual(north((3, 4)), (3, 3))

@@ -1,0 +1,125 @@
+// C# with Elan 2.0.0-alpha4
+
+// Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
+
+// A Cellular Automaton Model of Excitable Media
+
+//  
+
+// gW, gH : grid width, height
+
+const Int gW = 40
+
+const Int gH = 30
+
+// iR : infection rate (1..20)
+
+const Int iR = 1
+
+// w1, w2 : weighting factors (low integers)
+
+const Int w1 = 4
+
+const Int w2 = 1
+
+// colours : cellColour.s in descending order of RGB value
+
+// state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
+
+// colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
+
+const Int healthy = white
+
+const Int ill = black
+
+static List<int> getColours() { // function
+  return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill];
+}
+
+// vN : neighbourhood: von Neumann (4) true, Moore (8) false
+
+const Boolean vN = false
+
+static void main() {
+  // colour grids: hodge for display, podge for working
+  var podge = createBlockGraphics(healthy);
+  var hodge = new AsRef<List<List<int>>>(createBlockGraphics(healthy));
+  var blank = createBlockGraphics(healthy);
+  // initial colours of grid
+  updateGrid(hodge, podge, true); // call procedure
+  while (!uniform(hodge.value())) {
+    // successive updates to grid in blank podge
+    podge = blank; // re-assign variable
+    updateGrid(hodge, podge, false); // call procedure
+  }
+}
+
+static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool initial) { // procedure
+  var colours = getColours();
+  foreach (j in range(0, gH)) {
+    foreach (i in range(0, gW)) {
+      if (initial) {
+        podge[i][j] = colours[randint(0, (colours.length()) - 1)]; // re-assign variable
+        podge[1][1] = 0x1a001a; // re-assign variable
+      } else {
+        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]); // re-assign variable
+      }
+    }
+  }
+  var a = 0;
+  hodge.set(podge); // call procedure
+  displayBlocks(hodge.value()); // call procedure
+  sleep_ms(50); // call procedure
+}
+
+static bool uniform(List<List<int>> grid) { // function
+  var uniformGrid = createBlockGraphics(grid[0][0]);
+  return if(grid.equals(uniformGrid), true, false);
+}
+
+static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // function
+  // grid wraps around: all cells have the same number of neighbours
+  // H and V neighbours(von Neumann)
+  var sL = grid[(i - 1 + gW) % gW][j];
+  var sR = grid[(i + 1 + gW) % gW][j];
+  var sA = grid[i][(j - 1 + gH) % gH];
+  var sB = grid[i][(j + 1 + gH) % gH];
+  var neighbourColours = [sL, sR, sA, sB];
+  if (vN == false) {
+    // add diagonal neighbours (Moore)
+    var sLA = grid[(i - 1 + gW) % gW][(j - 1 + gH) % gH];
+    var sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH];
+    var sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH];
+    var sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH];
+    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB]; // re-assign variable
+  }
+  return neighbourColours;
+}
+
+static int newColour(List<int> neighbourColours, int nowColour) { // function
+  var colours = getColours();
+  var nInfected = 0;
+  var nIll = 0;
+  var sumStates = colours.indexOf(nowColour);
+  foreach (colour in neighbourColours) {
+    sumStates = sumStates + colours.indexOf(colour); // re-assign variable
+    if (colour < healthy) {
+      nInfected = nInfected + 1; // re-assign variable
+      if (colour == ill) {
+        nIll = nIll + 1; // re-assign variable
+      }
+    }
+  }
+  return updateColour(nowColour, sumStates, nInfected, nIll);
+}
+
+static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) { // function
+  var colours = getColours();
+  var state = 0;
+  if (nowColour == healthy) {
+    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2); // re-assign variable
+  } else if (nowColour != ill) {
+    state = divAsInt(sumStates, (nInfected + 1)) + iR; // re-assign variable
+  }
+  return if(state > (colours.length() - 1), ill, colours[state]);
+}
