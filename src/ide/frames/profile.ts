@@ -19,5 +19,4 @@ export class Profile {
   isAll() {
     return this.name === "all" || this.name === "";
   }
- 
 }

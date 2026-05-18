@@ -311,7 +311,7 @@ function getDebugSymbolList(
     getDebugSymbolHtml(`${i}`, "Int", item, typeMap["OfTypes"], true),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
-} 
+}
 
 function getDebugSymbolTuple(
   name: string | string[],
@@ -358,7 +358,6 @@ function getDebugSymbolDictionary(
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
-
 
 function safeIndex(key: string, toIndex: { [index: string]: any }) {
   if (Object.keys(toIndex).includes(key)) {

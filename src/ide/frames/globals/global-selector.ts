@@ -71,8 +71,12 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       result = !this.file.containsMain();
     }
     // Then apply profile rules
-    if ((this.profile.isProcedural())) {
-      result = keyword !== classKeyword && keyword !== abstractKeyword && keyword !== interfaceKeyword && keyword !== enumKeyword;
+    if (this.profile.isProcedural()) {
+      result =
+        keyword !== classKeyword &&
+        keyword !== abstractKeyword &&
+        keyword !== interfaceKeyword &&
+        keyword !== enumKeyword;
     }
     return result;
   }
