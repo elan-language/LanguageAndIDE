@@ -298,7 +298,7 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
-/* function getDebugSymbolList(
+function getDebugSymbolList(
   name: string | string[],
   nameType: string,
   value: [],
@@ -311,7 +311,7 @@ function getDebugHtml(content1: string, content2: string) {
     getDebugSymbolHtml(`${i}`, "Int", item, typeMap["OfTypes"], true),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
-} */
+} 
 
 function getDebugSymbolTuple(
   name: string | string[],
@@ -337,7 +337,7 @@ function getDebugSymbolTuple(
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
-
+*/
 
 function getDebugSymbolDictionary(
   name: string | string[],
@@ -358,7 +358,7 @@ function getDebugSymbolDictionary(
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
-*/
+
 
 function safeIndex(key: string, toIndex: { [index: string]: any }) {
   if (Object.keys(toIndex).includes(key)) {
@@ -514,7 +514,9 @@ function getDebugSymbolHtml(
       return getDebugSymbolString(name, nameType, value, asIndex);
     case "List":
     case "ListImmutable":
+      return getDebugSymbolList(name, nameType, value, typeMap, asIndex);
     case "Dictionary":
+      return getDebugSymbolDictionary(name, nameType, value, typeMap, asIndex);
     case "tuple":
       return getDebugSymbolTuple(name, nameType, value, typeMap, asIndex);
     case "Deconstructed":

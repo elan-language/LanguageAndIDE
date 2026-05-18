@@ -144,8 +144,8 @@ static List<String> evaluateYellows(String attempt, String target) { // function
 }
 
 static String markAttempt(String attempt, String target) { // function
-  var greens = evaluateGreens(attempt, target);
-  var markedAttempt = evaluateYellows(greens[0], greens[1]);
+  var greens = evaluateGreens(attempt, target); // let
+  var markedAttempt = evaluateYellows(greens[0], greens[1]); // let
   return markedAttempt[0];
 }
 
@@ -165,30 +165,30 @@ static List<String> possibleAnswersAfterAttempt(List<String> prior, String attem
 }
 
 @Test static void test_possibleAnswersAfterAttempt() {
-  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
+  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]; // let
   assertEquals(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "*____"))
   assertEquals(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "+____"))
   assertEquals(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"))
 }
 
 static int maxWordCountRemainingAfterAttempt(List<String> possAnswers, String attempt) { // function
-  var d = new Dictionary<String, int>();
-  var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt));
-  var keys = d2.keys();
+  var d = new Dictionary<String, int>(); // let
+  var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt)); // let
+  var keys = d2.keys(); // let
   return keys.reduce(0, (int maxSoFar, String mark) -> if(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 }
 
 static Dictionary<String, int> incrementCount(Dictionary<String, int> dd, String possAnswer, String attempt) { // function
-  var mark = markAttempt(attempt, possAnswer);
-  var keys = dd.keys();
-  var count = if(keys.contains(mark), dd[mark], 0);
-  var dd2 = dd.withSet(mark, count + 1);
+  var mark = markAttempt(attempt, possAnswer); // let
+  var keys = dd.keys(); // let
+  var count = if(keys.contains(mark), dd[mark], 0); // let
+  var dd2 = dd.withSet(mark, count + 1); // let
   return dd2;
 }
 
 @Test static void test_maxWordCountRemainingAfterAttempt() {
-  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"];
-  var d = new Dictionary<String, int>();
+  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]; // let
+  var d = new Dictionary<String, int>(); // let
   assertEquals(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"))
   assertEquals(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"))
   assertEquals(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"))
@@ -199,48 +199,48 @@ static List<WordCount> allRemainingWordCounts(List<String> possAnswers) { // fun
 }
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<String> possAnswers) { // function
-  var isBetter = wc2.count < wc1.count;
-  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word);
+  var isBetter = wc2.count < wc1.count; // let
+  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
   return if(isBetter || isEqualAndPossAnswer, wc2, wc1);
 }
 
 @Test static void test_betterOf() {
-  var possAnswers = new List<String>();
-  var b2 = new WordCount("B", 2);
-  var a3 = new WordCount("A", 3);
-  var a2 = new WordCount("A", 2);
+  var possAnswers = new List<String>(); // let
+  var b2 = new WordCount("B", 2); // let
+  var a3 = new WordCount("A", 3); // let
+  var a2 = new WordCount("A", 2); // let
   assertEquals(b2, betterOf(a3, b2, possAnswers))
   assertEquals(b2, betterOf(b2, a3, possAnswers))
   assertEquals(b2, betterOf(b2, a2, possAnswers))
   assertEquals(a2, betterOf(a2, b2, possAnswers))
-  var possAnswers2 = ["B"];
+  var possAnswers2 = ["B"]; // let
   assertEquals(b2, betterOf(a2, b2, possAnswers2))
-  var possAnswers3 = ["B", "A"];
+  var possAnswers3 = ["B", "A"]; // let
   assertEquals(b2, betterOf(a2, b2, possAnswers3))
   assertEquals(a2, betterOf(b2, a2, possAnswers3))
 }
 
 static String bestAttempt(List<String> possAnswers) { // function
-  var wordCounts = allRemainingWordCounts(possAnswers);
-  var best = wordCounts.reduce(wordCounts.head(), (WordCount bestSoFar, WordCount newWord) -> betterOf(bestSoFar, newWord, possAnswers));
+  var wordCounts = allRemainingWordCounts(possAnswers); // let
+  var best = wordCounts.reduce(wordCounts.head(), (WordCount bestSoFar, WordCount newWord) -> betterOf(bestSoFar, newWord, possAnswers)); // let
   return best.word;
 }
 
 @Test static void test_bestAttempt() {
-  var possAnswers = ["ABCDE", "ABBBB", "EDCBA"];
+  var possAnswers = ["ABCDE", "ABBBB", "EDCBA"]; // let
   assertEquals("EDCBA", bestAttempt(possAnswers))
-  var possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"];
+  var possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"]; // let
   assertEquals("BCDEA", bestAttempt(possAnswers2))
 }
 
 class WordCount {
 
-  public String word; // property
-  public int count; // property
   public WordCount(String word, int count) {
     this.word = word; // re-assign variable
     this.count = count; // re-assign variable
   }
+  public String word; // property
+  public int count; // property
   public String toString() { // function method
     return "";
   }
