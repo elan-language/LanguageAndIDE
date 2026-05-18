@@ -90,11 +90,7 @@ export class StatementSelector extends AbstractSelector {
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix() === tryKeyword;
     } else if (keyword === callKeyword || keyword === "print") {
-      result = !(
-        this.isWithinAFunction() ||
-        this.isWithinATest() ||
-        this.isWithinAConstructor()
-      );
+      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === letKeyword) {
       result = !userEntry && (this.isWithinAFunction() || this.isWithinATest());
     } else if (keyword === assertKeyword) {
@@ -102,7 +98,11 @@ export class StatementSelector extends AbstractSelector {
     }
     //Then apply context-specific rules
     if (this.isWithinATest()) {
-        result = keyword === assertKeyword || keyword === variableKeyword || keyword === letKeyword || keyword === commentMarker;
+      result =
+        keyword === assertKeyword ||
+        keyword === variableKeyword ||
+        keyword === letKeyword ||
+        keyword === commentMarker;
     }
     // Then apply profile rules
     if (this.profile.isFunctional()) {

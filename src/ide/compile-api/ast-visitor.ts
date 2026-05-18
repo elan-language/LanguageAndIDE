@@ -738,12 +738,9 @@ export function transform(
   }
 
   if (node instanceof Lambda) {
-    const parameters: ParamDefAsn[] = transformMany(
-        node.params as CSV,
-        fieldId,
-        scope,
-      ).items as Array<ParamDefAsn>;
-    
+    const parameters: ParamDefAsn[] = transformMany(node.params as CSV, fieldId, scope)
+      .items as Array<ParamDefAsn>;
+
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
     const body = transform(node.expr, fieldId, sig) as AstNode;
 
