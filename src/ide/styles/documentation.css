@@ -21,6 +21,10 @@ codeblock {
   white-space: pre-wrap;  
 }
 
+codeblock div {
+  white-space: normal;
+}
+
 p { margin-top:0; margin-bottom:0; line-height:inherit; }
 
 h1,h2,h3,h4
