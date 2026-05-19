@@ -7,6 +7,15 @@ code, codeblock { /* For convenience when authoring - before code is transformed
     color: rgba(5, 87, 165, 0.76);
 }
 
+code {
+  display: inline;
+  white-space: normal;
+}
+
+code span {
+  color: black;
+}
+
 codeblock {
   display: block;
   white-space: pre-wrap;  
