@@ -473,10 +473,10 @@ end test
 <codeblock>
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
 function setInStyle(s as String) returns String
-  return "<style>" + s + "<style>"
+  return "&lt;style&gt;" + s + "&lt;style&gt;"
 end function
 test test_setInStyle
-  assert setInStyle(sGW) is "<style>" + sGW + "</style>"
+  assert setInStyle(sGW) is "&lt;style&gt;" + sGW + "&lt;style&gt;"
   # assert fail message will be "s found at [146] {expected: /)"
 end test
 </codeblock>
@@ -724,21 +724,6 @@ constant warningMsg set to "Limit reached"
 whose return value is put into a variable.</p>
 <p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours in indexable variables:</p>
 
-<codeblock>
-main
-  variable rainbow set to getRainbow()
-  variable suitColours set to getSuitColours()
-end main
-
-function getRainbow() returns List&lt;of Int&gt;
-  return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
-end function
-
-function getSuitColours() returns Dictionary&lt;of String, Int&gt;
-  return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
-end function
-</codeblock>
-
 <div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
@@ -931,7 +916,7 @@ class Game
   property head as Square
   property body as List&lt;of Square&gt;
   constructor()
-  end constuctor
+  end constructor
   function toString() returns String
     return "undefined"
   end function
@@ -978,7 +963,7 @@ end class
 <hr>
 </div></div>
 
-<h2 id="unctionMethod"><b>function</b> method</h2>
+<h2 id="FunctionMethod"><b>function</b> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf08e;</i></a>. The differences are:</p>
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> on an instance.</li>
