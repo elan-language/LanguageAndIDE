@@ -397,7 +397,7 @@ end test
  </tr><tr id="split">
   <td><el-method>split</el-method></td>
   <td><code>String</code></td>
-  <td><codeblock>List<of String></codeblock></td>
+  <td><codeblock>List&lt;of String&gt;</codeblock></td>
   <td>a <code>List</code> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="subString">
@@ -568,7 +568,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>Method <a href="#createList"><el-method>createList</el-method></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
   <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
- <codeblock>variable aList set to new List<of String>()</codeblock><br>
+ <codeblock>variable aList set to new List&lt;of String&gt;()</codeblock><br>
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
@@ -616,7 +616,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><codeblock>variable array3D set to new List<of List<of List<of Float>>>()</codeblock></li>
+<li><codeblock>variable array3D set to new List&lt;of List<of List&lt;of Float&gt;&gt;>()</codeblock></li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
@@ -710,7 +710,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><code>List<of String></code></td>
+  <td><code>List&lt;of String&gt;</code></td>
   <td><code>String</code></td>
   <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
@@ -898,7 +898,7 @@ The Dictionary is a set of <i>key:value</i> pairs.</p>
 </ul>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the Type of its members must be specified in the form
- <code>HashSet<of String></code></p>
+ <code>HashSet&lt;of String&gt;</code></p>
 <p>You can add members: individually with <el-method>add</el-method>, or multiply with <el-method>addFromList</el-method>.
 And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
 <p>Example of creating a Set from a literal List and changing its content:</p>
@@ -907,7 +907,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr>
  <td>
   <codeblock>
-  variable st set to new HashSet<of Int>()
+  variable st set to new HashSet&lt;of Int&gt;()
   set st to st.addFromList([3, 5, 7])
   call print(st.length())
   </codeblock>
@@ -1037,7 +1037,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
  <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax.
- The Type is specified in the form shown below e.g. <code>Stack<of String></code>, <code>Queue<of Int></code>.</li>
+ The Type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
  <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
  <li>The same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> Type.</li>
@@ -1147,7 +1147,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr><td>
 <codeblock>
 main
-  variable sk set to new Stack<of String>()
+  variable sk set to new Stack&lt;of String&gt;()
   call print(sk.length())
   set sk to sk.push("apple")
   set sk to sk.push("banana")
@@ -1174,7 +1174,7 @@ end main
 <tr><td>
 <codeblock>
 main
-  variable qu set to new Queue<of String>()
+  variable qu set to new Queue&lt;of String&gt;()
   call print(qu.length())
   set qu to qu.enqueue("apple")
   set qu to qu.enqueue("banana")
@@ -1475,8 +1475,8 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
-<p>A set of SVG shapes is defined in either a <code>List<of VectorGraphic></code> or a <code>List</code> of any specific Type of <code>VectorGraphic</code>
- (e.g. <code>List<of CircleVG></code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
+<p>A set of SVG shapes is defined in either a <code>List&lt;of VectorGraphic&gt;</code> or a <code>List</code> of any specific Type of <code>VectorGraphic</code>
+ (e.g. <code>List&lt;of CircleVG&gt;</code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
@@ -1706,7 +1706,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle with a coloured circumference:</p>
 <codeblock>
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to new List&lt;of VectorGraphic&gt;()
   variable circ set to new CircleVG()
   call circ.setCentreX(20)
   call circ.setCentreY(20)
@@ -1724,7 +1724,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle that changes between red and green every second:</p>
 <codeblock>
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to new List&lt;of VectorGraphic&gt;()
   variable circ set to new CircleVG()
   call circ.setCentreX(50)
   call circ.setCentreY(37.5)
@@ -1869,7 +1869,7 @@ just as you would specify the Type of every parameter and the return Type for th
     then =&gt; (a 'fat arrow') and the return Type for that <b>function</b>. This <b>property</b> definition shows the syntax:</p>
 
 <codeblock>
-  property matchAt as Func<of String, String, Int => Boolean>
+  property matchAt as Func&lt;of String, String, Int =&gt; Boolean>
 </codeblock>
 
 <p>This example defines the Type for a <b>function</b> that defines three parameters of Type <code>String</code>, <code>String</code>, and <code>Int</code> respectively, and returns a <code>Boolean</code> value. This Type would match that of a <b>function</b> definition like this:</p>
@@ -2958,7 +2958,7 @@ class Pupil
 end class
 
 main
-  variable allPupils set to new List<of Pupil>()
+  variable allPupils set to new List&lt;of Pupil&gt;()
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 
@@ -3159,9 +3159,9 @@ end main
 <codeblock>
 main
   variable n set to [2, 3, 5, 7, 11, 13]
-  variable nR set to new List<of Int>()
-  variable eL set to new List<of Int>()
-  call print(n.reduce(eL, lambda nR as List<of Int>, m as Int => nR.withPrepend(m)))
+  variable nR set to new List&lt;of Int&gt;()
+  variable eL set to new List&lt;of Int&gt;()
+  call print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 &nbsp;&nbsp;&#x27f6; [13, 11, 7, 5, 3, 2]
@@ -3172,8 +3172,8 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
 main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
-  variable eL set to new List<of String>()
-  set sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
+  variable eL set to new List&lt;of String&gt;()
+  set sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   call print(sR)
 end main
 </codeblock>
