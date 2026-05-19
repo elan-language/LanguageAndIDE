@@ -74,6 +74,7 @@ export class ConcreteClassAsn extends ClassAsn {
       interfaces.concat(abstractClasses).map((tn) => tn.symbolType()) as ClassType[],
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
 
     const children = this.getChildren();

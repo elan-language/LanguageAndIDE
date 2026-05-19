@@ -86,18 +86,31 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         this.genericParameters[0].symbolType(),
         this.compileErrors,
         this.fieldId,
+        this.scope,
       );
     }
 
     if (rootSt.typeOptions.isImmutable) {
       for (const gp of this.genericParameters) {
-        mustBeImmutableGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+        mustBeImmutableGenericType(
+          rootSt,
+          gp.symbolType(),
+          this.compileErrors,
+          this.fieldId,
+          this.scope,
+        );
       }
     }
 
     if (rootSt instanceof ClassType && rootSt.className === "Maybe") {
       for (const gp of this.genericParameters) {
-        mustBeReferenceGenericType(rootSt, gp.symbolType(), this.compileErrors, this.fieldId);
+        mustBeReferenceGenericType(
+          rootSt,
+          gp.symbolType(),
+          this.compileErrors,
+          this.fieldId,
+          this.scope,
+        );
       }
     }
   }

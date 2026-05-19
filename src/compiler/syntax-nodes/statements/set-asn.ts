@@ -38,7 +38,13 @@ export class SetAsn extends BreakpointAsn {
 
     mustNotBePropertyOnFunctionMethod(assignableAstNode, this, this.compileErrors, this.fieldId);
 
-    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.fieldId);
+    mustBeCompatibleNode(
+      assignableAstNode,
+      exprAstNode,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
     mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);

@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../compiler-interfaces/type-options";
 
@@ -6,6 +7,10 @@ export class GenericParameterType implements SymbolType {
     public id: string,
     public constraint?: SymbolType,
   ) {}
+
+  languageSpecificName(_language: Language): string {
+    return this.name;
+  }
 
   typeOptions = noTypeOptions;
 

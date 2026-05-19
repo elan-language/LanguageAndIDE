@@ -47,7 +47,7 @@ export class FunctionMethodAsn extends FunctionAsn {
     const returnStatement = this.getReturnAsn().expr;
     const rst = returnStatement.symbolType();
 
-    mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId);
+    mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId, this.scope);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

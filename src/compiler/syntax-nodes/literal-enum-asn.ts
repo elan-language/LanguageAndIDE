@@ -29,6 +29,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
       UnknownType.Instance,
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
 
     if (isScope(symbol)) {
@@ -40,6 +41,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
         UnknownType.Instance,
         this.compileErrors,
         this.fieldId,
+        this.scope,
       );
     }
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

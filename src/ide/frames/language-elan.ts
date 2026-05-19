@@ -264,6 +264,7 @@ export class LanguageElan extends LanguageAbstract {
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = `<${this.OF} `;
+  END_OF_GENERIC: string = `>`;
   THIS_INSTANCE: string = this.THIS;
   OVERRIDES = "";
   IMPLEMENTS = "";
