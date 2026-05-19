@@ -84,6 +84,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.precedingNode.symbolType(),
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
 
     if (isMemberOnFieldsClass(funcSymbol, this.scope)) {
@@ -109,6 +110,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         this.updatedScope,
         this.compileErrors,
         this.fieldId,
+        this.scope,
       );
 
       mustCallMemberViaQualifier(

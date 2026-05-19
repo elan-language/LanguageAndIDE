@@ -100,26 +100,30 @@ import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 
-export function mustBeOfSymbolType(
+function mustBeOfSymbolType(
   exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  language: Language,
 ) {
   if (isKnownType(exprType) && exprType.name !== ofType.name) {
-    compileErrors.push(new TypeCompileError(ofType.name, location));
+    compileErrors.push(new TypeCompileError(ofType.languageSpecificName(language), location));
   }
 }
 
-export function mustBeMemberOfSymbolType(
+function mustBeMemberOfSymbolType(
   name: string,
   exprType: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  language: Language,
 ) {
   if (isKnownType(exprType) && exprType.name !== ofType.name) {
-    compileErrors.push(new MemberTypeCompileError(name, ofType.name, location));
+    compileErrors.push(
+      new MemberTypeCompileError(name, ofType.languageSpecificName(language), location),
+    );
   }
 }
 
@@ -128,21 +132,25 @@ export function mustBeOfType(
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
-  mustBeOfSymbolType(expr.symbolType(), ofType, compileErrors, location);
+  const language = getGlobalScope(scope).language;
+  mustBeOfSymbolType(expr.symbolType(), ofType, compileErrors, location, language);
 }
 
 export function mustBeBooleanCondition(
   expr: AstNode,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   const st = expr.symbolType();
 
   if (isKnownType(st) && st !== BooleanType.Instance) {
+    const language = getGlobalScope(scope).language;
     compileErrors.push(
       new SyntaxCompileError(
-        "Condition of 'if' expression does not evaluate to a Boolean.",
+        `Condition of 'if' expression does not evaluate to a ${language.BOOL_NAME}.`,
         location,
       ),
     );
@@ -169,13 +177,15 @@ export function mustBeKnownSymbol(
   onType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  forGlobal: Scope,
 ) {
   if (symbol instanceof UnknownSymbol && onType instanceof UnknownType) {
     const type = isClass(scope) ? scope.symbolId : "";
     const id = onSymbol || symbol.symbolId;
     compileErrors.push(new UndefinedSymbolCompileError(id, type, location));
   } else if (symbol instanceof UnknownSymbol) {
-    const type = isClass(scope) ? scope.symbolId : onType.name;
+    const language = getGlobalScope(forGlobal).language;
+    const type = isClass(scope) ? scope.symbolId : onType.languageSpecificName(language);
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, type, location));
   }
 }
@@ -319,11 +329,15 @@ export function mustBeIndexableType(
   read: boolean,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
   } else if (!(read && isIndexableType(symbolType))) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, false));
+    const language = getGlobalScope(scope).language;
+    compileErrors.push(
+      new NotIndexableCompileError(symbolType.languageSpecificName(language), location, false),
+    );
   }
 }
 
@@ -333,11 +347,15 @@ export function mustBeDoubleIndexableType(
   read: boolean,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(symbolId, "", location));
   } else if (!(read && isDoubleIndexableType(symbolType))) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.name, location, true));
+    const language = getGlobalScope(scope).language;
+    compileErrors.push(
+      new NotIndexableCompileError(symbolType.languageSpecificName(language), location, true),
+    );
   }
 }
 
@@ -346,9 +364,13 @@ export function mustBeRangeableType(
   read: boolean,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (isKnownType(symbolType) && !(read && isIterableType(symbolType))) {
-    compileErrors.push(new NotRangeableCompileError(symbolType.name, location));
+    const language = getGlobalScope(scope).language;
+    compileErrors.push(
+      new NotRangeableCompileError(symbolType.languageSpecificName(language), location),
+    );
   }
 }
 
@@ -440,6 +462,7 @@ export function mustImplementSuperClasses(
   superClassTypes: ClassType[],
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   for (const superClassType of superClassTypes) {
     const superSymbols = superClassType.childSymbols();
@@ -461,12 +484,14 @@ export function mustImplementSuperClasses(
           ),
         );
       } else {
+        const language = getGlobalScope(scope).language;
         mustBeMemberOfSymbolType(
           superSymbol.symbolId,
           subSymbol.symbolType(),
           superSymbol.symbolType(),
           compileErrors,
           location,
+          language,
         );
       }
     }
@@ -477,9 +502,13 @@ export function mustBeConcreteClass(
   classType: ClassType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
+  const language = getGlobalScope(scope).language;
   if (classType.subType !== ClassSubType.concrete) {
-    compileErrors.push(new MustBeConcreteCompileError(classType.name, location));
+    compileErrors.push(
+      new MustBeConcreteCompileError(classType.languageSpecificName(language), location),
+    );
   }
 }
 
@@ -541,13 +570,20 @@ export function mustNotCallNonExtensionViaQualifier(
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
+  forGlobal: Scope,
 ) {
   // method is not extension with a qualifier that is not a fixed id
   if (ft.isExtension || isClass(scope) || qualifierIsFixedIdOrEmpty(qualifier)) {
     return;
   }
-
-  compileErrors.push(new UndefinedSymbolCompileError(name, qualifier.symbolType().name, location));
+  const language = getGlobalScope(forGlobal).language;
+  compileErrors.push(
+    new UndefinedSymbolCompileError(
+      name,
+      qualifier.symbolType().languageSpecificName(language),
+      location,
+    ),
+  );
 }
 
 export function mustbeValidQualifier(
@@ -605,7 +641,8 @@ export function mustMatchParameters(
   if (extensionParm && extensionOfType) {
     const parmType = extensionParm.symbolType();
     if (!extensionOfType.isAssignableFrom(parmType)) {
-      mustBeKnownExtension(id, parmType.name, compileErrors, location);
+      const language = getGlobalScope(scope).language;
+      mustBeKnownExtension(id, parmType.languageSpecificName(language), compileErrors, location);
       return;
     }
   }
@@ -623,7 +660,8 @@ export function mustMatchParameters(
   }
 
   if (tempErrors.length > 0) {
-    const provided = parmTypes.map((pt) => pt.name).join(", ");
+    const language = getGlobalScope(scope).language;
+    const provided = parmTypes.map((pt) => pt.languageSpecificName(language)).join(", ");
     compileErrors.push(new ParameterTypesCompileError(description, provided, location));
   }
 }
@@ -664,15 +702,34 @@ function FailNoCommonType(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  language: Language,
 ) {
   if (isKnownType(lhs) && isKnownType(rhs)) {
-    compileErrors.push(new TernaryCompileError(rhs.name, lhs.name, location));
+    compileErrors.push(
+      new TernaryCompileError(
+        rhs.languageSpecificName(language),
+        lhs.languageSpecificName(language),
+        location,
+      ),
+    );
   }
 }
 
-function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
+function FailNotNumber(
+  lhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+  language: Language,
+) {
   if (isKnownType(lhs)) {
-    compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location));
+    compileErrors.push(
+      new TypesCompileError(
+        lhs.languageSpecificName(language),
+        `${language.FLOAT_NAME} or ${language.INT_NAME}`,
+        "",
+        location,
+      ),
+    );
   }
 }
 
@@ -737,9 +794,15 @@ export function mustBeKnownOperation(op: string, compileErrors: CompileError[], 
   );
 }
 
-export function mustBeNumberType(st: SymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeNumberType(
+  st: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+  scope: Scope,
+) {
   if (!isNumber(st)) {
-    FailNotNumber(st, compileErrors, location);
+    const language = getGlobalScope(scope).language;
+    FailNotNumber(st, compileErrors, location, language);
   }
 }
 
@@ -748,10 +811,11 @@ export function mustBeNumberTypes(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
-  mustBeNumberType(lhs, compileErrors, location);
+  mustBeNumberType(lhs, compileErrors, location, scope);
 
-  mustBeNumberType(rhs, compileErrors, location);
+  mustBeNumberType(rhs, compileErrors, location, scope);
 }
 
 export function mustBeBooleanType(
@@ -819,10 +883,15 @@ export function mustBeImmutableGenericType(
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (!ofType.typeOptions.isImmutable) {
+    const language = getGlobalScope(scope).language;
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'.`, location),
+      new SyntaxCompileError(
+        `${type} cannot be of mutable type '${ofType.languageSpecificName(language)}'.`,
+        location,
+      ),
     );
   }
 }
@@ -832,10 +901,15 @@ export function mustBeReferenceGenericType(
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (isValueType(ofType)) {
+    const language = getGlobalScope(scope).language;
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot be of value type '${ofType.name}'.`, location),
+      new SyntaxCompileError(
+        `${type} cannot be of value type '${ofType.languageSpecificName(language)}'.`,
+        location,
+      ),
     );
   }
 }
@@ -845,14 +919,19 @@ export function mustBeValidKeyType(
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (
     !ofType.typeOptions.isImmutable ||
     (ofType instanceof ClassType &&
       (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
   ) {
+    const language = getGlobalScope(scope).language;
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'.`, location),
+      new SyntaxCompileError(
+        `${type} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
+        location,
+      ),
     );
   }
 }
@@ -862,6 +941,7 @@ export function mustBeCompatibleType(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (
     lhs.name === rhs.name ||
@@ -878,8 +958,8 @@ export function mustBeCompatibleType(
   ) {
     return;
   }
-
-  FailNoCommonType(lhs, rhs, compileErrors, location);
+  const language = getGlobalScope(scope).language;
+  FailNoCommonType(lhs, rhs, compileErrors, location, language);
 }
 
 export function mustBeAssignableType(

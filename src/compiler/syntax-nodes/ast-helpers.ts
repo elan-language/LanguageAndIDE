@@ -412,11 +412,11 @@ export function compileSimpleSubscript(
 
   const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
   if (index.index instanceof IndexDoubleAsn) {
-    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
+    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId, scope);
     mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId, scope);
     mustBeAssignableType(indexType, index.index.index2.symbolType(), compileErrors, fieldId, scope);
   } else {
-    mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+    mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
     mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
   }
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);

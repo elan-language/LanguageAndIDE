@@ -147,7 +147,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isCompareOp(opSymbol) || this.isArithmeticOp(opSymbol)) {
-      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId);
+      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId, this.scope);
     }
 
     if (this.isIntegerOnlyOp(opSymbol)) {

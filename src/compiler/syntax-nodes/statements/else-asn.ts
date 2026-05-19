@@ -19,7 +19,13 @@ export class ElseAsn extends BreakpointAsn {
 
   private compileIfClause(): string {
     if (this.hasIf) {
-      mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
+      mustBeOfType(
+        this.condition,
+        BooleanType.Instance,
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
       return `if (${this.condition.compile()}) {`;
     }
     return `{`;

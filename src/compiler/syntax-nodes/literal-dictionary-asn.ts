@@ -49,7 +49,7 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     }
 
     const st = this.symbolType();
-    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId);
+    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId, this.scope);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
 

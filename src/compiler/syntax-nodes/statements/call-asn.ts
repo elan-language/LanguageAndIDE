@@ -71,6 +71,7 @@ export class CallAsn extends BreakpointAsn {
       qualifier.symbolType(),
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
     mustBeProcedure(
       procSymbol.symbolId,
@@ -103,6 +104,7 @@ export class CallAsn extends BreakpointAsn {
           currentScope,
           this.compileErrors,
           this.fieldId,
+          this.scope,
         );
 
         mustCallMemberViaQualifier(

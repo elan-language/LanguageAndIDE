@@ -37,7 +37,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     let code: string;
 
     if (type instanceof ClassType) {
-      mustBeConcreteClass(type, this.compileErrors, this.fieldId);
+      mustBeConcreteClass(type, this.compileErrors, this.fieldId, this.scope);
 
       if (type.subType === ClassSubType.concrete) {
         libScope = type.scope.symbolScope === SymbolScope.stdlib;
