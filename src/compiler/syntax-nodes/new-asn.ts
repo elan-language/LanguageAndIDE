@@ -57,6 +57,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
           false,
           this.compileErrors,
           this.fieldId,
+          this.scope,
         );
       }
 

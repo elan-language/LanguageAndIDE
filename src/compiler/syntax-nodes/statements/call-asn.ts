@@ -124,6 +124,7 @@ export class CallAsn extends BreakpointAsn {
           callParameters,
           this.compileErrors,
           this.fieldId,
+          this.scope,
         );
 
         // do after parameters checked

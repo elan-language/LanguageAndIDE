@@ -62,6 +62,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       postfix,
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
   }
 

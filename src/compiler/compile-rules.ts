@@ -2,6 +2,7 @@ import { AstNode } from "../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
+import { Language } from "../ide/frames/frame-interfaces/language";
 import {
   CannotCallAFunction,
   CannotCallAsAMethod,
@@ -582,6 +583,7 @@ export function mustMatchParameters(
   isExtension: boolean,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   const extensionOfType = isExtension ? ofType[0] : undefined;
   const extensionParm = isExtension ? parms[0] : undefined;
@@ -616,7 +618,7 @@ export function mustMatchParameters(
     const p = parmTypes[i];
     const t = ofType[i];
     if (p && t) {
-      mustBeAssignableType(t, p, tempErrors, location);
+      mustBeAssignableType(t, p, tempErrors, location, scope);
     }
   }
 
@@ -642,10 +644,18 @@ function FailNotAssignable(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  language: Language,
 ) {
   if (isKnownType(lhs) && isKnownType(rhs)) {
     // special case
-    compileErrors.push(new TypesCompileError(rhs.name, lhs.name, "", location));
+    compileErrors.push(
+      new TypesCompileError(
+        rhs.languageSpecificName(language),
+        lhs.languageSpecificName(language),
+        "",
+        location,
+      ),
+    );
   }
 }
 
@@ -681,6 +691,7 @@ export function mustBeCoercibleType(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   // for compare allow int and floats
   if (isNumber(lhs) && isNumber(rhs)) {
@@ -697,7 +708,7 @@ export function mustBeCoercibleType(
     FailCannotCompareProcFunc(compileErrors, location);
   }
 
-  mustBeAssignableType(lhs, rhs, compileErrors, location);
+  mustBeAssignableType(lhs, rhs, compileErrors, location, scope);
 }
 
 export function mustBeValueType(
@@ -743,8 +754,13 @@ export function mustBeNumberTypes(
   mustBeNumberType(rhs, compileErrors, location);
 }
 
-export function mustBeBooleanType(st: SymbolType, compileErrors: CompileError[], location: string) {
-  mustBeAssignableType(BooleanType.Instance, st, compileErrors, location);
+export function mustBeBooleanType(
+  st: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+  scope: Scope,
+) {
+  mustBeAssignableType(BooleanType.Instance, st, compileErrors, location, scope);
 }
 
 export function mustBeBooleanTypes(
@@ -752,9 +768,10 @@ export function mustBeBooleanTypes(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
-  mustBeBooleanType(lhs, compileErrors, location);
-  mustBeBooleanType(rhs, compileErrors, location);
+  mustBeBooleanType(lhs, compileErrors, location, scope);
+  mustBeBooleanType(rhs, compileErrors, location, scope);
 }
 
 export function mustBeIntegerType(
@@ -762,9 +779,10 @@ export function mustBeIntegerType(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
-  mustBeAssignableType(IntType.Instance, lhs, compileErrors, location);
-  mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
+  mustBeAssignableType(IntType.Instance, lhs, compileErrors, location, scope);
+  mustBeAssignableType(IntType.Instance, rhs, compileErrors, location, scope);
 }
 
 export function mustNotBeIntegerTypesToDivide(
@@ -869,9 +887,11 @@ export function mustBeAssignableType(
   rhs: SymbolType,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   if (!lhs.isAssignableFrom(rhs)) {
-    FailNotAssignable(lhs, rhs, compileErrors, location);
+    const language = getGlobalScope(scope).language;
+    FailNotAssignable(lhs, rhs, compileErrors, location, language);
   }
 }
 
@@ -941,11 +961,12 @@ export function mustBeCompatibleNode(
   rhs: AstNode,
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  mustBeAssignableType(lst, rst, compileErrors, location);
+  mustBeAssignableType(lst, rst, compileErrors, location, scope);
 }
 
 export function getId(astNode: AstNode) {

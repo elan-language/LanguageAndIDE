@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AstNode } from "./ast-node";
@@ -25,4 +26,5 @@ export interface RootAstNode extends AstNode, Scope {
   updateBreakpoints(event: BreakpointEvent): void;
   getScopeById(id: string): Scope;
   setScopeById(id: string, scope: Scope): void;
+  language: Language;
 }

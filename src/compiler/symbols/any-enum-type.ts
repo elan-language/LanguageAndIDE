@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { AnyEnumName } from "./elan-type-names";
@@ -5,6 +6,10 @@ import { EnumType } from "./enum-type";
 
 export class AnyEnumType implements SymbolType {
   private constructor() {}
+
+  languageSpecificName(_language: Language): string {
+    return this.name;
+  }
 
   initialValue = "";
 

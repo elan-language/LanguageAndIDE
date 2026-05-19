@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { Class } from "../compiler-interfaces/class";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
@@ -26,6 +27,21 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     public inheritsFrom: SymbolType[],
     public scope: Class | NullScope,
   ) {}
+
+  languageSpecificName(language: Language): string {
+
+    // kludge for lists
+    const className = this.className.trim().toUpperCase() === language.LIST_NAME.toUpperCase() ? language.LIST_NAME : this.className.trim();
+
+    if (this.ofTypes.length === 1) {
+      return `${className}${language.START_OF_GENERIC}${this.ofTypes[0].languageSpecificName(language)}${language.END_OF_GENERIC}`;
+    }
+    if (this.ofTypes.length === 2) {
+      return `${className}${language.START_OF_GENERIC}${this.ofTypes[0].languageSpecificName(language)}, ${this.ofTypes[1].languageSpecificName(language)}${language.END_OF_GENERIC}`;
+    }
+
+    return className;
+  }
 
   get ofTypes() {
     return isClass(this.scope) ? this.scope.ofTypes : [];
@@ -103,7 +119,7 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
   }
 
   get name() {
-    if (this.ofTypes.length === 1) {
+     if (this.ofTypes.length === 1) {
       return `${this.className.trim()}<of ${this.ofTypes[0].name}>`;
     }
     if (this.ofTypes.length === 2) {

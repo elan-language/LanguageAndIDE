@@ -64,7 +64,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     // not
-    mustBeBooleanType(opSt, this.compileErrors, this.fieldId);
+    mustBeBooleanType(opSt, this.compileErrors, this.fieldId, this.scope);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return code;

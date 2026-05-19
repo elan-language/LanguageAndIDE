@@ -1,9 +1,14 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { StringName } from "./elan-type-names";
 
 export class StringType implements GenericSymbolType {
   private constructor() {}
+
+  languageSpecificName(language: Language): string {
+    return language.STRING_NAME;
+  }
 
   get ofTypes() {
     return [StringType.Instance];

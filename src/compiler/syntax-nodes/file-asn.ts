@@ -29,7 +29,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   constructor(
     private readonly scope: Scope,
     private readonly version: Semver,
-    private readonly language: Language,
+    public readonly language: Language,
   ) {
     super();
   }

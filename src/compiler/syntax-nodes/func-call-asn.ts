@@ -130,6 +130,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters,
         this.compileErrors,
         this.fieldId,
+        this.scope,
       );
 
       // do after parameters checked
