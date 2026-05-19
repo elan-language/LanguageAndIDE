@@ -183,8 +183,9 @@ body *, code, el-code, el-code-block, el-field {
   user-select: auto;
 }
 
-/* display of code translations */
-codeblock el-fr, codeblock el-const el-fr {
+/* display of formatted code */
+code el-fr, code el-const el-fr,code el-enum el-fr,
+codeblock el-fr, codeblock el-const el-fr, codeblock el-enum el-fr {
   display: none;
 }
 
