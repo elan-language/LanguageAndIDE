@@ -80,7 +80,7 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
   <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List<of List<of Int>></code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
@@ -117,7 +117,7 @@ are passed around in a running program:</p>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
  <li><i>or</i> specified in the definition of:
  <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List<of Int></code></li>
+  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
   <li>parameters of functions and procedures</li>
   <li><b>return</b> value of a function</li>
   <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>concrete class</b></li>
@@ -284,7 +284,7 @@ end main
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 <codeblock>
-procedure inPlaceRippleSort(li as List<of Int>)
+procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
@@ -320,11 +320,11 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <codeblock>
 main
   variable arg set to "abc"
-  variable argRef set to new AsRef<of String>(arg)
+  variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
   call print(argRef.value())
 end main
-procedure changeArg(pointer as AsRef<of String>)
+procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
@@ -353,7 +353,7 @@ This may be an expression that will be evaluated before returning.</p>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
 <codeblock>
-function binarySearch(li as List<of String>, item as String) returns Boolean
+function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -413,7 +413,7 @@ test test_binarySearch
   variable li3 set to ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  variable li4 set to new List<of String>()
+  variable li4 set to new List&lt;of String&gt;()
   assert binarySearch(li4, "pear") is false
 end test
 </codeblock>
@@ -541,7 +541,7 @@ main
   call print(x.names.toString())
 end main
 class Thing
-  property names as List<of String>
+  property names as List&lt;of String&gt;
   constructor()
     set this.names to createList(6, "X")
   end constructor
@@ -578,7 +578,7 @@ class Apple
       end if
     end while
   end procedure
-  procedure updateBlocks(blocks as List<of List<of Int>>)
+  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
     set blocks[this.location.x][this.location.y] to red
   end procedure
 end class
@@ -730,11 +730,11 @@ main
   variable suitColours set to getSuitColours()
 end main
 
-function getRainbow() returns List<of Int>
+function getRainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
 
-function getSuitColours() returns Dictionary<of String, Int>
+function getSuitColours() returns Dictionary&lt;of String, Int&gt;
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
@@ -929,7 +929,7 @@ class Game
   property height as Int
   property board as Board
   property head as Square
-  property body as List<of Square>
+  property body as List&lt;of Square&gt;
   constructor()
   end constuctor
   function toString() returns String
@@ -967,9 +967,9 @@ class Teacher
 end class
 class Pupil
   constructor()
-    set this.tutor to new Maybe<of Teacher>()
+    set this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
-  property tutor as Maybe<of Teacher>
+  property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
     return "undefined"
   end function
@@ -1422,7 +1422,7 @@ end main
  <td>
 <codeblock>
 main
-  variable li set to new List<of Int>()
+  variable li set to new List&lt;of Int&gt;()
   set li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
@@ -1604,7 +1604,7 @@ You would typically define a <b>lambda</b>:</p>
 
 Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
 <codeblock>
-function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
+function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
   variable neighbours set to neighbourCells(c)
   variable live set to neighbours.filter(lambda i as Int => cells[i])
   return live.length()
@@ -1659,7 +1659,7 @@ end procedure
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
 
 <codeblock>
-  variable headRef set to new AsRef<of List<of Int>>(head)
+  variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
 </codeblock>
 
 <h1 id="Comment">Comments</h1>
