@@ -183,9 +183,10 @@ with all the same property values except for specific changes that you want to m
  library methods:<br>
  <code>variable  bodyGL set to g.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <code>variable  point set to (3, 7)</code><br>
- <code>variable  x set to point.item_0</code>
-</codeblock></li>
+
+ <code>variable point set to (3, 7)</code><br>
+ <code>variable x set to point.item_0</code>
+ </li>
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
   <code>enum Suit spades, hearts, diamonds, clubs</code><br>
   <code>variable suit set to Suit.spades</code></li>
@@ -193,13 +194,13 @@ with all the same property values except for specific changes that you want to m
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
 
-<code>
+<codeblock>
 constant maxHits set to 20
 function hits() returns Int
   variable maxHits set to 99
   return global.maxHits
 end function
-</code>
+</codeblock>
 
 <p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
@@ -693,7 +694,7 @@ class Hand
     return "a Hand"
   end function
 end class
-<codeblock>
+</codeblock>
 <hr>
 </div></div>
 
@@ -709,7 +710,7 @@ end class
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
-<code>
+<codeblock>
 constant maxHits set to 10
 constant turquoise set to 0x00ced1
 constant liveCell set to black
@@ -717,12 +718,27 @@ constant speedOfLight set to 299792.458
 constant gameOver set to true
 constant euro set to 0x20ac
 constant warningMsg set to "Limit reached"
-</code>
+</codeblock>
 
 <h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a <b>function</b>
 whose return value is put into a variable.</p>
 <p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours in indexable variables:</p>
+
+<codeblock>
+main
+  variable rainbow set to getRainbow()
+  variable suitColours set to getSuitColours()
+end main
+
+function getRainbow() returns List&lt;of Int&gt;
+  return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
+end function
+
+function getSuitColours() returns Dictionary&lt;of String, Int&gt;
+  return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
+end function
+</codeblock>
 
 <div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>

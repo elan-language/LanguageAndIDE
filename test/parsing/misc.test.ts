@@ -64,17 +64,10 @@ suite("Misc Tests", () => {
   test("code parser", async () => {
     const code = `
 main
-  variable rainbow set to getRainbow()
-  variable suitColours set to getSuitColours()
+  variable li set to [3, 6, 1, 0, 99, 4, 67]
+  call inPlaceRippleSort(li)
+  call print(li)
 end main
-
-function getRainbow() returns List&lt;of Int&gt;
-  return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
-end function
-
-function getSuitColours() returns Dictionary&lt;of String, Int&gt;
-  return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
-end function
 `;
     const htmlElan = await processInnerCode(code, LanguageElan.Instance);
     assert.equal(htmlElan.startsWith("<el-main"), true);
