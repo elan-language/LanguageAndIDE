@@ -26,6 +26,7 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
@@ -121,6 +122,11 @@ class TypeHolder implements SymbolType {
     public readonly symbolType: SymbolType,
     public readonly ofTypes: SymbolType[],
   ) {}
+
+  languageSpecificName(_language: Language): string {
+    return this.name;
+  }
+
   isAssignableFrom(otherType: SymbolType): boolean {
     return this.symbolType.isAssignableFrom(otherType);
   }
@@ -308,6 +314,7 @@ export function matchParametersAndTypes(
   parameters: AstNode[],
   compileErrors: CompileError[],
   location: string,
+  scope: Scope,
 ) {
   let parameterTypes = methodSymbolType.parameterTypes;
 
@@ -320,10 +327,11 @@ export function matchParametersAndTypes(
     id,
     parameters,
     parameterTypes,
-    parameterNamesWithTypes(methodSymbolType, parameterTypes).join(", "),
+    parameterNamesWithTypes(methodSymbolType, scope, parameterTypes).join(", "),
     methodSymbolType.isExtension,
     compileErrors,
     location,
+    scope,
   );
 }
 
@@ -398,17 +406,18 @@ export function compileSimpleSubscript(
   postfix: string,
   compileErrors: CompileError[],
   fieldId: string,
+  scope: Scope,
 ) {
   const index = indices.items[indices.items.length - 1] as IndexAsn;
 
   const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
   if (index.index instanceof IndexDoubleAsn) {
-    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
-    mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId);
-    mustBeAssignableType(indexType, index.index.index2.symbolType(), compileErrors, fieldId);
+    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId, scope);
+    mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId, scope);
+    mustBeAssignableType(indexType, index.index.index2.symbolType(), compileErrors, fieldId, scope);
   } else {
-    mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
-    mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId);
+    mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
+    mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
   }
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }

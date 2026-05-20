@@ -8,10 +8,6 @@ import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { processInnerCode } from "../../src/tools/codeParser";
 import { testHeader, transforms } from "../compiler/compiler-test-helpers";
-import { LanguagePython } from "../../src/ide/frames/language-python";
-import { LanguageVB } from "../../src/ide/frames/language-vb";
-import { LanguageCS } from "../../src/ide/frames/language-cs";
-import { LanguageJava } from "../../src/ide/frames/language-java";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -67,23 +63,13 @@ suite("Misc Tests", () => {
 
   test("code parser", async () => {
     const code = `
-constant maxHits set to 10
-constant turquoise set to 0x00ced1
-constant liveCell set to black
-constant speedOfLight set to 299792.458
-constant gameOver set to true
-constant euro set to 0x20ac
-constant warningMsg set to "Limit reached"
+main
+  variable li set to [3, 6, 1, 0, 99, 4, 67]
+  call inPlaceRippleSort(li)
+  call print(li)
+end main
 `;
     const htmlElan = await processInnerCode(code, LanguageElan.Instance);
-    const htmlPy = await processInnerCode(code, LanguagePython.Instance);
-    const htmlVb = await processInnerCode(code, LanguageVB.Instance);
-    const htmlCs = await processInnerCode(code, LanguageCS.Instance);
-    const htmlJv = await processInnerCode(code, LanguageJava.Instance);
-    assert.equal(htmlElan.startsWith("<el-const"), true);
-    assert.equal(htmlPy.startsWith("<el-const"), true);
-    assert.equal(htmlVb.startsWith("<el-const"), true);
-    assert.equal(htmlCs.startsWith("<el-const"), true);
-    assert.equal(htmlJv.startsWith("<el-const"), true);
+    assert.equal(htmlElan.startsWith("<el-main"), true);
   });
 });

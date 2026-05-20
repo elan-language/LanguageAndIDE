@@ -99,7 +99,6 @@ suite("Demo compile", () => {
     await assertGeneratesHtml(fl, testPath);
     await assertExportsAll(fl, testPath);
   });
-
   test("test maze-generator", async () => {
     const [fl, source, sourceFile, testPath] = await getFile("maze-generator");
     await assertParsesAndCompilesAndTests(fl);
@@ -107,7 +106,13 @@ suite("Demo compile", () => {
     await assertGeneratesHtml(fl, testPath);
     await assertExportsAll(fl, testPath);
   });
-
+  test("test merge-sort", async () => {
+    const [fl, source, sourceFile, testPath] = await getFile("merge-sort");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
+  });
   test("test password-generator", async () => {
     const [fl, source, sourceFile, testPath] = await getFile("password-generator");
     await assertParsesAndCompilesAndTests(fl);
@@ -175,14 +180,6 @@ suite("Demo compile", () => {
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
     const [fl, source, sourceFile, testPath] = await getFile("wordle-solver");
-    await assertParsesAndCompilesAndTests(fl);
-    await assertGeneratesSameElanSource(fl, source, sourceFile);
-    await assertGeneratesHtml(fl, testPath);
-    await assertExportsAll(fl, testPath);
-  });
-
-  ignore_test("test wordle-demo", async () => {
-    const [fl, source, sourceFile, testPath] = await getFile("wordle-demo");
     await assertParsesAndCompilesAndTests(fl);
     await assertGeneratesSameElanSource(fl, source, sourceFile);
     await assertGeneratesHtml(fl, testPath);

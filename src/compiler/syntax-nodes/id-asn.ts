@@ -95,6 +95,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
 
     if (!isMemberOnFieldsClass(symbol, this.scope)) {

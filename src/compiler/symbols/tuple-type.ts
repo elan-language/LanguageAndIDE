@@ -1,8 +1,13 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../compiler-interfaces/type-options";
 
 export class TupleType implements SymbolType {
   constructor(public readonly ofTypes: SymbolType[]) {}
+
+  languageSpecificName(language: Language): string {
+    return `(${this.ofTypes.map((t) => t.languageSpecificName(language)).join(", ")})`;
+  }
 
   typeOptions = noTypeOptions;
 

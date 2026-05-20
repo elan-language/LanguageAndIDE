@@ -143,19 +143,19 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.isEqualityOp(opSymbol)) {
       mustBeValueType(lst, rst, this.compileErrors, this.fieldId);
-      mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId, this.scope);
     }
 
     if (this.isCompareOp(opSymbol) || this.isArithmeticOp(opSymbol)) {
-      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId);
+      mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId, this.scope);
     }
 
     if (this.isIntegerOnlyOp(opSymbol)) {
-      mustBeIntegerType(lst, rst, this.compileErrors, this.fieldId);
+      mustBeIntegerType(lst, rst, this.compileErrors, this.fieldId, this.scope);
     }
 
     if (this.isLogicalOp(opSymbol)) {
-      mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
+      mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId, this.scope);
     }
 
     if (opSymbol === OperationSymbol.Divide) {

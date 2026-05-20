@@ -172,6 +172,7 @@ async function parseAsKeyword(code: string) {
 
 export async function processInnerCode(code: string, l: Language) {
   code = code.trim() + "\n";
+  code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
   const hasHeader = code.includes("guest default_profile valid");
   return (
     (await parseAsKeyword(code)) ||

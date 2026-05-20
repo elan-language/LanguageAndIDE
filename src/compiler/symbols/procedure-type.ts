@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { Deprecated } from "../compiler-interfaces/elan-type-interfaces";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
@@ -10,6 +11,10 @@ export class ProcedureType implements SymbolType {
     public readonly isAsync: boolean,
     public readonly deprecated?: Deprecated | undefined,
   ) {}
+
+  languageSpecificName(language: Language): string {
+    return `Procedure (${this.parameterTypes.map((p) => p.languageSpecificName(language)).join(", ")})`;
+  }
 
   typeOptions = immutableTypeOptions;
 

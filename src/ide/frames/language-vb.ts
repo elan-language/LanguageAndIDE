@@ -282,6 +282,7 @@ export class LanguageVB extends LanguageAbstract {
   HEX_PREFIX: string = "&H";
 
   START_OF_GENERIC: string = `(${this.OF} `;
+  END_OF_GENERIC: string = `)`;
   THIS_INSTANCE: string = this.ME;
   OVERRIDES = "Overrides";
   IMPLEMENTS = "Implements";

@@ -55,6 +55,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
       subscript,
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
   }
 

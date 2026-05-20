@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { Deprecated } from "../compiler-interfaces/elan-type-interfaces";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../compiler-interfaces/type-options";
@@ -13,6 +14,16 @@ export class FunctionType implements SymbolType {
     public readonly isAsync: boolean,
     public readonly deprecated?: Deprecated | undefined,
   ) {}
+
+  languageSpecificName(language: Language): string {
+    const ps =
+      this.parameterTypes.length === 0
+        ? "no parameters"
+        : this.parameterTypes.length === 1
+          ? "parameter - "
+          : "parameters - ";
+    return `lambda or function name that takes ${ps}${this.parameterTypes.map((p) => p.languageSpecificName(language)).join(", ")} - returning a ${this.returnType.languageSpecificName(language)}`;
+  }
 
   get initialValue() {
     return `system.emptyFunc(${this.returnType.initialValue})`;

@@ -41,7 +41,13 @@ export class IfAsn extends CompoundAsn {
   compile(): string {
     this.compileErrors = [];
 
-    mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
+    mustBeOfType(
+      this.condition,
+      BooleanType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
     const elses = this.children.filter((c) => c instanceof ElseAsn);
     let toCompile = this.children;
 
