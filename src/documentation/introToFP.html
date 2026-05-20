@@ -260,34 +260,123 @@ In this circumstance it is often better to delegate to new function that perform
 <p>There are two ways to achieve implement iteration within a function. The first is using 'recursion' - also known as 'recursive' functions).
    (The second approach is addressed in the next heading.)</p>
 
-<p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example. 
-  The <b>Binary Search - recursive</b> demo contains this code:</p>
+<p>A recursive function is best understood by looking at a classic example
+  - the calculation of a factorial:</p>
 
 <codeblock>
-function binarySearch(li as List&lt;of String@gt;, item as String) returns Boolean
-  variable result set to false
-  if li.length() > 0 then
-    variable mid set to divAsInt(li.length(), 2)
-    variable value set to li[mid]
-    if item.equals(value) then
-      set result to true
-    elif item.isBefore(value) then
-      set result to binarySearch(li.subList(0, mid), item)
-    else
-      set result to binarySearch(li.subList(mid + 1, li.length()), item)
-    end if
-  end if
-  return result
+function factorial(n as Int) returns Int
+  return if(n < 2, 1, n*factorial(n - 1))
 end function
 </codeblock>
 
-<p>This code defines the function named <el-method>binarySearch</el-method>, but also <i>uses</i> (evaluates) that function within its own implementation.
-It also shows the two important principles of designing a recursive function are:</p>
+<p>This simple example illustrates the three key principles of recursive functions:</p>
 
 <ul>
-  <li>That when the function is evaluated within the function body</li>
+  <li>A recursive function calls <i>itself</i> in at least one place within the function. 
+    In this example, the <el-method>factorial</el-method> function is called <i>directly</i>
+  within from within the function. 
+  A different example, however, might call another function that in turn calls the original one. Either way there is always an implicit 'looping'.</li>
+  <li>Typically, the function calls itself to solve a <i>smaller version of the same problem</i> - in this example <code>factorial(n)</code> calls <code>factorial(n - 1)</code>.
+  If it called itself with the <i>same</i> argument(s), this would cause an infinite loop and would eventually result in a 'Stack overflow' - which crashes the program.</li>
+  <li>This recursion must 'bottom out' and there must be specific code to detect this, and then <i>not</i> make another recursive call. In the above example
+  the execution bottoms out when <code>n < 2</code>, return 1 at that point. The most common mistake when designing a recursive function is to forget
+  to implement a condition and write, say:
+
+<codeblock>
+function factorial(n as Int) returns Int
+  return n*factorial(n - 1)
+end function
+</codeblock>
+
+whereby the function would never exit naturally, and would eventually fail as a stack overflow error.
+</li>
 </ul>
 
+  
+  
+<h3>Principle 7: Lists and other data structures are never mutated</h3>
+
+<p>In procedural programming a list may be mutated either by re-assigning an indexed value, for example:
+
+<codeblock>
+  set mySubjects[3] to "Geography"
+</codeblock>
+
+or by calling one of the available procedure methods on on it such as:
+
+<codeblock>
+  call mySubjects.append("Music")
+</codeblock>
+
+but in FP this is not permitted. Data structures are never to be mutated. Instead, you may call a function that returns 
+a <i>copy</i> of the data structures, but with specified differences from the original. For example, you may write:
+
+<codeblock>
+  let myNewSubjects be mySubjects.withSet(3, "Geography")
+</codeblock>
+or 
+<codeblock>
+  let myNewSubjects be mySubjects.withAppend("Music")
+</codeblock>
+</p>
+
+<p>At first sight this seem awkward, strange, and certainly inefficient. 
+  But though you might never have thought about it in these terms, this is what you have always done when manipulating a <code>String</code>.
+  You can never actually mutate a string - such as converting it to upper case or trimming off the leading spaces, you have to write, for example:
+
+<codeblock>
+  let myNewString be myString. "Geography")
+</codeblock>
+
+
+
+  
+  <b>Merge Sort</b> demo,
+  which, as well as demonstrating recursion, is a good example of functional decomposition: the <i>principal</i> function, <el-method>sort</el-method>
+  delegates work, directly or indirectly to four other functions - 
+  <el-method>sortedFrontHalf</el-method>, <el-method>sortedBackHalf</el-method>, <el-method>merge</el-method>, and <el-method>mergeNonEmpty</el-method>
+  each of which has its own associated unit tests. This makes the code easier to read, and possible to test progressively.</p>
+
+  <p><el-method>sort</el-method> and <el-method>merge</el-method> are both recursive. This might not be immediately apparent, because they don't
+    make use of themselves <i>directly</i>. But <el-method>sort</el-method> delegates work to <el-method>sortedFrontHalf</el-method> 
+    and <el-method>sortedBackHalf</el-method>, both of which in turn make use of the <el-method>sort</el-method>:
+    
+<codeblock>
+function sort(li as List&lt;of String&gt;) returns List&lt;of String&gt;
+  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+end function
+
+function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
+  let mid be divAsInt(li.length(), 2)
+  let frontHalf be li.subList(0, mid)
+  return sort(frontHalf)
+end function
+
+function sortedBackHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
+  let mid be divAsInt(li.length(), 2)
+  let backHalf be li.subList(mid, li.length())
+  return sort(backHalf)
+end function
+</codeblock>
+
+    Similarly <el-method>merge</el-method> delegates to <el-method>mergeNonEmpty</el-method>, which in turn makes use of <el-method>merge</el-method>:
+
+<codeblock>
+function merge(a as List&lt;of String&gt;, b as List&lt;of String&gt;) returns List&lt;of String&gt;
+  let oneIsEmpty be (a.length() is 0) or (b.length() is 0)
+  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+end function
+
+function mergeNonEmpty(a as List&lt;of String&gt;, b as List&lt;of String&gt;) returns List&lt;of String&gt;
+  let aHead be a.head()
+  let bHead be b.head()
+  let aTail be a.tail()
+  let bTail be b.tail()
+  return if(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+end function
+</codeblock>
+
+<p>These examples demonstrate two key principles of </p>
 
 <h2>Principle 7: A function may be passed into, or returned by, another function </3>
 # Higher order functions

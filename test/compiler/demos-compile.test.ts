@@ -1,4 +1,5 @@
 import { testElanFile } from "../testHelpers";
+import { ignore_test } from "./compiler-test-helpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
@@ -21,13 +22,17 @@ suite("Demo compile", () => {
     await testElanFile("collatz");
   });
 
+  test("test factorial", async () => {
+    await testElanFile("factorial");
+  });
+
   test("test fern", async () => {
     await testElanFile("fern");
   });
 
-  /*   test("test fern-params", async () => {
-    await testElanProgram(`./out/test/demo_programs/fern-params.elan`);
-  }); Not high enough value to warrant the long time that this test takes*/
+ ignore_test("test fern-params", async () => { // Not high enough value to warrant the long time that this test takes*/
+    await testElanFile(`fern-params.elan`);
+  }); 
 
   test("test in-place-ripple-sort", async () => {
     await testElanFile("in-place-ripple-sort");
