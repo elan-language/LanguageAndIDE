@@ -16,7 +16,13 @@ export class FunctionType implements SymbolType {
   ) {}
 
   languageSpecificName(language: Language): string {
-    return `Func${language.START_OF_GENERIC}${this.parameterTypes.map((p) => p.name).join(", ")} => ${this.returnType.name}${language.END_OF_GENERIC}`;
+    const ps =
+      this.parameterTypes.length === 0
+        ? "no parameters"
+        : this.parameterTypes.length === 1
+          ? "parameter - "
+          : "parameters - ";
+    return `lambda or function name that takes ${ps}${this.parameterTypes.map((p) => p.languageSpecificName(language)).join(", ")} - returning a ${this.returnType.languageSpecificName(language)}`;
   }
 
   get initialValue() {

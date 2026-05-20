@@ -17,4 +17,5 @@ export interface CodeSource {
   readMatching(regx: RegExp): string;
   readToNonMatchingCloseBracket(): string;
   mode: ParseMode;
+  pasting: boolean;
 }

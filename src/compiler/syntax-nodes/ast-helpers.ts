@@ -327,7 +327,7 @@ export function matchParametersAndTypes(
     id,
     parameters,
     parameterTypes,
-    parameterNamesWithTypes(methodSymbolType, parameterTypes).join(", "),
+    parameterNamesWithTypes(methodSymbolType, scope, parameterTypes).join(", "),
     methodSymbolType.isExtension,
     compileErrors,
     location,

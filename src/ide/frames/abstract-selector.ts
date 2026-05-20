@@ -65,7 +65,9 @@ export abstract class AbstractSelector extends AbstractFrame {
         .replace("] ", "");
     }
 
-    const options = this.optionsFilteredByContext(false).filter((o) => source.isMatch(o[0]));
+    const options = this.optionsFilteredByContext(source.pasting).filter((o) =>
+      source.isMatch(o[0]),
+    );
     if (options.length === 1) {
       const typeToAdd = options[0][0];
       const frame = this.addFrame(typeToAdd, "");
@@ -256,6 +258,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       code = (code ?? "").trim() + "\n";
 
       const source = new CodeSourceFromString(code, true);
+      source.pasting = true;
       const newFrame = this.parseFrom(source);
 
       if (source.hasMoreCode() && source.getRemainingCode().trim()) {

@@ -536,12 +536,15 @@ export function symbolScopeToFriendlyName(ss: SymbolScope) {
   }
 }
 
-export function parameterNamesWithTypes(st: SymbolType, actualTypes?: SymbolType[]) {
+export function parameterNamesWithTypes(st: SymbolType, scope: Scope, actualTypes?: SymbolType[]) {
   if (st instanceof ProcedureType || st instanceof FunctionType) {
     const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
     let parameterTypes = actualTypes ? actualTypes : st.parameterTypes;
     parameterTypes = st.isExtension ? parameterTypes.slice(1) : parameterTypes;
-    const descriptions = parameterNames.map((n, i) => `${n} (${parameterTypes[i].name})`);
+    const language = getGlobalScope(scope).language;
+    const descriptions = parameterNames.map(
+      (n, i) => `${n} (${parameterTypes[i].languageSpecificName(language)})`,
+    );
     return descriptions;
   }
   return [];
