@@ -158,7 +158,7 @@ with all the same property values except for specific changes that you want to m
 </ul>
 
 <h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <code>List</code>)  or user-defined (e.g. <code>class</code> <el-type>MyClass</el-type>), is named like an identifier but
+<p>Every Type, whether system (e.g. <code>List</code>) or user-defined (e.g. <code>class</code> <el-type>MyClass</el-type>), is named like an identifier but
  with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
 
 <div id="global"></div>
@@ -176,17 +176,17 @@ with all the same property values except for specific changes that you want to m
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
  <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
- <code>variable  n set to s.length()</code></li>
+ <code>variable n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
- <code>call  li.initialise(10,0)</code></li>
+ <code>call li.initialise(10,0)</code></li>
  <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>g</el-id>) of class <el-type>Game</el-type> and, in this example, to get the length of the property's current string value, using
  library methods:<br>
- <code>variable  bodyGL set to g.body.toString().length()</code></li>
+ <code>variable bodyGL set to g.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
-
  <code>variable point set to (3, 7)</code><br>
  <code>variable x set to point.item_0</code>
  </li>
+
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
   <code>enum Suit spades, hearts, diamonds, clubs</code><br>
   <code>variable suit set to Suit.spades</code></li>
@@ -258,7 +258,7 @@ end main
 <h2 id="procedure"><b>procedure</b></h2>
 <div id="Parameter_value">></div>
 <p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
-<p>Its name must follow  the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
+<p>Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p> Unlike a function:</p>
 <ul>
  <li>a <b>procedure</b> can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
@@ -334,7 +334,7 @@ end procedure
 </div></div>
 
 <h2 id="function"><b>function</b></h2>
-<p>A <b>function</b> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow  the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
+<p>A <b>function</b> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p>Unlike a <a href="#procedure">procedure <i class="fa">&#xf08e;</i></a>:</p>
 <ul>
  <li>a function always returns a value.</li>
@@ -384,7 +384,7 @@ end main
 <hr>
 </div></div>
 
-<h3  class="no-TOC" id="recursion">Recursion</h3>
+<h3 class="no-TOC" id="recursion">Recursion</h3>
 <p>Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:</p>
 <codeblock>
 function factorial(n as Int) returns Int
@@ -464,7 +464,7 @@ end test
 
 <h3 class="no-TOC" >Testing long strings</h3>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
- <i>first</i> character at which  the actual (computed) and expected strings differ.</p>
+ <i>first</i> character at which the actual (computed) and expected strings differ.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Example of testing long strings</h4>
@@ -698,7 +698,7 @@ end class
 
 <h2 id="constant"><b>constant</b> </h2>
 <p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
- Its name  follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
+ Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
  <code>String</code>.</p>
 <p>A 'constant' data structure can be defined by using a <b>function</b> which is then referenced to make the structure available in a <b>variable definition</b>. See <a href="#constant_structure">Constant data structure <i class="fa">&#xf08e;</i></a>.</p>
@@ -982,7 +982,7 @@ end class
 <li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
 <li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
  This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
+<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns a value of type <code>String</code>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
   Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
@@ -1224,8 +1224,8 @@ end main
 <h4 class="no-TOC acc-title">Technical note about the <b>for loop</b> variable</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
-So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect the items it refers to and  processes.</p>
-<p>It is  therefore recommended never to re-assign the loop variable within the loop.</p>
+So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect the items it refers to and processes.</p>
+<p>It is therefore recommended never to re-assign the loop variable within the loop.</p>
 <hr>
 </div></div>
 
@@ -1445,9 +1445,9 @@ call print(pow(4, 4))
 variable c set to sqrt(pow(a, 2) + pow(b, 2))
 </codeblock>
 
-<p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in  brackets to remove potential ambiguity.</p>
+<p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
 <div id="mod"></div>
-<p> The operator <b>mod</b> (integer remainder) is applied  only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
+<p> The operator <b>mod</b> (integer remainder) is applied only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
 <table class="tablePlain">
 <tr>
  <td><code>2/3.0</code></td><td>&#x27f6;</td><td>0.666..</td>
@@ -1928,7 +1928,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <p><b>enum</b> values must each be a valid identifier, separated by commas.</p>
 
 <h3 id="ExceptionMessageField" class="no-TOC">'message' field in a throw instruction</h3>
- <p>An exception message must  be either a literal string or a named value holding a string.</p>
+ <p>An exception message must be either a literal string or a named value holding a string.</p>
 
 <h3 id="ExpressionField" class="no-TOC">expression field - used within multiple instructions</h3>
  <p>This field expects an expression. For the various forms of expression see <a href="#Expression">Expressions <i class="fa">&#xf08e;</i></a>.</p>
