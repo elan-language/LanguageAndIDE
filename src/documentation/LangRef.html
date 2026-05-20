@@ -621,8 +621,11 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<code>function calculateDiscount(d as Float) returns Float</code>
-<code>  return discount</code>
+<codeblock>
+function calculateDiscount(a as Float, d as Float) returns Float
+  let discount be a*d
+return discount
+</codeblock>
 
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
@@ -1141,10 +1144,14 @@ specifies looping through a sequence of characters in a <code>String</code> or i
 The forms of the <b>for loop</b> are:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id> and the subject <el-id>q</el-id> are both of Type <code>String</code>:<br>
-  <code>variable title set to "Winnie the Pooh"</code>
-  <code>for ch in title</code>
-    <code>call print(ch)</code>
-  <code>end for</code>
+<codeblock>
+main
+  variable title set to "Winnie the Pooh"
+  for ch in title
+    call print(ch)
+  end for
+end main
+</codeblock>
 
   puts each character in <el-id>title</el-id> in turn into <code>String</code> <el-id>ch</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):
@@ -1236,15 +1243,19 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <li>a procedure that you have defined at the global level<br>
   <code>call fillRandom(grid)</code></li>
 <li>a procedure method on an object of a class that you have defined<br>
-  <code>call apple.newRandomPosition(snake)</code><br>
-  <code>call this.hand.draw()</code></li>
+<codeblock>
+  call apple.newRandomPosition(snake)
+  call this.hand.draw()
+</codeblock></li>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
 <li>a procedure method on an object of a Type provided by the standard library<br>
-  <code>call vg.append(rect)</code><br>
-  <code>call this.cards.append(card)</code></li>
+<codeblock>
+  call vg.append(rect)
+  call this.cards.append(card
+</codeblock>)</li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
