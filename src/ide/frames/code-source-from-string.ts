@@ -14,6 +14,8 @@ export class CodeSourceFromString implements CodeSource {
 
   mode: ParseMode = ParseMode.loadNew;
 
+  pasting: boolean = false;
+
   pushBackOntoFrontOfCode(pushBack: string): void {
     this.remainingCode = pushBack + this.remainingCode;
   }
