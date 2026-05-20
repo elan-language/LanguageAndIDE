@@ -53,7 +53,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
           typeAsString,
           this.parameters,
           parameterTypes,
-          parameterNamesWithTypes(constructorType).join(", "),
+          parameterNamesWithTypes(constructorType, this.scope).join(", "),
           false,
           this.compileErrors,
           this.fieldId,
