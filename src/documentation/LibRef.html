@@ -276,7 +276,7 @@ end test
 <p>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and '&pound;' can be input.</p>
 <p>You cannot use Alt+numeric-keypad to enter accented letters or other special characters in the extended ASCII range (0x80 to 0xff).</p>
 <p>You can, however, copy any text from outside Elan and paste it into a string, whether ASCII, extended ASCII or UTF-8 encoded.</p>
-<p>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal, by means of <b>function</b> <a href="#unicode"><el-method>unicode</el-method></a>:</p>
+<p>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal, by means of <b>function</b> <a href="#unicode"><el-method>unicode</el-method> <i class="fa">&#xf08e;</i></a>:</p>
 
 <table class="tablePlain">
 <tr>
@@ -293,7 +293,7 @@ end test
 </tr>
 </table>
 
-<p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields</a>).</p>
+<p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf08e;</i></a>).</p>
 
 <h3 class="no-TOC">Manipulating strings</h3>
 
@@ -314,7 +314,7 @@ end test
 
 <p>When editing and you leave the field, the newline will be implicitly applied in your code.</p>
 <p>As in most languages, strings are <i>immutable</i>. When you apply any operation or <b>function</b> with the intent of modifying an existing <code>String</code>, the existing <code>String</code> is never changed. Instead, the operation or <b>function</b> will return a new <code>String</code> that is based on the original, but with the specified differences.</p>
-<p>You can loop through a <code>String</code> picking each of its characters sequentially using the <a href="LangRef.html#for"><b>for loop</b></a>.</p>
+<p>You can loop through a <code>String</code> picking each of its characters sequentially using the <a href="LangRef.html#for"><b>for loop</b> <i class="fa">&#xf08e;</i></a>.</p>
 
 <h3 class="no-TOC" id="DotMethods_String">Function dot methods on a String</h3>
 <table class="tableMethod">
@@ -333,7 +333,7 @@ end test
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the Unicode value of the <i>first</i> character of the string<br>
-   (To convert a Unicode value into a string, use <b>function</b> <a href="#unicode"><el-method>unicode</el-method></a>)</td>
+   (To convert a Unicode value into a string, use <b>function</b> <a href="#unicode"><el-method>unicode</el-method> <i class="fa">&#xf08e;</i></a>)</td>
  </tr><tr id="contains_String">
   <td><el-method>contains</el-method></td>
   <td>(none)</td>
@@ -397,7 +397,7 @@ end test
  </tr><tr id="split">
   <td><el-method>split</el-method></td>
   <td><code>String</code></td>
-  <td><codeblock>List&lt;of String&gt;</codeblock></td>
+  <td><codeblock>List<of String&gt;</codeblock></td>
   <td>a <code>List</code> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="subString">
@@ -543,18 +543,18 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
-  <td>see <a href="#List_procedures">Procedure methods on a List</a></td>
-  <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
+  <td>see <a href="#List_procedures">Procedure methods on a List <i class="fa">&#xf08e;</i></a></td>
+  <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary <i class="fa">&#xf08e;</i></a></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
-  <td>see <a href="#List_functions">Function dot methods on a List</a></td>
-  <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
-  <td>see <a href="#Set_functions">Function dot methods on a Set</a></td>
-  <td>see <a href="#Stack_functions">Function dot methods on a Stack</a></td>
-  <td>see <a href="#Queue_functions">Function dot methods on a Queue</a></td>
+  <td>see <a href="#List_functions">Function dot methods on a List <i class="fa">&#xf08e;</i></a></td>
+  <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary <i class="fa">&#xf08e;</i></a></td>
+  <td>see <a href="#Set_functions">Function dot methods on a Set <i class="fa">&#xf08e;</i></a></td>
+  <td>see <a href="#Stack_functions">Function dot methods on a Stack <i class="fa">&#xf08e;</i></a></td>
+  <td>see <a href="#Queue_functions">Function dot methods on a Queue <i class="fa">&#xf08e;</i></a></td>
  </tr>
 </table>
 
@@ -565,7 +565,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>To create a List, use either of:</p>
 <ul>
- <li>Method <a href="#createList"><el-method>createList</el-method></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
+ <li>Method <a href="#createList"><el-method>createList</el-method> <i class="fa">&#xf08e;</i></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
   <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
  <codeblock>variable aList set to new List&lt;of String&gt;()</codeblock><br>
@@ -580,7 +580,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 
 <h3 class="no-TOC" id="deconstructList">Deconstructing a List</h3>
 <p>A <code>List</code> may be split (deconstructed) into new named values using indexes and
- the methods <el-method>head</el-method>, <a href="#tail"><el-method>tail</el-method></a> and <a href="#subList"><el-method>subList</el-method></a>:</p>
+ the methods <el-method>head</el-method>, <a href="#tail"><el-method>tail</el-method> <i class="fa">&#xf08e;</i></a> and <a href="#subList"><el-method>subList</el-method> <i class="fa">&#xf08e;</i></a>:</p>
 <ul>
  <li>To extract the first item in a List:<br>
  <code>variable headItem set to myList[0]</code><br>
@@ -600,9 +600,9 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Understood as a grid, a 2D array is a List of 'columns' each of which is a List of 'row' items, i.e. it is a List of Lists in which the column number is the <i>x</i> coordinate, and the row number is the <i>y</i> coordinate.</p>
 <p>To create a 2D array that holds a value of a single Type in every cell, you define such a List of Lists thus:</p>
 <ul>
- <li>Use method <a href="#createListOfLists"><el-method>createListOfLists</el-method></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
+ <li>Use method <a href="#createListOfLists"><el-method>createListOfLists</el-method> <i class="fa">&#xf08e;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
    <code>variable array2D set to  createListOfLists(cols, rows, value)</code></li>
-<li>For the special case of <a href="#BlockGraphics">Block graphics</a>, use 40 columns and 30 rows or (more simply):<br>
+<li>For the special case of <a href="#BlockGraphics">Block graphics <i class="fa">&#xf08e;</i></a>, use 40 columns and 30 rows or (more simply):<br>
    <code>variable grid set to createBlockGraphics(value)</code></li>
 </ul>
 
@@ -616,7 +616,9 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h4 class="no-TOC">Higher dimensional arrays</h4>
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
-<li><codeblock>variable array3D set to new List&lt;of List<of List&lt;of Float&gt;&gt;>()</codeblock></li>
+<li>
+<code>variable array3D set to new List<of List<of List<of Float>>>()</code>
+</li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
@@ -697,7 +699,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>lambda</code></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
-  see <a href="#filter"><el-method>filter</el-method></a> in <a href="#HoFs">HoFs</a></td>
+  see <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf08e;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="head_List">
   <td><el-method>head</el-method></td>
   <td>(none)</td>
@@ -723,19 +725,19 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>lambda</code></td>
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
-  see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
+  see <a href="#map"><el-method>map</el-method> <i class="fa">&#xf08e;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the maximum of the values returned by a lambda<br>
-  see <a href="#maxBy"><el-method>maxBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
+  see <a href="#maxBy"><el-method>maxBy</el-method> <i class="fa">&#xf08e;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code> item's Type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
-  see <a href="#minBy"><el-method>minBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
+  see <a href="#minBy"><el-method>minBy</el-method> <i class="fa">&#xf08e;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="notEqualTo_List">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>List</code></td>
@@ -752,7 +754,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>return Type of lambda</td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
-  see <a href="#reduce"><el-method>reduce</el-method></a> in <a href="#HoFs">HoFs</a></td>
+  see <a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf08e;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="subList">
   <td><el-method>subList</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
@@ -1216,7 +1218,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <ul>
  <li>Holding a pair of <i>x,y</i> coordinates (each of Type <code>Float</code>) as a single unit.</li>
  <li>Allowing a <b>function</b> to pass back a result comprised of both a message in a <code>String</code> and a <code>Boolean</code> indicating whether the operation was successful.</li>
- <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
+ <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method> <i class="fa">&#xf08e;</i></a>.</li>
 </ul>
 
 <h3 class="no-TOC">Defining a Tuple</h3>
@@ -1310,7 +1312,7 @@ end main
  just by passing the required one as the argument to method <el-method>displayBlocks</el-method>.</li>
  <li>Any <code>List</code>&lt;of <code>List</code>&lt;of <code>Int</code>&gt;&gt; structure of the same
  40 &times; 30 dimensions can be the argument to method <el-method>displayBlocks</el-method>.</li>
- <li>A colour is specified as an <code>Int</code>, as described under <a href="#Colours">Colours</a>.</li>
+ <li>A colour is specified as an <code>Int</code>, as described under <a href="#Colours">Colours <i class="fa">&#xf08e;</i></a>.</li>
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
@@ -1348,7 +1350,7 @@ So the top left corner of the display is at (-100,75).</p>
  </tr><tr id="penColour">
   <td><el-method>penColour</el-method></td>
   <td><code>Int</code></td>
-  <td>changes the <a href="#Colours">colour</a> of its path in the display to the literal or named value specified</td>
+  <td>changes the <a href="#Colours">colour <i class="fa">&#xf08e;</i></a> of its path in the display to the literal or named value specified</td>
  </tr><tr id="penDown">
   <td><el-method>penDown</el-method></td>
   <td>(none)</td>
@@ -1469,10 +1471,10 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
 <p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
- is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
+ is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
 Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
-<p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code></a>.</p>
+<p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code> <i class="fa">&#xf08e;</i></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <code>List&lt;of VectorGraphic&gt;</code> or a <code>List</code> of any specific Type of <code>VectorGraphic</code>
@@ -1483,12 +1485,12 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
 in a <b>function</b>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
-<p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours</a>.
+<p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours <i class="fa">&#xf08e;</i></a>.
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
 <p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
 <h3 class="no-TOC" id="displayVectorGraphics">Displaying Vector graphic shapes</h3>
-<p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until call procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
+<p>As with <a href="#BlockGraphics">Block <i class="fa">&#xf08e;</i></a> graphics, the assembled list of shapes is not displayed until call procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <code>VectorGraphic</code> instance.
 Later shapes are positioned in front of earlier ones.</p>
 
@@ -1750,7 +1752,7 @@ end main
 By this means features such as simple SVG animation can be defined.</p>
 <ul>
  <li>The raw SVG content should be enclosed in double quotes within which the SVG attribute values must be enclosed in single quotes.</li>
- <li>To include <a href="#InterpolatedString">interpolated</a> values, you precede the string with a $.</li>
+ <li>To include <a href="#InterpolatedString">interpolated <i class="fa">&#xf08e;</i></a> values, you precede the string with a $.</li>
  <li>The raw SVG may define multiple shapes.</li>
  <li>Multiple instances of <code>RawVG</code> may be added to the collection to be displayed, along with instances of other SVG Types;
  hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
@@ -1790,7 +1792,7 @@ end main
 
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
-<p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods</a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
+<p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods <i class="fa">&#xf08e;</i></a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
 <p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <<b>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 <code>variable rand set to new Random()</code><br>
@@ -1883,11 +1885,11 @@ end function
 <h1 id="InputOutput">Input/output</h1>
 <p>This section covers a variety of input and output facilities:</p>
 <ul>
- <li><a href="#KeyboardInput">Keyboard input</a> </li>
- <li><a href="#FileInputOutput">Text file input/output</a></li>
- <li><a href="#RenderHtml">Rendering Html in the display</a></li>
- <li><a href="#DisplayImageURL">Displaying images from URLs</a></li>
- <li><a href="#Sound">Sound</a></li>
+ <li><a href="#KeyboardInput">Keyboard input <i class="fa">&#xf08e;</i></a> </li>
+ <li><a href="#FileInputOutput">Text file input/output <i class="fa">&#xf08e;</i></a></li>
+ <li><a href="#RenderHtml">Rendering Html in the display <i class="fa">&#xf08e;</i></a></li>
+ <li><a href="#DisplayImageURL">Displaying images from URLs <i class="fa">&#xf08e;</i></a></li>
+ <li><a href="#Sound">Sound <i class="fa">&#xf08e;</i></a></li>
 </ul>
 
 <h2 id="KeyboardInput">Keyboard input</h2>
@@ -2023,14 +2025,14 @@ end main
   <td><code>TextFileWriter</code></td>
   <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
   with or without the default filetype of .txt, and returns a file handle<br>
-  see <a href="#TextFileWriter">Writing text files</a></td>
+  see <a href="#TextFileWriter">Writing text files <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="openFileForReading">
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
   <td><code>TextFileReader</code></td>
   <td>opens a file system dialog to choose the filename of filetype .txt to be read,
   and returns a file handle<br>
-  see <a href="#TextFileReader">Reading text files</a></td>
+  see <a href="#TextFileReader">Reading text files <i class="fa">&#xf08e;</i></a></td>
  </tr>
 </table>
 
@@ -2153,11 +2155,11 @@ end main
     (using <b>call procedure</b> <el-method>print</el-method>() or any of the print procedures)
     will be overlaid on top of this.</p>
 
-<p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
+<p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="LibRef.html#InterpolatedString">interpolated field</a>.</p>
+    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="LibRef.html#InterpolatedString">interpolated field <i class="fa">&#xf08e;</i></a>.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
@@ -2187,7 +2189,7 @@ end main
 </codeblock>
    <p>The usual &lt;img&gt; tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
- <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures</a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
+ <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures <i class="fa">&#xf08e;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>
 main
   variable sharkUrl set to "https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"
@@ -2246,20 +2248,20 @@ end main
   <th>Tuple</th>
  </tr><tr><!---->
   <td></td>
-  <td><a href="#Int"><code>Int</code></a></td>
-  <td><a href="#Float"><code>Float</code></a></td>
-  <td><a href="#Boolean"><code>Boolean</code></a></td>
-  <td><a href="#String"><code>String</code></a></td>
-  <td><a href="#List"><code>List</code></a></td>
-  <td><a href="#Dictionary"><code>Dictionary</code></a></td>
-  <td><a href="#HashSet"><code>HashSet</code></a></td>
-  <td><a href="#Stack"><code>Stack</code></a></td>
-  <td><a href="#Queue"><code>Queue</code></a></td>
+  <td><a href="#Int"><code>Int</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#Float"><code>Float</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#Boolean"><code>Boolean</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#String"><code>String</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#List"><code>List</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#Dictionary"><code>Dictionary</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#HashSet"><code>HashSet</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#Stack"><code>Stack</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#Queue"><code>Queue</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="ceiling"><el-method>ceiling</el-method></td>
-  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#ceiling_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2273,29 +2275,29 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#contains_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#contains_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 4.</td>
-  <td><a href="#contains_Set"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#contains_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#contains_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 4.</td>
+  <td><a href="#contains_Set"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
  </tr><tr><!---->
   <td id="equals"><el-method>equals</el-method></td>
-  <td><a href="#equals_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#equals_Tuple"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Int"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Boolean"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Set"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Stack"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Queue"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#equals_Tuple"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr><!---->
   <td id="floor"><el-method>floor</el-method></td>
-  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#floor_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2309,8 +2311,8 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#indexOf_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#indexOf_List"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#indexOf_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#indexOf_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2318,8 +2320,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isInfinite"><el-method>isInfinite</el-method></td>
-  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isInfinite_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2330,8 +2332,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isNan"><el-method>isNan</el-method></td>
-  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#isNaN_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2345,25 +2347,25 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#length_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i></a> note 3.</td>
-  <td><a href="#length_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#length_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#keys_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 3.</td>
+  <td><a href="#length_Set"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_Stack"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#length_Queue"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
-  <td><a href="#notEqualTo_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#notEqualTo_Tuple"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Int"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Boolean"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Set"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Stack"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Queue"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#notEqualTo_Tuple"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr><!---->
   <td id="peek"><el-method>peek</el-method></td>
   <td></td>
@@ -2373,13 +2375,13 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#peek_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#peek_Queue"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#peek_Stack"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#peek_Queue"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="round"><el-method>round</el-method></td>
-  <td><a href="#round_Float"><i class="fa">&#xf08e;</i></a> note 2.</td>
-  <td><a href="#round_Float"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#round_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a> note 2.</td>
+  <td><a href="#round_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2390,24 +2392,24 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="toString"><el-method>toString</el-method> note 1.</td>
-  <td><a href="#toString_Int"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Float"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Boolean"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_String"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Dictionary"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Set"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Stack"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Queue"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#toString_Tuple"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Int"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Float"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Boolean"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_String"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Set"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Stack"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Queue"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#toString_Tuple"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr><!---->
   <td id="withSet"><el-method>withSet</el-method></td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withSet_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#withSet_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withSet_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withSet_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2418,8 +2420,8 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withRemoveAt_List"><i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#withRemoveAt_Dictionary"><i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withRemoveAt_List"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#withRemoveAt_Dictionary"><i class="fa">&#xf08e;</i> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2445,7 +2447,7 @@ end main
 </ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>
-<p>All procedures are accessed via a <a href="LangRef.html#call"><code>call</code></a> statement.</p>
+<p>All procedures are accessed via a <a href="LangRef.html#call"><code>call</code> <i class="fa">&#xf08e;</i></a> statement.</p>
 
 <h2 id="StandaloneProcedures">Standalone procedures</h2>
 
@@ -2538,7 +2540,7 @@ end main
 </codeblock>
  </td>
  <td>&#x27f6;<br><br><br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
- <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="LibRef.html#InterpolatedString">interpolated strings</a>]<br>[defining a <a href="LibRef.html#Tuple">2-Tuple</a>]<br>true<br>42</td>
+ <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="LibRef.html#InterpolatedString">interpolated strings <i class="fa">&#xf08e;</i></a>]<br>[defining a <a href="LibRef.html#Tuple">2-Tuple <i class="fa">&#xf08e;</i></a>]<br>true<br>42</td>
  </tr>
 </table>
 <hr>
@@ -2576,9 +2578,9 @@ end main
 
 <p>Procedures applicable to standard Reference Types are linked from:</p>
 <ul>
- <li><a href="#List_procedures">Procedure methods on a <code>List</code></a></li>
- <li><a href="#Dictionary_procedures">Procedure methods on a <code>Dictionary</code></a></li>
- <li><a href="#Turtle_procedures">Procedure methods on a <code>Turtle</code></a></li>
+ <li><a href="#List_procedures">Procedure methods on a <code>List</code> <i class="fa">&#xf08e;</i></a></li>
+ <li><a href="#Dictionary_procedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf08e;</i></a></li>
+ <li><a href="#Turtle_procedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf08e;</i></a></li>
 </ul>
 <p>User-defined Classes may have procedures that can be applied to their Class instances.
 
@@ -2641,7 +2643,7 @@ end test
 <h5 class="no-TOC">Notes</h5>
 <ul>
  <li>Any string that parses as an <code>Int</code> will also parse as a <code>Float</code>.</li>
- <li>When validating user input,it may be easier to use the various <a href="#SystemMethods">input methods</a>.</li>
+ <li>When validating user input,it may be easier to use the various <a href="#SystemMethods">input methods <i class="fa">&#xf08e;</i></a>.</li>
 </ul>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using method <el-method>unicode</el-method>:</p>
@@ -2793,9 +2795,9 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
 </div></div>
 
 <h2 id="RegExp">RegExp functions</h2>
-    <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
+    <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions <i class="fa">&#xf08e;</i></a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now:</p>
-    <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
+    <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
 
 <codeblock>
 test test_matchesRegExp
@@ -2833,20 +2835,20 @@ end test
  <li>they may have a dependency on data that is not provided in an argument</li>
  <li>they may generate side effects, such as changing the screen display or writing to a file</li>
 </ul>
-<p>Because of these properties, system methods maybe used only within the <b>main</b> routine or a <b>procedure</b>.
+<p>Because of these properties, system methods may be used only within the <b>main</b> routine or a <b>procedure</b>.
 They may not be used inside a <b>function</b> that you have defined, because to do so would prevent the <b>function</b> from being pure.</p>
 <p>You cannot write a system method yourself.</p>
 
 <h2 id="IOMethods">Input/output</h2>
 <ul>
- <li><a href="#KeyboardInput">Keyboard input</a> </li>
- <li><a href="#FileInputOutput">Text file input/output</a></li>
+ <li><a href="#KeyboardInput">Keyboard input <i class="fa">&#xf08e;</i></a> </li>
+ <li><a href="#FileInputOutput">Text file input/output <i class="fa">&#xf08e;</i></a></li>
 </ul>
 
 <h2 id="MiscMethods">Clock and random numbers</h2>
 Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function</b> because
  of their dependence on external factors, i.e. they are subject to side effects.<br>
- To obtain random numbers within a <b>function</b>, use Type <a href="#Random"><code>Random</code></a>.
+ To obtain random numbers within a <b>function</b>, use Type <a href="#Random"><code>Random</code> <i class="fa">&#xf08e;</i></a>.
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -2926,7 +2928,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>rangeInSteps</el-method></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; and which uses <a href="#HoFs">Higher-order Functions</a> to print the prime numbers between 2 and 30:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; and which uses <a href="#HoFs">Higher-order Functions <i class="fa">&#xf08e;</i></a> to print the prime numbers between 2 and 30:</p>
 <codeblock>
   call print(rangeInSteps(2, 30, 1).filter(lambda n as Int => rangeInSteps(2, sqrt(n).floor(), 1).reduce(true, lambda c as Boolean, m as Int => c and ((n mod m) isnt 0))))
 </codeblock>
@@ -2938,16 +2940,16 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 
 <h2>Standard HoFs</h2>
 <p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely
-<a href="#filter"><el-method>filter</el-method></a>,
-<a href="#map"><el-method>map</el-method></a> and
-<a href="#reduce"><el-method>reduce</el-method></a>, and also provides
-<a href="#maxBy"><el-method>maxBy</el-method></a>,
-<a href="#minBy"><el-method>minBy</el-method></a> and
-<a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
+<a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf08e;</i></a>,
+<a href="#map"><el-method>map</el-method> <i class="fa">&#xf08e;</i></a> and
+<a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf08e;</i></a>, and also provides
+<a href="#maxBy"><el-method>maxBy</el-method> <i class="fa">&#xf08e;</i></a>,
+<a href="#minBy"><el-method>minBy</el-method> <i class="fa">&#xf08e;</i></a> and
+<a href="#orderBy"><el-method>orderBy</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
 <h2 id="AsRef">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a <b>function</b>.
- This can be either a <a href="LangRef.html#lambda"><code>lambda</code></a> or the name of a <b>function</b>.
+ This can be either a <a href="LangRef.html#lambda"><code>lambda</code> <i class="fa">&#xf08e;</i></a> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function</b>, its name is not followed by round brackets (or arguments), as in this example:
@@ -2969,7 +2971,7 @@ end function
 
 <h1 id="Constants">System constants</h1>
 
-<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <b>constant</b> </a>,
+<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <b>constant</b>  <i class="fa">&#xf08e;</i></a>,
  in that they are mutable named values, though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
@@ -3009,11 +3011,11 @@ end function
  </tr><tr id="true">
   <td><el-id>true</el-id></td>
   <td><code>Boolean</code></td>
-  <td><a href="#Boolean"><code>true</code></a></td>
+  <td><a href="#Boolean"><code>true</code> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr id="false">
   <td><el-id>false</el-id></td>
   <td><code>Boolean</code></td>
-  <td><a href="#Boolean"><code>false</code></a></td>
+  <td><a href="#Boolean"><code>false</code> <i class="fa">&#xf08e;</i></a></td>
  </tr>
 </table>
 
@@ -3037,13 +3039,13 @@ end function
  <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
  <li>a six digit hexadecimal value in the range <el-lit>0x000000</el-lit> &ndash; <el-lit>0xffffff</el-lit>
     using the same 'RGB' format as used in Html style, for example <el-lit>0xff0000</el-lit> for red.</li>
- <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes.
+ <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics <i class="fa">&#xf08e;</i></a> shapes.
 </ul>
 
 <h2>Defining your own HoFs</h2>
 
 <h2>Library functions that process Lists</h2>
-<p>These dot methods are called on any <code>List</code>, or <code>String</code>. As Higher-order Functions they take either a lambda</b></code> or a <b>function</b> reference as one of their arguments: see above.</p>
+<p>These dot methods are called on any <code>List</code> or <code>String</code>. As Higher-order Functions they take either a <b>lambda</b> or a <b>function</b> reference as one of their arguments: see above.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
@@ -3092,7 +3094,7 @@ end main
 &nbsp;&nbsp;&#x27f6; ["TOM", "DICK", "HARRIET"]
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To reverse each string in the list of names using the function <el-method>reverse</el-method>
- (from the example of the <a href="LangRef.html#for">for</a> loop):</p>
+ (from the example of the <a href="LangRef.html#for">for <i class="fa">&#xf08e;</i></a> loop):</p>
 <codeblock>
   call print(names.map(lambda s as String => reverseString(s)))
 </codeblock>
@@ -3114,7 +3116,7 @@ end main
 </ul>
 <p>The result may, however, be of a different Type than the items in the list, and may even  be a data structure, for example to:</p>
 <ul>
- <li>Generate a <a href="#Tuple">3-Tuple</a> of the sum, sum-of-squares, and count of numerical items.</li>
+ <li>Generate a <a href="#Tuple">3-Tuple <i class="fa">&#xf08e;</i></a> of the sum, sum-of-squares, and count of numerical items.</li>
  <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input List</li>
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
@@ -3192,8 +3194,8 @@ end main
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <code>List</code>.
 They take a <b>function</b> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <b>function</b>.</p>
 <p>For simply finding the maximum or minimum value in a <code>List</code>, you can use
-<a href="#max"><el-method>max</el-method></a>,
-<a href="#min"><el-method>min</el-method></a>.</p>
+<a href="#max"><el-method>max</el-method> <i class="fa">&#xf08e;</i></a>,
+<a href="#min"><el-method>min</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>
@@ -3244,6 +3246,6 @@ end main
 <hr>
 </div></div>
 <hr>
-<p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
+<p><b>Elan Library Reference</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
 </body>
 </html>
