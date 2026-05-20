@@ -5,7 +5,6 @@ import {
   assertParsesAndCompilesAndTests,
   getFile,
 } from "../testHelpers";
-import { ignore_test } from "./compiler-test-helpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
@@ -173,16 +172,8 @@ suite("Demo compile", () => {
   });
 
   // Ignored just becasuse these are very slow tests
-  ignore_test("test wordle-solver", async () => {
+  test("test wordle-solver", async () => {
     const [fl, source, sourceFile, testPath] = await getFile("wordle-solver");
-    await assertParsesAndCompilesAndTests(fl);
-    await assertGeneratesSameElanSource(fl, source, sourceFile);
-    await assertGeneratesHtml(fl, testPath);
-    await assertExportsAll(fl, testPath);
-  });
-
-  ignore_test("test wordle-demo", async () => {
-    const [fl, source, sourceFile, testPath] = await getFile("wordle-demo");
     await assertParsesAndCompilesAndTests(fl);
     await assertGeneratesSameElanSource(fl, source, sourceFile);
     await assertGeneratesHtml(fl, testPath);

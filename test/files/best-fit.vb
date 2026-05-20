@@ -36,3 +36,10 @@ End Function
   Assert.AreEqual(0.766, a.round(3))
   Assert.AreEqual(1.093, b.round(3))
 End Sub
+
+<TestMethod> Sub test_bestFit_empty()
+  Dim l1 = New List(Of Point)() ' let
+  Dim a_b = bestFitLine(l1) ' let
+  ' NaN means 'Not A Number"
+  Assert.AreEqual("(NaN, NaN)", a_b.toString())
+End Sub

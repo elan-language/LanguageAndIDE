@@ -36,3 +36,10 @@ static Point newPoint(double x, double y) { // function
   assertEquals(0.766, a.round(3))
   assertEquals(1.093, b.round(3))
 }
+
+@Test static void test_bestFit_empty() {
+  var l1 = new List<Point>(); // let
+  var a_b = bestFitLine(l1); // let
+  // NaN means 'Not A Number"
+  assertEquals("(NaN, NaN)", a_b.toString())
+}
