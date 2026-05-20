@@ -98,7 +98,7 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><code>abstract class</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#interface"><el-topic>Interface</el-topic><br><code>interface</code> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr>
   <td>Other</td>
@@ -185,7 +185,7 @@ with all the same property values except for specific changes that you want to m
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
  <code>variable  point set to (3, 7)</code><br>
  <code>variable  x set to point.item_0</code>
-</codeblock></li>
+</li>
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
   <code>enum Suit spades, hearts, diamonds, clubs</code><br>
   <code>variable suit set to Suit.spades</code></li>
@@ -255,7 +255,7 @@ end main
 </div></div>
 
 <h2 id="procedure"><b>procedure</b></h2>
-<div id="Parameter_value">
+<div id="Parameter_value">></div>
 <p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 <p>Its name must follow  the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p> Unlike a function:</p>
@@ -596,7 +596,7 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
 
-  <p>A <a href="#class">concrete class <i class="fa">&#xf08e;</i></a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><code>abstract class</code> <el-type>A</el-type> <i class="fa">&#xf08e;</i></a>
+  <p>A <a href="#class">concrete class <i class="fa">&#xf08e;</i></a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b> <el-type>A</el-type> <i class="fa">&#xf08e;</i></a>
     but may additionally inherit from any number of <a href="#interface">interfaces <i class="fa">&#xf08e;</i></a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
 
@@ -620,11 +620,9 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<codeblock>
-function calculateDiscount(d as Float) returns Float
-  return discount
-end function
-</codeblock>
+<code>function calculateDiscount(d as Float) returns Float</code>
+<code>  return discount</code>
+
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <b>abstract</b> on the superclass.</li>
@@ -729,11 +727,9 @@ main
   variable rainbow set to getRainbow()
   variable suitColours set to getSuitColours()
 end main
-
 function getRainbow() returns List<of Int>
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
-
 function getSuitColours() returns Dictionary<of String, Int>
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
@@ -904,7 +900,7 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
  <li>initialise properties with fixed values</li>
  <li>define parameters which are used to initialise properties</li>
 </ul>
-<p>If a <b>concrete class</b>'s <b>constructor</b defines parameters then, when the class is instantiated (using <b>new</b>), the values of
+<p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
 the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
 
 <codeblock>
@@ -938,14 +934,14 @@ class Game
 end class
 </codeblock>
 
-<h3 class="no-TOC id="Maybe"><code>Maybe</code></h3>
+<h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
 <p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
 If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
 and using <el-method>getValue</el-method> will give a runtime error.</p>
 <p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
-<div class="accordion">
 
+<div class="accordion">
 <h4 class="no-TOC acc-title">Example using <code>Maybe</code></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Here a pupil (of class <el-type>Pupil</el-type>) need not have a tutor (of class <el-type>Teacher</el-type>):</p>
@@ -983,7 +979,7 @@ end class
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> on an instance.</li>
 <li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on <code>abstract class A</code>, within its subclasses.
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
  This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
 <li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <code>String</code>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
@@ -1144,12 +1140,11 @@ specifies looping through a sequence of characters in a <code>String</code> or i
 The forms of the <b>for loop</b> are:</p>
 <ul>
  <li>The loop variable <el-id>p</el-id> and the subject <el-id>q</el-id> are both of Type <code>String</code>:<br>
-<codeblock>
-  variable title set to "Winnie the Pooh"
-  for ch in title
-    call print(ch)
-  end for
-</codeblock>
+  <code>variable title set to "Winnie the Pooh"</code>
+  <code>for ch in title</code>
+    <code>call print(ch)</code>
+  <code>end for</code>
+
   puts each character in <el-id>title</el-id> in turn into <code>String</code> <el-id>ch</el-id>.</li>
  <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):
 <codeblock>
@@ -1170,14 +1165,14 @@ end for
 </ul>
 <p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> to specify integer values of the loop variable:</p>
 <ul>
- <li>The loop variable <el-id>p</el-id>'s value is limited to a range:</li>
+ <li>The loop variable <el-id>p</el-id>'s value is limited to a range:
 <codeblock>
   variable numbers set to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   for n in range(3, 8)
     call print(n)
   end for
 </codeblock>
-  gives values with which to index into the List <el-id>numbers</el-id>.</li>
+  giving values with which to index into the List <el-id>numbers</el-id>.</li>
 </ul>
 <p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
 
@@ -1460,7 +1455,7 @@ variable c set to sqrt(pow(a, 2) + pow(b, 2))
 </tr><tr>
  <td><code>2 + 3</code></td><td>&#x27f6;</td><td>5</td>
 </tr><tr>
- <td><code>2 &minus; 3</code></td><td>&#x27f6;</td><td>&minus;1</td>
+ <td><code>2 - 3</code></td><td>&#x27f6;</td><td>&minus;1</td>
 </tr><tr>
  <td><code>11 mod 3</code></td><td>&#x27f6;</td><td>2</td>
 </tr>
@@ -1489,7 +1484,7 @@ variable c set to sqrt(pow(a, 2) + pow(b, 2))
 <p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
 <table class="tablePlain">
 <tr>
- <td><code>2*&minus;3</code></td><td>&#x27f6;</td><td>&minus;6</td>
+ <td><code>2*-3</code></td><td>&#x27f6;</td><td>&minus;6</td>
 </tr>
 </table>
 
@@ -1547,13 +1542,13 @@ Two instances which are subclasses of the same abstract class compare equal only
 <p>The numeric comparison operators are:</p>
 <table class="tablePlain">
 <tr>
- <td><code>&gt;</code></td><td>for</td><td>greater than</td>
+ <td>&gt;</td><td>for</td><td>greater than</td>
 </tr><tr>
- <td><code>&lt;</code></td><td>for</td><td>less than</td>
+ <td>&lt;</td><td>for</td><td>less than</td>
 </tr><tr>
- <td><code>&gt;=</code></td><td>for</td><td>greater than or equal to</td>
+ <td>&gt;=</td><td>for</td><td>greater than or equal to</td>
 </tr><tr>
- <td><code>&lt;=</code></td><td>for</td><td>less than or equal to</td>
+ <td>&lt;=</td><td>for</td><td>less than or equal to</td>
 </tr>
 </table>
 

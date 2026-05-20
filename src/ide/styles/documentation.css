@@ -166,7 +166,7 @@ el-topic {
 }
 
 .accordion > .acc-title::before {
-  content: "\25ba";
+  content: "\25b6";
   padding-right: 1.0em;
 }
 
