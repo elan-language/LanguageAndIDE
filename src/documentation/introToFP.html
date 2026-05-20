@@ -255,41 +255,37 @@ but differs from it in these important respects:</p>
 <p><el-method>if</el-method> functions can be nested. However, nesting more than one level can become very hard to read.
 In this circumstance it is often better to delegate to new function that perform part of the logic.</p>
 
-<h2>Principle 6: Iteration may be achieved using recursion</h2>
+<h2 id="recursion">Principle 6: Iteration may be achieved using recursion</h2>
 
 <p>There are two ways to achieve implement iteration within a function. The first is using 'recursion' - also known as 'recursive' functions).
-   (The second approach is addressed in the next heading.)</p>
+   (The second approach is addressed <a href="#">Principle 8</a>)</p>
 
-<p>A recursive function is best understood by looking at a classic example
-  - the calculation of a factorial:</p>
+<p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example. 
+  The <b>Binary Search - recursive</b> demo contains this code:</p>
 
 <codeblock>
-function factorial(n as Int) returns Int
-  return if(n < 2, 1, n*factorial(n - 1))
+function binarySearch(li as List&lt;of String@gt;, item as String) returns Boolean
+  variable result set to false
+  if li.length() > 0 then
+    variable mid set to divAsInt(li.length(), 2)
+    variable value set to li[mid]
+    if item.equals(value) then
+      set result to true
+    elif item.isBefore(value) then
+      set result to binarySearch(li.subList(0, mid), item)
+    else
+      set result to binarySearch(li.subList(mid + 1, li.length()), item)
+    end if
+  end if
+  return result
 end function
 </codeblock>
 
-<p>This simple example illustrates the three key principles of recursive functions:</p>
+<p>This code defines the function named <el-method>binarySearch</el-method>, but also <i>uses</i> (evaluates) that function within its own implementation.
+It also shows the two important principles of designing a recursive function are:</p>
 
 <ul>
-  <li>A recursive function calls <i>itself</i> in at least one place within the function. 
-    In this example, the <el-method>factorial</el-method> function is called <i>directly</i>
-  within from within the function. 
-  A different example, however, might call another function that in turn calls the original one. Either way there is always an implicit 'looping'.</li>
-  <li>Typically, the function calls itself to solve a <i>smaller version of the same problem</i> - in this example <code>factorial(n)</code> calls <code>factorial(n - 1)</code>.
-  If it called itself with the <i>same</i> argument(s), this would cause an infinite loop and would eventually result in a 'Stack overflow' - which crashes the program.</li>
-  <li>This recursion must 'bottom out' and there must be specific code to detect this, and then <i>not</i> make another recursive call. In the above example
-  the execution bottoms out when <code>n < 2</code>, return 1 at that point. The most common mistake when designing a recursive function is to forget
-  to implement a condition and write, say:
-
-<codeblock>
-function factorial(n as Int) returns Int
-  return n*factorial(n - 1)
-end function
-</codeblock>
-
-whereby the function would never exit naturally, and would eventually fail as a stack overflow error.
-</li>
+  <li>That when the function is evaluated within the function body</li>
 </ul>
 
   
@@ -325,22 +321,15 @@ or
   You can never actually mutate a string - such as converting it to upper case or trimming off the leading spaces, you have to write, for example:
 
 <codeblock>
-  let myNewString be myString. "Geography")
+  let myNewString be myString.upperCase()
 </codeblock>
 
+<p>When we want to apply operations to all members in a list we need to use iteration, which means either using <a href="recursion">recursion</a> or <a href="hofs">higher-order functions</a><div class=""> 
+  and within that technique make use of the various <el-method>with...</el-method> methods. The <b>Merge Sort</b> demo offers a good example. 
+  The principal function <el-method>sort</el-method> delegates to four other functions. These use the <el-method>length</el-method> 
+  and <el-method>subList</el-method> function methods to derive information from a list, and the <el-method>withAppendList</el-method>
+  function method to build the sorted list:
 
-
-  
-  <b>Merge Sort</b> demo,
-  which, as well as demonstrating recursion, is a good example of functional decomposition: the <i>principal</i> function, <el-method>sort</el-method>
-  delegates work, directly or indirectly to four other functions - 
-  <el-method>sortedFrontHalf</el-method>, <el-method>sortedBackHalf</el-method>, <el-method>merge</el-method>, and <el-method>mergeNonEmpty</el-method>
-  each of which has its own associated unit tests. This makes the code easier to read, and possible to test progressively.</p>
-
-  <p><el-method>sort</el-method> and <el-method>merge</el-method> are both recursive. This might not be immediately apparent, because they don't
-    make use of themselves <i>directly</i>. But <el-method>sort</el-method> delegates work to <el-method>sortedFrontHalf</el-method> 
-    and <el-method>sortedBackHalf</el-method>, both of which in turn make use of the <el-method>sort</el-method>:
-    
 <codeblock>
 function sort(li as List&lt;of String&gt;) returns List&lt;of String&gt;
   return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
@@ -357,11 +346,7 @@ function sortedBackHalf(li as List&lt;of String&gt;) returns List&lt;of String&g
   let backHalf be li.subList(mid, li.length())
   return sort(backHalf)
 end function
-</codeblock>
 
-    Similarly <el-method>merge</el-method> delegates to <el-method>mergeNonEmpty</el-method>, which in turn makes use of <el-method>merge</el-method>:
-
-<codeblock>
 function merge(a as List&lt;of String&gt;, b as List&lt;of String&gt;) returns List&lt;of String&gt;
   let oneIsEmpty be (a.length() is 0) or (b.length() is 0)
   return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
@@ -376,31 +361,23 @@ function mergeNonEmpty(a as List&lt;of String&gt;, b as List&lt;of String&gt;) r
 end function
 </codeblock>
 
-<p>These examples demonstrate two key principles of </p>
-
-<h2>Principle 7: A function may be passed into, or returned by, another function </3>
+<h2 >Principle 8: A function may be passed into, or returned by, another function </3>
 # Higher order functions
 - Use of Hofs 
   - passing in a function name
   - defining a lambda
 
-<h2>Principle 8: Data structures should never be mutated</h2>
-- standard data structures
-  - `with` methods return a copy with specified differences
-  - with methods may be chained. (Maybe add graphics into best-fit demo?)
-  - simple examples
+  Using Hofs to iterate over a '2D data structure'
 
+<h2>Principle 9: User-defined classes should define their own 'with' methods for updates</h2>
 - ser-defined types
   - Classes can only have function methods, no procedures
   - 'updates' (like strings, or lists) are done by returning a copy with the changes
   - 'with' instructions are just a special case of a function method, with own template, and code and a 'set' which you should not delete. 
 
-<h3>Patterns and Practices</h3>
+<h3>Principle : (Random)</h3>
 
 <h2 id="random_fp">Generating Random numbers within functions</h2>
-
-<h2>Manipulating 2D lists</h2>
-
 
 </body>
 </html>
