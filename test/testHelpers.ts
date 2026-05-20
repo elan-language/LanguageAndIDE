@@ -60,12 +60,13 @@ export async function assertGeneratesSameElanSource(fl : FileImpl, source: strin
   const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = source.replaceAll("\r", "");
+  let msg = "";
 
   try {
     assert.strictEqual(actualSource, expectedSource);
   }
   catch {
-    let msg = `rendered elan incorrect`;
+    msg = `rendered elan incorrect`;
     if (updateTestFiles) {
       // update original not copied 
       sourceFile = sourceFile.replace("out\/test", "src");
@@ -73,13 +74,14 @@ export async function assertGeneratesSameElanSource(fl : FileImpl, source: strin
       updateTestFile(sourceFile, actualSource);
       msg = msg + ": test file updated";
     }
-    throw new Error(msg);
   }
+  return msg;
 }
 
 export async function assertGeneratesHtml(fl: FileImpl, path: string) {
   let actualHtml = "";
   let htmlFile = path + ".html";
+  let msg = ""
   
   try {  
     const renderedHtml = await fl.renderAsHtml();
@@ -89,7 +91,7 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
     assert.strictEqual(actualHtml, expectedHtml);
   }
   catch {
-    let msg = `rendered html incorrect`;
+    msg = `rendered html incorrect`;
     if (updateTestFiles) {
       // update original not copied 
       htmlFile = htmlFile.replace("out\/", "");
@@ -97,8 +99,9 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
       updateTestFile(htmlFile, actualHtml);
       msg = msg + ": test file updated";
     }
-    throw new Error(msg);
+   
   }
+   return msg;
 }
 
 export async function assertExports(fl: FileImpl, path: string, language: Language) {
@@ -132,6 +135,21 @@ export async function assertExportsAll(fl: FileImpl, path: string) {
   msgs.push(await assertExports(fl, path, LanguageVB.Instance));
   msgs.push(await assertExports(fl, path, LanguageCS.Instance));
   msgs.push(await assertExports(fl, path, LanguageJava.Instance));
+
+  if (msgs.some(m => m)) {
+    return msgs.join(", ");
+  }
+  return "";
+}
+
+export async function testElanFile(fn: string) {
+  const [fl, source, sourceFile, testPath] = await getFile(fn);
+  await assertParsesAndCompilesAndTests(fl);
+
+  let msgs = [];
+  msgs.push(await assertGeneratesSameElanSource(fl, source, sourceFile));
+  msgs.push(await assertGeneratesHtml(fl, testPath));
+  msgs.push(await assertExportsAll(fl, testPath));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "))
