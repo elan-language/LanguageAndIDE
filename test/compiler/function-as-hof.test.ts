@@ -450,7 +450,7 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameters - Int, Int - returning a Int.LangRef.html#compile_error",
     ]);
   });
 
@@ -483,7 +483,7 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.LangRef.html#compile_error",
     ]);
   });
 
@@ -715,7 +715,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -745,7 +745,7 @@ end function`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 });

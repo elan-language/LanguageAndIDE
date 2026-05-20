@@ -22,13 +22,14 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
     const expr1Code = this.expr1.compile();
     const expr2Code = this.expr2.compile();
 
-    mustBeBooleanCondition(this.condition, this.compileErrors, this.fieldId);
+    mustBeBooleanCondition(this.condition, this.compileErrors, this.fieldId, this.scope);
 
     mustBeCompatibleType(
       this.expr1.symbolType(),
       this.expr2.symbolType(),
       this.compileErrors,
       this.fieldId,
+      this.scope,
     );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

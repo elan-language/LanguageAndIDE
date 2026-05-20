@@ -32,4 +32,10 @@ def test_bestFit(self) -> None:
   self.assertEqual(a.round(3), 0.766)
   self.assertEqual(b.round(3), 1.093)
 
+def test_bestFit_empty(self) -> None:
+  l1 = list[Point]() # let
+  a_b = bestFitLine(l1) # let
+  # NaN means 'Not A Number"
+  self.assertEqual(a_b.toString(), "(NaN, NaN)")
+
 main()

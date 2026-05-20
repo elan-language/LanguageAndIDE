@@ -73,6 +73,7 @@ export interface Language {
   HEX_PREFIX: string;
 
   START_OF_GENERIC: string;
+  END_OF_GENERIC: string;
   THIS_INSTANCE: string;
 
   EXPRESSION_KEYWORDS: string[];

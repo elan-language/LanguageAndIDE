@@ -80,7 +80,7 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
   <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List<of List<of Int>></code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
@@ -117,7 +117,7 @@ are passed around in a running program:</p>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
  <li><i>or</i> specified in the definition of:
  <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List<of Int></code></li>
+  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
   <li>parameters of functions and procedures</li>
   <li><b>return</b> value of a function</li>
   <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>concrete class</b></li>
@@ -185,7 +185,8 @@ with all the same property values except for specific changes that you want to m
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
  <code>variable point set to (3, 7)</code><br>
  <code>variable x set to point.item_0</code>
-</li>
+ </li>
+
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
   <code>enum Suit spades, hearts, diamonds, clubs</code><br>
   <code>variable suit set to Suit.spades</code></li>
@@ -193,13 +194,13 @@ with all the same property values except for specific changes that you want to m
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
 
-<code>
+<codeblock>
 constant maxHits set to 20
 function hits() returns Int
   variable maxHits set to 99
   return global.maxHits
 end function
-</code>
+</codeblock>
 
 <p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
@@ -284,7 +285,7 @@ end main
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 <codeblock>
-procedure inPlaceRippleSort(li as List<of Int>)
+procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
@@ -320,11 +321,11 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <codeblock>
 main
   variable arg set to "abc"
-  variable argRef set to new AsRef<of String>(arg)
+  variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
   call print(argRef.value())
 end main
-procedure changeArg(pointer as AsRef<of String>)
+procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
@@ -353,7 +354,7 @@ This may be an expression that will be evaluated before returning.</p>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
 <codeblock>
-function binarySearch(li as List<of String>, item as String) returns Boolean
+function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -413,7 +414,7 @@ test test_binarySearch
   variable li3 set to ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  variable li4 set to new List<of String>()
+  variable li4 set to new List&lt;of String&gt;()
   assert binarySearch(li4, "pear") is false
 end test
 </codeblock>
@@ -473,10 +474,10 @@ end test
 <codeblock>
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
 function setInStyle(s as String) returns String
-  return "<style>" + s + "<style>"
+  return "&lt;style&gt;" + s + "&lt;style&gt;"
 end function
 test test_setInStyle
-  assert setInStyle(sGW) is "<style>" + sGW + "</style>"
+  assert setInStyle(sGW) is "&lt;style&gt;" + sGW + "&lt;style&gt;"
   # assert fail message will be "s found at [146] {expected: /)"
 end test
 </codeblock>
@@ -541,7 +542,7 @@ main
   call print(x.names.toString())
 end main
 class Thing
-  property names as List<of String>
+  property names as List&lt;of String&gt;
   constructor()
     set this.names to createList(6, "X")
   end constructor
@@ -578,7 +579,7 @@ class Apple
       end if
     end while
   end procedure
-  procedure updateBlocks(blocks as List<of List<of Int>>)
+  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
     set blocks[this.location.x][this.location.y] to red
   end procedure
 end class
@@ -691,7 +692,7 @@ class Hand
     return "a Hand"
   end function
 end class
-<codeblock>
+</codeblock>
 <hr>
 </div></div>
 
@@ -707,7 +708,7 @@ end class
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
-<code>
+<codeblock>
 constant maxHits set to 10
 constant turquoise set to 0x00ced1
 constant liveCell set to black
@@ -715,7 +716,7 @@ constant speedOfLight set to 299792.458
 constant gameOver set to true
 constant euro set to 0x20ac
 constant warningMsg set to "Limit reached"
-</code>
+</codeblock>
 
 <h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
 <p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a <b>function</b>
@@ -925,9 +926,9 @@ class Game
   property height as Int
   property board as Board
   property head as Square
-  property body as List<of Square>
+  property body as List&lt;of Square&gt;
   constructor()
-  end constuctor
+  end constructor
   function toString() returns String
     return "undefined"
   end function
@@ -963,9 +964,9 @@ class Teacher
 end class
 class Pupil
   constructor()
-    set this.tutor to new Maybe<of Teacher>()
+    set this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
-  property tutor as Maybe<of Teacher>
+  property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
     return "undefined"
   end function
@@ -974,7 +975,7 @@ end class
 <hr>
 </div></div>
 
-<h2 id="unctionMethod"><b>function</b> method</h2>
+<h2 id="FunctionMethod"><b>function</b> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf08e;</i></a>. The differences are:</p>
 <ul>
 <li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> on an instance.</li>
@@ -1417,7 +1418,7 @@ end main
  <td>
 <codeblock>
 main
-  variable li set to new List<of Int>()
+  variable li set to new List&lt;of Int&gt;()
   set li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
@@ -1599,7 +1600,7 @@ You would typically define a <b>lambda</b>:</p>
 
 Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
 <codeblock>
-function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
+function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
   variable neighbours set to neighbourCells(c)
   variable live set to neighbours.filter(lambda i as Int => cells[i])
   return live.length()
@@ -1654,7 +1655,7 @@ end procedure
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
 
 <codeblock>
-  variable headRef set to new AsRef<of List<of Int>>(head)
+  variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
 </codeblock>
 
 <h1 id="Comment">Comments</h1>

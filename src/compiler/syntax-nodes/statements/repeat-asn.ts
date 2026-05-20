@@ -15,7 +15,13 @@ export class RepeatAsn extends CompoundAsn {
 
   compile(): string {
     this.compileErrors = [];
-    mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
+    mustBeOfType(
+      this.condition,
+      BooleanType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

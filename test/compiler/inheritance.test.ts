@@ -1955,7 +1955,7 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "Member 'p1' must be of type Int.LangRef.html#MemberTypeCompileError",
       "Member 'setP1' must be of type Procedure (Int).LangRef.html#MemberTypeCompileError",
-      "Member 'product' must be of type Func<of  => Int>.LangRef.html#MemberTypeCompileError",
+      "Member 'product' must be of type lambda or function name that takes no parameters - returning a Int.LangRef.html#MemberTypeCompileError",
     ]);
   });
 
@@ -2012,7 +2012,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'product' must be of type Func<of  => Int>.LangRef.html#MemberTypeCompileError",
+      "Member 'product' must be of type lambda or function name that takes no parameters - returning a Int.LangRef.html#MemberTypeCompileError",
     ]);
   });
 

@@ -23,7 +23,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     const ofType = this.items[0]?.symbolType();
 
     for (const i of this.items) {
-      mustBeAssignableType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(ofType, i.symbolType(), this.compileErrors, this.fieldId, this.scope);
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");

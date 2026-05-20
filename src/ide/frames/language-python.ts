@@ -677,6 +677,7 @@ def clock():
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = "[";
+  END_OF_GENERIC: string = "]";
   THIS_INSTANCE: string = this.SELF;
   OVERRIDES = "";
   IMPLEMENTS = "";

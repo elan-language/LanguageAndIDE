@@ -32,12 +32,24 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     const ofValueType = first.symbolType();
 
     for (const i of items) {
-      mustBeAssignableType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
-      mustBeAssignableType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
+      mustBeAssignableType(
+        ofKeyType,
+        i.keySymbolType(),
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
+      mustBeAssignableType(
+        ofValueType,
+        i.symbolType(),
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
     }
 
     const st = this.symbolType();
-    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId);
+    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId, this.scope);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
 

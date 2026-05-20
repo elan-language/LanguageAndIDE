@@ -32,7 +32,7 @@ export class GlobalFunctionAsn extends FunctionAsn {
     const returnStatement = this.getReturnAsn().expr;
     const rst = returnStatement.symbolType();
 
-    mustBeAssignableType(rt, rst, this.compileErrors, this.fieldId);
+    mustBeAssignableType(rt, rst, this.compileErrors, this.fieldId, this.scope);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

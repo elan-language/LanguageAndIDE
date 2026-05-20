@@ -218,6 +218,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   HEX_PREFIX: string = "0x";
 
   START_OF_GENERIC: string = "<";
+  END_OF_GENERIC: string = ">";
   THIS_INSTANCE: string = this.THIS;
 
   EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];

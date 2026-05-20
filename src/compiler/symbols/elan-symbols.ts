@@ -140,3 +140,13 @@ export const elanSymbols = [
   tupleSymbol,
   funcSymbol,
 ];
+
+// without func symbol so that it doesn't show in symbol completion
+export const elanSymbolMatches = [
+  intSymbol,
+  floatSymbol,
+  stringSymbol,
+  booleanSymbol,
+  regExpSymbol,
+  tupleSymbol,
+];

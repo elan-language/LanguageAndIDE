@@ -5,7 +5,7 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../compiler/compiler-interfaces/semver";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { DuplicateSymbol } from "../../compiler/symbols/duplicate-symbol";
-import { elanSymbols } from "../../compiler/symbols/elan-symbols";
+import { elanSymbolMatches, elanSymbols } from "../../compiler/symbols/elan-symbols";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import {
   isByLanguageSymbol,
@@ -29,7 +29,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   constructor(
     private readonly scope: Scope,
     private readonly version: Semver,
-    private readonly language: Language,
+    public readonly language: Language,
   ) {
     super();
   }
@@ -111,7 +111,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const languageMatches = symbolMatches(id, all, this.byLanguage(elanSymbols));
+    const languageMatches = symbolMatches(id, all, this.byLanguage(elanSymbolMatches));
     const libMatches = this.scope.symbolMatches(id, all, this);
     const globalSymbols = this.children.filter((c) => isSymbol(c));
     const matches = symbolMatches(id, all, globalSymbols);
