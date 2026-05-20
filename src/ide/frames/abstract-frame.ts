@@ -3,6 +3,7 @@ import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
 import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import {
   addDeleteToContextMenu,
+  escapeHtmlChars,
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
   helper_CompileOrParseAsDisplayStatus,
@@ -305,7 +306,7 @@ export abstract class AbstractFrame implements Frame {
       }
       case "c": {
         if (e.modKey.control) {
-          this.copySelected();
+          this.copySelected(e.modKey.alt);
           codeHasChanged = true;
         }
         break;
@@ -368,8 +369,8 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  copySelected = () => {
-    if (!this.getParent().copySelectedChildren()) {
+  copySelected = (encode : boolean) => {
+    if (!this.getParent().copySelectedChildren(encode)) {
       this.pasteError = "Copy Failed: At least one selected frame does not parse";
       return true;
     }
@@ -398,7 +399,7 @@ export abstract class AbstractFrame implements Frame {
       return true;
     }
 
-    if (!parentHelper_copySelectedChildren(this.getParent())) {
+    if (!parentHelper_copySelectedChildren(this.getParent(), false)) {
       this.pasteError = "Cut Failed: At least one selected frame does not parse";
       return true;
     }
@@ -686,9 +687,9 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
-  copy = () => {
+  copy = (encode : boolean) => {
     const source = this.renderAsElanSource();
-    this.getFile().addCopiedSource(source);
+    this.getFile().addCopiedSource(encode ? escapeHtmlChars(source) : source);
     return false;
   };
 
@@ -834,7 +835,7 @@ export abstract class AbstractFrame implements Frame {
     }
     map.set("copyInternal", [
       "copy for internal use <span class='kb'>Ctrl+c</span>",
-      this.copySelected,
+      () => this.copySelected(false),
     ]);
     if (!(this.language().languageHtmlClass === "elan")) {
       map.set("copyExport", ["copy for export", this.exportSelected]);

@@ -35,7 +35,7 @@ export interface Parent {
 
   deleteSelectedChildren(): void;
 
-  copySelectedChildren(): boolean;
+  copySelectedChildren(encode : boolean): boolean;
 
   exportSelectedChildren(): boolean;
 
