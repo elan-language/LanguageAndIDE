@@ -48,6 +48,14 @@ suite("Demo compile", () => {
     await assertExportsAll(fl, testPath);
   });
 
+  test("test factorial", async () => {
+    const [fl, source, sourceFile, testPath] = await getFile("factorial");
+    await assertParsesAndCompilesAndTests(fl);
+    await assertGeneratesSameElanSource(fl, source, sourceFile);
+    await assertGeneratesHtml(fl, testPath);
+    await assertExportsAll(fl, testPath);
+  });
+
   test("test fern", async () => {
     const [fl, source, sourceFile, testPath] = await getFile("fern");
     await assertParsesAndCompilesAndTests(fl);

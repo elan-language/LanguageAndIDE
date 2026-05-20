@@ -1,0 +1,18 @@
+# aa53ada741283ebd6410268f8533d8d69db8542f2c713735b5c28620f4003cb0 Elan 2.0.0-alpha4 valid
+
+main
+  for n in range(1, 21)
+    call print($"{n}! is {factorial(n)}")
+  end for
+end main
+
+function factorial(n as Int) returns Int
+  return if(n < 2, 1, n*factorial(n - 1))
+end function
+
+test test_factorial
+  assert factorial(2) is 2
+  assert factorial(3) is 6
+  assert factorial(7) is 5040
+  assert factorial(10) is 3628800
+end test
