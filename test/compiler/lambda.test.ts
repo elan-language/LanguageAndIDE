@@ -402,7 +402,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.LangRef.html#compile_error",
     ]);
   });
 
@@ -458,7 +458,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of  => Int>), Provided: Int, Func<of Int => Int>.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes no parameters - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a Int.LangRef.html#compile_error",
     ]);
   });
 
@@ -486,7 +486,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of  => Int>.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes no parameters - returning a Int.LangRef.html#compile_error",
     ]);
   });
 

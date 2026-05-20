@@ -1311,7 +1311,7 @@ end function`;
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1340,7 +1340,7 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1374,7 +1374,7 @@ end function`;
     assertDoesNotCompile(fileImpl, [
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Incompatible types. Expected: Func<of  => Int>, Provided: Func<of Int => Float>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: lambda or function name that takes no parameters - returning a Int, Provided: lambda or function name that takes parameter - Int - returning a Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1436,7 +1436,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1464,7 +1464,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1493,7 +1493,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined for type 'Func<of  => Int>'.LangRef.html#compile_error",
+      "'b' is not defined for type 'lambda or function name that takes no parameters - returning a Int'.LangRef.html#compile_error",
     ]);
   });
 
