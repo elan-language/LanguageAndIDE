@@ -132,7 +132,8 @@ functionality, resulting in bugs that might not surface to the user for a long t
 
     <p>It follows that the higher the percentage of a program's total instructions that exist within functions the higher the
       percentage of your code than can be <i>safely</i> unit tested. The table below shows the percentage of instructions covered
-      by tests for the demo versions of two of the demo programs. You can verify this information by examining the demo code.</p>
+      by tests for two of the demo programs that offer both procedural and functional implementations. 
+      You can verify this information by examining the demo code.</p>
 
   <table class="tableType" id="">
   <tr>
@@ -141,7 +142,6 @@ functionality, resulting in bugs that might not surface to the user for a long t
     <th>Snake - functional</th>
     <th>Life - procedural</th>
     <th>Life - functional</th>
-    <th>Wordle Solver</th>
   </tr>
   <tr>
     <td>Total instructions, excluding tests</td>
@@ -149,7 +149,6 @@ functionality, resulting in bugs that might not surface to the user for a long t
     <td>115</td>
     <td>78</td>
     <td>76</td>
-    <td>63</td>
   </tr>
   <tr>
     <td>Instructions covered by tests</td>
@@ -157,7 +156,6 @@ functionality, resulting in bugs that might not surface to the user for a long t
     <td>90%</td>
     <td>73%</td>
     <td>90%</td>
-    <td>87%</td>
   </tr>
   </table>
 
@@ -170,7 +168,7 @@ functionality, resulting in bugs that might not surface to the user for a long t
 
 <h2>Principle 4: Internally, functions should return an expression, optionally preceded by 'let' instructions</h2>
 
-<p>In the FP demos you will see that a significant number of functions contain only of a <code>return</code> followed by an expression to be evaluated, for example:</p>
+<p>In the FP demos you will see that a significant number of functions simply <code>return</code> an expression to be evaluated, for example:</p>
 
 <codeblock>
 function gameOver(g as Game) returns Boolean
@@ -178,7 +176,7 @@ function gameOver(g as Game) returns Boolean
 end function
 </codeblock>
 
-<p>Other functions precede the <code>return</code> by one or more <b>let</b> instructions, for example</p>
+<p>Other functions precede the <code>return</code> by one or more <b>let statement</b>, for example</p>
 
 <codeblock>
 function hasHitEdge(g as Game) returns Boolean
@@ -188,15 +186,108 @@ function hasHitEdge(g as Game) returns Boolean
 end function
 </codeblock>
 
-<p>If you try to insert a new </p>
+<p>A <b>let statement</b> works like a <b>variable definition</b> except that the named value created <i>may not be re-assigned</i>. But it differs from
+a <b>constant</b> in that:</p>
+
+<ul>
+  <li>it is defined within a <b>function</b> (or a <b>test</b>), whereas a <b>constant</b> is always defined at global (file) level.</li>
+  <li>it may be defined by an expression rather than just by a literal value</li>
+  <li>it may refer to a list, or other data structure</li>
+</ul>
+
+<p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
+
+<ul>
+  <li>To make a long expression easier to read</li>
+  <li>To eliminate duplication - where the same sub-expression otherwise appears in full in more than one place.</li>
+  <li>Within a test, because the 'actual' field does not support 'chained' expressions (expressions containing more than one 'dot')</li>
+</ul>
+
+<p>When running in the <b>Functional</b> profile, <b>let statement</b> is the only type of instruction that you may add within a function, 
+  and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You may still add comments.)</p>
 
 <h2>Principle 5: Selection is implemented using 'if expressions'</h2>
-- Functions consist of just 'return expression' - optionally preceded by 'let' instructions (like 'variable' but can't be modified)
-  - so 'let' is the only instruction offered within a function
-- Use of conditional expressions instead of if statements
-- Use of recursion instead of loops (one file with multiple classics incl. reverse (using head/tail), merge, factorial, fibonnacci, insertion sort )
+
+<p>When running in the Functional profile, you cannot add an <b>if</b> <i>instruction</i> into a function. 
+  So how do you implement 'selection' and 'iteration'? 
+  Iteration will be addressed in the next heading, but selection is handled by means of a 'conditional expression'.</p>
+
+<p>All of the languages supported by Elan have their own, custom syntax for conditional expressions. For simplicity,
+  and understandability, Elan offers an <el-method>if</el-method> <i>function</i> that is used identically in all the languages.
+  Incidentally, the  <el-method>if</el-method> function works the same way that it does in an Excel spreadsheets 
+  (though 'IF', like all Excel functions, is capitalised, therein). Here are some examples of conditional expressions
+  from the demo programs:
+</p>
+
+<codeblock>
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List&lt;of String&gt;) returns WordCount
+  let isBetter be wc2.count < wc1.count
+  let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
+  return if(isBetter or isEqualAndPossAnswer, wc2, wc1)
+end function
+</codeblock>
+
+<codeblock>
+function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+  let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
+  return if(live, black, white)
+end function
+</codeblock>
+
+<p>The <el-method>if</el-method> function requires three arguments to be provided, in the following order:</p>
+
+<ol>
+  <li>The condition. This condition may compare two values, or may call another function that returns a Boolean value</li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to true</li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to false</li>
+</ol>
+
+<p>The <el-method>if</el-method> function, then, performs a role somewhat similar to an <b>if</b> <i>instruction</i>,
+but differs from it in these important respects:</p>
+
+<ul>
+  <li>The <el-method>if</el-method> function is <i>not</i> an instruction - forms part, or all, of an <i>expression</i> and may be used
+    within any expression that forms part of an instruction.</li>
+  <li>It <i>returns</i> a value, which must be <i>used</i>.</li>
+  <li>It may make use of other expressions to define the arguments, but may not contain other <i>instructions</i>.</li>
+</ul>
+
+<p><el-method>if</el-method> functions can be nested. However, nesting more than one level can become very hard to read.
+In this circumstance it is often better to delegate to new function that perform part of the logic.</p>
 
 <h2>Principle 6: Iteration may be achieved using recursion</h2>
+
+<p>There are two ways to achieve implement iteration within a function. The first is using 'recursion' - also known as 'recursive' functions).
+   (The second approach is addressed in the next heading.)</p>
+
+<p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example. 
+  The <b>Binary Search - recursive</b> demo contains this code:</p>
+
+<codeblock>
+function binarySearch(li as List&lt;of String@gt;, item as String) returns Boolean
+  variable result set to false
+  if li.length() > 0 then
+    variable mid set to divAsInt(li.length(), 2)
+    variable value set to li[mid]
+    if item.equals(value) then
+      set result to true
+    elif item.isBefore(value) then
+      set result to binarySearch(li.subList(0, mid), item)
+    else
+      set result to binarySearch(li.subList(mid + 1, li.length()), item)
+    end if
+  end if
+  return result
+end function
+</codeblock>
+
+<p>This code defines the function named <el-method>binarySearch</el-method>, but also <i>uses</i> (evaluates) that function within its own implementation.
+It also shows the two important principles of designing a recursive function are:</p>
+
+<ul>
+  <li>That when the function is evaluated within the function body</li>
+</ul>
+
 
 <h2>Principle 7: A function may be passed into, or returned by, another function </3>
 # Higher order functions
