@@ -186,7 +186,7 @@ function isValidOrIncomplete(f: Frame) {
   return status === ParseStatus.valid || status === ParseStatus.incomplete;
 }
 
-export function parentHelper_copySelectedChildren(parent: Parent): boolean {
+export function parentHelper_copySelectedChildren(parent: Parent, encode: boolean): boolean {
   const toCopy = parentHelper_getAllSelectedChildren(parent);
 
   if (toCopy.some((tc) => !isValidOrIncomplete(tc))) {
@@ -194,7 +194,7 @@ export function parentHelper_copySelectedChildren(parent: Parent): boolean {
   }
 
   for (const tc of toCopy) {
-    tc.copy();
+    tc.copy(encode);
   }
 
   return true;
