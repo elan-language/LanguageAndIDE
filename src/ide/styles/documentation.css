@@ -18,7 +18,10 @@ code span {
 
 codeblock {
   display: block;
-  white-space: pre-wrap;  
+}
+
+codeblock:not(:has(*)) {    /* has no children */
+  white-space: pre-wrap;
 }
 
 codeblock div {
