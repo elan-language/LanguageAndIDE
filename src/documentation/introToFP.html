@@ -260,13 +260,76 @@ In this circumstance it is often better to delegate to new function that perform
 <p>There are two ways to achieve implement iteration within a function. The first is using 'recursion' - also known as 'recursive' functions).
    (The second approach is addressed in the next heading.)</p>
 
-<p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by looking at a classic example
-  - the calculation of a factorial:
+<p>A recursive function is best understood by looking at a classic example
+  - the calculation of a factorial:</p>
+
+<codeblock>
+function factorial(n as Int) returns Int
+  return if(n < 2, 1, n*factorial(n - 1))
+end function
+</codeblock>
+
+<p>This simple example illustrates the three key principles of recursive functions:</p>
+
+<ul>
+  <li>A recursive function calls <i>itself</i> in at least one place within the function. 
+    In this example, the <el-method>factorial</el-method> function is called <i>directly</i>
+  within from within the function. 
+  A different example, however, might call another function that in turn calls the original one. Either way there is always an implicit 'looping'.</li>
+  <li>Typically, the function calls itself to solve a <i>smaller version of the same problem</i> - in this example <code>factorial(n)</code> calls <code>factorial(n - 1)</code>.
+  If it called itself with the <i>same</i> argument(s), this would cause an infinite loop and would eventually result in a 'Stack overflow' - which crashes the program.</li>
+  <li>This recursion must 'bottom out' and there must be specific code to detect this, and then <i>not</i> make another recursive call. In the above example
+  the execution bottoms out when <code>n < 2</code>, return 1 at that point. The most common mistake when designing a recursive function is to forget
+  to implement a condition and write, say:
+
+<codeblock>
+function factorial(n as Int) returns Int
+  return n*factorial(n - 1)
+end function
+</codeblock>
+
+whereby the function would never exit naturally, and would eventually fail as a stack overflow error.
+</li>
+</ul>
 
   
   
-  
-<h3>Processing lists and other data structures
+<h3>Principle 7: Lists and other data structures are never mutated</h3>
+
+<p>In procedural programming a list may be mutated either by re-assigning an indexed value, for example:
+
+<codeblock>
+  set mySubjects[3] to "Geography"
+</codeblock>
+
+or by calling one of the available procedure methods on on it such as:
+
+<codeblock>
+  call mySubjects.append("Music")
+</codeblock>
+
+but in FP this is not permitted. Data structures are never to be mutated. Instead, you may call a function that returns 
+a <i>copy</i> of the data structures, but with specified differences from the original. For example, you may write:
+
+<codeblock>
+  let myNewSubjects be mySubjects.withSet(3, "Geography")
+</codeblock>
+or 
+<codeblock>
+  let myNewSubjects be mySubjects.withAppend("Music")
+</codeblock>
+</p>
+
+<p>At first sight this seem awkward, strange, and certainly inefficient. 
+  But though you might never have thought about it in these terms, this is what you have always done when manipulating a <code>String</code>.
+  You can never actually mutate a string - such as converting it to upper case or trimming off the leading spaces, you have to write, for example:
+
+<codeblock>
+  let myNewString be myString. "Geography")
+</codeblock>
+
+
+
   
   <b>Merge Sort</b> demo,
   which, as well as demonstrating recursion, is a good example of functional decomposition: the <i>principal</i> function, <el-method>sort</el-method>
