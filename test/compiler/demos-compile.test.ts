@@ -48,7 +48,6 @@ suite("Demo compile", () => {
   test("test life_FP", async () => {
     await testElanFile("life_FP");
   });
-
   test("test maze-generator", async () => {
     await testElanFile("maze-generator");
   });
