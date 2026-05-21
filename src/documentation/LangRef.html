@@ -704,10 +704,11 @@ end class
  Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
  <code>String</code>.</p>
-<p>A 'constant' data structure can be defined by using a <b>function</b> which is then referenced to make the structure available in a <b>variable definition</b>. See <a href="#constant_structure">Constant data structure <i class="fa">&#xf08e;</i></a>.</p>
 <p>Constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
 <p>A constant can be defined by reference to a previously defined constant or to a system constant,
  but take care not to re-define a <a href="LibRef.html#Constants">system constant <i class="fa">&#xf08e;</i></a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
+<p>A 'constant' data structure can be defined by using a <b>function</b> which is then referenced from wherever needed.
+ See <a href="#constantStructure">Constant data structures <i class="fa">&#xf08e;</i></a>.</p>
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
@@ -722,19 +723,20 @@ constant warningMsg set to "Limit reached"
 </codeblock>
 
 <h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
-<p>To define a data structure that is to be considered a constant in your program, you have to initialise it with a <b>function</b>
-whose return value is put into a variable.</p>
-<p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours in indexable variables:</p>
+<p>To use a data structure that is to be a constant in your program, you define it as the value of a <b>function</b>
+which cam then be referenced from anywhere in the program, often from within an expression.</p>
+<p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours which
+are indexable:</p>
 
 <codeblock>
 main
-  variable rainbow set to getRainbow()
-  variable suitColours set to getSuitColours()
+  call print ($"{rainbow()[0]} is violet")
+  call print ($"{suitColours()["hearts"]} is red")
 end main
-function getRainbow() returns List<of Int>
+function rainbow() returns List<of Int>
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
-function getSuitColours() returns Dictionary<of String, Int>
+function suitColours() returns Dictionary<of String, Int>
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
