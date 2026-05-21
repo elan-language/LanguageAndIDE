@@ -224,7 +224,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div id="Method"></div>
 <ul>
  <li><b>main</b>, <b>procedure</b> and <b>function</b> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions <i class="fa">&#xf08e;</i></a> within them.</li>
- <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert equal</b> <i class="fa">&#xf08e;</i></a> instruction for testing functions during development of your program.</li>
+ <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert</b> equal <i class="fa">&#xf08e;</i></a> instruction for testing functions during development of your program.</li>
  <li><b>concrete class</b>, <b>abstract class</b>, and <b>interface</b> define data structures and these always contain <a href="#Member">members <i class="fa">&#xf08e;</i></a>.</li>
  <li><b>constant</b> and <b>enum</b> do not contain any further instructions: only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
@@ -281,7 +281,7 @@ end main
 <p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of procedure</h4>
+<h4 class="no-TOC acc-title">Example of a <b>procedure</b></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 <codeblock>
@@ -314,7 +314,7 @@ end procedure
 must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of call by reference</h4>
+<h4 class="no-TOC acc-title">Example of a call by reference</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
@@ -350,7 +350,7 @@ You follow the <b>return</b> instruction with the value to be returned by the fu
 This may be an expression that will be evaluated before returning.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of functions</h4>
+<h4 class="no-TOC acc-title">Examples of <b>function</b>s</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
 <codeblock>
@@ -394,10 +394,10 @@ end function
 
 <h2 id="test"><b>test</b></h2>
 <p>A <b>test</b> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
-<p>Without having to run your program, the <b>assert equal</b> instructions show whether your assertions pass or fail.
+<p>Without having to run your program, the <b>assert</b> equal instructions show whether your assertions pass or fail.
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a set of <b>assert equal</b> instructions that test a <b>function</b></h4>
+<h4 class="no-TOC acc-title">Example of a set of <b>assert</b> equal instructions that test a <b>function</b></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <el-method>binarySearch</el-method> on four test lists</p>
 <codeblock>
@@ -428,9 +428,9 @@ end test
  <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test.
  You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
  <li><b>test</b> instructions may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <b>test</b> instruction may contain any number of <b>assert equal</b> instructions. The test runner is part of the IDE and it automatically attempts to run all <b>assert equal</b> instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <b>assert equal</b> failure) then execution of the test will stop and remaining <b>assert equal</b>s will be shown as 'not run'.</li>
- <li>In addition to <b>assert equal</b> instructions, a <b>test</b> may contain any other instructions that may be added into a <b>function</b>.</li>
- <li>All <b>assert equal</b> statements should be at the top level within the <b>test</b> instruction; none may be put into a loop structure.</li>
+ <li>A <b>test</b> instruction may contain any number of <b>assert</b> equal instructions. The test runner is part of the IDE and it automatically attempts to run all <b>assert</b> equal instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <b>assert</b> equal failure) then execution of the test will stop and remaining <b>assert</b> equals will be shown as 'not run'.</li>
+ <li>In addition to <b>assert</b> equal instructions, a <b>test</b> may contain any other instructions that may be added into a <b>function</b>.</li>
+ <li>All <b>assert</b> equal statements should be at the top level within the <b>test</b> instruction; none may be put into a loop structure.</li>
 </ul>
 
 <h3 class="no-TOC">Testing Float values</h3>
@@ -486,7 +486,7 @@ end test
 
 <h3 class="no-TOC" id="ignore">Ignoring tests</h3>
 <p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when <b>test</b>s or <b>assert equal</b>s are <code>ghosted</code>, all the tests will be run and their status shown, but
+<p>Even when <b>test</b>s or <b>assert</b> equals are <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <div class="accordion">
@@ -555,7 +555,7 @@ end class
 <p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example concrete class definition</h4>
+<h4 class="no-TOC acc-title">Example definition of a <b>concrete class</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
@@ -621,8 +621,11 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<code>function calculateDiscount(d as Float) returns Float</code>
-<code>  return discount</code>
+<codeblock>
+function calculateDiscount(a as Float, d as Float) returns Float
+  let discount be a*d
+return discount
+</codeblock>
 
 <p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
@@ -753,10 +756,10 @@ enum Outcome undecided, win, lose, draw, winDouble
 </codeblock>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of use</h4>
+<h4 class="no-TOC acc-title">Examples of use of <b>enum</b></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To retrieve a valid 'value':</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To retrieve a valid 'value':</p>
 <codeblock>
 enum Status pending, playing, standing, blackjack, bust
 main
@@ -765,7 +768,7 @@ end main
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To get a valid option from an abbreviation (in demo program pathfinder.elan):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To get a valid option from an abbreviation (in demo program pathfinder.elan):</p>
 <codeblock>
 enum Algorithm dijkstra, aStar, heuristic
 function getAlgFromLetter(letter as String) returns Algorithm
@@ -775,7 +778,7 @@ end function
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; A function to turn directions held in an <b>enum</b> through 90&deg; clockwise:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; A function to turn directions held in an <b>enum</b> through 90&deg; clockwise:</p>
 <codeblock>
 enum Compass north, east, south, west
 main
@@ -1041,8 +1044,8 @@ end class
  <a href="#for"><b>for loop</b> <i class="fa">&#xf08e;</i></a>,
  <a href="#call"><b>call procedure</b> <i class="fa">&#xf08e;</i></a>,
  <a href="#try"><b>try</b> <i class="fa">&#xf08e;</i></a>,
- <a href="#throw"><b>throw exception</b> <i class="fa">&#xf08e;</i></a>
- and, within a test, <a href="#assert"><b>assert equal</b> <i class="fa">&#xf08e;</i></a>.
+ <a href="#throw"><b>throw</b> <i class="fa">&#xf08e;</i></a>
+ and, within a test, <a href="#assert"><b>assert</b> equal <i class="fa">&#xf08e;</i></a>.
 </p>
 
 <h2 id="variable"><b>variable definition</b></h2>
@@ -1129,77 +1132,38 @@ main
 end main
 </codeblock>
 
-<h2 id="for"><b>for</b></h2>
-<div id="to"></div>
-<div id="step"></div>
+<h2 id="for"><b>for loop</b></h2>
 <p>The construct
 <codeblock>
   for p in q
   end for
 </codeblock>
-specifies looping through a sequence of characters in a <code>String</code> or items in a <code>List</code>.
-The forms of the <b>for loop</b> are:</p>
-<ul>
- <li>The loop variable <el-id>p</el-id> and the subject <el-id>q</el-id> are both of Type <code>String</code>:<br>
-  <code>variable title set to "Winnie the Pooh"</code>
-  <code>for ch in title</code>
-    <code>call print(ch)</code>
-  <code>end for</code>
+specifies looping through a sequence either of characters in a <code>String</code>, or of items in a <code>List</code>.</p>
+<p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
 
-  puts each character in <el-id>title</el-id> in turn into <code>String</code> <el-id>ch</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>Int</code>):
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the Type of a List's items (here <code>Int</code>),
+and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
 <codeblock>
+procedure printPrimes()
   variable primes set to [2, 3, 5, 7, 11]
   for n in primes
     call print(n)
   end for
-</codeblock>
-  puts each item in the List <el-id>primes</el-id> in turn into <code>Int</code> <el-id>n</el-id>.</li>
- <li>The loop variable <el-id>p</el-id> is of the Type of a List's items (here <code>String</code>):
-<codeblock>
-variable basket set to ["apple", "banana", "cherry", "date"]
-for fruit in basket
-  call print(fruit)
-end for
-</codeblock>
-  puts each item in the List <el-id>basket</el-id> in turn into <code>String</code> <el-id>fruit</el-id>.</li>
-</ul>
-<p>Alternatively, the selection can be constrained using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> to specify integer values of the loop variable:</p>
-<ul>
- <li>The loop variable <el-id>p</el-id>'s value is limited to a range:
-<codeblock>
-  variable numbers set to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  for n in range(3, 8)
-    call print(n)
-  end for
-</codeblock>
-  giving values with which to index into the List <el-id>numbers</el-id>.</li>
-</ul>
-<p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>for</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
-<codeblock>
-function reverse(s as String) returns String
-  variable sReturn set to ""
-  for ch in s
-    set sReturn to ch + sReturn
-  end for
-  return sReturn
-end function
+end procedure
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To print the first item in a <code>List</code> and then each item in it:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the Type of a List's items (here <code>String</code>).
+and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
 <codeblock>
 main
-  variable names set to ["Tom", "Dick", "Harriet"]
-  call print(names[0])
-  for n in names
-    call print(n)
+  variable basket set to ["apple", "banana", "cherry", "date"]
+  for fruit in basket
+    call print(fruit)
   end for
 end main
 </codeblock>
@@ -1218,13 +1182,40 @@ main
 end main
 </codeblock>
 <hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
+<codeblock>
+main
+  call print(reverse("stressed"))
+end main
+function reverse(s as String) returns String
+  variable sReturn set to ""
+  for ch in s
+    set sReturn to ch + sReturn
+  end for
+  return sReturn
+end function
+</codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Alternatively the loop variable may be defined as an integer range using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and
+<a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> in order to index into a subject List:</p>
+<codeblock>
+main
+  variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
+  for n in range(2, 6)
+    call print(numbers[n])
+  end for
+end main
+</codeblock>
+<hr>
 </div></div>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Technical note about the <b>for loop</b> variable</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
-So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect the items it refers to and processes.</p>
+So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
 <p>It is therefore recommended never to re-assign the loop variable within the loop.</p>
 <hr>
 </div></div>
@@ -1236,15 +1227,19 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <li>a procedure that you have defined at the global level<br>
   <code>call fillRandom(grid)</code></li>
 <li>a procedure method on an object of a class that you have defined<br>
-  <code>call apple.newRandomPosition(snake)</code><br>
-  <code>call this.hand.draw()</code></li>
+<codeblock>
+  call apple.newRandomPosition(snake)
+  call this.hand.draw()
+</codeblock></li>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
 <li>a procedure method on an object of a Type provided by the standard library<br>
-  <code>call vg.append(rect)</code><br>
-  <code>call this.cards.append(card)</code></li>
+<codeblock>
+  call vg.append(rect)
+  call this.cards.append(card
+</codeblock>)</li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1265,14 +1260,15 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf08e;</i></a>.</p>
 
 <div id="catch"></div>
-<h2 id="try"><b>try .. catch</b></h2>
-<p>You can enclose code in a <b>try</b> instruction when you want it to be able, at execution, to throw an exception that you handle.</p>
+<h2 id="try"><b>try</b></h2>
+<p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
+<p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p> 
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>try .. catch</b></h4>
+<h4 class="no-TOC acc-title">Examples using <b>try</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To check a function input, and throw an exception up:</p>
@@ -1312,13 +1308,13 @@ end function
 <hr>
 </div></div>
 
-<h2 id="throw"><b>throw</b> exception</h2>
+<h2 id="throw"><b>throw</b></h2>
 <p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw</b> instruction
  which defines an explanatory string.</p>
 <p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example using <b>throw exception</b></h4>
+<h4 class="no-TOC acc-title">Example using <b>throw</b> exception</h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
@@ -1339,11 +1335,11 @@ end function
 <hr>
 </div></div>
 
-<h2 id="assert"><b>assert equal</b></h2>
-<p>The <b>assert equal</b> instruction is used only within a <a href="#test"><b>test</b> <i class="fa">&#xf08e;</i></a>,
+<h2 id="assert"><b>assert</b></h2>
+<p>The <b>assert</b> equal instruction is used only within a <a href="#test"><b>test</b> <i class="fa">&#xf08e;</i></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
- In Elan, you can get equivalent functionality by throwing an <b>exception</b>, as described in the <a href="#throw"><b>throw exception</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
+ In Elan, you can get equivalent functionality by throwing an exception, as described in the <a href="#throw"><b>throw exception</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 
 <h2 id="constant_let"><b>let statement</b></h2>
 <p>Of particular importance in Functional Programming is providing for constant values within a function.</p>
@@ -1395,7 +1391,7 @@ then an empty string or list is returned.</p>
 <p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
 <a href="LibRef.html#put_List"><el-method>put</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
-<p>Example of using indexing on a string:</p>
+<p>Example using indexing on a string:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -1906,13 +1902,13 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
  just a named value or a function evaluation. Generally, if you want to use a more
  complex expression, it is better to evaluate it in a preceding <b>variable definition</b>
- instruction and then use the named value in the 'actual' field of the <b>assert equal</b>
+ instruction and then use the named value in the 'actual' field of the <b>assert</b> equal
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
   <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
-  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert equal</b> instruction.</li>
+  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert</b> equal instruction.</li>
  </ul>
 
 <h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
