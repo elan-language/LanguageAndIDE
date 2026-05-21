@@ -120,10 +120,10 @@ el-header .ok {
 /* Horizontal and vertical spacing */
 el-statement, el-constructor, el-prop, el-class > el-func, el-class > el-proc, el-class > el-member {
     display: block;
-    background-color: var(--panelBackground);
+    background-color: transparent;
     border-left-style: solid;
     border-left-width: 2ch;
-    border-color: var(--panelBackground);
+    border-color: transparent;
 }
 
 el-statement:not(.multiline), el-const, el-enum{
@@ -229,7 +229,7 @@ el-field.advisory, el-field.advisory el-kw, el-field.advisory el-type, el-field.
 /* el-field-el-txt*/
 el-field el-txt {
     color: var(--defaultText);
-    background-color: var(--panelBackground);
+    background-color: transparent;
     font-family: consolas, monospace; /* needed for comments in documented code */
 }
 el-field.error *, el-field.error input  {
@@ -404,13 +404,13 @@ el-field el-msg {
     border-color: black;
     border-width: 1px;
     display: inline;
-    background-color: var(--panelBackground);
+    background-color: transparent;
     color: var(--optional);
   }
 
   .selected > el-select el-help,   .selected > el-select el-help a {
     display: inline;
-    background-color: var(--panelBackground);
+    background-color: transparent;
     color: var(--optional);
   }
     
