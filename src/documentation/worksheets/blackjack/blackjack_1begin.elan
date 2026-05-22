@@ -176,7 +176,7 @@ test test_htmlForGame
   let p be (new HumanPlayer("fred", 10)).withCards([c1, c2])
   let players be (new List<of Player>()).withAppend(p)
   let g2 be (new Game(1)).withPlayers(players)
-  assert htmlForGame(g2) is "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&amp;clubs;</div><div class='a'>&amp;clubs;</div><div class='b'>&amp;clubs;</div><div class='c'>&amp;clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>"
+  assert htmlForGame(g2) is "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>"
 end test
 
 function htmlForPlayer(player as Player) returns String
@@ -195,7 +195,7 @@ test test_htmlForPlayer
   let c1 be new Card("3", Suit.clubs, false)
   let c2 be new Card("K", Suit.spades, true)
   let p be (new HumanPlayer("charlie", 10)).withCards([c1, c2])
-  assert htmlForPlayer(p) is "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&amp;clubs;</div><div class='a'>&amp;clubs;</div><div class='b'>&amp;clubs;</div><div class='c'>&amp;clubs;</div></div><div class='card reversed'></div></div></div>"
+  assert htmlForPlayer(p) is "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>"
 end test
 
 function htmlForCard(card as Card) returns String
@@ -225,7 +225,7 @@ end function
 
 test test_htmlForCard
   variable c1 set to new Card("3", Suit.clubs, false)
-  assert htmlForCard(c1) is "<div class='card black'><div class='u'>3</div><div class='v'>&amp;clubs;</div><div class='a'>&amp;clubs;</div><div class='b'>&amp;clubs;</div><div class='c'>&amp;clubs;</div></div>"
+  assert htmlForCard(c1) is "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>"
   variable c2 set to new Card("K", Suit.spades, true)
   assert htmlForCard(c2) is "<div class='card reversed'></div>"
 end test
@@ -235,7 +235,7 @@ function htmlForSpot(id as String, content as String) returns String
 end function
 
 test test_htmlForSpot
-  assert htmlForSpot("c", "&amp;hearts;") is "<div class='c'>&amp;hearts;</div>"
+  assert htmlForSpot("c", "&hearts;") is "<div class='c'>&hearts;</div>"
   assert htmlForSpot("u", "10") is "<div class='u'>10</div>"
 end test
 
@@ -546,7 +546,7 @@ enum Status active, standing, blackjack, bust
 enum Suit clubs, diamonds, hearts, spades
 
 function symbolForSuit(s as Suit) returns String
-  variable dc set to [Suit.clubs:"&amp;clubs;", Suit.diamonds:"&amp;diams;", Suit.hearts:"&amp;hearts;", Suit.spades:"&amp;spades;"]
+  variable dc set to [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"]
   return dc[s]
 end function
 
