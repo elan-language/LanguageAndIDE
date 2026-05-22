@@ -71,7 +71,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       result = !this.file.containsMain();
     }
     // Then apply profile rules
-    if (this.profile.isProcedural()) {
+    if (this.profile.isProcedural() && userEntry) {
       result =
         keyword !== classKeyword &&
         keyword !== abstractKeyword &&
