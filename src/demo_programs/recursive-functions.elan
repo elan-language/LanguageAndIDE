@@ -1,0 +1,43 @@
+# e9a2cf6a43bd195fa7f0a1821a95a6e46f401cd2c09c7fa73659cc37f69d6620 Elan 2.0.0-alpha4 valid
+
+function factorial(n as Int) returns Int
+  return if(n < 2, 1, n*factorial(n - 1))
+end function
+
+test test_factorial
+  assert factorial(2) is 2
+  assert factorial(3) is 6
+  assert factorial(7) is 5040
+  assert factorial(10) is 3628800
+  # edge cases:
+  assert factorial(1) is 1
+  assert factorial(0) is 1
+end test
+
+function sum(li as List<of Float>) returns Float
+  return if(li.length() is 0, 0.0, li.head() + sum(li.tail()))
+end function
+
+test test_sum
+  let li be [3.1, 5.02, 4, 7.73, 9.9]
+  assert sum(li).round(2) is 29.75
+  # edge cases: empty, and one element lists
+  let le be new List<of Float>()
+  assert sum(le) is 0
+  let l1 be [0.6]
+  assert sum(l1) is 0.6
+end test
+
+function reverse(li as List<of Float>) returns List<of Float>
+  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+end function
+
+test test_reverse
+  let l be [3.1, 5.02, 4, 7.73, 9.9]
+  assert reverse(l) is [9.9, 7.73, 4, 5.02, 3.1]
+  # edge cases: empty, and one element lists
+  let le be new List<of Float>()
+  assert reverse(le) is le
+  let l1 be [0.6]
+  assert reverse(l1) is l1
+end test

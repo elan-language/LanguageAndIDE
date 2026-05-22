@@ -1,0 +1,34 @@
+# 54a34c03cddf9f48eef9c0f5f6c9be9c82c17120f75fc2978670912dd9715908 Elan 2.0.0-alpha4 valid
+
+test test_Map_Filter_Reduce
+  let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
+  assert nums.filter(lessThan5) is [2.22, 2.5]
+  assert nums.map(cube) is [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
+  assert nums.reduce(1.0, product).floor() is 81480107
+  assert nums.filter(lessThan5).map(inverse) is [0.45, 0.4]
+  assert nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat) is "results: 0.45|0.4|"
+end test
+
+function lessThan5(n as Float) returns Boolean
+  return n < 5
+end function
+
+function cube(n as Float) returns Float
+  return pow(n, 3).round(2)
+end function
+
+function inverse(n as Float) returns Float
+  return (1/n).round(2)
+end function
+
+function asString(n as Float) returns String
+  return $"{n}|"
+end function
+
+function product(x as Float, y as Float) returns Float
+  return (x*y)
+end function
+
+function concat(a as String, b as String) returns String
+  return a + b
+end function

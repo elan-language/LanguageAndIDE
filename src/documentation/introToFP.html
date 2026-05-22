@@ -261,34 +261,28 @@ In this circumstance it is often better to delegate to new function that perform
    (The second approach is addressed <a href="#">Principle 8</a>)</p>
 
 <p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example. 
-  The <b>Binary Search - recursive</b> demo contains this code:</p>
+  In the <b>Recursive Functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
 
 <codeblock>
-function binarySearch(li as List&lt;of String@gt;, item as String) returns Boolean
-  variable result set to false
-  if li.length() > 0 then
-    variable mid set to divAsInt(li.length(), 2)
-    variable value set to li[mid]
-    if item.equals(value) then
-      set result to true
-    elif item.isBefore(value) then
-      set result to binarySearch(li.subList(0, mid), item)
-    else
-      set result to binarySearch(li.subList(mid + 1, li.length()), item)
-    end if
-  end if
-  return result
+function factorial(n as Int) returns Int
+  return if(n < 2, 1, n*factorial(n - 1))
 end function
 </codeblock>
 
-<p>This code defines the function named <el-method>binarySearch</el-method>, but also <i>uses</i> (evaluates) that function within its own implementation.
-It also shows the two important principles of designing a recursive function are:</p>
+as it shows the two important principles of designing a recursive function:</p>
 
 <ul>
-  <li>That when the function is evaluated within the function body</li>
+  <li>that when the function is called within the function body it is typically with a <i>smaller</i> version of the original problem:
+  in this case <code>factorial(n)</code> calculates <code>factorial(n)</code> and multiplies it by <code>n</code></li>
+  <li>the recursion must 'bottom out' eventually, and this must be explicitly checked in the code. In this case it bottoms out when
+    <code>n</code> is less than <code>2</code>, because 0! and 1! are both 1. The most common error when writing a recursive function
+    is forgetting to define and check for the bottoming-out condition. If you fail to do this, for example by writing 
+    <code>return n*factorial(n - 1)</code>
+    - or you get the condition wrong - the
+    iteration will continue indefinitely until you eventually get a 'Stack overflow error', which crashes the program. 
+    Try it so that you learn to recognise and diagnose the problem.
+  </li>
 </ul>
-
-  
   
 <h3>Principle 7: Lists and other data structures are never mutated</h3>
 
@@ -324,45 +318,124 @@ or
   let myNewString be myString.upperCase()
 </codeblock>
 
-<p>When we want to apply operations to all members in a list we need to use iteration, which means either using <a href="recursion">recursion</a> or <a href="hofs">higher-order functions</a><div class=""> 
-  and within that technique make use of the various <el-method>with...</el-method> methods. The <b>Merge Sort</b> demo offers a good example. 
-  The principal function <el-method>sort</el-method> delegates to four other functions. These use the <el-method>length</el-method> 
-  and <el-method>subList</el-method> function methods to derive information from a list, and the <el-method>withAppendList</el-method>
-  function method to build the sorted list:
-
+<p>When we want to apply operations to all members in a list we need to use iteration, which means either using <a href="recursion">recursion</a> or <a href="hofs">higher-order functions</a>
+  and within that technique make use of the various <el-method>with...</el-method> methods. The <el-method>sum</el-method> function in the
+   <b>Recursive Functions</b> demo calculates the sum of all members of any list of floating point numbers (the tests included in the demo show example results):
 <codeblock>
-function sort(li as List&lt;of String&gt;) returns List&lt;of String&gt;
-  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
-end function
-
-function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
-  let mid be divAsInt(li.length(), 2)
-  let frontHalf be li.subList(0, mid)
-  return sort(frontHalf)
-end function
-
-function sortedBackHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
-  let mid be divAsInt(li.length(), 2)
-  let backHalf be li.subList(mid, li.length())
-  return sort(backHalf)
-end function
-
-function merge(a as List&lt;of String&gt;, b as List&lt;of String&gt;) returns List&lt;of String&gt;
-  let oneIsEmpty be (a.length() is 0) or (b.length() is 0)
-  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
-end function
-
-function mergeNonEmpty(a as List&lt;of String&gt;, b as List&lt;of String&gt;) returns List&lt;of String&gt;
-  let aHead be a.head()
-  let bHead be b.head()
-  let aTail be a.tail()
-  let bTail be b.tail()
-  return if(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+function sum(li as List&lt;of Float&gt;) returns Float
+  return if(li.length() is 0, 0.0, li.head() + sum(li.tail()))
 end function
 </codeblock>
 
-<h2 >Principle 8: A function may be passed into, or returned by, another function </3>
-# Higher order functions
+Note the use of these two dotted-function calls on the list <code>li</code>:
+
+<ul>
+ <li><el-method>head</el-method> returns only the first element of the list.</li> 
+ <li><el-method>tail</el-method> dotted methods on a list, returns all the elements of the list <i>except</i> the first.</li>
+</ul>
+
+In FP, algorithms to process lists are often written in terms of the 'head' and 'tail' of the list. 
+You could just write e.g. <code>li[0]</code> and <code>li.substring(1, li.length()) instead - with the same result -
+  but using the <el-method>head</el-method> and <el-method>tail</el-method> Functions
+   makes your code easier to read, and more 'intentional' (makes the intention clearer).
+</code>
+</p>
+
+<p>The next example combines the previous two ideas:
+
+<ul>
+  <li>updating a list by using <el-method>with...</el-method> methods - which create a copy of the original, with specified differences</li>
+  <li>using recursion to iterate over the elements in a List</li>
+</ul>
+
+in a function to reverse the order or elements in a list:
+
+<codeblock>
+function reverse(li as List&lt;of Float&gt;) returns List&lt;of Float&gt;
+  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+end function
+</codeblock>
+  
+<p>A more advanced example is the <b>Merge Sort</b> demo. In that code, note that:</p>
+
+<ul>
+  <li>the principal function (<el-method>sort</el-method>) defines the algorithm in just one line, by delegating to other, simpler functions.
+  This is a very good example of 'functional decomposition' - defining a function in terms of other functions each of which does part of the task.</li>
+  <li>as well as testing the principal function, there are unit tests for each of the component functions. This builds confidence and makes de-bugging
+    simpler. (Recursive functions can be hard to debug otherwise.)</li>
+  <li><a href="http://" target="_blank" rel="noopener noreferrer"></a>t first glance, none of the functions <i>appear</i> to be recursive, because none of them calls <i>itself</i> directly. However,
+  as you study the code you will see,for example, that <el-method>sort</el-method> calls <el-method>sortedFrontHalf</el-method> 
+  and <el-method>sortedBackHalf</el-method> both of which call 
+back into <el-method>sort</el-method> again - but with approximately half of the original list. 
+The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method></li>
+</ul>
+
+<h2 >Principle 8: A function may be passed into, or returned by, another function</h2>
+
+<p>The alternative to writing your own recursive function is to use 'higher order functions' (HoFs). 
+  A Hof is a function that takes in another function as a parameter (the more common case), or that returns a function as its result.
+  Under the covers, HoFs are written using recursion, but you don't see this.</p>
+
+<p>There are many possible HoFs, but three of them - <el-method>map</el-method>, <el-method>filter</el-method>, and <el-method>reduce</el-method>
+are so widely used in FP, to process lists in many different ways, that they sometimes referred to as the 'Holy Trinity of functional programming'.
+They can be used individually, or in combination. The purpose and operation of each will be explained shortly.</p>
+
+<p>Note. All of the languages supported by Elan have their own versions of  <el-method>map filter reduce</el-method> that are similar in intent
+but have different syntax, and sometimes different names (e.g. 'fold' in place of 'reduce').The Elan library has its own version of these functions
+which work, the same way, in each language. Because they are all dotted methods, they can easily be chained.</p>
+
+<p>Start by loading and running the demo program <b>Map Filter Reduce</b>. Then looking at the main routine:
+
+<codeblock>
+test test_Map_Filter_Reduce
+  let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
+  assert nums.filter(lessThan5) is [2.22, 2.5]
+  assert nums.map(cube) is [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
+  assert nums.reduce(1.0, product).floor() is 81480107
+  assert nums.filter(lessThan5).map(inverse) is [0.45, 0.4]
+  assert nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat) is "results: 0.45|0.4|"
+end test
+
+</codeblock>
+
+Note that:
+
+<ul>
+  <li>each of the three HoFs is applied to a list, as a 'dotted method call'. In this example each is applied to the same list (of floating point numbers),
+    but the list can be of any type.</li>
+  <li>each of the HoFs is passed just the <i>name</i> of a function that is defined lower down - no brackets, no arguments. 
+    For <el-method>filter</el-method> and <el-method>map</el-method>, this is the only argument; for <el-method>reduce</el-method>
+  there is another argument.</li>
+  <li><el-method>filter</el-method> returns a list of the same type, but typically with fewer members. The function passed into
+    it is applied to <i>each</i> of the list's members in turn, and determines whether or not each should 'pass' through the filter into the resulting list.
+    In the first example the function passes only those values from the original list that are less than 5. 
+    Note from the definition of the function <el-method>lessThan5</el-method> that it takes in a <code>Float</code> and returns a <code>Boolean</code>.
+    Making sure that types match up as expected can be the trickiest part of learning to use HoFs. The function passed into <el-method>filter</el-method> must
+    define a single parameter of the same type as the members of the list, and must return a Boolean.</li>
+  <li><el-method>map</el-method> returns a list that will have the same number of members as the original list. 
+    They might be of the same type as the on the original list - but typically different values - or, depending on the return type of the function
+    passed in, they might all be of a different type. But each member of the resulting list is derived from ('maps to') the member of the
+    original list in the corresponding position. As for <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
+    define a single parameter of the same type as the members of the list, but the return type can be anything.
+  </li>
+  <li><el-method>reduce</el-method> most commonly it returns a single value
+  that is derived by combining each of the values in the original list according to the function passed in. That derived value can be of the same
+type as the members of the list - for example when <el-method>reduce</el-method> is used to combine a list of numbers by addition, or multiplication
+but it might also be of a different type. The resulting value can even be a list or another data structure. <el-method>reduce</el-method>. Unlike
+<el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments - the function being the second one.
+The first parameter is the <i>initial</i> value that forms the 'seed' for the eventual value that will be returned and must therefore be of that type.
+the function passed into <el-method>reduce</el-method> must define two parameters: the first must be of the same type as that 'seed' value, and the second
+must be of the same type as the members of the list. The return type must be the same type as the 'seed' value (and first parameter of the function). 
+Each member of the list is passed into the function as its second parameter in turn; the first parameter passed in is the <i>latest</i> value that has
+grown from the seed. 
+</li>
+<li><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, in any order, provided that the type of the resulting
+list is the type expected by the next one. Because <el-method>reduce</el-method> transforms a list into a single value, if used, it typically
+forms the end of the chain - unless a simpler function (such as <el-method>round</el-method>) is chained on afterwards.</li>
+</ul>
+</p>
+
+
 - Use of Hofs 
   - passing in a function name
   - defining a lambda

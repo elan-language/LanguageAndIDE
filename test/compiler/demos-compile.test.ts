@@ -22,10 +22,6 @@ suite("Demo compile", () => {
     await testElanFile("collatz");
   });
 
-  test("test factorial", async () => {
-    await testElanFile("factorial");
-  });
-
   test("test fern", async () => {
     await testElanFile("fern");
   });
@@ -53,8 +49,17 @@ suite("Demo compile", () => {
   test("test life_FP", async () => {
     await testElanFile("life_FP");
   });
+
+  test("test map-filter-reduce", async () => {
+    await testElanFile("map-filter-reduce");
+  });
+
   test("test maze-generator", async () => {
     await testElanFile("maze-generator");
+  });
+
+  test("test merge-sort", async () => {
+    await testElanFile("merge-sort");
   });
 
   test("test password-generator", async () => {
@@ -63,6 +68,10 @@ suite("Demo compile", () => {
 
   test("test pathfinder", async () => {
     await testElanFile("pathfinder");
+  });
+
+  test("test recursive-functions", async () => {
+    await testElanFile("recursive-functions");
   });
 
   test("test roman-numerals-turing-machine.elan", async () => {
