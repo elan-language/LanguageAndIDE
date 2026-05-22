@@ -1,4 +1,4 @@
-# 6054b7d4acd5024001ebcbd493f802e743d666d4d2c4b01320e9662a0f1a3dfb Elan 2.0.0-alpha4 valid
+# a1d184b5736c7e1bd0432720904489352b2c7a16ac7e8f801ac31b373daafc69 Elan 2.0.0-alpha4 valid
 
 main
   variable game set to new Game(1000)
@@ -22,7 +22,7 @@ procedure playOneRound(game as Game)
   call game.newRound()
   call display(game)
   variable dealer set to game.dealer
-  variable faceCard set to dealer.faceCard.getValue()
+  variable faceCard set to dealer.faceCard
   for player in game.players
     call player.startTurn()
     call display(game)
@@ -424,10 +424,10 @@ class Dealer inherits Player
     set this.name to "Dealer"
     set this.points to startingPoints
     set this.cards to new List<of Card>()
-    set this.faceCard to new Maybe<of Card>()
+    set this.faceCard to new Card("2", Suit.clubs, true)
   end constructor
 
-  property faceCard as Maybe<of Card>
+  property faceCard as Card
 
   property hasPlayed as Boolean
 
@@ -453,8 +453,7 @@ class Dealer inherits Player
   procedure newHand()
     set this.hasPlayed to false
     call this.newHandHelper()
-    variable faceCard set to this.faceCard
-    call faceCard.set(this.cards[0])
+    set this.faceCard to this.cards[0]
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
@@ -538,6 +537,8 @@ class HumanPlayer inherits Player
   end function
 
 end class
+
+enum Choice stand, draw
 
 enum Outcome undecided, lose, draw, win, winDouble
 
