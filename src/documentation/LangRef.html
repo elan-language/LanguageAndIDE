@@ -107,8 +107,9 @@ are passed around in a running program:</p>
   <td></td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf08e;</i></a></td>
+<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
+  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf08e;</i></a></td>
+  <td></td>
   </tr>
 </table>
 
@@ -186,14 +187,12 @@ with all the same property values except for specific changes that you want to m
  <code>variable point set to (3, 7)</code><br>
  <code>variable x set to point.item_0</code>
  </li>
-
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
   <code>enum Suit spades, hearts, diamonds, clubs</code><br>
   <code>variable suit set to Suit.spades</code></li>
 <li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <b>function</b> or <b>procedure</b>.
 The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
 returns the value of the global constant and not the value of the local variable of the same name:
-
 <codeblock>
 constant maxHits set to 20
 function hits() returns Int
@@ -201,7 +200,6 @@ function hits() returns Int
   return global.maxHits
 end function
 </codeblock>
-
 <p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
  </li>
 </ul>
@@ -256,7 +254,7 @@ end main
 </div></div>
 
 <h2 id="procedure"><b>procedure</b></h2>
-<div id="Parameter_value">></div>
+<div id="Parameter_value"></div>
 <p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf08e;</i></a> instruction.</p>
 <p>Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf08e;</i></a>.</p>
 <p> Unlike a function:</p>
@@ -433,7 +431,7 @@ end test
  <li>All <b>assert</b> equal statements should be at the top level within the <b>test</b> instruction; none may be put into a loop structure.</li>
 </ul>
 
-<h3 class="no-TOC">Testing Float values</h3>
+<h3 class="no-TOC">Testing <code>Float</code> values</h3>
 <p>When testing <code>Float</code> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
 
 <codeblock>
@@ -596,10 +594,9 @@ you can refer to this instance with the keyword <b>this</b>, as shown by this li
 <el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-
-  <p>A <a href="#class">concrete class <i class="fa">&#xf08e;</i></a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b> <el-type>A</el-type> <i class="fa">&#xf08e;</i></a>
-    but may additionally inherit from any number of <a href="#interface">interfaces <i class="fa">&#xf08e;</i></a>.
-    The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
+<p>A <a href="#class">concrete class <i class="fa">&#xf08e;</i></a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b> <el-type>A</el-type> <i class="fa">&#xf08e;</i></a>
+ but may additionally inherit from any number of <a href="#interface">interfaces <i class="fa">&#xf08e;</i></a>.
+ The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
@@ -741,6 +738,9 @@ function suitColours() returns Dictionary<of String, Int>
 end function
 </codeblock>
 
+<h3 class="no-TOC">System constants</h3>
+Some useful constants are provided: see <a href="LibRef.html#systemConstants">System constants <i class="fa">&#xf08e;</i></a> 
+
 <div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
@@ -758,7 +758,7 @@ enum Outcome undecided, win, lose, draw, winDouble
 </codeblock>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of use of <b>enum</b></h4>
+<h4 class="no-TOC acc-title">Examples using <b>enum</b></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To retrieve a valid 'value':</p>
@@ -1122,7 +1122,8 @@ end main
 <p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if some condition is <el-id>true</el-id>.</p>
 <p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
-<p>When the condition is <el-id>true</el-id> the enclosed code is executed;
+<p>The value of the condition must a some point become <el-id>false</el-id> otherwise the loop will not terminate and exit.</p>
+<p>While the condition is <el-id>true</el-id> the enclosed code is executed;
  when <el-id>false</el-id> the loop is bypassed. For example:</p>
 <codeblock>
 main
@@ -1229,19 +1230,17 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <li>a procedure that you have defined at the global level<br>
   <code>call fillRandom(grid)</code></li>
 <li>a procedure method on an object of a class that you have defined<br>
-<codeblock>
-  call apple.newRandomPosition(snake)
-  call this.hand.draw()
-</codeblock></li>
+  <code>call apple.newRandomPosition(snake)</code><br>
+  <code>call this.hand.draw()</code>
+</li>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
 <li>a procedure method on an object of a Type provided by the standard library<br>
-<codeblock>
-  call vg.append(rect)
-  call this.cards.append(card
-</codeblock>)</li>
+  <code>call vg.append(rect)</code><br>
+  <code>call this.cards.append(card)</code>
+</li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
@@ -1266,7 +1265,7 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
-<p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p> 
+<p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p>
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
 
 <div class="accordion">
@@ -1332,8 +1331,10 @@ function percent(value as Float, maximum as Float) returns Float
 end function
 </codeblock>
 <p>At runtime, if the condition is met, execution will stop and the display will show:</p>
-<code>proportion exceeds 100%</code><br>
-<code>Error</code>
+<pre>
+    proportion exceeds 100%
+    Error
+</pre>
 <hr>
 </div></div>
 
@@ -1405,8 +1406,8 @@ main
   call print(a.subString(0, 7))
 end main
 </codeblock>
- </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><br>o<br>o world!<br>Hello w &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+ </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><el-code><br><br>o</el-type><br>o world!<br>Hello w</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
 </tr>
 </table>
 
@@ -1423,8 +1424,8 @@ main
   call print(li.subList(0, 7))
 end main
 </codeblock>
- </td><td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><br>4 &nbsp;&nbsp;&nbsp; (the value of the list item)<br>[4, 5, 6, 7, 8, 9, 10, 11] &nbsp;&nbsp;&nbsp; (a new list)<br>[0, 1, 2, 3, 4, 5, 6] &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+ </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><el-code><br><br><br>4</el-code> &nbsp;&nbsp;&nbsp; (the value of the list item)<br><el-code>[4, 5, 6, 7, 8, 9, 10, 11]</el-code> &nbsp;&nbsp;&nbsp; (a new list)<br><el-code>[0, 1, 2, 3, 4, 5, 6]</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
 </tr>
 </table>
 
@@ -1438,11 +1439,8 @@ end main
 <p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 <div id="power"></div>
 <p>For raising one value to the power of another, use the syntax in these examples:<br></p>
-<codeblock>
-call print(pow(4, 4))
-variable c set to sqrt(pow(a, 2) + pow(b, 2))
-</codeblock>
-
+<code>call print(pow(4, 4))</code><br>
+<code>variable c set to sqrt(pow(a, 2) + pow(b, 2))</code>
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
 <div id="mod"></div>
 <p> The operator <b>mod</b> (integer remainder) is applied only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
@@ -1507,7 +1505,7 @@ end function
 </codeblock>
 
 <h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The + perator is also used for concatenating <code>String</code> values.</p>
+<p>The + operator is also used for concatenating <code>String</code> values.</p>
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
@@ -1525,10 +1523,10 @@ end function
 <p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
 <li>
-<codeblock>
-if listA.equals(listB) then
-end if
-</codeblock></li>
+<code>if listA.equals(listB) then</code><br>
+<i>new code</i><br>
+<code>end if</code>
+</li>
 <li><code>set differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
@@ -1579,13 +1577,11 @@ See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08
 </ul>
 
 <h2 id="lambda"><b>lambda</b></h2>
-<p>A <b>lambda</b> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
-You would typically define a <b>lambda</b>:</p>
-<ul>
-<li>when the functionality it defines is needed in only one location:
-   typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a> or HoF.</li>
-<li>when you need to capture a local variable in the implementation: this is called 'closing around a variable'.</li>
-</ul>
+<p>A <b>lambda</b> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).</p>
+<p>You can use a lambda only as an argument to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a>.</p>
+<p>You would typically define a <b>lambda</b> when the functionality it defines is needed in only one location,
+e.g. in a particular call to a Higher-order Function.</p>
+<!-- when you need to capture a local variable in the implementation: this is called 'closing around a variable'. -->
 <p>The syntax for a <b>lambda</b> is as follows:</p>
 <ul>
 <li>Start with the keyword <b>lambda</b>.</li>
@@ -1593,7 +1589,8 @@ You would typically define a <b>lambda</b>:</p>
 <li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
-<p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
+<p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
+<!-- <p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
  to assign a <b>lambda</b> to a named value, so as to reuse it within the scope of that named value.</p>
 
 Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
@@ -1603,7 +1600,7 @@ function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
   variable live set to neighbours.filter(lambda i as Int => cells[i])
   return live.length()
 end function
-</codeblock>
+</codeblock> -->
 
 <h2 id="if_expression"><b>if</b> (expression)</h2>
 
@@ -1611,9 +1608,7 @@ end function
 <p>Its syntax is shown in this <b>re-assign variable</b> instruction:</p>
 <code>variable isBigger set to if(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
-<codeblock>
-  variable d set to if(c < 580, c - 40, c + 60)
-</codeblock>
+  <code>variable d set to if(c < 580, c - 40, c + 60)</code>
 <p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
@@ -1651,10 +1646,7 @@ end procedure
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
    or a <a href="#class"> user-defined class <i class="fa">&#xf08e;</i></a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
-
-<codeblock>
-  variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
-</codeblock>
+<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 
 <h1 id="Comment">Comments</h1>
 <h2># comment</h2>
@@ -1826,7 +1818,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div,
  each, else, empty, end, enum, exception, for, from, function, global, if, image, import, in, inherits, interface, is, isnt, lambda, let, library, main, mod,
  new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try,
- variable, while, with </el-code></p>
+ variable, while, with</el-code></p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
  <p>In addition to Elan keywords there are other 'reserved words' that cannot be used to define the name for a
@@ -1971,7 +1963,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
  <p>The definition for a variable instruction is most commonly
- a simple name. Less commonly, it may take the form of a dconstruction of a
+ a simple name. Less commonly, it may take the form of a deconstruction of a
  <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
 <!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutabl</code>e <i class="fa">&#xf08e;</i></a> or-->
  <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
@@ -1993,6 +1985,10 @@ very slow parsing. We strongly recommend that you you simplify the contents of t
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
+<hr>
+<p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
+</body>
+</html>
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
 </body>
