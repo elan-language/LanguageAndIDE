@@ -307,7 +307,7 @@ end test
 <p>A newline may be inserted within a string with <el-lit>\n</el-lit>:
 <table class="tablePlain">
 <tr>
- <td>call print("Hello\nworld")</td><td>&#x27f6;</td><td>Hello<br>world</td>
+ <td><code>call print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
 </tr>
 </table>
 
@@ -445,11 +445,10 @@ end test
  <td><codeblock>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
   <codeblock>call print(message) </codeblock>
  </td>
- <td><br>&#x27f6;</td>
- <td><br> LANDED SAFELY AT SPEED 300 FUEL 50</td>
+ <td>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
 </tr>
 </table>
-<p>And, for the area of a circle:</p>
+<p>And for the area of a circle:</p>
 <table class="tablePlain">
 <tr><td>
 <codeblock>
@@ -458,8 +457,7 @@ main
   call print($"area = {(pi*r*r).round(2)}")
 end main
 </codeblock>
- </td><td><br><br><br>&#x27f6;</td>
- <td><br><br><br>area = 12.57<br></td>
+ </td><td><br><br>&#x27f6;</td><td><br><br>area = 12.57<br></td>
  </tr>
 </table>
 
