@@ -1230,16 +1230,14 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 <li>a procedure that you have defined at the global level<br>
   <code>call fillRandom(grid)</code></li>
 <li>a procedure method on an object of a class that you have defined<br>
-  <code>call apple.newRandomPosition(snake)</code><br>
-  <code>call this.hand.draw()</code>
+  <code>call apple.newRandomPosition(snake)</code>
 </li>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
 <li>a procedure method on an object of a Type provided by the standard library<br>
-  <code>call vg.append(rect)</code><br>
-  <code>call this.cards.append(card)</code>
+  <code>call vg.append(rect)</code>
 </li>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
@@ -1523,9 +1521,11 @@ end function
 <p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
 <li>
-<code>if listA.equals(listB) then</code><br>
-<i>new code</i><br>
-<code>end if</code>
+<codeblock>
+if listA.equals(listB) then
+
+end if
+</codeblock>
 </li>
 <li><code>set differs to set1.notEqualTo(set2)</code></li>
 </ul>
