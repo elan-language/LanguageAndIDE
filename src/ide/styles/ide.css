@@ -74,6 +74,13 @@ body {
   display: inline;
 }
 
+.twobytwo {
+  flex-basis: auto;
+  flex-grow: 1;
+  padding: 5px;
+  position: relative;
+}
+
 .code {
   flex-basis: auto;
   flex-grow: 1;
@@ -670,4 +677,11 @@ div.demo-file.procedural, div.demo-file.oop, div.demo-file.functional { display:
 body.procedural div.demo-file.procedural { display: revert; }
 body.oop div.demo-file.oop { display: revert; }
 body.functional div.demo-file.functional { display: revert; }
+
+.twobytwo {
+  display: grid;
+  grid-template-columns: 50% 50%; 
+  grid-template-rows: 50% 50%;
+  grid-column-gap: 5px;
+}
 
