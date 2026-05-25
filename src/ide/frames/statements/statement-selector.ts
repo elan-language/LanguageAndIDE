@@ -106,7 +106,7 @@ export class StatementSelector extends AbstractSelector {
     }
     // Then apply profile rules
     if (this.profile.isFunctional() && userEntry) {
-      if (this.isWithinAFunction() ) {
+      if (this.isWithinAFunction()) {
         result = keyword === letKeyword || keyword === commentMarker;
       } else if (this.isWithinATest()) {
         result = keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;

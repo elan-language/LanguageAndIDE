@@ -127,7 +127,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     } else if (keyword === procedureKeyword) {
       result = !(this.profile.isFunctional() && userEntry);
     } else if (keyword === withKeyword) {
-      result =  !userEntry || this.profile.isFunctional();
+      result = !userEntry || this.profile.isFunctional();
     }
     return result;
   }
