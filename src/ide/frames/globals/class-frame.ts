@@ -162,7 +162,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     parentHelper_deleteSelectedChildren(this);
   }
 
-  copySelectedChildren(encode : boolean): boolean {
+  copySelectedChildren(encode: boolean): boolean {
     return parentHelper_copySelectedChildren(this, encode);
   }
 

@@ -369,7 +369,7 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  copySelected = (encode : boolean) => {
+  copySelected = (encode: boolean) => {
     if (!this.getParent().copySelectedChildren(encode)) {
       this.pasteError = "Copy Failed: At least one selected frame does not parse";
       return true;
@@ -687,7 +687,7 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
-  copy = (encode : boolean) => {
+  copy = (encode: boolean) => {
     const source = this.renderAsElanSource();
     this.getFile().addCopiedSource(encode ? escapeHtmlChars(source) : source);
     return false;

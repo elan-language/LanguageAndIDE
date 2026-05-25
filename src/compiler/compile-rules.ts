@@ -1296,7 +1296,7 @@ export function mustNotBeRedefined(
     isEnum(variable) ||
     variable.symbolScope === SymbolScope.member ||
     variable.symbolScope === SymbolScope.program ||
-    variable.symbolScope === SymbolScope.stdlib 
+    variable.symbolScope === SymbolScope.stdlib
   ) {
     // ok
     return;
