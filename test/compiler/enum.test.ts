@@ -97,6 +97,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "pear");
   });
 
+  test("Pass_variableNameSameAsType", async () => {
+    const code = `${testHeader}
+
+main
+  variable fruit set to Fruit.apple
+end main
+   
+enum Fruit apple, orange, pear`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+const global = new class {};
+async function main() {
+  let fruit = Fruit.apple;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Pass_useAsType", async () => {
     const code = `${testHeader}
 

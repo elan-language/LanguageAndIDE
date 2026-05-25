@@ -62,6 +62,7 @@ import {
   getGlobalScope,
   isClass,
   isDoubleIndexableType,
+  isEnum,
   isFunction,
   isGlobalConstant,
   isIndexableType,
@@ -1292,9 +1293,10 @@ export function mustNotBeRedefined(
 ) {
   if (
     variable instanceof UnknownSymbol ||
+    isEnum(variable) ||
     variable.symbolScope === SymbolScope.member ||
     variable.symbolScope === SymbolScope.program ||
-    variable.symbolScope === SymbolScope.stdlib
+    variable.symbolScope === SymbolScope.stdlib 
   ) {
     // ok
     return;
