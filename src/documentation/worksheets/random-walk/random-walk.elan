@@ -1,11 +1,5 @@
-# 7b6b42200e782377dfff618c401a483b8cb6adaef443df0adff6c4d3aedaf4d9 Elan 2.0.0-alpha valid
+# 0531ff1bff6b95d97f593be193d2dbbc0945f9fa8efa7fd009ebf12e2c8d0708 Elan 2.0.0-alpha4 valid
 
-# 
-# 
-# 
-# 
-# 
-# Elan 1.9.0
 main
   variable t set to new Turtle()
   variable paces set to 0
@@ -22,11 +16,11 @@ main
       set paces to paces + 1
     end while
   end for
-  call print($"Average number of paces: {paces/20}")
+  call print($"Average number of paces: {paces/20.0}")
 end main
 
 procedure circle(t as Turtle, radius as Int)
-  variable segment set to radius*pi*2/360
+  variable segment set to radius*pi/180
   call t.placeAt(-radius, 0)
   for count in range(1, 361)
     call t.move(segment)
