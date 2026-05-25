@@ -1049,10 +1049,16 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       //   //debug check
       //   if (dbgFocused.length > 1) {
       //     let msg = "multiple focused ";
-      //     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
+      //     C
       //     //await vm.showError(new Error(msg), this.fileName, false);
       //   }
       // }
+
+      const ff = document.querySelectorAll(".focused");
+
+      for (const e of ff){
+        e.scrollIntoView(false);
+      }
 
       cursorDefault();
     }
