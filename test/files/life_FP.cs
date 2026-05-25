@@ -6,7 +6,7 @@ static void main() {
   var grid = initialGrid(rng);
   while (true) {
     displayBlocks(grid); // call procedure
-    grid = nextGrid(grid); // re-assign variable
+    grid = nextGeneration(grid); // re-assign variable
     sleep_ms(50); // call procedure
   }
 }
@@ -280,7 +280,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   Assert.AreEqual(white, nxt)
 }
 
-static List<List<int>> nextGrid(List<List<int>> grid) { // function
+static List<List<int>> nextGeneration(List<List<int>> grid) { // function
   var cols = range(0, 40); // let
   return cols.map(int x => nextCol(grid, x));
 }

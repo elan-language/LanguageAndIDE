@@ -6,7 +6,7 @@ def main() -> None:
   grid = initialGrid(rng) # variable definition
   while True:
     displayBlocks(grid) # call procedure
-    grid = nextGrid(grid) # re-assign variable
+    grid = nextGeneration(grid) # re-assign variable
     sleep_ms(50) # call procedure
 
 def initialGrid(rng: Random) -> list[list[int]]: # function
@@ -244,7 +244,7 @@ def test_nextCellValue(self) -> None:
   nxt = nextCellValue(grid, 1, 1) # let
   self.assertEqual(nxt, white)
 
-def nextGrid(grid: list[list[int]]) -> list[list[int]]: # function
+def nextGeneration(grid: list[list[int]]) -> list[list[int]]: # function
   cols = range(0, 40) # let
   return cols.map(lambda x: int: nextCol(grid, x))
 
