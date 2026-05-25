@@ -284,7 +284,7 @@ as it shows the two important principles of designing a recursive function:</p>
   </li>
 </ul>
   
-<h3>Principle 7: Lists and other data structures are never mutated</h3>
+<h3 id="list-mutation">Principle 7: Lists and other data structures are never mutated</h3>
 
 <p>In procedural programming a list may be mutated either by re-assigning an indexed value, for example:
 
@@ -499,14 +499,148 @@ just lists of numbers e.g. [0, 1, 2, ... , 39]. The <el-function>map</el-functio
 and use them to access the appropriate portions of the <code>grid</code> - a 2D list (<code>List&lt;of List&lt;of Int&gt;&gt;</code>).
 
 <h2>Principle 9: User-defined classes should define their own 'with' methods for updates</h2>
-- ser-defined types
-  - Classes can only have function methods, no procedures
-  - 'updates' (like strings, or lists) are done by returning a copy with the changes
-  - 'with' instructions are just a special case of a function method, with own template, and code and a 'set' which you should not delete. 
 
-<h3>Principle : (Random)</h3>
+<p>It is possible, indeed highly desirable, to have user-defined types (classes) in FP. However, in true FP, an instance of a class should
+  never be mutated. So, when running under the <b>Functional</b> profile, you may define classes and add properties and function methods, 
+  but you may <i>not</i> define any <i>procedure</i> method - which in OOP you would use to mutate an instance and/or to do do other
+  things not permissible in a function.</p>
 
-<h2 id="random_fp">Generating Random numbers within functions</h2>
+<p>But this raises a question: how <i>are we to make changes to an instance of a class?</i>. 
+  The answer is similar to that for updating a list, string, or other standard data structure within a function 
+  (described in <a href="#list-mutation">Principle 7</a>): you need define <el-method>with...</el-method> methods that
+  return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the class <code>Game</code>
+  has several <el-method>with...</el-method> methods, one of which is shown here:
 
+<codeblock>
+function withHead(value as Square) returns Game
+  let copyOfThis be copy(this)
+  set copyOfThis.head to value
+  return copyOfThis
+end function
+</codeblock>
+
+Note that it:
+<ul>
+  <li>returns a <code>Game</code></li>
+  <li>creates a copy of <code>this</code> named <code>copyOfThis</code></li>
+  <li>reassigns the <code>x</code> property of <code>copyOfThis</code> to the new value</li>
+  <li>returns the updated <code>copyOfThis</code></li>
+</ul>
+
+<p>Although a <el-method>with...</el-method> method is a pure function. The standard, simpler form of <el-method>with...</el-method> method, like the one above,
+  must be created using the <b>with method</b> instruction template, which is
+offered only within a class, and only when using the <b>Functional</b> profile.
+The reason is that only within the <el-method>with...</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
+a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>set this.x to value</code>, since that would 
+make changes observable from outside the function.</p>
+
+<p>Note, in the same demo, that the class <code>Square</code> does not define any <el-method>with...</el-method> methods, because there is no need
+  within the program to update any instance of Square - instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
+  as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
+  need to do other work. <el-method>withNewApple</el-method> has been written using the standard <b>function method</b> instruction template.
+</p>
+
+<h3 id="random_fp">Principle 10: Random numbers require a special pattern</h3>
+
+<p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
+it until you are fairly comfortable with all the previous principles.</p>
+
+<p>In procedural programming you use the 'system methods' <el-method>random</el-method> (for a floating point number in the range 0 to 1) or 
+<el-method>randInt</el-method> for an integer in a specified range. You may use these system methods within the main routine or another
+procedure, and you may pass these random values <i>into</i> a function, but you may not generate one or more random values <i>within</i> a function. 
+But when writing games or simulations that rely heavily on generating random numbers this can make
+it very difficult to achieve the primary objective of doing all your data transformations within functions. Fortunately, there 
+<i>is</i> a mechanism to generate random numbers within functions. Before looking at how to use it, it is important to
+understand the followin:</p>
+
+<ul>
+  <li>A small number of computers have dedicated hardware that generates true random numbers using advanced physics such as quantum effects or radioactive decay.
+    Most computers, however, rely on 'pseudo random number generation' - where the 'next' random number is actually derived from the previous one, but 
+    in such a way that <i>for most practical purposes</i> the results may be considered as random.</li>
+  <li>When you use the standard <el-method>random</el-method> or <el-method>randInt</el-method> system methods, the 'system' is keeping track of the
+  previously-generated numbers and using this to generate the next one. This means that the coding using it is dependent upon state of the system
+  as a whole.</li>
+  <li>Functions must be 'deterministic' - the returned value must depend <i>solely</i> on the values provided as arguments into its parameters. If
+  you call a function with a given set of arguments, it must always return the same result: it cannot change dependent upon the current date/time,
+  or on what the system has done previously, unless all the necessary information was passed in as parameter(s) - making such functions extremely
+  complicated.</li>
+</li>
+</ul>
+
+<p>The 'functional Random' pattern, works within these constraints. If you want to <i>generate</i> one or more random numbers within a function,
+you must pass in the 'state' needed to derive that next random value, and you must pass the <i>updated</i> state to the next place where
+a new random is required, either inside or outside the function. This is done using an instance of the type <code>Random</code> (note the capital R,
+which distinguishes this from the procedural methods) - which may be thought of as an instance of a 'Random Number Generator'.</p>
+
+<p>To see how <code>Random</code> works, we will first explore it within a tiny program intended to show the result of rolling the dice 10 times:
+
+<codeblock>
+main
+  variable rng set to new Random()
+  for i in range(1, 10)
+    call print(rollDice(rng))
+  end for
+end main
+
+function rollDice(rng as Random) returns Int
+  return rng.asInt(1, 6)
+end function
+</codeblock>
+
+If you run this program you will see that it generates the same value - 3 - each time! We need to change it so that after each roll
+the variable <code>rng</code> is updated to the <i>next</i> value of the Random number generator. So change just the main routine to:
+
+<codeblock>
+main
+  variable rng set to new Random()
+  for i in range(1, 10)
+    call print(rollDice(rng))
+    set rng to rng.nextGen()
+  end for
+end main
+</codeblock>
+
+which will generate a more random-looking sequence. However, if you run the same program <i>again</i> you will notice that it will
+always produce the same sequence. This effect can be very useful for <i>testing</i> code, but it makes for very predictable games!
+We can overcome this, by initialising the random generator from the system clock - which given that the latter changes 1000 times per second,
+makes it almost impossible to predict the sequence:
+
+<codeblock>
+main
+  variable rng set to new Random()
+  call rng.initialiseFromClock()
+  for i in range(1, 10)
+    call print(rollDice(rng))
+    set rng to rng.nextGen()
+  end for
+end main
+</codeblock>
+
+<p>This now works well. But if we are going to have to go back out to the main routine between each use of <code>Random</code>, we might
+as well have used the procedural methods in the first place. However, the following example shows something that could not be done that way de-bugging
+creating a list of random dice-throws entirely within a function:
+<codeblock>
+main
+  variable rng set to new Random()
+  call rng.initialiseFromClock()
+  call print(randomList(rng).item_0)
+end main
+
+function randomList(rng as Random) returns (List&lt;of Int&gt;, Random)
+  let li be new List&lt;of Int&gt;()
+  let elements be range(0, 10)
+  return elements.reduce((li, rng), appendDiceThrow)
+end function
+
+function appendDiceThrow(tup as (List&lt;of Int&gt;, Random), row as Int) returns (List&lt;of Int&gt;, Random)
+  let col be tup.item_0
+  let rng be tup.item_1
+  return (col.withAppend(rng.asInt(1, 6)), rng.nextGen())
+end function
+</codeblock>
+
+
+In <b>Life - functional</b> you can find this pattern employed to create a randomised initial grid of random black/white blocks.
+</p>
 </body>
 </html>
