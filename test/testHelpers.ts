@@ -40,7 +40,7 @@ import { getTestRunner } from "./runner";
 
 
 // flag to update test files
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   const runner = await createTestRunner();
