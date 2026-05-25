@@ -31,6 +31,13 @@
   font-size: var(--ideTitleSize);
 }
 
+.quad {
+  flex-basis: auto;
+  flex-grow: 1;
+  padding-right: 10px;
+  position: relative;
+}
+
 body {
   background-color: var(--ideBackground);
   display: flex;
@@ -74,7 +81,7 @@ body {
   display: inline;
 }
 
-.twobytwo {
+.quad {
   flex-basis: auto;
   flex-grow: 1;
   padding: 5px;
@@ -678,10 +685,17 @@ body.procedural div.demo-file.procedural { display: revert; }
 body.oop div.demo-file.oop { display: revert; }
 body.functional div.demo-file.functional { display: revert; }
 
-.twobytwo {
+.quad {
   display: grid;
   grid-template-columns: 50% 50%; 
   grid-template-rows: 50% 50%;
-  grid-column-gap: 5px;
+  grid-gap: 10px;
+  padding-right: 15px;
+  padding-bottom: 10px;
 }
 
+
+.quad .code:not( :focus-within)
+{
+  opacity: 1;
+}
