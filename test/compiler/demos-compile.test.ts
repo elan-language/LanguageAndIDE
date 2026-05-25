@@ -26,9 +26,10 @@ suite("Demo compile", () => {
     await testElanFile("fern");
   });
 
- ignore_test("test fern-params", async () => { // Not high enough value to warrant the long time that this test takes*/
+  ignore_test("test fern-params", async () => {
+    // Not high enough value to warrant the long time that this test takes*/
     await testElanFile(`fern-params.elan`);
-  }); 
+  });
 
   test("test in-place-ripple-sort", async () => {
     await testElanFile("in-place-ripple-sort");
