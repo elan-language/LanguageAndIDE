@@ -525,7 +525,7 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async renderAsHtml(editingField: boolean) {
-    const content = await codeViewModel.renderAsHtml();
+    const content = await codeViewModel.renderAsHtmlAll();
     try {
       await codeViewModel.updateContent(
         content,

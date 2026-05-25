@@ -3,7 +3,6 @@
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
-
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
@@ -12,7 +11,11 @@ import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
+import { LanguageCS } from "../frames/language-cs";
 import { LanguageElan } from "../frames/language-elan";
+import { LanguageJava } from "../frames/language-java";
+import { LanguagePython } from "../frames/language-python";
+import { LanguageVB } from "../frames/language-vb";
 import { Profile } from "../frames/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
@@ -151,6 +154,20 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async renderAsHtml() {
     return await this.file!.renderAsHtml();
   }
+
+  async renderAsHtmlAll() {
+    const languages = [LanguagePython.Instance, LanguageCS.Instance, LanguageVB.Instance, LanguageJava.Instance];
+    const html = [];
+
+    for (const l of languages) {
+      this.file!.setLanguage(l);
+      html.push(await this.file!.renderAsHtml());
+    }
+
+    return html;
+  }
+
+
 
   removeAllSelectorsThatCanBe() {
     this.file!.removeAllSelectorsThatCanBe();
@@ -755,7 +772,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async updateContent(
-    text: string,
+    textAll: string[],
     editingField: boolean,
     vm: IIDEViewModel,
     fm: FileManager,
@@ -765,10 +782,13 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     collapseAllMenus();
     const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
 
+    let textInst = 0;
+
     for (const codeContainer of codeContainers) {
+      let text = textAll[textInst++];
       codeContainer.innerHTML = text;
 
-      const frames = document.querySelectorAll(".code [id]");
+      const frames = codeContainer.querySelectorAll("[id]");
 
       for (const frame of frames) {
         const id = frame.id;
