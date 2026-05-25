@@ -694,6 +694,9 @@ body.functional div.demo-file.functional { display: revert; }
   padding-bottom: 10px;
 }
 
+.quad .code {
+  max-height: 45vh;
+}
 
 .quad .code:not( :focus-within)
 {
