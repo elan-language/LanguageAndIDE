@@ -737,12 +737,12 @@ class IDEViewModel implements IIDEViewModel {
     }
 
     for (const codeContainer of codeContainers) {
-      codeContainer.classList.remove("elan");
-      codeContainer.classList.remove("python");
-      codeContainer.classList.remove("cs");
-      codeContainer.classList.remove("vb");
-      codeContainer.classList.remove("java");
-      codeContainer.classList.add(l.languageHtmlClass);
+      // codeContainer.classList.remove("elan");
+      // codeContainer.classList.remove("python");
+      // codeContainer.classList.remove("cs");
+      // codeContainer.classList.remove("vb");
+      // codeContainer.classList.remove("java");
+      // codeContainer.classList.add(l.languageHtmlClass);
     }
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
