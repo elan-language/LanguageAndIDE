@@ -63,7 +63,7 @@ export interface Frame extends Selectable {
   isGhostedOrWithinAGhostedFrame(): boolean;
 
   export(): boolean;
-  copy(encode : boolean): boolean;
+  copy(encode: boolean): boolean;
   deleteAllGhosted(): void;
 
   frameSpecificAnnotation(): string;

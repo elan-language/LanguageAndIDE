@@ -191,7 +191,7 @@ export class FileImpl implements File {
     parentHelper_deleteSelectedChildren(this);
   }
 
-  copySelectedChildren(encode : boolean): boolean {
+  copySelectedChildren(encode: boolean): boolean {
     return parentHelper_copySelectedChildren(this, encode);
   }
 
