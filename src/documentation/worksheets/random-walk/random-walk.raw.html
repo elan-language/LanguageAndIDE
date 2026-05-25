@@ -20,14 +20,14 @@
     <hint>Hint HINTNUMBER: the complete code</hint>
     <content>
         <codeblock>
-            main
-            let t be new Turtle()
+        main
+            variable t set to new Turtle()
             call t.placeAt(0, 0)
-            for count from 1 to 8 step 1
+            for count in range(1, 9)
                 call t.move(20)
                 call t.turn(45)
             end for
-            end main
+        end main
         </codeblock>
     </content>
 </step>
@@ -47,14 +47,14 @@
     <hint>Hint HINTNUMBER: the complete code</hint>
     <content>
         <codeblock>
-            main
-            let t be new Turtle()
+        main
+            variable t set to new Turtle()
             call t.placeAt(-50, 0)
-            for count from 1 to 360 step 1
+            for count in range(1, 361)
                 call t.move(1)
                 call t.turn(1)
             end for
-            end main
+        end main
         </codeblock>
     </content>
 </step>
@@ -65,8 +65,8 @@
         and test that it draws two concentric circles of different radius. Then:
 
         <ul>    
-            <li>Delete the second <code>call</code> to <el-method>circle</el-method> - as the random walk simulation needs only one.</li>
-            <li>Insert, immediately after the definition of <code>t</code> within <code>main</code> the instruction:
+            <li>Delete the second <b>call </b> to the <el-method>circle</el-method> procedure - as the random walk simulation needs only one.</li>
+            <li>Insert, immediately after the definition of <code>t</code> within the main routine the instruction:
             <code>call circle(t, 50)</code></li>
         </ul>
 
@@ -78,15 +78,15 @@
     <content>
         <codeblock>
             main
-                let t be new Turtle()
+                variable t set to new Turtle()
                 call t.hide()
                 call circle(t, 50)
             end main
 
             procedure circle(t as Turtle, radius as Int)
-                let segment be radius*pi*2/360
+                variable segment set to radius*pi*2/360
                 call t.placeAt(-radius, 0)
-                for count from 1 to 360 step 1
+                for count in range(1, 361)
                     call t.move(segment)
                     call t.turn(1)
                 end for
