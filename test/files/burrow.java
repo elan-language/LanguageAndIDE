@@ -17,6 +17,6 @@ static void main() {
       y = min([y + 1, 29]); // re-assign variable
     } else if (direction == 3) {
       y = max([y - 1, 0]); // re-assign variable
-    }
-  }
-}
+    } // if
+  } // while
+} // main

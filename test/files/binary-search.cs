@@ -13,10 +13,10 @@ static void main() {
         print($"\nWe can supply a {wanted}");
       } else {
         print($"\nSorry, we cannot supply a {wanted}");
-      }
-    }
-  }
-}
+      } // if
+    } // if
+  } // while
+} // main
 
 static bool binarySearch(List<string> li, string item) { // function
   var result = false;
@@ -29,10 +29,10 @@ static bool binarySearch(List<string> li, string item) { // function
       result = binarySearch(li.subList(0, mid), item); // re-assign variable
     } else {
       result = binarySearch(li.subList(mid + 1, li.length()), item); // re-assign variable
-    }
-  }
+    } // if
+  } // if
   return result;
-}
+} // function
 
 [TestMethod] static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
@@ -49,4 +49,4 @@ static bool binarySearch(List<string> li, string item) { // function
   Assert.AreEqual(false, binarySearch(li3, "lime"))
   var li4 = new List<string>();
   Assert.AreEqual(false, binarySearch(li4, "pear"))
-}
+} // 

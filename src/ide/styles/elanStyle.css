@@ -170,6 +170,7 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-kw,
 .selected > el-instr, 
 .selected > el-punc,
+.selected > el-comment,
 .selected > el-field, 
 .selected > el-field *, 
 .selected > el-txt, 

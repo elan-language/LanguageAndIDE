@@ -159,7 +159,34 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   }
 
   common_renderBottomAsHtml(frame: Frame): string {
-    return frame ? `}` : ``;
+    let html = "<el-punc>}</el-punc><el-comment> // ";
+     if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
+      html += this.CLASS;
+    } else if (frame instanceof Constructor) {
+      html += "constructor";
+    } else if (frame instanceof FunctionMethod) {
+      html += "function method";
+    } else if (frame instanceof ProcedureMethod) {
+      html += "procedure method";
+    } else if (frame instanceof For) {
+      html += this.FOREACH;
+    } else if (frame instanceof GlobalFunction) {
+      html += "function";
+    } else if (frame instanceof GlobalProcedure) {
+      html += "procedure";
+    } else if (frame instanceof IfStatement) {
+      html += "if";
+    } else if (frame instanceof InterfaceFrame) {
+      html += this.INTERFACE;
+    } else if (frame instanceof MainFrame) {
+      html += "main";
+    } else if (frame instanceof TryStatement) {
+      html += this.TRY;
+    } else if (frame instanceof While) {
+      
+      html += this.WHILE;
+    }
+    return html + "</el-comment>";
   }
 
   common_functionFrameFields(frame: FunctionFrame): Field[] {

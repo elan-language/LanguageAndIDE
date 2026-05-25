@@ -27,9 +27,9 @@ static void main() {
     print(String.format("State: %", tm.currentState));
     print(String.format("Rule applied: %", rule.toString()));
     sleep_ms(40); // call procedure
-  }
+  } // while
   print(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim()));
-}
+} // main
 
 final String initState = "init" // constant
 
@@ -44,10 +44,10 @@ class TuringMachine {
     this.rules = new List<Rule>(); // re-assign variable
     this.currentState = initialState; // re-assign variable
     this.headPosition = 0; // re-assign variable
-  }
+  } // constructor
   public String toString() { // function method
     return "";
-  }
+  } // function method
   public String initialState; // property
   public String currentState; // property
   public int headPosition; // property
@@ -56,28 +56,28 @@ class TuringMachine {
   public String tape; // property
   public void setTape(String tape) { // procedure method
     this.tape = tape; // re-assign variable
-  }
+  } // procedure method
   public void append(Rule rule) { // procedure method
     this.rules = this.rules.withAppend(rule); // re-assign variable
-  }
+  } // procedure method
   public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
-  }
+  } // procedure method
   public bool isHalted() { // function method
     return this.currentState.equals(this.haltState);
-  }
+  } // function method
   public Rule findMatchingRule() { // function method
     var matches = this.rules.filter((Rule r) -> (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError(String.format("No rule matching state % and symbol %", this.currentState, this.tape[this.headPosition]));
-    }
+    } // if
     return matches.head();
-  }
+  } // function method
   public void write(String newSymbol) { // procedure method
     var hp = this.headPosition;
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // re-assign variable
-  }
+  } // procedure method
   public void execute(Rule rule) { // procedure method
     this.currentState = rule.nextState; // re-assign variable
     this.write(rule.writeSymbol); // call procedure
@@ -85,16 +85,16 @@ class TuringMachine {
       this.headPosition = this.headPosition + 1; // re-assign variable
       if (this.headPosition >= this.tape.length()) {
         this.tape = this.tape + " "; // re-assign variable
-      }
+      } // if
     } else {
       this.headPosition = this.headPosition - 1; // re-assign variable
       if (this.headPosition < 0) {
         this.tape = " " + this.tape; // re-assign variable
         this.headPosition = 0; // re-assign variable
-      }
-    }
-  }
-}
+      } // if
+    } // if
+  } // procedure method
+} // class
 
 class Rule {
 
@@ -109,11 +109,11 @@ class Rule {
     this.nextState = nextState; // re-assign variable
     this.writeSymbol = writeSymbol; // re-assign variable
     this.move = move; // re-assign variable
-  }
+  } // constructor
   public String toString() { // function method
     return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumValue(this.move));
-  }
-}
+  } // function method
+} // class
 
 enum Dir {left, right}
 
@@ -465,4 +465,4 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "M", "barFound", "M", Dir.left)); // call procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
-}
+} // procedure

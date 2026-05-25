@@ -11,5 +11,5 @@ static void main() {
     blocks[20 - x][15 - y] = colour; // re-assign variable
     blocks[20 - x][15 + y] = colour; // re-assign variable
     displayBlocks(blocks); // call procedure
-  }
-}
+  } // while
+} // main
