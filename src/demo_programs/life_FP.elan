@@ -1,4 +1,4 @@
-# 9a211fd62d15ac997821dfa17a7183cddbd07cce08ebcfa59e13c733e4c6e730 Elan 2.0.0-alpha4 valid
+# c2577b4cf64d0bb81deafe827365908d8f03bc86722a2c62bac3dda104350ed7 Elan 2.0.0-alpha4 valid
 
 main
   variable rng set to new Random()
@@ -6,7 +6,7 @@ main
   variable grid set to initialGrid(rng)
   while true
     call displayBlocks(grid)
-    set grid to nextGrid(grid)
+    set grid to nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main
@@ -280,7 +280,7 @@ test test_nextCellValue
   assert nxt is white
 end test
 
-function nextGrid(grid as List<of List<of Int>>) returns List<of List<of Int>>
+function nextGeneration(grid as List<of List<of Int>>) returns List<of List<of Int>>
   let cols be range(0, 40)
   return cols.map(lambda x as Int => nextCol(grid, x))
 end function
