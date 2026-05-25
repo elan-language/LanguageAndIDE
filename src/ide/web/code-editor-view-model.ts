@@ -3,7 +3,7 @@
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
-import { isElanProduction } from "../../environment";
+
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
@@ -763,266 +763,278 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   ) {
     this.setRunStatus(RunStatus.default);
     collapseAllMenus();
-    const codeContainer = (document.querySelector(".code") as HTMLDivElement)!;
+    const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
 
-    codeContainer.innerHTML = text;
+    for (const codeContainer of codeContainers) {
+      codeContainer.innerHTML = text;
 
-    const frames = document.querySelectorAll(".code [id]");
+      const frames = document.querySelectorAll(".code [id]");
 
-    for (const frame of frames) {
-      const id = frame.id;
+      for (const frame of frames) {
+        const id = frame.id;
 
-      frame.addEventListener("keydown", async (event: Event) => {
-        const ke = event as KeyboardEvent;
-        await this.handleEditorEvent(vm, tr, fm, event, "key", "frame", getModKey(ke), id, ke.key);
-      });
-
-      frame.addEventListener("click", async (event) => {
-        const pe = event as PointerEvent;
-        const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
-        const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
-
-        const selection: [number, number] | undefined =
-          selectionStart === undefined
-            ? undefined
-            : [selectionStart, selectionEnd ?? selectionStart];
-
-        await this.handleEditorEvent(
-          vm,
-          tr,
-          fm,
-          event,
-          "click",
-          "frame",
-          getModKey(pe),
-          id,
-          undefined,
-          selection,
-        );
-      });
-
-      frame.addEventListener("mousedown", async (event) => {
-        // mousedown rather than click as click does not seem to pick up shift/ctrl click
-        const me = event as MouseEvent;
-        if (me.button === 0 && me.shiftKey) {
-          // left button only
-          await this.handleEditorEvent(vm, tr, fm, event, "click", "frame", getModKey(me), id);
-        }
-      });
-
-      frame.addEventListener("mousemove", (event) => {
-        event.preventDefault();
-      });
-
-      frame.addEventListener("dblclick", async (event) => {
-        const ke = event as KeyboardEvent;
-        await this.handleEditorEvent(vm, tr, fm, event, "dblclick", "frame", getModKey(ke), id);
-      });
-
-      frame.addEventListener("contextmenu", async (event) => {
-        const mk = { control: false, shift: false, alt: false };
-        await this.handleEditorEvent(vm, tr, fm, event, "contextmenu", "frame", mk, id);
-        event.preventDefault();
-      });
-    }
-
-    function getInput() {
-      return document.querySelector(".focused input") as HTMLInputElement;
-    }
-
-    const input = getInput();
-    const focused = getFocused();
-
-    codeContainer?.addEventListener("click", (event) => {
-      if (this.isRunningState()) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-
-      this.showCode();
-    });
-
-    codeContainer.addEventListener("mousedown", (event) => {
-      // to prevent codeContainer taking focus on a click
-      if (this.isRunningState()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    });
-
-    let firstContextItem: HTMLDivElement | undefined;
-
-    if (document.querySelector(".context-menu")) {
-      const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
-
-      firstContextItem = items[0];
-
-      for (const item of items) {
-        item.addEventListener("click", async (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          const ke = event as PointerEvent | KeyboardEvent;
-          const tgt = ke.target as HTMLDivElement;
-          const id = tgt.dataset.id;
-          const func = tgt.dataset.func;
-          const txt = await navigator.clipboard.readText();
+        frame.addEventListener("keydown", async (event: Event) => {
+          const ke = event as KeyboardEvent;
           await this.handleEditorEvent(
             vm,
             tr,
             fm,
-
             event,
-            "contextmenu",
+            "key",
             "frame",
             getModKey(ke),
             id,
-            "ContextMenu",
-            undefined,
-            func,
-            `${txt.trim()}`,
+            ke.key,
           );
         });
 
-        item.addEventListener("keydown", (event) => {
-          if (event.key === "ArrowUp") {
-            handleMenuArrowUp();
-            event.preventDefault();
-            event.stopPropagation();
-          } else if (event.key === "ArrowDown") {
-            handleMenuArrowDown();
-            event.preventDefault();
-            event.stopPropagation();
-          } else if (event.key === "Enter" || event.key === "Space") {
-            const focusedItem = document.activeElement as HTMLElement;
-            focusedItem?.click();
-            event.preventDefault();
-            event.stopPropagation();
+        frame.addEventListener("click", async (event) => {
+          const pe = event as PointerEvent;
+          const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
+          const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
+
+          const selection: [number, number] | undefined =
+            selectionStart === undefined
+              ? undefined
+              : [selectionStart, selectionEnd ?? selectionStart];
+
+          await this.handleEditorEvent(
+            vm,
+            tr,
+            fm,
+            event,
+            "click",
+            "frame",
+            getModKey(pe),
+            id,
+            undefined,
+            selection,
+          );
+        });
+
+        frame.addEventListener("mousedown", async (event) => {
+          // mousedown rather than click as click does not seem to pick up shift/ctrl click
+          const me = event as MouseEvent;
+          if (me.button === 0 && me.shiftKey) {
+            // left button only
+            await this.handleEditorEvent(vm, tr, fm, event, "click", "frame", getModKey(me), id);
           }
         });
+
+        frame.addEventListener("mousemove", (event) => {
+          event.preventDefault();
+        });
+
+        frame.addEventListener("dblclick", async (event) => {
+          const ke = event as KeyboardEvent;
+          await this.handleEditorEvent(vm, tr, fm, event, "dblclick", "frame", getModKey(ke), id);
+        });
+
+        frame.addEventListener("contextmenu", async (event) => {
+          const mk = { control: false, shift: false, alt: false };
+          await this.handleEditorEvent(vm, tr, fm, event, "contextmenu", "frame", mk, id);
+          event.preventDefault();
+        });
       }
-    }
 
-    const helpLinks = document.querySelectorAll("el-help a");
+      function getInput() {
+        return document.querySelector(".focused input") as HTMLInputElement;
+      }
 
-    for (const item of helpLinks) {
-      item.addEventListener("click", (event) => {
-        if ((event.target as any).target === "help-iframe") {
-          // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
-          // no focus
-          vm.clickHelpTab();
+      const input = getInput();
+      const focused = getFocused();
+
+      codeContainer?.addEventListener("click", (event) => {
+        if (this.isRunningState()) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
         }
 
-        event.stopPropagation();
+        this.showCode();
       });
-    }
 
-    if (firstContextItem) {
-      firstContextItem.focus();
-    } else if (input) {
-      const cursorStart = input.dataset.cursorstart as string;
-      const cursorEnd = input.dataset.cursorend as string;
-      const startIndex = parseInt(cursorStart) as number;
-      const endIndex = parseInt(cursorEnd) as number;
-      const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
-      const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
+      codeContainer.addEventListener("mousedown", (event) => {
+        // to prevent codeContainer taking focus on a click
+        if (this.isRunningState()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
 
-      input.setSelectionRange(cursorIndex1, cursorIndex2);
-      input.focus();
-    } else if (focused) {
-      focused.focus();
-    } else {
-      codeContainer.focus();
-    }
+      let firstContextItem: HTMLDivElement | undefined;
 
-    if (document.querySelector(".autocomplete-popup")) {
-      const items = document.querySelectorAll(".autocomplete-item");
+      if (document.querySelector(".context-menu")) {
+        const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
 
-      for (const item of items) {
-        item.addEventListener("click", async (event) => {
-          const ke = event as PointerEvent;
-          const tgt = ke.target as HTMLDivElement;
-          const id = tgt.dataset.id;
+        firstContextItem = items[0];
 
-          await this.handleEditorEvent(
-            vm,
-            tr,
-            fm,
-            event,
-            "key",
-            "frame",
-            getModKey(ke),
-            id,
-            "Enter",
-            undefined,
-            undefined,
-            tgt.innerText,
-          );
-        });
-      }
+        for (const item of items) {
+          item.addEventListener("click", async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const ke = event as PointerEvent | KeyboardEvent;
+            const tgt = ke.target as HTMLDivElement;
+            const id = tgt.dataset.id;
+            const func = tgt.dataset.func;
+            const txt = await navigator.clipboard.readText();
+            await this.handleEditorEvent(
+              vm,
+              tr,
+              fm,
 
-      const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
+              event,
+              "contextmenu",
+              "frame",
+              getModKey(ke),
+              id,
+              "ContextMenu",
+              undefined,
+              func,
+              `${txt.trim()}`,
+            );
+          });
 
-      if (ellipsis.length === 1) {
-        ellipsis[0].addEventListener("click", async (event) => {
-          const ke = event as PointerEvent;
-          const tgt = ke.target as HTMLDivElement;
-          const id = tgt.dataset.id;
-          const selected = tgt.dataset.selected;
-
-          await this.handleEditorEvent(
-            vm,
-            tr,
-            fm,
-            event,
-            "key",
-            "frame",
-            getModKey(ke),
-            id,
-            "ArrowDown",
-            undefined,
-            undefined,
-            selected,
-          );
-        });
-      }
-    }
-
-    const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
-
-    if (activeHelp) {
-      activeHelp.click();
-    }
-
-    const copiedSource = this.getCopiedSource();
-
-    if (copiedSource.length > 0) {
-      let allCode = "";
-
-      for (const code of copiedSource) {
-        if (allCode) {
-          allCode = allCode + "\n" + code;
-        } else {
-          allCode = code;
+          item.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") {
+              handleMenuArrowUp();
+              event.preventDefault();
+              event.stopPropagation();
+            } else if (event.key === "ArrowDown") {
+              handleMenuArrowDown();
+              event.preventDefault();
+              event.stopPropagation();
+            } else if (event.key === "Enter" || event.key === "Space") {
+              const focusedItem = document.activeElement as HTMLElement;
+              focusedItem?.click();
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          });
         }
       }
 
-      await navigator.clipboard.writeText(allCode);
-    }
+      const helpLinks = document.querySelectorAll("el-help a");
 
-    await fm.save(this, focused, editingField, vm);
-    vm.updateDisplayValues(this);
+      for (const item of helpLinks) {
+        item.addEventListener("click", (event) => {
+          if ((event.target as any).target === "help-iframe") {
+            // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
+            // no focus
+            vm.clickHelpTab();
+          }
 
-    if (!isElanProduction) {
-      const dbgFocused = document.querySelectorAll(".focused");
-      //debug check
-      if (dbgFocused.length > 1) {
-        let msg = "multiple focused ";
-        dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-        await vm.showError(new Error(msg), this.fileName, false);
+          event.stopPropagation();
+        });
       }
-    }
 
-    cursorDefault();
+      if (firstContextItem) {
+        firstContextItem.focus();
+      } else if (input) {
+        const cursorStart = input.dataset.cursorstart as string;
+        const cursorEnd = input.dataset.cursorend as string;
+        const startIndex = parseInt(cursorStart) as number;
+        const endIndex = parseInt(cursorEnd) as number;
+        const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
+        const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
+
+        input.setSelectionRange(cursorIndex1, cursorIndex2);
+        input.focus();
+      } else if (focused) {
+        focused.focus();
+      } else {
+        codeContainer.focus();
+      }
+
+      if (document.querySelector(".autocomplete-popup")) {
+        const items = document.querySelectorAll(".autocomplete-item");
+
+        for (const item of items) {
+          item.addEventListener("click", async (event) => {
+            const ke = event as PointerEvent;
+            const tgt = ke.target as HTMLDivElement;
+            const id = tgt.dataset.id;
+
+            await this.handleEditorEvent(
+              vm,
+              tr,
+              fm,
+              event,
+              "key",
+              "frame",
+              getModKey(ke),
+              id,
+              "Enter",
+              undefined,
+              undefined,
+              tgt.innerText,
+            );
+          });
+        }
+
+        const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
+
+        if (ellipsis.length === 1) {
+          ellipsis[0].addEventListener("click", async (event) => {
+            const ke = event as PointerEvent;
+            const tgt = ke.target as HTMLDivElement;
+            const id = tgt.dataset.id;
+            const selected = tgt.dataset.selected;
+
+            await this.handleEditorEvent(
+              vm,
+              tr,
+              fm,
+              event,
+              "key",
+              "frame",
+              getModKey(ke),
+              id,
+              "ArrowDown",
+              undefined,
+              undefined,
+              selected,
+            );
+          });
+        }
+      }
+
+      const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
+
+      if (activeHelp) {
+        activeHelp.click();
+      }
+
+      const copiedSource = this.getCopiedSource();
+
+      if (copiedSource.length > 0) {
+        let allCode = "";
+
+        for (const code of copiedSource) {
+          if (allCode) {
+            allCode = allCode + "\n" + code;
+          } else {
+            allCode = code;
+          }
+        }
+
+        await navigator.clipboard.writeText(allCode);
+      }
+
+      await fm.save(this, focused, editingField, vm);
+      vm.updateDisplayValues(this);
+
+      // if (!isElanProduction) {
+      //   const dbgFocused = document.querySelectorAll(".focused");
+      //   //debug check
+      //   if (dbgFocused.length > 1) {
+      //     let msg = "multiple focused ";
+      //     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
+      //     //await vm.showError(new Error(msg), this.fileName, false);
+      //   }
+      // }
+
+      cursorDefault();
+    }
   }
 }

@@ -50,7 +50,8 @@ import { sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
-const codeContainer = document.querySelector(".code") as HTMLDivElement;
+//const codeContainer = document.querySelector(".code") as HTMLDivElement;
+const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -217,7 +218,9 @@ class IDEViewModel implements IIDEViewModel {
     setStatus(runStatus, cvm.getRunStatusColour(), cvm.getRunStatusLabel(), false);
 
     if (isRunning || isTestRunning) {
-      codeContainer?.classList.add("running");
+      for (const codeContainer of codeContainers) {
+        codeContainer?.classList.add("running");
+      }
 
       if (isPaused) {
         this.enable(runDebugButton, "Resume the program");
@@ -263,7 +266,9 @@ class IDEViewModel implements IIDEViewModel {
         elem.setAttribute("hidden", "");
       }
     } else {
-      codeContainer?.classList.remove("running");
+      for (const codeContainer of codeContainers) {
+        codeContainer?.classList.remove("running");
+      }
 
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
@@ -598,7 +603,9 @@ class IDEViewModel implements IIDEViewModel {
           break;
         case "e":
         case "E":
-          codeContainer.click();
+          for (const codeContainer of codeContainers) {
+            codeContainer.click();
+          }
           kp.preventDefault();
           break;
         case "g":
@@ -728,12 +735,15 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
-    codeContainer.classList.remove("elan");
-    codeContainer.classList.remove("python");
-    codeContainer.classList.remove("cs");
-    codeContainer.classList.remove("vb");
-    codeContainer.classList.remove("java");
-    codeContainer.classList.add(l.languageHtmlClass);
+
+    for (const codeContainer of codeContainers) {
+      codeContainer.classList.remove("elan");
+      codeContainer.classList.remove("python");
+      codeContainer.classList.remove("cs");
+      codeContainer.classList.remove("vb");
+      codeContainer.classList.remove("java");
+      codeContainer.classList.add(l.languageHtmlClass);
+    }
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
     this.tvm.setHelpLanguage(l.languageHtmlClass);
