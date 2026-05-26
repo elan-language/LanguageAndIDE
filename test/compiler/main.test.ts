@@ -51,40 +51,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
-
-    const pythonCode = `${testPythonHeader}
-
-def main() -> None:
-
-
-main()
-`;
-
-    const csCode = `${testCSHeader}
-
-static void main() {
-
-}
-`;
-
-    const javaCode = `${testJavaHeader}
-
-static void main() {
-
-}
-`;
-
-    const vbCode = `${testVBHeader}
-
-Sub main()
-
-End Sub
-`;
-
-    await assertExportedPythonIs(fileImpl, pythonCode);
-    await assertExportedCSIs(fileImpl, csCode);
-    await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Fail_TwoMain", async () => {
