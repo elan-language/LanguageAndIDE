@@ -898,6 +898,9 @@ toggleQuadEditorButton.addEventListener("click", async (e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
 
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
+    if (codeViewModel.getLanguage() === LanguageElan.Instance) {
+      await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, true);
+    }
     const ll = getLanguagesForQuad(codeViewModel.getLanguage());
 
     for (let i = 0; i < 4; i++) {

@@ -703,3 +703,8 @@ body.functional div.demo-file.functional { display: revert; }
 {
   opacity: 1;
 }
+
+.quad-editor #elan-language
+{
+  display: none;
+}
