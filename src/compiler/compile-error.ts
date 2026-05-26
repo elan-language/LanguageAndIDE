@@ -442,7 +442,7 @@ export class MutateCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `May not re-assign the ${purpose} '${name}'.`,
+      `May not reassign the ${purpose} '${name}'.`,
       location,
       "LangRef.html#compile_error",
     );

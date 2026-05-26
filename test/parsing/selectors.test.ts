@@ -1,6 +1,5 @@
 import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { FunctionMethod } from "../../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { AbstractClass } from "../../src/ide/frames/globals/abstract-class";
@@ -28,7 +27,7 @@ suite("Selector tests", () => {
     assertOptions(selector, [
       "print",
       "variable definition",
-      "re-assign variable",
+      "reassign variable",
       "if",
       "while loop",
       "for loop",
@@ -175,7 +174,7 @@ suite("Selector tests", () => {
     const s = new StatementSelector(func);
     assertOptions(s, [
       "variable definition",
-      "re-assign variable",
+      "reassign variable",
       "if",
       "while loop",
       "for loop",
@@ -213,7 +212,7 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "print",
       "variable definition",
-      "re-assign variable",
+      "reassign variable",
       "if",
       "while loop",
       "for loop",
@@ -238,7 +237,7 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "print",
       "variable definition",
-      "re-assign variable",
+      "reassign variable",
       "if",
       "while loop",
       "for loop",
@@ -308,7 +307,7 @@ suite("Selector tests", () => {
     assertOptions(s, [
       "print",
       "variable definition",
-      "re-assign variable",
+      "reassign variable",
       "if",
       "else if",
       "else",

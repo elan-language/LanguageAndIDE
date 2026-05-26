@@ -17,10 +17,10 @@ static void main() {
     var headRef = new AsRef<List<int>>(head);
     var tailRef = new AsRef<List<int>>(tail);
     updateSnake(currentDirRef, tailRef, headRef, body); // call procedure
-    head = headRef.value(); // re-assign variable
-    tail = tailRef.value(); // re-assign variable
-    currentDir = currentDirRef.value(); // re-assign variable
-    gameOn = !hasHitEdge(head[0], head[1]) && !body.contains(head); // re-assign variable
+    head = headRef.value(); // reassign variable
+    tail = tailRef.value(); // reassign variable
+    currentDir = currentDirRef.value(); // reassign variable
+    gameOn = !hasHitEdge(head[0], head[1]) && !body.contains(head); // reassign variable
     if (head.equals(apple)) {
       setAppleToRandomPosition(apple, body); // call procedure
     } else {
@@ -35,7 +35,7 @@ static void updateSnake(AsRef<string> currentDirRef, AsRef<List<int>> tailRef, A
   var head = headRef.value();
   var tail = tailRef.value();
   var currentDir = currentDirRef.value();
-  currentDir = directionByKey(currentDir, getKey()); // re-assign variable
+  currentDir = directionByKey(currentDir, getKey()); // reassign variable
   tailRef.set(body[0]); // call procedure
   body.append(head); // call procedure
   headRef.set(getAdjacentSquare(head, currentDir)); // call procedure
@@ -43,20 +43,20 @@ static void updateSnake(AsRef<string> currentDirRef, AsRef<List<int>> tailRef, A
 } // procedure
 
 static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
-  blocks[head[0]][head[1]] = green; // re-assign variable
+  blocks[head[0]][head[1]] = green; // reassign variable
   var tailColour = getTailColour(tail, body);
-  blocks[tail[0]][tail[1]] = tailColour; // re-assign variable
-  blocks[apple[0]][apple[1]] = red; // re-assign variable
+  blocks[tail[0]][tail[1]] = tailColour; // reassign variable
+  blocks[apple[0]][apple[1]] = red; // reassign variable
   displayBlocks(blocks); // call procedure
 } // procedure
 
 static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure
   var changePosition = true;
   while (changePosition) {
-    apple[0] = randint(0, 39); // re-assign variable
-    apple[1] = randint(0, 29); // re-assign variable
+    apple[0] = randint(0, 39); // reassign variable
+    apple[1] = randint(0, 29); // reassign variable
     if (!body.contains(apple)) {
-      changePosition = false; // re-assign variable
+      changePosition = false; // reassign variable
     } // if
   } // while
 } // procedure
@@ -64,7 +64,7 @@ static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { //
 static int getTailColour(List<int> tail, List<List<int>> body) { // function
   var colour = white;
   if (body[0].equals(tail)) {
-    colour = green; // re-assign variable
+    colour = green; // reassign variable
   } // if
   return colour;
 } // function
@@ -77,13 +77,13 @@ static List<int> getAdjacentSquare(List<int> sq, string dir) { // function
   var newX = sq[0];
   var newY = sq[1];
   if (dir.equals("left")) {
-    newX = newX - 1; // re-assign variable
+    newX = newX - 1; // reassign variable
   } else if (dir.equals("right")) {
-    newX = newX + 1; // re-assign variable
+    newX = newX + 1; // reassign variable
   } else if (dir.equals("up")) {
-    newY = newY - 1; // re-assign variable
+    newY = newY - 1; // reassign variable
   } else if (dir.equals("down")) {
-    newY = newY + 1; // re-assign variable
+    newY = newY + 1; // reassign variable
   } // if
   return [newX, newY];
 } // function
@@ -92,7 +92,7 @@ static string directionByKey(string current, string key) { // function
   var dirn = current;
   var d = ["w":"up", "s":"down", "a":"left", "d":"right"];
   if (d.keys().contains(key)) {
-    dirn = d[key]; // re-assign variable
+    dirn = d[key]; // reassign variable
   } // if
   return dirn;
 } // function

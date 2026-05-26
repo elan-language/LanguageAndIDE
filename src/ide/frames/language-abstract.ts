@@ -26,7 +26,7 @@ import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { LetStatement } from "./statements/let-statement";
-import { ReAssignVariable } from "./statements/re-assign-variable";
+import { ReAssignVariable } from "./statements/reassign-variable";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";

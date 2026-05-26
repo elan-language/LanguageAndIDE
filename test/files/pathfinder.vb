@@ -24,7 +24,7 @@ Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Po
   Dim gr2 = initialiseGraphics(start, destination, rocks) ' variable definition
   While solver.running
     solver.visitNextPoint() ' call procedure
-    gr2 = addVisited(gr2, solver.getLastVisited()) ' re-assign variable
+    gr2 = addVisited(gr2, solver.getLastVisited()) ' reassign variable
     displayBlocks(gr2) ' call procedure
     sleep_ms(0) ' call procedure
   End While
@@ -32,7 +32,7 @@ Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Po
     Dim rl = solver.getRouteAndLength() ' variable definition
     Dim route = rl.item_0 ' variable definition
     Dim length = rl.item_1 ' variable definition
-    gr2 = addRoute(gr2, route) ' re-assign variable
+    gr2 = addRoute(gr2, route) ' reassign variable
     displayBlocks(gr2) ' call procedure
     printNoLine($"Length of route: {length.round(2)} ") ' call procedure
   Else
@@ -60,10 +60,10 @@ End Sub
 Function initialiseGraphics(start As Point, dest As Point, rocks As List(Of Point)) As List(Of List(Of Integer))
   Dim gr = createBlockGraphics(white) ' variable definition
   For Each rock In rocks
-    gr = withPut(gr, rock.x, rock.y, black) ' re-assign variable
+    gr = withPut(gr, rock.x, rock.y, black) ' reassign variable
   Next rock
-  gr = withPut(gr, start.x, start.y, green) ' re-assign variable
-  gr = withPut(gr, dest.x, dest.y, red) ' re-assign variable
+  gr = withPut(gr, start.x, start.y, green) ' reassign variable
+  gr = withPut(gr, dest.x, dest.y, red) ' reassign variable
   Return gr
 End Function
 
@@ -78,22 +78,22 @@ End Function
 Function addRoute(gr As List(Of List(Of Integer)), route As List(Of Point)) As List(Of List(Of Integer))
   Dim graphics = gr ' variable definition
   For Each p In route
-    graphics = withPut(graphics, p.x, p.y, orange) ' re-assign variable
+    graphics = withPut(graphics, p.x, p.y, orange) ' reassign variable
   Next p
   Dim start = route[0] ' variable definition
   Dim dest = route[route.length() - 1] ' variable definition
-  graphics = withPut(graphics, start.x, start.y, green) ' re-assign variable
-  graphics = withPut(graphics, dest.x, dest.y, red) ' re-assign variable
+  graphics = withPut(graphics, start.x, start.y, green) ' reassign variable
+  graphics = withPut(graphics, dest.x, dest.y, red) ' reassign variable
   Return graphics
 End Function
 
 Class Solver
 
   Sub New(nodes As List(Of Node), start As Point, destination As Point)
-    Me.nodes = nodes ' re-assign variable
-    Me.start = start ' re-assign variable
-    Me.destination = destination ' re-assign variable
-    Me.current = New Node(emptyPoint(), 0, 0) ' re-assign variable
+    Me.nodes = nodes ' reassign variable
+    Me.start = start ' reassign variable
+    Me.destination = destination ' reassign variable
+    Me.current = New Node(emptyPoint(), 0, 0) ' reassign variable
   End Sub
   Function toString() As String
     Return ""
@@ -106,9 +106,9 @@ Class Solver
   Property running As Boolean
   ' TODO can this go into the constructor ?
   Sub initialise(alg As Algorithm) ' procedure method
-    Me.alg = alg ' re-assign variable
-    Me.current = New Node(Me.start, 0, infinity) ' re-assign variable
-    Me.running = True ' re-assign variable
+    Me.alg = alg ' reassign variable
+    Me.current = New Node(Me.start, 0, infinity) ' reassign variable
+    Me.running = True ' reassign variable
     For Each node In Me.nodes
       node.setDistanceFromStart(infinity) ' call procedure
       node.setVia(emptyPoint()) ' call procedure
@@ -117,9 +117,9 @@ Class Solver
   End Sub
   Sub visitNextPoint() ' procedure method
     Me.updateNeighbours() ' call procedure
-    Me.current = Me.nextNodeToVisit() ' re-assign variable
+    Me.current = Me.nextNodeToVisit() ' reassign variable
     If (Me.current.isEmpty Or (Me.current.point.equals(Me.destination))) Then
-      Me.running = False ' re-assign variable
+      Me.running = False ' reassign variable
     Else
       Dim current = Me.current ' variable definition
       current.setVisited(True) ' call procedure
@@ -144,7 +144,7 @@ Class Solver
       Dim node = Me.getNodeFor(p) ' variable definition
       Dim point = node.point ' variable definition
       If Not point.isEmpty Then
-        neighbours = neighbours.withAppend(node) ' re-assign variable
+        neighbours = neighbours.withAppend(node) ' reassign variable
       End If
     Next p
     Return neighbours
@@ -163,8 +163,8 @@ Class Solver
     For Each nd In possibilities
       Dim cost = Me.calculateCost(nd) ' variable definition
       If cost < lowestCostSoFar Then
-        lowestCostSoFar = cost ' re-assign variable
-        lowestCostNode = nd ' re-assign variable
+        lowestCostSoFar = cost ' reassign variable
+        lowestCostNode = nd ' reassign variable
       End If
     Next nd
     Return lowestCostNode
@@ -174,11 +174,11 @@ Class Solver
     Dim fromStart = node.distFromStart ' variable definition
     Dim estToDest = node.estDistToDest ' variable definition
     If Me.alg = Algorithm.dijkstra Then
-      cost = fromStart ' re-assign variable
+      cost = fromStart ' reassign variable
     ElseIf Me.alg = Algorithm.aStar Then
-      cost = fromStart + estToDest ' re-assign variable
+      cost = fromStart + estToDest ' reassign variable
     ElseIf Me.alg = Algorithm.heuristic Then
-      cost = estToDest ' re-assign variable
+      cost = estToDest ' reassign variable
     End If
     Return cost
   End Function
@@ -189,9 +189,9 @@ Class Solver
     While Not node.point.equals(Me.start)
       Dim previous = node.via ' variable definition
       Dim p = node.point ' variable definition
-      length = length + p.minDistTo(previous) ' re-assign variable
-      route = route.withInsert(0, previous) ' re-assign variable
-      node = Me.getNodeFor(previous) ' re-assign variable
+      length = length + p.minDistTo(previous) ' reassign variable
+      route = route.withInsert(0, previous) ' reassign variable
+      node = Me.getNodeFor(previous) ' reassign variable
     End While
     Return (route, length)
   End Function
@@ -205,13 +205,13 @@ Class Node
 
   Sub New(p As Point, distFromStart As Double, estDistToDest As Double)
     If p.isEmpty Then
-      Me.isEmpty = True ' re-assign variable
+      Me.isEmpty = True ' reassign variable
     End If
-    Me.point = p ' re-assign variable
-    Me.visited = False ' re-assign variable
-    Me.distFromStart = distFromStart ' re-assign variable
-    Me.via = emptyPoint() ' re-assign variable
-    Me.estDistToDest = estDistToDest ' re-assign variable
+    Me.point = p ' reassign variable
+    Me.visited = False ' reassign variable
+    Me.distFromStart = distFromStart ' reassign variable
+    Me.via = emptyPoint() ' reassign variable
+    Me.estDistToDest = estDistToDest ' reassign variable
   End Sub
   Property point As Point
   Property visited As Boolean
@@ -220,13 +220,13 @@ Class Node
   Property estDistToDest As Double
   Property isEmpty As Boolean
   Sub setVisited(value As Boolean) ' procedure method
-    Me.visited = value ' re-assign variable
+    Me.visited = value ' reassign variable
   End Sub
   Sub setDistanceFromStart(d As Double) ' procedure method
-    Me.distFromStart = d ' re-assign variable
+    Me.distFromStart = d ' reassign variable
   End Sub
   Sub setVia(p As Point) ' procedure method
-    Me.via = p ' re-assign variable
+    Me.via = p ' reassign variable
   End Sub
   Function toString() As String
     Return $"[{Me.point.toString()} {Me.visited} {Me.distFromStart}]"
@@ -244,10 +244,10 @@ Class Point
   Property isEmpty As Boolean
   Sub New(x As Integer, y As Integer)
     If (x < 0) Or (y < 0) Then
-      Me.isEmpty = True ' re-assign variable
+      Me.isEmpty = True ' reassign variable
     Else
-      Me.x = x ' re-assign variable
-      Me.y = y ' re-assign variable
+      Me.x = x ' reassign variable
+      Me.y = y ' reassign variable
     End If
   End Sub
   Function minDistTo(p As Point) As Double

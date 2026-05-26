@@ -18,13 +18,13 @@ def main() -> None:
   # or the browser will run out of memory
   while count < 1000:
     point = onepoint(x, y, r) # variable definition
-    rect = point.item_0 # re-assign variable
-    x = point.item_1 # re-assign variable
-    y = point.item_2 # re-assign variable
-    r = point.item_3 # re-assign variable
+    rect = point.item_0 # reassign variable
+    x = point.item_1 # reassign variable
+    y = point.item_2 # reassign variable
+    r = point.item_3 # reassign variable
     vg.append(rect) # call procedure
     displayVectorGraphics(vg) # call procedure
-    count = count + 1 # re-assign variable
+    count = count + 1 # reassign variable
   print("Finished")
 
 def onepoint(x: float, y: float, r: Random) -> tuple[RectangleVG, float, float, Random]: # function
@@ -58,11 +58,11 @@ def onestep(x: float, y: float, r: float) -> tuple[float, float]: # function
   nx = 0.0 # variable definition
   ny = 0.0 # variable definition
   for pp in allPs:
-    cumuprob = cumuprob + pp[6] # re-assign variable
+    cumuprob = cumuprob + pp[6] # reassign variable
     if (not done) and (r < cumuprob):
-      nx = x*pp[0] + y*pp[1] + pp[4] # re-assign variable
-      ny = x*pp[2] + y*pp[3] + pp[5] # re-assign variable
-      done = True # re-assign variable
+      nx = x*pp[0] + y*pp[1] + pp[4] # reassign variable
+      ny = x*pp[2] + y*pp[3] + pp[5] # reassign variable
+      done = True # reassign variable
   return (nx, ny)
 
 def test_one(self) -> None:

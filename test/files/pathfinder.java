@@ -24,7 +24,7 @@ static void runSolver(List<List<int>> gr, Point start, Point destination, List<P
   var gr2 = initialiseGraphics(start, destination, rocks);
   while (solver.running) {
     solver.visitNextPoint(); // call procedure
-    gr2 = addVisited(gr2, solver.getLastVisited()); // re-assign variable
+    gr2 = addVisited(gr2, solver.getLastVisited()); // reassign variable
     displayBlocks(gr2); // call procedure
     sleep_ms(0); // call procedure
   } // while
@@ -32,7 +32,7 @@ static void runSolver(List<List<int>> gr, Point start, Point destination, List<P
     var rl = solver.getRouteAndLength();
     var route = rl.item_0;
     var length = rl.item_1;
-    gr2 = addRoute(gr2, route); // re-assign variable
+    gr2 = addRoute(gr2, route); // reassign variable
     displayBlocks(gr2); // call procedure
     printNoLine(String.format("Length of route: % ", length.round(2))); // call procedure
   } else {
@@ -60,10 +60,10 @@ static void createRocksAndNodes(int percentRocks, List<Point> rocks, List<Node> 
 static List<List<int>> initialiseGraphics(Point start, Point dest, List<Point> rocks) { // function
   var gr = createBlockGraphics(white);
   foreach (rock in rocks) {
-    gr = withPut(gr, rock.x, rock.y, black); // re-assign variable
+    gr = withPut(gr, rock.x, rock.y, black); // reassign variable
   } // foreach
-  gr = withPut(gr, start.x, start.y, green); // re-assign variable
-  gr = withPut(gr, dest.x, dest.y, red); // re-assign variable
+  gr = withPut(gr, start.x, start.y, green); // reassign variable
+  gr = withPut(gr, dest.x, dest.y, red); // reassign variable
   return gr;
 } // function
 
@@ -78,22 +78,22 @@ static List<List<int>> addVisited(List<List<int>> gr, Point visited) { // functi
 static List<List<int>> addRoute(List<List<int>> gr, List<Point> route) { // function
   var graphics = gr;
   foreach (p in route) {
-    graphics = withPut(graphics, p.x, p.y, orange); // re-assign variable
+    graphics = withPut(graphics, p.x, p.y, orange); // reassign variable
   } // foreach
   var start = route[0];
   var dest = route[route.length() - 1];
-  graphics = withPut(graphics, start.x, start.y, green); // re-assign variable
-  graphics = withPut(graphics, dest.x, dest.y, red); // re-assign variable
+  graphics = withPut(graphics, start.x, start.y, green); // reassign variable
+  graphics = withPut(graphics, dest.x, dest.y, red); // reassign variable
   return graphics;
 } // function
 
 class Solver {
 
   public Solver(List<Node> nodes, Point start, Point destination) {
-    this.nodes = nodes; // re-assign variable
-    this.start = start; // re-assign variable
-    this.destination = destination; // re-assign variable
-    this.current = new Node(emptyPoint(), 0, 0); // re-assign variable
+    this.nodes = nodes; // reassign variable
+    this.start = start; // reassign variable
+    this.destination = destination; // reassign variable
+    this.current = new Node(emptyPoint(), 0, 0); // reassign variable
   } // constructor
   public String toString() { // function method
     return "";
@@ -106,9 +106,9 @@ class Solver {
   public bool running; // property
   // TODO can this go into the constructor ?
   public void initialise(Algorithm alg) { // procedure method
-    this.alg = alg; // re-assign variable
-    this.current = new Node(this.start, 0, infinity); // re-assign variable
-    this.running = true; // re-assign variable
+    this.alg = alg; // reassign variable
+    this.current = new Node(this.start, 0, infinity); // reassign variable
+    this.running = true; // reassign variable
     foreach (node in this.nodes) {
       node.setDistanceFromStart(infinity); // call procedure
       node.setVia(emptyPoint()); // call procedure
@@ -117,9 +117,9 @@ class Solver {
   } // procedure method
   public void visitNextPoint() { // procedure method
     this.updateNeighbours(); // call procedure
-    this.current = this.nextNodeToVisit(); // re-assign variable
+    this.current = this.nextNodeToVisit(); // reassign variable
     if ((this.current.isEmpty || (this.current.point.equals(this.destination)))) {
-      this.running = false; // re-assign variable
+      this.running = false; // reassign variable
     } else {
       var current = this.current;
       current.setVisited(true); // call procedure
@@ -144,7 +144,7 @@ class Solver {
       var node = this.getNodeFor(p);
       var point = node.point;
       if (!point.isEmpty) {
-        neighbours = neighbours.withAppend(node); // re-assign variable
+        neighbours = neighbours.withAppend(node); // reassign variable
       } // if
     } // foreach
     return neighbours;
@@ -163,8 +163,8 @@ class Solver {
     foreach (nd in possibilities) {
       var cost = this.calculateCost(nd);
       if (cost < lowestCostSoFar) {
-        lowestCostSoFar = cost; // re-assign variable
-        lowestCostNode = nd; // re-assign variable
+        lowestCostSoFar = cost; // reassign variable
+        lowestCostNode = nd; // reassign variable
       } // if
     } // foreach
     return lowestCostNode;
@@ -174,11 +174,11 @@ class Solver {
     var fromStart = node.distFromStart;
     var estToDest = node.estDistToDest;
     if (this.alg == Algorithm.dijkstra) {
-      cost = fromStart; // re-assign variable
+      cost = fromStart; // reassign variable
     } else if (this.alg == Algorithm.aStar) {
-      cost = fromStart + estToDest; // re-assign variable
+      cost = fromStart + estToDest; // reassign variable
     } else if (this.alg == Algorithm.heuristic) {
-      cost = estToDest; // re-assign variable
+      cost = estToDest; // reassign variable
     } // if
     return cost;
   } // function method
@@ -189,9 +189,9 @@ class Solver {
     while (!node.point.equals(this.start)) {
       var previous = node.via;
       var p = node.point;
-      length = length + p.minDistTo(previous); // re-assign variable
-      route = route.withInsert(0, previous); // re-assign variable
-      node = this.getNodeFor(previous); // re-assign variable
+      length = length + p.minDistTo(previous); // reassign variable
+      route = route.withInsert(0, previous); // reassign variable
+      node = this.getNodeFor(previous); // reassign variable
     } // while
     return (route, length);
   } // function method
@@ -205,13 +205,13 @@ class Node {
 
   public Node(Point p, double distFromStart, double estDistToDest) {
     if (p.isEmpty) {
-      this.isEmpty = true; // re-assign variable
+      this.isEmpty = true; // reassign variable
     } // if
-    this.point = p; // re-assign variable
-    this.visited = false; // re-assign variable
-    this.distFromStart = distFromStart; // re-assign variable
-    this.via = emptyPoint(); // re-assign variable
-    this.estDistToDest = estDistToDest; // re-assign variable
+    this.point = p; // reassign variable
+    this.visited = false; // reassign variable
+    this.distFromStart = distFromStart; // reassign variable
+    this.via = emptyPoint(); // reassign variable
+    this.estDistToDest = estDistToDest; // reassign variable
   } // constructor
   public Point point; // property
   public bool visited; // property
@@ -220,13 +220,13 @@ class Node {
   public double estDistToDest; // property
   public bool isEmpty; // property
   public void setVisited(bool value) { // procedure method
-    this.visited = value; // re-assign variable
+    this.visited = value; // reassign variable
   } // procedure method
   public void setDistanceFromStart(double d) { // procedure method
-    this.distFromStart = d; // re-assign variable
+    this.distFromStart = d; // reassign variable
   } // procedure method
   public void setVia(Point p) { // procedure method
-    this.via = p; // re-assign variable
+    this.via = p; // reassign variable
   } // procedure method
   public String toString() { // function method
     return String.format("[% % %]", this.point.toString(), this.visited, this.distFromStart);
@@ -244,10 +244,10 @@ class Point {
   public bool isEmpty; // property
   public Point(int x, int y) {
     if ((x < 0) || (y < 0)) {
-      this.isEmpty = true; // re-assign variable
+      this.isEmpty = true; // reassign variable
     } else {
-      this.x = x; // re-assign variable
-      this.y = y; // re-assign variable
+      this.x = x; // reassign variable
+      this.y = y; // reassign variable
     } // if
   } // constructor
   public double minDistTo(Point p) { // function method

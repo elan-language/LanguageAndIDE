@@ -7,7 +7,7 @@ static void main() {
     displayBlocks(grid); // call procedure
     var gridRef = new AsRef<List<List<int>>>(grid);
     nextGeneration(gridRef); // call procedure
-    grid = gridRef.value(); // re-assign variable
+    grid = gridRef.value(); // reassign variable
     sleep_ms(50); // call procedure
   } // while
 } // main
@@ -15,7 +15,7 @@ static void main() {
 static void fillRandom(List<List<int>> grid) { // procedure
   foreach (col in range(0, 40)) {
     foreach (row in range(0, 30)) {
-      grid[col][row] = blackOrWhite(random()); // re-assign variable
+      grid[col][row] = blackOrWhite(random()); // reassign variable
     } // foreach
   } // foreach
 } // procedure
@@ -26,7 +26,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   foreach (x in range(0, 40)) {
     foreach (y in range(0, 30)) {
       var colour = nextCellValue(grid, x, y);
-      nextGen[x][y] = colour; // re-assign variable
+      nextGen[x][y] = colour; // reassign variable
     } // foreach
   } // foreach
   gridRef.set(nextGen); // call procedure
@@ -35,7 +35,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
 static int blackOrWhite(double random) { // function
   var result = black;
   if (random > 0.5) {
-    result = white; // re-assign variable
+    result = white; // reassign variable
   } // if
   return result;
 } // function
@@ -95,7 +95,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
     var cx = cell.item_0;
     var cy = cell.item_1;
     if (grid[cx][cy] == black) {
-      count = count + 1; // re-assign variable
+      count = count + 1; // reassign variable
     } // if
   } // foreach
   return count;
@@ -104,9 +104,9 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
 static bool willLive(int cell, int liveNeighbours) { // function
   var result = false;
   if (cell == black) {
-    result = (liveNeighbours > 1) && (liveNeighbours < 4); // re-assign variable
+    result = (liveNeighbours > 1) && (liveNeighbours < 4); // reassign variable
   } else {
-    result = liveNeighbours == 3; // re-assign variable
+    result = liveNeighbours == 3; // reassign variable
   } // if
   return result;
 } // function
@@ -115,7 +115,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var colour = white;
   var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
   if (live) {
-    colour = black; // re-assign variable
+    colour = black; // reassign variable
   } // if
   return colour;
 } // function

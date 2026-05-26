@@ -6,10 +6,10 @@ def main() -> None:
     x = randint(0, 19) # variable definition
     y = randint(0, 14) # variable definition
     colour = randint(0, (pow(2, 24) - 1).floor()) # variable definition
-    blocks[20 + x][15 - y] = colour # re-assign variable
-    blocks[20 + x][15 + y] = colour # re-assign variable
-    blocks[20 - x][15 - y] = colour # re-assign variable
-    blocks[20 - x][15 + y] = colour # re-assign variable
+    blocks[20 + x][15 - y] = colour # reassign variable
+    blocks[20 + x][15 + y] = colour # reassign variable
+    blocks[20 - x][15 - y] = colour # reassign variable
+    blocks[20 - x][15 + y] = colour # reassign variable
     displayBlocks(blocks) # call procedure
 
 main()

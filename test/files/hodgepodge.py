@@ -48,7 +48,7 @@ def main() -> None:
   updateGrid(hodge, podge, True) # call procedure
   while not uniform(hodge.value()):
     # successive updates to grid in blank podge
-    podge = blank # re-assign variable
+    podge = blank # reassign variable
     updateGrid(hodge, podge, False) # call procedure
 
 def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: bool) -> None: # procedure
@@ -56,10 +56,10 @@ def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: b
   for j in range(0, gH):
     for i in range(0, gW):
       if initial:
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)] # re-assign variable
-        podge[1][1] = 0x1a001a # re-assign variable
+        podge[i][j] = colours[randint(0, (colours.length()) - 1)] # reassign variable
+        podge[1][1] = 0x1a001a # reassign variable
       else:
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) # re-assign variable
+        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) # reassign variable
   a = 0 # variable definition
   hodge.set(podge) # call procedure
   displayBlocks(hodge.value()) # call procedure
@@ -83,7 +83,7 @@ def getNeighbourColours(grid: list[list[int]], i: int, j: int) -> list[int]: # f
     sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH] # variable definition
     sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
     sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
-    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # re-assign variable
+    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # reassign variable
   return neighbourColours
 
 def newColour(neighbourColours: list[int], nowColour: int) -> int: # function
@@ -92,20 +92,20 @@ def newColour(neighbourColours: list[int], nowColour: int) -> int: # function
   nIll = 0 # variable definition
   sumStates = colours.indexOf(nowColour) # variable definition
   for colour in neighbourColours:
-    sumStates = sumStates + colours.indexOf(colour) # re-assign variable
+    sumStates = sumStates + colours.indexOf(colour) # reassign variable
     if colour < healthy:
-      nInfected = nInfected + 1 # re-assign variable
+      nInfected = nInfected + 1 # reassign variable
       if colour == ill:
-        nIll = nIll + 1 # re-assign variable
+        nIll = nIll + 1 # reassign variable
   return updateColour(nowColour, sumStates, nInfected, nIll)
 
 def updateColour(nowColour: int, sumStates: int, nInfected: int, nIll: int) -> int: # function
   colours = getColours() # variable definition
   state = 0 # variable definition
   if nowColour == healthy:
-    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # re-assign variable
+    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # reassign variable
   elif nowColour != ill: # else if
-    state = divAsInt(sumStates, (nInfected + 1)) + iR # re-assign variable
+    state = divAsInt(sumStates, (nInfected + 1)) + iR # reassign variable
   return if(state > (colours.length() - 1), ill, colours[state])
 
 main()

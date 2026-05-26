@@ -18,13 +18,13 @@ Sub main()
   ' or the browser will run out of memory
   While count < 1000
     Dim point = onepoint(x, y, r) ' variable definition
-    rect = point.item_0 ' re-assign variable
-    x = point.item_1 ' re-assign variable
-    y = point.item_2 ' re-assign variable
-    r = point.item_3 ' re-assign variable
+    rect = point.item_0 ' reassign variable
+    x = point.item_1 ' reassign variable
+    y = point.item_2 ' reassign variable
+    r = point.item_3 ' reassign variable
     vg.append(rect) ' call procedure
     displayVectorGraphics(vg) ' call procedure
-    count = count + 1 ' re-assign variable
+    count = count + 1 ' reassign variable
   End While
   print("Finished")
 End Sub
@@ -61,11 +61,11 @@ Function onestep(x As Double, y As Double, r As Double) As (Double, Double)
   Dim nx = 0.0 ' variable definition
   Dim ny = 0.0 ' variable definition
   For Each pp In allPs
-    cumuprob = cumuprob + pp[6] ' re-assign variable
+    cumuprob = cumuprob + pp[6] ' reassign variable
     If (Not done) And (r < cumuprob) Then
-      nx = x*pp[0] + y*pp[1] + pp[4] ' re-assign variable
-      ny = x*pp[2] + y*pp[3] + pp[5] ' re-assign variable
-      done = True ' re-assign variable
+      nx = x*pp[0] + y*pp[1] + pp[4] ' reassign variable
+      ny = x*pp[2] + y*pp[3] + pp[5] ' reassign variable
+      done = True ' reassign variable
     End If
   Next pp
   Return (nx, ny)

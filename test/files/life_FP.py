@@ -6,7 +6,7 @@ def main() -> None:
   grid = initialGrid(rng) # variable definition
   while True:
     displayBlocks(grid) # call procedure
-    grid = nextGeneration(grid) # re-assign variable
+    grid = nextGeneration(grid) # reassign variable
     sleep_ms(50) # call procedure
 
 def initialGrid(rng: Random) -> list[list[int]]: # function

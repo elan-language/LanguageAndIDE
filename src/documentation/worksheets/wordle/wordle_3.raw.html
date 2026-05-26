@@ -49,7 +49,7 @@
           Instead, we can get the <code>mark</code> by evaluating the <el-method>markAttempt</el-method>
           function that we wrote in Wordle 1. However, we don't then need to use two instructions
           to obtain the mark - we can write it as a single <code>let</code> instruction. (It <i>could</i>
-          still be a <code>variable</code>, but we have no need to re-assign it because it
+          still be a <code>variable</code>, but we have no need to reassign it because it
           defines <code>mark</code> anew each time around the <code>while</code> loop, anyway).
         </li>
         <li>The <code>while</code> loop need test only for whether the puzzle is <code>solved</code>, not
@@ -194,7 +194,7 @@
     </ul>
     (The choice of those two <i>temporary</i> initial values will become apparent shortly). 
     These are both <i>variables</i> because later on we will need to replace the initial value with a calculated one in each case.</p>
-  <li><p>Below this, define two more values - <code>successPercent</code> and <code>average</code> - but for each these use a <code>let</code> instruction (because we won't need to re-assign them):
+  <li><p>Below this, define two more values - <code>successPercent</code> and <code>average</code> - but for each these use a <code>let</code> instruction (because we won't need to reassign them):
     <p>For <code>successPercent</code> give it a calculated value, derived from <code>success</code> such that it will represent a percentage of the number of <code>validTargets</code>
     <i>rounded to one decimal place.</i>.</p>
     <p>The <code>average</code> is the <code>weightedSum</code> divided by <code>success</code> <i>rounded to two decimal places</i>.</p>

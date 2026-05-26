@@ -8,7 +8,7 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../../src/ide/frames/statements/call-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";

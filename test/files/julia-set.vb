@@ -35,7 +35,7 @@ Function allpoints(p As Coords) As List(Of VectorGraphic)
       ' colour depends on how many iterations were done for that point
       Dim col = if(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
       Dim rect = (New RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) ' variable definition
-      vg2 = vg2.withAppend(rect) ' re-assign variable
+      vg2 = vg2.withAppend(rect) ' reassign variable
     Next yp
   Next xp
   Return vg2
@@ -48,11 +48,11 @@ Function onepoint(x As Double, y As Double, maxnum As Integer, p As Coords) As I
   Dim i = 0 ' variable definition
   While Not done
     Dim c = 2*a*b ' variable definition
-    a = (a*a - b*b) + p.jx ' re-assign variable
-    b = c + p.jy ' re-assign variable
-    i = i + 1 ' re-assign variable
+    a = (a*a - b*b) + p.jx ' reassign variable
+    b = c + p.jy ' reassign variable
+    i = i + 1 ' reassign variable
     If (i >= maxnum) Or ((a*a + b*b) > 4) Then
-      done = True ' re-assign variable
+      done = True ' reassign variable
     End If
   End While
   Return i
@@ -62,13 +62,13 @@ Class Coords
 
   Sub New()
     ' number of cells per unit distance on complex plane
-    Me.scale = 100 ' re-assign variable
+    Me.scale = 100 ' reassign variable
     ' centered on the screen to start
-    Me.xoff = 0 ' re-assign variable
-    Me.yoff = 0 ' re-assign variable
+    Me.xoff = 0 ' reassign variable
+    Me.yoff = 0 ' reassign variable
     ' Julia set parameters
-    Me.jx = -0.512 ' re-assign variable
-    Me.jy = 0.521 ' re-assign variable
+    Me.jx = -0.512 ' reassign variable
+    Me.jy = 0.521 ' reassign variable
   End Sub
   Function toString() As String
     Return ""
@@ -90,33 +90,33 @@ Class Coords
       ' loop because more than one key may have been pressed
       While Not k.equals("")
         If k.equals("z") Then
-          Me.scale = Me.scale*1.2 ' re-assign variable
+          Me.scale = Me.scale*1.2 ' reassign variable
         ElseIf k.equals("x") Then
-          Me.scale = Me.scale/1.2 ' re-assign variable
+          Me.scale = Me.scale/1.2 ' reassign variable
         ElseIf k.equals("ArrowUp") Then
-          Me.yoff = Me.yoff + panstep ' re-assign variable
+          Me.yoff = Me.yoff + panstep ' reassign variable
         ElseIf k.equals("ArrowDown") Then
-          Me.yoff = Me.yoff - panstep ' re-assign variable
+          Me.yoff = Me.yoff - panstep ' reassign variable
         ElseIf k.equals("ArrowLeft") Then
-          Me.xoff = Me.xoff + panstep ' re-assign variable
+          Me.xoff = Me.xoff + panstep ' reassign variable
         ElseIf k.equals("ArrowRight") Then
-          Me.xoff = Me.xoff - panstep ' re-assign variable
+          Me.xoff = Me.xoff - panstep ' reassign variable
         ElseIf k.equals("g") Then
-          Me.jx = Me.jx + jstep ' re-assign variable
+          Me.jx = Me.jx + jstep ' reassign variable
         ElseIf k.equals("j") Then
-          Me.jx = Me.jx - jstep ' re-assign variable
+          Me.jx = Me.jx - jstep ' reassign variable
         ElseIf k.equals("y") Then
-          Me.jy = Me.jy + jstep ' re-assign variable
+          Me.jy = Me.jy + jstep ' reassign variable
         ElseIf k.equals("h") Then
-          Me.jy = Me.jy - jstep ' re-assign variable
+          Me.jy = Me.jy - jstep ' reassign variable
           ' for autocomplete in the RHS expression, don't type "property"
         Else
           ' ignore erroneous key presses
         End If
         ' there is no harm in recalculating even if an invalid key was pressed
-        changed = True ' re-assign variable
+        changed = True ' reassign variable
         ' another key may have been pressed
-        k = getKey() ' re-assign variable
+        k = getKey() ' reassign variable
       End While
       sleep_ms(10) ' call procedure
     End While

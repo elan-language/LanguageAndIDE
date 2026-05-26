@@ -8,10 +8,10 @@ static void main() {
   rnd.initialiseFromClock(); // call procedure
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
-    blocks = updateGraphics(game, blocks); // re-assign variable
+    blocks = updateGraphics(game, blocks); // reassign variable
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
-    game = clockTick(game, getKey()); // re-assign variable
+    game = clockTick(game, getKey()); // reassign variable
   } // while
   print($"Game Over! Score: {score(game)}");
 } // main
@@ -80,13 +80,13 @@ class Game {
   public Random rnd {get; private set;} // property
   public string key {get; private set;} // property
   public Game(Random rnd) {
-    this.head = new Square(22, 15); // re-assign variable
-    this.body = [new Square(20, 15), new Square(21, 15)]; // re-assign variable
-    this.priorTail = new Square(0, 0); // re-assign variable
-    this.key = "d"; // re-assign variable
-    this.isOn = true; // re-assign variable
-    this.apple = new Square(12, 15); // re-assign variable
-    this.rnd = rnd; // re-assign variable
+    this.head = new Square(22, 15); // reassign variable
+    this.body = [new Square(20, 15), new Square(21, 15)]; // reassign variable
+    this.priorTail = new Square(0, 0); // reassign variable
+    this.key = "d"; // reassign variable
+    this.isOn = true; // reassign variable
+    this.apple = new Square(12, 15); // reassign variable
+    this.rnd = rnd; // reassign variable
   } // constructor
   public string toString() { // function method
     return "";
@@ -102,37 +102,37 @@ class Game {
   } // function method
   public Game withHead(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.head = value; // re-assign variable
+    copyOfThis.head = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withBody(List<Square> value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.body = value; // re-assign variable
+    copyOfThis.body = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withPriorTail(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.priorTail = value; // re-assign variable
+    copyOfThis.priorTail = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withApple(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.apple = value; // re-assign variable
+    copyOfThis.apple = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withIsOn(bool value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.isOn = value; // re-assign variable
+    copyOfThis.isOn = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withRnd(Random value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.rnd = value; // re-assign variable
+    copyOfThis.rnd = value; // reassign variable
     return copyOfThis;
   } // function method
   public Game withKey(string value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.key = value; // re-assign variable
+    copyOfThis.key = value; // reassign variable
     return copyOfThis;
   } // function method
 } // class
@@ -142,17 +142,17 @@ class Square {
   public int x {get; private set;} // property
   public int y {get; private set;} // property
   public Square(int x, int y) {
-    this.x = x; // re-assign variable
-    this.y = y; // re-assign variable
+    this.x = x; // reassign variable
+    this.y = y; // reassign variable
   } // constructor
   public Square withX(int value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.x = value; // re-assign variable
+    copyOfThis.x = value; // reassign variable
     return copyOfThis;
   } // function method
   public Square withY(int value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.y = value; // re-assign variable
+    copyOfThis.y = value; // reassign variable
     return copyOfThis;
   } // function method
   public string toString() { // function method

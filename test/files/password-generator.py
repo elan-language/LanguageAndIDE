@@ -29,8 +29,8 @@ def main() -> None:
   while not valid:
     pwRef = AsRef[str]("") # variable definition
     populatePassword(pwRef, all) # call procedure
-    password = pwRef.value() # re-assign variable
-    valid = isValid(password, upper, lower, digit, symbol) # re-assign variable
+    password = pwRef.value() # reassign variable
+    valid = isValid(password, upper, lower, digit, symbol) # reassign variable
   print(password)
 
 def populatePassword(password: AsRef[str], all: str) -> None: # procedure
@@ -64,7 +64,7 @@ def test_passesRule(self) -> None:
 def hasAtLeastOneFrom(fromChars: str, password: str) -> bool: # function
   hasOne = False # variable definition
   for ch in password:
-    hasOne = hasOne or fromChars.contains(ch) # re-assign variable
+    hasOne = hasOne or fromChars.contains(ch) # reassign variable
   return hasOne
 
 def test_hasAtLeastOneFrom(self) -> None:

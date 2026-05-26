@@ -8,10 +8,10 @@ Sub main()
   rnd.initialiseFromClock() ' call procedure
   Dim game = (New Game(rnd)).withNewApple() ' variable definition
   While game.isOn
-    blocks = updateGraphics(game, blocks) ' re-assign variable
+    blocks = updateGraphics(game, blocks) ' reassign variable
     displayBlocks(blocks) ' call procedure
     sleep_ms(150) ' call procedure
-    game = clockTick(game, getKey()) ' re-assign variable
+    game = clockTick(game, getKey()) ' reassign variable
   End While
   print($"Game Over! Score: {score(game)}")
 End Sub
@@ -80,13 +80,13 @@ Class Game
   Property rnd As Random
   Property key As String
   Sub New(rnd As Random)
-    Me.head = New Square(22, 15) ' re-assign variable
-    Me.body = {New Square(20, 15), New Square(21, 15)} ' re-assign variable
-    Me.priorTail = New Square(0, 0) ' re-assign variable
-    Me.key = "d" ' re-assign variable
-    Me.isOn = True ' re-assign variable
-    Me.apple = New Square(12, 15) ' re-assign variable
-    Me.rnd = rnd ' re-assign variable
+    Me.head = New Square(22, 15) ' reassign variable
+    Me.body = {New Square(20, 15), New Square(21, 15)} ' reassign variable
+    Me.priorTail = New Square(0, 0) ' reassign variable
+    Me.key = "d" ' reassign variable
+    Me.isOn = True ' reassign variable
+    Me.apple = New Square(12, 15) ' reassign variable
+    Me.rnd = rnd ' reassign variable
   End Sub
   Function toString() As String
     Return ""
@@ -102,37 +102,37 @@ Class Game
   End Function
   Function withHead(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.head = value ' re-assign variable
+    copyOfThis.head = value ' reassign variable
     Return copyOfThis
   End Function
   Function withBody(value As List(Of Square)) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.body = value ' re-assign variable
+    copyOfThis.body = value ' reassign variable
     Return copyOfThis
   End Function
   Function withPriorTail(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.priorTail = value ' re-assign variable
+    copyOfThis.priorTail = value ' reassign variable
     Return copyOfThis
   End Function
   Function withApple(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.apple = value ' re-assign variable
+    copyOfThis.apple = value ' reassign variable
     Return copyOfThis
   End Function
   Function withIsOn(value As Boolean) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.isOn = value ' re-assign variable
+    copyOfThis.isOn = value ' reassign variable
     Return copyOfThis
   End Function
   Function withRnd(value As Random) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.rnd = value ' re-assign variable
+    copyOfThis.rnd = value ' reassign variable
     Return copyOfThis
   End Function
   Function withKey(value As String) As Game
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.key = value ' re-assign variable
+    copyOfThis.key = value ' reassign variable
     Return copyOfThis
   End Function
 End Class
@@ -142,17 +142,17 @@ Class Square
   Property x As Integer
   Property y As Integer
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' re-assign variable
-    Me.y = y ' re-assign variable
+    Me.x = x ' reassign variable
+    Me.y = y ' reassign variable
   End Sub
   Function withX(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.x = value ' re-assign variable
+    copyOfThis.x = value ' reassign variable
     Return copyOfThis
   End Function
   Function withY(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
-    copyOfThis.y = value ' re-assign variable
+    copyOfThis.y = value ' reassign variable
     Return copyOfThis
   End Function
   Function toString() As String

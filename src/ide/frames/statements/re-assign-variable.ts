@@ -38,7 +38,7 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "re-assign variable";
+    return "reassign variable";
   }
 
   renderAsElanSource(): string {

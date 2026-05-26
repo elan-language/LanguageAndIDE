@@ -22,14 +22,14 @@ def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list
   gr2 = initialiseGraphics(start, destination, rocks) # variable definition
   while solver.running:
     solver.visitNextPoint() # call procedure
-    gr2 = addVisited(gr2, solver.getLastVisited()) # re-assign variable
+    gr2 = addVisited(gr2, solver.getLastVisited()) # reassign variable
     displayBlocks(gr2) # call procedure
     sleep_ms(0) # call procedure
   if solver.getLastVisited().equals(destination):
     rl = solver.getRouteAndLength() # variable definition
     route = rl.item_0 # variable definition
     length = rl.item_1 # variable definition
-    gr2 = addRoute(gr2, route) # re-assign variable
+    gr2 = addRoute(gr2, route) # reassign variable
     displayBlocks(gr2) # call procedure
     printNoLine(f"Length of route: {length.round(2)} ") # call procedure
   else:
@@ -51,9 +51,9 @@ def createRocksAndNodes(percentRocks: int, rocks: list[Point], nodes: list[Node]
 def initialiseGraphics(start: Point, dest: Point, rocks: list[Point]) -> list[list[int]]: # function
   gr = createBlockGraphics(white) # variable definition
   for rock in rocks:
-    gr = withPut(gr, rock.x, rock.y, black) # re-assign variable
-  gr = withPut(gr, start.x, start.y, green) # re-assign variable
-  gr = withPut(gr, dest.x, dest.y, red) # re-assign variable
+    gr = withPut(gr, rock.x, rock.y, black) # reassign variable
+  gr = withPut(gr, start.x, start.y, green) # reassign variable
+  gr = withPut(gr, dest.x, dest.y, red) # reassign variable
   return gr
 
 def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
@@ -65,20 +65,20 @@ def addVisited(gr: list[list[int]], visited: Point) -> list[list[int]]: # functi
 def addRoute(gr: list[list[int]], route: list[Point]) -> list[list[int]]: # function
   graphics = gr # variable definition
   for p in route:
-    graphics = withPut(graphics, p.x, p.y, orange) # re-assign variable
+    graphics = withPut(graphics, p.x, p.y, orange) # reassign variable
   start = route[0] # variable definition
   dest = route[route.length() - 1] # variable definition
-  graphics = withPut(graphics, start.x, start.y, green) # re-assign variable
-  graphics = withPut(graphics, dest.x, dest.y, red) # re-assign variable
+  graphics = withPut(graphics, start.x, start.y, green) # reassign variable
+  graphics = withPut(graphics, dest.x, dest.y, red) # reassign variable
   return graphics
 
 class Solver # concrete class
 
   def __init__(self: Solver, nodes: list[Node], start: Point, destination: Point) -> None:
-    self.nodes = nodes # re-assign variable
-    self.start = start # re-assign variable
-    self.destination = destination # re-assign variable
-    self.current = Node(emptyPoint(), 0, 0) # re-assign variable
+    self.nodes = nodes # reassign variable
+    self.start = start # reassign variable
+    self.destination = destination # reassign variable
+    self.current = Node(emptyPoint(), 0, 0) # reassign variable
   def toString(self: Solver) -> str: # function method
     return ""
   nodes: list[Node] # property
@@ -89,18 +89,18 @@ class Solver # concrete class
   running: bool # property
   # TODO can this go into the constructor ?
   def initialise(self: Solver, alg: Algorithm) -> None: # procedure method
-    self.alg = alg # re-assign variable
-    self.current = Node(self.start, 0, infinity) # re-assign variable
-    self.running = True # re-assign variable
+    self.alg = alg # reassign variable
+    self.current = Node(self.start, 0, infinity) # reassign variable
+    self.running = True # reassign variable
     for node in self.nodes:
       node.setDistanceFromStart(infinity) # call procedure
       node.setVia(emptyPoint()) # call procedure
       node.setVisited(False) # call procedure
   def visitNextPoint(self: Solver) -> None: # procedure method
     self.updateNeighbours() # call procedure
-    self.current = self.nextNodeToVisit() # re-assign variable
+    self.current = self.nextNodeToVisit() # reassign variable
     if (self.current.isEmpty or (self.current.point.equals(self.destination))):
-      self.running = False # re-assign variable
+      self.running = False # reassign variable
     else:
       current = self.current # variable definition
       current.setVisited(True) # call procedure
@@ -120,7 +120,7 @@ class Solver # concrete class
       node = self.getNodeFor(p) # variable definition
       point = node.point # variable definition
       if not point.isEmpty:
-        neighbours = neighbours.withAppend(node) # re-assign variable
+        neighbours = neighbours.withAppend(node) # reassign variable
     return neighbours
   def getNodeFor(self: Solver, p: Point) -> Node: # function method
     matches = self.nodes.filter(lambda n: Node: n.point.equals(p)) # variable definition
@@ -134,19 +134,19 @@ class Solver # concrete class
     for nd in possibilities:
       cost = self.calculateCost(nd) # variable definition
       if cost < lowestCostSoFar:
-        lowestCostSoFar = cost # re-assign variable
-        lowestCostNode = nd # re-assign variable
+        lowestCostSoFar = cost # reassign variable
+        lowestCostNode = nd # reassign variable
     return lowestCostNode
   def calculateCost(self: Solver, node: Node) -> float: # function method
     cost = 0.0 # variable definition
     fromStart = node.distFromStart # variable definition
     estToDest = node.estDistToDest # variable definition
     if self.alg == Algorithm.dijkstra:
-      cost = fromStart # re-assign variable
+      cost = fromStart # reassign variable
     elif self.alg == Algorithm.aStar: # else if
-      cost = fromStart + estToDest # re-assign variable
+      cost = fromStart + estToDest # reassign variable
     elif self.alg == Algorithm.heuristic: # else if
-      cost = estToDest # re-assign variable
+      cost = estToDest # reassign variable
     return cost
   def getRouteAndLength(self: Solver) -> tuple[list[Point], float]: # function method
     route = [self.destination] # variable definition
@@ -155,9 +155,9 @@ class Solver # concrete class
     while not node.point.equals(self.start):
       previous = node.via # variable definition
       p = node.point # variable definition
-      length = length + p.minDistTo(previous) # re-assign variable
-      route = route.withInsert(0, previous) # re-assign variable
-      node = self.getNodeFor(previous) # re-assign variable
+      length = length + p.minDistTo(previous) # reassign variable
+      route = route.withInsert(0, previous) # reassign variable
+      node = self.getNodeFor(previous) # reassign variable
     return (route, length)
 
 
@@ -168,12 +168,12 @@ class Node # concrete class
 
   def __init__(self: Node, p: Point, distFromStart: float, estDistToDest: float) -> None:
     if p.isEmpty:
-      self.isEmpty = True # re-assign variable
-    self.point = p # re-assign variable
-    self.visited = False # re-assign variable
-    self.distFromStart = distFromStart # re-assign variable
-    self.via = emptyPoint() # re-assign variable
-    self.estDistToDest = estDistToDest # re-assign variable
+      self.isEmpty = True # reassign variable
+    self.point = p # reassign variable
+    self.visited = False # reassign variable
+    self.distFromStart = distFromStart # reassign variable
+    self.via = emptyPoint() # reassign variable
+    self.estDistToDest = estDistToDest # reassign variable
   point: Point # property
   visited: bool # property
   distFromStart: float # property
@@ -181,11 +181,11 @@ class Node # concrete class
   estDistToDest: float # property
   isEmpty: bool # property
   def setVisited(self: Node, value: bool) -> None: # procedure method
-    self.visited = value # re-assign variable
+    self.visited = value # reassign variable
   def setDistanceFromStart(self: Node, d: float) -> None: # procedure method
-    self.distFromStart = d # re-assign variable
+    self.distFromStart = d # reassign variable
   def setVia(self: Node, p: Point) -> None: # procedure method
-    self.via = p # re-assign variable
+    self.via = p # reassign variable
   def toString(self: Node) -> str: # function method
     return f"[{self.point.toString()} {self.visited} {self.distFromStart}]"
 
@@ -200,10 +200,10 @@ class Point # concrete class
   isEmpty: bool # property
   def __init__(self: Point, x: int, y: int) -> None:
     if (x < 0) or (y < 0):
-      self.isEmpty = True # re-assign variable
+      self.isEmpty = True # reassign variable
     else:
-      self.x = x # re-assign variable
-      self.y = y # re-assign variable
+      self.x = x # reassign variable
+      self.y = y # reassign variable
   def minDistTo(self: Point, p: Point) -> float: # function method
     return sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
   def isAdjacentTo(self: Point, p: Point) -> bool: # function method

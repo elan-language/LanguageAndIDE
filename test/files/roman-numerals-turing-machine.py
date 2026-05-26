@@ -19,7 +19,7 @@ def main() -> None:
   while not tm.isHalted():
     rule = tm.findMatchingRule() # variable definition
     tm.singleStep() # call procedure
-    steps = steps + 1 # re-assign variable
+    steps = steps + 1 # reassign variable
     clearPrintedText() # call procedure
     print(tm.tape)
     printTab(tm.headPosition - 1, "^") # call procedure
@@ -36,12 +36,12 @@ haltState = "halt" # constant
 class TuringMachine # concrete class
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
-    self.tape = "" # re-assign variable
-    self.initialState = initialState # re-assign variable
-    self.haltState = haltState # re-assign variable
-    self.rules = list[Rule]() # re-assign variable
-    self.currentState = initialState # re-assign variable
-    self.headPosition = 0 # re-assign variable
+    self.tape = "" # reassign variable
+    self.initialState = initialState # reassign variable
+    self.haltState = haltState # reassign variable
+    self.rules = list[Rule]() # reassign variable
+    self.currentState = initialState # reassign variable
+    self.headPosition = 0 # reassign variable
   def toString(self: TuringMachine) -> str: # function method
     return ""
   initialState: str # property
@@ -51,9 +51,9 @@ class TuringMachine # concrete class
   rules: list[Rule] # property
   tape: str # property
   def setTape(self: TuringMachine, tape: str) -> None: # procedure method
-    self.tape = tape # re-assign variable
+    self.tape = tape # reassign variable
   def append(self: TuringMachine, rule: Rule) -> None: # procedure method
-    self.rules = self.rules.withAppend(rule) # re-assign variable
+    self.rules = self.rules.withAppend(rule) # reassign variable
   def singleStep(self: TuringMachine) -> None: # procedure method
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
@@ -66,19 +66,19 @@ class TuringMachine # concrete class
     return matches.head()
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure method
     hp = self.headPosition # variable definition
-    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # re-assign variable
+    self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # reassign variable
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure method
-    self.currentState = rule.nextState # re-assign variable
+    self.currentState = rule.nextState # reassign variable
     self.write(rule.writeSymbol) # call procedure
     if rule.move == Dir.right:
-      self.headPosition = self.headPosition + 1 # re-assign variable
+      self.headPosition = self.headPosition + 1 # reassign variable
       if self.headPosition >= self.tape.length():
-        self.tape = self.tape + " " # re-assign variable
+        self.tape = self.tape + " " # reassign variable
     else:
-      self.headPosition = self.headPosition - 1 # re-assign variable
+      self.headPosition = self.headPosition - 1 # reassign variable
       if self.headPosition < 0:
-        self.tape = " " + self.tape # re-assign variable
-        self.headPosition = 0 # re-assign variable
+        self.tape = " " + self.tape # reassign variable
+        self.headPosition = 0 # reassign variable
 
 
 class Rule # concrete class
@@ -89,11 +89,11 @@ class Rule # concrete class
   writeSymbol: str # property
   move: Dir # property
   def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
-    self.currentState = currentState # re-assign variable
-    self.currentSymbol = currentSymbol # re-assign variable
-    self.nextState = nextState # re-assign variable
-    self.writeSymbol = writeSymbol # re-assign variable
-    self.move = move # re-assign variable
+    self.currentState = currentState # reassign variable
+    self.currentSymbol = currentSymbol # reassign variable
+    self.nextState = nextState # reassign variable
+    self.writeSymbol = writeSymbol # reassign variable
+    self.move = move # reassign variable
   def toString(self: Rule) -> str: # function method
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
 

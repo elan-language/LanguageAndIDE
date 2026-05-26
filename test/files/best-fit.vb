@@ -16,8 +16,8 @@ Class Point
   Property x As Double
   Property y As Double
   Sub New(x As Double, y As Double)
-    Me.x = x ' re-assign variable
-    Me.y = y ' re-assign variable
+    Me.x = x ' reassign variable
+    Me.y = y ' reassign variable
   End Sub
   Function toString() As String
     Return $"Point {Me.x}, {Me.y}"

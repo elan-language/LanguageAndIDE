@@ -11,15 +11,15 @@ Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure
   Dim hasChanged = True ' variable definition
   Dim lastComp = li.length() - 2 ' variable definition
   While hasChanged = True
-    hasChanged = False ' re-assign variable
+    hasChanged = False ' reassign variable
     For Each i In range(0, lastComp + 1)
       If li[i] > li[i + 1] Then
         Dim temp = li[i] ' variable definition
-        li[i] = li[i + 1] ' re-assign variable
-        li[i + 1] = temp ' re-assign variable
-        hasChanged = True ' re-assign variable
+        li[i] = li[i + 1] ' reassign variable
+        li[i + 1] = temp ' reassign variable
+        hasChanged = True ' reassign variable
       End If
     Next i
-    lastComp = lastComp - 1 ' re-assign variable
+    lastComp = lastComp - 1 ' reassign variable
   End While
 End Sub

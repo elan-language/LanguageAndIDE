@@ -7,13 +7,13 @@ def main() -> None:
     displayBlocks(grid) # call procedure
     gridRef = AsRef[list[list[int]]](grid) # variable definition
     nextGeneration(gridRef) # call procedure
-    grid = gridRef.value() # re-assign variable
+    grid = gridRef.value() # reassign variable
     sleep_ms(50) # call procedure
 
 def fillRandom(grid: list[list[int]]) -> None: # procedure
   for col in range(0, 40):
     for row in range(0, 30):
-      grid[col][row] = blackOrWhite(random()) # re-assign variable
+      grid[col][row] = blackOrWhite(random()) # reassign variable
 
 def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   nextGen = createBlockGraphics(white) # variable definition
@@ -21,13 +21,13 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   for x in range(0, 40):
     for y in range(0, 30):
       colour = nextCellValue(grid, x, y) # variable definition
-      nextGen[x][y] = colour # re-assign variable
+      nextGen[x][y] = colour # reassign variable
   gridRef.set(nextGen) # call procedure
 
 def blackOrWhite(random: float) -> int: # function
   result = black # variable definition
   if random > 0.5:
-    result = white # re-assign variable
+    result = white # reassign variable
   return result
 
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -76,22 +76,22 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
     cx = cell.item_0 # variable definition
     cy = cell.item_1 # variable definition
     if grid[cx][cy] == black:
-      count = count + 1 # re-assign variable
+      count = count + 1 # reassign variable
   return count
 
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   result = False # variable definition
   if cell == black:
-    result = (liveNeighbours > 1) and (liveNeighbours < 4) # re-assign variable
+    result = (liveNeighbours > 1) and (liveNeighbours < 4) # reassign variable
   else:
-    result = liveNeighbours == 3 # re-assign variable
+    result = liveNeighbours == 3 # reassign variable
   return result
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   colour = white # variable definition
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
   if live:
-    colour = black # re-assign variable
+    colour = black # reassign variable
   return colour
 
 def test_north(self) -> None:

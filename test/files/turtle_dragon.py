@@ -8,7 +8,7 @@ def main() -> None:
   corner = side/12.0/cos(45) # variable definition
   turns = left # variable definition
   for i in range(1, order + 1):
-    turns = setTurns(turns) # re-assign variable
+    turns = setTurns(turns) # reassign variable
   t = Turtle() # variable definition
   setupTurtle(t, order) # call procedure
   drawDragon(t, order, turns, side, corner) # call procedure
@@ -21,7 +21,7 @@ def drawDragon(t: Turtle, order: int, turns: str, side: float, corner: float) ->
   p = (200.0/order).floor() # variable definition
   turnI = 0 # variable definition
   for turn in turns:
-    turnI = (if(turn.equals(left), 1, -1)) # re-assign variable
+    turnI = (if(turn.equals(left), 1, -1)) # reassign variable
     t.turn(-45*turnI) # call procedure
     t.move(corner) # call procedure
     t.turn(-45*turnI) # call procedure
@@ -46,7 +46,7 @@ def setTurns(turns: str) -> str: # function
 def reflect(s: str) -> str: # function
   sR = "" # variable definition
   for i in range(1, s.length() + 1):
-    sR = if((s[i - 1]).equals(left), right, left) + sR # re-assign variable
+    sR = if((s[i - 1]).equals(left), right, left) + sR # reassign variable
   return sR
 
 def test_setTurns(self) -> None:

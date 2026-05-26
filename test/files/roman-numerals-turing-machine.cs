@@ -19,7 +19,7 @@ static void main() {
   while (!tm.isHalted()) {
     var rule = tm.findMatchingRule();
     tm.singleStep(); // call procedure
-    steps = steps + 1; // re-assign variable
+    steps = steps + 1; // reassign variable
     clearPrintedText(); // call procedure
     print(tm.tape);
     printTab(tm.headPosition - 1, "^"); // call procedure
@@ -38,12 +38,12 @@ const String haltState = "halt"
 class TuringMachine {
 
   public TuringMachine(string initialState, string haltState) {
-    this.tape = ""; // re-assign variable
-    this.initialState = initialState; // re-assign variable
-    this.haltState = haltState; // re-assign variable
-    this.rules = new List<Rule>(); // re-assign variable
-    this.currentState = initialState; // re-assign variable
-    this.headPosition = 0; // re-assign variable
+    this.tape = ""; // reassign variable
+    this.initialState = initialState; // reassign variable
+    this.haltState = haltState; // reassign variable
+    this.rules = new List<Rule>(); // reassign variable
+    this.currentState = initialState; // reassign variable
+    this.headPosition = 0; // reassign variable
   } // constructor
   public string toString() { // function method
     return "";
@@ -55,10 +55,10 @@ class TuringMachine {
   public List<Rule> rules {get; private set;} // property
   public string tape {get; private set;} // property
   public void setTape(string tape) { // procedure method
-    this.tape = tape; // re-assign variable
+    this.tape = tape; // reassign variable
   } // procedure method
   public void append(Rule rule) { // procedure method
-    this.rules = this.rules.withAppend(rule); // re-assign variable
+    this.rules = this.rules.withAppend(rule); // reassign variable
   } // procedure method
   public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
@@ -76,21 +76,21 @@ class TuringMachine {
   } // function method
   public void write(string newSymbol) { // procedure method
     var hp = this.headPosition;
-    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // re-assign variable
+    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // reassign variable
   } // procedure method
   public void execute(Rule rule) { // procedure method
-    this.currentState = rule.nextState; // re-assign variable
+    this.currentState = rule.nextState; // reassign variable
     this.write(rule.writeSymbol); // call procedure
     if (rule.move == Dir.right) {
-      this.headPosition = this.headPosition + 1; // re-assign variable
+      this.headPosition = this.headPosition + 1; // reassign variable
       if (this.headPosition >= this.tape.length()) {
-        this.tape = this.tape + " "; // re-assign variable
+        this.tape = this.tape + " "; // reassign variable
       } // if
     } else {
-      this.headPosition = this.headPosition - 1; // re-assign variable
+      this.headPosition = this.headPosition - 1; // reassign variable
       if (this.headPosition < 0) {
-        this.tape = " " + this.tape; // re-assign variable
-        this.headPosition = 0; // re-assign variable
+        this.tape = " " + this.tape; // reassign variable
+        this.headPosition = 0; // reassign variable
       } // if
     } // if
   } // procedure method
@@ -104,11 +104,11 @@ class Rule {
   public string writeSymbol {get; private set;} // property
   public Dir move {get; private set;} // property
   public Rule(string currentState, string currentSymbol, string nextState, string writeSymbol, Dir move) {
-    this.currentState = currentState; // re-assign variable
-    this.currentSymbol = currentSymbol; // re-assign variable
-    this.nextState = nextState; // re-assign variable
-    this.writeSymbol = writeSymbol; // re-assign variable
-    this.move = move; // re-assign variable
+    this.currentState = currentState; // reassign variable
+    this.currentSymbol = currentSymbol; // reassign variable
+    this.nextState = nextState; // reassign variable
+    this.writeSymbol = writeSymbol; // reassign variable
+    this.move = move; // reassign variable
   } // constructor
   public string toString() { // function method
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}";
