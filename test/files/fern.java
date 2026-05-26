@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 // https://en.wikipedia.org/wiki/Barnsley_fern
 
@@ -25,9 +25,9 @@ static void main() {
     vg.append(rect); // call procedure
     displayVectorGraphics(vg); // call procedure
     count = count + 1; // re-assign variable
-  }
+  } // while
   print("Finished");
-}
+} // main
 
 static (RectangleVG, double, double, Random) onepoint(double x, double y, Random r) { // function
   // next pseudo-random number (Grogono parameters)
@@ -38,7 +38,7 @@ static (RectangleVG, double, double, Random) onepoint(double x, double y, Random
   var ny = nx_ny.item_1;
   var rect = (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25);
   return (rect, nx, ny, rNext);
-}
+} // function
 
 // r is random Float 0.0 <= r < 1.0
 
@@ -66,15 +66,15 @@ static (double, double) onestep(double x, double y, double r) { // function
       nx = x*pp[0] + y*pp[1] + pp[4]; // re-assign variable
       ny = x*pp[2] + y*pp[3] + pp[5]; // re-assign variable
       done = true; // re-assign variable
-    }
-  }
+    } // if
+  } // foreach
   return (nx, ny);
-}
+} // function
 
 @Test static void test_one() {
   assertEquals([0.0064, 1.736], roundtuple2(onestep(0.0, 0.16, 0.5)))
   assertEquals([-0.0416, 1.6352], roundtuple2(onestep(0.0, 0.16, 0.9)))
-}
+} // 
 
 // two approaches to rounding a tuple to N decimal places
 
@@ -82,12 +82,12 @@ static (double, double) roundtuple1((double, double) n) { // function
   var a = n.item_0;
   var b = n.item_1;
   return (a.round(8), b.round(8));
-}
+} // function
 
 static List<double> roundtuple2((double, double) n) { // function
   var a = n.item_0;
   var b = n.item_1;
   return [a, b].map((double x) -> x.round(8));
-}
+} // function
 
 final Int scale = 7 // constant

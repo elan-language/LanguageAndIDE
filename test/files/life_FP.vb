@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha4
+' VB.NET with Elan 2.0.0-alpha5
 
 Sub main()
   Dim rng = New Random() ' variable definition
@@ -6,7 +6,7 @@ Sub main()
   Dim grid = initialGrid(rng) ' variable definition
   While True
     displayBlocks(grid) ' call procedure
-    grid = nextGrid(grid) ' re-assign variable
+    grid = nextGeneration(grid) ' re-assign variable
     sleep_ms(50) ' call procedure
   End While
 End Sub
@@ -280,7 +280,7 @@ End Function
   Assert.AreEqual(white, nxt)
 End Sub
 
-Function nextGrid(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
+Function nextGeneration(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
   Dim cols = range(0, 40) ' let
   Return cols.map(Function (x As Integer) nextCol(grid, x))
 End Function

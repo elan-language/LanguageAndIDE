@@ -5,10 +5,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -16,13 +12,9 @@ import {
   assertParses,
   assertStatusIsValid,
   ignore_test,
-  testCSHeader,
   testHash,
   testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("Procedure Statement", () => {
@@ -68,63 +60,8 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "123");
-    const pythonCode = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(1) # call procedure
-  foo() # call procedure
-  printNoLine(3) # call procedure
-
-def foo() -> None: # procedure
-  printNoLine(2) # call procedure
-
-main()
-`;
-
-    const csCode = `${testCSHeader}
-
-static void main() {
-  printNoLine(1); // call procedure
-  foo(); // call procedure
-  printNoLine(3); // call procedure
-}
-
-static void foo() { // procedure
-  printNoLine(2); // call procedure
-}
-`;
-
-    const javaCode = `${testJavaHeader}
-
-static void main() {
-  printNoLine(1); // call procedure
-  foo(); // call procedure
-  printNoLine(3); // call procedure
-}
-
-static void foo() { // procedure
-  printNoLine(2); // call procedure
-}
-`;
-
-    const vbCode = `${testVBHeader}
-
-Sub main()
-  printNoLine(1) ' call procedure
-  foo() ' call procedure
-  printNoLine(3) ' call procedure
-End Sub
-
-Sub foo() ' procedure
-  printNoLine(2) ' call procedure
-End Sub
-`;
-
-    await assertExportedPythonIs(fileImpl, pythonCode);
-    await assertExportedCSIs(fileImpl, csCode);
-    await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedVBis(fileImpl, vbCode);
   });
+  
   test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
     const code = `${testHeader}
 

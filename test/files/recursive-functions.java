@@ -1,8 +1,8 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 static int factorial(int n) { // function
   return if(n < 2, 1, n*factorial(n - 1));
-}
+} // function
 
 @Test static void test_factorial() {
   assertEquals(2, factorial(2))
@@ -12,11 +12,11 @@ static int factorial(int n) { // function
   // edge cases:
   assertEquals(1, factorial(1))
   assertEquals(1, factorial(0))
-}
+} // 
 
 static double sum(List<double> li) { // function
   return if(li.length() == 0, 0.0, li.head() + sum(li.tail()));
-}
+} // function
 
 @Test static void test_sum() {
   var li = [3.1, 5.02, 4, 7.73, 9.9]; // let
@@ -26,11 +26,11 @@ static double sum(List<double> li) { // function
   assertEquals(0, sum(le))
   var l1 = [0.6]; // let
   assertEquals(0.6, sum(l1))
-}
+} // 
 
 static List<double> reverse(List<double> li) { // function
   return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()));
-}
+} // function
 
 @Test static void test_reverse() {
   var l = [3.1, 5.02, 4, 7.73, 9.9]; // let
@@ -40,4 +40,4 @@ static List<double> reverse(List<double> li) { // function
   assertEquals(le, reverse(le))
   var l1 = [0.6]; // let
   assertEquals(l1, reverse(l1))
-}
+} // 

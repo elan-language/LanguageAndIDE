@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 static void main() {
   var t = new Turtle();
@@ -8,5 +8,5 @@ static void main() {
     t.move(i); // call procedure
     t.turn(90); // call procedure
     sleep_ms(300); // call procedure
-  }
-}
+  } // foreach
+} // main

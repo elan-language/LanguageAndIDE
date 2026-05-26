@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
@@ -13,10 +13,10 @@ static void main() {
         print(String.format("\nWe can supply a %", wanted));
       } else {
         print(String.format("\nSorry, we cannot supply a %", wanted));
-      }
-    }
-  }
-}
+      } // if
+    } // if
+  } // while
+} // main
 
 static bool binarySearch(List<String> li, String item) { // function
   var result = false;
@@ -29,10 +29,10 @@ static bool binarySearch(List<String> li, String item) { // function
       result = binarySearch(li.subList(0, mid), item); // re-assign variable
     } else {
       result = binarySearch(li.subList(mid + 1, li.length()), item); // re-assign variable
-    }
-  }
+    } // if
+  } // if
   return result;
-}
+} // function
 
 @Test static void test_binarySearch() {
   var li1 = ["lemon", "lime", "orange"];
@@ -49,4 +49,4 @@ static bool binarySearch(List<String> li, String item) { // function
   assertEquals(false, binarySearch(li3, "lime"))
   var li4 = new List<String>();
   assertEquals(false, binarySearch(li4, "pear"))
-}
+} // 

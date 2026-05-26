@@ -1,4 +1,4 @@
-# 66737955da9780a404167f595966111b3cca67482c2840a6a5e19e5423ed9fd3 Elan 2.0.0-alpha valid
+# 6089902c6151f35f45c60588b5b4e0b503651546c975f620d5178fb76127f510 Elan 2.0.0-alpha4 valid
 
 main
   variable score set to 0
@@ -11,36 +11,36 @@ main
     end if
     variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
-    variable stop set to clock() + 1000
-    while clock() < stop
+    variable limit set to clock() + 1000
+    while clock() < limit
       call processKey(hole, score)
     end while
   end while
 end main
 
-procedure processKey(out hole as Hole, out score as Int)
+procedure processKey(ho as Hole, score as Int)
   variable n set to getNumericKey()
   if n isnt -1 then
-    if hole is Hole.mole then
-      set hole to Hole.hit
+    if ho is Hole.mole then
+      set ho to Hole.hit
       set score to score + 1
-    elif hole is Hole.vacant then
-      set hole to Hole.miss
+    elif ho is Hole.vacant then
+      set ho to Hole.miss
       set score to score - 1
     end if
-    variable html set to htmlForSimpleGame(hole, score)
+    variable html set to htmlForSimpleGame(ho, score)
     call displayHtml(html)
   end if
 end procedure
 
 enum Hole vacant, mole, hit, miss
 
-function htmlForSimpleGame(hole as Hole, score as Int) returns String
-  variable core set to htmlForHole(hole, "hole")
+function htmlForSimpleGame(h as Hole, score as Int) returns String
+  variable core set to htmlForHole(h, "hole")
   return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
-function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
+function htmlForFullGame(holes as List<of Hole>, score as Int) returns String
   variable core set to ""
   for i in range(0, holes.length())
     set core to core + htmlForHole(holes[i], i.toString())
@@ -48,8 +48,8 @@ function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
-function htmlForHole(hole as Hole, label as String) returns String
-  variable img set to imageForStatus[hole]
+function htmlForHole(ho as Hole, label as String) returns String
+  variable img set to imageForStatus()[ho]
   return $"<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
 
@@ -62,6 +62,8 @@ constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-m
 
 constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
 
-constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
+function imageForStatus() returns Dictionary<of Hole, String>
+  return [Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg]
+end function
 
-constant styleSheet set to $"\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}"
+constant styleSheet set to "\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}"

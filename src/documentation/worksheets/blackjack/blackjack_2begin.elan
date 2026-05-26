@@ -1,11 +1,11 @@
-# 956aaca44652d46585b5a038d21a6ae2e868be45146d6fc99f1f0550d8f814a5 Elan 2.0.0-alpha valid
+# 47766b251a04b5040e3c126fa56a0fab91529194373ccd742579113eff4be0fe Elan 2.0.0-alpha4 valid
 
 main
   variable points set to 1000
   variable rounds set to 1
   variable game set to new Game(points)
-  call game.addPlayer(new AutomatedPlayer("Player A", strategyA, points))
-  call game.addPlayer(new AutomatedPlayer("Player B", strategyB, points))
+  call game.addPlayer(new AutomatedPlayerA(points))
+  call game.addPlayer(new AutomatedPlayerB(points))
   while rounds > 0
     call playOneRound(game)
     call clearKeyBuffer()
@@ -13,6 +13,14 @@ main
     set rounds to rounds - 1
   end while
 end main
+
+function strategyA(p as Player, dealerFaceUp as Card) returns Choice
+  return Choice.stand
+end function
+
+function strategyB(p as Player, dealerFaceUp as Card) returns Choice
+  return Choice.draw
+end function
 
 procedure playOneRound(game as Game)
   call game.newRound()
@@ -40,14 +48,6 @@ procedure display(game as Game)
   call displayHtml(html)
   call sleep(1.5)
 end procedure
-
-function strategyA(p as Player, dealerFaceUp as Card) returns Action
-  return Action.stand
-end function
-
-function strategyB(p as Player, dealerFaceUp as Card) returns Action
-  return Action.draw
-end function
 
 procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
   if playerOutcome is Outcome.winDouble then
@@ -101,8 +101,8 @@ end function
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
   variable rank set to rankValue().keys()[divAsInt(number, 4)]
-  variable suit set to intAsSuit(number mod 4)
-  return new Card(rank, suit)
+  variable suit set to number mod 4
+  return new Card(rank, intAsSuit(suit), false)
 end function
 
 function intAsSuit(n as Int) returns Suit
@@ -171,6 +171,8 @@ end function
 class Game
   constructor(dealerStartPoints as Int)
     set this.dealer to new Dealer(dealerStartPoints)
+    set this.players to new List<of Player>()
+    set this.message to ""
   end constructor
 
   property dealer as Dealer
@@ -179,8 +181,15 @@ class Game
 
   property message as String
 
+  function withPlayers(p as List<of Player>) returns Game
+    let copyOfThis be copy(this)
+    set copyOfThis.players to p
+    return copyOfThis
+  end function
+
   procedure newRound()
-    call this.dealer.newHand()
+    variable dealer set to this.dealer
+    call dealer.newHand()
     for player in this.players
       call player.newHand()
     end for
@@ -194,29 +203,32 @@ class Game
   end procedure
 
   procedure addPlayer(player as Player)
-    call this.players.append(player)
+    variable players set to this.players
+    call players.append(player)
   end procedure
 
   procedure setMessage(message as String)
     set this.message to message
   end procedure
 
+  function toString() returns String
+    return "undefined"
+  end function
+
 end class
 
 class Card
-  constructor(rank as String, suit as Suit)
-    set this.rank to rank
-    set this.suit to suit
-    set this.value to rankValue()[rank]
-  end constructor
-
   property suit as Suit
 
   property rank as String
 
-  property value as Int
-
   property faceDown as Boolean
+
+  constructor(rank as String, suit as Suit, facedown as Boolean)
+    set this.rank to rank
+    set this.suit to suit
+    set this.faceDown to facedown
+  end constructor
 
   procedure turnFaceUp()
     set this.faceDown to false
@@ -225,6 +237,10 @@ class Card
   procedure turnFaceDown()
     set this.faceDown to true
   end procedure
+
+  function toString() returns String
+    return "undefined"
+  end function
 
 end class
 
@@ -237,7 +253,7 @@ abstract class Player
 
   property handTotal as Int
 
-  property hasSoftAce as Boolean
+  property softAce as Boolean
 
   property status as Status
 
@@ -250,11 +266,11 @@ abstract class Player
   end procedure
 
   procedure evaluateStatus(newCard as Card)
-    if (cardCount() is 2) and (this.handTotal is 21) then
+    if (this.cardCount() is 2) and (this.handTotal is 21) then
       set this.status to Status.blackjack
-    elif (this.handTotal > 21) and (this.hasSoftAce) then
+    elif (this.handTotal > 21) and (this.softAce) then
       set this.handTotal to this.handTotal - 10
-      set this.hasSoftAce to false
+      set this.softAce to false
     elif this.handTotal > 21 then
       set this.status to Status.bust
     elif this.handTotal is 21 then
@@ -272,21 +288,22 @@ abstract class Player
 
   procedure draw()
     variable newCard set to dealCard(random())
-    call this.cards.append(newCard)
+    variable cards set to this.cards
+    call cards.append(newCard)
     if newCard.rank.equals("A") then
-      call addAce()
+      call this.addAce()
     else
-      set this.handTotal to this.handTotal + newCard.value
+      set this.handTotal to this.handTotal + rankValue()[newCard.rank]
     end if
-    call evaluateStatus(newCard)
+    call this.evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
-    if this.hasSoftAce then
+    if this.softAce then
       set this.handTotal to this.handTotal + 1
     else
       set this.handTotal to this.handTotal + 11
-      set this.hasSoftAce to true
+      set this.softAce to true
     end if
   end procedure
 
@@ -302,12 +319,12 @@ abstract class Player
 
   procedure newHandHelper()
     set this.hasTurn to false
-    set this.hasSoftAce to false
+    set this.softAce to false
     set this.cards to new List<of Card>()
     set this.handTotal to 0
     set this.status to Status.active
-    call draw()
-    call draw()
+    call this.draw()
+    call this.draw()
   end procedure
 
   abstract function getMessage() returns String
@@ -335,14 +352,28 @@ class Dealer inherits Player
   constructor(startingPoints as Int)
     set this.name to "Dealer"
     set this.points to startingPoints
+    set this.cards to new List<of Card>()
+    set this.faceCard to new Card("2", Suit.clubs, true)
   end constructor
 
   property faceCard as Card
 
   property hasPlayed as Boolean
 
+  function withStatus(status as Status) returns Dealer
+    let copyOfThis be copy(this)
+    set copyOfThis.status to status
+    return copyOfThis
+  end function
+
+  function withHandTotal(ht as Int) returns Dealer
+    let copyOfThis be copy(this)
+    set copyOfThis.handTotal to ht
+    return copyOfThis
+  end function
+
   procedure play()
-    call startTurn()
+    call this.startTurn()
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceUp()
     set this.hasPlayed to true
@@ -350,7 +381,7 @@ class Dealer inherits Player
 
   procedure newHand()
     set this.hasPlayed to false
-    call newHandHelper()
+    call this.newHandHelper()
     set this.faceCard to this.cards[0]
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
@@ -358,18 +389,22 @@ class Dealer inherits Player
 
   procedure nextAction(faceCard as Card)
     if this.handTotal < 17 then
-      call draw()
+      call this.draw()
     else
-      call stand()
+      call this.stand()
     end if
   end procedure
 
   function getMessage() returns String
     variable msg set to ""
     if this.hasPlayed then
-      set msg to statusAsString() + $" - hand total: {this.handTotal}"
+      set msg to this.statusAsString() + $" - hand total: {this.handTotal}"
     end if
     return msg
+  end function
+
+  function toString() returns String
+    return "undefined"
   end function
 
 end class
@@ -378,10 +413,29 @@ class HumanPlayer inherits Player
   constructor(name as String, startingPoints as Int)
     set this.name to name
     set this.points to startingPoints
+    set this.cards to new List<of Card>()
   end constructor
 
+  function withStatus(status as Status) returns HumanPlayer
+    let copyOfThis be copy(this)
+    set copyOfThis.status to status
+    return copyOfThis
+  end function
+
+  function withHandTotal(ht as Int) returns HumanPlayer
+    let copyOfThis be copy(this)
+    set copyOfThis.handTotal to ht
+    return copyOfThis
+  end function
+
+  function withCards(c as List<of Card>) returns HumanPlayer
+    let copyOfThis be copy(this)
+    set copyOfThis.cards to c
+    return copyOfThis
+  end function
+
   procedure newHand()
-    call newHandHelper()
+    call this.newHandHelper()
   end procedure
 
   procedure nextAction(dealerFaceCard as Card)
@@ -390,9 +444,9 @@ class HumanPlayer inherits Player
     while key.equals("")
       set key to waitForKey()
       if key.equals("d") then
-        call draw()
+        call this.draw()
       elif key.equals("s") then
-        call stand()
+        call this.stand()
       else
         set key to ""
       end if
@@ -400,44 +454,71 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to statusAsString() + $"- hand total: {this.handTotal}"
+    variable msg set to this.statusAsString() + $"- hand total: {this.handTotal}"
     if this.hasTurn then
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
   end function
 
-end class
-
-class AutomatedPlayer inherits Player
-  constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
-    set this.name to name
-    set this.decisionFunc to decisionFunc
-    set this.points to startingPoints
-  end constructor
-
-  property decisionFunc as Func<of Player, Card => Action>
-
-  procedure newHand()
-    call newHandHelper()
-  end procedure
-
-  procedure nextAction(dealerFaceCard as Card)
-    variable act set to decisionFunc(this, dealerFaceCard)
-    if act is Action.draw then
-      call draw()
-    else
-      call stand()
-    end if
-  end procedure
-
-  function getMessage() returns String
-    return statusAsString() + $" - hand total: {this.handTotal}"
+  function toString() returns String
+    return "undefined"
   end function
 
 end class
 
-enum Action stand, draw
+abstract class AutomatedPlayer inherits Player
+  procedure newHand()
+    call this.newHandHelper()
+  end procedure
+
+  procedure nextAction(dealerFaceCard as Card)
+    # variable act set to decisionFunc(this, dealerFaceCard)
+  end procedure
+
+  abstract function getChoice(dealerFaceCard as Card) returns Choice
+
+  function getMessage() returns String
+    return this.statusAsString() + $" - hand total: {this.handTotal}"
+  end function
+
+end class
+
+class AutomatedPlayerA inherits AutomatedPlayer
+  constructor(startingPoints as Int)
+    set this.name to "Player A"
+    set this.points to startingPoints
+    set this.cards to new List<of Card>()
+  end constructor
+
+  function getChoice(dealerFaceCard as Card) returns Choice
+    return strategyA(this, dealerFaceCard)
+  end function
+
+  function toString() returns String
+    return this.name
+  end function
+
+end class
+
+class AutomatedPlayerB inherits AutomatedPlayer
+  constructor(startingPoints as Int)
+    set this.name to "Player B"
+    set this.points to startingPoints
+    set this.cards to new List<of Card>()
+  end constructor
+
+  function getChoice(dealerFaceCard as Card) returns Choice
+    return strategyB(this, dealerFaceCard)
+  end function
+
+  function toString() returns String
+    return this.name
+  end function
+
+end class
+
+enum Choice stand, draw
 
 enum Outcome undecided, lose, draw, win, winDouble
 
@@ -446,8 +527,8 @@ enum Status active, standing, blackjack, bust
 enum Suit clubs, diamonds, hearts, spades
 
 function symbolForSuit(suit as Suit) returns String
-  variable dict set to [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"]
-  return dict[suit]
+  variable dc set to [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"]
+  return dc[suit]
 end function
 
 function rankValue() returns Dictionary<of String, Int>
@@ -455,13 +536,13 @@ function rankValue() returns Dictionary<of String, Int>
 end function
 
 function gridForRank(rank as String) returns List<of String>
-  variable dict set to ["A":["royal"], "2":["b", "c"], "3":["a", "b", "c"], "4":["d", "e", "f", "g"], "5":["a", "d", "e", "f", "g"], "6":["d", "e", "f", "g", "h", "i"], "7":["d", "e", "f", "g", "h", "i", "l"], "8":["d", "e", "f", "g", "h", "i", "l", "m"], "9":["a", "d", "e", "f", "g", "n", "o", "p", "r"], "10":["d", "e", "f", "g", "n", "o", "p", "r", "s", "t"], "J":["royal"], "Q":["royal"], "K":["royal"]]
-  return dict[rank]
+  variable dc set to ["A":["royal"], "2":["b", "c"], "3":["a", "b", "c"], "4":["d", "e", "f", "g"], "5":["a", "d", "e", "f", "g"], "6":["d", "e", "f", "g", "h", "i"], "7":["d", "e", "f", "g", "h", "i", "l"], "8":["d", "e", "f", "g", "h", "i", "l", "m"], "9":["a", "d", "e", "f", "g", "n", "o", "p", "r"], "10":["d", "e", "f", "g", "n", "o", "p", "r", "s", "t"], "J":["royal"], "Q":["royal"], "K":["royal"]]
+  return dc[rank]
 end function
 
 function colourForSuit(suit as Suit) returns String
-  variable dict set to [Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"]
-  return dict[suit]
+  variable dc set to [Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"]
+  return dc[suit]
 end function
 
-constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
+constant styleSheet set to ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .s {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}"

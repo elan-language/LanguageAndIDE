@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha4
+// C# with Elan 2.0.0-alpha5
 
 static void main() {
   var blocks = createBlockGraphics(black);
@@ -12,14 +12,14 @@ static void main() {
     if (okToSet(p, setTo, blocks)) {
       var colour = if(setTo == 1, white, black);
       blocks[p.x][p.y] = colour; // re-assign variable
-    }
-  }
+    } // if
+  } // foreach
   displayBlocks(blocks); // call procedure
   var name = input("File name to save: ");
   if (!name.equals("x")) {
     saveAsFile(name, blocks); // call procedure
-  }
-}
+  } // if
+} // main
 
 const Int displayWidth = 150
 
@@ -31,19 +31,19 @@ static void saveAsFile(string name, List<List<int>> b) { // procedure
       var colour = b[col][row];
       var symbol = if(colour == white, " ", "X");
       line = line + symbol; // re-assign variable
-    }
+    } // foreach
     file.writeLine(line); // call procedure
-  }
+  } // foreach
   file.saveAndClose(); // call procedure
-}
+} // procedure
 
 static List<List<int>> createStart(List<List<int>> b) { // function
   var b2 = b;
   foreach (i in rangeInSteps(0, 16, 2)) {
     b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i); // re-assign variable
-  }
+  } // foreach
   return b2;
-}
+} // function
 
 static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, int width, int depth) { // function
   var paint = white;
@@ -51,17 +51,17 @@ static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, i
   foreach (x in range(startX, startX + width + 1)) {
     b2 = withPut(b2, x, startY, paint); // re-assign variable
     b2 = withPut(b2, x, startY + depth, paint); // re-assign variable
-  }
+  } // foreach
   foreach (y in range(startY, startY + depth + 1)) {
     b2 = withPut(b2, startX, y, paint); // re-assign variable
     b2 = withPut(b2, startX + width, y, paint); // re-assign variable
-  }
+  } // foreach
   return b2;
-}
+} // function
 
 static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colour) { // function
   return graphics.withSet(x, graphics[x].withSet(y, colour));
-}
+} // function
 
 // colour: 0 for black, 1 for white
 
@@ -72,29 +72,29 @@ static bool okToSet(Point p, int colour, List<List<int>> g) { // function
   var q3 = isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8);
   var q4 = isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8);
   return q1 && q2 && q3 && q4;
-}
+} // function
 
 static int getValue(Point p, List<List<int>> b) { // function
   var result = 0;
   if ((p.x > -1) && (p.x < 40) && (p.y > -1) && (p.y < 30)) {
     var colour = b[p.x][p.y];
     result = if(colour == black, 0, 1); // re-assign variable
-  }
+  } // if
   return result;
-}
+} // function
 
 static int flip01(int v) { // function
   return if(v == 0, 1, 0);
-}
+} // function
 
 [TestMethod] static void test_flip01() {
   Assert.AreEqual(1, flip01(0))
   Assert.AreEqual(0, flip01(1))
-}
+} // 
 
 static bool isValidQuadrant(int q) { // function
   return (q % 5) != 0;
-}
+} // function
 
 [TestMethod] static void test_isValidQuadrant() {
   Assert.AreEqual(false, isValidQuadrant(0))
@@ -113,7 +113,7 @@ static bool isValidQuadrant(int q) { // function
   Assert.AreEqual(true, isValidQuadrant(13))
   Assert.AreEqual(true, isValidQuadrant(14))
   Assert.AreEqual(false, isValidQuadrant(15))
-}
+} // 
 
 class Point {
 
@@ -122,21 +122,21 @@ class Point {
   public Point(int x, int y) {
     this.x = x; // re-assign variable
     this.y = y; // re-assign variable
-  }
+  } // constructor
   public string toString() { // function method
     return "";
-  }
+  } // function method
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds
   public List<Point> neighbouringPoints() { // function method
     var x = this.x;
     var y = this.y;
     return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)];
-  }
-}
+  } // function method
+} // class
 
 [TestMethod] static void test_neighbouringPoints() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
   Assert.AreEqual(expected, n)
-}
+} // 

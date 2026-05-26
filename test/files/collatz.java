@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 // A program to investigate the Collatz Conjecture
 
@@ -18,29 +18,29 @@ static void main() {
         x = divAsInt(x, 2); // re-assign variable
       } else {
         x = x*3 + 1; // re-assign variable
-      }
+      } // if
       if (x > max) {
         max = x; // re-assign variable
-      }
+      } // if
       p.append(x); // call procedure
       // draw what we have got so far, scaled to the canvas
       var vg = new List<VectorGraphic>();
       foreach (i in range(0, p.length() - 1)) {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // re-assign variable
-      }
+      } // foreach
       displayVectorGraphics(vg); // call procedure
       print(x);
       sleep_ms(100); // call procedure
-    }
-  }
+    } // while
+  } // while
   print("Finished");
-}
+} // main
 
 // scale x.  We pass in p just to get its length
 
 static double scx(int i, List<int> p) { // function
   return divAsFloat(i*100, p.length());
-}
+} // function
 
 // scale y
 
@@ -50,6 +50,6 @@ static double scx(int i, List<int> p) { // function
 
 static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
-}
+} // function
 
 final Int grey = 0x808080 // constant
