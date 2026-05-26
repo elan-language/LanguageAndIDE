@@ -45,7 +45,7 @@ static String getDate(int unixSecs) { // function
 
 @Test static void test_getDate() {
   assertEquals("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991))
-} // 
+} // test
 
 static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
   // get separate values from Unix time
@@ -65,7 +65,7 @@ static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
 
 @Test static void test_dateTime() {
   assertEquals((8, 49, 51, 90, 2026, 2), dateTime(1774946991))
-} // 
+} // test
 
 static int dayInYear(int year, int unixDays) { // function
   // unixDays start at 0, months, day numbers start at 1
@@ -85,7 +85,7 @@ static int dayInYear(int year, int unixDays) { // function
 
 @Test static void test_dayInYear() {
   assertEquals(-20087, dayInYear(2025, 1))
-} // 
+} // test
 
 static bool leap(int year) { // function
   var leapYear = false;
@@ -103,7 +103,7 @@ static bool leap(int year) { // function
   assertEquals(true, leap(2024))
   assertEquals(false, leap(1900))
   assertEquals(true, leap(2000))
-} // 
+} // test
 
 static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
   // get month (1-12) &amp; day (1-31) from dayNumber (1-365 or 1-366)
@@ -150,7 +150,7 @@ static String getWeekdayName(int weekDay) { // function
 @Test static void test_getWeekdayName() {
   assertEquals("Sun", getWeekdayName(0))
   assertEquals("Sat", getWeekdayName(6))
-} // 
+} // test
 
 static String getMonthName(int month) { // function
   var names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -160,7 +160,7 @@ static String getMonthName(int month) { // function
 @Test static void test_getMonthName() {
   assertEquals("Jan", getMonthName(1))
   assertEquals("Dec", getMonthName(12))
-} // 
+} // test
 
 static List<int> getStartDays() { // function
   return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
@@ -174,7 +174,7 @@ static String padLwithZero(int i) { // function
   assertEquals("01", padLwithZero(1))
   assertEquals("10", padLwithZero(10))
   assertEquals("00", padLwithZero(0))
-} // 
+} // test
 
 static String pad(String d, String p, String s) { // function
   // d: L or R for pad left or right

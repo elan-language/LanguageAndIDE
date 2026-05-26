@@ -7,7 +7,7 @@
   assertEquals(81480107, nums.reduce(1.0, product).floor())
   assertEquals([0.45, 0.4], nums.filter(lessThan5).map(inverse))
   assertEquals("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat))
-} // 
+} // test
 
 static bool lessThan5(double n) { // function
   return n < 5;

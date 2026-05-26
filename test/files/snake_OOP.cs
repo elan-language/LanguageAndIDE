@@ -144,11 +144,11 @@ enum Direction {up, down, left, right}
   // gameOver, score - can only test test_for default - which is not thorough test
   Assert.AreEqual(false, snake.gameOver())
   Assert.AreEqual(0, snake.score())
-} // 
+} // test
 
 [TestMethod] static void test_apple() {
   // no tests
-} // 
+} // test
 
 [TestMethod] static void test_square() {
   // constructor - not testable as properties are private
@@ -168,4 +168,4 @@ enum Direction {up, down, left, right}
   Assert.AreEqual(true, (new Square(3, -1)).hasHitEdge())
   Assert.AreEqual(true, (new Square(40, 3)).hasHitEdge())
   Assert.AreEqual(true, (new Square(3, 30)).hasHitEdge())
-} // 
+} // test

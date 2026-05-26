@@ -286,11 +286,11 @@ static Algorithm getAlgFromLetter(String letter) { // function
   assertEquals(Algorithm.aStar, getAlgFromLetter("a"))
   assertEquals(Algorithm.heuristic, getAlgFromLetter("h"))
   assertEquals(Algorithm.dijkstra, getAlgFromLetter("d"))
-} // 
+} // test
 
 @Test static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
   assertEquals(expected, n)
-} // 
+} // test

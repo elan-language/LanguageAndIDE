@@ -125,28 +125,28 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((39, 29), north((39, 0)))
   assertEquals((0, 28), north((0, 29)))
   assertEquals((39, 28), north((39, 29)))
-} // 
+} // test
 
 @Test static void test_south() {
   assertEquals((3, 5), south((3, 4)))
   assertEquals((39, 1), south((39, 0)))
   assertEquals((0, 0), south((0, 29)))
   assertEquals((39, 0), south((39, 29)))
-} // 
+} // test
 
 @Test static void test_east() {
   assertEquals((11, 2), east((10, 2)))
   assertEquals((0, 0), east((39, 0)))
   assertEquals((1, 1), east((0, 1)))
   assertEquals((0, 29), east((39, 29)))
-} // 
+} // test
 
 @Test static void test_west() {
   assertEquals((2, 4), west((3, 4)))
   assertEquals((38, 0), west((39, 0)))
   assertEquals((39, 0), west((0, 0)))
   assertEquals((39, 29), west((0, 29)))
-} // 
+} // test
 
 @Test static void test_northEast() {
   assertEquals((4, 3), northEast((3, 4)))
@@ -154,7 +154,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((0, 29), northEast((39, 0)))
   assertEquals((1, 28), northEast((0, 29)))
   assertEquals((0, 28), northEast((39, 29)))
-} // 
+} // test
 
 @Test static void test_southEast() {
   assertEquals((4, 5), southEast((3, 4)))
@@ -162,7 +162,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((0, 1), southEast((39, 0)))
   assertEquals((1, 0), southEast((0, 29)))
   assertEquals((0, 0), southEast((39, 29)))
-} // 
+} // test
 
 @Test static void test_northWest() {
   assertEquals((2, 3), northWest((3, 4)))
@@ -170,7 +170,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((38, 29), northWest((39, 0)))
   assertEquals((39, 28), northWest((0, 29)))
   assertEquals((38, 28), northWest((39, 29)))
-} // 
+} // test
 
 @Test static void test_southWest() {
   assertEquals((2, 5), southWest((3, 4)))
@@ -178,7 +178,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((38, 1), southWest((39, 0)))
   assertEquals((39, 0), southWest((0, 29)))
   assertEquals((38, 0), southWest((39, 29)))
-} // 
+} // test
 
 @Test static void test_blackOrWhite() {
   assertEquals(black, blackOrWhite(0))
@@ -186,11 +186,11 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(black, blackOrWhite(0.5))
   assertEquals(white, blackOrWhite(0.501))
   assertEquals(white, blackOrWhite(1))
-} // 
+} // test
 
 [ghosted] @Test static void test_neighbourCells() {
   assertEquals([(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5], neighbourCells(3, 4))
-} // 
+} // test
 
 @Test static void test_willLive() {
   assertEquals(false, willLive(white, 0))
@@ -211,4 +211,4 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(false, willLive(black, 6))
   assertEquals(false, willLive(black, 7))
   assertEquals(false, willLive(black, 8))
-} // 
+} // test

@@ -62,9 +62,9 @@ static String reflect(String s) { // function
   assertEquals("1110", setTurns("11"))
   assertEquals("110110", setTurns("110"))
   assertEquals("11011001110010", setTurns("1101100"))
-} // 
+} // test
 
 @Test static void test_reflect() {
   assertEquals("100", reflect("110"))
   assertEquals("01111", reflect("00001"))
-} // 
+} // test
