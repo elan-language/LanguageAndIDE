@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Method", () => {
@@ -27,12 +27,12 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
     procedure setP1(value as Float)
-        set this.p1 to value
+        reassign this.p1 to value
     end procedure
     function toString() returns String
          return ""
@@ -96,7 +96,7 @@ end main
 
 class Foo
   constructor()
-      set this.p1 to 5
+      reassign this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -167,7 +167,7 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -175,12 +175,12 @@ class Foo
     procedure times(b as Bar)
         call b.p1PlusOne()
         call this.p1PlusOne()
-        set this.p1 to this.p1 + b.p1
+        reassign this.p1 to this.p1 + b.p1
         call printNoLine(this.p1)
     end procedure
 
     procedure p1PlusOne()
-        set this.p1 to this.p1 + 1
+        reassign this.p1 to this.p1 + 1
     end procedure
 
     function toString() returns String
@@ -191,13 +191,13 @@ end class
 
 class Bar
     constructor()
-        set this.p1 to 1
+        reassign this.p1 to 1
     end constructor
 
     property p1 as Float
 
     procedure p1PlusOne()
-        set this.p1 to this.p1 + 1
+        reassign this.p1 to this.p1 + 1
     end procedure
 
     function toString() returns String
@@ -289,7 +289,7 @@ end main
 
 class Foo
   constructor()
-      set this.p1 to 5
+      reassign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -332,7 +332,7 @@ end main
 
 class Foo
   constructor()
-      set this.p1 to 5
+      reassign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -545,7 +545,7 @@ class Foo
   end function
   
   procedure foo()
-    set p1 to 4
+    reassign p1 to 4
   end procedure
 
   property p1 as Int

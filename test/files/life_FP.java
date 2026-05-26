@@ -6,7 +6,7 @@ static void main() {
   var grid = initialGrid(rng);
   while (true) {
     displayBlocks(grid); // call procedure
-    grid = nextGeneration(grid); // re-assign variable
+    grid = nextGeneration(grid); // reassign variable
     sleep_ms(50); // call procedure
   } // while
 } // main

@@ -1,4 +1,4 @@
-# aa3d7d1bef0208f41973dbd9c62d777cd2327da6a567a10fd9764c6d4714280a Elan 2.0.0-alpha5 valid
+# 1468f7eb5f244c2755b47d1e9fd912499385269af026b02d4455b2c266470489 Elan 2.0.0-alpha5 valid
 
 main
   variable start set to new Point(5, 5)
@@ -24,7 +24,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
-    set gr2 to addVisited(gr2, solver.getLastVisited())
+    reassign gr2 to addVisited(gr2, solver.getLastVisited())
     call displayBlocks(gr2)
     call sleep_ms(0)
   end while
@@ -32,7 +32,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     variable rl set to solver.getRouteAndLength()
     variable route set to rl.item_0
     variable length set to rl.item_1
-    set gr2 to addRoute(gr2, route)
+    reassign gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
     call printNoLine($"Length of route: {length.round(2)} ")
   else
@@ -60,10 +60,10 @@ end procedure
 function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
   variable gr set to createBlockGraphics(white)
   for rock in rocks
-    set gr to withPut(gr, rock.x, rock.y, black)
+    reassign gr to withPut(gr, rock.x, rock.y, black)
   end for
-  set gr to withPut(gr, start.x, start.y, green)
-  set gr to withPut(gr, dest.x, dest.y, red)
+  reassign gr to withPut(gr, start.x, start.y, green)
+  reassign gr to withPut(gr, dest.x, dest.y, red)
   return gr
 end function
 
@@ -78,21 +78,21 @@ end function
 function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
   variable graphics set to gr
   for p in route
-    set graphics to withPut(graphics, p.x, p.y, orange)
+    reassign graphics to withPut(graphics, p.x, p.y, orange)
   end for
   variable start set to route[0]
   variable dest set to route[route.length() - 1]
-  set graphics to withPut(graphics, start.x, start.y, green)
-  set graphics to withPut(graphics, dest.x, dest.y, red)
+  reassign graphics to withPut(graphics, start.x, start.y, green)
+  reassign graphics to withPut(graphics, dest.x, dest.y, red)
   return graphics
 end function
 
 class Solver
   constructor(nodes as List<of Node>, start as Point, destination as Point)
-    set this.nodes to nodes
-    set this.start to start
-    set this.destination to destination
-    set this.current to new Node(emptyPoint(), 0, 0)
+    reassign this.nodes to nodes
+    reassign this.start to start
+    reassign this.destination to destination
+    reassign this.current to new Node(emptyPoint(), 0, 0)
   end constructor
 
   function toString() returns String
@@ -113,9 +113,9 @@ class Solver
 
   # TODO can this go into the constructor ?
   procedure initialise(alg as Algorithm)
-    set this.alg to alg
-    set this.current to new Node(this.start, 0, infinity)
-    set this.running to true
+    reassign this.alg to alg
+    reassign this.current to new Node(this.start, 0, infinity)
+    reassign this.running to true
     for node in this.nodes
       call node.setDistanceFromStart(infinity)
       call node.setVia(emptyPoint())
@@ -125,9 +125,9 @@ class Solver
 
   procedure visitNextPoint()
     call this.updateNeighbours()
-    set this.current to this.nextNodeToVisit()
+    reassign this.current to this.nextNodeToVisit()
     if (this.current.isEmpty or (this.current.point.equals(this.destination))) then
-      set this.running to false
+      reassign this.running to false
     else
       variable current set to this.current
       call current.setVisited(true)
@@ -154,7 +154,7 @@ class Solver
       variable node set to this.getNodeFor(p)
       variable point set to node.point
       if not point.isEmpty then
-        set neighbours to neighbours.withAppend(node)
+        reassign neighbours to neighbours.withAppend(node)
       end if
     end for
     return neighbours
@@ -176,8 +176,8 @@ class Solver
     for nd in possibilities
       variable cost set to this.calculateCost(nd)
       if cost < lowestCostSoFar then
-        set lowestCostSoFar to cost
-        set lowestCostNode to nd
+        reassign lowestCostSoFar to cost
+        reassign lowestCostNode to nd
       end if
     end for
     return lowestCostNode
@@ -188,11 +188,11 @@ class Solver
     variable fromStart set to node.distFromStart
     variable estToDest set to node.estDistToDest
     if this.alg is Algorithm.dijkstra then
-      set cost to fromStart
+      reassign cost to fromStart
     elif this.alg is Algorithm.aStar then
-      set cost to fromStart + estToDest
+      reassign cost to fromStart + estToDest
     elif this.alg is Algorithm.heuristic then
-      set cost to estToDest
+      reassign cost to estToDest
     end if
     return cost
   end function
@@ -204,9 +204,9 @@ class Solver
     while not node.point.equals(this.start)
       variable previous set to node.via
       variable p set to node.point
-      set length to length + p.minDistTo(previous)
-      set route to route.withInsert(0, previous)
-      set node to this.getNodeFor(previous)
+      reassign length to length + p.minDistTo(previous)
+      reassign route to route.withInsert(0, previous)
+      reassign node to this.getNodeFor(previous)
     end while
     return (route, length)
   end function
@@ -220,13 +220,13 @@ end function
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
     if p.isEmpty then
-      set this.isEmpty to true
+      reassign this.isEmpty to true
     end if
-    set this.point to p
-    set this.visited to false
-    set this.distFromStart to distFromStart
-    set this.via to emptyPoint()
-    set this.estDistToDest to estDistToDest
+    reassign this.point to p
+    reassign this.visited to false
+    reassign this.distFromStart to distFromStart
+    reassign this.via to emptyPoint()
+    reassign this.estDistToDest to estDistToDest
   end constructor
 
   property point as Point
@@ -242,15 +242,15 @@ class Node
   property isEmpty as Boolean
 
   procedure setVisited(value as Boolean)
-    set this.visited to value
+    reassign this.visited to value
   end procedure
 
   procedure setDistanceFromStart(d as Float)
-    set this.distFromStart to d
+    reassign this.distFromStart to d
   end procedure
 
   procedure setVia(p as Point)
-    set this.via to p
+    reassign this.via to p
   end procedure
 
   function toString() returns String
@@ -272,10 +272,10 @@ class Point
 
   constructor(x as Int, y as Int)
     if (x < 0) or (y < 0) then
-      set this.isEmpty to true
+      reassign this.isEmpty to true
     else
-      set this.x to x
-      set this.y to y
+      reassign this.x to x
+      reassign this.y to y
     end if
   end constructor
 

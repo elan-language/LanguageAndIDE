@@ -4,15 +4,15 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Arithmetic Expressions", () => {
@@ -215,8 +215,8 @@ return [main, _tests];}`;
 main
   variable x set to 0.0
   variable y set to 0
-  set x to - 4.7
-  set y to 5 * -3
+  reassign x to - 4.7
+  reassign y to 5 * -3
   call printNoLine(x)
   call printNoLine(y)
 end main`;

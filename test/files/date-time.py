@@ -3,7 +3,7 @@
 def main() -> None:
   reply = "" # variable definition
   while not reply.upperCase().equals("Q"):
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # re-assign variable
+    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # reassign variable
     if reply.equals(""):
       now = divAsInt(clock(), 1000) # variable definition
       print(now)
@@ -63,11 +63,11 @@ def dayInYear(year: int, unixDays: int) -> int: # function
   dayNumber = unixDays + 1 # variable definition
   if year > unixYear:
     # discount previous nominal years
-    dayNumber = dayNumber - 365*(year - unixYear) # re-assign variable
+    dayNumber = dayNumber - 365*(year - unixYear) # reassign variable
     # discount previous leap days
     for y in range(unixYear, year):
       if leap(y):
-        dayNumber = dayNumber - 1 # re-assign variable
+        dayNumber = dayNumber - 1 # reassign variable
   return dayNumber
 
 def test_dayInYear(self) -> None:
@@ -76,9 +76,9 @@ def test_dayInYear(self) -> None:
 def leap(year: int) -> bool: # function
   leapYear = False # variable definition
   if (year % 4) == 0:
-    leapYear = True # re-assign variable
+    leapYear = True # reassign variable
     if ((year % 100) == 0) and ((divAsInt(year, 100) % 4) != 0):
-      leapYear = False # re-assign variable
+      leapYear = False # reassign variable
   return leapYear
 
 def test_leap(self) -> None:
@@ -94,10 +94,10 @@ def monthDay(startDays: list[int], dayNumber: int) -> tuple[int, int]: # functio
   monthFound = False # variable definition
   while monthFound == False:
     if (dayNumber < startDays[month]):
-      monthFound = True # re-assign variable
-      day = dayNumber - startDays[month - 1] + 1 # re-assign variable
+      monthFound = True # reassign variable
+      day = dayNumber - startDays[month - 1] + 1 # reassign variable
     else:
-      month = month + 1 # re-assign variable
+      month = month + 1 # reassign variable
   return (month, day)
 
 def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
@@ -105,7 +105,7 @@ def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
   startDaysL = getStartDays() # variable definition
   if leap(year):
     for m in range(2, 13):
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # re-assign variable
+      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # reassign variable
   return startDaysL
 
 # Unix epoch is 1970.01.01 00:00:00 Thursday
@@ -153,9 +153,9 @@ def pad(d: str, p: str, s: str) -> str: # function
   if p.length() > s.length():
     if d.upperCase().equals("L"):
       ps = p + s # variable definition
-      sR = ps.subString(ps.length() - p.length(), ps.length()) # re-assign variable
+      sR = ps.subString(ps.length() - p.length(), ps.length()) # reassign variable
     elif d.upperCase().equals("R"): # else if
-      sR = (s + p).subString(0, p.length()) # re-assign variable
+      sR = (s + p).subString(0, p.length()) # reassign variable
   return sR
 
 main()

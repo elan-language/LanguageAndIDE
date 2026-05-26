@@ -3,18 +3,18 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Statement", () => {
@@ -438,7 +438,7 @@ end main
 
 class Foo
     constructor()
-      set this.p1 to new Bar()
+      reassign this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
@@ -456,7 +456,7 @@ end class
 
 class Bar
     constructor()
-      set this.p1 to 5
+      reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -800,7 +800,7 @@ end procedure
 
 class Foo
   constructor()
-    set this.ff to 1
+    reassign this.ff to 1
   end constructor
   function toString() returns String
     return ""
@@ -1262,7 +1262,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-  set a to [1, 2, 3]
+  reassign a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1279,7 +1279,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1293,7 +1293,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-  set a to [1, 2, 3]
+  reassign a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1310,7 +1310,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1324,7 +1324,7 @@ main
 end main
 
 procedure changeValue(a as Int)
-    set a to 3
+    reassign a to 3
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1341,7 +1341,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1584,7 +1584,7 @@ end procedure`;
 
 main
   variable a set to [1,2]
-  set a to a.append(3)
+  reassign a to a.append(3)
 end main`;
 
     const fileImpl = new FileImpl(

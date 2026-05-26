@@ -3,23 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -33,7 +25,7 @@ end main
 
 class Foo
   constructor(p1 as Float)
-    set this.p1 to p1
+    reassign this.p1 to p1
   end constructor
 
   property p1 as Float
@@ -99,7 +91,7 @@ end function
 
 class Foo
     constructor()
-        set this.p1 to 3
+        reassign this.p1 to 3
     end constructor
 
     property p1 as Float
@@ -174,7 +166,7 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to 1
+    reassign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -344,7 +336,7 @@ end main
 
 class Foo
     constructor(p1 as Float)
-        set this.p to p1
+        reassign this.p to p1
     end constructor
   function toString() returns String
     return ""
@@ -383,7 +375,7 @@ end main
 
 class Foo
     constructor(p1 as Float)
-        set p1 to p1
+        reassign p1 to p1
     end constructor
   function toString() returns String
     return ""

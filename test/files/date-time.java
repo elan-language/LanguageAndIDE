@@ -3,7 +3,7 @@
 static void main() {
   var reply = "";
   while (!reply.upperCase().equals("Q")) {
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // re-assign variable
+    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
     if (reply.equals("")) {
       var now = divAsInt(clock(), 1000);
       print(now);
@@ -72,11 +72,11 @@ static int dayInYear(int year, int unixDays) { // function
   var dayNumber = unixDays + 1;
   if (year > unixYear) {
     // discount previous nominal years
-    dayNumber = dayNumber - 365*(year - unixYear); // re-assign variable
+    dayNumber = dayNumber - 365*(year - unixYear); // reassign variable
     // discount previous leap days
     foreach (y in range(unixYear, year)) {
       if (leap(y)) {
-        dayNumber = dayNumber - 1; // re-assign variable
+        dayNumber = dayNumber - 1; // reassign variable
       } // if
     } // foreach
   } // if
@@ -90,9 +90,9 @@ static int dayInYear(int year, int unixDays) { // function
 static bool leap(int year) { // function
   var leapYear = false;
   if ((year % 4) == 0) {
-    leapYear = true; // re-assign variable
+    leapYear = true; // reassign variable
     if (((year % 100) == 0) && ((divAsInt(year, 100) % 4) != 0)) {
-      leapYear = false; // re-assign variable
+      leapYear = false; // reassign variable
     } // if
   } // if
   return leapYear;
@@ -112,10 +112,10 @@ static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
   var monthFound = false;
   while (monthFound == false) {
     if ((dayNumber < startDays[month])) {
-      monthFound = true; // re-assign variable
-      day = dayNumber - startDays[month - 1] + 1; // re-assign variable
+      monthFound = true; // reassign variable
+      day = dayNumber - startDays[month - 1] + 1; // reassign variable
     } else {
-      month = month + 1; // re-assign variable
+      month = month + 1; // reassign variable
     } // if
   } // while
   return (month, day);
@@ -126,7 +126,7 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
   var startDaysL = getStartDays();
   if (leap(year)) {
     foreach (m in range(2, 13)) {
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // re-assign variable
+      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // reassign variable
     } // foreach
   } // if
   return startDaysL;
@@ -184,9 +184,9 @@ static String pad(String d, String p, String s) { // function
   if (p.length() > s.length()) {
     if (d.upperCase().equals("L")) {
       var ps = p + s;
-      sR = ps.subString(ps.length() - p.length(), ps.length()); // re-assign variable
+      sR = ps.subString(ps.length() - p.length(), ps.length()); // reassign variable
     } else if (d.upperCase().equals("R")) {
-      sR = (s + p).subString(0, p.length()); // re-assign variable
+      sR = (s + p).subString(0, p.length()); // reassign variable
     } // if
   } // if
   return sR;

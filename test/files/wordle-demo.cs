@@ -6,7 +6,7 @@ const String allValidAnswers = "ABACK ZONAL"
 
 static void main() {
   while (true) {
-    const Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4);
+    const Int choice = inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4);
     clearAllDisplays(); // call procedure
     executeOption(choice); // call procedure
     pressAnyKeyToContinue(); // call procedure
@@ -41,7 +41,7 @@ static void playGame() { // procedure
   initialiseGrid(grid); // call procedure
   var used = new Dictionary<string, string>();
   foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-    used[letter] = " "; // re-assign variable
+    used[letter] = " "; // reassign variable
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
   const String target = allValidAnswers.split(" ")[randint(0, 2308)];
@@ -51,8 +51,8 @@ static void playGame() { // procedure
     enterAttempt(attemptNo, grid, used); // call procedure
     var solvedRef = new AsRef<bool>(solved);
     colourAttempt(attemptNo, grid, target, solvedRef, used); // call procedure
-    solved = solvedRef.value(); // re-assign variable
-    attemptNo = attemptNo + 1; // re-assign variable
+    solved = solvedRef.value(); // reassign variable
+    attemptNo = attemptNo + 1; // reassign variable
   }
   clearPrintedText(); // call procedure
   if (solved) {
@@ -76,17 +76,17 @@ static void enterAttempt(int attemptNo, List<List<string>> grid, Dictionary<stri
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
     if ((k.equals("BACKSPACE")) && (chNo > 0)) {
-      chNo = chNo - 1; // re-assign variable
-      grid[chNo][attemptNo] = ""; // re-assign variable
-      word = word; // re-assign variable
+      chNo = chNo - 1; // reassign variable
+      grid[chNo][attemptNo] = ""; // reassign variable
+      word = word; // reassign variable
       clearPrintedText(); // call procedure
     } else if ((chNo < 5) && isUCLetter(k)) {
-      grid[chNo][attemptNo] = k; // re-assign variable
-      chNo = chNo + 1; // re-assign variable
-      word = word + k; // re-assign variable
+      grid[chNo][attemptNo] = k; // reassign variable
+      chNo = chNo + 1; // reassign variable
+      word = word + k; // reassign variable
     } else if ((chNo == 5) && (k.equals("ENTER"))) {
       if (allWords.contains(word)) {
-        chNo = chNo + 1; // re-assign variable
+        chNo = chNo + 1; // reassign variable
       } else {
         print("Invalid word");
       }
@@ -101,9 +101,9 @@ static void colourAttempt(int attemptNo, List<List<string>> grid, string target,
   foreach (i in range(0, 5)) {
     var letter = grid[i][attemptNo];
     var mark = marks[i];
-    grid[i][attemptNo] = letter + mark; // re-assign variable
+    grid[i][attemptNo] = letter + mark; // reassign variable
     if (mark.isAfter(used[letter])) {
-      used[letter] = mark; // re-assign variable
+      used[letter] = mark; // reassign variable
     }
   }
   if (marks.equals("22222")) {
@@ -121,24 +121,24 @@ static void playReverseGame() { // procedure
   var attempt = "ARISE";
   while ((attemptNo < 6) && (!solved)) {
     foreach (i in range(0, 5)) {
-      grid[i][attemptNo] = attempt[i]; // re-assign variable
+      grid[i][attemptNo] = attempt[i]; // reassign variable
     }
     displayHtml(drawGrid(grid)); // call procedure
     var mark = "";
     var markRef = new AsRef<string>(mark);
     enterMark(attemptNo, grid, markRef); // call procedure
-    mark = markRef.value(); // re-assign variable
+    mark = markRef.value(); // reassign variable
     if (mark.equals("22222")) {
-      solved = true; // re-assign variable
+      solved = true; // reassign variable
     } else {
-      attemptNo = attemptNo + 1; // re-assign variable
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // re-assign variable
+      attemptNo = attemptNo + 1; // reassign variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
     }
     if (possible.length() == 0) {
       print("No possible answer matches marks so far. Press any key to continue");
-      attemptNo = 6; // re-assign variable
+      attemptNo = 6; // reassign variable
     } else {
-      attempt = possible[divAsInt(possible.length(), 2)]; // re-assign variable
+      attempt = possible[divAsInt(possible.length(), 2)]; // reassign variable
     }
   }
 }
@@ -150,17 +150,17 @@ static void enterMark(int attemptNo, List<List<string>> grid, AsRef<string> mark
   while (chNo <= 5) {
     var k = waitForKey().upperCase();
     if ((k.equals("BACKSPACE")) && (chNo > 0)) {
-      chNo = chNo - 1; // re-assign variable
+      chNo = chNo - 1; // reassign variable
       var entry = grid[chNo][attemptNo];
-      grid[chNo][attemptNo] = entry[0]; // re-assign variable
-      mark = mark.subString(0, chNo); // re-assign variable
+      grid[chNo][attemptNo] = entry[0]; // reassign variable
+      mark = mark.subString(0, chNo); // reassign variable
     } else if ((chNo < 5) && "012".contains(k)) {
       var ch = grid[chNo][attemptNo];
-      grid[chNo][attemptNo] = ch + k; // re-assign variable
-      chNo = chNo + 1; // re-assign variable
-      mark = mark + k; // re-assign variable
+      grid[chNo][attemptNo] = ch + k; // reassign variable
+      chNo = chNo + 1; // reassign variable
+      mark = mark + k; // reassign variable
     } else if ((chNo == 5) && (k.equals("ENTER"))) {
-      chNo = chNo + 1; // re-assign variable
+      chNo = chNo + 1; // reassign variable
     }
     displayHtml(drawGrid(grid)); // call procedure
   }
@@ -176,18 +176,18 @@ static void analyse() { // procedure
     var attempt = "RAISE";
     var attempts = 0;
     while ((!mark.equals("22222"))) {
-      attempts = attempts + 1; // re-assign variable
-      mark = markAttempt(attempt, word); // re-assign variable
-      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // re-assign variable
-      attempt = possible[0]; // re-assign variable
+      attempts = attempts + 1; // reassign variable
+      mark = markAttempt(attempt, word); // reassign variable
+      possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
+      attempt = possible[0]; // reassign variable
     }
-    outcomes[attempts] = outcomes[attempts] + 1; // re-assign variable
+    outcomes[attempts] = outcomes[attempts] + 1; // reassign variable
   }
   var success = 0;
   var weightedSum = 0;
   foreach (i in range(1, 7)) {
-    success = success + outcomes[i]; // re-assign variable
-    weightedSum = weightedSum + (i*outcomes[i]); // re-assign variable
+    success = success + outcomes[i]; // reassign variable
+    weightedSum = weightedSum + (i*outcomes[i]); // reassign variable
   }
   clearPrintedText(); // call procedure
   const Int solved = (success/2309.0*100).floor();
@@ -212,7 +212,7 @@ static bool isUCLetter(string k) { // function
 static string getWord(int attemptNo, List<List<string>> grid) { // function
   var guessWord = "";
   foreach (i in range(0, 5)) {
-    guessWord = guessWord + grid[i][attemptNo]; // re-assign variable
+    guessWord = guessWord + grid[i][attemptNo]; // reassign variable
   }
   return guessWord;
 }
@@ -231,14 +231,14 @@ static string markAttempt(string attempt, string target) { // function
   var unused = target;
   foreach (n in range(0, 5)) {
     if (attempt[n].equals(unused[n])) {
-      mark = setChar(mark, n, "2"); // re-assign variable
-      unused = setChar(unused, n, " "); // re-assign variable
+      mark = setChar(mark, n, "2"); // reassign variable
+      unused = setChar(unused, n, " "); // reassign variable
     }
   }
   foreach (n in range(0, 5)) {
     if ((!mark[n].equals("2")) && unused.contains(attempt[n])) {
-      mark = setChar(mark, n, "1"); // re-assign variable
-      unused = setChar(unused, unused.indexOf(attempt[n]), " "); // re-assign variable
+      mark = setChar(mark, n, "1"); // reassign variable
+      unused = setChar(unused, unused.indexOf(attempt[n]), " "); // reassign variable
     }
   }
   return mark;
@@ -262,7 +262,7 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
   foreach (word in possible) {
     const String markForWord = markAttempt(attempt, word);
     if (markForWord.equals(mark)) {
-      newPossible = newPossible.withAppend(word); // re-assign variable
+      newPossible = newPossible.withAppend(word); // reassign variable
     }
   }
   return newPossible;
@@ -280,14 +280,14 @@ static List<string> possibleAnswersAfterAttempt(List<string> possible, string at
 static string drawGrid(List<List<string>> grid) { // function
   var html = $"<style>{style}</style> <grid>";
   foreach (row in range(0, 6)) {
-    html = html + "<word>"; // re-assign variable
+    html = html + "<word>"; // reassign variable
     foreach (col in range(0, 5)) {
       const String entry = grid[col][row];
       const String ch = if(entry.length() > 0, entry[0], "");
       const String mark = if(entry.length() > 1, entry.subString(1, entry.length()), "");
-      html = html + $"<ch class='_{mark}'>{ch}</ch>"; // re-assign variable
+      html = html + $"<ch class='_{mark}'>{ch}</ch>"; // reassign variable
     }
-    html = html + "</word>"; // re-assign variable
+    html = html + "</word>"; // reassign variable
   }
   return html + "</grid>";
 }
@@ -296,9 +296,9 @@ static string drawKeyboard(Dictionary<string, string> used) { // function
   var html = "<keyboard><div>";
   foreach (k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM") {
     if (k.equals("-")) {
-      html = html + "</div><div>"; // re-assign variable
+      html = html + "</div><div>"; // reassign variable
     } else {
-      html = html + $"<key class='_{used[k]}'>{k}</key>"; // re-assign variable
+      html = html + $"<key class='_{used[k]}'>{k}</key>"; // reassign variable
     }
   }
   return html + "<key></key></div></keyboard>";

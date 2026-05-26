@@ -7,7 +7,7 @@
 def main() -> None:
   x = 1 # variable definition
   while x > 0:
-    x = inputInt("Enter a starting number (0 to quit)") # re-assign variable
+    x = inputInt("Enter a starting number (0 to quit)") # reassign variable
     # Array of the values we have seen so far
     p = [x] # variable definition
     # capture the max value so we can scale the graph
@@ -15,16 +15,16 @@ def main() -> None:
     while x > 1:
       # Collatz sequence
       if (x % 2) == 0:
-        x = divAsInt(x, 2) # re-assign variable
+        x = divAsInt(x, 2) # reassign variable
       else:
-        x = x*3 + 1 # re-assign variable
+        x = x*3 + 1 # reassign variable
       if x > max:
-        max = x # re-assign variable
+        max = x # reassign variable
       p.append(x) # call procedure
       # draw what we have got so far, scaled to the canvas
       vg = list[VectorGraphic]() # variable definition
       for i in range(0, p.length() - 1):
-        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # re-assign variable
+        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # reassign variable
       displayVectorGraphics(vg) # call procedure
       print(x)
       sleep_ms(100) # call procedure

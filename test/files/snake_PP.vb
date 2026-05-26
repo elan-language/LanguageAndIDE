@@ -17,10 +17,10 @@ Sub main()
     Dim headRef = New AsRef(Of List(Of Integer))(head) ' variable definition
     Dim tailRef = New AsRef(Of List(Of Integer))(tail) ' variable definition
     updateSnake(currentDirRef, tailRef, headRef, body) ' call procedure
-    head = headRef.value() ' re-assign variable
-    tail = tailRef.value() ' re-assign variable
-    currentDir = currentDirRef.value() ' re-assign variable
-    gameOn = Not hasHitEdge(head[0], head[1]) And Not body.contains(head) ' re-assign variable
+    head = headRef.value() ' reassign variable
+    tail = tailRef.value() ' reassign variable
+    currentDir = currentDirRef.value() ' reassign variable
+    gameOn = Not hasHitEdge(head[0], head[1]) And Not body.contains(head) ' reassign variable
     If head.equals(apple) Then
       setAppleToRandomPosition(apple, body) ' call procedure
     Else
@@ -35,7 +35,7 @@ Sub updateSnake(currentDirRef As AsRef(Of String), tailRef As AsRef(Of List(Of I
   Dim head = headRef.value() ' variable definition
   Dim tail = tailRef.value() ' variable definition
   Dim currentDir = currentDirRef.value() ' variable definition
-  currentDir = directionByKey(currentDir, getKey()) ' re-assign variable
+  currentDir = directionByKey(currentDir, getKey()) ' reassign variable
   tailRef.set(body[0]) ' call procedure
   body.append(head) ' call procedure
   headRef.set(getAdjacentSquare(head, currentDir)) ' call procedure
@@ -43,20 +43,20 @@ Sub updateSnake(currentDirRef As AsRef(Of String), tailRef As AsRef(Of List(Of I
 End Sub
 
 Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer), tail As List(Of Integer), body As List(Of List(Of Integer)), apple As List(Of Integer)) ' procedure
-  blocks[head[0]][head[1]] = green ' re-assign variable
+  blocks[head[0]][head[1]] = green ' reassign variable
   Dim tailColour = getTailColour(tail, body) ' variable definition
-  blocks[tail[0]][tail[1]] = tailColour ' re-assign variable
-  blocks[apple[0]][apple[1]] = red ' re-assign variable
+  blocks[tail[0]][tail[1]] = tailColour ' reassign variable
+  blocks[apple[0]][apple[1]] = red ' reassign variable
   displayBlocks(blocks) ' call procedure
 End Sub
 
 Sub setAppleToRandomPosition(apple As List(Of Integer), body As List(Of List(Of Integer))) ' procedure
   Dim changePosition = True ' variable definition
   While changePosition
-    apple[0] = randint(0, 39) ' re-assign variable
-    apple[1] = randint(0, 29) ' re-assign variable
+    apple[0] = randint(0, 39) ' reassign variable
+    apple[1] = randint(0, 29) ' reassign variable
     If Not body.contains(apple) Then
-      changePosition = False ' re-assign variable
+      changePosition = False ' reassign variable
     End If
   End While
 End Sub
@@ -64,7 +64,7 @@ End Sub
 Function getTailColour(tail As List(Of Integer), body As List(Of List(Of Integer))) As Integer
   Dim colour = white ' variable definition
   If body[0].equals(tail) Then
-    colour = green ' re-assign variable
+    colour = green ' reassign variable
   End If
   Return colour
 End Function
@@ -77,13 +77,13 @@ Function getAdjacentSquare(sq As List(Of Integer), dir As String) As List(Of Int
   Dim newX = sq[0] ' variable definition
   Dim newY = sq[1] ' variable definition
   If dir.equals("left") Then
-    newX = newX - 1 ' re-assign variable
+    newX = newX - 1 ' reassign variable
   ElseIf dir.equals("right") Then
-    newX = newX + 1 ' re-assign variable
+    newX = newX + 1 ' reassign variable
   ElseIf dir.equals("up") Then
-    newY = newY - 1 ' re-assign variable
+    newY = newY - 1 ' reassign variable
   ElseIf dir.equals("down") Then
-    newY = newY + 1 ' re-assign variable
+    newY = newY + 1 ' reassign variable
   End If
   Return {newX, newY}
 End Function
@@ -92,7 +92,7 @@ Function directionByKey(current As String, key As String) As String
   Dim dirn = current ' variable definition
   Dim d = ["w":"up", "s":"down", "a":"left", "d":"right"] ' variable definition
   If d.keys().contains(key) Then
-    dirn = d[key] ' re-assign variable
+    dirn = d[key] ' reassign variable
   End If
   Return dirn
 End Function

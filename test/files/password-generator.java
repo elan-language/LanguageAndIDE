@@ -29,8 +29,8 @@ static void main() {
   while (!valid) {
     var pwRef = new AsRef<String>("");
     populatePassword(pwRef, all); // call procedure
-    password = pwRef.value(); // re-assign variable
-    valid = isValid(password, upper, lower, digit, symbol); // re-assign variable
+    password = pwRef.value(); // reassign variable
+    valid = isValid(password, upper, lower, digit, symbol); // reassign variable
   } // while
   print(password);
 } // main
@@ -72,7 +72,7 @@ static bool passesRule(bool rule, String charSet, String password) { // function
 static bool hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
   foreach (ch in password) {
-    hasOne = hasOne || fromChars.contains(ch); // re-assign variable
+    hasOne = hasOne || fromChars.contains(ch); // reassign variable
   } // foreach
   return hasOne;
 } // function

@@ -2,7 +2,7 @@
 
 static void main() {
   var blocks = createBlockGraphics(black);
-  blocks = createStart(blocks); // re-assign variable
+  blocks = createStart(blocks); // reassign variable
   foreach (i in range(0, displayWidth + 1)) {
     var x = randint(0, 39);
     var y = randint(0, 29);
@@ -11,7 +11,7 @@ static void main() {
     var setTo = (random() + 0.7).floor();
     if (okToSet(p, setTo, blocks)) {
       var colour = if(setTo == 1, white, black);
-      blocks[p.x][p.y] = colour; // re-assign variable
+      blocks[p.x][p.y] = colour; // reassign variable
     } // if
   } // foreach
   displayBlocks(blocks); // call procedure
@@ -30,7 +30,7 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
     foreach (col in range(0, 40)) {
       var colour = b[col][row];
       var symbol = if(colour == white, " ", "X");
-      line = line + symbol; // re-assign variable
+      line = line + symbol; // reassign variable
     } // foreach
     file.writeLine(line); // call procedure
   } // foreach
@@ -40,7 +40,7 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
 static List<List<int>> createStart(List<List<int>> b) { // function
   var b2 = b;
   foreach (i in rangeInSteps(0, 16, 2)) {
-    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i); // re-assign variable
+    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i); // reassign variable
   } // foreach
   return b2;
 } // function
@@ -49,12 +49,12 @@ static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, i
   var paint = white;
   var b2 = b;
   foreach (x in range(startX, startX + width + 1)) {
-    b2 = withPut(b2, x, startY, paint); // re-assign variable
-    b2 = withPut(b2, x, startY + depth, paint); // re-assign variable
+    b2 = withPut(b2, x, startY, paint); // reassign variable
+    b2 = withPut(b2, x, startY + depth, paint); // reassign variable
   } // foreach
   foreach (y in range(startY, startY + depth + 1)) {
-    b2 = withPut(b2, startX, y, paint); // re-assign variable
-    b2 = withPut(b2, startX + width, y, paint); // re-assign variable
+    b2 = withPut(b2, startX, y, paint); // reassign variable
+    b2 = withPut(b2, startX + width, y, paint); // reassign variable
   } // foreach
   return b2;
 } // function
@@ -78,7 +78,7 @@ static int getValue(Point p, List<List<int>> b) { // function
   var result = 0;
   if ((p.x > -1) && (p.x < 40) && (p.y > -1) && (p.y < 30)) {
     var colour = b[p.x][p.y];
-    result = if(colour == black, 0, 1); // re-assign variable
+    result = if(colour == black, 0, 1); // reassign variable
   } // if
   return result;
 } // function
@@ -120,8 +120,8 @@ class Point {
   public int x; // property
   public int y; // property
   public Point(int x, int y) {
-    this.x = x; // re-assign variable
-    this.y = y; // re-assign variable
+    this.x = x; // reassign variable
+    this.y = y; // reassign variable
   } // constructor
   public String toString() { // function method
     return "";

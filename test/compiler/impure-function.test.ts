@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Impure Function", () => {
@@ -21,14 +21,14 @@ suite("Impure Function", () => {
 main
   variable k set to getKey()
   variable r set to randint(1, 6)
-  set r to randint(1, 6) * 10
+  reassign r to randint(1, 6) * 10
   call bar(randint(1,6))
 end main
 
 procedure foo()
   variable k set to getKey()
   variable r set to randint(1, 6)
-  set r to randint(1, 6) * 10
+  reassign r to randint(1, 6) * 10
 end procedure
 
 procedure bar(x as Int)

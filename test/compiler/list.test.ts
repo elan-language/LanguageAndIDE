@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedVBis,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedVBis,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -346,7 +346,7 @@ return [main, _tests];}`;
 main
   variable a set to [4,5,6,7,8]
   variable b set to new List<of Int>()
-  set b to a.subList(2, 5)
+  reassign b to a.subList(2, 5)
   call printNoLine(b)
   call printNoLine(a.subList(1, 3))
   call printNoLine(a.subList(0, 2))
@@ -451,7 +451,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["foo", "bar", "yon"]
-  set a to a.subList(1, a.length())
+  reassign a to a.subList(1, a.length())
   call printNoLine(a)
 end main`;
 
@@ -529,8 +529,8 @@ main
   call a.append("yon")
   variable c set to ""
   variable d set to ""
-  set c to a[3]
-  set d to a[4]
+  reassign c to a[3]
+  reassign d to a[4]
   call printNoLine(c)
   call printNoLine(d)
 end main`;
@@ -761,7 +761,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [2,2]
-  set a[0] to 1
+  reassign a[0] to 1
   call print(a[0])
 end main
 `;
@@ -801,7 +801,7 @@ end main
 
 procedure foo()
   variable a set to [2,2]
-  set a[0] to 1
+  reassign a[0] to 1
   call print(a[0])
 end procedure
 `;
@@ -846,7 +846,7 @@ end main
 
 function foo() returns Int
   variable a set to [2,2]
-  set a[0] to 1
+  reassign a[0] to 1
   return a[0]
 end function
 `;
@@ -873,7 +873,7 @@ end function
 
 main
   variable a set to [2,2]
-  set a[0] to "fred"
+  reassign a[0] to "fred"
   call print(a[0])
 end main
 `;
@@ -1099,7 +1099,7 @@ main
   call a.put(0, "fred")
   call a.put(1, "bill")
   variable b set to 0
-  set b to a[0]
+  reassign b to a[0]
 end main
 `;
 
@@ -1275,7 +1275,7 @@ end main
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withSet(1, "TWO")
+    reassign a to a.withSet(1, "TWO")
     variable b set to a.withSet(0, "ONE")
     call printNoLine(a)
     call printNoLine(b)
@@ -1314,7 +1314,7 @@ return [main, _tests];}`;
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withSet(3, "THREE")
+    reassign a to a.withSet(3, "THREE")
     call printNoLine(a)
 end main`;
 
@@ -1349,7 +1349,7 @@ return [main, _tests];}`;
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withInsert(1, "TWO")
+    reassign a to a.withInsert(1, "TWO")
     variable b set to a.withInsert(0, "ONE")
     call printNoLine(a)
     call printNoLine(b)
@@ -1388,7 +1388,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["one", "two", "three"]
-  set a to a.withRemove(1)
+  reassign a to a.withRemove(1)
   call printNoLine(a)
 end main
 `;
@@ -1415,7 +1415,7 @@ end main
 
 main
   variable a set to ["one", "two", "three"]
-  set a to a + "four"
+  reassign a to a + "four"
   call printNoLine(a)
 end main
 `;
@@ -1442,7 +1442,7 @@ end main
 
 main
   variable a set to ["one", "two", "three"]
-  set a to "four" + a
+  reassign a to "four" + a
   call printNoLine(a)
 end main
 `;
@@ -1471,7 +1471,7 @@ end main
 
 main
     variable a set to ["one", "two", "three", "one", "two", "three"]
-    set a to a.withRemoveFirst("two")
+    reassign a to a.withRemoveFirst("two")
     call printNoLine(a)
 end main`;
 
@@ -1506,7 +1506,7 @@ return [main, _tests];}`;
 
 main
     variable a set to ["one", "two", "three", "one", "two", "three"]
-    set a to a.withRemoveAll("two")
+    reassign a to a.withRemoveAll("two")
     call printNoLine(a)
 end main`;
 
@@ -1541,7 +1541,7 @@ return [main, _tests];}`;
 
 main
     variable a set to ["one", "two", "three"]
-    set a to a.withRemoveAt(1)
+    reassign a to a.withRemoveAt(1)
     variable b set to a.withRemoveAt(0)
     call printNoLine(a)
     call printNoLine(b)
@@ -1581,7 +1581,7 @@ return [main, _tests];}`;
 main
     variable a set to ["one", "two", "three"]
     variable b set to ""
-    set b to a.head()
+    reassign b to a.head()
     call printNoLine(b)
 end main`;
 
@@ -1618,7 +1618,7 @@ return [main, _tests];}`;
 main
     variable a set to ["one", "two", "three"]
     variable b set to [""]
-    set b to a.tail()
+    reassign b to a.tail()
     call printNoLine(b)
 end main`;
 
@@ -1881,7 +1881,7 @@ end main`;
 
 main
     variable a set to [1,2,3,4]
-    set a.subList(1, 2) to a
+    reassign a.subList(1, 2) to a
     call printNoLine(a)
 end main`;
 
@@ -2034,7 +2034,7 @@ end main`;
 
 main
   variable points set to new List<of (Int, Int)>()
-  set points to points + (1, 2)
+  reassign points to points + (1, 2)
   call printNoLine(points)
 end main`;
 
@@ -2147,7 +2147,7 @@ end main
 main
   variable a set to [1,2,3,4]
   variable b set to -1
-  set a[b] to 3
+  reassign a[b] to 3
   call printNoLine(a)
 end main`;
 

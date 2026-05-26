@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Interface", () => {
@@ -33,7 +33,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set this.prop to 3
+    reassign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -142,7 +142,7 @@ end interface
 
 class Bar inherits Foo2
   constructor()
-    set this.prop to 3
+    reassign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -259,7 +259,7 @@ end interface
 
 class Bar inherits Foo, Foo1, Foo2
   constructor()
-    set this.prop to 3
+    reassign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -719,7 +719,7 @@ end interface
 
 class Bar
   constructor()
-    set this.foo to new Maybe<of Foo>()
+    reassign this.foo to new Maybe<of Foo>()
   end constructor
   function toString() returns String
     return ""
@@ -1049,7 +1049,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set this.prop to 3
+    reassign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1094,7 +1094,7 @@ end interface
 
 class Bar inherits Foo
   constructor()
-    set this.prop to 3
+    reassign this.prop to 3
   end constructor
   function toString() returns String
     return ""

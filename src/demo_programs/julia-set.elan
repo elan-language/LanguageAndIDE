@@ -1,4 +1,4 @@
-# c2e0292adf6530c1f0bf4ac3750f8ab71f7dbe63ce3f053dd76dce5fc3fc83ce Elan 2.0.0-alpha5 valid
+# 467ea0c94c2b8a68318787fb41b892c207d7f5ce1a6df9fdd70c3587ba51e9bb Elan 2.0.0-alpha5 valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -27,7 +27,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       # colour depends on how many iterations were done for that point
       variable col set to if(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
       variable rect set to (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25)
-      set vg2 to vg2.withAppend(rect)
+      reassign vg2 to vg2.withAppend(rect)
     end for
   end for
   return vg2
@@ -40,11 +40,11 @@ function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns In
   variable i set to 0
   while not done
     variable c set to 2*a*b
-    set a to (a*a - b*b) + p.jx
-    set b to c + p.jy
-    set i to i + 1
+    reassign a to (a*a - b*b) + p.jx
+    reassign b to c + p.jy
+    reassign i to i + 1
     if (i >= maxnum) or ((a*a + b*b) > 4) then
-      set done to true
+      reassign done to true
     end if
   end while
   return i
@@ -53,13 +53,13 @@ end function
 class Coords
   constructor()
     # number of cells per unit distance on complex plane
-    set this.scale to 100
+    reassign this.scale to 100
     # centered on the screen to start
-    set this.xoff to 0
-    set this.yoff to 0
+    reassign this.xoff to 0
+    reassign this.yoff to 0
     # Julia set parameters
-    set this.jx to -0.512
-    set this.jy to 0.521
+    reassign this.jx to -0.512
+    reassign this.jy to 0.521
   end constructor
 
   function toString() returns String
@@ -88,33 +88,33 @@ class Coords
       # loop because more than one key may have been pressed
       while not k.equals("")
         if k.equals("z") then
-          set this.scale to this.scale*1.2
+          reassign this.scale to this.scale*1.2
         elif k.equals("x") then
-          set this.scale to this.scale/1.2
+          reassign this.scale to this.scale/1.2
         elif k.equals("ArrowUp") then
-          set this.yoff to this.yoff + panstep
+          reassign this.yoff to this.yoff + panstep
         elif k.equals("ArrowDown") then
-          set this.yoff to this.yoff - panstep
+          reassign this.yoff to this.yoff - panstep
         elif k.equals("ArrowLeft") then
-          set this.xoff to this.xoff + panstep
+          reassign this.xoff to this.xoff + panstep
         elif k.equals("ArrowRight") then
-          set this.xoff to this.xoff - panstep
+          reassign this.xoff to this.xoff - panstep
         elif k.equals("g") then
-          set this.jx to this.jx + jstep
+          reassign this.jx to this.jx + jstep
         elif k.equals("j") then
-          set this.jx to this.jx - jstep
+          reassign this.jx to this.jx - jstep
         elif k.equals("y") then
-          set this.jy to this.jy + jstep
+          reassign this.jy to this.jy + jstep
         elif k.equals("h") then
-          set this.jy to this.jy - jstep
+          reassign this.jy to this.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else
           # ignore erroneous key presses
         end if
         # there is no harm in recalculating even if an invalid key was pressed
-        set changed to true
+        reassign changed to true
         # another key may have been pressed
-        set k to getKey()
+        reassign k to getKey()
       end while
       call sleep_ms(10)
     end while

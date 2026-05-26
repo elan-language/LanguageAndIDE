@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List of List", () => {
@@ -646,7 +646,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2],[3,4]]
-  set a[0][0] to 0
+  reassign a[0][0] to 0
   call printNoLine(a[0][0])
 end main`;
 
@@ -681,7 +681,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[[1,2],[3,4]],[[5,6],[7,8]]]
-  set a[0][0][0] to 0
+  reassign a[0][0][0] to 0
   call printNoLine(a[0][0][0])
 end main`;
 
@@ -716,7 +716,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[[1,2],[3,4]],[[5,6],[7,8]]]
-  set a[0][0] to [9,10]
+  reassign a[0][0] to [9,10]
   call printNoLine(a[0][0][0])
 end main`;
 
@@ -751,7 +751,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2],[3,4]]
-  set a[0][0] to ""
+  reassign a[0][0] to ""
   call printNoLine(a[0][0])
 end main`;
 

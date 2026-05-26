@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Dictionary", () => {
@@ -193,7 +193,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":1, "b":3, "z":10]
   variable b set to new List<of String>()
-  set b to a.keys()
+  reassign b to a.keys()
   call printNoLine(b)
 end main`;
 
@@ -623,7 +623,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":2, "b":2]
-  set a["a"] to 1
+  reassign a["a"] to 1
   call print(a["a"])
 end main
 `;
@@ -663,7 +663,7 @@ end main
 
 procedure foo()
   variable a set to ["a":2,"b":2]
-  set a["a"] to 1
+  reassign a["a"] to 1
   call print(a["a"])
 end procedure
 `;
@@ -708,7 +708,7 @@ end main
 
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
-  set a["a"]["c"] to 1
+  reassign a["a"]["c"] to 1
   call print(a["a"]["c"])
 end procedure
 `;
@@ -753,7 +753,7 @@ end main
 
 procedure foo()
   variable a set to ["a":["c":["e":""]],"b":["d":["f":""]]]
-  set a["a"]["c"]["e"] to "1"
+  reassign a["a"]["c"]["e"] to "1"
   call print(a["a"]["c"]["e"])
 end procedure
 `;
@@ -798,7 +798,7 @@ end main
 
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
-  set a["a"]["c"] to ""
+  reassign a["a"]["c"] to ""
   call print(a["a"]["c"])
 end procedure
 `;
@@ -829,7 +829,7 @@ end main
 
 function foo() returns Int
   variable a set to ["a":2,"b":2]
-  set a["a"] to 1
+  reassign a["a"] to 1
   return a["a"]
 end function
 `;
@@ -856,7 +856,7 @@ end function
 
 main
   variable a set to ["a":2,"b":2]
-  set a["a"] to "fred"
+  reassign a["a"] to "fred"
   call print(a["a"])
 end main
 `;

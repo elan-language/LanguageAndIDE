@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Lambda", () => {
@@ -180,14 +180,14 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to lambda x => 0
+    reassign this.p1 to lambda x => 0
   end constructor
   function toString() returns String
     return ""
   end function
 
   procedure setP1(p as Func<of Int => Int>)
-    set this.p1 to ref p
+    reassign this.p1 to ref p
   end procedure
 
   property p1 as Func<of Int => Int>

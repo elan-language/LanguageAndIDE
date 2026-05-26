@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Each Loop", () => {
@@ -22,7 +22,7 @@ main
   variable a set to [7,8,9]
   variable n set to 0
    for x in a
-      set n to n + x
+      reassign n to n + x
   end for
   call printNoLine(n)
 end main`;
@@ -64,7 +64,7 @@ main
   variable a set to [7,8,9]
   variable n set to 0
    for x in a
-    set n to n + x
+    reassign n to n + x
   end for
   call printNoLine(n)
 end main`;
@@ -336,7 +336,7 @@ end main
 class Bar
   private property l as List<of Int>
   constructor(li as List<of Int>)
-    set this.l to li
+    reassign this.l to li
   end constructor
   function toString() returns String
     return ""
@@ -540,7 +540,7 @@ main
   variable s set to "hello"
    for ch in s
     call printNoLine(ch)
-    set s to "fred"
+    reassign s to "fred"
   end for
 end main
 `;
@@ -580,7 +580,7 @@ return [main, _tests];}`;
 main
   variable a set to [1, 2, 3, 4, 5]
    for x in a
-    set a to a.withAppend(x)
+    reassign a to a.withAppend(x)
     call printNoLine(x)
   end for
 end main

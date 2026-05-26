@@ -1,4 +1,4 @@
-# f3b2bc7d1426daa50e85a9ba045f4b3b40a42f1c247fa4d299bee193dd8b7ee0 Elan 2.0.0-alpha5 valid
+# 414c8e071962ab9b834ae03c16f622cb9e734dc496e943229a4babf0e8dca4c4 Elan 2.0.0-alpha5 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -17,8 +17,8 @@ class Point
   property y as Float
 
   constructor(x as Float, y as Float)
-    set this.x to x
-    set this.y to y
+    reassign this.x to x
+    reassign this.y to y
   end constructor
 
   function toString() returns String

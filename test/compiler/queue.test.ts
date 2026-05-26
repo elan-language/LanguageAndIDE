@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Queue", () => {
@@ -21,19 +21,19 @@ suite("Queue", () => {
 main
   variable q set to new Queue<of String>()
   call printNoLine(q.length())
-  set q to q.enqueue("apple")
-  set q to q.enqueue("pear")
+  reassign q to q.enqueue("apple")
+  reassign q to q.enqueue("pear")
   call printNoLine(q)
   call printNoLine(q.length())
   call printNoLine(q.peek())
   variable fruit set to ""
   variable t set to q.dequeue()
-  set fruit to t.item_0
-  set q to t.item_1
+  reassign fruit to t.item_0
+  reassign q to t.item_1
   call printNoLine(fruit)
-  set t to q.dequeue()
-  set fruit to t.item_0
-  set q to t.item_1
+  reassign t to q.dequeue()
+  reassign fruit to t.item_0
+  reassign q to t.item_1
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
@@ -85,8 +85,8 @@ return [main, _tests];}`;
 
 main
   variable q set to new Queue<of String>()
-  set q to q.enqueue("apple")
-  set q to q.enqueue(3)
+  reassign q to q.enqueue("apple")
+  reassign q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -112,7 +112,7 @@ end main`;
 
 main
   variable q set to new Queue<of String>()
-  set q to q.enqueue(3)
+  reassign q to q.enqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(

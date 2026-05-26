@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Stack", () => {
@@ -21,19 +21,19 @@ suite("Stack", () => {
 main
   variable st set to new Stack<of String>()
   call printNoLine(st.length())
-  set st to st.push("apple")
-  set st to st.push("pear")
+  reassign st to st.push("apple")
+  reassign st to st.push("pear")
   call printNoLine(st)
   call printNoLine(st.length())
   call printNoLine(st.peek())
   variable fruit set to ""
   variable t set to st.pop()
-  set fruit to t.item_0
-  set st to t.item_1
+  reassign fruit to t.item_0
+  reassign st to t.item_1
   call printNoLine(fruit)
-  set t to st.pop()
-  set fruit to t.item_0
-  set st to t.item_1
+  reassign t to st.pop()
+  reassign fruit to t.item_0
+  reassign st to t.item_1
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
@@ -85,8 +85,8 @@ return [main, _tests];}`;
 
 main
   variable st set to new Stack<of String>()
-  set st to st.push("apple")
-  set st to st.push(3)
+  reassign st to st.push("apple")
+  reassign st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -112,7 +112,7 @@ end main`;
 
 main
   variable st set to new Stack<of String>()
-  set st to st.push(3)
+  reassign st to st.push(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -138,9 +138,9 @@ end main`;
 
 main
   variable st set to new Stack<of String>()
-  set st to st.push("apple")
+  reassign st to st.push("apple")
   variable a set to 1
-  set a to st.peek()
+  reassign a to st.peek()
 end main`;
 
     const fileImpl = new FileImpl(

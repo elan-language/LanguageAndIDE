@@ -8,10 +8,10 @@ def main() -> None:
   rnd.initialiseFromClock() # call procedure
   game = (Game(rnd)).withNewApple() # variable definition
   while game.isOn:
-    blocks = updateGraphics(game, blocks) # re-assign variable
+    blocks = updateGraphics(game, blocks) # reassign variable
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
-    game = clockTick(game, getKey()) # re-assign variable
+    game = clockTick(game, getKey()) # reassign variable
   print(f"Game Over! Score: {score(game)}")
 
 def clockTick(g: Game, k: str) -> Game: # function
@@ -69,13 +69,13 @@ class Game # concrete class
   rnd: Random # property
   key: str # property
   def __init__(self: Game, rnd: Random) -> None:
-    self.head = Square(22, 15) # re-assign variable
-    self.body = [Square(20, 15), Square(21, 15)] # re-assign variable
-    self.priorTail = Square(0, 0) # re-assign variable
-    self.key = "d" # re-assign variable
-    self.isOn = True # re-assign variable
-    self.apple = Square(12, 15) # re-assign variable
-    self.rnd = rnd # re-assign variable
+    self.head = Square(22, 15) # reassign variable
+    self.body = [Square(20, 15), Square(21, 15)] # reassign variable
+    self.priorTail = Square(0, 0) # reassign variable
+    self.key = "d" # reassign variable
+    self.isOn = True # reassign variable
+    self.apple = Square(12, 15) # reassign variable
+    self.rnd = rnd # reassign variable
   def toString(self: Game) -> str: # function method
     return ""
   def withNewApple(self: Game) -> Game: # function method
@@ -88,31 +88,31 @@ class Game # concrete class
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   def withHead(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.head = value # re-assign variable
+    copyOfThis.head = value # reassign variable
     return copyOfThis
   def withBody(self: Game, value: list[Square]) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.body = value # re-assign variable
+    copyOfThis.body = value # reassign variable
     return copyOfThis
   def withPriorTail(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.priorTail = value # re-assign variable
+    copyOfThis.priorTail = value # reassign variable
     return copyOfThis
   def withApple(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.apple = value # re-assign variable
+    copyOfThis.apple = value # reassign variable
     return copyOfThis
   def withIsOn(self: Game, value: bool) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.isOn = value # re-assign variable
+    copyOfThis.isOn = value # reassign variable
     return copyOfThis
   def withRnd(self: Game, value: Random) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.rnd = value # re-assign variable
+    copyOfThis.rnd = value # reassign variable
     return copyOfThis
   def withKey(self: Game, value: str) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.key = value # re-assign variable
+    copyOfThis.key = value # reassign variable
     return copyOfThis
 
 
@@ -121,15 +121,15 @@ class Square # concrete class
   x: int # property
   y: int # property
   def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # re-assign variable
-    self.y = y # re-assign variable
+    self.x = x # reassign variable
+    self.y = y # reassign variable
   def withX(self: Square, value: int) -> Square: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.x = value # re-assign variable
+    copyOfThis.x = value # reassign variable
     return copyOfThis
   def withY(self: Square, value: int) -> Square: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.y = value # re-assign variable
+    copyOfThis.y = value # reassign variable
     return copyOfThis
   def toString(self: Square) -> str: # function method
     return f"{self.x}, {self.y}"

@@ -6,7 +6,7 @@ main
     variable holes set to new List<of Hole>()
     call holes.intialise(10, Hole.vacant)    variable hole set to Hole.vacant
     variable holeNumber set to randint(0, 9)
-    set holes[holeNumber] to Hole.mole
+    reassign holes[holeNumber] to Hole.mole
     variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
     variable stop set to clock() + 1000
@@ -20,11 +20,11 @@ procedure processKey(out holes as Array<of Hole>, out score as Int)
   variable n set to getNumericKey()
   if n isnt -1 then
     if holes[n] is Hole.mole then
-      set holes[n] to Hole.hit
-      set score to score + 1
+      reassign holes[n] to Hole.hit
+      reassign score to score + 1
     elif holes[n] is Hole.vacant then
-      set holes[n] to Hole.miss
-      set score to score - 1
+      reassign holes[n] to Hole.miss
+      reassign score to score - 1
     end if
     variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
@@ -41,7 +41,7 @@ end function
 function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   variable core set to ""
   for i in range(0, holes.length())
-    set core to core + htmlForHole(holes[i], i.toString())
+    reassign core to core + htmlForHole(holes[i], i.toString())
   end for
   return $"<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function

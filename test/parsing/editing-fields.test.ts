@@ -8,11 +8,11 @@ import { MainFrame } from "../../src/ide/frames/globals/main-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { CallStatement } from "../../src/ide/frames/statements/call-statement";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { transforms, ignore_test } from "../compiler/compiler-test-helpers";
-import { key, fileWithPython, fileWithVB, fileWithCS, tab } from "../testHelpers";
 import { hash } from "../../src/ide/util";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
+import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {

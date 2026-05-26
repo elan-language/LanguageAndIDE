@@ -49,7 +49,7 @@ static void main() {
   updateGrid(hodge, podge, true); // call procedure
   while (!uniform(hodge.value())) {
     // successive updates to grid in blank podge
-    podge = blank; // re-assign variable
+    podge = blank; // reassign variable
     updateGrid(hodge, podge, false); // call procedure
   } // while
 } // main
@@ -59,10 +59,10 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
   foreach (j in range(0, gH)) {
     foreach (i in range(0, gW)) {
       if (initial) {
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)]; // re-assign variable
-        podge[1][1] = 0x1a001a; // re-assign variable
+        podge[i][j] = colours[randint(0, (colours.length()) - 1)]; // reassign variable
+        podge[1][1] = 0x1a001a; // reassign variable
       } else {
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]); // re-assign variable
+        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]); // reassign variable
       } // if
     } // foreach
   } // foreach
@@ -91,7 +91,7 @@ static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // fu
     var sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH];
     var sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH];
     var sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH];
-    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB]; // re-assign variable
+    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB]; // reassign variable
   } // if
   return neighbourColours;
 } // function
@@ -102,11 +102,11 @@ static int newColour(List<int> neighbourColours, int nowColour) { // function
   var nIll = 0;
   var sumStates = colours.indexOf(nowColour);
   foreach (colour in neighbourColours) {
-    sumStates = sumStates + colours.indexOf(colour); // re-assign variable
+    sumStates = sumStates + colours.indexOf(colour); // reassign variable
     if (colour < healthy) {
-      nInfected = nInfected + 1; // re-assign variable
+      nInfected = nInfected + 1; // reassign variable
       if (colour == ill) {
-        nIll = nIll + 1; // re-assign variable
+        nIll = nIll + 1; // reassign variable
       } // if
     } // if
   } // foreach
@@ -117,9 +117,9 @@ static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) {
   var colours = getColours();
   var state = 0;
   if (nowColour == healthy) {
-    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2); // re-assign variable
+    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2); // reassign variable
   } else if (nowColour != ill) {
-    state = divAsInt(sumStates, (nInfected + 1)) + iR; // re-assign variable
+    state = divAsInt(sumStates, (nInfected + 1)) + iR; // reassign variable
   } // if
   return if(state > (colours.length() - 1), ill, colours[state]);
 } // function

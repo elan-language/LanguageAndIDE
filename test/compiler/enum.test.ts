@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Enum", () => {
@@ -61,7 +61,7 @@ return [main, _tests];}`;
 
 main
   variable x set to Fruit.apple
-  set x to Fruit.pear
+  reassign x to Fruit.pear
   call printNoLine(enumValue(x))
 end main
    
@@ -451,7 +451,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
 
 main
   variable a set to 1
-  set a to Fruit.apple
+  reassign a to Fruit.apple
 end main
 
 enum Fruit apple, orange, pear`;

@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Function Method", () => {
@@ -25,7 +25,7 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -91,13 +91,13 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable x set to 1.1
-  set x to f.times(x)
+  reassign x to f.times(x)
   call printNoLine(x)
 end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -165,13 +165,13 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable x set to new List<of Float>()
-  set x to f.times(2)
+  reassign x to f.times(2)
   call printNoLine(x)
 end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -244,7 +244,7 @@ end main
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -254,7 +254,7 @@ class Bar
 
   function getTimes() returns List<of Float>
     variable x set to new List<of Float>()
-    set x to this.p1.times(2)
+    reassign x to this.p1.times(2)
     return x
   end function
 
@@ -262,7 +262,7 @@ end class
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
     function toString() returns String
       return ""
@@ -361,7 +361,7 @@ end main
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -371,7 +371,7 @@ class Bar
 
   function getTimes() returns List<of Qux>
     variable x set to new List<of Qux>()
-    set x to this.p1.times(2)
+    reassign x to this.p1.times(2)
     return x
   end function
 
@@ -379,7 +379,7 @@ end class
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
     function toString() returns String
       return ""
@@ -499,7 +499,7 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to new Bar()
+        reassign this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
@@ -516,7 +516,7 @@ end class
 
 class Bar
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -613,7 +613,7 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -634,7 +634,7 @@ end class
 
 class Bar
     constructor()
-        set this.p1 to 1
+        reassign this.p1 to 1
     end constructor
 
     property p1 as Float
@@ -729,7 +729,7 @@ end main
 
 class Foo
   constructor()
-      set this.p1 to 5
+      reassign this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -880,7 +880,7 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -919,7 +919,7 @@ end class`;
 main
   variable f set to new Foo()
   variable v set to 0
-  set v to f.noSuch()
+  reassign v to f.noSuch()
 end main
 
 class Foo
@@ -958,7 +958,7 @@ end class`;
 
 class Foo
   constructor()
-    set this.p1 to 5
+    reassign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -967,7 +967,7 @@ class Foo
   property p1 as Float
 
   function times(value as Float) returns Float
-    set this.p1 to this.p1 * value
+    reassign this.p1 to this.p1 * value
     return this.p1
   end function
 
@@ -995,7 +995,7 @@ end class`;
 
 class Foo
     constructor()
-        set this.p1 to 5
+        reassign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -1009,7 +1009,7 @@ class Foo
     end function
 
     procedure setP1(value as Float) 
-        set this.p1 to value
+        reassign this.p1 to value
     end procedure
 
     function toString() returns String
@@ -1250,7 +1250,7 @@ class Foo
 
   function foo() returns Int
     if this.p2 then
-      set this.p1 to 1
+      reassign this.p1 to 1
     end if
     return this.p1
   end function
@@ -1296,7 +1296,7 @@ class Foo
     if this.p2 then
       if this.p2 then
         if this.p2 then
-          set this.p1 to 1
+          reassign this.p1 to 1
         end if
       end if
     end if

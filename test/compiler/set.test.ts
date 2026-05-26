@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Set", () => {
@@ -19,13 +19,13 @@ suite("Set", () => {
 
 main
   variable st set to new HashSet<of Int>()
-  set st to st.add(3).add(7).add(5)
+  reassign st to st.add(3).add(7).add(5)
   call printNoLine(st.length())
-  set st to st.add(7)
+  reassign st to st.add(7)
   call printNoLine(st.length())
-  set st to st.remove(3)
+  reassign st to st.remove(3)
   call printNoLine(st.length())
-  set st to st.remove(3)
+  reassign st to st.remove(3)
   call printNoLine(st.length())
   call printNoLine(st)
 end main`;
@@ -69,8 +69,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  set st1 to st1.add(2).add(4).add(6)
-  set st2 to st2.add(1).add(4).add(9)
+  reassign st1 to st1.add(2).add(4).add(6)
+  reassign st2 to st2.add(1).add(4).add(9)
   variable st3 set to st1.union(st2)
   call printNoLine(st3)
 end main`;
@@ -110,8 +110,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  set st1 to st1.add(2).add(4).add(6).add(3)
-  set st2 to st2.add(3).add(1).add(4).add(9)
+  reassign st1 to st1.add(2).add(4).add(6).add(3)
+  reassign st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.intersection(st2)
   call printNoLine(st3)
 end main`;
@@ -151,8 +151,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  set st1 to st1.add(2).add(4).add(6).add(3)
-  set st2 to st2.add(3).add(1).add(4).add(9)
+  reassign st1 to st1.add(2).add(4).add(6).add(3)
+  reassign st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.difference(st2)
   call printNoLine(st3)
 end main`;
@@ -321,7 +321,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new HashSet<of String>()
-  set a to a.add("foo")
+  reassign a to a.add("foo")
   call printNoLine(a.contains("foo"))
 end main`;
 
@@ -356,7 +356,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new HashSet<of String>()
-  set a to a.add("bar")
+  reassign a to a.add("bar")
   call printNoLine(a.contains("foo"))
 end main`;
 

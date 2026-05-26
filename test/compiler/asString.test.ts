@@ -3,13 +3,13 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("toString", () => {
@@ -106,7 +106,7 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Maybe<of Foo>()
+    reassign this.p1 to new Maybe<of Foo>()
   end constructor
   function toString() returns String
     return ""
@@ -179,7 +179,7 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to new Maybe<of Foo>()
+    reassign this.p1 to new Maybe<of Foo>()
   end constructor
 
   property p1 as Maybe<of Foo>
@@ -251,8 +251,8 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
-        set this.p2 to "Apple"
+        reassign this.p1 to 5
+        reassign this.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -320,8 +320,8 @@ end main
 
 class Foo
     constructor()
-        set this.p1 to 5
-        set this.p2 to "Apple"
+        reassign this.p1 to 5
+        reassign this.p2 to "Apple"
     end constructor
 
     property p1 as Float

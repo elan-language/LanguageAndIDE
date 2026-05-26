@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Equality", () => {
@@ -28,15 +28,15 @@ end main
 
 class Foo
     constructor(p1 as Float, p2 as String)
-        set this.p1 to p1
-        set this.p2 to p2
+        reassign this.p1 to p1
+        reassign this.p2 to p2
     end constructor
 
     property p1 as Float
     property p2 as String
 
     procedure setP1(v as Float)
-        set this.p1 to v
+        reassign this.p1 to v
     end procedure
 
     function toString() returns String
@@ -111,15 +111,15 @@ end main
 
 class Foo
   constructor(p1 as Int, p2 as String)
-    set this.p1 to p1
-    set this.p2 to p2
+    reassign this.p1 to p1
+    reassign this.p2 to p2
   end constructor
 
   property p1 as Int
   property p2 as String
 
   procedure setP1(v as Int)
-    set this.p1 to v
+    reassign this.p1 to v
   end procedure
 
   function toString() returns String
@@ -236,7 +236,7 @@ end main
 
 class Foo
   constructor(p as Int)
-    set this.p to p
+    reassign this.p to p
   end constructor
   function toString() returns String
     return ""
@@ -245,7 +245,7 @@ class Foo
   property p as Int
 
   procedure setP(value as Int)
-    set this.p to value
+    reassign this.p to value
   end procedure
 
 end class`;
@@ -323,7 +323,7 @@ class Foo
   property p as Int
 
   constructor(p as Int)
-    set this.p to p
+    reassign this.p to p
   end constructor
   function toString() returns String
     return ""

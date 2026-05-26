@@ -17,7 +17,7 @@ import { Else } from "../../src/ide/frames/statements/else";
 import { ElseIf } from "../../src/ide/frames/statements/elseIf";
 import { For } from "../../src/ide/frames/statements/for";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
 import { TryStatement } from "../../src/ide/frames/statements/try";

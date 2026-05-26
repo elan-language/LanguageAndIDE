@@ -5,10 +5,10 @@ import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
 import {
-  assertAutocompletes,
-  assertSymbolCompletionMenuStartsWith,
-  assertSymbolCompletionWithString,
-  fileWithPython,
+    assertAutocompletes,
+    assertSymbolCompletionMenuStartsWith,
+    assertSymbolCompletionWithString,
+    fileWithPython,
 } from "../testHelpers";
 
 suite("SymbolCompletionDropDown", () => {
@@ -18,7 +18,7 @@ suite("SymbolCompletionDropDown", () => {
 main
   variable foo set to 1
   variable foobar set to 2
-  set f to 1
+  reassign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -46,7 +46,7 @@ end main`;
 main
   variable foo set to 1
   variable foobar set to 2
-  set f to 1
+  reassign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -169,7 +169,7 @@ end main`;
 main
   variable foo set to 1
   variable fooBar set to 2
-  set foo to 1
+  reassign foo to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -194,7 +194,7 @@ end main`;
 main
   variable foo set to 1
   variable foobar set to 2
-  set f to 1
+  reassign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -229,7 +229,7 @@ class Foo
   end function
 
   procedure pp1()
-    set a to 2
+    reassign a to 2
   end procedure
 
   property aa2 as Int
@@ -260,7 +260,7 @@ end class`;
 
 class Foo
   constructor()
-    set a to 0
+    reassign a to 0
   end constructor
   function toString() returns String
     return ""
@@ -301,7 +301,7 @@ class Foo
 
   procedure pp()
     variable a set to 0
-    set a to 0
+    reassign a to 0
   end procedure
 
   property aa2 as Int
@@ -340,7 +340,7 @@ class Foo
 
   procedure pp(aa4 as Int)
     variable a set to 0
-    set a to 0
+    reassign a to 0
   end procedure
 
   property aa2 as Int
@@ -373,7 +373,7 @@ end class`;
 main
   variable foo set to 1
   variable foobar set to 2
-  set foo to 1
+  reassign foo to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -400,7 +400,7 @@ constant fooyon set to 3
 main
   variable foo set to 1
   variable foobar set to 2
-  set f to 1
+  reassign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -900,7 +900,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set f to 0
+    reassign f to 0
   end procedure
 
   property foo as Int
@@ -945,7 +945,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set f to 0
+    reassign f to 0
   end procedure
 
   property foo as Int
@@ -987,7 +987,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set f to 0
+    reassign f to 0
   end procedure
 
   property foo as Int
@@ -1033,7 +1033,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set t to 0
+    reassign t to 0
   end procedure
 
   property foo as Int
@@ -1079,7 +1079,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set f to 0
+    reassign f to 0
   end procedure
 
   property foo as Int
@@ -1120,7 +1120,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set f to 0
+    reassign f to 0
   end procedure
 
   property foo as Int
@@ -1165,7 +1165,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    set b to 0
+    reassign b to 0
   end procedure
 
   property foo as Int
@@ -2500,10 +2500,10 @@ main
   for i in range(1, 1001)
     variable pacesThisAttempt set to 0
     while true
-      set pacesThisAttempt to pacesThisAttempt + 1
+      reassign pacesThisAttempt to pacesThisAttempt + 1
     end while
     variable totalPaces set to 0
-    set totalPaces to totalPaces + pacesThisAttempt
+    reassign totalPaces to totalPaces + pacesThisAttempt
   end for
 end main`;
 

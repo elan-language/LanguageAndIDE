@@ -3,24 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
@@ -30,7 +22,7 @@ suite("For Loop", () => {
 main
   variable tot set to 0
   for i in range(1, 11)
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -71,7 +63,7 @@ main
   variable tot set to 0
   variable i set to 0
   for i in range(1, 11)
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -99,7 +91,7 @@ end main`;
 main
 variable tot set to 0
 for i in rangeInSteps(1, 11, 2)
-  set tot to tot + i
+  reassign tot to tot + i
 end for
 call printNoLine(tot)
 end main`;
@@ -139,7 +131,7 @@ return [main, _tests];}`;
 main
   variable tot set to 0
   for i in rangeInSteps(10, 3, -1)
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -180,7 +172,7 @@ main
   variable tot set to 0
   for i in range(1, 4)
     for j in range(1, 5)
-      set tot to tot + 1
+      reassign tot to tot + 1
     end for
   end for
   call printNoLine(tot)
@@ -225,7 +217,7 @@ main
   variable upper set to 10
   variable tot set to 0
   for i in rangeInSteps(lower, upper + 1, 2)
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -317,7 +309,7 @@ main
   variable limit set to 10
   for i in range(1, limit + 1)
     call printNoLine($"{i}")
-    set limit to limit + 1
+    reassign limit to limit + 1
   end for
 end main`;
 
@@ -357,7 +349,7 @@ main
   variable tot set to 0
   variable i set to ""
   for i in range(1, 11)
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -386,7 +378,7 @@ end main`;
 main
   variable tot set to 0.0
   for i in range(1.5, 11.1).0
-    set tot to tot + i
+    reassign tot to tot + i
   end for
   call printNoLine(tot)
 end main
@@ -412,7 +404,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 11)
-    set i to 10
+    reassign i to 10
   end for
 end main
 `;
@@ -430,7 +422,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the loop counter 'i'.LangRef.html#compile_error",
+      "May not reassign the loop counter 'i'.LangRef.html#compile_error",
     ]);
   });
 
@@ -440,7 +432,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 11)
-    set tot to 10
+    reassign tot to 10
   end for
   call printNoLine(i)
 end main
@@ -467,7 +459,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 4)
-    for j in range(1, 5)  set tot to tot + 1
+    for j in range(1, 5)  reassign tot to tot + 1
     end for
 end main
 `;
@@ -515,7 +507,7 @@ end main
 
 main
   variable tot set to 0
-  for i in range(1, 11)  set tot to tot + i
+  for i in range(1, 11)  reassign tot to tot + i
     break
   end for
 end main
@@ -540,7 +532,7 @@ end main
 
 main
   variable tot set to 0
-  for i in range(1, 11)  set tot to tot + i
+  for i in range(1, 11)  reassign tot to tot + i
     continue
   end for
 end main

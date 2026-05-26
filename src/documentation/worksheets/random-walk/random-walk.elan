@@ -13,7 +13,7 @@ main
       variable angle set to randint(-90, 90)
       call t.turn(angle)
       call t.move(5)
-      set paces to paces + 1
+      reassign paces to paces + 1
     end while
   end for
   call print($"Average number of paces: {paces/20.0}")

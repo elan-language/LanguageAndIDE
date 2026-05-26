@@ -21,9 +21,9 @@ Sub main()
   Dim mark = "" ' variable definition
   Dim attempt = "RAISE" ' variable definition
   While Not mark.equals("*****")
-    mark = input("" + attempt) ' re-assign variable
-    possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' re-assign variable
-    attempt = bestAttempt(possible) ' re-assign variable
+    mark = input("" + attempt) ' reassign variable
+    possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' reassign variable
+    attempt = bestAttempt(possible) ' reassign variable
   End While
 End Sub
 
@@ -110,8 +110,8 @@ End Function
 Class WordCount
 
   Sub New(word As String, count As Integer)
-    Me.word = word ' re-assign variable
-    Me.count = count ' re-assign variable
+    Me.word = word ' reassign variable
+    Me.count = count ' reassign variable
   End Sub
   Property word As String
   Property count As Integer

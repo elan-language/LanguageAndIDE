@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Chaining", () => {
@@ -95,7 +95,7 @@ end main
 
 class Foo
   constructor()
-    set this.a to [1]
+    reassign this.a to [1]
   end constructor
   function toString() returns String
     return ""
@@ -152,13 +152,13 @@ return [main, _tests];}`;
 main 
   variable f set to new Foo()
   variable b set to 0
-  set b to f.b.y.z
+  reassign b to f.b.y.z
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    set this.b to new Bar()
+    reassign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -169,7 +169,7 @@ end class
 
 class Bar
   constructor()
-    set this.y to new Yon()
+    reassign this.y to new Yon()
   end constructor
   function toString() returns String
     return ""
@@ -180,7 +180,7 @@ end class
 
 class Yon
   constructor()
-    set this.z to 2
+    reassign this.z to 2
   end constructor
   function toString() returns String
     return ""
@@ -282,13 +282,13 @@ return [main, _tests];}`;
 main 
   variable f set to [new Foo()]
   variable b set to 0
-  set b to f[0].b.ff()
+  reassign b to f[0].b.ff()
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    set this.b to new Bar()
+    reassign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -382,13 +382,13 @@ return [main, _tests];}`;
 main 
   variable f set to [new Foo()]
   variable b set to 0
-  set b to f[0].b.ff()
+  reassign b to f[0].b.ff()
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    set this.b to new Bar()
+    reassign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -481,7 +481,7 @@ return [main, _tests];}`;
 
 main 
   variable s set to ""
-  set s to "Hello World!".lowerCase().subString(0, 1).upperCase()
+  reassign s to "Hello World!".lowerCase().subString(0, 1).upperCase()
   call printNoLine(s)
 end main`;
 
@@ -517,7 +517,7 @@ return [main, _tests];}`;
 main 
   variable aStringVar set to "abcdexefg"
   variable s set to ""
-  set s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString()
+  reassign s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString()
   call printNoLine(s)
 end main`;
 
@@ -552,13 +552,13 @@ return [main, _tests];}`;
 
 main 
   variable a set to ""
-  set a to (new Bar()).strArr[0].upperCase()[0]
+  reassign a to (new Bar()).strArr[0].upperCase()[0]
   call printNoLine(a)
 end main
 
 class Bar
   constructor()
-    set this.strArr to ["apple", "orange", "pair"]
+    reassign this.strArr to ["apple", "orange", "pair"]
   end constructor
   function toString() returns String
     return ""
@@ -615,7 +615,7 @@ return [main, _tests];}`;
 main 
   variable aFoo set to new Foo()
   variable b set to 0
-  set b to aFoo.createLst(10).subList(1, 5).length() + 3
+  reassign b to aFoo.createLst(10).subList(1, 5).length() + 3
   call printNoLine(b)
 end main
 
@@ -683,13 +683,13 @@ return [main, _tests];}`;
 main 
   variable aBar set to new Bar()
   variable b set to 0
-  set b to 5 + aBar.foo.create2DList()[2][1] - 2
+  reassign b to 5 + aBar.foo.create2DList()[2][1] - 2
   call printNoLine(b)
 end main
 
 class Bar
   constructor()
-    set this.foo to new Foo()
+    reassign this.foo to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -853,7 +853,7 @@ return [main, _tests];}`;
 main 
   variable a set to [[1,2], [3,4]]
   variable b set to ""
-  set b to a[1][1]
+  reassign b to a[1][1]
   call printNoLine(b)
 end main`;
 

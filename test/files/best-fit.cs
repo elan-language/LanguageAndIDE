@@ -16,8 +16,8 @@ class Point {
   public double x {get; private set;} // property
   public double y {get; private set;} // property
   public Point(double x, double y) {
-    this.x = x; // re-assign variable
-    this.y = y; // re-assign variable
+    this.x = x; // reassign variable
+    this.y = y; // reassign variable
   } // constructor
   public string toString() { // function method
     return $"Point {this.x}, {this.y}";

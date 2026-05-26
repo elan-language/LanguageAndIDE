@@ -18,13 +18,13 @@ static void main() {
   // or the browser will run out of memory
   while (count < 1000) {
     var point = onepoint(x, y, r);
-    rect = point.item_0; // re-assign variable
-    x = point.item_1; // re-assign variable
-    y = point.item_2; // re-assign variable
-    r = point.item_3; // re-assign variable
+    rect = point.item_0; // reassign variable
+    x = point.item_1; // reassign variable
+    y = point.item_2; // reassign variable
+    r = point.item_3; // reassign variable
     vg.append(rect); // call procedure
     displayVectorGraphics(vg); // call procedure
-    count = count + 1; // re-assign variable
+    count = count + 1; // reassign variable
   } // while
   print("Finished");
 } // main
@@ -61,11 +61,11 @@ static (double, double) onestep(double x, double y, double r) { // function
   var nx = 0.0;
   var ny = 0.0;
   foreach (pp in allPs) {
-    cumuprob = cumuprob + pp[6]; // re-assign variable
+    cumuprob = cumuprob + pp[6]; // reassign variable
     if ((!done) && (r < cumuprob)) {
-      nx = x*pp[0] + y*pp[1] + pp[4]; // re-assign variable
-      ny = x*pp[2] + y*pp[3] + pp[5]; // re-assign variable
-      done = true; // re-assign variable
+      nx = x*pp[0] + y*pp[1] + pp[4]; // reassign variable
+      ny = x*pp[2] + y*pp[3] + pp[5]; // reassign variable
+      done = true; // reassign variable
     } // if
   } // foreach
   return (nx, ny);

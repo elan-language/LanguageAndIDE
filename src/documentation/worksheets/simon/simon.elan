@@ -29,24 +29,24 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
     variable valid set to false
     variable move set to 0
     try
-      set move to parseAsInt(k)
-      set valid to true
+      reassign move to parseAsInt(k)
+      reassign valid to true
     catch ElanRuntimeError
     end try
     if valid and (sequence[counter] is move) then
       call displayMove(move, interval)
     else
-      set correctSoFar to false
-      set ok to false
+      reassign correctSoFar to false
+      reassign ok to false
     end if
-    set counter to counter + 1
+    reassign counter to counter + 1
   end while
 end procedure
 
 procedure displayMove(move as Int, interval as Int)
   variable colours set to [red, yellow, blue, green]
   variable tones set to [164.81, 220, 277.18, 329.63]
-  variable circle set to (new CircleVG()).withCentreX(move*20 - 5).withCentreY(15).withRadius(10).with strokeWidth().with 0, fillColour set to colours[move - 1]
+  variable circle reassign to (new CircleVG()).withCentreX(move*20 - 5).withCentreY(15).withRadius(10).with strokeWidth().with 0, fillColour set to colours[move - 1]
   call displayVectorGraphics([circle])
   call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()

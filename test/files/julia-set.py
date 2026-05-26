@@ -33,7 +33,7 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
       # colour depends on how many iterations were done for that point
       col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
       rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
-      vg2 = vg2.withAppend(rect) # re-assign variable
+      vg2 = vg2.withAppend(rect) # reassign variable
   return vg2
 
 def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
@@ -43,24 +43,24 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
   i = 0 # variable definition
   while not done:
     c = 2*a*b # variable definition
-    a = (a*a - b*b) + p.jx # re-assign variable
-    b = c + p.jy # re-assign variable
-    i = i + 1 # re-assign variable
+    a = (a*a - b*b) + p.jx # reassign variable
+    b = c + p.jy # reassign variable
+    i = i + 1 # reassign variable
     if (i >= maxnum) or ((a*a + b*b) > 4):
-      done = True # re-assign variable
+      done = True # reassign variable
   return i
 
 class Coords # concrete class
 
   def __init__(self: Coords) -> None:
     # number of cells per unit distance on complex plane
-    self.scale = 100 # re-assign variable
+    self.scale = 100 # reassign variable
     # centered on the screen to start
-    self.xoff = 0 # re-assign variable
-    self.yoff = 0 # re-assign variable
+    self.xoff = 0 # reassign variable
+    self.yoff = 0 # reassign variable
     # Julia set parameters
-    self.jx = -0.512 # re-assign variable
-    self.jy = 0.521 # re-assign variable
+    self.jx = -0.512 # reassign variable
+    self.jy = 0.521 # reassign variable
   def toString(self: Coords) -> str: # function method
     return ""
   scale: float # property
@@ -80,32 +80,32 @@ class Coords # concrete class
       # loop because more than one key may have been pressed
       while not k.equals(""):
         if k.equals("z"):
-          self.scale = self.scale*1.2 # re-assign variable
+          self.scale = self.scale*1.2 # reassign variable
         elif k.equals("x"): # else if
-          self.scale = self.scale/1.2 # re-assign variable
+          self.scale = self.scale/1.2 # reassign variable
         elif k.equals("ArrowUp"): # else if
-          self.yoff = self.yoff + panstep # re-assign variable
+          self.yoff = self.yoff + panstep # reassign variable
         elif k.equals("ArrowDown"): # else if
-          self.yoff = self.yoff - panstep # re-assign variable
+          self.yoff = self.yoff - panstep # reassign variable
         elif k.equals("ArrowLeft"): # else if
-          self.xoff = self.xoff + panstep # re-assign variable
+          self.xoff = self.xoff + panstep # reassign variable
         elif k.equals("ArrowRight"): # else if
-          self.xoff = self.xoff - panstep # re-assign variable
+          self.xoff = self.xoff - panstep # reassign variable
         elif k.equals("g"): # else if
-          self.jx = self.jx + jstep # re-assign variable
+          self.jx = self.jx + jstep # reassign variable
         elif k.equals("j"): # else if
-          self.jx = self.jx - jstep # re-assign variable
+          self.jx = self.jx - jstep # reassign variable
         elif k.equals("y"): # else if
-          self.jy = self.jy + jstep # re-assign variable
+          self.jy = self.jy + jstep # reassign variable
         elif k.equals("h"): # else if
-          self.jy = self.jy - jstep # re-assign variable
+          self.jy = self.jy - jstep # reassign variable
           # for autocomplete in the RHS expression, don't type "property"
         else:
           # ignore erroneous key presses
         # there is no harm in recalculating even if an invalid key was pressed
-        changed = True # re-assign variable
+        changed = True # reassign variable
         # another key may have been pressed
-        k = getKey() # re-assign variable
+        k = getKey() # reassign variable
       sleep_ms(10) # call procedure
 
 

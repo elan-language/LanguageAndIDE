@@ -49,7 +49,7 @@
           Instead, we can get the <code>mark</code> by evaluating the <el-method>markAttempt</el-method>
           function that we wrote in Wordle 1. However, we don't then need to use two instructions
           to obtain the mark - we can write it as a single <code>let</code> instruction. (It <i>could</i>
-          still be a <code>variable</code>, but we have no need to re-assign it because it
+          still be a <code>variable</code>, but we have no need to reassign it because it
           defines <code>mark</code> anew each time around the <code>while</code> loop, anyway).
         </li>
         <li>The <code>while</code> loop need test only for whether the puzzle is <code>solved</code>, not
@@ -78,11 +78,11 @@
         while something
           let mark be something
           if something then
-            set solved to something
+            reassign solved to something
           else
-            set possible to something
-            set attemptNo to something
-            set attempt to something
+            reassign possible to something
+            reassign attemptNo to something
+            reassign attempt to something
           end if
         end while
         return attemptNo
@@ -103,11 +103,11 @@
         while (not solved)
           let mark be markAttempt(attempt, target)
           if mark is "22222" then
-            set solved to true
+            reassign solved to true
           else
-            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
-            set attemptNo to attemptNo + 1
-            set attempt to possible[0]
+            reassign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            reassign attemptNo to attemptNo + 1
+            reassign attempt to possible[0]
           end if
         end while
         return attemptNo
@@ -194,7 +194,7 @@
     </ul>
     (The choice of those two <i>temporary</i> initial values will become apparent shortly). 
     These are both <i>variables</i> because later on we will need to replace the initial value with a calculated one in each case.</p>
-  <li><p>Below this, define two more values - <code>successPercent</code> and <code>average</code> - but for each these use a <code>let</code> instruction (because we won't need to re-assign them):
+  <li><p>Below this, define two more values - <code>successPercent</code> and <code>average</code> - but for each these use a <code>let</code> instruction (because we won't need to reassign them):
     <p>For <code>successPercent</code> give it a calculated value, derived from <code>success</code> such that it will represent a percentage of the number of <code>validTargets</code>
     <i>rounded to one decimal place.</i>.</p>
     <p>The <code>average</code> is the <code>weightedSum</code> divided by <code>success</code> <i>rounded to two decimal places</i>.</p>
@@ -254,7 +254,7 @@
       each target in something
         let attempts be something
         if something then
-          set success to something
+          reassign success to something
         end if
       end each
     </codeblock>
@@ -268,7 +268,7 @@
         each target in validTargets
           let attempts be attemptsNeededToSolve(target, firstAttempt)
           if attempts <= 6 then
-            set success to success + 1
+            reassign success to success + 1
           end if
         end each
         let successPercent be success/validTargets.length()*100.round(1)
@@ -315,14 +315,14 @@
   <content>
     <codeblock>
       for i from something to something step 1
-        set weightedSum to something
+        reassign weightedSum to something
       end for
     </codeblock>
   </content>
   <hint>Hint HINTNUMBER: the completed instruction for updating 'outcomes'</hint>
   <content>
     <codeblock>
-      set outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+      reassign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
     </codeblock>
   </content>
   <hint>Hint HINTNUMBER: the completed function</hint>
@@ -335,12 +335,12 @@
         each target in validTargets
           let attempts be attemptsNeededToSolve(target, firstAttempt)
           if attempts <= 6 then
-            set success to success + 1
-            set outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+            reassign success to success + 1
+            reassign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
           end if
         end each
         for i from 1 to 6 step 1
-          set weightedSum to weightedSum + i*outcomes[i]
+          reassign weightedSum to weightedSum + i*outcomes[i]
         end for
         let successPercent be (success/validTargets.length()*100).round(1)
         let average be (weightedSum/success).round(2)

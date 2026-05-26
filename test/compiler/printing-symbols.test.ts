@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Printing Symbols", () => {
@@ -174,7 +174,7 @@ return [main, _tests];}`;
 
 main
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
-  set i to i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar")
+  reassign i to i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar")
   call printNoLine(i)
 end main`;
 

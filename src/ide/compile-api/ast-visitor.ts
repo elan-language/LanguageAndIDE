@@ -176,7 +176,7 @@ import { ElseIf } from "../frames/statements/elseIf";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { LetStatement } from "../frames/statements/let-statement";
-import { ReAssignVariable } from "../frames/statements/re-assign-variable";
+import { ReAssignVariable } from "../frames/statements/reassign-variable";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";

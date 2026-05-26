@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("String Manipulation", () => {
@@ -170,7 +170,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to "z"
-  set b to b + a[0]
+  reassign b to b + a[0]
   call printNoLine(b)
 end main`;
 
@@ -207,7 +207,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to "z"
-  set b to a[0]
+  reassign b to a[0]
   call printNoLine(b)
 end main`;
 
@@ -365,7 +365,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to 2.1 + 3.4
-  set a to b.toString()
+  reassign a to b.toString()
   call printNoLine(a)
 end main`;
 
@@ -578,7 +578,7 @@ end main
 
 main
   variable a set to "abcde"
-  set a to 2.1 + 3.4
+  reassign a to 2.1 + 3.4
   call printNoLine(a)
 end main
 `;

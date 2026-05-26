@@ -35,6 +35,7 @@ export const orKeyword = "or";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
+export const reassignKeyword = "reassign";
 export const refKeyword = "ref";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
@@ -102,10 +103,11 @@ const elanKeywords: string[] = [
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
+  reassignKeyword,
   refKeyword,
   returnKeyword,
   returnsKeyword,
-  setKeyword,
+  stepKeyword,
   stepKeyword,
   testKeyword,
   thenKeyword,

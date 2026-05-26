@@ -8,7 +8,7 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../../src/ide/frames/statements/call-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/re-assign-variable";
+import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
@@ -21,7 +21,7 @@ function hash() {
 
 suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement", () => {
-    const code = "  set fooBar to 3.141";
+    const code = "  reassign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -40,7 +40,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - set statement 2", () => {
-    const code = "  set tot to tot";
+    const code = "  reassign tot to tot";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -58,7 +58,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - set statement 3", () => {
-    const code = "  set result to 3 + 4";
+    const code = "  reassign result to 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -187,7 +187,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - StatementSelector", () => {
-    const code = "set fooBar to 3.141";
+    const code = "reassign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -319,7 +319,7 @@ end main
 
 main
   variable name set to value or expression
-  set a to 3 + 4
+  reassign a to 3 + 4
   throw ElanRuntimeError "message"
   call signIn(rwp, password)
   call printNoLine("Hello World!")

@@ -250,7 +250,7 @@
 //   });
 //   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-//   await page.evaluate(() => navigator.clipboard.writeText("variable a set to 2\nvariable b set to 3"));
+//   await page.evaluate(() => navigator.clipboard.writeText("variable a reassign to 2\nvariable b set to 3"));
 
 //   await page.getByText('main procedure function test').click();
 
@@ -273,7 +273,7 @@
 //   });
 //   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-//   await page.evaluate(() => navigator.clipboard.writeText("variable a set to 2\nvariable b set to 3"));
+//   await page.evaluate(() => navigator.clipboard.writeText("variable a reassign to 2\nvariable b set to 3"));
 
 //   await page.getByText('main procedure function test').click();
 

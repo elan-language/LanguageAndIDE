@@ -17,10 +17,10 @@ def main() -> None:
     headRef = AsRef[list[int]](head) # variable definition
     tailRef = AsRef[list[int]](tail) # variable definition
     updateSnake(currentDirRef, tailRef, headRef, body) # call procedure
-    head = headRef.value() # re-assign variable
-    tail = tailRef.value() # re-assign variable
-    currentDir = currentDirRef.value() # re-assign variable
-    gameOn = not hasHitEdge(head[0], head[1]) and not body.contains(head) # re-assign variable
+    head = headRef.value() # reassign variable
+    tail = tailRef.value() # reassign variable
+    currentDir = currentDirRef.value() # reassign variable
+    gameOn = not hasHitEdge(head[0], head[1]) and not body.contains(head) # reassign variable
     if head.equals(apple):
       setAppleToRandomPosition(apple, body) # call procedure
     else:
@@ -32,31 +32,31 @@ def updateSnake(currentDirRef: AsRef[str], tailRef: AsRef[list[int]], headRef: A
   head = headRef.value() # variable definition
   tail = tailRef.value() # variable definition
   currentDir = currentDirRef.value() # variable definition
-  currentDir = directionByKey(currentDir, getKey()) # re-assign variable
+  currentDir = directionByKey(currentDir, getKey()) # reassign variable
   tailRef.set(body[0]) # call procedure
   body.append(head) # call procedure
   headRef.set(getAdjacentSquare(head, currentDir)) # call procedure
   currentDirRef.set(currentDir) # call procedure
 
 def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure
-  blocks[head[0]][head[1]] = green # re-assign variable
+  blocks[head[0]][head[1]] = green # reassign variable
   tailColour = getTailColour(tail, body) # variable definition
-  blocks[tail[0]][tail[1]] = tailColour # re-assign variable
-  blocks[apple[0]][apple[1]] = red # re-assign variable
+  blocks[tail[0]][tail[1]] = tailColour # reassign variable
+  blocks[apple[0]][apple[1]] = red # reassign variable
   displayBlocks(blocks) # call procedure
 
 def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: # procedure
   changePosition = True # variable definition
   while changePosition:
-    apple[0] = randint(0, 39) # re-assign variable
-    apple[1] = randint(0, 29) # re-assign variable
+    apple[0] = randint(0, 39) # reassign variable
+    apple[1] = randint(0, 29) # reassign variable
     if not body.contains(apple):
-      changePosition = False # re-assign variable
+      changePosition = False # reassign variable
 
 def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
   colour = white # variable definition
   if body[0].equals(tail):
-    colour = green # re-assign variable
+    colour = green # reassign variable
   return colour
 
 def hasHitEdge(headX: int, headY: int) -> bool: # function
@@ -66,20 +66,20 @@ def getAdjacentSquare(sq: list[int], dir: str) -> list[int]: # function
   newX = sq[0] # variable definition
   newY = sq[1] # variable definition
   if dir.equals("left"):
-    newX = newX - 1 # re-assign variable
+    newX = newX - 1 # reassign variable
   elif dir.equals("right"): # else if
-    newX = newX + 1 # re-assign variable
+    newX = newX + 1 # reassign variable
   elif dir.equals("up"): # else if
-    newY = newY - 1 # re-assign variable
+    newY = newY - 1 # reassign variable
   elif dir.equals("down"): # else if
-    newY = newY + 1 # re-assign variable
+    newY = newY + 1 # reassign variable
   return [newX, newY]
 
 def directionByKey(current: str, key: str) -> str: # function
   dirn = current # variable definition
   d = ["w":"up", "s":"down", "a":"left", "d":"right"] # variable definition
   if d.keys().contains(key):
-    dirn = d[key] # re-assign variable
+    dirn = d[key] # reassign variable
   return dirn
 
 def test_getTailColour(self) -> None:

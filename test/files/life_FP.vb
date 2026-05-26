@@ -6,7 +6,7 @@ Sub main()
   Dim grid = initialGrid(rng) ' variable definition
   While True
     displayBlocks(grid) ' call procedure
-    grid = nextGeneration(grid) ' re-assign variable
+    grid = nextGeneration(grid) ' reassign variable
     sleep_ms(50) ' call procedure
   End While
 End Sub

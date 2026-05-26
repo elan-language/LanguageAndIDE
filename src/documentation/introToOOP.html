@@ -99,7 +99,7 @@ end class
 
 <p><i>Within the same class</i> the value of a property may be read, or written to using the following syntax (taken from <code>Snake</code>):</p>
 
-<codeblock>set this.priorTail to this.body[0]</codeblock>
+<codeblock>reassign this.priorTail to this.body[0]</codeblock>
 
 <p>where the value of the property named <code>priorTail</code> is being changed to hold the first element from the list of squares held in the property named <code>body</code>. 
 In both cases the keyword <code>this</code> refers to the current instance (i.e. the instance to which the code is applied). It is followed by a dot and the name of the property - an example of 'dot syntax'.</p>
@@ -111,8 +111,8 @@ In both cases the keyword <code>this</code> refers to the current instance (i.e.
 
 <codeblock>
   constructor(x as Int, y as Int)
-    set this.x to x
-    set this.y to y
+    reassign this.x to x
+    reassign this.y to y
   end constructor
 </codeblock>   
 
@@ -124,10 +124,10 @@ ambiguity is avoided because the <i>property</i> is always prefixed by <code>thi
 <codeblock>
 constructor()
     variable tail set to new Square(20, 15)
-    set this.currentDir to Direction.right
-    set this.body to [tail]
-    set this.head to tail.getAdjacentSquare(this.currentDir)
-    set this.priorTail to tail
+    reassign this.currentDir to Direction.right
+    reassign this.body to [tail]
+    reassign this.head to tail.getAdjacentSquare(this.currentDir)
+    reassign this.priorTail to tail
 end constructor
 </codeblock>
 
@@ -146,13 +146,13 @@ function getAdjacentSquare(d as Direction) returns Square
     variable newX set to this.x
     variable newY set to this.y
     if d is Direction.left then
-        set newX to this.x - 1
+        reassign newX to this.x - 1
     elif d is Direction.right then
-        set newX to this.x + 1
+        reassign newX to this.x + 1
     elif d is Direction.up then
-        set newY to this.y - 1
+        reassign newY to this.y - 1
     elif d is Direction.down then
-        set newY to this.y + 1
+        reassign newY to this.y + 1
     end if
     return new Square(newX, newY)
 end function
@@ -173,9 +173,9 @@ procedure newRandomPosition(snake as Snake)
     while changePosition
         variable ranX set to randint(0, 39)
         variable ranY set to randint(0, 29)
-        set this.location to new Square(ranX, ranY)
+        reassign this.location to new Square(ranX, ranY)
         if not snake.bodyCovers(this.location) then
-        set changePosition to false
+        reassign changePosition to false
         end if
     end while
 end procedure

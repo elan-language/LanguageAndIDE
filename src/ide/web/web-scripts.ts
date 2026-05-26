@@ -1208,7 +1208,7 @@ async function setup(p: Profile) {
   // add "procedural", "oop" or "functional" to body
   // to control which demos are visible
   docBody.classList.add(p.name);
-  // and set the text on the button to match
+  // and reassign the text on the button to match
   profileButton.textContent = document.getElementById("profile-" + p.name)!.textContent;
 
   codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));

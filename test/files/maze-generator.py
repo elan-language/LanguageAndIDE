@@ -2,7 +2,7 @@
 
 def main() -> None:
   blocks = createBlockGraphics(black) # variable definition
-  blocks = createStart(blocks) # re-assign variable
+  blocks = createStart(blocks) # reassign variable
   for i in range(0, displayWidth + 1):
     x = randint(0, 39) # variable definition
     y = randint(0, 29) # variable definition
@@ -11,7 +11,7 @@ def main() -> None:
     setTo = (random() + 0.7).floor() # variable definition
     if okToSet(p, setTo, blocks):
       colour = if(setTo == 1, white, black) # variable definition
-      blocks[p.x][p.y] = colour # re-assign variable
+      blocks[p.x][p.y] = colour # reassign variable
   displayBlocks(blocks) # call procedure
   name = input("File name to save: ") # variable definition
   if not name.equals("x"):
@@ -26,25 +26,25 @@ def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
     for col in range(0, 40):
       colour = b[col][row] # variable definition
       symbol = if(colour == white, " ", "X") # variable definition
-      line = line + symbol # re-assign variable
+      line = line + symbol # reassign variable
     file.writeLine(line) # call procedure
   file.saveAndClose() # call procedure
 
 def createStart(b: list[list[int]]) -> list[list[int]]: # function
   b2 = b # variable definition
   for i in rangeInSteps(0, 16, 2):
-    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) # re-assign variable
+    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) # reassign variable
   return b2
 
 def addRectangle(b: list[list[int]], startX: int, startY: int, width: int, depth: int) -> list[list[int]]: # function
   paint = white # variable definition
   b2 = b # variable definition
   for x in range(startX, startX + width + 1):
-    b2 = withPut(b2, x, startY, paint) # re-assign variable
-    b2 = withPut(b2, x, startY + depth, paint) # re-assign variable
+    b2 = withPut(b2, x, startY, paint) # reassign variable
+    b2 = withPut(b2, x, startY + depth, paint) # reassign variable
   for y in range(startY, startY + depth + 1):
-    b2 = withPut(b2, startX, y, paint) # re-assign variable
-    b2 = withPut(b2, startX + width, y, paint) # re-assign variable
+    b2 = withPut(b2, startX, y, paint) # reassign variable
+    b2 = withPut(b2, startX + width, y, paint) # reassign variable
   return b2
 
 def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
@@ -64,7 +64,7 @@ def getValue(p: Point, b: list[list[int]]) -> int: # function
   result = 0 # variable definition
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30):
     colour = b[p.x][p.y] # variable definition
-    result = if(colour == black, 0, 1) # re-assign variable
+    result = if(colour == black, 0, 1) # reassign variable
   return result
 
 def flip01(v: int) -> int: # function
@@ -100,8 +100,8 @@ class Point # concrete class
   x: int # property
   y: int # property
   def __init__(self: Point, x: int, y: int) -> None:
-    self.x = x # re-assign variable
-    self.y = y # re-assign variable
+    self.x = x # reassign variable
+    self.y = y # reassign variable
   def toString(self: Point) -> str: # function method
     return ""
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds

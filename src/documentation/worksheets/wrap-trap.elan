@@ -15,16 +15,16 @@ end main
 procedure move(out x as Int, out y as Int, out dir as String)
   variable k set to getKey()
   if (k isnt "") and (directions.contains(k)) then
-    set dir to k
+    reassign dir to k
   end if
   if dir is "d" then
-    set x to x + 1
+    reassign x to x + 1
   elif dir is "s" then
-    set y to y + 1
+    reassign y to y + 1
   elif dir is "a" then
-    set x to x - 1
+    reassign x to x - 1
   elif dir is "w" then
-    set y to y - 1
+    reassign y to y - 1
   end if
 end procedure
 
@@ -34,15 +34,15 @@ procedure compTurn(out dir as String)
   variable i set to directions.indexOf(dir)
   variable rnd set to randint(-1, 1)
   variable i2 set to (i + rnd) mod 4
-  set dir to directions[i2]
+  reassign dir to directions[i2]
 end procedure
 
 function newDirection(current as String, rnd as Float) returns String
   variable i set to directions.indexOf(current)
   if rnd > 0.5 then
-    set i to (i + 1) mod 3
+    reassign i to (i + 1) mod 3
   else
-    set i to (i - 1) mod 3
+    reassign i to (i - 1) mod 3
   end if
   return directions[i]
 end function

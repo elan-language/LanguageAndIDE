@@ -1,4 +1,4 @@
-# f9f590cdcc3d10f07cb4d057d826d2504515155914ba26433c118af01ce30993 Elan 2.0.0-alpha5 valid
+# ef1f7a379c4ab3fd25bf4ca7dc8805a5718b7513d01a18275a5adb346c7c1030 Elan 2.0.0-alpha5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -19,10 +19,10 @@ end main
 class Snake
   constructor()
     variable tail set to new Square(20, 15)
-    set this.currentDir to Direction.right
-    set this.body to [tail]
-    set this.head to tail.getAdjacentSquare(this.currentDir)
-    set this.priorTail to tail
+    reassign this.currentDir to Direction.right
+    reassign this.body to [tail]
+    reassign this.head to tail.getAdjacentSquare(this.currentDir)
+    reassign this.priorTail to tail
   end constructor
 
   function toString() returns String
@@ -39,21 +39,21 @@ class Snake
 
   procedure clockTick(key as String, apple as Apple)
     call this.setDirection(key)
-    set this.priorTail to this.body[0]
+    reassign this.priorTail to this.body[0]
     variable body set to this.body
     call body.append(this.head)
-    set this.head to this.head.getAdjacentSquare(this.currentDir)
+    reassign this.head to this.head.getAdjacentSquare(this.currentDir)
     if this.head.equals(apple.location) then
       call apple.newRandomPosition(this)
     else
-      set this.body to this.body.subList(1, this.body.length())
+      reassign this.body to this.body.subList(1, this.body.length())
     end if
   end procedure
 
   procedure updateBlocks(blocks as List<of List<of Int>>)
-    set blocks[this.head.x][this.head.y] to green
+    reassign blocks[this.head.x][this.head.y] to green
     if not this.body[0].equals(this.priorTail) then
-      set blocks[this.priorTail.x][this.priorTail.y] to white
+      reassign blocks[this.priorTail.x][this.priorTail.y] to white
     end if
   end procedure
 
@@ -65,7 +65,7 @@ class Snake
     variable result set to false
     for seg in this.body
       if (seg.equals(sq)) then
-        set result to true
+        reassign result to true
       end if
     end for
     return result
@@ -77,13 +77,13 @@ class Snake
 
   private procedure setDirection(key as String)
     if key.equals("w") then
-      set this.currentDir to Direction.up
+      reassign this.currentDir to Direction.up
     elif key.equals("s") then
-      set this.currentDir to Direction.down
+      reassign this.currentDir to Direction.down
     elif key.equals("a") then
-      set this.currentDir to Direction.left
+      reassign this.currentDir to Direction.left
     elif key.equals("d") then
-      set this.currentDir to Direction.right
+      reassign this.currentDir to Direction.right
     end if
   end procedure
 
@@ -91,7 +91,7 @@ end class
 
 class Apple
   constructor()
-    set this.location to new Square(0, 0)
+    reassign this.location to new Square(0, 0)
   end constructor
 
   function toString() returns String
@@ -105,23 +105,23 @@ class Apple
     while changePosition
       variable ranX set to randint(0, 39)
       variable ranY set to randint(0, 29)
-      set this.location to new Square(ranX, ranY)
+      reassign this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
-        set changePosition to false
+        reassign changePosition to false
       end if
     end while
   end procedure
 
   procedure updateBlocks(blocks as List<of List<of Int>>)
-    set blocks[this.location.x][this.location.y] to red
+    reassign blocks[this.location.x][this.location.y] to red
   end procedure
 
 end class
 
 class Square
   constructor(x as Int, y as Int)
-    set this.x to x
-    set this.y to y
+    reassign this.x to x
+    reassign this.y to y
   end constructor
 
   function toString() returns String
@@ -136,13 +136,13 @@ class Square
     variable newX set to this.x
     variable newY set to this.y
     if d is Direction.left then
-      set newX to this.x - 1
+      reassign newX to this.x - 1
     elif d is Direction.right then
-      set newX to this.x + 1
+      reassign newX to this.x + 1
     elif d is Direction.up then
-      set newY to this.y - 1
+      reassign newY to this.y - 1
     elif d is Direction.down then
-      set newY to this.y + 1
+      reassign newY to this.y + 1
     end if
     return new Square(newX, newY)
   end function

@@ -52,7 +52,7 @@
         This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
         getting the target within six attempts, but it is just to gain some familiarity with the code. So...</li>
       <li><b>stop</b> the program and insert a new instruction within the <code>while</code> loop in <el-method>playReverseGame</el-method></el-method>
-      just <i>before</i> the <el-kw>end if</el-kw>. The new instruction should set <code>attempt</code> to a new word, randomly selected
+      just <i>before</i> the <el-kw>end if</el-kw>. The new instruction should reassign <code>attempt</code> to a new word, randomly selected
       from <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 valid target words.
       </li>
     </ul>
@@ -89,10 +89,10 @@
       variable mark set to ""
       call enterMark(attemptNo, grid, mark)
       if mark is "22222" then
-        set solved to true
+        reassign solved to true
       else
-        set attemptNo to attemptNo + 1
-        set attempt to possible[randint(0, possible.length() - 1)]
+        reassign attemptNo to attemptNo + 1
+        reassign attempt to possible[randint(0, possible.length() - 1)]
       end if
     end while
     </codeblock>
@@ -182,7 +182,7 @@
       variable newPossible set to new List<of String>()
       each something in something
         if something is something then
-          set something to something
+          reassign something to something
         end if
       end each
       return newPossible
@@ -206,7 +206,7 @@
         variable newPossible set to new List<of String>()
         each word in prior
           if markAttempt(attempt, word) is mark then
-            set newPossible to newPossible.withAppend(word)
+            reassign newPossible to newPossible.withAppend(word)
           end if
         end each
         return newPossible
@@ -221,7 +221,7 @@
     we can make use of that with the <el-method>playReverseGame</el-method> procedure.
    <p>Insert a new instruction immediately <i>after</i> instruction <b>69</b> i.e. just <i>above</i> the instruction that you added
     into the procedure earlier. This new instruction should
-    set the list named <code>possible</code> to the new, filtered, list that results from evaluating the
+    reassign the list named <code>possible</code> to the new, filtered, list that results from evaluating the
     <el-method>possibleTargetsAfterAttempt</el-method> function, passing in suitable arguments.</p>
   <hint>Hint HINTNUMBER: the expression to evaluate the filtered version of the list</hint>
   <content>
@@ -241,11 +241,11 @@
           variable mark set to ""
           call enterMark(attemptNo, grid, mark)
           if mark is "22222" then
-            set solved to true
+            reassign solved to true
           else
-            set attemptNo to attemptNo + 1
-            set possible to possibleTargetsAfterAttempt(possible, attempt, mark)
-            set attempt to possible[randint(0, possible.length() - 1)]
+            reassign attemptNo to attemptNo + 1
+            reassign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
+            reassign attempt to possible[randint(0, possible.length() - 1)]
           end if
         end while
       end procedure
@@ -280,21 +280,21 @@
   <ul>
     <li><i>Delete</i> the following instruction (we'll replace it with something else, lower down):
     <codeblock>
-      set attempt to possible[randint(0, possible.length() - 1)]
+      reassign attempt to possible[randint(0, possible.length() - 1)]
     </codeblock></li>
     <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.
-      If there <i>is</i> then set <code>attempt</code> to the <i>first</i> word in that list; if not then print the message 
-      "No possible target matches marks so far" and set <code>attemptNo</code> to 6 - the easiest way to end the program.</li>
+      If there <i>is</i> then reassign <code>attempt</code> to the <i>first</i> word in that list; if not then print the message 
+      "No possible target matches marks so far" and reassign <code>attemptNo</code> to 6 - the easiest way to end the program.</li>
   </ul>
   <hint>Hint HINTNUMBER: outline version of the new instructions</hint>
   <content>
     <code>
     if something then
-      set something to something
+      reassign something to something
     else
       print something
-      set something to something
+      reassign something to something
     end if
     </code>
   </content>
@@ -312,16 +312,16 @@
           variable mark set to ""
           call enterMark(attemptNo, grid, mark)
           if mark is "22222" then
-            set solved to true
+            reassign solved to true
           else
-            set attemptNo to attemptNo + 1
-            set possible to possibleTargetsAfterAttempt(possible, attempt, mark)
+            reassign attemptNo to attemptNo + 1
+            reassign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
           end if
           if possible.length() > 0 then
-            set attempt to possible[0]
+            reassign attempt to possible[0]
           else
             print "No possible target matches marks so far"
-            set attemptNo to 6
+            reassign attemptNo to 6
           end if
         end while
       end procedure
@@ -360,9 +360,9 @@
     also see that the <el-method>playGame</el-method> (used in the previous worksheet) is still there. So you could modify
     <code>main</code> to do either one of the following:
     <ul>
-      <li>Offer the user a simple menu with options to solve a puzzle, or set a puzzle for the computer to solve. 
+      <li>Offer the user a simple menu with options to solve a puzzle, or reassign a puzzle for the computer to solve. 
         One calls <el-method>playGame</el-method>, the other calls <el-method>playReverseGame</el-method>.</li>
-      <li>Set up a contunuous loop so that it alternates between those two modes. You might need to add some
+      <li>reassign up a contunuous loop so that it alternates between those two modes. You might need to add some
         further <code>print</code> instructions to make clear which mode it is in (though there is a difference
         between the two displays. You might also find the following instruction useful at various points:
         <codeblock>

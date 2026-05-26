@@ -20,7 +20,7 @@
     <input type="text" id="username" class="question"/>
     <h3>Preliminaries</h3>
     <ul>
-      <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+      <li>reassign the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
       <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
           to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
       </li>
@@ -93,7 +93,7 @@
     <div class="hint" id="hint4" data-hint="">Hint 4: Some useful coding idioms and hints</div>
     <div class="content" id="hint4content">
         <ul>
-          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned.
+          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be reassigned.
           In all other cases, define a named value with a <el/kw>let</el>.</li>
           <li>The method <el-method>length</el-method> - called as a 'dotted' method on a named value
           holding a list returns its length as an integer.</li>
@@ -150,7 +150,7 @@
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
-          <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw>...</el-statement>
+          <el-statement ><el-kw>reassign </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw>...</el-statement>
           <el-kw>end if</el-kw>
           </el-statement>
           <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
@@ -172,7 +172,7 @@
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id><el-kw> ...</el-txt></el-field></el-statement>
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
-          <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>...</el-txt></el-field></el-statement>
+          <el-statement ><el-kw>reassign </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>...</el-txt></el-field></el-statement>
           <el-kw>end if</el-kw>
           </el-statement>
           <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
@@ -196,7 +196,7 @@
             <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id><el-kw> div </el-kw><el-lit>2</el-lit></el-txt></el-field></el-statement>
             <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>(<el-id>li</el-id>[..<el-id>mid</el-id>])</el-txt></el-field></el-statement>
             <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>(<el-id>li</el-id>[<el-id>mid</el-id>..])</el-txt></el-field></el-statement>
-            <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>(<el-id>frontHalf</el-id>, <el-id>backHalf</el-id>)</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>reassign </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>(<el-id>frontHalf</el-id>, <el-id>backHalf</el-id>)</el-txt></el-field></el-statement>
             <el-kw>end if</el-kw>
             </el-statement>
             <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>

@@ -1,4 +1,4 @@
-# 32f4de072a1effc39121cfb58cedad7ea55adcda61101ab7d17715d1d9020943 Elan 2.0.0-alpha5 valid
+# dd21daafadd39642f4f9b3086c9070ce9bdb2034cd9d4ad007b6e8b9c4a53f1d Elan 2.0.0-alpha5 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -16,10 +16,10 @@ main
     variable headRef set to new AsRef<of List<of Int>>(head)
     variable tailRef set to new AsRef<of List<of Int>>(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
-    set head to headRef.value()
-    set tail to tailRef.value()
-    set currentDir to currentDirRef.value()
-    set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    reassign head to headRef.value()
+    reassign tail to tailRef.value()
+    reassign currentDir to currentDirRef.value()
+    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head.equals(apple) then
       call setAppleToRandomPosition(apple, body)
     else
@@ -34,7 +34,7 @@ procedure updateSnake(currentDirRef as AsRef<of String>, tailRef as AsRef<of Lis
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
-  set currentDir to directionByKey(currentDir, getKey())
+  reassign currentDir to directionByKey(currentDir, getKey())
   call tailRef.set(body[0])
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
@@ -42,20 +42,20 @@ procedure updateSnake(currentDirRef as AsRef<of String>, tailRef as AsRef<of Lis
 end procedure
 
 procedure updateDisplay(blocks as List<of List<of Int>>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
-  set blocks[head[0]][head[1]] to green
+  reassign blocks[head[0]][head[1]] to green
   variable tailColour set to getTailColour(tail, body)
-  set blocks[tail[0]][tail[1]] to tailColour
-  set blocks[apple[0]][apple[1]] to red
+  reassign blocks[tail[0]][tail[1]] to tailColour
+  reassign blocks[apple[0]][apple[1]] to red
   call displayBlocks(blocks)
 end procedure
 
 procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
   variable changePosition set to true
   while changePosition
-    set apple[0] to randint(0, 39)
-    set apple[1] to randint(0, 29)
+    reassign apple[0] to randint(0, 39)
+    reassign apple[1] to randint(0, 29)
     if not body.contains(apple) then
-      set changePosition to false
+      reassign changePosition to false
     end if
   end while
 end procedure
@@ -63,7 +63,7 @@ end procedure
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
   variable colour set to white
   if body[0].equals(tail) then
-    set colour to green
+    reassign colour to green
   end if
   return colour
 end function
@@ -76,13 +76,13 @@ function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of In
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir.equals("left") then
-    set newX to newX - 1
+    reassign newX to newX - 1
   elif dir.equals("right") then
-    set newX to newX + 1
+    reassign newX to newX + 1
   elif dir.equals("up") then
-    set newY to newY - 1
+    reassign newY to newY - 1
   elif dir.equals("down") then
-    set newY to newY + 1
+    reassign newY to newY + 1
   end if
   return [newX, newY]
 end function
@@ -91,7 +91,7 @@ function directionByKey(current as String, key as String) returns String
   variable dirn set to current
   variable d set to ["w":"up", "s":"down", "a":"left", "d":"right"]
   if d.keys().contains(key) then
-    set dirn to d[key]
+    reassign dirn to d[key]
   end if
   return dirn
 end function

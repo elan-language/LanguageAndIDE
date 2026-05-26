@@ -50,7 +50,7 @@ import {
 import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
-import { ReAssignVariable } from "../statements/re-assign-variable";
+import { ReAssignVariable } from "../statements/reassign-variable";
 import { ReturnStatement } from "../statements/return-statement";
 import { CompileStatus } from "../status-enums";
 

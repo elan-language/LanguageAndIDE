@@ -1244,7 +1244,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
          * - wherever an insertion operation or block of insertion operations appears in the hunk, the
          *   immediately preceding and following lines of context match exactly
          *
-         * `toPos` should be set such that lines[toPos] is meant to match hunkLines[0].
+         * `toPos` should be reassign such that lines[toPos] is meant to match hunkLines[0].
          *
          * If the hunk can be applied, returns an object with properties `oldLineLastI` and
          * `replacementLines`. Otherwise, returns null.
@@ -1343,7 +1343,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
                 const line = hunkResult.patchedLines[i];
                 resultLines.push(line);
             }
-            // Set lower text limit to end of the current hunk, so next ones don't try
+            // reassign lower text limit to end of the current hunk, so next ones don't try
             // to fit over already patched text
             minLine = hunkResult.oldLineLastI + 1;
             // Note the offset between where the patch said the hunk should've applied and where we

@@ -10,7 +10,7 @@ import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
-import { ReAssignVariable } from "./statements/re-assign-variable";
+import { ReAssignVariable } from "./statements/reassign-variable";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";

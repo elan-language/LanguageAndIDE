@@ -8,7 +8,7 @@ Sub main()
   Dim corner = side/12.0/cos(45) ' variable definition
   Dim turns = left ' variable definition
   For Each i In range(1, order + 1)
-    turns = setTurns(turns) ' re-assign variable
+    turns = setTurns(turns) ' reassign variable
   Next i
   Dim t = New Turtle() ' variable definition
   setupTurtle(t, order) ' call procedure
@@ -23,7 +23,7 @@ Sub drawDragon(t As Turtle, order As Integer, turns As String, side As Double, c
   Dim p = (200.0/order).floor() ' variable definition
   Dim turnI = 0 ' variable definition
   For Each turn In turns
-    turnI = (if(turn.equals(left), 1, -1)) ' re-assign variable
+    turnI = (if(turn.equals(left), 1, -1)) ' reassign variable
     t.turn(-45*turnI) ' call procedure
     t.move(corner) ' call procedure
     t.turn(-45*turnI) ' call procedure
@@ -52,7 +52,7 @@ End Function
 Function reflect(s As String) As String
   Dim sR = "" ' variable definition
   For Each i In range(1, s.length() + 1)
-    sR = if((s[i - 1]).equals(left), right, left) + sR ' re-assign variable
+    sR = if((s[i - 1]).equals(left), right, left) + sR ' reassign variable
   Next i
   Return sR
 End Function
