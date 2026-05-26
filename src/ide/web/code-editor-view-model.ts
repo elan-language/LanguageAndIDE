@@ -156,6 +156,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async renderAsHtmlAll() {
+    const existingLanguage = this.file!.language();
     const languages = [LanguagePython.Instance, LanguageCS.Instance, LanguageVB.Instance, LanguageJava.Instance];
     const html = [];
 
@@ -163,6 +164,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       this.file!.setLanguage(l);
       html.push(await this.file!.renderAsHtml());
     }
+
+    this.file!.setLanguage(existingLanguage);
 
     return html;
   }
@@ -780,8 +783,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   ) {
     this.setRunStatus(RunStatus.default);
     collapseAllMenus();
-    const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
+    const codeContainers = Array.from((document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>));
 
+    codeContainers.length = textAll.length;
     let textInst = 0;
 
     for (const codeContainer of codeContainers) {

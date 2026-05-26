@@ -526,7 +526,9 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async renderAsHtml(editingField: boolean) {
-    const content = await codeViewModel.renderAsHtmlAll();
+    const isQuad = document.querySelector("body")?.classList.contains("quad-editor");
+
+    const content = isQuad ? await codeViewModel.renderAsHtmlAll() : [await codeViewModel.renderAsHtml()];
     try {
       await codeViewModel.updateContent(
         content,
@@ -736,14 +738,13 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
-
  
-      // codeContainers[0].classList.remove("elan");
-      // codeContainers[0].classList.remove("python");
-      // codeContainers[0].classList.remove("cs");
-      // codeContainers[0].classList.remove("vb");
-      // codeContainers[0].classList.remove("java");
-      // codeContainers[0].classList.add(l.languageHtmlClass);
+    codeContainers[0].classList.remove("elan");
+    codeContainers[0].classList.remove("python");
+    codeContainers[0].classList.remove("cs");
+    codeContainers[0].classList.remove("vb");
+    codeContainers[0].classList.remove("java");
+    codeContainers[0].classList.add(l.languageHtmlClass);
     
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
