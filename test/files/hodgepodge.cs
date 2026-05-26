@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha4
+// C# with Elan 2.0.0-alpha5
 
 // Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
 
