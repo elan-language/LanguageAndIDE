@@ -75,8 +75,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       result =
         keyword !== classKeyword &&
         keyword !== abstractKeyword &&
-        keyword !== interfaceKeyword &&
-        keyword !== enumKeyword;
+        keyword !== interfaceKeyword;
     }
     return result;
   }
