@@ -85,6 +85,7 @@ const profileButton = document.getElementById("profile") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
+const toggleQuadEditorButton = document.getElementById("toggle-quad-editor") as HTMLDivElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -736,14 +737,14 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
 
-    for (const codeContainer of codeContainers) {
-      // codeContainer.classList.remove("elan");
-      // codeContainer.classList.remove("python");
-      // codeContainer.classList.remove("cs");
-      // codeContainer.classList.remove("vb");
-      // codeContainer.classList.remove("java");
-      // codeContainer.classList.add(l.languageHtmlClass);
-    }
+ 
+      codeContainers[0].classList.remove("elan");
+      codeContainers[0].classList.remove("python");
+      codeContainers[0].classList.remove("cs");
+      codeContainers[0].classList.remove("vb");
+      codeContainers[0].classList.remove("java");
+      codeContainers[0].classList.add(l.languageHtmlClass);
+    
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
     this.tvm.setHelpLanguage(l.languageHtmlClass);
@@ -888,6 +889,17 @@ saveButton.addEventListener("click", async (e: Event) => {
 exportButton.addEventListener("click", async (e: Event) => {
   codeViewModel.setExporting(true);
   await getDownloader()(e);
+});
+
+toggleQuadEditorButton.addEventListener("click", async (e: Event) => {
+  document.querySelector("body")!.classList.toggle("quad-editor");
+
+  if (document.querySelector("body")!.classList.contains("quad-editor")) {
+    codeContainers[0].classList.add("python");
+    codeContainers[1].classList.add("cs");
+    codeContainers[2].classList.add("vb");
+    codeContainers[3].classList.add("java");
+  }
 });
 
 copyAsUrlButton.addEventListener("click", async (_e: Event) => {

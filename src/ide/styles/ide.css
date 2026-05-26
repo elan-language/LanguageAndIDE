@@ -88,6 +88,10 @@ body {
   position: relative;
 }
 
+.single {
+  display: flex;
+}
+
 .code {
   flex-basis: auto;
   flex-grow: 1;
@@ -694,11 +698,15 @@ body.functional div.demo-file.functional { display: revert; }
   padding-bottom: 10px;
 }
 
-.quad .code {
+.quad > .code {
   max-height: 45vh;
 }
 
 .quad .code:not( :focus-within)
 {
   opacity: 1;
+}
+
+.quad-editor #lang-button {
+  display: none;
 }
