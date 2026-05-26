@@ -6,7 +6,7 @@ final String allValidAnswers = "ABACK ZONAL" // constant
 
 static void main() {
   while (true) {
-    final Int choice = inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4); // constant
+    final Int choice = inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4); // constant
     clearAllDisplays(); // call procedure
     executeOption(choice); // call procedure
     pressAnyKeyToContinue(); // call procedure

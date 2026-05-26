@@ -1,4 +1,4 @@
-# 21248cad17c658253b5059fcf0ceee2aba9299ad9c4371258c37321f47825122 Elan 2.0.0-alpha5 valid
+# 35ab499f1d4e0c925adc20c9a6f77f9c2d2b33dcc55a117d86dbe1c7c456688a Elan 2.0.0-alpha5 valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -39,7 +39,7 @@ main
   call updateGrid(hodge, podge, true)
   while not uniform(hodge.value())
     # successive updates to grid in blank podge
-    set podge to blank
+    reassign podge to blank
     call updateGrid(hodge, podge, false)
   end while
 end main
@@ -49,10 +49,10 @@ procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of 
   for j in range(0, gH)
     for i in range(0, gW)
       if initial then
-        set podge[i][j] to colours[randint(0, (colours.length()) - 1)]
-        [ghosted] set podge[1][1] to 0x1a001a
+        reassign podge[i][j] to colours[randint(0, (colours.length()) - 1)]
+        [ghosted] reassign podge[1][1] to 0x1a001a
       else
-        set podge[i][j] to newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j])
+        reassign podge[i][j] to newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j])
       end if
     end for
   end for
@@ -81,7 +81,7 @@ function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) 
     variable sRA set to grid[(i + 1 + gW) mod gW][(j - 1 + gH) mod gH]
     variable sLB set to grid[(i - 1 + gW) mod gW][(j + 1 + gH) mod gH]
     variable sRB set to grid[(i + 1 + gW) mod gW][(j + 1 + gH) mod gH]
-    set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
+    reassign neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours
 end function
@@ -92,11 +92,11 @@ function newColour(neighbourColours as List<of Int>, nowColour as Int) returns I
   variable nIll set to 0
   variable sumStates set to colours.indexOf(nowColour)
   for colour in neighbourColours
-    set sumStates to sumStates + colours.indexOf(colour)
+    reassign sumStates to sumStates + colours.indexOf(colour)
     if colour < healthy then
-      set nInfected to nInfected + 1
+      reassign nInfected to nInfected + 1
       if colour is ill then
-        set nIll to nIll + 1
+        reassign nIll to nIll + 1
       end if
     end if
   end for
@@ -107,9 +107,9 @@ function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll
   variable colours set to getColours()
   variable state set to 0
   if nowColour is healthy then
-    set state to divAsInt(nInfected, w1) + divAsInt(nIll, w2)
+    reassign state to divAsInt(nInfected, w1) + divAsInt(nIll, w2)
   elif nowColour isnt ill then
-    set state to divAsInt(sumStates, (nInfected + 1)) + iR
+    reassign state to divAsInt(sumStates, (nInfected + 1)) + iR
   end if
   return if(state > (colours.length() - 1), ill, colours[state])
 end function

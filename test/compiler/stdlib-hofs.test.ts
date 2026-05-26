@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib HOFs", () => {
@@ -220,7 +220,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  set source to source.map(lambda x as Int => x + 1)
+  reassign source to source.map(lambda x as Int => x + 1)
   call printNoLine(source)
 end main`;
 
@@ -330,7 +330,7 @@ return [main, _tests];}`;
 
 main
   variable ed set to ["one":1, "two":2]
-  set ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withSet(x, 1))
+  reassign ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withSet(x, 1))
   call printNoLine(ed)
 end main
 

@@ -1,22 +1,22 @@
-# c94184e0e91e368975eb68d3491fc49a18bd854e41840e7d276380b3e069f596 Elan 2.0.0-alpha5 valid
+# 50d91c3d6d37123907dc89061135d1f6baf59c8962a5e29142668295a44e146c Elan 2.0.0-alpha5 valid
 
 main
   variable blocks set to createBlockGraphics(white)
   variable x set to 20
   variable y set to 15
   while true
-    set blocks[x][y] to red
+    reassign blocks[x][y] to red
     call displayBlocks(blocks)
-    set blocks[x][y] to black
+    reassign blocks[x][y] to black
     variable direction set to randint(0, 3)
     if direction is 0 then
-      set x to min([x + 1, 39])
+      reassign x to min([x + 1, 39])
     elif direction is 1 then
-      set x to max([x - 1, 0])
+      reassign x to max([x - 1, 0])
     elif direction is 2 then
-      set y to min([y + 1, 29])
+      reassign y to min([y + 1, 29])
     elif direction is 3 then
-      set y to max([y - 1, 0])
+      reassign y to max([y - 1, 0])
     end if
   end while
 end main

@@ -5,15 +5,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {
@@ -222,7 +222,7 @@ end test
 
 class Foo
   constructor()
-    set this.p1 to 10
+    reassign this.p1 to 10
   end constructor
   function toString() returns String
     return ""
@@ -294,7 +294,7 @@ end test
 
 class Foo
   constructor()
-    set this.p1 to 10
+    reassign this.p1 to 10
   end constructor
   function toString() returns String
     return ""
@@ -584,7 +584,7 @@ end test
 
 class Foo
   constructor(b as Int)
-    set this.bar to b
+    reassign this.bar to b
   end constructor
   function toString() returns String
     return "a Foo"

@@ -3,24 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("Function", () => {
@@ -198,9 +190,9 @@ end main
 function factorial(a as Int) returns Int
     variable result set to 0
     if a > 2 then
-        set result to a * factorial(a - 1)
+        reassign result to a * factorial(a - 1)
       else 
-        set result to a
+        reassign result to a
     end if
     return result
 end function`;
@@ -537,7 +529,7 @@ end main`;
 
 main
   variable a set to ""
-  set a to foo(3,4)
+  reassign a to foo(3,4)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -726,7 +718,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  set a to 1
+  reassign a to 1
   return a * b
 end function`;
 
@@ -756,7 +748,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  set a to a + 1
+  reassign a to a + 1
   return a * b
 end function`;
 
@@ -1301,7 +1293,7 @@ end function`;
 
 main
   variable d set to ref p1
-  set d to ref p3
+  reassign d to ref p3
 end main
 
 function p1() returns Int
@@ -1534,7 +1526,7 @@ end main
 
 function p1() returns Int
   variable a set to [1, 2]
-  set a[0] to 2
+  reassign a[0] to 2
   return a[0]
 end function`;
 

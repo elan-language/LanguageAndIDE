@@ -106,7 +106,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof ReAssignVariable) {
-      html = `<el-kw>${this.SET} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.REASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
@@ -223,6 +223,7 @@ export class LanguageElan extends LanguageAbstract {
   private PRIVATE = "private";
   private PROCEDURE = "procedure";
   private PROPERTY = "property";
+  private REASSIGN = "reassign";
   private REF = "ref";
   private RETURN = "return";
   private RETURNS = "returns";

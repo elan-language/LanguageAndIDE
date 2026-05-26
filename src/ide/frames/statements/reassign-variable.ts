@@ -1,4 +1,4 @@
-import { setKeyword, toKeyword } from "../../../compiler/elan-keywords";
+import { reassignKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -18,12 +18,12 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
-    return setKeyword;
+    return reassignKeyword;
   }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove(`${setKeyword} `);
+    source.remove(`${reassignKeyword} `);
     this.assignable.parseFrom(source);
     source.remove(` ${toKeyword} `);
     this.expr.parseFrom(source);
@@ -42,6 +42,6 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${reassignKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("While Loop", () => {
@@ -21,7 +21,7 @@ suite("While Loop", () => {
 main
   variable x set to 0
   while x < 10
-    set x to x + 1
+    reassign x to x + 1
   end while
   call printNoLine(x)
 end main`;
@@ -63,10 +63,10 @@ main
   while x < 3
     variable y set to 0
       while y < 4
-        set y to y + 1
-        set t to t + 1
+        reassign y to y + 1
+        reassign t to t + 1
       end while
-      set x to x + 1
+      reassign x to x + 1
   end while
   call printNoLine(t)
 end main`;
@@ -111,7 +111,7 @@ return [main, _tests];}`;
 main
   let x = 0
   while x < 10
-    set x to x + 1
+    reassign x to x + 1
  end main
 `;
 
@@ -134,7 +134,7 @@ main
 
 main
   while x < 10
-    set x to x + 1
+    reassign x to x + 1
   end while
  end main
 `;
@@ -159,7 +159,7 @@ main
 
 main
   while variable x < 10
-    set x to x + 1
+    reassign x to x + 1
   end while
  end main
 `;
@@ -184,7 +184,7 @@ main
 main
   variable x set to 0
   while
-    set x to x + 1
+    reassign x to x + 1
   end while
  end main
 `;
@@ -209,7 +209,7 @@ main
 main
   variable x set to 0
   while x < 10
-    set x to x + 1
+    reassign x to x + 1
   do
  end main
 `;

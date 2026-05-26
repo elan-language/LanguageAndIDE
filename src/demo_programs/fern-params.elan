@@ -37,19 +37,19 @@ procedure processoneline(line as String, result as AsRef<of String>, skippingRef
   variable closebrace set to unicode(125)
   if line.contains("Portion generated") then
     # start of the part we are interested in
-    set skipping to false
+    reassign skipping to false
   end if
   if not skipping then
     # change Unicode Minus Sign to ASCII hyphen-minus
     variable linem set to line
-    set linem to linem.replace(unicode(0x2212), "-")
+    reassign linem to linem.replace(unicode(0x2212), "-")
     # fetch the number at the end of the line
     # note that the number is held as a string at all times in this program
     variable num set to gettrailingnumber(linem)
     if not num.equals("") then
       if num.equals("0") then
         # all values must be Floats
-        set num to "0.0"
+        reassign num to "0.0"
       end if
       call result.set(result.value() + num + ",")
     end if
@@ -60,7 +60,7 @@ procedure processoneline(line as String, result as AsRef<of String>, skippingRef
     if linem.contains("Largest right-hand") then
       # end of parameters
       call result.set(result.value() + closebrace + closebrace)
-      set skipping to true
+      reassign skipping to true
       # we are done, tidy up result to remove excess separators
       call result.set(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
     end if

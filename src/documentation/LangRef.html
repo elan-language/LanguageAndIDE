@@ -287,16 +287,16 @@ procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
-    set hasChanged to false
+    reassign hasChanged to false
     for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
-        set li[i] to li[i + 1]
-        set li[i + 1] to temp
-        set hasChanged to true
+        reassign li[i] to li[i + 1]
+        reassign li[i + 1] to temp
+        reassign hasChanged to true
       end if
     end for
-    set lastComp to lastComp - 1
+    reassign lastComp to lastComp - 1
   end while
 end procedure
 </codeblock>
@@ -358,11 +358,11 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
     variable mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     if item.equals(value) then
-      set result to true
+      reassign result to true
     elif item.isBefore(value) then
-      set result to binarySearch(li.subList(0, mid), item)
+      reassign result to binarySearch(li.subList(0, mid), item)
     else
-      set result to binarySearch(li.subList(mid + 1, li.length()), item)
+      reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
   end if
   return result
@@ -542,7 +542,7 @@ end main
 class Thing
   property names as List&lt;of String&gt;
   constructor()
-    set this.names to createList(6, "X")
+    reassign this.names to createList(6, "X")
   end constructor
   function toString() returns String
     return "instance of class Thing"
@@ -560,7 +560,7 @@ end class
 <codeblock>
 class Apple
   constructor()
-    set this.location to new Square(0, 0)
+    reassign this.location to new Square(0, 0)
   end constructor
   function toString() returns String
     return ""
@@ -571,14 +571,14 @@ class Apple
     while changePosition
       variable ranX set to randint(0, 39)
       variable ranY set to randint(0, 29)
-      set this.location to new Square(ranX, ranY)
+      reassign this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
-        set changePosition to false
+        reassign changePosition to false
       end if
     end while
   end procedure
   procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
-    set blocks[this.location.x][this.location.y] to red
+    reassign blocks[this.location.x][this.location.y] to red
   end procedure
 end class
 </codeblock>
@@ -657,13 +657,13 @@ abstract class Automated inherits Player
   property score as Int
   abstract function getAction() returns PlayerAction
   procedure changeScoreBy(amount as Int)
-    set this.score to this.score + amount
+    reassign this.score to this.score + amount
   end procedure
 end class
 class Dealer inherits Automated
   constructor(startingPoints as Int)
-    set this.score to startingPoints
-    set this.hand to this.hand
+    reassign this.score to startingPoints
+    reassign this.hand to this.hand
   end constructor
   function getAction() returns PlayerAction
     return if((this.hand.total < 17), PlayerAction.draw, PlayerAction.stand)
@@ -674,7 +674,7 @@ class Dealer inherits Automated
 end class
 class HumanPlayer inherits Player
   constructor(startingPoints as Int, hand as Hand)
-    set this.hand to hand
+    reassign this.hand to hand
   end constructor
   property hand as Hand
   procedure changeScoreBy(amount as Int)
@@ -685,7 +685,7 @@ class HumanPlayer inherits Player
 end class
 class Hand
   constructor()
-    set this.total to 0
+    reassign this.total to 0
   end constructor
   property total as Int
   function toString() returns String
@@ -744,7 +744,7 @@ Some useful constants are provided: see <a href="LibRef.html#systemConstants">Sy
 <div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
-It is used to provide a fixed set of options that are self-explanatory, and the references to its
+It is used to provide a fixed reassign of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
 <p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
 number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf08e;</i></a>.</p>
@@ -790,11 +790,11 @@ end main
 function clockwise(d as Compass) returns Compass
   variable newDir set to Compass.north
   if d.equals(Compass.north) then
-    set newDir to Compass.east
+    reassign newDir to Compass.east
   elif d.equals(Compass.east) then
-    set newDir to Compass.south
+    reassign newDir to Compass.south
   elif d.equals(Compass.south) then
-    set newDir to Compass.west
+    reassign newDir to Compass.west
   end if
   return newDir
 end function
@@ -912,8 +912,8 @@ the correct Type must be provided. For example, if the class <code>Square</code>
 <codeblock>
 class Square
   constructor(x as Int, y as Int)
-    set this.x to x
-    set this.y to y
+    reassign this.x to x
+    reassign this.y to y
   end constructor
 end class
 </codeblock>
@@ -969,7 +969,7 @@ class Teacher
 end class
 class Pupil
   constructor()
-    set this.tutor to new Maybe&lt;of Teacher&gt;()
+    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
   property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
@@ -1014,7 +1014,7 @@ end class
 <p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
 if defined on an <b>abstract class</b>, within its subclasses.
  This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
-This action is a toggle used both to set and to remove the modifier <b>private</b>.</p>
+This action is a toggle used both to reassign and to remove the modifier <b>private</b>.</p>
 <ul>
  <li></li>
  <li>A property that is not private may be read, but not written to.</li>
@@ -1027,10 +1027,10 @@ This action is a toggle used both to set and to remove the modifier <b>private</
 <codeblock>
 class Game
   constructor(board as Board)
-    set this.board to board
+    reassign this.board to board
   end constructor
   procedure setHeight(height as Int)
-    set this.height to height
+    reassign this.height to height
   end procedure
 end class
 </codeblock>
@@ -1058,7 +1058,7 @@ end class
 </p>
 
 <h2 id="set"><b>reassign variable</b></h2>
-<p>The <b>set variable .. to .. </b> instruction assigns a new value to an existing <b>variable</b> definition (mutable) named value.</p>
+<p>The <b>reassign variable .. to .. </b> instruction assigns a new value to an existing <b>variable</b> definition (mutable) named value.</p>
 <p>The new value must be of the same Type as (or of a Type compatible with) that of the variable.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
@@ -1074,13 +1074,13 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
  <li>It is structured like this:
 <codeblock>
 if (x < 1) then
-  set x to 1
+  reassign x to 1
 elif x < 2 then
-  set x to 2
+  reassign x to 2
 elif x < 3 then
-  set x to 3
+  reassign x to 3
 else
-  set x to 0
+  reassign x to 0
 end if
 </codeblock>
 </li>
@@ -1107,11 +1107,11 @@ end if
 main
   variable result set to false
   if item.equals(value) then
-    set result to true
+    reassign result to true
   elif item.isBefore(value) then
-    set result to binarySearch(li.subList(0, mid), item)
+    reassign result to binarySearch(li.subList(0, mid), item)
   else
-    set result to binarySearch(li.subList(mid + 1, li.length()), item)
+    reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
   end if
 end main
 </codeblock>
@@ -1194,7 +1194,7 @@ end main
 function reverse(s as String) returns String
   variable sReturn set to ""
   for ch in s
-    set sReturn to ch + sReturn
+    reassign sReturn to ch + sReturn
   end for
   return sReturn
 end function
@@ -1416,7 +1416,7 @@ end main
 <codeblock>
 main
   variable li set to new List&lt;of Int&gt;()
-  set li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
   call print(li.subList(0, 7))
@@ -1527,7 +1527,7 @@ if listA.equals(listB) then
 end if
 </codeblock>
 </li>
-<li><code>set differs to set1.notEqualTo(set2)</code></li>
+<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
 Two Lists compare equal if they contain the same items in the same order.
@@ -1554,8 +1554,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<code>set x to (a > b) and (b < c)</code><br>
-<code>set x to (a + b) > (c - d)</code>
+<code>reassign x to (a > b) and (b < c)</code><br>
+<code>reassign x to (a + b) > (c - d)</code>
 
 <h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:

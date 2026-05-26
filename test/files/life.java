@@ -45,7 +45,7 @@ static (int, int) north((int, int) cell) { // function
   var y = cell.item_1;
   var y2 = y - 1;
   if (y2 == -1) {
-    y2 = 29; // re-assign variable
+    y2 = 29; // reassign variable
   } // if
   return (x, y2);
 } // function
@@ -55,7 +55,7 @@ static (int, int) south((int, int) cell) { // function
   var y = cell.item_1;
   var y2 = y + 1;
   if (y2 == 30) {
-    y2 = 0; // re-assign variable
+    y2 = 0; // reassign variable
   } // if
   return (x, y2);
 } // function
@@ -65,7 +65,7 @@ static (int, int) east((int, int) cell) { // function
   var y = cell.item_1;
   var x2 = x + 1;
   if (x2 == 40) {
-    x2 = 0; // re-assign variable
+    x2 = 0; // reassign variable
   } // if
   return (x2, y);
 } // function
@@ -75,7 +75,7 @@ static (int, int) west((int, int) cell) { // function
   var y = cell.item_1;
   var x2 = x - 1;
   if (x2 == -1) {
-    x2 = 39; // re-assign variable
+    x2 = 39; // reassign variable
   } // if
   return (x2, y);
 } // function

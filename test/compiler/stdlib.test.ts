@@ -5,20 +5,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertCompiles,
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertCompiles,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertGraphicsContains,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -786,8 +786,8 @@ main
   variable val set to 0
   call rnd.initialiseFromClock()
   for i in range(1, 10001)
-    set val to rnd.asInt(0, 1)
-    set rnd to rnd.nextGen()
+    reassign val to rnd.asInt(0, 1)
+    reassign rnd to rnd.nextGen()
     call results.put(val, results[val] + 1)
   end for
   call printNoLine(results[0] > 0)
@@ -840,8 +840,8 @@ main
   variable rnd set to new Random()
   variable val set to 0
   for i in range(1, 10001)
-    set val to rnd.asInt(3, 5)
-    set rnd to rnd.nextGen()
+    reassign val to rnd.asInt(3, 5)
+    reassign rnd to rnd.nextGen()
     call results.put(val, results[val] + 1)
   end for
   for i in range(0, 7)
@@ -899,8 +899,8 @@ main
   variable dice set to 0
   for i in range(1, 10001)
     variable t set to rollDice(rnd)
-    set dice to t.item_0
-    set rnd to t.item_1
+    reassign dice to t.item_0
+    reassign rnd to t.item_1
     call results.put(dice, results[dice] + 1)
   end for
   for i in range(0, 7)
@@ -1502,7 +1502,7 @@ main
   call printNoLine(c.indexOf("ll"))
   call printNoLine(c.indexOf("x"))
   variable i set to 1
-  set i to a.indexOf(9)
+  reassign i to a.indexOf(9)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1544,7 +1544,7 @@ return [main, _tests];}`;
 
 main
   variable i set to 1
-  set i to "A".asUnicode()
+  reassign i to "A".asUnicode()
   call printNoLine(i)
 end main`;
 
@@ -2204,7 +2204,7 @@ main
     end for
     call b.append(sa)
   end for
-  set b to createBlockGraphics(white)
+  reassign b to createBlockGraphics(white)
 end main
 `;
 

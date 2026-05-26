@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertGraphicsContains,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertGraphicsContains,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display", () => {
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable g set to createBlockGraphics(white)
-  set g[1][0] to 4
+  reassign g[1][0] to 4
   call displayBlocks(g)
 end main`;
 
@@ -157,7 +157,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  set a to getNumericKey()
+  reassign a to getNumericKey()
   call printNoLine(a)
 end main`;
 
@@ -330,7 +330,7 @@ end main
 
 class Foo
   constructor()
-    set this.p to new List<of Int>()
+    reassign this.p to new List<of Int>()
   end constructor
   function toString() returns String
     return ""

@@ -3,13 +3,13 @@ import { processWorksheetsInDirectory } from "../../src/build-scripts/preprocess
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { processInnerCode } from "../../src/tools/codeParser";
 import {
-  processCode,
-  processFinals,
-  processHelps,
-  processHints,
-  processLoads,
-  processQuestions,
-  processSteps,
+    processCode,
+    processFinals,
+    processHelps,
+    processHints,
+    processLoads,
+    processQuestions,
+    processSteps,
 } from "../../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../../src/tools/parserConstants";
 import { ignore_test } from "../compiler/compiler-test-helpers";
@@ -30,7 +30,7 @@ suite("process worksheets", () => {
   for col in range(0, 40)
     for row in range(0, 30)
       variable cell set to if(random() > 0.5, black, white)
-      set grid[col][row] to cell
+      reassign grid[col][row] to cell
     end for
   end for
 end procedure`;
@@ -44,7 +44,7 @@ end procedure`;
     const code = `for col in range(0, 40)
   for row in range(0, 30)
     variable cell set to if(random() > 0.5, black, white)
-    set grid[col][row] to cell
+    reassign grid[col][row] to cell
   end for
 end for`;
 
@@ -55,7 +55,7 @@ end for`;
 
   test("process constructor", async () => {
     const code = `constructor()
-  set this.p1 to 1
+  reassign this.p1 to 1
 end constructor`;
 
     const actual = await processInnerCode(code, LanguageElan.Instance);
@@ -289,14 +289,14 @@ end constructor`;
             variable unused set to something
             for n in range(0, 5)
               if attempt[n] is unused[n] then
-                set mark to setChar(mark, n, "2")
-                set unused to something
+                reassign mark to setChar(mark, n, "2")
+                reassign unused to something
               end if
             end for
             for n in range(0, 5)
               if (mark[n] isnt "2") and unused.contains(attempt[n]) then
-                set mark to setChar(mark, n, "1")
-                set unused to something
+                reassign mark to setChar(mark, n, "1")
+                reassign unused to something
               end if
             end for
             return mark

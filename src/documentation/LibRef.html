@@ -442,7 +442,7 @@ end test
 <p>If <code>velocity</code> and <code>fuel</code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><codeblock>set message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
+ <td><codeblock>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
   <codeblock>call print(message) </codeblock>
  </td>
  <td>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
@@ -573,7 +573,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 </ul>
 <p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
- <li><code>set aList[ix] to "Smith"</code></li>
+ <li><code>reassign aList[ix] to "Smith"</code></li>
 </ul>
 <p>A List's size can be dynamically changed using the procedure methods listed below.</p>
 
@@ -584,12 +584,12 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>To extract the first item in a List:<br>
  <code>variable headItem set to myList[0]</code><br>
  or<br>
- <code>set heatItem to myList.head()</code>
+ <code>reassign heatItem to myList.head()</code>
  </li><li>To form a new List of all but the first item in a List:<br>
  <code>variable  tailList set to myList.tail()</code><br>
  If the original list contains only one item, the new List will be the empty List.
  </li><li>To get some other portion of a List, use the method <el-method>subList</el-method>:<br>
- <code>set shortList to myList.subList(1,5)</code>
+ <code>reassign shortList to myList.subList(1,5)</code>
 </li>
 </ul>
 <p>In all these cases the items indexed must exist, else a runtime error will stop the program.</p>
@@ -609,7 +609,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  using its two coordinates in square brackets:</p>
 <ul>
   <li><code>variable value set to  array2D[ix][iy]</code></li>
-  <li><code>set array2D[ix][iy] to 7</code></li>
+  <li><code>reassign array2D[ix][iy] to 7</code></li>
 </ul>
 
 <h4 class="no-TOC">Higher dimensional arrays</h4>
@@ -908,12 +908,12 @@ end main
 <h2 id="HashSet">HashSet</h2>
 <p>A <code>HashSet</code> (also referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <code>List</code> with two important differences:</p>
 <ul>
- <li>The value of a Set member may appear only once: if a member being added to a <code>HashSet</code> has the same value as an existing member in the Set then the Set remains the same as before.</li>
+ <li>The value of a reassign member may appear only once: if a member being added to a <code>HashSet</code> has the same value as an existing member in the Set then the Set remains the same as before.</li>
  <li>The values in a <code>HashSet</code> are not indexed: two Sets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
  <li>There are no methods that modify an existing Set but several, e.g. <el-method>add</el-method> and <el-method>remove</el-method>,
  return a new <code>HashSet</code> that is based on the original Set or Sets with specified differences.</li>
 </ul>
-<p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
+<p>This enables a reassign to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the Type of its members must be specified in the form
  <code>HashSet&lt;of String&gt;</code></p>
 <p>You can add members: individually with <el-method>add</el-method>, or multiply with <el-method>addFromList</el-method>.
@@ -925,7 +925,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  <td>
   <codeblock>
   variable st set to new HashSet&lt;of Int&gt;()
-  set st to st.addFromList([3, 5, 7])
+  reassign st to st.addFromList([3, 5, 7])
   call print(st.length())
   </codeblock>
   </td><td>
@@ -935,7 +935,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 </tr><tr>
  <td>
   <codeblock>
-  set st to st.add(7)
+  reassign st to st.add(7)
   call print(st.length())
   </codeblock>
  </td><td>
@@ -946,14 +946,14 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 </tr><tr>
  <td>
   <codeblock>
-  set st to st.remove(3)
+  reassign st to st.remove(3)
   call print(st.length())
   </codeblock>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
  <td>
   <codeblock>
-  set st to st.remove(3)
+  reassign st to st.remove(3)
   call print(st.length())
   </codeblock>
  <td><br>&#x27f6;</td><td><br>2</td>
@@ -1009,7 +1009,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>intersection</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>HashSet</code></td>
-  <td>a Set containing those members common to both the Set and the argument Set</td>
+  <td>a reassign containing those members common to both the Set and the argument Set</td>
  </tr><tr id="isDisjointFrom">
   <td><el-method>isDisjointFrom</el-method></td>
   <td><code>HashSet</code></td>
@@ -1166,9 +1166,9 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 main
   variable sk set to new Stack&lt;of String&gt;()
   call print(sk.length())
-  set sk to sk.push("apple")
-  set sk to sk.push("banana")
-  set sk to sk.push("cherry")
+  reassign sk to sk.push("apple")
+  reassign sk to sk.push("banana")
+  reassign sk to sk.push("cherry")
   call print(sk.length())
   call print(sk)
   call print(sk.peek())
@@ -1176,7 +1176,7 @@ main
   call print(sk)
   call print(sk.pop().item_0)
   call print(sk)
-  set sk to sk.pop().item_1
+  reassign sk to sk.pop().item_1
   call print(sk)
 end main
 </codeblock>
@@ -1193,9 +1193,9 @@ end main
 main
   variable qu set to new Queue&lt;of String&gt;()
   call print(qu.length())
-  set qu to qu.enqueue("apple")
-  set qu to qu.enqueue("banana")
-  set qu to qu.enqueue("cherry")
+  reassign qu to qu.enqueue("apple")
+  reassign qu to qu.enqueue("banana")
+  reassign qu to qu.enqueue("cherry")
   call print(qu.length())
   call print(qu)
   call print(qu.peek())
@@ -1203,7 +1203,7 @@ main
   call print(qu)
   call print(qu.dequeue().item_0)
   call print(qu)
-  set qu to qu.dequeue().item_1
+  reassign qu to qu.dequeue().item_1
   call print(qu)
 end main
 </codeblock>
@@ -1310,7 +1310,7 @@ main
     variable x set to randint(0, 39)
     variable y set to randint(0, 29)
     variable colour set to randint(0, white - 1)
-    set grid[x][y] to colour
+    reassign grid[x][y] to colour
     call displayBlocks(grid)
   end while
 end main
@@ -1486,7 +1486,7 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
 <p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
- is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
+ is reassign with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
 Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code> <i class="fa">&#xf08e;</i></a>.</p>
@@ -1862,8 +1862,8 @@ main
   call rnd.initialiseFromClock()
   variable dice set to 0
   for i in range(1, 11)
-    set dice to rollDice(rnd).item_0
-    set rnd to rollDice(rnd).item_1
+    reassign dice to rollDice(rnd).item_0
+    reassign rnd to rollDice(rnd).item_1
     call print(dice)
   end for
 end main
@@ -2966,7 +2966,7 @@ end function
 <h3 class="no-TOC" id="filter">filter </h3>
 
 <p>You give a <code>List</code> to the Higher-order Function <el-method>filter</el-method> in order to return a new <code>List</code> containing a subset of items.
-The subset is chosen by a lambda function that tests list item values and returns a Boolean to specify filtering in or out.</p>
+The subreassign is chosen by a lambda function that tests list item values and returns a Boolean to specify filtering in or out.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
@@ -3120,7 +3120,7 @@ main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
-  set sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   call print(sR)
 end main
 </codeblock>

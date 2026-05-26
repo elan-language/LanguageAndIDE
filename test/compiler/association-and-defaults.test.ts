@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Associations and Defaults", () => {
@@ -26,9 +26,9 @@ end main
 
 class Game
     constructor()
-      set this.p2 to new Player("Chloe")
-      set this.p1 to new Player("Joe")
-      set this.previousScores to [5, 2, 4]
+      reassign this.p2 to new Player("Chloe")
+      reassign this.p1 to new Player("Joe")
+      reassign this.previousScores to [5, 2, 4]
     end constructor
 
     property p1 as Player
@@ -44,7 +44,7 @@ end class
 
 class Player
     constructor(name as String)
-        set this.name to name
+        reassign this.name to name
     end constructor
 
     property name as String
@@ -143,8 +143,8 @@ end main
 
 class Foo
     constructor()
-      set this.p2 to 1
-      set this.p1 to this.p2
+      reassign this.p2 to 1
+      reassign this.p1 to this.p2
     end constructor
   function toString() returns String
     return ""
@@ -216,10 +216,10 @@ end main
 
 class Game
     constructor()
-      set this.s to ""
-      set this.ds to new Dictionary<of String, Int>()
-      set this.ai to new List<of Int>()
-      set this.t to (0, "", new List<of Int>())
+      reassign this.s to ""
+      reassign this.ds to new Dictionary<of String, Int>()
+      reassign this.ai to new List<of Int>()
+      reassign this.t to (0, "", new List<of Int>())
     end constructor
 
     property i as Int
@@ -320,7 +320,7 @@ end main
 
 class Player
   constructor()
-    set this.g to new Game()
+    reassign this.g to new Game()
   end constructor
   function toString() returns String
     return ""
@@ -332,11 +332,11 @@ end class
 
 class Game
     constructor()
-      set this.s to ""
-      set this.li to new List<of Int>()
-      set this.ds to new Dictionary<of String, Int>()
-      set this.ai to new List<of Int>()
-      set this.t to (0, "", new List<of Int>())
+      reassign this.s to ""
+      reassign this.li to new List<of Int>()
+      reassign this.ds to new Dictionary<of String, Int>()
+      reassign this.ai to new List<of Int>()
+      reassign this.t to (0, "", new List<of Int>())
     end constructor
 
     property i as Int
@@ -457,8 +457,8 @@ end main
 
 class Game
   constructor()
-    set this.p1 to new Player("Player1")
-    set this.previousGame to new Maybe<of Game>()
+    reassign this.p1 to new Player("Player1")
+    reassign this.previousGame to new Maybe<of Game>()
   end constructor
 
   property p1 as Player
@@ -472,7 +472,7 @@ end class
 
 class Player
   constructor(name as String)
-    set this.name to name
+    reassign this.name to name
   end constructor
 
   property name as String
@@ -567,8 +567,8 @@ end main
 
 class Game
   constructor()
-    set this.p1 to new Maybe<of Player>()
-    set this.p2 to new Maybe<of Player>()
+    reassign this.p1 to new Maybe<of Player>()
+    reassign this.p2 to new Maybe<of Player>()
   end constructor
 
   property p1 as Maybe<of Player>
@@ -666,7 +666,7 @@ end main
 
 class Game
   constructor()
-    set this.p1 to [1,2,3]
+    reassign this.p1 to [1,2,3]
   end constructor
   function toString() returns String
     return ""
@@ -676,7 +676,7 @@ class Game
 
   procedure something()
     variable a set to 1
-    set a to this.p1[0]
+    reassign a to this.p1[0]
     call printNoLine(a)
   end procedure
 
@@ -751,7 +751,7 @@ end class
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -910,7 +910,7 @@ end main
 
 class Foo
   constructor()
-    set this.p1 to p2
+    reassign this.p1 to p2
   end constructor
   function toString() returns String
     return ""
@@ -947,8 +947,8 @@ end main
 
 class Foo
   constructor()
-    set this.p2 to [0]
-    set this.p1 to p2[0]
+    reassign this.p2 to [0]
+    reassign this.p1 to p2[0]
   end constructor
   function toString() returns String
     return ""
@@ -985,7 +985,7 @@ end main
 
 class Foo
   constructor()
-    set this.p2 to new List<of Int>()
+    reassign this.p2 to new List<of Int>()
   end constructor
   function toString() returns String
     return ""
@@ -996,7 +996,7 @@ class Foo
 
   procedure foo()
     if this.p1 is 0 then
-      set p2 to [0]
+      reassign p2 to [0]
     end if
   end procedure
 
@@ -1028,7 +1028,7 @@ end main
 
 class Foo
   constructor()
-    set this.p2 to new List<of Int>()
+    reassign this.p2 to new List<of Int>()
   end constructor
   function toString() returns String
     return ""
@@ -1038,8 +1038,8 @@ class Foo
   property p2 as List<of Int>
 
   procedure foo()
-    set this.p2 to [0]
-    set p1 to this.p2[0]
+    reassign this.p2 to [0]
+    reassign p1 to this.p2[0]
   end procedure
 
 end class`;
@@ -1084,7 +1084,7 @@ end class
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -1137,7 +1137,7 @@ end class
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -1192,7 +1192,7 @@ end class
 
 class Bar
   constructor()
-    set this.p1 to new Foo()
+    reassign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -1200,7 +1200,7 @@ class Bar
 
   procedure p()
     if this.p2 then
-      set p2 to false
+      reassign p2 to false
     end if 
   end procedure
 

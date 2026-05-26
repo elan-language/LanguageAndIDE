@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Input", () => {
@@ -85,7 +85,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  set a to inputInt("")
+  reassign a to inputInt("")
   call printNoLine(a)
 end main`;
 
@@ -120,7 +120,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  set a to inputFloat("")
+  reassign a to inputFloat("")
   call printNoLine(a)
 end main`;
 
@@ -156,8 +156,8 @@ return [main, _tests];}`;
 main
   variable a set to "value"
   variable b set to "value1"
-  set a to input("")
-  set b to a
+  reassign a to input("")
+  reassign b to a
   call printNoLine(b)
 end main`;
 
@@ -260,7 +260,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  set a to inputInt("aprompt")
+  reassign a to inputInt("aprompt")
   call printNoLine(a)
 end main`;
 
@@ -295,7 +295,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  set a to inputIntBetween("aprompt", 3, 7)
+  reassign a to inputIntBetween("aprompt", 3, 7)
   call printNoLine(a)
 end main`;
 
@@ -330,7 +330,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  set a to inputFloat("aprompt")
+  reassign a to inputFloat("aprompt")
   call printNoLine(a)
 end main`;
 
@@ -365,7 +365,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  set a to inputFloatBetween("aprompt", 0, 1)
+  reassign a to inputFloatBetween("aprompt", 0, 1)
   call printNoLine(a)
 end main`;
 
@@ -400,7 +400,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ""
-  set a to inputInt("")
+  reassign a to inputInt("")
   call printNoLine(a)
 end main`;
 

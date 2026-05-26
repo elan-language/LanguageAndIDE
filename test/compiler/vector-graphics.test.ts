@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Vector Graphics", () => {
@@ -223,30 +223,30 @@ return [main, _tests];}`;
 main
   variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG()
-  set circ to circ.withRadius(20)
-  set circ to circ.withCentreX(30)
-  set circ to circ.withCentreY(40)
-  set circ to circ.withFillColour(blue)
-  set circ to circ.withStrokeColour(yellow)
-  set circ to circ.withStrokeWidth(2)
-  set vg to vg.withAppend(circ)
+  reassign circ to circ.withRadius(20)
+  reassign circ to circ.withCentreX(30)
+  reassign circ to circ.withCentreY(40)
+  reassign circ to circ.withFillColour(blue)
+  reassign circ to circ.withStrokeColour(yellow)
+  reassign circ to circ.withStrokeWidth(2)
+  reassign vg to vg.withAppend(circ)
   variable line set to new LineVG()
-  set line to line.withX1(10)
-  set line to line.withY1(15)
-  set line to line.withX2(20)
-  set line to line.withY2(30)
-  set line to line.withStrokeColour(blue)
-  set line to line.withStrokeWidth(3)
-  set vg to vg.withAppend(line)
+  reassign line to line.withX1(10)
+  reassign line to line.withY1(15)
+  reassign line to line.withX2(20)
+  reassign line to line.withY2(30)
+  reassign line to line.withStrokeColour(blue)
+  reassign line to line.withStrokeWidth(3)
+  reassign vg to vg.withAppend(line)
   variable rect set to new RectangleVG()
-  set rect to rect.withX(10)
-  set rect to rect.withY(15)
-  set rect to rect.withWidth(20)
-  set rect to rect.withHeight(30)
-  set rect to rect.withFillColour(green)
-  set rect to rect.withStrokeColour(blue)
-  set rect to rect.withStrokeWidth(3)
-  set vg to vg.withAppend(rect)
+  reassign rect to rect.withX(10)
+  reassign rect to rect.withY(15)
+  reassign rect to rect.withWidth(20)
+  reassign rect to rect.withHeight(30)
+  reassign rect to rect.withFillColour(green)
+  reassign rect to rect.withStrokeColour(blue)
+  reassign rect to rect.withStrokeWidth(3)
+  reassign vg to vg.withAppend(rect)
   call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;
 
@@ -469,7 +469,7 @@ return [main, _tests];}`;
 main
   variable vg set to new List<of VectorGraphic>()
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
-  set i to i.withX(50).withY(50).withWidth(50).withHeight(50)
+  reassign i to i.withX(50).withY(50).withWidth(50).withHeight(50)
   call vg.append(i)
   call printNoLine(vg.vectorGraphicsAsHtml())
 end main`;

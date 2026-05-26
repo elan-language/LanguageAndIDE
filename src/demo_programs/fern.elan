@@ -1,4 +1,4 @@
-# 2b4e3cf60c3692f53148a5eeb483c0d94dcf701bc7e9be67efe2a5d37dda3745 Elan 2.0.0-alpha5 valid
+# bd46dac657ed13c2a1135f8e842f3c799db05767beaa00d27cd15ff1bc1bcf81 Elan 2.0.0-alpha5 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -16,13 +16,13 @@ main
   # or the browser will run out of memory
   while count < 1000
     variable point set to onepoint(x, y, r)
-    set rect to point.item_0
-    set x to point.item_1
-    set y to point.item_2
-    set r to point.item_3
+    reassign rect to point.item_0
+    reassign x to point.item_1
+    reassign y to point.item_2
+    reassign r to point.item_3
     call vg.append(rect)
     call displayVectorGraphics(vg)
-    set count to count + 1
+    reassign count to count + 1
   end while
   call print("Finished")
 end main
@@ -56,11 +56,11 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable nx set to 0.0
   variable ny set to 0.0
   for pp in allPs
-    set cumuprob to cumuprob + pp[6]
+    reassign cumuprob to cumuprob + pp[6]
     if (not done) and (r < cumuprob) then
-      set nx to x*pp[0] + y*pp[1] + pp[4]
-      set ny to x*pp[2] + y*pp[3] + pp[5]
-      set done to true
+      reassign nx to x*pp[0] + y*pp[1] + pp[4]
+      reassign ny to x*pp[2] + y*pp[3] + pp[5]
+      reassign done to true
     end if
   end for
   return (nx, ny)

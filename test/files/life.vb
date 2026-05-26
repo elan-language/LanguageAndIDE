@@ -45,7 +45,7 @@ Function north(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim y2 = y - 1 ' variable definition
   If y2 = -1 Then
-    y2 = 29 ' re-assign variable
+    y2 = 29 ' reassign variable
   End If
   Return (x, y2)
 End Function
@@ -55,7 +55,7 @@ Function south(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim y2 = y + 1 ' variable definition
   If y2 = 30 Then
-    y2 = 0 ' re-assign variable
+    y2 = 0 ' reassign variable
   End If
   Return (x, y2)
 End Function
@@ -65,7 +65,7 @@ Function east(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim x2 = x + 1 ' variable definition
   If x2 = 40 Then
-    x2 = 0 ' re-assign variable
+    x2 = 0 ' reassign variable
   End If
   Return (x2, y)
 End Function
@@ -75,7 +75,7 @@ Function west(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim x2 = x - 1 ' variable definition
   If x2 = -1 Then
-    x2 = 39 ' re-assign variable
+    x2 = 39 ' reassign variable
   End If
   Return (x2, y)
 End Function

@@ -289,7 +289,7 @@ as it shows the two important principles of designing a recursive function:</p>
 <p>In procedural programming a list may be mutated either by reassigning an indexed value, for example:
 
 <codeblock>
-  set mySubjects[3] to "Geography"
+  reassign mySubjects[3] to "Geography"
 </codeblock>
 
 or by calling one of the available procedure methods on on it such as:
@@ -514,7 +514,7 @@ and use them to access the appropriate portions of the <code>grid</code> - a 2D 
 <codeblock>
 function withHead(value as Square) returns Game
   let copyOfThis be copy(this)
-  set copyOfThis.head to value
+  reassign copyOfThis.head to value
   return copyOfThis
 end function
 </codeblock>
@@ -531,7 +531,7 @@ Note that it:
   must be created using the <b>with method</b> instruction template, which is
 offered only within a class, and only when using the <b>Functional</b> profile.
 The reason is that only within the <el-method>with...</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
-a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>set this.x to value</code>, since that would 
+a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would 
 make changes observable from outside the function.</p>
 
 <p>Note, in the same demo, that the class <code>Square</code> does not define any <el-method>with...</el-method> methods, because there is no need
@@ -595,7 +595,7 @@ main
   variable rng set to new Random()
   for i in range(1, 10)
     call print(rollDice(rng))
-    set rng to rng.nextGen()
+    reassign rng to rng.nextGen()
   end for
 end main
 </codeblock>
@@ -611,7 +611,7 @@ main
   call rng.initialiseFromClock()
   for i in range(1, 10)
     call print(rollDice(rng))
-    set rng to rng.nextGen()
+    reassign rng to rng.nextGen()
   end for
 end main
 </codeblock>

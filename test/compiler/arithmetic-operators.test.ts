@@ -4,15 +4,15 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Arithmetic Operators", () => {
@@ -358,10 +358,10 @@ return [main, _tests];}`;
 main
   variable a set to 1.0
   variable b set to 1.1
-  set a to pow(2, 2)
-  set b to pow(2, 2)
-  set b to pow(2, 0.5)
-  set b to pow(0.5, 2)
+  reassign a to pow(2, 2)
+  reassign b to pow(2, 2)
+  reassign b to pow(2, 0.5)
+  reassign b to pow(0.5, 2)
   call printNoLine(a)
   call printNoLine(b)
 end main`;
@@ -402,7 +402,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  set a to a + 1
+  reassign a to a + 1
   call printNoLine(a)
 end main`;
 
@@ -685,7 +685,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to pow(2, 0.5)
+  reassign x to pow(2, 0.5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -711,7 +711,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to pow(0.5, 2)
+  reassign x to pow(0.5, 2)
 end main`;
 
     const fileImpl = new FileImpl(

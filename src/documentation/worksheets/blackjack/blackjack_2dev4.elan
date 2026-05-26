@@ -9,7 +9,7 @@ main
   while rounds > 0
     call playOneRound(game)
     call clearKeyBuffer()
-    set rounds to rounds - 1
+    reassign rounds to rounds - 1
   end while
   call display(game)
 end main
@@ -46,12 +46,12 @@ function strategyA(p as Player, dealerFaceUp as Card) returns Action
   variable dfc set to dealerFaceUp.value - 2
   variable limit set to 0
   if p.hasSoftAce then
-    set limit to drawToWithSoftAce[dfc]
+    reassign limit to drawToWithSoftAce[dfc]
   else
-    set limit to drawTo[dfc]
+    reassign limit to drawTo[dfc]
   end if
   if p.handTotal < limit then
-    set act to Action.draw
+    reassign act to Action.draw
   end if
   return act
 end function
@@ -59,11 +59,11 @@ end function
 function strategyB(p as Player, dealerFaceUp as Card) returns Action
   variable act set to Action.stand
   if (dealerFaceUp.value >= 4) and (dealerFaceUp.value <= 6) then
-    set act to drawUpTo(12, p)
+    reassign act to drawUpTo(12, p)
   elif p.hasSoftAce then
-    set act to drawUpTo(18, p)
+    reassign act to drawUpTo(18, p)
   else
-    set act to drawUpTo(17, p)
+    reassign act to drawUpTo(17, p)
   end if
   return act
 end function
@@ -71,7 +71,7 @@ end function
 function drawUpTo(limit as Int, p as Player) returns Action
   variable act set to Action.stand
   if p.handTotal < limit then
-    set act to Action.draw
+    reassign act to Action.draw
   end if
   return act
 end function
@@ -107,24 +107,24 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   variable draw set to Outcome.draw
   variable playerOutcome set to draw
   if p is bust then
-    set playerOutcome to lose
+    reassign playerOutcome to lose
   elif (p is bj) and (d isnt bj) then
-    set playerOutcome to winDouble
+    reassign playerOutcome to winDouble
   elif d is bust then
-    set playerOutcome to win
+    reassign playerOutcome to win
   elif (d is bj) and (p is bj) then
-    set playerOutcome to draw
+    reassign playerOutcome to draw
   elif p is bj then
-    set playerOutcome to winDouble
+    reassign playerOutcome to winDouble
   elif d is bj then
-    set playerOutcome to lose
+    reassign playerOutcome to lose
   elif pTotal > dTotal then
-    set playerOutcome to win
+    reassign playerOutcome to win
   elif pTotal < dTotal then
-    set playerOutcome to lose
+    reassign playerOutcome to lose
   else
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
-    set playerOutcome to draw
+    reassign playerOutcome to draw
   end if
   return playerOutcome
 end function
@@ -139,33 +139,33 @@ end function
 function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
   if n is 1 then
-    set suit to Suit.diamonds
+    reassign suit to Suit.diamonds
   elif n is 2 then
-    set suit to Suit.hearts
+    reassign suit to Suit.hearts
   elif n is 3 then
-    set suit to Suit.spades
+    reassign suit to Suit.spades
   end if
   return suit
 end function
 
 function htmlForGame(game as Game) returns String
   variable html set to "<div class='game'>"
-  set html to html + htmlForPlayer(game.dealer)
+  reassign html to html + htmlForPlayer(game.dealer)
   for player in game.players
-    set html to html + htmlForPlayer(player)
+    reassign html to html + htmlForPlayer(player)
   end for
-  set html to html + $"<div class='message'>{game.message}</div>"
+  reassign html to html + $"<div class='message'>{game.message}</div>"
   return html + "</div>"
 end function
 
 function htmlForPlayer(player as Player) returns String
   variable html set to "<div class='player'>"
-  set html to html + $"<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>"
-  set html to html + "<div class='hand'>"
+  reassign html to html + $"<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>"
+  reassign html to html + "<div class='hand'>"
   for card in player.cards
     variable suit set to card.suit
     variable rank set to card.rank
-    set html to html + htmlForCard(card)
+    reassign html to html + htmlForCard(card)
   end for
   return html + "</div></div>"
 end function
@@ -173,24 +173,24 @@ end function
 function htmlForCard(card as Card) returns String
   variable html set to ""
   if card.faceDown then
-    set html to "<div class='card reversed'>"
+    reassign html to "<div class='card reversed'>"
   else
     variable rank set to card.rank
     variable suit set to card.suit
     variable colour set to colours[suit]
     variable symbol set to symbols[suit]
-    set html to $"<div class='card {colour}'>"
+    reassign html to $"<div class='card {colour}'>"
     variable u set to htmlForSpot("u", rank)
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     for location in gridByRank[rank]
       if location is "royal" then
-        set grid to grid + htmlForSpot(location, rank)
+        reassign grid to grid + htmlForSpot(location, rank)
       else
-        set grid to grid + htmlForSpot(location, symbol)
+        reassign grid to grid + htmlForSpot(location, symbol)
       end if
     end for
-    set html to html + $"{u}{v}{grid}"
+    reassign html to html + $"{u}{v}{grid}"
   end if
   return html + "</div>"
 end function
@@ -201,7 +201,7 @@ end function
 
 class Game
   constructor(dealerStartPoints as Int)
-    set this.dealer to new Dealer(dealerStartPoints)
+    reassign this.dealer to new Dealer(dealerStartPoints)
   end constructor
 
   property dealer as Dealer
@@ -229,16 +229,16 @@ class Game
   end procedure
 
   procedure setMessage(message as String)
-    set this.message to message
+    reassign this.message to message
   end procedure
 
 end class
 
 class Card
   constructor(rank as String, suit as Suit)
-    set this.rank to rank
-    set this.suit to suit
-    set this.value to rankValue[rank]
+    reassign this.rank to rank
+    reassign this.suit to suit
+    reassign this.value to rankValue[rank]
   end constructor
 
   property suit as Suit
@@ -250,11 +250,11 @@ class Card
   property faceDown as Boolean
 
   procedure turnFaceUp()
-    set this.faceDown to false
+    reassign this.faceDown to false
   end procedure
 
   procedure turnFaceDown()
-    set this.faceDown to true
+    reassign this.faceDown to true
   end procedure
 
 end class
@@ -276,29 +276,29 @@ abstract class Player
 
   procedure startTurn()
     if this.status is Status.active then
-      set this.hasTurn to true
+      reassign this.hasTurn to true
     end if
   end procedure
 
   procedure evaluateStatus(newCard as Card)
     if (cardCount() is 2) and (this.handTotal is 21) then
-      set this.status to Status.blackjack
+      reassign this.status to Status.blackjack
     elif (this.handTotal > 21) and (this.hasSoftAce) then
-      set this.handTotal to this.handTotal - 10
-      set this.hasSoftAce to false
+      reassign this.handTotal to this.handTotal - 10
+      reassign this.hasSoftAce to false
     elif this.handTotal > 21 then
-      set this.status to Status.bust
+      reassign this.status to Status.bust
     elif this.handTotal is 21 then
-      set this.status to Status.standing
+      reassign this.status to Status.standing
     end if
     if this.status isnt Status.active then
-      set this.hasTurn to false
+      reassign this.hasTurn to false
     end if
   end procedure
 
   procedure stand()
-    set this.status to Status.standing
-    set this.hasTurn to false
+    reassign this.status to Status.standing
+    reassign this.hasTurn to false
   end procedure
 
   procedure draw()
@@ -307,17 +307,17 @@ abstract class Player
     if newCard.rank is "A" then
       call addAce()
     else
-      set this.handTotal to this.handTotal + newCard.value
+      reassign this.handTotal to this.handTotal + newCard.value
     end if
     call evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
     if this.hasSoftAce then
-      set this.handTotal to this.handTotal + 1
+      reassign this.handTotal to this.handTotal + 1
     else
-      set this.handTotal to this.handTotal + 11
-      set this.hasSoftAce to true
+      reassign this.handTotal to this.handTotal + 11
+      reassign this.hasSoftAce to true
     end if
   end procedure
 
@@ -326,17 +326,17 @@ abstract class Player
   end function
 
   procedure changePointsBy(amount as Int)
-    set this.points to this.points + amount
+    reassign this.points to this.points + amount
   end procedure
 
   abstract procedure newHand()
 
   procedure newHandHelper()
-    set this.hasTurn to false
-    set this.hasSoftAce to false
-    set this.cards to new List<of Card>()
-    set this.handTotal to 0
-    set this.status to Status.active
+    reassign this.hasTurn to false
+    reassign this.hasSoftAce to false
+    reassign this.cards to new List<of Card>()
+    reassign this.handTotal to 0
+    reassign this.status to Status.active
     call draw()
     call draw()
   end procedure
@@ -347,13 +347,13 @@ abstract class Player
     variable msg set to ""
     variable status set to this.status
     if this.hasTurn then
-      set msg to msg + " - PLAYING"
+      reassign msg to msg + " - PLAYING"
     elif status is Status.standing then
-      set msg to msg + " - STANDING"
+      reassign msg to msg + " - STANDING"
     elif status is Status.blackjack then
-      set msg to msg + " - BLACKJACK"
+      reassign msg to msg + " - BLACKJACK"
     elif status is Status.bust then
-      set msg to msg + " - BUST"
+      reassign msg to msg + " - BUST"
     end if
     return msg
   end function
@@ -364,8 +364,8 @@ end class
 
 class Dealer inherits Player
   constructor(startingPoints as Int)
-    set this.name to "Dealer"
-    set this.points to startingPoints
+    reassign this.name to "Dealer"
+    reassign this.points to startingPoints
   end constructor
 
   property faceCard as Card
@@ -376,13 +376,13 @@ class Dealer inherits Player
     call startTurn()
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceUp()
-    set this.hasPlayed to true
+    reassign this.hasPlayed to true
   end procedure
 
   procedure newHand()
-    set this.hasPlayed to false
+    reassign this.hasPlayed to false
     call newHandHelper()
-    set this.faceCard to this.cards[0]
+    reassign this.faceCard to this.cards[0]
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
@@ -398,7 +398,7 @@ class Dealer inherits Player
   function getMessage() returns String
     variable msg set to ""
     if this.hasPlayed then
-      set msg to statusAsString() + $" - hand total: {this.handTotal}"
+      reassign msg to statusAsString() + $" - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -407,8 +407,8 @@ end class
 
 class HumanPlayer inherits Player
   constructor(name as String, startingPoints as Int)
-    set this.name to name
-    set this.points to startingPoints
+    reassign this.name to name
+    reassign this.points to startingPoints
   end constructor
 
   procedure newHand()
@@ -419,13 +419,13 @@ class HumanPlayer inherits Player
     variable key set to ""
     call clearKeyBuffer()
     while key is ""
-      set key to waitForKey()
+      reassign key to waitForKey()
       if key is "d" then
         call draw()
       elif key is "s" then
         call stand()
       else
-        set key to ""
+        reassign key to ""
       end if
     end while
   end procedure
@@ -433,7 +433,7 @@ class HumanPlayer inherits Player
   function getMessage() returns String
     variable msg set to statusAsString() + $"- hand total: {this.handTotal}"
     if this.hasTurn then
-      set msg to msg + " - press 'd' to draw, 's' to stand"
+      reassign msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
   end function
@@ -442,9 +442,9 @@ end class
 
 class AutomatedPlayer inherits Player
   constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
-    set this.name to name
-    set this.decisionFunc to decisionFunc
-    set this.points to startingPoints
+    reassign this.name to name
+    reassign this.decisionFunc to decisionFunc
+    reassign this.points to startingPoints
   end constructor
 
   property decisionFunc as Func<of Player, Card => Action>

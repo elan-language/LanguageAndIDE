@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Conditional Expressions", () => {
@@ -102,7 +102,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70
-  set score to score + if(score is 70, 1, 2)
+  reassign score to score + if(score is 70, 1, 2)
   call printNoLine(score)
 end main
 `;
@@ -138,7 +138,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  set score to if(true, 60.1, 60)
+  reassign score to if(true, 60.1, 60)
   call printNoLine(score)
 end main
 `;
@@ -174,7 +174,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  set score to if(false, 60, 60.1)
+  reassign score to if(false, 60, 60.1)
   call printNoLine(score)
 end main
 `;
@@ -210,7 +210,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  set score to if(false, new Bar(), cast(new Bar()))
+  reassign score to if(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -284,7 +284,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  set score to if(false, cast(new Bar()), new Bar())
+  reassign score to if(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 
@@ -439,7 +439,7 @@ end main`;
 
 main
  variable a set to 10
- set a to if(true, 0.5, 10)
+ reassign a to if(true, 0.5, 10)
  call printNoLine(a)
 end main`;
 
@@ -466,7 +466,7 @@ end main`;
 
 main
  variable a set to 10
- set a to if(true, 10, 0.5)
+ reassign a to if(true, 10, 0.5)
  call printNoLine(a)
 end main`;
 
@@ -493,7 +493,7 @@ end main`;
 
 main
   variable score set to new Bar()
-  set score to if(false, new Foo(), new Bar())
+  reassign score to if(false, new Foo(), new Bar())
   call printNoLine(score)
 end main
 
@@ -527,7 +527,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  set score to if(false, new Bar(), new Foo())
+  reassign score to if(false, new Bar(), new Foo())
   call printNoLine(score)
 end main
 
@@ -560,7 +560,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  set score to if(false, new Bar(), cast(new Bar()))
+  reassign score to if(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -597,7 +597,7 @@ end function`;
 
 main
   variable score set to new Bar()
-  set score to if(false, cast(new Bar()), new Bar())
+  reassign score to if(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 

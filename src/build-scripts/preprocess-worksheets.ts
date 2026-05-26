@@ -1,11 +1,11 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { isElanProduction } from "../environment";
 import {
-  processCode,
-  processFinals,
-  processSteps,
-  processTitle,
-  setCurrentDir,
+    processCode,
+    processFinals,
+    processSteps,
+    processTitle,
+    setCurrentDir,
 } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
@@ -52,7 +52,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string, version: str
     <div class="version" hidden="">${version}</div>
 
     <div class="transient">
-      <p>First, set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
+      <p>First, reassign the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
 
 
       <p class="transient">Then choose <i>either one</i> of the two options below:</p>

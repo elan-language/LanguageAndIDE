@@ -616,7 +616,7 @@
 // //   await page.keyboard.type('va'); 
 // //   await page.keyboard.type('a,b');
 // //   await page.keyboard.press('Tab');
-// //   await page.keyboard.type('new Foo() with a set to 1, b set to "bill"');
+// //   await page.keyboard.type('new Foo() with a reassign to 1, b set to "bill"');
 // //   await page.keyboard.press('Enter');
 
 // //   await page.keyboard.type('ca')
@@ -668,7 +668,7 @@
 // //   await page.keyboard.type('va'); 
 // //   await page.keyboard.type('dict');
 // //   await page.keyboard.press('Tab');
-// //   await page.keyboard.type('{"key":new Foo() with a set to {1, 2}, b set to "bill"}');
+// //   await page.keyboard.type('{"key":new Foo() with a reassign to {1, 2}, b set to "bill"}');
 // //   await page.keyboard.press('Enter');
 
 // //   await page.keyboard.type('ca');

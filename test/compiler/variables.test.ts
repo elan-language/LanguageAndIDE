@@ -3,23 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedCSIs,
-  assertExportedJavaIs,
-  assertExportedPythonIs,
-  assertExportedVBis,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testCSHeader,
-  testHash,
-  testHeader,
-  testJavaHeader,
-  testPythonHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("Variables", () => {
@@ -129,7 +121,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  set a to 4
+  reassign a to 4
   call printNoLine(a)
 end main`;
 
@@ -164,7 +156,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3.1
-  set a to 4
+  reassign a to 4
   call printNoLine(a)
 end main`;
 
@@ -302,7 +294,7 @@ return [main, _tests];}`;
 main
   variable a set to [1, 2]
   variable b set to a.map(lambda x as Int => x)
-  set b to [1, 2]
+  reassign b to [1, 2]
   call printNoLine(b)
 end main`;
 
@@ -406,7 +398,7 @@ end main`;
 
 main
   variable a set to "astring"
-  set a to 4.1
+  reassign a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -431,7 +423,7 @@ end main`;
 
 main
   variable a
-  set a to 4.1
+  reassign a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -561,10 +553,10 @@ main
   variable b set to 1
   variable c set to ""
   variable d set to f()
-  set a to 1.0
-  set b to false
-  set c to [1.0, 2]
-  set d to 1.0
+  reassign a to 1.0
+  reassign b to false
+  reassign c to [1.0, 2]
+  reassign d to 1.0
 end main`;
 
     const fileImpl = new FileImpl(
@@ -594,9 +586,9 @@ main
   variable a set to createList(3, "")
   variable b set to [1.0, 2]
   variable c set to ["a":1.0, "b":3, "z":10]
-  set a to [1.0, 2]
-  set b to a
-  set c to b
+  reassign a to [1.0, 2]
+  reassign b to a
+  reassign c to b
 end main`;
 
     const fileImpl = new FileImpl(

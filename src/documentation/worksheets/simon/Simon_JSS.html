@@ -23,7 +23,7 @@
     <input type="text" class="question answered" id="username" value="John" disabled="" />
     <h3>Preliminaries</h3>
     <ul>
-      <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+      <li>reassign the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
       <li>Select <b>File &gt; New</b> to start a new program,
         then select <b>File &gt; Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
         Remember that you can use the <b>Undo</b> button (or <b>Ctrl+z</b>) to undo recent changes.</li>
@@ -86,7 +86,7 @@
         a list of the properties that can be specified with for a <el-type>CircleVG</el-type>.
          Select the first option, <el-id>centreX</el-id>, then <b>Tab</b> to add the prompted words
          <el-kw>set to</el-kw> and then enter the value <el-lit>15</el-lit> followed by a comma.
-        Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
+        Repeat this sequence to reassign the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
         and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - the last one being to get rid of the black line around the circle.
         When you press <b>Enter</b> at the end of this field, the instruction will automatically reformat for
         over several lines for readability, but note that this is still one instruction, and if you were to edit it again the field would still be one long line.</li>
@@ -101,7 +101,7 @@
       <el-code-block>
         <main class="ok multiline" id="main3">
           <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-lit>15</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
           <el-kw>end main</el-kw>
         </main>
@@ -171,7 +171,7 @@
             <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
             <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
             <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end main</el-kw>
           </main>
@@ -241,7 +241,7 @@
             <el-proc class="ok multiline">
             <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
             <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end procedure</el-kw>
             </el-proc>
@@ -324,7 +324,7 @@
       which instead of just pausing, plays a tone for the same interval. The second argument defines the frequency of the tone - in
       this case 256Hz, which musicians might recognise as 'middle C'. The third argument specifies the volume. Run the program.
       If you do not hear any tones, investigate the sound settings on your computer. Then adjust the value up or down from <el-lit>0.1</el-lit>,
-      but <b>please, if you are working in a classroom set the volume to the lowest setting where you can still just hear the tones.</b>
+      but <b>please, if you are working in a classroom reassign the volume to the lowest setting where you can still just hear the tones.</b>
       </li><li>Just as the four moves are represented by different colours, in different locations, they
         should also have different tones. The original Simon game used four musical notes - E, A, C#, and E (one octave higher) -
         such that they would combine in any order for a pleasing effect. The frequencies, in Hz, for these four notes are: 164.81, 220.00, 277.18, and 329.63
@@ -539,7 +539,7 @@
     </el-code-block>
     </li>
     <li>Within the <el-kw>if</el-kw>, add an <el-kw>else</el-kw> clause <i>after</i> the call to <el-method>displayMove</el-method>
-    and underneath the <el-kw>else</el-kw>, set the value of <el-id>correctSoFar</el-id> to <el-id>false</el-id> followed by an
+    and underneath the <el-kw>else</el-kw>, reassign the value of <el-id>correctSoFar</el-id> to <el-id>false</el-id> followed by an
     instruction to print the message 'Wrong!' (this is a temporary action - to be refined later).
     <div class="hint" id="hint9b" data-hint="">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
     <div class="content" id="hint9bcontent"></div>
@@ -590,7 +590,7 @@
         </li>
         <li>Within the <el-method>playersTurn</el-method> procedure, delete the instruction <el-code><el-kw>print</el-kw> "<el-lit>Wrong!</el-lit>"</el-code> and
         replace it with one that sets the value of <el-id>ok</el-id> to false.
-		<!-- JSS: hint has no sleep_ms(2000) but set ok to false -->
+		<!-- JSS: hint has no sleep_ms(2000) but reassign ok to false -->
         <div class="hint" id="hint10b2" data-hint="">Hint: the whole revised procedure</div>
         <div class="content" id="hint10b2content"></div>
         </li>

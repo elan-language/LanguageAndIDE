@@ -35,7 +35,7 @@ def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   y2 = y - 1 # variable definition
   if y2 == -1:
-    y2 = 29 # re-assign variable
+    y2 = 29 # reassign variable
   return (x, y2)
 
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -43,7 +43,7 @@ def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   y2 = y + 1 # variable definition
   if y2 == 30:
-    y2 = 0 # re-assign variable
+    y2 = 0 # reassign variable
   return (x, y2)
 
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -51,7 +51,7 @@ def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   x2 = x + 1 # variable definition
   if x2 == 40:
-    x2 = 0 # re-assign variable
+    x2 = 0 # reassign variable
   return (x2, y)
 
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -59,7 +59,7 @@ def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   x2 = x - 1 # variable definition
   if x2 == -1:
-    x2 = 39 # re-assign variable
+    x2 = 39 # reassign variable
   return (x2, y)
 
 def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function

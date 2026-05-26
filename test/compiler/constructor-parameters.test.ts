@@ -3,12 +3,12 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertParses,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertParses,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Constructor Parameters", () => {
@@ -17,7 +17,7 @@ suite("Constructor Parameters", () => {
 
 class Foo
     constructor(p_1 as Int)
-        set p_1 to this.p1
+        reassign p_1 to this.p1
     end constructor
   function toString() returns String
     return ""
@@ -83,7 +83,7 @@ end class`;
 
 class Foo
     constructor()
-        set p1 to 4
+        reassign p1 to 4
     end constructor
   function toString() returns String
     return ""

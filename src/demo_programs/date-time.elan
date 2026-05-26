@@ -1,9 +1,9 @@
-# af9e9f353056a90a41c328a50f88dfa1fbacba89c3a6a7d79c8d84dc5a5dff94 Elan 2.0.0-alpha5 valid
+# 5e70ce4f39ca085d22bb1f23f72ba05a113889c1e0aac8b6b720a65ef9160a44 Elan 2.0.0-alpha5 valid
 
 main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    set reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
       call print(now)
@@ -72,11 +72,11 @@ function dayInYear(year as Int, unixDays as Int) returns Int
   variable dayNumber set to unixDays + 1
   if year > unixYear then
     # discount previous nominal years
-    set dayNumber to dayNumber - 365*(year - unixYear)
+    reassign dayNumber to dayNumber - 365*(year - unixYear)
     # discount previous leap days
     for y in range(unixYear, year)
       if leap(y) then
-        set dayNumber to dayNumber - 1
+        reassign dayNumber to dayNumber - 1
       end if
     end for
   end if
@@ -90,9 +90,9 @@ end test
 function leap(year as Int) returns Boolean
   variable leapYear set to false
   if (year mod 4) is 0 then
-    set leapYear to true
+    reassign leapYear to true
     if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
-      set leapYear to false
+      reassign leapYear to false
     end if
   end if
   return leapYear
@@ -112,10 +112,10 @@ function monthDay(startDays as List<of Int>, dayNumber as Int) returns (Int, Int
   variable monthFound set to false
   while monthFound is false
     if (dayNumber < startDays[month]) then
-      set monthFound to true
-      set day to dayNumber - startDays[month - 1] + 1
+      reassign monthFound to true
+      reassign day to dayNumber - startDays[month - 1] + 1
     else
-      set month to month + 1
+      reassign month to month + 1
     end if
   end while
   return (month, day)
@@ -126,7 +126,7 @@ function startDaysList(year as Int, startDays as List<of Int>) returns List<of I
   variable startDaysL set to getStartDays()
   if leap(year) then
     for m in range(2, 13)
-      set startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
+      reassign startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
     end for
   end if
   return startDaysL
@@ -182,9 +182,9 @@ function pad(d as String, p as String, s as String) returns String
   if p.length() > s.length() then
     if d.upperCase().equals("L") then
       variable ps set to p + s
-      set sR to ps.subString(ps.length() - p.length(), ps.length())
+      reassign sR to ps.subString(ps.length() - p.length(), ps.length())
     elif d.upperCase().equals("R") then
-      set sR to (s + p).subString(0, p.length())
+      reassign sR to (s + p).subString(0, p.length())
     end if
   end if
   return sR

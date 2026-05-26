@@ -1,4 +1,4 @@
-# 51d20232694f2a33be1adbdc5e5b8eacf4a72d7bcd8bec55c23eb181c9b74ff7 Elan 2.0.0-alpha5 valid
+# 5949ec2a85d995891de7fef1de27cd45ffbccb6cdc90b79c8fa7ccd0dcf4f73c Elan 2.0.0-alpha5 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -14,7 +14,7 @@ main
   while not tm.isHalted()
     variable rule set to tm.findMatchingRule()
     call tm.singleStep()
-    set steps to steps + 1
+    reassign steps to steps + 1
     call clearPrintedText()
     call print(tm.tape)
     call printTab(tm.headPosition - 1, "^")
@@ -32,12 +32,12 @@ constant haltState set to "halt"
 
 class TuringMachine
   constructor(initialState as String, haltState as String)
-    set this.tape to ""
-    set this.initialState to initialState
-    set this.haltState to haltState
-    set this.rules to new List<of Rule>()
-    set this.currentState to initialState
-    set this.headPosition to 0
+    reassign this.tape to ""
+    reassign this.initialState to initialState
+    reassign this.haltState to haltState
+    reassign this.rules to new List<of Rule>()
+    reassign this.currentState to initialState
+    reassign this.headPosition to 0
   end constructor
 
   function toString() returns String
@@ -57,11 +57,11 @@ class TuringMachine
   property tape as String
 
   procedure setTape(tape as String)
-    set this.tape to tape
+    reassign this.tape to tape
   end procedure
 
   procedure append(rule as Rule)
-    set this.rules to this.rules.withAppend(rule)
+    reassign this.rules to this.rules.withAppend(rule)
   end procedure
 
   procedure singleStep()
@@ -83,22 +83,22 @@ class TuringMachine
 
   procedure write(newSymbol as String)
     variable hp set to this.headPosition
-    set this.tape to this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length())
+    reassign this.tape to this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length())
   end procedure
 
   procedure execute(rule as Rule)
-    set this.currentState to rule.nextState
+    reassign this.currentState to rule.nextState
     call this.write(rule.writeSymbol)
     if rule.move is Dir.right then
-      set this.headPosition to this.headPosition + 1
+      reassign this.headPosition to this.headPosition + 1
       if this.headPosition >= this.tape.length() then
-        set this.tape to this.tape + " "
+        reassign this.tape to this.tape + " "
       end if
     else
-      set this.headPosition to this.headPosition - 1
+      reassign this.headPosition to this.headPosition - 1
       if this.headPosition < 0 then
-        set this.tape to " " + this.tape
-        set this.headPosition to 0
+        reassign this.tape to " " + this.tape
+        reassign this.headPosition to 0
       end if
     end if
   end procedure
@@ -117,11 +117,11 @@ class Rule
   property move as Dir
 
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
-    set this.currentState to currentState
-    set this.currentSymbol to currentSymbol
-    set this.nextState to nextState
-    set this.writeSymbol to writeSymbol
-    set this.move to move
+    reassign this.currentState to currentState
+    reassign this.currentSymbol to currentSymbol
+    reassign this.nextState to nextState
+    reassign this.writeSymbol to writeSymbol
+    reassign this.move to move
   end constructor
 
   function toString() returns String

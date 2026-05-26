@@ -1,15 +1,15 @@
 import {
-  elanAnyType,
-  ElanClass,
-  elanClassExport,
-  elanClassType,
-  elanFunction,
-  elanGenericParamT1Type,
-  elanIntType,
-  elanProcedure,
-  ElanT1,
-  FunctionOptions,
-  ProcedureOptions,
+    elanAnyType,
+    ElanClass,
+    elanClassExport,
+    elanClassType,
+    elanFunction,
+    elanGenericParamT1Type,
+    elanIntType,
+    elanProcedure,
+    ElanT1,
+    FunctionOptions,
+    ProcedureOptions,
 } from "../../src/compiler/elan-type-annotations";
 import { List } from "../../src/compiler/standard-library/list";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
@@ -19,13 +19,13 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertCompiles,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertCompiles,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 class TestStdLib {
@@ -75,7 +75,7 @@ suite("Directives", () => {
 
 main
   variable x set to 0.0
-  set x to simpleFunction()
+  reassign x to simpleFunction()
   call printNoLine(x)
 end main`;
 
@@ -102,7 +102,7 @@ end main`;
 
 main
   variable x set to new List<of VectorGraphic>()
-  set x to createVectorGraphics()
+  reassign x to createVectorGraphics()
   call printNoLine(x)
 end main`;
 
