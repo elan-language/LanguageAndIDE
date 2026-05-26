@@ -894,7 +894,7 @@ exportButton.addEventListener("click", async (e: Event) => {
   await getDownloader()(e);
 });
 
-toggleQuadEditorButton.addEventListener("click", async (e: Event) => {
+toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
 
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
