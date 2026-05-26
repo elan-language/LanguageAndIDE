@@ -33,25 +33,33 @@ def blackOrWhite(random: float) -> int: # function
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
   y = cell.item_1 # variable definition
-  y2 = if(y == 0, 29, y - 1) # variable definition
+  y2 = y - 1 # variable definition
+  if y2 == -1:
+    y2 = 29 # re-assign variable
   return (x, y2)
 
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
   y = cell.item_1 # variable definition
-  y2 = if(y == 29, 0, y + 1) # variable definition
+  y2 = y + 1 # variable definition
+  if y2 == 30:
+    y2 = 0 # re-assign variable
   return (x, y2)
 
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
   y = cell.item_1 # variable definition
-  x2 = if(x == 39, 0, x + 1) # variable definition
+  x2 = x + 1 # variable definition
+  if x2 == 40:
+    x2 = 0 # re-assign variable
   return (x2, y)
 
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
   y = cell.item_1 # variable definition
-  x2 = if(x == 0, 39, x - 1) # variable definition
+  x2 = x - 1 # variable definition
+  if x2 == -1:
+    x2 = 39 # re-assign variable
   return (x2, y)
 
 def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function
@@ -153,8 +161,8 @@ def test_blackOrWhite(self) -> None:
   self.assertEqual(blackOrWhite(0.501), white)
   self.assertEqual(blackOrWhite(1), white)
 
-[ghosted] def test_neighbourCells(self) -> None:
-  self.assertEqual(neighbourCells(3, 4), [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5])
+def test_neighbourCells(self) -> None:
+  self.assertEqual(neighbourCells(3, 4), [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)])
 
 def test_willLive(self) -> None:
   self.assertEqual(willLive(white, 0), False)

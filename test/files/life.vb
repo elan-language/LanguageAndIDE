@@ -43,28 +43,40 @@ End Function
 Function north(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' variable definition
   Dim y = cell.item_1 ' variable definition
-  Dim y2 = if(y = 0, 29, y - 1) ' variable definition
+  Dim y2 = y - 1 ' variable definition
+  If y2 = -1 Then
+    y2 = 29 ' re-assign variable
+  End If
   Return (x, y2)
 End Function
 
 Function south(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' variable definition
   Dim y = cell.item_1 ' variable definition
-  Dim y2 = if(y = 29, 0, y + 1) ' variable definition
+  Dim y2 = y + 1 ' variable definition
+  If y2 = 30 Then
+    y2 = 0 ' re-assign variable
+  End If
   Return (x, y2)
 End Function
 
 Function east(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' variable definition
   Dim y = cell.item_1 ' variable definition
-  Dim x2 = if(x = 39, 0, x + 1) ' variable definition
+  Dim x2 = x + 1 ' variable definition
+  If x2 = 40 Then
+    x2 = 0 ' re-assign variable
+  End If
   Return (x2, y)
 End Function
 
 Function west(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' variable definition
   Dim y = cell.item_1 ' variable definition
-  Dim x2 = if(x = 0, 39, x - 1) ' variable definition
+  Dim x2 = x - 1 ' variable definition
+  If x2 = -1 Then
+    x2 = 39 ' re-assign variable
+  End If
   Return (x2, y)
 End Function
 
@@ -188,8 +200,8 @@ End Sub
   Assert.AreEqual(white, blackOrWhite(1))
 End Sub
 
-[ghosted] <TestMethod> Sub test_neighbourCells()
-  Assert.AreEqual({(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5}, neighbourCells(3, 4))
+<TestMethod> Sub test_neighbourCells()
+  Assert.AreEqual({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4))
 End Sub
 
 <TestMethod> Sub test_willLive()

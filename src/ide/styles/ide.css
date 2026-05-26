@@ -686,9 +686,6 @@ body.functional div.demo-file.functional { display: revert; }
   display: grid;
   grid-template-columns: 50% 50%; 
   grid-template-rows: 50% 50%;
-  grid-gap: 10px;
-  padding-right: 15px;
-  padding-bottom: 10px;
   overflow: revert;
 }
 
@@ -698,6 +695,7 @@ body.functional div.demo-file.functional { display: revert; }
 
 .quad-editor .quad .code {
   max-height: 45vh;
+  margin-right: 10px;
 }
 .quad-editor .quad .code:not( :focus-within)
 {
