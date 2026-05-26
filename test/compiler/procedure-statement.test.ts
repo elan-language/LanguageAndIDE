@@ -14,7 +14,7 @@ import {
   ignore_test,
   testHash,
   testHeader,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Statement", () => {
@@ -61,7 +61,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "123");
   });
-  
+
   test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
     const code = `${testHeader}
 
