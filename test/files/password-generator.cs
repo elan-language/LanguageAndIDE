@@ -56,7 +56,7 @@ static bool isValid(string password, bool mustHaveUpper, bool mustHaveLower, boo
   Assert.AreEqual(true, isValid("$4de", false, true, true, true))
   Assert.AreEqual(true, isValid("eD$4", true, true, true, true))
   Assert.AreEqual(true, isValid("$4De$4De", true, true, true, true))
-} // 
+} // test
 
 static bool passesRule(bool rule, string charSet, string password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
@@ -67,7 +67,7 @@ static bool passesRule(bool rule, string charSet, string password) { // function
   Assert.AreEqual(true, passesRule(false, "12A", "ABC"))
   Assert.AreEqual(false, passesRule(true, "12", "ABCD"))
   Assert.AreEqual(true, passesRule(false, "12", "ABCD"))
-} // 
+} // test
 
 static bool hasAtLeastOneFrom(string fromChars, string password) { // function
   var hasOne = false;
@@ -81,4 +81,4 @@ static bool hasAtLeastOneFrom(string fromChars, string password) { // function
   Assert.AreEqual(true, hasAtLeastOneFrom("12A", "ABC"))
   Assert.AreEqual(true, hasAtLeastOneFrom("C12", "ABC"))
   Assert.AreEqual(false, hasAtLeastOneFrom("12", "ABCD"))
-} // 
+} // test

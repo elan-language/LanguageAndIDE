@@ -286,11 +286,11 @@ static Algorithm getAlgFromLetter(string letter) { // function
   Assert.AreEqual(Algorithm.aStar, getAlgFromLetter("a"))
   Assert.AreEqual(Algorithm.heuristic, getAlgFromLetter("h"))
   Assert.AreEqual(Algorithm.dijkstra, getAlgFromLetter("d"))
-} // 
+} // test
 
 [TestMethod] static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
   Assert.AreEqual(expected, n)
-} // 
+} // test

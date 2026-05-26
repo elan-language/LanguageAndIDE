@@ -20,6 +20,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
+import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
@@ -185,6 +186,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof While) {
       
       html += this.WHILE;
+    } else if (frame instanceof TestFrame) {
+      html += "test";
     }
     return html + "</el-comment>";
   }

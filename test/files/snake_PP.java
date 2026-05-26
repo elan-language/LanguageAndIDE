@@ -100,7 +100,7 @@ static String directionByKey(String current, String key) { // function
 @Test static void test_getTailColour() {
   assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
   assertEquals(white, getTailColour([3, 4], [[3, 5], [3, 6]]))
-} // 
+} // test
 
 @Test static void test_hasHitEdge() {
   assertEquals(false, hasHitEdge(0, 0))
@@ -111,7 +111,7 @@ static String directionByKey(String current, String key) { // function
   assertEquals(true, hasHitEdge(5, 30))
   assertEquals(true, hasHitEdge(40, 5))
   assertEquals(true, hasHitEdge(5, -1))
-} // 
+} // test
 
 @Test static void test_getAdjacentSquare() {
   var sq = [20, 15];
@@ -121,7 +121,7 @@ static String directionByKey(String current, String key) { // function
   assertEquals([21, 15], getAdjacentSquare(sq, "right"))
   // boundary
   assertEquals([-1, 15], getAdjacentSquare([0, 15], "left"))
-} // 
+} // test
 
 @Test static void test_directionByKey() {
   var current = "up";
@@ -132,4 +132,4 @@ static String directionByKey(String current, String key) { // function
   assertEquals("left", directionByKey(current, "a"))
   assertEquals("right", directionByKey(current, "d"))
   assertEquals("up", directionByKey(current, "D"))
-} // 
+} // test
