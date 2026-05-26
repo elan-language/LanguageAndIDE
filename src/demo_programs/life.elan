@@ -1,4 +1,4 @@
-# 1235c01ea522464878def3acf5954906cf053ef6a6195e5b394e9dd5189b59b0 Elan 2.0.0-alpha5 valid
+# 209d1280215f8b2870d7730565d80c8c2905697a82637c487b638fac0f719b4d Elan 2.0.0-alpha5 valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -43,28 +43,40 @@ end function
 function north(cell as (Int, Int)) returns (Int, Int)
   variable x set to cell.item_0
   variable y set to cell.item_1
-  variable y2 set to if(y is 0, 29, y - 1)
+  variable y2 set to y - 1
+  if y2 is -1 then
+    set y2 to 29
+  end if
   return (x, y2)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
   variable x set to cell.item_0
   variable y set to cell.item_1
-  variable y2 set to if(y is 29, 0, y + 1)
+  variable y2 set to y + 1
+  if y2 is 30 then
+    set y2 to 0
+  end if
   return (x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
   variable x set to cell.item_0
   variable y set to cell.item_1
-  variable x2 set to if(x is 39, 0, x + 1)
+  variable x2 set to x + 1
+  if x2 is 40 then
+    set x2 to 0
+  end if
   return (x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
   variable x set to cell.item_0
   variable y set to cell.item_1
-  variable x2 set to if(x is 0, 39, x - 1)
+  variable x2 set to x - 1
+  if x2 is -1 then
+    set x2 to 39
+  end if
   return (x2, y)
 end function
 
@@ -188,8 +200,8 @@ test test_blackOrWhite
   assert blackOrWhite(1) is white
 end test
 
-[ghosted] test test_neighbourCells
-  [ghosted] assert neighbourCells(3, 4) is [(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5]
+test test_neighbourCells
+  assert neighbourCells(3, 4) is [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
 end test
 
 test test_willLive

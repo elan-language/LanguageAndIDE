@@ -43,28 +43,40 @@ static int blackOrWhite(double random) { // function
 static (int, int) north((int, int) cell) { // function
   var x = cell.item_0;
   var y = cell.item_1;
-  var y2 = if(y == 0, 29, y - 1);
+  var y2 = y - 1;
+  if (y2 == -1) {
+    y2 = 29; // re-assign variable
+  } // if
   return (x, y2);
 } // function
 
 static (int, int) south((int, int) cell) { // function
   var x = cell.item_0;
   var y = cell.item_1;
-  var y2 = if(y == 29, 0, y + 1);
+  var y2 = y + 1;
+  if (y2 == 30) {
+    y2 = 0; // re-assign variable
+  } // if
   return (x, y2);
 } // function
 
 static (int, int) east((int, int) cell) { // function
   var x = cell.item_0;
   var y = cell.item_1;
-  var x2 = if(x == 39, 0, x + 1);
+  var x2 = x + 1;
+  if (x2 == 40) {
+    x2 = 0; // re-assign variable
+  } // if
   return (x2, y);
 } // function
 
 static (int, int) west((int, int) cell) { // function
   var x = cell.item_0;
   var y = cell.item_1;
-  var x2 = if(x == 0, 39, x - 1);
+  var x2 = x - 1;
+  if (x2 == -1) {
+    x2 = 39; // re-assign variable
+  } // if
   return (x2, y);
 } // function
 
@@ -188,8 +200,8 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(white, blackOrWhite(1))
 } // test
 
-[ghosted] @Test static void test_neighbourCells() {
-  assertEquals([(2, 3), 3, 3, 4, 3, 2, 4, 4, 4, 2, 5, 3, 5, 4, 5], neighbourCells(3, 4))
+@Test static void test_neighbourCells() {
+  assertEquals([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4))
 } // test
 
 @Test static void test_willLive() {
