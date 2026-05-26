@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 2.0.0-alpha5
 
 static (double, double) bestFitLine(List<Point> points) { // function
   var sumX = points.reduce(0.0, (double s, Point p) -> s + p.x); // let
