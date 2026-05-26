@@ -71,7 +71,7 @@ suite("Selector tests", () => {
       false,
     );
     const g = new GlobalSelector(f);
-    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "# comment"]);
+    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "enum", "# comment"]);
   });
 
   test("Selection Filtering - globals - no profile specified", () => {
@@ -332,7 +332,7 @@ suite("Selector tests", () => {
     );
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
-    assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "# comment"]);
+    assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "enum", "# comment"]);
   });
 
   test("Selection Filtering - globals - all", () => {

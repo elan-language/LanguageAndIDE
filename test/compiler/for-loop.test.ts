@@ -62,7 +62,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "55");
-
   });
 
   test("Pass_cannotReuseVariable", async () => {
