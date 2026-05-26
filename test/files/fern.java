@@ -74,7 +74,7 @@ static (double, double) onestep(double x, double y, double r) { // function
 @Test static void test_one() {
   assertEquals([0.0064, 1.736], roundtuple2(onestep(0.0, 0.16, 0.5)))
   assertEquals([-0.0416, 1.6352], roundtuple2(onestep(0.0, 0.16, 0.9)))
-} // 
+} // test
 
 // two approaches to rounding a tuple to N decimal places
 

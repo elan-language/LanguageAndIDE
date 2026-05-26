@@ -144,11 +144,11 @@ enum Direction {up, down, left, right}
   // gameOver, score - can only test test_for default - which is not thorough test
   assertEquals(false, snake.gameOver())
   assertEquals(0, snake.score())
-} // 
+} // test
 
 @Test static void test_apple() {
   // no tests
-} // 
+} // test
 
 @Test static void test_square() {
   // constructor - not testable as properties are private
@@ -168,4 +168,4 @@ enum Direction {up, down, left, right}
   assertEquals(true, (new Square(3, -1)).hasHitEdge())
   assertEquals(true, (new Square(40, 3)).hasHitEdge())
   assertEquals(true, (new Square(3, 30)).hasHitEdge())
-} // 
+} // test

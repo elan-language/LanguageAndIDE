@@ -12,7 +12,7 @@ static int factorial(int n) { // function
   // edge cases:
   Assert.AreEqual(1, factorial(1))
   Assert.AreEqual(1, factorial(0))
-} // 
+} // test
 
 static double sum(List<double> li) { // function
   return if(li.length() == 0, 0.0, li.head() + sum(li.tail()));
@@ -26,7 +26,7 @@ static double sum(List<double> li) { // function
   Assert.AreEqual(0, sum(le))
   var l1 = [0.6]; // let
   Assert.AreEqual(0.6, sum(l1))
-} // 
+} // test
 
 static List<double> reverse(List<double> li) { // function
   return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()));
@@ -40,4 +40,4 @@ static List<double> reverse(List<double> li) { // function
   Assert.AreEqual(le, reverse(le))
   var l1 = [0.6]; // let
   Assert.AreEqual(l1, reverse(l1))
-} // 
+} // test

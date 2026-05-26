@@ -127,7 +127,7 @@ class Coords {
   var p = new Coords();
   assertEquals(100, onepoint(0, 0, 100, p))
   assertEquals(3, onepoint(0.5, 0.5, 100, p))
-} // 
+} // test
 
 final Int width = 200 // constant
 

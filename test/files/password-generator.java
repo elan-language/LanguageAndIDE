@@ -56,7 +56,7 @@ static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, boo
   assertEquals(true, isValid("$4de", false, true, true, true))
   assertEquals(true, isValid("eD$4", true, true, true, true))
   assertEquals(true, isValid("$4De$4De", true, true, true, true))
-} // 
+} // test
 
 static bool passesRule(bool rule, String charSet, String password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
@@ -67,7 +67,7 @@ static bool passesRule(bool rule, String charSet, String password) { // function
   assertEquals(true, passesRule(false, "12A", "ABC"))
   assertEquals(false, passesRule(true, "12", "ABCD"))
   assertEquals(true, passesRule(false, "12", "ABCD"))
-} // 
+} // test
 
 static bool hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
@@ -81,4 +81,4 @@ static bool hasAtLeastOneFrom(String fromChars, String password) { // function
   assertEquals(true, hasAtLeastOneFrom("12A", "ABC"))
   assertEquals(true, hasAtLeastOneFrom("C12", "ABC"))
   assertEquals(false, hasAtLeastOneFrom("12", "ABCD"))
-} // 
+} // test
