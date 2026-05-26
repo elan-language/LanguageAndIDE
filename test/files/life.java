@@ -202,7 +202,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
 
 @Test static void test_neighbourCells() {
   assertEquals([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4))
-} // 
+} // test
 
 @Test static void test_willLive() {
   assertEquals(false, willLive(white, 0))
