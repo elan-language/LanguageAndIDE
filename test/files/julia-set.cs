@@ -127,7 +127,7 @@ class Coords {
   var p = new Coords();
   Assert.AreEqual(100, onepoint(0, 0, 100, p))
   Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p))
-} // 
+} // test
 
 const Int width = 200
 

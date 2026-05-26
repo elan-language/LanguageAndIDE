@@ -176,7 +176,7 @@ class Square {
   var g6 = g5.withHead(new Square(22, 29)); // let
   var g7 = clockTick(g6, "s"); // let
   Assert.AreEqual(false, g7.isOn)
-} // 
+} // test
 
 [TestMethod] static void test_updateGraphics() {
   var blocks = createBlockGraphics(white); // let
@@ -190,7 +190,7 @@ class Square {
   Assert.AreEqual(red, blocks3[12][15])
   Assert.AreEqual(green, blocks3[22][15])
   Assert.AreEqual(green, blocks3[23][15])
-} // 
+} // test
 
 [TestMethod] static void test_testnewApple() {
   var g1 = new Game(new Random()); // let
@@ -204,7 +204,7 @@ class Square {
   var g5 = g4.withBody([new Square(10, 12)]); // let
   var g6 = g5.withNewApple(); // let
   Assert.AreEqual(new Square(12, 15), g4.apple)
-} // 
+} // test
 
 [TestMethod] static void test_score() {
   var g1 = new Game(new Random()); // let
@@ -215,7 +215,7 @@ class Square {
   Assert.AreEqual(1, score(g3))
   var g4 = g1.withBody([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)]); // let
   Assert.AreEqual(2, score(g4))
-} // 
+} // test
 
 [TestMethod] static void test_moveSnake() {
   var g1 = new Game(new Random()); // let
@@ -231,7 +231,7 @@ class Square {
   var g8 = g1.withKey("s"); // let
   var g9 = moveSnake(g8); // let
   Assert.AreEqual(new Square(22, 16), g9.head)
-} // 
+} // test
 
 [TestMethod] static void test_eatAppleIfPoss() {
   var g1 = new Game(new Random()); // let
@@ -248,7 +248,7 @@ class Square {
   Assert.AreEqual(2, g5.body.length())
   Assert.AreEqual(new Square(12, 15), g5.apple)
   Assert.AreEqual(g1.priorTail, g5.priorTail)
-} // 
+} // test
 
 [TestMethod] static void test_overApple() {
   var g1 = new Game(new Random()); // let
@@ -256,7 +256,7 @@ class Square {
   Assert.AreEqual(false, headOverApple(g2))
   var g3 = g2.withHead(new Square(23, 15)); // let
   Assert.AreEqual(true, headOverApple(g3))
-} // 
+} // test
 
 [TestMethod] static void test_gameOver() {
   var g1 = new Game((new Random())); // let
@@ -267,7 +267,7 @@ class Square {
   Assert.AreEqual(true, gameOver(g3))
   var g4 = g1.withHead(new Square(21, 15)); // let
   Assert.AreEqual(true, gameOver(g4))
-} // 
+} // test
 
 [TestMethod] static void test_headIsAtEdge() {
   var g1 = new Game(new Random()); // let
@@ -280,13 +280,13 @@ class Square {
   Assert.AreEqual(true, hasHitEdge(g4))
   var g5 = g1.withHead(new Square(20, -1)); // let
   Assert.AreEqual(true, hasHitEdge(g5))
-} // 
+} // test
 
 [TestMethod] static void test_newSquare() {
   var sq = new Square(3, 4); // let
   Assert.AreEqual(3, sq.x)
   Assert.AreEqual(4, sq.y)
-} // 
+} // test
 
 [TestMethod] static void test_newGame() {
   var rnd = new Random(); // let
@@ -301,4 +301,4 @@ class Square {
   Assert.AreEqual(new Square(0, 0), game.priorTail)
   Assert.AreEqual("d", game.key)
   Assert.AreEqual(true, game.isOn)
-} // 
+} // test

@@ -100,7 +100,7 @@ static string directionByKey(string current, string key) { // function
 [TestMethod] static void test_getTailColour() {
   Assert.AreEqual(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
   Assert.AreEqual(white, getTailColour([3, 4], [[3, 5], [3, 6]]))
-} // 
+} // test
 
 [TestMethod] static void test_hasHitEdge() {
   Assert.AreEqual(false, hasHitEdge(0, 0))
@@ -111,7 +111,7 @@ static string directionByKey(string current, string key) { // function
   Assert.AreEqual(true, hasHitEdge(5, 30))
   Assert.AreEqual(true, hasHitEdge(40, 5))
   Assert.AreEqual(true, hasHitEdge(5, -1))
-} // 
+} // test
 
 [TestMethod] static void test_getAdjacentSquare() {
   var sq = [20, 15];
@@ -121,7 +121,7 @@ static string directionByKey(string current, string key) { // function
   Assert.AreEqual([21, 15], getAdjacentSquare(sq, "right"))
   // boundary
   Assert.AreEqual([-1, 15], getAdjacentSquare([0, 15], "left"))
-} // 
+} // test
 
 [TestMethod] static void test_directionByKey() {
   var current = "up";
@@ -132,4 +132,4 @@ static string directionByKey(string current, string key) { // function
   Assert.AreEqual("left", directionByKey(current, "a"))
   Assert.AreEqual("right", directionByKey(current, "d"))
   Assert.AreEqual("up", directionByKey(current, "D"))
-} // 
+} // test
