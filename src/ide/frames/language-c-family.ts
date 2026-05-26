@@ -160,7 +160,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   common_renderBottomAsHtml(frame: Frame): string {
     let html = "<el-punc>}</el-punc><el-comment> // ";
-     if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
+    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
       html += this.CLASS;
     } else if (frame instanceof Constructor) {
       html += "constructor";
@@ -183,7 +183,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof TryStatement) {
       html += this.TRY;
     } else if (frame instanceof While) {
-      
       html += this.WHILE;
     }
     return html + "</el-comment>";

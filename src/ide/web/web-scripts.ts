@@ -30,6 +30,7 @@ import {
   cursorWait,
   domEventType,
   getLanguageByClass,
+  getLanguagesForQuad,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuKey,
@@ -528,7 +529,9 @@ class IDEViewModel implements IIDEViewModel {
   async renderAsHtml(editingField: boolean) {
     const isQuad = document.querySelector("body")?.classList.contains("quad-editor");
 
-    const content = isQuad ? await codeViewModel.renderAsHtmlAll() : [await codeViewModel.renderAsHtml()];
+    const content = isQuad
+      ? await codeViewModel.renderAsHtmlAll()
+      : [await codeViewModel.renderAsHtml()];
     try {
       await codeViewModel.updateContent(
         content,
@@ -738,14 +741,13 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
- 
+
     codeContainers[0].classList.remove("elan");
     codeContainers[0].classList.remove("python");
     codeContainers[0].classList.remove("cs");
     codeContainers[0].classList.remove("vb");
     codeContainers[0].classList.remove("java");
     codeContainers[0].classList.add(l.languageHtmlClass);
-    
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
     this.tvm.setHelpLanguage(l.languageHtmlClass);
@@ -896,11 +898,13 @@ toggleQuadEditorButton.addEventListener("click", async (e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
 
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
-    codeContainers[0].classList.add("python");
-    codeContainers[1].classList.add("cs");
-    codeContainers[2].classList.add("vb");
-    codeContainers[3].classList.add("java");
+    const ll = getLanguagesForQuad(codeViewModel.getLanguage());
+
+    for (let i = 0; i < 4; i++) {
+      codeContainers[i].classList.add(ll[i].languageHtmlClass);
+    }
   }
+  await ideViewModel.renderAsHtml(false);
 });
 
 copyAsUrlButton.addEventListener("click", async (_e: Event) => {

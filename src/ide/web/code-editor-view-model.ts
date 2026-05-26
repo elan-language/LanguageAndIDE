@@ -27,6 +27,7 @@ import {
   delayMessage,
   getEditorMsg,
   getFocused,
+  getLanguagesForQuad,
   getModKey,
   handleMenuArrowDown,
   handleMenuArrowUp,
@@ -157,7 +158,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
-    const languages = [LanguagePython.Instance, LanguageCS.Instance, LanguageVB.Instance, LanguageJava.Instance];
+    const languages = getLanguagesForQuad(existingLanguage);
     const html = [];
 
     for (const l of languages) {
@@ -169,8 +170,6 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
     return html;
   }
-
-
 
   removeAllSelectorsThatCanBe() {
     this.file!.removeAllSelectorsThatCanBe();
@@ -783,7 +782,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   ) {
     this.setRunStatus(RunStatus.default);
     collapseAllMenus();
-    const codeContainers = Array.from((document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>));
+    const codeContainers = Array.from(
+      document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>,
+    );
 
     codeContainers.length = textAll.length;
     let textInst = 0;
@@ -1060,7 +1061,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
       const ff = document.querySelectorAll(".focused");
 
-      for (const e of ff){
+      for (const e of ff) {
         e.scrollIntoView(false);
       }
 
