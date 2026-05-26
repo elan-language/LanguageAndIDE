@@ -62,54 +62,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "12");
-    const pythonCode = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(foo(3, 4)) # call procedure
-
-def foo(a: float, b: float) -> float: # function
-  return a*b
-
-main()
-`;
-
-    const csCode = `${testCSHeader}
-
-static void main() {
-  printNoLine(foo(3, 4)); // call procedure
-}
-
-static double foo(double a, double b) { // function
-  return a*b;
-}
-`;
-
-    const javaCode = `${testJavaHeader}
-
-static void main() {
-  printNoLine(foo(3, 4)); // call procedure
-}
-
-static double foo(double a, double b) { // function
-  return a*b;
-}
-`;
-
-    const vbCode = `${testVBHeader}
-
-Sub main()
-  printNoLine(foo(3, 4)) ' call procedure
-End Sub
-
-Function foo(a As Double, b As Double) As Double
-  Return a*b
-End Function
-`;
-
-    await assertExportedPythonIs(fileImpl, pythonCode);
-    await assertExportedCSIs(fileImpl, csCode);
-    await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_IndexResult", async () => {

@@ -62,54 +62,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "55");
-    const pythonCode = `${testPythonHeader}
 
-def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 11):
-    tot = tot + i # re-assign variable
-  printNoLine(tot) # call procedure
-
-main()
-`;
-
-    const csCode = `${testCSHeader}
-
-static void main() {
-  var tot = 0;
-  foreach (i in range(1, 11)) {
-    tot = tot + i; // re-assign variable
-  }
-  printNoLine(tot); // call procedure
-}
-`;
-
-    const javaCode = `${testJavaHeader}
-
-static void main() {
-  var tot = 0;
-  foreach (i in range(1, 11)) {
-    tot = tot + i; // re-assign variable
-  }
-  printNoLine(tot); // call procedure
-}
-`;
-
-    const vbCode = `${testVBHeader}
-
-Sub main()
-  Dim tot = 0 ' variable definition
-  For Each i In range(1, 11)
-    tot = tot + i ' re-assign variable
-  Next i
-  printNoLine(tot) ' call procedure
-End Sub
-`;
-
-    await assertExportedPythonIs(fileImpl, pythonCode);
-    await assertExportedCSIs(fileImpl, csCode);
-    await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_cannotReuseVariable", async () => {

@@ -8,5 +8,5 @@ static void main() {
     t.move(i); // call procedure
     t.turn(90); // call procedure
     sleep_ms(300); // call procedure
-  }
-}
+  } // foreach
+} // main

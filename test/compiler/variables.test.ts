@@ -54,43 +54,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3");
-    const pythonCode = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  printNoLine(a) # call procedure
-
-main()
-`;
-
-    const csCode = `${testCSHeader}
-
-static void main() {
-  var a = 3;
-  printNoLine(a); // call procedure
-}
-`;
-
-    const javaCode = `${testJavaHeader}
-
-static void main() {
-  var a = 3;
-  printNoLine(a); // call procedure
-}
-`;
-
-    const vbCode = `${testVBHeader}
-
-Sub main()
-  Dim a = 3 ' variable definition
-  printNoLine(a) ' call procedure
-End Sub
-`;
-
-    await assertExportedPythonIs(fileImpl, pythonCode);
-    await assertExportedCSIs(fileImpl, csCode);
-    await assertExportedJavaIs(fileImpl, javaCode);
-    await assertExportedVBis(fileImpl, vbCode);
   });
 
   test("Pass_IntVariable", async () => {

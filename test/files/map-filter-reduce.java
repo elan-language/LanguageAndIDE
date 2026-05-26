@@ -7,28 +7,28 @@
   assertEquals(81480107, nums.reduce(1.0, product).floor())
   assertEquals([0.45, 0.4], nums.filter(lessThan5).map(inverse))
   assertEquals("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat))
-}
+} // 
 
 static bool lessThan5(double n) { // function
   return n < 5;
-}
+} // function
 
 static double cube(double n) { // function
   return pow(n, 3).round(2);
-}
+} // function
 
 static double inverse(double n) { // function
   return (1/n).round(2);
-}
+} // function
 
 static String asString(double n) { // function
   return String.format("%|", n);
-}
+} // function
 
 static double product(double x, double y) { // function
   return (x*y);
-}
+} // function
 
 static String concat(String a, String b) { // function
   return a + b;
-}
+} // function

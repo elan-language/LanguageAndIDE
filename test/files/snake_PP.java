@@ -25,11 +25,11 @@ static void main() {
       setAppleToRandomPosition(apple, body); // call procedure
     } else {
       body.removeAt(0); // call procedure
-    }
+    } // if
     sleep_ms(150); // call procedure
-  }
+  } // while
   print(String.format("Game Over! Score: %", body.length() - 1));
-}
+} // main
 
 static void updateSnake(AsRef<String> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
   var head = headRef.value();
@@ -40,7 +40,7 @@ static void updateSnake(AsRef<String> currentDirRef, AsRef<List<int>> tailRef, A
   body.append(head); // call procedure
   headRef.set(getAdjacentSquare(head, currentDir)); // call procedure
   currentDirRef.set(currentDir); // call procedure
-}
+} // procedure
 
 static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
   blocks[head[0]][head[1]] = green; // re-assign variable
@@ -48,7 +48,7 @@ static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail
   blocks[tail[0]][tail[1]] = tailColour; // re-assign variable
   blocks[apple[0]][apple[1]] = red; // re-assign variable
   displayBlocks(blocks); // call procedure
-}
+} // procedure
 
 static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure
   var changePosition = true;
@@ -57,21 +57,21 @@ static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { //
     apple[1] = randint(0, 29); // re-assign variable
     if (!body.contains(apple)) {
       changePosition = false; // re-assign variable
-    }
-  }
-}
+    } // if
+  } // while
+} // procedure
 
 static int getTailColour(List<int> tail, List<List<int>> body) { // function
   var colour = white;
   if (body[0].equals(tail)) {
     colour = green; // re-assign variable
-  }
+  } // if
   return colour;
-}
+} // function
 
 static bool hasHitEdge(int headX, int headY) { // function
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
-}
+} // function
 
 static List<int> getAdjacentSquare(List<int> sq, String dir) { // function
   var newX = sq[0];
@@ -84,23 +84,23 @@ static List<int> getAdjacentSquare(List<int> sq, String dir) { // function
     newY = newY - 1; // re-assign variable
   } else if (dir.equals("down")) {
     newY = newY + 1; // re-assign variable
-  }
+  } // if
   return [newX, newY];
-}
+} // function
 
 static String directionByKey(String current, String key) { // function
   var dirn = current;
   var d = ["w":"up", "s":"down", "a":"left", "d":"right"];
   if (d.keys().contains(key)) {
     dirn = d[key]; // re-assign variable
-  }
+  } // if
   return dirn;
-}
+} // function
 
 @Test static void test_getTailColour() {
   assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
   assertEquals(white, getTailColour([3, 4], [[3, 5], [3, 6]]))
-}
+} // 
 
 @Test static void test_hasHitEdge() {
   assertEquals(false, hasHitEdge(0, 0))
@@ -111,7 +111,7 @@ static String directionByKey(String current, String key) { // function
   assertEquals(true, hasHitEdge(5, 30))
   assertEquals(true, hasHitEdge(40, 5))
   assertEquals(true, hasHitEdge(5, -1))
-}
+} // 
 
 @Test static void test_getAdjacentSquare() {
   var sq = [20, 15];
@@ -121,7 +121,7 @@ static String directionByKey(String current, String key) { // function
   assertEquals([21, 15], getAdjacentSquare(sq, "right"))
   // boundary
   assertEquals([-1, 15], getAdjacentSquare([0, 15], "left"))
-}
+} // 
 
 @Test static void test_directionByKey() {
   var current = "up";
@@ -132,4 +132,4 @@ static String directionByKey(String current, String key) { // function
   assertEquals("left", directionByKey(current, "a"))
   assertEquals("right", directionByKey(current, "d"))
   assertEquals("up", directionByKey(current, "D"))
-}
+} // 
