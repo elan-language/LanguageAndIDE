@@ -624,3 +624,37 @@ export function getLanguageByClass(cl: string) {
   ];
   return languages.find((l) => l.languageHtmlClass === cl) ?? LanguageElan.Instance;
 }
+
+export function getLanguagesForQuad(l: Language) {
+  switch (l.languageHtmlClass) {
+    case "python":
+      return [
+        LanguagePython.Instance,
+        LanguageVB.Instance,
+        LanguageJava.Instance,
+        LanguageCS.Instance,
+      ];
+    case "vb":
+      return [
+        LanguageVB.Instance,
+        LanguageCS.Instance,
+        LanguagePython.Instance,
+        LanguageJava.Instance,
+      ];
+    case "cs":
+      return [
+        LanguageCS.Instance,
+        LanguageJava.Instance,
+        LanguageVB.Instance,
+        LanguagePython.Instance,
+      ];
+    case "java":
+      return [
+        LanguageJava.Instance,
+        LanguagePython.Instance,
+        LanguageCS.Instance,
+        LanguageVB.Instance,
+      ];
+  }
+  return [];
+}

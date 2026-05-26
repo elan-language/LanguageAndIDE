@@ -74,14 +74,6 @@ body {
   display: inline;
 }
 
-.code {
-  flex-basis: auto;
-  flex-grow: 1;
-  padding: 5px;
-  position: relative;
-  overflow-y: scroll;
-}
-
 #rh-header {
   display: flex;
   flex-direction: row;
@@ -671,3 +663,48 @@ body.procedural div.demo-file.procedural { display: revert; }
 body.oop div.demo-file.oop { display: revert; }
 body.functional div.demo-file.functional { display: revert; }
 
+
+.quad {
+  display: flex;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.quad .code {
+  flex-basis: auto;
+  flex-grow: 1;
+  position: relative;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.quad .code:not(:first-child) {
+  display: none;
+}
+
+.quad-editor .quad {
+  display: grid;
+  grid-template-columns: 50% 50%; 
+  grid-template-rows: 50% 50%;
+  grid-gap: 10px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  overflow: revert;
+}
+
+.quad-editor .quad .code {
+  display: block;
+}
+
+.quad-editor .quad .code {
+  max-height: 45vh;
+}
+.quad-editor .quad .code:not( :focus-within)
+{
+  opacity: 1;
+}
+
+.quad-editor #elan-language
+{
+  display: none;
+}
