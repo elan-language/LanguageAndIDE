@@ -30,6 +30,7 @@ import {
   cursorWait,
   domEventType,
   getLanguageByClass,
+  getLanguagesForQuad,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuKey,
@@ -50,7 +51,8 @@ import { sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
-const codeContainer = document.querySelector(".code") as HTMLDivElement;
+//const codeContainer = document.querySelector(".code") as HTMLDivElement;
+const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
@@ -84,6 +86,7 @@ const profileButton = document.getElementById("profile") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
+const toggleQuadEditorButton = document.getElementById("toggle-quad-editor") as HTMLDivElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -217,7 +220,9 @@ class IDEViewModel implements IIDEViewModel {
     setStatus(runStatus, cvm.getRunStatusColour(), cvm.getRunStatusLabel(), false);
 
     if (isRunning || isTestRunning) {
-      codeContainer?.classList.add("running");
+      for (const codeContainer of codeContainers) {
+        codeContainer?.classList.add("running");
+      }
 
       if (isPaused) {
         this.enable(runDebugButton, "Resume the program");
@@ -263,7 +268,9 @@ class IDEViewModel implements IIDEViewModel {
         elem.setAttribute("hidden", "");
       }
     } else {
-      codeContainer?.classList.remove("running");
+      for (const codeContainer of codeContainers) {
+        codeContainer?.classList.remove("running");
+      }
 
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
@@ -520,7 +527,11 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async renderAsHtml(editingField: boolean) {
-    const content = await codeViewModel.renderAsHtml();
+    const isQuad = document.querySelector("body")?.classList.contains("quad-editor");
+
+    const content = isQuad
+      ? await codeViewModel.renderAsHtmlAll()
+      : [await codeViewModel.renderAsHtml()];
     try {
       await codeViewModel.updateContent(
         content,
@@ -598,7 +609,9 @@ class IDEViewModel implements IIDEViewModel {
           break;
         case "e":
         case "E":
-          codeContainer.click();
+          for (const codeContainer of codeContainers) {
+            codeContainer.click();
+          }
           kp.preventDefault();
           break;
         case "g":
@@ -728,12 +741,13 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
-    codeContainer.classList.remove("elan");
-    codeContainer.classList.remove("python");
-    codeContainer.classList.remove("cs");
-    codeContainer.classList.remove("vb");
-    codeContainer.classList.remove("java");
-    codeContainer.classList.add(l.languageHtmlClass);
+
+    codeContainers[0].classList.remove("elan");
+    codeContainers[0].classList.remove("python");
+    codeContainers[0].classList.remove("cs");
+    codeContainers[0].classList.remove("vb");
+    codeContainers[0].classList.remove("java");
+    codeContainers[0].classList.add(l.languageHtmlClass);
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
     this.tvm.setHelpLanguage(l.languageHtmlClass);
@@ -878,6 +892,22 @@ saveButton.addEventListener("click", async (e: Event) => {
 exportButton.addEventListener("click", async (e: Event) => {
   codeViewModel.setExporting(true);
   await getDownloader()(e);
+});
+
+toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
+  document.querySelector("body")!.classList.toggle("quad-editor");
+
+  if (document.querySelector("body")!.classList.contains("quad-editor")) {
+    if (codeViewModel.getLanguage() === LanguageElan.Instance) {
+      await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, true);
+    }
+    const ll = getLanguagesForQuad(codeViewModel.getLanguage());
+
+    for (let i = 0; i < 4; i++) {
+      codeContainers[i].classList.add(ll[i].languageHtmlClass);
+    }
+  }
+  await ideViewModel.renderAsHtml(false);
 });
 
 copyAsUrlButton.addEventListener("click", async (_e: Event) => {
