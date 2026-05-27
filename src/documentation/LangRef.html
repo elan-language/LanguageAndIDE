@@ -135,11 +135,11 @@ with all the same property values except for specific changes that you want to m
 <p>This table shows which named values can be reassigned and/or mutated depending on how they were defined:</p>
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
- <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>reassign<br>with 'set'</th><th>mutate</th><th>scope</th></tr>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>reassign<br>with <b>reassign</b></th><th>mutate</th><th>scope</th></tr>
  <tr><td><a href="#constant"><b>constant</b> <i class="fa">&#xf08e;</i></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
-  <td>values are set only at compile time</td></tr>
+  <td>values are assigned only at compile time</td></tr>
  <tr><td><a href="#variable"><b>variable definition</b> <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
-  <td>values are set at execution</td></tr>
+  <td>values are assigned during execution</td></tr>
  <tr><td><a href="#Parameter_value">parameter (by value) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
   <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
  <tr><td><a href="#Parameter_reference">parameter (by reference) <i class="fa">&#xf08e;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
@@ -744,7 +744,7 @@ Some useful constants are provided: see <a href="LibRef.html#systemConstants">Sy
 <div id="enumValue"></div>
 <h2 id="enum"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
-It is used to provide a fixed reassign of options that are self-explanatory, and the references to its
+It is used to provide a fixed set of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
 <p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
 number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf08e;</i></a>.</p>
@@ -1040,7 +1040,7 @@ end class
 <p>Statement instructions (sometimes referred to as 'statements') are the imperative keywords used in the methods (procedural logic) of a program, and are:</p>
 <p>
  <a href="#variable"><b>variable definition</b> <i class="fa">&#xf08e;</i></a>,
- <a href="#set"><b>reassign variable</b> <i class="fa">&#xf08e;</i></a>,
+ <a href="#reassign"><b>reassign variable</b> <i class="fa">&#xf08e;</i></a>,
  <a href="#if"><b>if</b> <i class="fa">&#xf08e;</i></a>,
  <a href="#while"><b>while loop</b> <i class="fa">&#xf08e;</i></a>,
  <a href="#for"><b>for loop</b> <i class="fa">&#xf08e;</i></a>,
@@ -1057,7 +1057,7 @@ end class
   <code>variable note set to 440</code>
 </p>
 
-<h2 id="set"><b>reassign variable</b></h2>
+<h2 id="reassign"><b>reassign variable</b></h2>
 <p>The <b>reassign variable .. to .. </b> instruction assigns a new value to an existing <b>variable</b> definition (mutable) named value.</p>
 <p>The new value must be of the same Type as (or of a Type compatible with) that of the variable.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
@@ -1985,10 +1985,6 @@ very slow parsing. We strongly recommend that you you simplify the contents of t
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
-<hr>
-<p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
-</body>
-</html>
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
 </body>
