@@ -62,12 +62,12 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import {
-    fileWithCS,
-    fileWithJava,
-    fileWithPython,
-    fileWithVB,
-    testActiveNodeAndDone,
-    testNodeParse,
+  fileWithCS,
+  fileWithJava,
+  fileWithPython,
+  fileWithVB,
+  testActiveNodeAndDone,
+  testNodeParse,
 } from "../testHelpers";
 
 suite("Parsing Nodes", () => {

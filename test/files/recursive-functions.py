@@ -35,5 +35,3 @@ def test_reverse(self) -> None:
   self.assertEqual(reverse(le), le)
   l1 = [0.6] # let
   self.assertEqual(reverse(l1), l1)
-
-main()

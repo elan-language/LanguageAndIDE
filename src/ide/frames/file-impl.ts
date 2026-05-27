@@ -233,7 +233,7 @@ export class FileImpl implements File {
   public async renderAsHtml(withHeader: boolean = true): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
-    const trailer = this.language().renderFileTrailerAsHtml();
+    const trailer = this.language().renderFileTrailerAsHtml(this);
     this.currentHash = await this.getHash();
     return withHeader
       ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${globals}${trailer}`
@@ -261,7 +261,7 @@ export class FileImpl implements File {
     this.doingExport = oldde;
     // No need to remove HTML as this has none as it is for export only
     const imports = this.language().renderFileImportsAsHtml();
-    const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml());
+    const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml(this));
     const lang = this.language().languageFullName;
     return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${globals}${trailer}
 `;

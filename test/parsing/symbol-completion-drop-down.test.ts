@@ -5,10 +5,10 @@ import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
 import {
-    assertAutocompletes,
-    assertSymbolCompletionMenuStartsWith,
-    assertSymbolCompletionWithString,
-    fileWithPython,
+  assertAutocompletes,
+  assertSymbolCompletionMenuStartsWith,
+  assertSymbolCompletionWithString,
+  fileWithPython,
 } from "../testHelpers";
 
 suite("SymbolCompletionDropDown", () => {

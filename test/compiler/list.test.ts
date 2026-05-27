@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertExportedVBis,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    testHeader,
-    testVBHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertExportedVBis,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testHeader,
+  testVBHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {

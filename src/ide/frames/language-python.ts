@@ -8,6 +8,7 @@ import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { ParamListField } from "./fields/param-list-field";
+import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -28,9 +29,9 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import {
-    LineFormat,
-    languageHelper_enumValuesList,
-    languageHelper_mathFunctions,
+  LineFormat,
+  languageHelper_enumValuesList,
+  languageHelper_mathFunctions,
 } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
@@ -226,8 +227,8 @@ export class LanguagePython extends LanguageAbstract {
     return result + extra;
   }
 
-  renderFileTrailerAsHtml(): string {
-    return "\n\n<el-method>main</el-method>()";
+  renderFileTrailerAsHtml(f: FileImpl): string {
+    return f.containsMain() ? "\n\n<el-method>main</el-method>()" : "";
   }
 
   translateExpression(expr: string): string {
