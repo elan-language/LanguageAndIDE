@@ -595,7 +595,7 @@ iframe a:focus {
 
 .code:not( :focus-within)
 {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 button[aria-expanded="true"]::after {
@@ -678,15 +678,30 @@ body.functional div.demo-file.functional { display: revert; }
   padding: 5px;
 }
 
-.quad .code:not(:first-child) {
+.quad .editor-label {
   display: none;
+}
+
+.quad .code:not(:nth-child(3)) {
+  display: none;
+}
+
+.quad-editor #lhs {
+  width: 80%;
 }
 
 .quad-editor .quad {
   display: grid;
   grid-template-columns: 50% 50%; 
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 2.5% 47.5% 2.5% 47.5%;
   overflow: revert;
+}
+
+.quad-editor .quad .editor-label {
+  display: block;
+  color: white;
+  font-family: var(--ideTitleFont);
+  font-size: 11pt;
 }
 
 .quad-editor .quad .code {
@@ -697,9 +712,8 @@ body.functional div.demo-file.functional { display: revert; }
   max-height: 45vh;
   margin-right: 10px;
 }
-.quad-editor .quad .code:not( :focus-within)
-{
-  opacity: 1;
+.quad-editor .quad .code el-header {
+  display: none;
 }
 
 .quad-editor #elan-language
