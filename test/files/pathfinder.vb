@@ -95,15 +95,23 @@ Class Solver
     Me.destination = destination ' reassign variable
     Me.current = New Node(emptyPoint(), 0, 0) ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Property nodes As List(Of Node)
+
   Property start As Point
+
   Property destination As Point
+
   Property current As Node
+
   Property alg As Algorithm
+
   Property running As Boolean
+
   ' TODO can this go into the constructor ?
   Sub initialise(alg As Algorithm) ' procedure method
     Me.alg = alg ' reassign variable
@@ -115,6 +123,7 @@ Class Solver
       node.setVisited(False) ' call procedure
     Next node
   End Sub
+
   Sub visitNextPoint() ' procedure method
     Me.updateNeighbours() ' call procedure
     Me.current = Me.nextNodeToVisit() ' reassign variable
@@ -125,6 +134,7 @@ Class Solver
       current.setVisited(True) ' call procedure
     End If
   End Sub
+
   Sub updateNeighbours() ' procedure method
     Dim distToCurrent = Me.current.distFromStart ' variable definition
     Dim currentPoint = Me.current.point ' variable definition
@@ -136,6 +146,7 @@ Class Solver
       End If
     Next neighbour
   End Sub
+
   Function currentNeighbours() As List(Of Node)
     Dim currentNode = Me.current ' variable definition
     Dim currentPoint = currentNode.point ' variable definition
@@ -149,13 +160,16 @@ Class Solver
     Next p
     Return neighbours
   End Function
+
   Function getNodeFor(p As Point) As Node
     Dim matches = Me.nodes.filter(Function (n As Node) n.point.equals(p)) ' variable definition
     Return if(matches.length() = 1, matches.head(), emptyNode())
   End Function
+
   Function getLastVisited() As Point
     Return Me.current.point
   End Function
+
   Function nextNodeToVisit() As Node
     Dim lowestCostSoFar = infinity ' variable definition
     Dim lowestCostNode = emptyNode() ' variable definition
@@ -169,6 +183,7 @@ Class Solver
     Next nd
     Return lowestCostNode
   End Function
+
   Function calculateCost(node As Node) As Double
     Dim cost = 0.0 ' variable definition
     Dim fromStart = node.distFromStart ' variable definition
@@ -182,6 +197,7 @@ Class Solver
     End If
     Return cost
   End Function
+
   Function getRouteAndLength() As (List(Of Point), Double)
     Dim route = {Me.destination} ' variable definition
     Dim length = 0.0 ' variable definition
@@ -195,6 +211,7 @@ Class Solver
     End While
     Return (route, length)
   End Function
+
 End Class
 
 Function emptyNode() As Node
@@ -213,24 +230,35 @@ Class Node
     Me.via = emptyPoint() ' reassign variable
     Me.estDistToDest = estDistToDest ' reassign variable
   End Sub
+
   Property point As Point
+
   Property visited As Boolean
+
   Property distFromStart As Double
+
   Property via As Point
+
   Property estDistToDest As Double
+
   Property isEmpty As Boolean
+
   Sub setVisited(value As Boolean) ' procedure method
     Me.visited = value ' reassign variable
   End Sub
+
   Sub setDistanceFromStart(d As Double) ' procedure method
     Me.distFromStart = d ' reassign variable
   End Sub
+
   Sub setVia(p As Point) ' procedure method
     Me.via = p ' reassign variable
   End Sub
+
   Function toString() As String
     Return $"[{Me.point.toString()} {Me.visited} {Me.distFromStart}]"
   End Function
+
 End Class
 
 Function emptyPoint() As Point
@@ -240,8 +268,11 @@ End Function
 Class Point
 
   Property x As Integer
+
   Property y As Integer
+
   Property isEmpty As Boolean
+
   Sub New(x As Integer, y As Integer)
     If (x < 0) Or (y < 0) Then
       Me.isEmpty = True ' reassign variable
@@ -250,19 +281,24 @@ Class Point
       Me.y = y ' reassign variable
     End If
   End Sub
+
   Function minDistTo(p As Point) As Double
     Return sqrt(pow((p.x - Me.x), 2) + pow((p.y - Me.y), 2))
   End Function
+
   Function isAdjacentTo(p As Point) As Boolean
     Return (Me.minDistTo(p) = 1) Or (Me.minDistTo(p).round(4) = sqrt(2).round(4))
   End Function
+
   ' Returns the 8 theoretically-neighbouring points, whether or not within bounds
   Function neighbouringPoints() As List(Of Point)
     Return {New Point(Me.x - 1, Me.y - 1), New Point(Me.x, Me.y - 1), New Point(Me.x + 1, Me.y - 1), New Point(Me.x - 1, Me.y), New Point(Me.x + 1, Me.y), New Point(Me.x - 1, Me.y + 1), New Point(Me.x, Me.y + 1), New Point(Me.x + 1, Me.y + 1)}
   End Function
+
   Function toString() As String
     Return $"{Me.x},{Me.y}"
   End Function
+
 End Class
 
 Enum Algorithm 

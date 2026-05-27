@@ -45,28 +45,40 @@ Class TuringMachine
     Me.currentState = initialState ' reassign variable
     Me.headPosition = 0 ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Property initialState As String
+
   Property currentState As String
+
   Property headPosition As Integer
+
   Property haltState As String
+
   Property rules As List(Of Rule)
+
   Property tape As String
+
   Sub setTape(tape As String) ' procedure method
     Me.tape = tape ' reassign variable
   End Sub
+
   Sub append(rule As Rule) ' procedure method
     Me.rules = Me.rules.withAppend(rule) ' reassign variable
   End Sub
+
   Sub singleStep() ' procedure method
     Dim rule = Me.findMatchingRule() ' variable definition
     Me.execute(rule) ' call procedure
   End Sub
+
   Function isHalted() As Boolean
     Return Me.currentState.equals(Me.haltState)
   End Function
+
   Function findMatchingRule() As Rule
     Dim matches = Me.rules.filter(Function (r As Rule) (r.currentState.equals(Me.currentState)) And (r.currentSymbol.equals(Me.tape[Me.headPosition]))) ' variable definition
     If matches.length() = 0 Then
@@ -74,10 +86,12 @@ Class TuringMachine
     End If
     Return matches.head()
   End Function
+
   Sub write(newSymbol As String) ' procedure method
     Dim hp = Me.headPosition ' variable definition
     Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' reassign variable
   End Sub
+
   Sub execute(rule As Rule) ' procedure method
     Me.currentState = rule.nextState ' reassign variable
     Me.write(rule.writeSymbol) ' call procedure
@@ -94,15 +108,21 @@ Class TuringMachine
       End If
     End If
   End Sub
+
 End Class
 
 Class Rule
 
   Property currentState As String
+
   Property currentSymbol As String
+
   Property nextState As String
+
   Property writeSymbol As String
+
   Property move As Dir
+
   Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
     Me.currentState = currentState ' reassign variable
     Me.currentSymbol = currentSymbol ' reassign variable
@@ -110,9 +130,11 @@ Class Rule
     Me.writeSymbol = writeSymbol ' reassign variable
     Me.move = move ' reassign variable
   End Sub
+
   Function toString() As String
     Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumValue(Me.move)}"
   End Function
+
 End Class
 
 Enum Dir 

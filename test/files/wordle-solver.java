@@ -113,11 +113,15 @@ class WordCount {
     this.word = word; // reassign variable
     this.count = count; // reassign variable
   } // constructor
+
   public String word; // property
+
   public int count; // property
+
   public String toString() { // function method
     return String.format("% %", this.word, this.count);
   } // function method
+
 } // class
 
 // 2309 words

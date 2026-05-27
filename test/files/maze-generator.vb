@@ -118,20 +118,25 @@ End Sub
 Class Point
 
   Property x As Integer
+
   Property y As Integer
+
   Sub New(x As Integer, y As Integer)
     Me.x = x ' reassign variable
     Me.y = y ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   ' Returns the 8 theoretically-neighbouring points, whether or not within bounds
   Function neighbouringPoints() As List(Of Point)
     Dim x = Me.x ' variable definition
     Dim y = Me.y ' variable definition
     Return {New Point(x - 1, y - 1), New Point(x, y - 1), New Point(x + 1, y - 1), New Point(x - 1, y), New Point(x + 1, y), New Point(x - 1, y + 1), New Point(x, y + 1), New Point(x + 1, y + 1)}
   End Function
+
 End Class
 
 <TestMethod> Sub test_neighbouringPoints()

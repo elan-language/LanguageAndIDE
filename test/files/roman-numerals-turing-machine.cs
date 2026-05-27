@@ -45,28 +45,40 @@ class TuringMachine {
     this.currentState = initialState; // reassign variable
     this.headPosition = 0; // reassign variable
   } // constructor
+
   public string toString() { // function method
     return "";
   } // function method
+
   public string initialState {get; private set;} // property
+
   public string currentState {get; private set;} // property
+
   public int headPosition {get; private set;} // property
+
   public string haltState {get; private set;} // property
+
   public List<Rule> rules {get; private set;} // property
+
   public string tape {get; private set;} // property
+
   public void setTape(string tape) { // procedure method
     this.tape = tape; // reassign variable
   } // procedure method
+
   public void append(Rule rule) { // procedure method
     this.rules = this.rules.withAppend(rule); // reassign variable
   } // procedure method
+
   public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
   } // procedure method
+
   public bool isHalted() { // function method
     return this.currentState.equals(this.haltState);
   } // function method
+
   public Rule findMatchingRule() { // function method
     var matches = this.rules.filter(Rule r => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
@@ -74,10 +86,12 @@ class TuringMachine {
     } // if
     return matches.head();
   } // function method
+
   public void write(string newSymbol) { // procedure method
     var hp = this.headPosition;
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // reassign variable
   } // procedure method
+
   public void execute(Rule rule) { // procedure method
     this.currentState = rule.nextState; // reassign variable
     this.write(rule.writeSymbol); // call procedure
@@ -94,15 +108,21 @@ class TuringMachine {
       } // if
     } // if
   } // procedure method
+
 } // class
 
 class Rule {
 
   public string currentState {get; private set;} // property
+
   public string currentSymbol {get; private set;} // property
+
   public string nextState {get; private set;} // property
+
   public string writeSymbol {get; private set;} // property
+
   public Dir move {get; private set;} // property
+
   public Rule(string currentState, string currentSymbol, string nextState, string writeSymbol, Dir move) {
     this.currentState = currentState; // reassign variable
     this.currentSymbol = currentSymbol; // reassign variable
@@ -110,9 +130,11 @@ class Rule {
     this.writeSymbol = writeSymbol; // reassign variable
     this.move = move; // reassign variable
   } // constructor
+
   public string toString() { // function method
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}";
   } // function method
+
 } // class
 
 enum Dir {left, right}

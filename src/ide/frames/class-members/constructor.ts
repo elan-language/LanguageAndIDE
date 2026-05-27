@@ -1,5 +1,6 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { ParamListField } from "../fields/param-list-field";
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
@@ -59,5 +60,10 @@ ${this.indent()}end constructor\r
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end constructor");
+  }
+
+  renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
   }
 }

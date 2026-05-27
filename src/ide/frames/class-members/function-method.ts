@@ -7,6 +7,7 @@ import {
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
+  removeHtmlTagsAndEscChars,
   singleIndent,
   togglePrivatePublic,
 } from "../frame-helpers";
@@ -86,5 +87,10 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
     }
 
     return super.processKey(e);
+  }
+
+  renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
   }
 }

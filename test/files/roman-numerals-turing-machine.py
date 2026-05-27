@@ -42,31 +42,45 @@ class TuringMachine # concrete class
     self.rules = list[Rule]() # reassign variable
     self.currentState = initialState # reassign variable
     self.headPosition = 0 # reassign variable
+
   def toString(self: TuringMachine) -> str: # function method
     return ""
+
   initialState: str # property
+
   currentState: str # property
+
   headPosition: int # property
+
   haltState: str # property
+
   rules: list[Rule] # property
+
   tape: str # property
+
   def setTape(self: TuringMachine, tape: str) -> None: # procedure method
     self.tape = tape # reassign variable
+
   def append(self: TuringMachine, rule: Rule) -> None: # procedure method
     self.rules = self.rules.withAppend(rule) # reassign variable
+
   def singleStep(self: TuringMachine) -> None: # procedure method
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
+
   def isHalted(self: TuringMachine) -> bool: # function method
     return self.currentState.equals(self.haltState)
+
   def findMatchingRule(self: TuringMachine) -> Rule: # function method
     matches = self.rules.filter(lambda r: Rule: (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
       raise ElanRuntimeError(f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}")
     return matches.head()
+
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure method
     hp = self.headPosition # variable definition
     self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # reassign variable
+
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure method
     self.currentState = rule.nextState # reassign variable
     self.write(rule.writeSymbol) # call procedure
@@ -81,21 +95,29 @@ class TuringMachine # concrete class
         self.headPosition = 0 # reassign variable
 
 
+
 class Rule # concrete class
 
   currentState: str # property
+
   currentSymbol: str # property
+
   nextState: str # property
+
   writeSymbol: str # property
+
   move: Dir # property
+
   def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
     self.currentState = currentState # reassign variable
     self.currentSymbol = currentSymbol # reassign variable
     self.nextState = nextState # reassign variable
     self.writeSymbol = writeSymbol # reassign variable
     self.move = move # reassign variable
+
   def toString(self: Rule) -> str: # function method
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
+
 
 
 class Dir(Enum):

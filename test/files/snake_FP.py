@@ -62,12 +62,19 @@ def hasHitEdge(g: Game) -> bool: # function
 class Game # concrete class
 
   head: Square # property
+
   body: list[Square] # property
+
   priorTail: Square # property
+
   apple: Square # property
+
   isOn: bool # property
+
   rnd: Random # property
+
   key: str # property
+
   def __init__(self: Game, rnd: Random) -> None:
     self.head = Square(22, 15) # reassign variable
     self.body = [Square(20, 15), Square(21, 15)] # reassign variable
@@ -76,8 +83,10 @@ class Game # concrete class
     self.isOn = True # reassign variable
     self.apple = Square(12, 15) # reassign variable
     self.rnd = rnd # reassign variable
+
   def toString(self: Game) -> str: # function method
     return ""
+
   def withNewApple(self: Game) -> Game: # function method
     x = self.rnd.asInt(0, 39) # let
     rnd2 = self.rnd.nextGen() # let
@@ -86,53 +95,67 @@ class Game # concrete class
     apple2 = Square(x, y) # let
     g2 = self.withApple(apple2).withRnd(rnd3) # let
     return if(g2.body.contains(apple2), g2.withNewApple(), g2)
+
   def withHead(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.head = value # reassign variable
     return copyOfThis
+
   def withBody(self: Game, value: list[Square]) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.body = value # reassign variable
     return copyOfThis
+
   def withPriorTail(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.priorTail = value # reassign variable
     return copyOfThis
+
   def withApple(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.apple = value # reassign variable
     return copyOfThis
+
   def withIsOn(self: Game, value: bool) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.isOn = value # reassign variable
     return copyOfThis
+
   def withRnd(self: Game, value: Random) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.rnd = value # reassign variable
     return copyOfThis
+
   def withKey(self: Game, value: str) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.key = value # reassign variable
     return copyOfThis
 
 
+
 class Square # concrete class
 
   x: int # property
+
   y: int # property
+
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+
   def withX(self: Square, value: int) -> Square: # function method
     copyOfThis = copy(self) # let
     copyOfThis.x = value # reassign variable
     return copyOfThis
+
   def withY(self: Square, value: int) -> Square: # function method
     copyOfThis = copy(self) # let
     copyOfThis.y = value # reassign variable
     return copyOfThis
+
   def toString(self: Square) -> str: # function method
     return f"{self.x}, {self.y}"
+
 
 
 def test_clockTick(self) -> None:

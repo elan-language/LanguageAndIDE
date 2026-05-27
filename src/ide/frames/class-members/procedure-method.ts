@@ -3,7 +3,7 @@ import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
   singleIndent,
-  togglePrivatePublic,
+  togglePrivatePublic
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
@@ -79,5 +79,10 @@ ${this.indent()}end procedure\r
     }
 
     return super.processKey(e);
+  }
+
+  renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
   }
 }

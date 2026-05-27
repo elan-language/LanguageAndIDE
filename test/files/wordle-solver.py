@@ -93,10 +93,14 @@ class WordCount # concrete class
   def __init__(self: WordCount, word: str, count: int) -> None:
     self.word = word # reassign variable
     self.count = count # reassign variable
+
   word: str # property
+
   count: int # property
+
   def toString(self: WordCount) -> str: # function method
     return f"{self.word} {self.count}"
+
 
 
 # 2309 words

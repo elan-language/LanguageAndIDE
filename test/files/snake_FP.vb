@@ -73,12 +73,19 @@ End Function
 Class Game
 
   Property head As Square
+
   Property body As List(Of Square)
+
   Property priorTail As Square
+
   Property apple As Square
+
   Property isOn As Boolean
+
   Property rnd As Random
+
   Property key As String
+
   Sub New(rnd As Random)
     Me.head = New Square(22, 15) ' reassign variable
     Me.body = {New Square(20, 15), New Square(21, 15)} ' reassign variable
@@ -88,9 +95,11 @@ Class Game
     Me.apple = New Square(12, 15) ' reassign variable
     Me.rnd = rnd ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Function withNewApple() As Game
     Dim x = Me.rnd.asInt(0, 39) ' let
     Dim rnd2 = Me.rnd.nextGen() ' let
@@ -100,64 +109,78 @@ Class Game
     Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' let
     Return if(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
+
   Function withHead(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.head = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withBody(value As List(Of Square)) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.body = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withPriorTail(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.priorTail = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withApple(value As Square) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.apple = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withIsOn(value As Boolean) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.isOn = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withRnd(value As Random) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.rnd = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withKey(value As String) As Game
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.key = value ' reassign variable
     Return copyOfThis
   End Function
+
 End Class
 
 Class Square
 
   Property x As Integer
+
   Property y As Integer
+
   Sub New(x As Integer, y As Integer)
     Me.x = x ' reassign variable
     Me.y = y ' reassign variable
   End Sub
+
   Function withX(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.x = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function withY(value As Integer) As Square
     Dim copyOfThis = copy(Me) ' let
     copyOfThis.y = value ' reassign variable
     Return copyOfThis
   End Function
+
   Function toString() As String
     Return $"{Me.x}, {Me.y}"
   End Function
+
 End Class
 
 <TestMethod> Sub test_clockTick()
