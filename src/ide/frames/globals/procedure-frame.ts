@@ -29,7 +29,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
   }
 
   getIdPrefix(): string {
-    return "proc";
+    return `${this.language().languageHtmlClass}_proc`;
   }
 
   frameSpecificAnnotation(): string {

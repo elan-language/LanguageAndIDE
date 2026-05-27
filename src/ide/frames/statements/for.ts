@@ -29,7 +29,7 @@ export class For extends FrameWithStatements implements Statement {
   }
 
   getIdPrefix(): string {
-    return "for";
+    return `${this.language().languageHtmlClass}_for`;
   }
 
   frameSpecificAnnotation(): string {

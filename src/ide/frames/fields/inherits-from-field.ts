@@ -17,7 +17,7 @@ export class InheritsFromField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "text";
+    return `${this.language().languageHtmlClass}_text`;
   }
 
   initialiseRoot(): ParseNode {

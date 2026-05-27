@@ -37,7 +37,7 @@ end main`;
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident10", "o", 1, expected);
   });
 
   test("Pass_LocalVars1", async () => {
@@ -65,7 +65,7 @@ end main`;
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident10", "f", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident10", "f", expected);
   });
 
   test("Pass_Let", async () => {
@@ -93,7 +93,7 @@ end main`;
       ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "fo", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "fo", expected);
   });
 
   test("Pass_keyword", async () => {
@@ -116,7 +116,7 @@ end main`;
 
     const expected = [["bitNot", "bitNot", "bitNot("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "no", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "no", expected);
   });
 
   test("Pass_space", async () => {
@@ -139,7 +139,7 @@ end main`;
 
     const expected = [] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr5", " ", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_expr5", " ", 1, expected);
   });
 
   test("Pass_emptyExpression", async () => {
@@ -160,7 +160,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 72);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", " ", 72);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -185,7 +185,7 @@ end main`;
 
     const expected = [["fooBar", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
   });
 
   test("Pass_LocalVarsCaseInsensitive2", async () => {
@@ -210,7 +210,7 @@ end main`;
 
     const expected = [] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident10", "O", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident10", "O", 1, expected);
   });
 
   test("Pass_InClass", async () => {
@@ -252,7 +252,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident24", "a", 1, expected);
   });
 
   test("Pass_InConstructor", async () => {
@@ -286,7 +286,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident16", "a", expected);
   });
 
   test("Pass_InProcedure", async () => {
@@ -325,7 +325,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident25", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
   });
 
   test("Pass_InProcedureParameter", async () => {
@@ -364,7 +364,7 @@ end class`;
       ["aa3", "this.aa3", "this.aa3"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident25", "a", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -389,7 +389,7 @@ end main`;
 
     const expected = [["foobar", "foobar", "foobar"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident10", "b", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
   });
 
   test("Pass_NoConstant", async () => {
@@ -419,7 +419,7 @@ end main`;
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident13", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident13", "o", 1, expected);
   });
 
   test("Pass_StdLibConstant", async () => {
@@ -442,7 +442,7 @@ end main`;
 
     const expected = [["white", "white", "white"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "wh", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "wh", expected);
   });
 
   test("Pass_CallLocalVars", async () => {
@@ -475,7 +475,7 @@ end main`;
       ["fooyon", "fooyon", "fooyon"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident14", "o", 1, expected);
   });
 
   test("Pass_CallMembers", async () => {
@@ -527,7 +527,7 @@ end main`;
       ["proc2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident45", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident45", ".", 3, expected);
   });
 
   test("Pass_CallLibMembers", async () => {
@@ -562,7 +562,7 @@ end main`;
       ["removeFirst", "removeFirst", "removeFirst"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
   });
 
   test("Pass_CallMembersFilter", async () => {
@@ -610,7 +610,7 @@ end main`;
 
     const expected = [["pproc3", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident45", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_ident45", "p", 5, expected);
   });
 
   test("Pass_CallExtensions", async () => {
@@ -645,7 +645,7 @@ end main`;
       ["removeFirst", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
   });
 
   test("Pass_CallExtensionsFilter", async () => {
@@ -672,7 +672,7 @@ end main`;
       ["appendList", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_ident7", "p", 5, expected);
   });
 
   test("Pass_ExpressionId", async () => {
@@ -701,7 +701,7 @@ end main`;
       ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", "o", 1, expected);
   });
 
   test("Pass_ExpressionLocalVar", async () => {
@@ -730,7 +730,7 @@ end main`;
       ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
   });
 
   test("Pass_ExpressionLocalFunction", async () => {
@@ -764,7 +764,7 @@ end function`;
       ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
   });
 
   test("Pass_ExpressionDictionaryExtension", async () => {
@@ -791,7 +791,7 @@ end main`;
       ["withSet", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", "i", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", "i", 5, expected);
   });
 
   test("Pass_ExpressionAbstractDictionaryExtension", async () => {
@@ -818,7 +818,7 @@ end main`;
       ["hasKey", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", "e", 5, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", "e", 5, expected);
   });
 
   test("Pass_CallDict", async () => {
@@ -845,7 +845,7 @@ end main`;
       ["removeAt", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
   });
 
   test("Pass_ExprDict", async () => {
@@ -878,7 +878,7 @@ end main`;
       ["withSet", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "expr8", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "elan_expr8", ".", 3, expected);
   });
 
   test("Pass_properties1", async () => {
@@ -923,7 +923,7 @@ end class`;
       ["foo", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident33", "f", 0, expected, true);
+    await assertAutocompletes(fileImpl, "elan_ident33", "f", 0, expected, true);
   });
 
   test("Pass_properties2", async () => {
@@ -965,7 +965,7 @@ end class`;
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident33", "o", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident33", "o", 1, expected);
   });
 
   ignore_test("Pass_properties3", async () => {
@@ -1011,7 +1011,7 @@ end class`;
       ["foo", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "t", 0, expected, true);
+    await assertAutocompletes(fileImpl, "elan_ident24", "t", 0, expected, true);
   });
 
   ignore_test("Pass_properties4", async () => {
@@ -1057,7 +1057,7 @@ end class`;
       ["foo", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident24", "h", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident24", "h", 1, expected);
   });
 
   test("Pass_properties5", async () => {
@@ -1098,7 +1098,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "*", "*"]] as [string, string, string][];
-    await assertSymbolCompletionWithString(fileImpl, "ident33", "this.f", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident33", "this.f", expected);
   });
 
   test("Pass_properties6", async () => {
@@ -1143,7 +1143,7 @@ end class`;
       ["bar", "*", "*"],
     ] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident33", "b", 0, expected, true);
+    await assertAutocompletes(fileImpl, "elan_ident33", "b", 0, expected, true);
   });
 
   test("Pass_properties7", async () => {
@@ -1185,7 +1185,7 @@ end class`;
 
     const expected = [["bar", "*", "*"]] as [string, string, string][];
 
-    await assertAutocompletes(fileImpl, "ident33", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "elan_ident33", "a", 1, expected);
   });
 
   test("Pass_private1", async () => {
@@ -1224,7 +1224,7 @@ end class`;
 
     const expected = [["pp2", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident7", "foo.p", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "foo.p", expected);
   });
 
   test("Pass_private2", async () => {
@@ -1266,7 +1266,7 @@ end class`;
       ["pp2", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident28", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
   });
 
   test("Pass_assert", async () => {
@@ -1343,7 +1343,7 @@ end function`;
       ["HashSet", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as S", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as S", expected);
   });
 
   test("Pass_typeName2", async () => {
@@ -1373,7 +1373,7 @@ end function`;
       ["Int", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as I", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as I", expected);
   });
 
   ignore_test("Pass_typeName5", async () => {
@@ -1400,7 +1400,7 @@ end function`;
 
     const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as Int, b as B", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as Int, b as B", expected);
   });
 
   test("Pass_typeName6", async () => {
@@ -1430,7 +1430,7 @@ end function`;
       ["Int", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as HashSet<of I", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as HashSet<of I", expected);
   });
 
   test("Pass_typeName7", async () => {
@@ -1463,7 +1463,7 @@ end function`;
       ["RectangleVG", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "params6", "a as VG", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as VG", expected);
   });
 
   test("Pass_returnType1", async () => {
@@ -1490,7 +1490,7 @@ end function`;
       ["HashSet", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "type5", "S", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_type5", "S", expected);
   });
 
   test("Pass_returnType2", async () => {
@@ -1513,7 +1513,7 @@ end function`;
 
     const expected = [["CircleVG", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "type5", "Circle", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_type5", "Circle", expected);
   });
 
   test("Pass_functionResult", async () => {
@@ -1566,7 +1566,7 @@ end class`;
       ["toString", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().", expected);
   });
 
   test("Pass_functionResultWithParams", async () => {
@@ -1619,7 +1619,7 @@ end class`;
       ["toString", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo(1).", expected);
   });
 
   test("Pass_complexExpression1", async () => {
@@ -1646,7 +1646,7 @@ end main`;
       ["enumValue", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "abs(al", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "abs(al", expected);
   });
 
   test("Pass_libExtension1", async () => {
@@ -1679,7 +1679,7 @@ end main`;
       ["toString", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "foo.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "foo.", expected);
   });
 
   test("Pass_newType1", async () => {
@@ -1703,7 +1703,7 @@ end main
 
     const expected = [["Boolean", "*", "*"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new B", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new B", expected);
   });
 
   test("Pass_newType2", async () => {
@@ -1751,7 +1751,7 @@ end main`;
       ["Turtle", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new ", expected);
   });
 
   test("Pass_Parameter", async () => {
@@ -1778,7 +1778,7 @@ end main`;
       ["CustomError", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "args8", "0, new C", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_args8", "0, new C", expected);
   });
 
   ignore_test("Pass_newConcreteType #897", async () => {
@@ -1824,7 +1824,7 @@ end main`;
       ["Turtle", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "vg.withAppend(new ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "vg.withAppend(new ", expected);
   });
 
   test("Pass_EnumType", async () => {
@@ -1849,7 +1849,7 @@ enum Fruit apple, orange, pear`;
 
     const expected = [["Fruit", "Fruit", "Fruit"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "Fr", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fr", expected);
   });
 
   test("Pass_enumValue", async () => {
@@ -1878,7 +1878,7 @@ enum Fruit apple, orange, pear`;
       ["pear", "pear", "pear"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "Fruit.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fruit.", expected);
   });
 
   test("Pass_propProc", async () => {
@@ -1922,7 +1922,7 @@ end class`;
       ["bar2", "bar2", "bar2"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident31", "ba", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident31", "ba", expected);
   });
 
   test("Pass_largeConstant", async () => {
@@ -1975,7 +1975,7 @@ end main`;
 
     const expected = [["contains", "contains", "contains("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
   });
 
   test("Pass_stringExtension", async () => {
@@ -1999,7 +1999,7 @@ end main`;
 
     const expected = [["contains", "contains", "contains("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "s.con", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
   });
 
   test("Pass_listExtension1", async () => {
@@ -2025,7 +2025,7 @@ end main`;
       ["maxBy", "maxBy", "maxBy("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,5).ma", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "range(1,5).ma", expected);
   });
 
   ignore_test("Pass_callProperty", async () => {
@@ -2052,7 +2052,7 @@ end class`;
 
     const expected = [["p1", "this.p1", "this.p1"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident13", "this.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident13", "this.", expected);
   });
 
   test("Pass_inheritProperty", async () => {
@@ -2081,7 +2081,7 @@ end class`;
 
     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr28", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr28", "pp", expected);
   });
 
   test("Pass_inheritPropertyKeyword1", async () => {
@@ -2120,7 +2120,7 @@ end class`;
       ["pppp", "this.pppp", "this.pppp"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr35", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr35", "pp", expected);
   });
 
   ignore_test("Pass_inheritPropertyKeyword2", async () => {
@@ -2159,7 +2159,7 @@ end class`;
       ["pppp", "this.pppp", "this.pppp"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr25", "this", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this", expected);
   });
 
   ignore_test("Pass_inheritPropertyKeyword3", async () => {
@@ -2198,7 +2198,7 @@ end class`;
       ["pppp", "this.pppp", "this.pppp"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr25", "this.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this.", expected);
   });
 
   test("Pass_inheritIndirectProperty", async () => {
@@ -2231,7 +2231,7 @@ end class`;
 
     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr32", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "pp", expected);
   });
 
   test("Pass_inheritFunction", async () => {
@@ -2265,7 +2265,7 @@ end class`;
       ["ff1", "ff1", "ff1("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr32", "ff", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "ff", expected);
   });
 
   test("Pass_inheritIndirectFunction", async () => {
@@ -2303,7 +2303,7 @@ end class`;
       ["ff1", "ff1", "ff1("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr36", "ff", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr36", "ff", expected);
   });
 
   test("Pass_inheritProcedure", async () => {
@@ -2336,7 +2336,7 @@ end class`;
       ["pp1", "pp1", "pp1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident28", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
   });
 
   test("Pass_inheritIndirectProcedure", async () => {
@@ -2373,7 +2373,7 @@ end class`;
       ["pp1", "pp1", "pp1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident32", "pp", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident32", "pp", expected);
   });
 
   test("Pass_stdlibClass", async () => {
@@ -2410,7 +2410,7 @@ end main`;
       ["turnToHeading", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident7", "t.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "t.", expected);
   });
 
   test("Pass_newClass", async () => {
@@ -2436,7 +2436,7 @@ end class`;
 
     const expected = [] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new Foo()", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new Foo()", expected);
   });
 
   test("Pass_abstractClass", async () => {
@@ -2466,7 +2466,7 @@ end main`;
       ["RectangleVG", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "new List<of V", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new List<of V", expected);
   });
 
   test("Pass_args", async () => {
@@ -2490,7 +2490,7 @@ end main`;
 
     const expected = [["aaa", "aaa", "aaa"]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "args8", "aa", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_args8", "aa", expected);
   });
 
   test("Pass_withinForLoop", async () => {
@@ -2523,7 +2523,7 @@ end main`;
       ["totalPaces", "totalPaces", "totalPaces"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr21", "totalPaces + pac", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr21", "totalPaces + pac", expected);
   });
 
   test("Pass_tuple", async () => {
@@ -2550,7 +2550,7 @@ end main`;
       ["item_1", "item_1", "item_1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr8", "t.it", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "t.it", expected);
   });
 
   test("Pass_tuple1", async () => {
@@ -2580,7 +2580,7 @@ end function`;
       ["item_1", "item_1", "item_1"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().it", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().it", expected);
   });
 
   ignore_test("Pass_tuple2", async () => {
@@ -2612,7 +2612,7 @@ end procedure`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "args5",
+      "elan_args5",
       "(4, 5), lambda t as (Int, Int) => t.it",
       expected,
     );
@@ -2648,7 +2648,7 @@ end procedure`;
 
     const expected = [["bar", "bar", "bar("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "args5", "lambda t as Foo => t.b", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_args5", "lambda t as Foo => t.b", expected);
   });
 
   ignore_test("Pass_lambdaParameter2", async () => {
@@ -2683,7 +2683,7 @@ end procedure`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "args5",
+      "elan_args5",
       "new Foo(), lambda t as Foo => t.b",
       expected,
     );
@@ -2721,7 +2721,7 @@ end procedure`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "args5",
+      "elan_args5",
       "new Foo(), lambda t as Foo => u.b",
       expected,
     );
@@ -2763,7 +2763,7 @@ end procedure`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "args5",
+      "elan_args5",
       "new Foo(), lambda t as Foo => t.",
       expected,
     );
@@ -2801,7 +2801,7 @@ end procedure`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "args5",
+      "elan_args5",
       "new Foo(), lambda aFoo as Foo => aF",
       expected,
     );
@@ -2830,7 +2830,7 @@ end main`;
       ["new", "new", "new "],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
   });
   test("Pass_keywordsNotShownWhenNotElan", async () => {
     const code = `${testHeader}
@@ -2848,6 +2848,6 @@ end main`;
       ["asin", "asin", "asin("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionMenuStartsWith(fileImpl, "expr5", " ", expected);
+    await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
   });
 });

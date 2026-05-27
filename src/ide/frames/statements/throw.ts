@@ -31,7 +31,7 @@ export class Throw extends SingleLineFrame implements Statement {
     return [this.type, this.text];
   }
   getIdPrefix(): string {
-    return "throw";
+    return `${this.language().languageHtmlClass}_throw`;
   }
 
   frameSpecificAnnotation(): string {

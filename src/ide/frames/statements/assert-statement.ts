@@ -40,7 +40,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "assert";
+    return `${this.language().languageHtmlClass}_assert`;
   }
 
   frameSpecificAnnotation(): string {

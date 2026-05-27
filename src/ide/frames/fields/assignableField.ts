@@ -18,7 +18,7 @@ export class AssignableField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "ident";
+    return `${this.language().languageHtmlClass}_ident`;
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new AssignableNode(this.getFile());

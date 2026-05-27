@@ -23,7 +23,7 @@ export class MethodNameField extends AbstractField {
     source.readUntil(/[^a-zA-Z0-9_]/);
 
   getIdPrefix(): string {
-    return "ident";
+    return `${this.language().languageHtmlClass}_ident`;
   }
   isEndMarker(key: string) {
     return key === " " || key === "(";

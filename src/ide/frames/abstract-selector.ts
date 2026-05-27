@@ -135,7 +135,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   getIdPrefix(): string {
-    return "select";
+    return `${this.language().languageHtmlClass}_select`;
   }
 
   frameSpecificAnnotation(): string {

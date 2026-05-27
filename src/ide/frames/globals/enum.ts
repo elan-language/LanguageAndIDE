@@ -33,7 +33,7 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     return [this.name, this.values];
   }
   getIdPrefix(): string {
-    return "enum";
+    return `${this.language().languageHtmlClass}_enum`;
   }
 
   frameSpecificAnnotation(): string {

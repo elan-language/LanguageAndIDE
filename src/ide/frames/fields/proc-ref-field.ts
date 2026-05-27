@@ -21,7 +21,7 @@ export class ProcRefField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "ident";
+     return `${this.language().languageHtmlClass}_ident`;
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new ProcRefNode(this.getFile());

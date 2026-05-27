@@ -27,7 +27,7 @@ export class TryStatement extends FrameWithStatements {
   }
 
   getIdPrefix(): string {
-    return "try";
+    return `${this.language().languageHtmlClass}_try`;
   }
 
   frameSpecificAnnotation(): string {

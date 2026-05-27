@@ -16,7 +16,7 @@ export class IdentifierDefField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "var";
+    return `${this.language().languageHtmlClass}_var`;
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new IdentifierDef(this.getFile());

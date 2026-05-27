@@ -21,7 +21,7 @@ export class While extends FrameWithStatements {
   }
 
   getIdPrefix(): string {
-    return "while";
+    return `${this.language().languageHtmlClass}_while`;
   }
 
   frameSpecificAnnotation(): string {

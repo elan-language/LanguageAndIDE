@@ -35,7 +35,7 @@ export class CommentStatement extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "com";
+    return `${this.language().languageHtmlClass}_com`;
   }
 
   frameSpecificAnnotation(): string {

@@ -12,6 +12,7 @@ import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
+import { Language } from "../frame-interfaces/language";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { Selectable } from "../frame-interfaces/selectable";
 import { Overtyper } from "../overtyper";
@@ -30,7 +31,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected _placeholder: string = "";
   protected placeholderIsCode: boolean = false;
   protected useHtmlTags: boolean = false;
-  public htmlId: string = "";
+  private id: string = "";
   protected selected: boolean = false;
   private focused: boolean = false;
   private _classes = new Array<string>();
@@ -53,11 +54,16 @@ export abstract class AbstractField implements Selectable, Field {
   constructor(holder: Frame) {
     this.holder = holder;
     const map = holder.getMap();
-    this.htmlId = `${this.getIdPrefix()}${this.getFile().getNextId()}`;
+    this.id = `${this.getFile().getNextId()}`;
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
   }
+
+  get htmlId() {
+    return `${this.getIdPrefix()}${this.id}`;
+  }
+
 
   getRootNode(): ParseNode | undefined {
     return this.rootNode;
@@ -497,6 +503,10 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  language() : Language {
+    return this.getFile().language();
+  }
+
   private replaceAutocompletedText() {
     // todo this will need refinement
 
@@ -505,7 +515,7 @@ export abstract class AbstractField implements Selectable, Field {
       this.text = this.text.slice(0, li);
     }
 
-    const thisInstance = this.getFile().language().THIS_INSTANCE;
+    const thisInstance = this.language().THIS_INSTANCE;
     const propertyPrefix = `${thisInstance}.`;
     const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 
@@ -566,7 +576,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this.holder;
   }
   getIdPrefix(): string {
-    return "text";
+    return `${this.language().languageHtmlClass}_text`;
   }
   focus(): void {
     this.focused = true;
