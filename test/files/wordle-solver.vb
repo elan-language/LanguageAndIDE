@@ -113,11 +113,15 @@ Class WordCount
     Me.word = word ' reassign variable
     Me.count = count ' reassign variable
   End Sub
+
   Property word As String
+
   Property count As Integer
+
   Function toString() As String
     Return $"{Me.word} {Me.count}"
   End Function
+
 End Class
 
 ' 2309 words

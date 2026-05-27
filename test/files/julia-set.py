@@ -61,13 +61,20 @@ class Coords # concrete class
     # Julia set parameters
     self.jx = -0.512 # reassign variable
     self.jy = 0.521 # reassign variable
+
   def toString(self: Coords) -> str: # function method
     return ""
+
   scale: float # property
+
   xoff: float # property
+
   yoff: float # property
+
   jx: float # property
+
   jy: float # property
+
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   def checkkeys(self: Coords) -> None: # procedure method
@@ -107,6 +114,7 @@ class Coords # concrete class
         # another key may have been pressed
         k = getKey() # reassign variable
       sleep_ms(10) # call procedure
+
 
 
 def test_one(self) -> None:

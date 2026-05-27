@@ -73,12 +73,19 @@ static bool hasHitEdge(Game g) { // function
 class Game {
 
   public Square head; // property
+
   public List<Square> body; // property
+
   public Square priorTail; // property
+
   public Square apple; // property
+
   public bool isOn; // property
+
   public Random rnd; // property
+
   public String key; // property
+
   public Game(Random rnd) {
     this.head = new Square(22, 15); // reassign variable
     this.body = [new Square(20, 15), new Square(21, 15)]; // reassign variable
@@ -88,9 +95,11 @@ class Game {
     this.apple = new Square(12, 15); // reassign variable
     this.rnd = rnd; // reassign variable
   } // constructor
+
   public String toString() { // function method
     return "";
   } // function method
+
   public Game withNewApple() { // function method
     var x = this.rnd.asInt(0, 39); // let
     var rnd2 = this.rnd.nextGen(); // let
@@ -100,64 +109,78 @@ class Game {
     var g2 = this.withApple(apple2).withRnd(rnd3); // let
     return if(g2.body.contains(apple2), g2.withNewApple(), g2);
   } // function method
+
   public Game withHead(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.head = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withBody(List<Square> value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.body = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withPriorTail(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.priorTail = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withApple(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.apple = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withIsOn(bool value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.isOn = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withRnd(Random value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.rnd = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Game withKey(String value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.key = value; // reassign variable
     return copyOfThis;
   } // function method
+
 } // class
 
 class Square {
 
   public int x; // property
+
   public int y; // property
+
   public Square(int x, int y) {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
   } // constructor
+
   public Square withX(int value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.x = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public Square withY(int value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.y = value; // reassign variable
     return copyOfThis;
   } // function method
+
   public String toString() { // function method
     return String.format("%, %", this.x, this.y);
   } // function method
+
 } // class
 
 @Test static void test_clockTick() {

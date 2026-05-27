@@ -79,14 +79,22 @@ class Solver # concrete class
     self.start = start # reassign variable
     self.destination = destination # reassign variable
     self.current = Node(emptyPoint(), 0, 0) # reassign variable
+
   def toString(self: Solver) -> str: # function method
     return ""
+
   nodes: list[Node] # property
+
   start: Point # property
+
   destination: Point # property
+
   current: Node # property
+
   alg: Algorithm # property
+
   running: bool # property
+
   # TODO can this go into the constructor ?
   def initialise(self: Solver, alg: Algorithm) -> None: # procedure method
     self.alg = alg # reassign variable
@@ -96,6 +104,7 @@ class Solver # concrete class
       node.setDistanceFromStart(infinity) # call procedure
       node.setVia(emptyPoint()) # call procedure
       node.setVisited(False) # call procedure
+
   def visitNextPoint(self: Solver) -> None: # procedure method
     self.updateNeighbours() # call procedure
     self.current = self.nextNodeToVisit() # reassign variable
@@ -104,6 +113,7 @@ class Solver # concrete class
     else:
       current = self.current # variable definition
       current.setVisited(True) # call procedure
+
   def updateNeighbours(self: Solver) -> None: # procedure method
     distToCurrent = self.current.distFromStart # variable definition
     currentPoint = self.current.point # variable definition
@@ -112,6 +122,7 @@ class Solver # concrete class
       if distViaCurrent < neighbour.distFromStart:
         neighbour.setVia(currentPoint) # call procedure
         neighbour.setDistanceFromStart(distViaCurrent) # call procedure
+
   def currentNeighbours(self: Solver) -> list[Node]: # function method
     currentNode = self.current # variable definition
     currentPoint = currentNode.point # variable definition
@@ -122,11 +133,14 @@ class Solver # concrete class
       if not point.isEmpty:
         neighbours = neighbours.withAppend(node) # reassign variable
     return neighbours
+
   def getNodeFor(self: Solver, p: Point) -> Node: # function method
     matches = self.nodes.filter(lambda n: Node: n.point.equals(p)) # variable definition
     return if(matches.length() == 1, matches.head(), emptyNode())
+
   def getLastVisited(self: Solver) -> Point: # function method
     return self.current.point
+
   def nextNodeToVisit(self: Solver) -> Node: # function method
     lowestCostSoFar = infinity # variable definition
     lowestCostNode = emptyNode() # variable definition
@@ -137,6 +151,7 @@ class Solver # concrete class
         lowestCostSoFar = cost # reassign variable
         lowestCostNode = nd # reassign variable
     return lowestCostNode
+
   def calculateCost(self: Solver, node: Node) -> float: # function method
     cost = 0.0 # variable definition
     fromStart = node.distFromStart # variable definition
@@ -148,6 +163,7 @@ class Solver # concrete class
     elif self.alg == Algorithm.heuristic: # else if
       cost = estToDest # reassign variable
     return cost
+
   def getRouteAndLength(self: Solver) -> tuple[list[Point], float]: # function method
     route = [self.destination] # variable definition
     length = 0.0 # variable definition
@@ -159,6 +175,7 @@ class Solver # concrete class
       route = route.withInsert(0, previous) # reassign variable
       node = self.getNodeFor(previous) # reassign variable
     return (route, length)
+
 
 
 def emptyNode() -> Node: # function
@@ -174,20 +191,31 @@ class Node # concrete class
     self.distFromStart = distFromStart # reassign variable
     self.via = emptyPoint() # reassign variable
     self.estDistToDest = estDistToDest # reassign variable
+
   point: Point # property
+
   visited: bool # property
+
   distFromStart: float # property
+
   via: Point # property
+
   estDistToDest: float # property
+
   isEmpty: bool # property
+
   def setVisited(self: Node, value: bool) -> None: # procedure method
     self.visited = value # reassign variable
+
   def setDistanceFromStart(self: Node, d: float) -> None: # procedure method
     self.distFromStart = d # reassign variable
+
   def setVia(self: Node, p: Point) -> None: # procedure method
     self.via = p # reassign variable
+
   def toString(self: Node) -> str: # function method
     return f"[{self.point.toString()} {self.visited} {self.distFromStart}]"
+
 
 
 def emptyPoint() -> Point: # function
@@ -196,23 +224,31 @@ def emptyPoint() -> Point: # function
 class Point # concrete class
 
   x: int # property
+
   y: int # property
+
   isEmpty: bool # property
+
   def __init__(self: Point, x: int, y: int) -> None:
     if (x < 0) or (y < 0):
       self.isEmpty = True # reassign variable
     else:
       self.x = x # reassign variable
       self.y = y # reassign variable
+
   def minDistTo(self: Point, p: Point) -> float: # function method
     return sqrt(pow((p.x - self.x), 2) + pow((p.y - self.y), 2))
+
   def isAdjacentTo(self: Point, p: Point) -> bool: # function method
     return (self.minDistTo(p) == 1) or (self.minDistTo(p).round(4) == sqrt(2).round(4))
+
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function method
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]
+
   def toString(self: Point) -> str: # function method
     return f"{self.x},{self.y}"
+
 
 
 class Algorithm(Enum):

@@ -113,11 +113,15 @@ class WordCount {
     this.word = word; // reassign variable
     this.count = count; // reassign variable
   } // constructor
+
   public string word {get; private set;} // property
+
   public int count {get; private set;} // property
+
   public string toString() { // function method
     return $"{this.word} {this.count}";
   } // function method
+
 } // class
 
 // 2309 words

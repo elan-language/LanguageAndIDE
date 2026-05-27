@@ -70,14 +70,21 @@ Class Coords
     Me.jx = -0.512 ' reassign variable
     Me.jy = 0.521 ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Property scale As Double
+
   Property xoff As Double
+
   Property yoff As Double
+
   Property jx As Double
+
   Property jy As Double
+
   ' Arrow keys move the virtual camera
   ' eg Arrow Up moves the image down
   Sub checkkeys() ' procedure method
@@ -121,6 +128,7 @@ Class Coords
       sleep_ms(10) ' call procedure
     End While
   End Sub
+
 End Class
 
 <TestMethod> Sub test_one()

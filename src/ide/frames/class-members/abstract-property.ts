@@ -63,4 +63,9 @@ export class AbstractProperty extends SingleLineFrame implements MemberFrame {
     source.remove(" as ");
     this.type.parseFrom(source);
   }
+
+  renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
+  }
 }
