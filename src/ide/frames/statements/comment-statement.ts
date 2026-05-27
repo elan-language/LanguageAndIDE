@@ -11,6 +11,8 @@ export class CommentStatement extends SingleLineFrame implements Statement {
   isMember = true;
   isAbstract = false;
   private = false;
+  protected canHaveBreakPoint = false;
+  
   public text: CommentField;
   constructor(parent: Parent) {
     super(parent);
