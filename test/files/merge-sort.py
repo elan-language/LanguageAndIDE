@@ -121,5 +121,3 @@ def test_mergeNonEmpty(self) -> None:
   #  Error case unsorted list
   lu = ["lime", "pear", "apple"] # let
   self.assertEqual(merge(lu, l2), ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"])
-
-main()

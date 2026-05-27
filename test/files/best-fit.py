@@ -37,5 +37,3 @@ def test_bestFit_empty(self) -> None:
   a_b = bestFitLine(l1) # let
   # NaN means 'Not A Number"
   self.assertEqual(a_b.toString(), "(NaN, NaN)")
-
-main()

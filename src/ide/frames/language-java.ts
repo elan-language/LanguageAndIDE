@@ -2,6 +2,7 @@ import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
+import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -115,7 +116,7 @@ export class LanguageJava extends LanguageCfamily {
   renderFileImportsAsHtml(): string {
     return "";
   }
-  renderFileTrailerAsHtml(): string {
+  renderFileTrailerAsHtml(_f: FileImpl): string {
     return "";
   }
 

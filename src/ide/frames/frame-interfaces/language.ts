@@ -1,5 +1,6 @@
 import { EnumValuesField } from "../fields/enum-values-field";
 import { InheritsFromField } from "../fields/inherits-from-field";
+import { FileImpl } from "../file-impl";
 import { Lambda } from "../parse-nodes/lambda";
 import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
 import { NewInstance } from "../parse-nodes/new-instance";
@@ -26,7 +27,7 @@ export interface Language {
   renderBottomAsHtml(frame: Frame): string;
 
   renderFileImportsAsHtml(): string;
-  renderFileTrailerAsHtml(): string;
+  renderFileTrailerAsHtml(f: FileImpl): string;
 
   translateExpression(expr: string): string;
 

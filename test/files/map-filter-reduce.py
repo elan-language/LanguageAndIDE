@@ -25,5 +25,3 @@ def product(x: float, y: float) -> float: # function
 
 def concat(a: str, b: str) -> str: # function
   return a + b
-
-main()

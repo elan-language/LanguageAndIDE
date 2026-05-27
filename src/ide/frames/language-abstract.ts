@@ -3,6 +3,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
+import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -65,7 +66,7 @@ export abstract class LanguageAbstract implements Language {
   abstract renderBottomAsHtml(frame: Frame): string;
 
   abstract renderFileImportsAsHtml(): string;
-  abstract renderFileTrailerAsHtml(): string;
+  abstract renderFileTrailerAsHtml(f: FileImpl): string;
 
   abstract translateExpression(expr: string): string;
 
