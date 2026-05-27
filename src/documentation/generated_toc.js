@@ -62,7 +62,7 @@ generated_toc = {
       return;
     }
 
-    // reassign top_node to be the element in the document under which
+    // set top_node to be the element in the document under which
     // we'll be analysing headings
     if (generate_for == 'page') {
       top_node = document.getElementsByTagName('body')[0];
@@ -230,7 +230,7 @@ generated_toc = {
       a.firstChild.nodeValue = (d == 'block' ? 'Show' : 'Hide') + ' table of contents';
       a.className = (d == 'block' ? 'toggle-closed' : 'toggle-open');
       cur_list_el.style.display = d == 'block' ? 'none' : 'block';
-      // reassign a cookie to "open" or "closed" to save the state of the TOC
+      // set a cookie to "open" or "closed" to save the state of the TOC
       if (cur_list_el.style.display == "block") {
         generated_toc.createCookie("generated_toc_display","open",21);
       } else {
