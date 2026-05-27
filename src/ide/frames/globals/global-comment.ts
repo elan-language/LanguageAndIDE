@@ -10,6 +10,8 @@ export class GlobalComment extends SingleLineFrame implements GlobalFrame {
   isGlobal = true;
   public text: CommentField;
   file: File;
+  protected canHaveBreakPoint = false;
+
   constructor(parent: File) {
     super(parent);
     this.file = parent;
