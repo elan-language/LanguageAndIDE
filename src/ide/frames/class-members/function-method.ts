@@ -7,7 +7,6 @@ import {
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
-  removeHtmlTagsAndEscChars,
   singleIndent,
   togglePrivatePublic,
 } from "../frame-helpers";
