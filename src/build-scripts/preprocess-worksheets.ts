@@ -1,11 +1,11 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { isElanProduction } from "../environment";
 import {
-    processCode,
-    processFinals,
-    processSteps,
-    processTitle,
-    setCurrentDir,
+  processCode,
+  processFinals,
+  processSteps,
+  processTitle,
+  setCurrentDir,
 } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
@@ -46,8 +46,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string, version: str
       <title>${title}</title>
   </head>
 
-  <body>
-    <div id="worksheet" class="elan">
+  <body id="worksheet" class="elan">
     <div class="docTitle">${title}</div>
     <div class="version" hidden="">${version}</div>
 
