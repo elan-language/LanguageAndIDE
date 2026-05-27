@@ -712,11 +712,15 @@ body.functional div.demo-file.functional { display: revert; }
   max-height: 45vh;
   margin-right: 10px;
 }
+
 .quad-editor .quad .code el-header {
   display: none;
 }
 
-.quad-editor #elan-language
-{
+.quad-editor #elan-language {
+  display: none;
+}
+
+.quad-editor button#language {
   display: none;
 }
