@@ -5,7 +5,6 @@ import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
-import { NamespaceNode } from "./namespace-node";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: Alternatives | undefined;
@@ -20,10 +19,9 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifierDot = () => new DotAfter(this.file, new NamespaceNode(this.file));
       const instance = new InstanceNode(this.file);
       const instanceDot = () => new DotAfter(this.file, instance);
-      this.prefix = new Alternatives(this.file, [qualifierDot, instanceDot]);
+      this.prefix = new Alternatives(this.file, [instanceDot]);
       this.procName = new MethodNameUse(
         this.file,
         new Set([TokenType.method_procedure]),

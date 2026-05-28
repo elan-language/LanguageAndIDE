@@ -1539,8 +1539,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
     testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
     testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
-    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
-    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.invalid, "", "");
+    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.invalid, "", "");
     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", "");
   });

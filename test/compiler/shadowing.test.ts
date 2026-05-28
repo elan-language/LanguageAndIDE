@@ -15,11 +15,11 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Shadowing", () => {
-  test("Pass_DisambiguateLocalVariableFromLibConstant", async () => {
+  test("Pass_LocalVariableShadowsLibConstant", async () => {
     const code = `${testHeader}
 
 main
-  variable pi set to library.pi
+  variable pi set to 4
   call printNoLine(pi)
 end main`;
 
@@ -45,10 +45,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
+    await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test("Pass_DisambiguateLocalVariableFromGlobalConstant", async () => {
+  test("Pass_LocalVariableFromGlobalConstant", async () => {
     const code = `${testHeader}
 
 constant f set to 1
@@ -56,7 +56,6 @@ constant f set to 1
 main
   variable f set to 2
   call printNoLine(f)
-  call printNoLine(global.f)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -67,7 +66,6 @@ const global = new class {
 async function main() {
   let f = 2;
   await _stdlib.printNoLine(f);
-  await _stdlib.printNoLine(global.f);
 }
 return [main, _tests];}`;
 
@@ -85,91 +83,16 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "21");
+    await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_DisambiguateLocalLetFromLibConstant", async () => {
-    const code = `${testHeader}
-
-main
-  variable pi set to library.pi
-  call printNoLine(pi)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let pi = _stdlib.pi;
-  await _stdlib.printNoLine(pi);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3.141592653589793");
-  });
-
-  test("Pass_DisambiguateLocalLetFromGlobalConstant", async () => {
-    const code = `${testHeader}
-
-constant f set to 1
-
-main
-  variable f set to 2
-  call printNoLine(f)
-  call printNoLine(global.f)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  f = 1;
-
-};
-async function main() {
-  let f = 2;
-  await _stdlib.printNoLine(f);
-  await _stdlib.printNoLine(global.f);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "21");
-  });
-
-  test("Pass_DisambiguateLibFunctionFromLocalAndInstanceFunctions", async () => {
+  test("Pass_GlobalAndInstanceFunctionsShadowGlobals", async () => {
     const code = `${testHeader}
 
 main
     variable f set to new Foo()
     call printNoLine(f.sin(1))
     call printNoLine(sin(1))
-    call printNoLine(global.sin(1))
-    call printNoLine(library.sin(1))
 end main
 
 function sin(x as Float) returns Float
@@ -193,8 +116,6 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   await _stdlib.printNoLine((await f.sin(1)));
-  await _stdlib.printNoLine((await global.sin(1)));
-  await _stdlib.printNoLine((await global.sin(1)));
   await _stdlib.printNoLine(_stdlib.sin(1));
 }
 
@@ -236,7 +157,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2221111110.8414709848078965");
+    await assertObjectCodeExecutes(fileImpl, "222111");
   });
 
   test("Pass_DisambiguateLibProcedureFromLocalAndInstanceProcedures", async () => {
@@ -246,8 +167,6 @@ main
   variable f set to new Foo()
   call f.sleep_ms(1)
   call sleep_ms(1)
-  call global.sleep_ms(1)
-  call library.sleep_ms(1)
 end main
 
 procedure sleep_ms(x as Float)
@@ -272,8 +191,6 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   await f.sleep_ms(1);
   await sleep_ms(1);
-  await global.sleep_ms(1);
-  await _stdlib.sleep_ms(1);
 }
 
 async function sleep_ms(x) {
@@ -314,36 +231,22 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "222111111");
+    await assertObjectCodeExecutes(fileImpl, "222111");
   });
 
-  test("Pass_DisambiguateGlobalFunctionFromLocalVar", async () => {
+  test("Pass_Can'tDisambiguateGlobalFunctionFromLocalVar", async () => {
     const code = `${testHeader}
 
 main
     variable sin set to 2
     call printNoLine(sin)
-    call printNoLine(global.sin(1))
+    call printNoLine(sin(1))
 end main
 
 function sin(x as Float) returns Float
     return 111
 end function`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let sin = 2;
-  await _stdlib.printNoLine(sin);
-  await _stdlib.printNoLine((await global.sin(1)));
-}
-
-async function sin(x) {
-  return 111;
-}
-global["sin"] = sin;
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -357,52 +260,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2111");
-  });
-
-  test("Pass_DisambiguateGlobalProcedureFromLocalVar", async () => {
-    const code = `${testHeader}
-
-main
-  variable sin set to 2
-  call printNoLine(sin)
-  call global.sin(1)
-end main
-
-procedure sin(x as Float)
-  call printNoLine(111)
-end procedure`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let sin = 2;
-  await _stdlib.printNoLine(sin);
-  await global.sin(1);
-}
-
-async function sin(x) {
-  await _stdlib.printNoLine(111);
-}
-global["sin"] = sin;
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2111");
+    assertDoesNotCompile(fileImpl, ["x"]);
   });
 
   test("Pass_LocalVarShadowsGlobalFunction", async () => {
