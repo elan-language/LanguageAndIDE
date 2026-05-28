@@ -16,7 +16,6 @@ export const enumKeyword = "enum";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
-export const globalKeyword = "global";
 export const ifKeyword = "if";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
@@ -25,7 +24,6 @@ export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
-export const libraryKeyword = "library";
 export const mainKeyword = "main";
 export const modKeyword = "mod";
 export const newKeyword = "new";
@@ -84,7 +82,6 @@ const elanKeywords: string[] = [
   forKeyword,
   fromKeyword,
   functionKeyword,
-  globalKeyword,
   ifKeyword,
   inKeyword,
   inheritsKeyword,
@@ -93,7 +90,6 @@ const elanKeywords: string[] = [
   isntKeyword,
   lambdaKeyword,
   letKeyword,
-  libraryKeyword,
   mainKeyword,
   modKeyword,
   newKeyword,

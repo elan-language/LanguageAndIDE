@@ -2,7 +2,7 @@ import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeNameQualifiedNode } from "./type-name-qualified-node";
+import { TypeNameUse } from "./type-name-use";
 
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
@@ -15,7 +15,7 @@ export class TypeSimpleOrGeneric extends AbstractAlternatives {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.alternatives.push(new TypeNameQualifiedNode(this.file, this.tokenTypes));
+      this.alternatives.push(new TypeNameUse(this.file, this.tokenTypes));
       this.alternatives.push(new TypeGenericNode(this.file, this.tokenTypes));
       super.parseText(text);
     }

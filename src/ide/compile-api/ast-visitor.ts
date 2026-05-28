@@ -4,7 +4,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { ElanCompilerError } from "../../compiler/elan-compiler-error";
-import { globalKeyword, libraryKeyword, thisKeyword } from "../../compiler/elan-keywords";
+import { thisKeyword } from "../../compiler/elan-keywords";
 import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
@@ -26,7 +26,6 @@ import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-fro
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn";
 import { FileAsn } from "../../compiler/syntax-nodes/file-asn";
-import { FixedIdAsn } from "../../compiler/syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
@@ -164,7 +163,7 @@ import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
 import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
-import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
@@ -755,13 +754,11 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.qualifiedName!.unqualifiedName!.elanTypeName;
-    const qualifier =
-      transform(node.qualifiedName?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
+    const type = node.qualifiedName!.elanTypeName;
     const generic = node.genericTypes;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as CSV, fieldId, scope).items;
-    return new TypeAsn(type, qualifier, gp, fieldId, scope);
+    return new TypeAsn(type, gp, fieldId, scope);
   }
 
   if (node instanceof TypeFuncNode) {
@@ -771,17 +768,17 @@ export function transform(
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    return new TypeAsn(FuncName, EmptyAsn.Instance, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeNameQualifiedNode) {
-    const type = node.libraryQualifier?.matchedText + node.unqualifiedName!.elanTypeName;
-    return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
+  if (node instanceof TypeNameUse) {
+    const type = node.elanTypeName;
+    return new TypeAsn(type, [], fieldId, scope);
   }
 
   if (node instanceof TypeNameDef) {
     const type = node.elanTypeName;
-    return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
+    return new TypeAsn(type, [], fieldId, scope);
   }
 
   if (node instanceof InheritanceNode) {
@@ -828,12 +825,6 @@ export function transform(
 
   if (node instanceof KeywordNode) {
     // todo decouple this from js
-    if (node.fixedText === libraryKeyword) {
-      return new FixedIdAsn(libraryKeyword, fieldId);
-    }
-    if (node.fixedText === globalKeyword) {
-      return new FixedIdAsn(globalKeyword, fieldId);
-    }
     if (node.fixedText === thisKeyword) {
       return new ThisAsn(fieldId, scope);
     }
@@ -898,7 +889,7 @@ export function transform(
 
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
-    return new TypeAsn(TupleName, EmptyAsn.Instance, gp, fieldId, scope);
+    return new TypeAsn(TupleName, gp, fieldId, scope);
   }
 
   if (node instanceof IndexDouble) {
@@ -984,7 +975,7 @@ export function transform(
 
   if (node instanceof InstanceProcRef) {
     const q =
-      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? EmptyAsn.Instance;
+      (transform(node.prefix, fieldId, scope) as AstQualifierNode) ?? EmptyAsn.Instance;
     const id = node.procName!.matchedText;
     return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }

@@ -49,7 +49,6 @@ import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../../src/ide/frames/parse-nodes/term-simple-with-opt-index";
 import { ThisInstance } from "../../src/ide/frames/parse-nodes/this-instance";
 import { TupleNode } from "../../src/ide/frames/parse-nodes/tuple-node";
-import { TypeNameQualifiedNode } from "../../src/ide/frames/parse-nodes/type-name-qualified-node";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../../src/ide/frames/parse-nodes/type-simple-or-generic";
@@ -746,7 +745,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeSimpleNode", () => {
     testNodeParse(
-      new TypeNameQualifiedNode(f),
+      new TypeNameUse(f),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -754,7 +753,7 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Foo</el-type>",
     );
-    testNodeParse(new TypeNameQualifiedNode(f), `foo`, ParseStatus.invalid, "", "foo", "");
+    testNodeParse(new TypeNameUse(f), `foo`, ParseStatus.invalid, "", "foo", "");
   });
   test("TypeSimpleOrGeneric", () => {
     testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
@@ -878,7 +877,7 @@ suite("Parsing Nodes", () => {
     ); //Single
   });
   test("TypeNode - library qualifier", () => {
-    testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.valid, "library.Random", "", ""); //Single
+    testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.invalid, "", "", ""); //Single
   });
   test("TypeNode - other qualifier", () => {
     testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
@@ -1539,8 +1538,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
     testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
     testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
-    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
-    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.invalid, "", "");
+    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.invalid, "", "");
     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", "");
   });

@@ -15,7 +15,6 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "../elan-compiler-error";
-import { globalKeyword, libraryKeyword } from "../elan-keywords";
 import {
   getSuperClasses,
   isAstIdNode,
@@ -305,7 +304,7 @@ export function scopePrefix(
 function internalUpdateScopeAndQualifier(
   qualifierScope: SymbolType,
   currentScope: Scope,
-  value: AstNode,
+  _value: AstNode,
   qualifier: AstNode,
 ): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {
@@ -320,11 +319,6 @@ function internalUpdateScopeAndQualifier(
     }
   } else if (qualifierScope instanceof TupleType) {
     currentScope = new TupleAsn(qualifierScope, currentScope);
-  } else if (isAstIdNode(value) && value.id === libraryKeyword) {
-    currentScope = getGlobalScope(currentScope).libraryScope;
-    qualifier = EmptyAsn.Instance;
-  } else if (isAstIdNode(value) && value.id === globalKeyword) {
-    currentScope = getGlobalScope(currentScope);
   } else if (!isEmptyNode(qualifier)) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {

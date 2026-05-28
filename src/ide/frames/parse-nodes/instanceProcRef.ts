@@ -1,14 +1,11 @@
-import { globalKeyword, libraryKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
-import { NamespaceNode } from "./namespace-node";
 
 export class InstanceProcRef extends AbstractSequence {
-  prefix: Alternatives | undefined;
+  prefix: DotAfter | undefined;
   procName: MethodNameUse | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -20,10 +17,8 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifierDot = () => new DotAfter(this.file, new NamespaceNode(this.file));
       const instance = new InstanceNode(this.file);
-      const instanceDot = () => new DotAfter(this.file, instance);
-      this.prefix = new Alternatives(this.file, [qualifierDot, instanceDot]);
+      this.prefix =new DotAfter(this.file, instance);
       this.procName = new MethodNameUse(
         this.file,
         new Set([TokenType.method_procedure]),
@@ -37,7 +32,7 @@ export class InstanceProcRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid()
-      ? `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      ? `${this.prefix!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
       : this.matchedText;
   }
 
@@ -53,8 +48,6 @@ export class InstanceProcRef extends AbstractSequence {
     const thisInstance = this.file.language().THIS_INSTANCE;
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([
-          KeywordCompletion.create(globalKeyword, false, true),
-          KeywordCompletion.create(libraryKeyword, false, true),
           KeywordCompletion.create(thisInstance, false, true),
         ])
       : super.symbolCompletion_keywords();
