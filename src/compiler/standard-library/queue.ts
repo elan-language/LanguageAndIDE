@@ -5,9 +5,9 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
+  elanProcedure,
   ElanT1,
-  ElanTuple,
-  FunctionOptions,
+  FunctionOptions
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanRuntimeError } from "./elan-runtime-error";
@@ -31,6 +31,11 @@ export class Queue<T1> {
 
   private system?: System;
 
+  @elanFunction([], FunctionOptions.pure, ElanInt)
+  length() {
+    return this.contents.length;
+  }
+
   @elanFunction([], FunctionOptions.pure, ElanT1)
   peek(): T1 {
     if (this.contents.length === 0) {
@@ -39,27 +44,34 @@ export class Queue<T1> {
     return this.contents[0];
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
-  length() {
-    return this.contents.length;
+  @elanProcedure(["item"])
+  enqueue(@elanGenericParamT1Type() item: T1) {
+    this.contents.push(item);
+  }
+
+  @elanFunction([], FunctionOptions.impure, ElanT1)
+  dequeue(): T1 {
+    if (this.contents.length === 0) {
+      throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
+    }
+    return this.contents.shift() as T1;
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClass(Queue))
-  enqueue(@elanGenericParamT1Type() item: T1) {
+  withEnqueue(@elanGenericParamT1Type() item: T1) {
     const newContents = [...this.contents];
     newContents.push(item);
     return this.system!.initialise(new Queue(newContents));
   }
 
-  @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Queue)]))
-  dequeue(): [typeof ElanT1, typeof Queue] {
+  @elanFunction([], FunctionOptions.impure, ElanClass(Queue))
+  withDequeue(): Queue<T1> {
     if (this.contents.length === 0) {
       throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
     }
     const newContents = [...this.contents];
-    const item = newContents.shift();
-    const newQueue = this.system!.initialise(new Queue(newContents));
-    return this.system!.tuple([item, newQueue]) as [typeof ElanT1, typeof Queue];
+    newContents.shift();
+    return this.system!.initialise(new Queue(newContents));
   }
 
   async toString() {

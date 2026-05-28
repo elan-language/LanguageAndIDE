@@ -15,25 +15,20 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Stack", () => {
-  test("Pass_Stack", async () => {
+  test("Pass Stack using conventional methods", async () => {
     const code = `${testHeader}
 
 main
   variable st set to new Stack<of String>()
   call printNoLine(st.length())
-  reassign st to st.push("apple")
-  reassign st to st.push("pear")
+  call st.push("apple")
+  call st.push("pear")
   call printNoLine(st)
   call printNoLine(st.length())
   call printNoLine(st.peek())
-  variable fruit set to ""
-  variable t set to st.pop()
-  reassign fruit to t.item_0
-  reassign st to t.item_1
+  variable fruit set to st.pop()
   call printNoLine(fruit)
-  reassign t to st.pop()
-  reassign fruit to t.item_0
-  reassign st to t.item_1
+  reassign fruit to st.pop()
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
@@ -44,19 +39,14 @@ const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Stack()._initialise());
   await _stdlib.printNoLine(st.length());
-  st = st.push("apple");
-  st = st.push("pear");
+  st.push("apple");
+  st.push("pear");
   await _stdlib.printNoLine(st);
   await _stdlib.printNoLine(st.length());
   await _stdlib.printNoLine(st.peek());
-  let fruit = "";
-  let t = st.pop();
-  fruit = t[0];
-  st = t[1];
+  let fruit = st.pop();
   await _stdlib.printNoLine(fruit);
-  t = st.pop();
-  fruit = t[0];
-  st = t[1];
+  fruit = st.pop();
   await _stdlib.printNoLine(fruit);
   await _stdlib.printNoLine(st.length());
   await _stdlib.printNoLine(st);
@@ -80,14 +70,51 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0[pear, apple]2pearpearapple0[]");
   });
 
-  test("Fail_Stack_adding_incompatible_type1", async () => {
+  test("Pass Stack using functional approach", async () => {
     const code = `${testHeader}
 
 main
   variable st set to new Stack<of String>()
-  reassign st to st.push("apple")
-  reassign st to st.push(3)
+  call printNoLine(st.length())
+  reassign st to st.withPush("apple")
+  reassign st to st.withPush("pear")
+  call printNoLine(st)
+  call printNoLine(st.length())
+  call printNoLine(st.peek())
+  variable fruit set to st.peek()
+  reassign st to st.withPop()
+  call printNoLine(fruit)
+  call printNoLine(st.length())
+  call printNoLine(st)
+  reassign fruit to st.peek()
+  reassign st to st.withPop()
+  call printNoLine(fruit)
+  call printNoLine(st.length())
+  call printNoLine(st)
 end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let st = system.initialise(await new _stdlib.Stack()._initialise());
+  await _stdlib.printNoLine(st.length());
+  st = st.withPush("apple");
+  st = st.withPush("pear");
+  await _stdlib.printNoLine(st);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st.peek());
+  let fruit = st.peek();
+  st = st.withPop();
+  await _stdlib.printNoLine(fruit);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st);
+  fruit = st.peek();
+  st = st.withPop();
+  await _stdlib.printNoLine(fruit);
+  await _stdlib.printNoLine(st.length());
+  await _stdlib.printNoLine(st);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -102,17 +129,17 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0[pear, apple]2pearpear1[apple]apple0[]");
   });
 
-  test("Fail_Stack_adding_incompatible_type2", async () => {
+  test("Fail_Stack_adding_incompatible_type1", async () => {
     const code = `${testHeader}
 
 main
   variable st set to new Stack<of String>()
-  reassign st to st.push(3)
+  reassign st to st.withPush("apple")
+  reassign st to st.withPush(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -138,7 +165,7 @@ end main`;
 
 main
   variable st set to new Stack<of String>()
-  reassign st to st.push("apple")
+  call st.push("apple")
   variable a set to 1
   reassign a to st.peek()
 end main`;
