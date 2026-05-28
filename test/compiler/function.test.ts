@@ -906,32 +906,6 @@ end function`;
     ]);
   });
 
-  test("Fail_CannotSpecifyParamByRef", async () => {
-    const code = `${testHeader}
-
-main
-  variable result set to foo(3, "b")
-  call printNoLine(result)
-end main
-
-function foo(ref a as Int, b as Int) returns Int
-    return a * b
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_PassMutableTypes", async () => {
     const code = `${testHeader}
 
@@ -1196,7 +1170,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable a set to (ref p1).equals(ref p2)
+  variable a set to (p1).equals(p2)
 end main
 
 function p1() returns Int
@@ -1230,7 +1204,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable b set to ref p1 + ref p2
+  variable b set to p1 + p2
 end main
 
 function p1() returns Int
@@ -1253,8 +1227,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1263,7 +1235,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable c set to - ref p1
+  variable c set to - p1
 end main
 
 function p1() returns Int
@@ -1283,7 +1255,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1292,8 +1263,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable d set to ref p1
-  reassign d to ref p3
+  variable d set to p1
+  reassign d to p3
 end main
 
 function p1() returns Int
@@ -1316,8 +1287,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: lambda or function name that takes no parameters - returning a Int, Provided: lambda or function name that takes parameter - Int - returning a Float.LangRef.html#TypesCompileError",
     ]);
   });

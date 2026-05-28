@@ -498,18 +498,6 @@ export class DuplicateKeyCompileError extends CompileError {
   }
 }
 
-export class FunctionRefCompileError extends CompileError {
-  constructor(location: string) {
-    super(
-      DisplayPriority.fourth,
-      Severity.advisory,
-      `The 'ref' keyword is no longer needed and we recommend that you remove it.`,
-      location,
-      "LangRef.html#ref",
-    );
-  }
-}
-
 export class DivCompileError extends CompileError {
   constructor(location: string) {
     super(

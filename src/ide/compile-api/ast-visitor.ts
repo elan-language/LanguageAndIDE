@@ -119,7 +119,6 @@ import { DottedTerm } from "../frames/parse-nodes/dotted-term";
 import { EnumValUse } from "../frames/parse-nodes/enum-val-use";
 import { EnumValuesList } from "../frames/parse-nodes/enum-values-list";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
-import { FunctionRefNode } from "../frames/parse-nodes/function-ref-node";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
@@ -712,7 +711,7 @@ export function transform(
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
 
-    return new IdAsn(node.matchedText, fieldId, false, scope);
+    return new IdAsn(node.matchedText, fieldId, scope);
   }
 
   if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
@@ -726,7 +725,7 @@ export function transform(
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
 
-    return new IdAsn(node.matchedText, fieldId, false, scope);
+    return new IdAsn(node.matchedText, fieldId, scope);
   }
 
   if (node instanceof MethodCallNode) {
@@ -980,11 +979,7 @@ export function transform(
     return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
-  if (node instanceof FunctionRefNode) {
-    return new IdAsn(node.name?.matchedText ?? "", fieldId, true, scope);
-  }
-
-  if (node instanceof ArgListField) {
+ if (node instanceof ArgListField) {
     const rn = node.getRootNode();
     if (rn) {
       return transform(rn, node.getHtmlId(), scope);

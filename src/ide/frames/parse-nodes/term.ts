@@ -1,4 +1,3 @@
-import { refKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
@@ -34,7 +33,6 @@ export class Term extends AbstractAlternatives {
       const thisInstance = this.file.language().THIS_INSTANCE;
       return new Set<KeywordCompletion>([
         KeywordCompletion.create(thisInstance),
-        KeywordCompletion.create(refKeyword),
       ]);
     } else {
       return super.symbolCompletion_keywords();

@@ -69,7 +69,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.method_function,
         TokenType.method_system,
       ],
-      ["ref"],
+      [],
     );
   });
   test("Reference2", () => {

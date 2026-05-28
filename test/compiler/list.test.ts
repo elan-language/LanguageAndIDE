@@ -1653,8 +1653,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable foo1 set to ref foo
-  variable body set to [ref foo, ref foo1]
+  variable foo1 set to foo
+  variable body set to [foo, foo1]
   variable foo2 set to body[0]
   call printNoLine(foo2(1))
 end main
@@ -1691,11 +1691,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
@@ -1953,7 +1949,7 @@ end main`;
     const code = `${testHeader}
 
 main
-    variable body set to [ref getKey]
+    variable body set to [getKey]
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1969,7 +1965,6 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Library or class function 'getKey' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
@@ -1979,7 +1974,7 @@ end main`;
 
 main
   variable f set to new Foo()
-  variable body set to [ref f.bar]
+  variable body set to [f.bar]
 end main
 
 class Foo

@@ -14,7 +14,6 @@ import {
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
-  FunctionRefCompileError,
   GenericParametersCompileError,
   InvalidSourceForForLoopCompileError,
   IsDeprecated,
@@ -1313,16 +1312,6 @@ export function mustHaveUniqueKeys(
 
 export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(new NotNewableCompileError(type, location));
-}
-
-export function adviseAgainstFunctionRef(
-  symbol: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (symbol.symbolType() instanceof FunctionType) {
-    compileErrors.push(new FunctionRefCompileError(location));
-  }
 }
 
 export function adviseAgainstDiv(compileErrors: CompileError[], location: string) {
