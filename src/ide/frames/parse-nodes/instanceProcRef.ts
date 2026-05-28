@@ -1,12 +1,11 @@
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameUse } from "./method-name-use";
 
 export class InstanceProcRef extends AbstractSequence {
-  prefix: Alternatives | undefined;
+  prefix: DotAfter | undefined;
   procName: MethodNameUse | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -19,8 +18,7 @@ export class InstanceProcRef extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const instance = new InstanceNode(this.file);
-      const instanceDot = () => new DotAfter(this.file, instance);
-      this.prefix = new Alternatives(this.file, [instanceDot]);
+      this.prefix =new DotAfter(this.file, instance);
       this.procName = new MethodNameUse(
         this.file,
         new Set([TokenType.method_procedure]),
@@ -34,7 +32,7 @@ export class InstanceProcRef extends AbstractSequence {
 
   renderAsHtml(): string {
     return this.isValid()
-      ? `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
+      ? `${this.prefix!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`
       : this.matchedText;
   }
 

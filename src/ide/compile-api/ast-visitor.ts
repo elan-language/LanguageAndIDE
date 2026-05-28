@@ -976,7 +976,7 @@ export function transform(
 
   if (node instanceof InstanceProcRef) {
     const q =
-      (transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined) ?? EmptyAsn.Instance;
+      (transform(node.prefix, fieldId, scope) as AstQualifierNode) ?? EmptyAsn.Instance;
     const id = node.procName!.matchedText;
     return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
