@@ -73,6 +73,12 @@ suite("Selector tests", () => {
     assertOptions(g, ["main", "function", "test", "procedure", "k constant", "enum", "# comment"]);
   });
 
+  test("Selection Filtering - globals - procedural - with main", () => {
+    const f = emptyMainOnly("procedural");
+    const g = new GlobalSelector(f);
+    assertOptions(g, ["function", "test", "procedure", "k constant", "enum", "# comment"]);
+  });
+
   test("Selection Filtering - globals - no profile specified", () => {
     const f = new FileImpl(
       hash,
