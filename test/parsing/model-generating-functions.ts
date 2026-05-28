@@ -219,8 +219,8 @@ export function oneConstant(): FileImpl {
   return file;
 }
 
-export function emptyMainOnly(): FileImpl {
-  const file = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()), false);
+export function emptyMainOnly(prof = ""): FileImpl {
+  const file = new FileImpl(hash, new Profile(prof), "", transforms(), new StdLib(new StubInputOutput()), false);
   const globSel = file.getFirstChild();
   const main = new MainFrame(file);
   file.addChildBefore(main, globSel);
