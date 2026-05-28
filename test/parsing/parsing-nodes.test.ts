@@ -878,7 +878,7 @@ suite("Parsing Nodes", () => {
     ); //Single
   });
   test("TypeNode - library qualifier", () => {
-    testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.valid, "library.Random", "", ""); //Single
+    testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.invalid, "", "", ""); //Single
   });
   test("TypeNode - other qualifier", () => {
     testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single

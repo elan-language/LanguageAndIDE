@@ -26,7 +26,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let pi = _stdlib.pi;
+  let pi = 4;
   await _stdlib.printNoLine(pi);
 }
 return [main, _tests];}`;
@@ -100,15 +100,15 @@ function sin(x as Float) returns Float
 end function
 
 class Foo
-    constructor()
-    end constructor
+  constructor()
+  end constructor
   function toString() returns String
     return ""
   end function
 
-    function sin(x as Float) returns Float
-      return 222
-    end function
+  function sin(x as Float) returns Float
+    return 222
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -116,7 +116,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   await _stdlib.printNoLine((await f.sin(1)));
-  await _stdlib.printNoLine(_stdlib.sin(1));
+  await _stdlib.printNoLine((await global.sin(1)));
 }
 
 async function sin(x) {
@@ -260,7 +260,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["x"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'sin' as a method.LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_LocalVarShadowsGlobalFunction", async () => {

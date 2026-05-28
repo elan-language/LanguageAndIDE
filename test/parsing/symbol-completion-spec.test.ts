@@ -521,7 +521,7 @@ suite("Symbol Completion Spec", () => {
         TokenType.id_property,
         TokenType.id_variable,
       ],
-      ["global,library,this"],
+      ["this"],
       "",
     );
   });

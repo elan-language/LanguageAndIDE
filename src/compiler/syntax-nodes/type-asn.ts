@@ -20,7 +20,6 @@ import {
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
-import { libraryKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstQualifierNode } from "./ast-helpers";
 import { FixedIdAsn } from "./fixed-id-asn";
@@ -28,7 +27,6 @@ import { FixedIdAsn } from "./fixed-id-asn";
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
     public readonly id: string,
-    public readonly qualifier: AstNode,
     public readonly genericParameters: AstNode[],
     public readonly fieldId: string,
     private readonly scope: Scope,
@@ -131,16 +129,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return this.genericParameters.map((gp) => gp.symbolType());
   }
 
-  isLibraryQualified() {
-    return (
-      isAstQualifierNode(this.qualifier) &&
-      (this.qualifier.value as FixedIdAsn).id === libraryKeyword
-    );
-  }
-
   rootSymbol() {
-    const globalScope = getGlobalScope(this.scope);
-    const scope = this.isLibraryQualified() ? globalScope.libraryScope : globalScope;
+    const scope = getGlobalScope(this.scope);
     return scope.resolveSymbol(this.id, true, this.scope);
   }
 
