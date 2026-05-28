@@ -2265,7 +2265,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must be concrete to new.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must be concrete to create instance.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_SuperClassAsFunctionParameter", async () => {

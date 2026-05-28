@@ -1235,7 +1235,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type, Type>'.LangRef.html#GenericParametersCompileError",
+      "Expected: two generic type specifiers.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

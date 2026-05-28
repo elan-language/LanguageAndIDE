@@ -1872,7 +1872,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -2025,7 +2025,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
