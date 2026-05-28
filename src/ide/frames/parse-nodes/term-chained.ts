@@ -7,7 +7,7 @@ import { Multiple } from "./multiple";
 import { TermSimple } from "./term-simple";
 
 export class TermChained extends AbstractSequence {
-  chainedHead: Alternatives | undefined;
+  chainedHead: TermSimple | undefined;
   tail: Multiple | undefined;
 
   constructor(file: File) {
@@ -16,8 +16,7 @@ export class TermChained extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const termSimple = () => new TermSimple(this.file);
-      this.chainedHead = new Alternatives(this.file, [termSimple]);
+      this.chainedHead = new TermSimple(this.file);
       const dottedTerm = () => new DottedTerm(this.file);
       const index = () => new Index(this.file);
       const dottedSymbolOrIndex = () => new Alternatives(this.file, [dottedTerm, index]);

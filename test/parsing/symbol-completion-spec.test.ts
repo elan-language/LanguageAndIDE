@@ -180,12 +180,7 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       TypeNameUse.name,
       "Foo",
-      [
-        TokenType.type_abstract,
-        TokenType.type_concrete,
-        TokenType.type_notInheritable,
-        TokenType.type_enum,
-      ],
+      [TokenType.type_enum],
       [],
     );
   });

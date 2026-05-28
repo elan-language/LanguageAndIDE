@@ -164,7 +164,7 @@ import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
 import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
-import { TypeNameQualifiedNode } from "../frames/parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
@@ -755,7 +755,7 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.qualifiedName!.unqualifiedName!.elanTypeName;
+    const type = node.qualifiedName!.elanTypeName;
     const generic = node.genericTypes;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as CSV, fieldId, scope).items;
@@ -772,8 +772,8 @@ export function transform(
     return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeNameQualifiedNode) {
-    const type = node.unqualifiedName!.elanTypeName;
+  if (node instanceof TypeNameUse) {
+    const type = node.elanTypeName;
     return new TypeAsn(type, [], fieldId, scope);
   }
 
