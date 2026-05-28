@@ -26,7 +26,6 @@ import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-fro
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn";
 import { FileAsn } from "../../compiler/syntax-nodes/file-asn";
-import { FixedIdAsn } from "../../compiler/syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";

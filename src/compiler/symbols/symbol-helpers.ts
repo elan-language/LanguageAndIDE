@@ -304,7 +304,7 @@ export function scopePrefix(
 function internalUpdateScopeAndQualifier(
   qualifierScope: SymbolType,
   currentScope: Scope,
-  value: AstNode,
+  _value: AstNode,
   qualifier: AstNode,
 ): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {

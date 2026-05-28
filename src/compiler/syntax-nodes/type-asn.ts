@@ -21,8 +21,6 @@ import {
   mustMatchGenericParameters,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { isAstQualifierNode } from "./ast-helpers";
-import { FixedIdAsn } from "./fixed-id-asn";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
