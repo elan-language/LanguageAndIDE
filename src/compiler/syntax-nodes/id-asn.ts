@@ -14,7 +14,6 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
-  adviseAgainstFunctionRef,
   getQualifierId,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
@@ -29,7 +28,6 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,
-    private readonly isFuncRef: boolean,
     private scope: Scope,
   ) {
     super();
@@ -104,10 +102,6 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
-    }
-
-    if (this.isFuncRef) {
-      adviseAgainstFunctionRef(symbol, this.compileErrors, this.fieldId);
     }
 
     mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);

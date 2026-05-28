@@ -226,24 +226,13 @@ export class NotIndexableCompileError extends CompileError {
   }
 }
 
-export class NotRangeableCompileError extends CompileError {
-  constructor(type: string, location: string) {
-    super(
-      DisplayPriority.second,
-      Severity.error,
-      `Cannot range ${type}.`,
-      location,
-      "LangRef.html#compile_error",
-    );
-  }
-}
 
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Cannot new ${type}.`,
+      `Cannot create instance of ${type}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -255,7 +244,7 @@ export class InvalidSourceForForLoopCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Source must evaluate to a List or String.`,
+      `Source must evaluate to a list or string.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -339,19 +328,7 @@ export class MustBeConcreteCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `${type} must be concrete to new.`,
-      location,
-      "LangRef.html#compile_error",
-    );
-  }
-}
-
-export class OutParameterCompileError extends CompileError {
-  constructor(name: string, location: string) {
-    super(
-      DisplayPriority.fourth,
-      Severity.error,
-      `Cannot pass '${name}' as an out parameter.`,
+      `${type} must be concrete to create instance.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -425,11 +402,11 @@ export class GenericParametersCompileError extends CompileError {
     const severity = actual < expected ? Severity.warning : Severity.error;
     let msg = ``;
     if (expected === 0 && actual > 0) {
-      msg = `<of Type> was not expected here.`;
+      msg = `generic type specifier was not expected here.`;
     } else if (expected === 1 && actual === 0) {
-      msg = `Expected: '<of Type>'.`;
+      msg = `Expected: generic type specifier.`;
     } else if (expected === 2 && actual < 2) {
-      msg = `Expected: '<of Type, Type>'.`;
+      msg = `Expected: two generic type specifiers.`;
     } else {
       msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
@@ -517,18 +494,6 @@ export class DuplicateKeyCompileError extends CompileError {
       `Duplicate Dictionary key(s).`,
       location,
       "LangRef.html#compile_error",
-    );
-  }
-}
-
-export class FunctionRefCompileError extends CompileError {
-  constructor(location: string) {
-    super(
-      DisplayPriority.fourth,
-      Severity.advisory,
-      `The 'ref' keyword is no longer needed and we recommend that you remove it.`,
-      location,
-      "LangRef.html#ref",
     );
   }
 }

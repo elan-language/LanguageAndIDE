@@ -281,7 +281,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

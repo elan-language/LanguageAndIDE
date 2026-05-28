@@ -636,7 +636,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable x set to ref createFileForWriting
+  variable x set to createFileForWriting
   variable y set to x("")
 end main`;
 
@@ -653,7 +653,6 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Library or class function 'createFileForWriting' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });

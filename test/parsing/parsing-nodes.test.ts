@@ -1632,8 +1632,8 @@ suite("Parsing Nodes", () => {
       `this.a[1].b().c(d)[e]`,
       "",
     );
-    testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref foo`, "");
-    testNodeParse(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
+    testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.invalid, ``, "");
+    testNodeParse(new ExprNode(f), `ref `, ParseStatus.invalid, ``, "");
   });
   test("OperatorAmbiguity#728", () => {
     //Test operations
