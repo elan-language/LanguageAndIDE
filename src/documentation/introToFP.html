@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="../ide/styles/elanStyle.css">
 <!-- Font Awesome has external link symbol at U+F08E (in Unicode Private Use Area)    -->
 <!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="favicon.ico" rel="icon">
 <title>Introduction to Functional Programming with Elan</title>
 <script type="text/javascript" src="generated_toc.js"></script>
@@ -21,27 +22,26 @@
 
 <h1>Getting started</h1>
 
-<p>To undertake functional programming (FP) in Elan,
+<p>To undertake Functional Programming (FP) in Elan,
     you should first be reasonably familiar with procedural programming (PP) with Elan,
      and ideally, with object-oriented programming (OOP) with Elan.
 Then, switch to the <b>Functional</b> profile from the menu at the top of the IDE.
 This changes two things: </p>
 <ol>
-<li>The list of demo programs will now show only programs that use FP.
+<li>The menu of demo programs will now show only programs that use FP.
     A very good place to start is to look at the <b>Snake - functional</b> demo,
     which is functionally identical to the (procedural) original, but it written using FP design and coding patterns.
 </li>
 <li>It will change some of the options available on the <b>new code</b> menus in the editor:
     <ul>
         <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a new instruction named <b>let</b> (plus, of course, comments).</li>
-        <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
-        <li>Within a concrete or abstract class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
+        <li>Within a concrete or abstract Class, you may add function methods, but not procedure methods.</li>
+        <li>Within a concrete or abstract Class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
         of function method which is particularly useful in FP.</li>
     </ul>
     The rationale for disallowing some of the instructions you are used to in PP or OOP, and how to use the new instructions, will become clear as you read through this document.
 </ol>
-<p>In the following sections we will be drawing out the principles and patterns, practices of FP with reference to the various FP demo programs.</p>
-
+<p>In the following sections we will be drawing out the principles, patterns and practices of FP with reference to the various FP demo programs.</p>
 
 <h1>Principle 1: Functions must be pure</h1>
 
@@ -52,12 +52,12 @@ This changes two things: </p>
         This means it may not depend on data obtained from user input, from a file, or from over the network,
         though such data may be obtained <i>outside</i> the function and passed into it in parameters.</li>
     <li>Similarly, within the function, you cannot make direct use of the system clock or system-generated random numbers. (There is a technique
-        to <a href="#random_fp">generate random numbers</a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
+        to <a href="#FP_random">generate random numbers <i class="fa">&#xf14c;</i></a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
     <li>The function may not generate any <i>side effects</i>, that is changes to the state of the system that may be observed outside the function.</li>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
 
-<p>Dedicated functional programming languages &mdash; such as Haskell &mdash; enforce these rules automatically. Common 'multi-paradigm' languages
+<p>Dedicated Functional Programming languages &mdash; such as Haskell &mdash; enforce these rules automatically. Common 'multi-paradigm' languages
     &mdash; including Python, VB, C#, and Java &mdash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
@@ -65,14 +65,13 @@ Elan editor enforces the rules automatically.</p>
 and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a procedure</b>, nor can you make use of system methods such as <el-method>input</el-method>,
 <el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
 
-
 <h1>Principle 2: As much of the code as possible should be in functions</h1>
 
 <p>When using FP in Python, VB, C#, or Java, every program still needs a  main routine, which is necessarily procedural in nature,
   because it cannot work without dependencies on the system, and it generates <i>side effects</i> such as output to a display.</p>
 <p>To avoid your main routine becoming difficult to read, and to avoid duplicated code, you may still define procedures
   (which also, inherently, use procedural programming to manage input/output and other system operations).
-  But this second principle of FP is that the main together with any necessary procedures should
+  But this second principle of FP implies that the <b>main</b> together with any necessary <b>procedure</b>s should
   be kept as small as possible:
   <ul><i>Any code within the main routine or procedures that performs calculation, evaluates logic, or
     transforms data in any way, should be delegated to functions</i>.
@@ -105,7 +104,7 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   <tr>
     <td>Number of functions</td>
     <td>4</td>
-    <td>21 (incl. function methods within classes)</td>
+    <td>21 (incl. function methods within Classes)</td>
   </tr>
   <tr>
     <td>Instructions within procedures, including main</td>
@@ -119,26 +118,28 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   </tr>
   </table>
 
+<h1>Principle 3: Every function can and should be unit tested</h1>
 
-<h1>  Principle 3: Every function can and should be unit-tested</h1>
+  <p>The idea of writing automated tests isn't restricted to Functional Programming. The tests offered by Elan are known as 'unit tests', and are
+    designed to test <i>functions</i>.</p>
+    <p>Such tests are extremely easy to write, and run automatically when the program is loaded from a file, and then run
+  again after every edit that results in code that compiles.</p>
+  <p>Unit tests give you huge confidence that your code does what it is supposed to do,
+and that subsequent changes, whether as a result of debugging or of implementing new requirements, do not break existing
+functionality. Without unit tests, bugs might go unnoticed and surface only later and less obviously.</p>
 
-  <p>The idea of writing automated tests isn't restricted to functional programming. The tests offered by Elan are known as 'unit tests' -
-    designed to test <i>functions</i>. They are extremely easy to write, and run automatically when the program is loaded from a file, and run
-  again after every edit that results in code that compiles. Unit tests give you huge confidence that your code does what it is supposed to do,
-and that subsequent changes to your code &mdash; either as a result of de-bugging, or to implement new requirements &mdash; do not break existing
-functionality, resulting in bugs that might not surface to the user for a long time.</p>
-
-  <p>On some other platforms it is possible to write automated tests that also cover procedures (including the main routine).
+  <p>On some platforms it is possible to write automated tests that also cover procedures (including the main routine).
      These are sometimes referred to as 'end to end tests', or 'UI tests' because they can simulate a user interacting with the program.
      But such tests are much harder to write than unit tests, and notoriously 'brittle' &mdash; meaning that a tiny change to code can break
-     many existing tests and take hours to fix, even such changes as a routine upgrade to the browser or operating system.
-     Elan does currently support those kind of tests. (Note: <i>outside Elan</i>  Python, VB, C#, and Java, <i>unit testing</i> frameworks
-     will, theoretically, allow unit-tests to run <i>any</i> method. This can be dangerous because running the tests might
-     &mdash; without your awareness &mdash; be updating a file or database, or sending Internet messages. Unit tests are only safe when applied to
-     safe (pure) functions.</p>
+     many existing tests and take hours to fix. Changes external to your program, such as a routine upgrade to the browser or operating system,
+     can easily render such tests invalid. Elan does not currently support those kind of tests.</p>
+     <p>Note, however, that <i>outside Elan</i>,  Python, VB, C#, and Java, have <i>unit testing</i> frameworks
+     that can theoretically allow unit tests to run <i>any</i> method. This can be dangerous because running the tests might,
+     without your awareness, be updating a file or database, or sending Internet messages. Unit tests are safe only when applied to
+     safe (i.e. pure) functions.</p>
 
-    <p>It follows that the higher the percentage of a program's total instructions that exist within functions the higher the
-      percentage of your code than can be <i>safely</i> unit tested. The table below shows the percentage of instructions covered
+    <p>It follows that the higher the percentage of a program's total instructions that exist within functions, the higher the
+      percentage of your code that can be safely unit tested. The table below shows the percentage of instructions covered
       by tests for two of the demo programs that offer both procedural and functional implementations.
       You can verify this information by examining the demo code.</p>
 
@@ -166,26 +167,23 @@ functionality, resulting in bugs that might not surface to the user for a long t
   </tr>
   </table>
 
-  <h3 class="no-TOC">Notes</h3>
+  <h3 class="no-TOC">Note on demo program <b>Best Fit</b></h3>
 <ul>
-  <li>The <b>Best Fit</b> demo defines a function and a class for use in other programs &mdash; it has no <b>main</b> instruction,
-    so comparison with the other programs in the table above would be misleading. The function, and the operation
-  of the class are both 100% tested.</li>
+  <li>The <b>Best Fit</b> demo defines a function and a Class for use in other programs. It has no <b>main</b> instruction,
+    so comparison with the the unit testing in other programs would be misleading. The function and the operation
+  of the Class are both 100% tested.</li>
 </ul>
 
-
-<h1>Principle 4: Internally, functions should return an expression, optionally preceded by 'let' instructions</h1>
+<h1>Principle 4: A function contains only a return value that is an expression, plus optional let instructions</h1>
 
 <p>In the FP demos you will see that a significant number of functions simply <code>return</code> an expression to be evaluated, for example:</p>
-
 <codeblock>
 function gameOver(g as Game) returns Boolean
   return g.body.contains(g.head) or hasHitEdge(g)
 end function
 </codeblock>
 
-<p>Other functions precede the <code>return</code> by one or more <b>let statement</b>, for example</p>
-
+<p>Other functions precede the <code>return</code> by one or more <b>let statement</b>s, for example</p>
 <codeblock>
 function hasHitEdge(g as Game) returns Boolean
   let x be g.head.x
@@ -200,7 +198,7 @@ a <b>constant</b> in that:</p>
 <ul>
   <li>it is defined within a <b>function</b> (or a <b>test</b>), whereas a <b>constant</b> is always defined at global (file) level.</li>
   <li>it may be defined by an expression rather than just by a literal value</li>
-  <li>it may refer to a list, or other data structure</li>
+  <li>it may refer to a List or other data structure</li>
 </ul>
 
 <p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
@@ -212,22 +210,20 @@ a <b>constant</b> in that:</p>
 </ul>
 
 <p>When running in the <b>Functional</b> profile, <b>let statement</b> is the only type of instruction that you may add within a function,
-  and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You may still add comments.)</p>
-
+  and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
 
 <h1>Principle 5: Selection is implemented using 'if expressions'</h1>
 
 <p>When running in the Functional profile, you cannot add an <b>if</b> <i>instruction</i> into a function.
   So how do you implement 'selection' and 'iteration'?
-  Iteration will be addressed in the next heading, but selection is handled by means of a 'conditional expression'.</p>
+  Selection is handled by means of a 'conditional expression', whereas iteration will be addressed under <a href="#FP_recursion">Principle 6 <i class="fa">&#xf14c;</i></a>.</p>
 
-<p>All of the languages supported by Elan have their own, custom syntax for conditional expressions. For simplicity,
+<p>All of the languages supported by Elan have their own custom syntax for conditional expressions. For simplicity,
   and understandability, Elan offers an <el-method>if</el-method> <i>function</i> that is used identically in all the languages.
-  Incidentally, the  <el-method>if</el-method> function works the same way that it does in an Excel spreadsheets
-  (though 'IF', like all Excel functions, is capitalised, therein). Here are some examples of conditional expressions
-  from the demo programs:
+  (Incidentally, the  <el-method>if</el-method> function works the same way as it does in an Excel spreadsheet).
+  <!--(though 'IF', like all Excel functions, is capitalised, therein).-->
+  Here are some examples of conditional expressions from the demo programs:
 </p>
-
 <codeblock>
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List&lt;of String&gt;) returns WordCount
   let isBetter be wc2.count < wc1.count
@@ -237,7 +233,7 @@ end function
 </codeblock>
 
 <codeblock>
-function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+function nextCellValue(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int, y as Int) returns Int
   let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
   return if(live, black, white)
 end function
@@ -246,30 +242,28 @@ end function
 <p>The <el-method>if</el-method> function requires three arguments to be provided, in the following order:</p>
 
 <ol>
-  <li>The condition. This condition may compare two values, or may call another function that returns a Boolean value</li>
-  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to true</li>
-  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to false</li>
+  <li>The condition, which may compare two values, or it may call another function that returns a Boolean value</li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <el-id>true</el-id></li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <el-id>false</el-id></li>
 </ol>
 
-<p>The <el-method>if</el-method> function, then, performs a role somewhat similar to an <b>if</b> <i>instruction</i>,
+<p>Thus the <el-method>if</el-method> function performs a role somewhat similar to an <b>if</b> <i>instruction</i>,
 but differs from it in these important respects:</p>
 
 <ul>
-  <li>The <el-method>if</el-method> function is <i>not</i> an instruction &mdash; forms part, or all, of an <i>expression</i> and may be used
+  <li>The <el-method>if</el-method> function is <i>not</i> an instruction: it forms part, or all, of an <i>expression</i> and may be used
     within any expression that forms part of an instruction.</li>
   <li>It <i>returns</i> a value, which must be <i>used</i>.</li>
   <li>It may make use of other expressions to define the arguments, but may not contain other <i>instructions</i>.</li>
 </ul>
 
-<p><el-method>if</el-method> functions can be nested. However, nesting more than one level can become very hard to read.
-In this circumstance it is often better to delegate to new function that perform part of the logic.</p>
-
+<p>Although <el-method>if</el-method> functions can be nested, nesting to more than one level can become very hard to read.
+When required, it is often better to delegate to a new function to perform part of the logic.</p>
 
 <h1 id="FP_recursion">Principle 6: Iteration may be achieved using recursion</h1>
 
-<p>There are two ways to achieve implement iteration within a function. The first is using 'recursion' &mdash; also known as 'recursive' functions).
-   (The second approach is addressed <a href="#">Principle 8</a>)</p>
-
+<p>There are two ways to implement iteration within a function:</p>
+<p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#FP_HoFs">Principle 8 <i class="fa">&#xf14c;</i></a>.</p>
 <p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example.
   In the <b>Recursive Functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
 
@@ -279,25 +273,23 @@ function factorial(n as Int) returns Int
 end function
 </codeblock>
 
-as it shows the two important principles of designing a recursive function:</p>
-
+<p>It shows these important aspects of designing a recursive function:</p>
 <ul>
-  <li>that when the function is called within the function body it is typically with a <i>smaller</i> version of the original problem:
-  in this case <code>factorial(n)</code> calculates <code>factorial(n)</code> and multiplies it by <code>n</code></li>
-  <li>the recursion must 'bottom out' eventually, and this must be explicitly checked in the code. In this case it bottoms out when
+  <li>When the function is called within the function body it is typically with a <i>smaller</i> version of the original problem:
+  in this case <code>factorial(n)</code> calculates <code>factorial(n - 1)</code> and multiplies it by <code>n</code>.</li>
+  <li>The recursion must 'bottom out' eventually, and this must be explicitly checked for. In this case it bottoms out when
     <code>n</code> is less than <code>2</code>, because 0! and 1! are both 1. The most common error when writing a recursive function
     is forgetting to define and check for the bottoming-out condition. If you fail to do this, for example by writing
     <code>return n*factorial(n - 1)</code>
     &mdash; or you get the condition wrong &mdash; the
     iteration will continue indefinitely until you eventually get a 'Stack overflow error', which crashes the program.
-    Try it so that you learn to recognise and diagnose the problem.
+    Try it so that you learn to recognise and diagnose the potential problem.
   </li>
 </ul>
 
-
 <h1 id="FP_listMutation">Principle 7: Lists and other data structures are never mutated</h1>
 
-<p>In procedural programming a list may be mutated either by reassigning an indexed value, for example:
+<p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
 
 <codeblock>
   reassign mySubjects[3] to "Geography"
@@ -310,7 +302,7 @@ or by calling one of the available procedure methods on on it such as:
 </codeblock>
 
 but in FP this is not permitted. Data structures are never to be mutated. Instead, you may call a function that returns
-a <i>copy</i> of the data structures, but with specified differences from the original. For example, you may write:
+a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:
 
 <codeblock>
   let myNewSubjects be mySubjects.withSet(3, "Geography")
@@ -321,45 +313,45 @@ or
 </codeblock>
 </p>
 
-<p>At first sight this seem awkward, strange, and certainly inefficient.
+<p>At first sight this may seem awkward, strange and certainly inefficient.
   But though you might never have thought about it in these terms, this is what you have always done when manipulating a <code>String</code>.
-  You can never actually mutate a string &mdash; such as converting it to upper case or trimming off the leading spaces, you have to write, for example:
+  You can never actually mutate a string, such as converting it to upper case or trimming off the leading spaces. You have to write, for example:</p>
 
 <codeblock>
   let myNewString be myString.upperCase()
 </codeblock>
 
-<p>When we want to apply operations to all members in a list we need to use iteration, which means either using <a href="recursion">recursion</a> or <a href="hofs">higher-order functions</a>
-  and within that technique make use of the various <el-method>with...</el-method> methods. The <el-method>sum</el-method> function in the
-   <b>Recursive Functions</b> demo calculates the sum of all members of any list of floating point numbers (the tests included in the demo show example results):
+<p>When you want to apply operations to all items in a List you need to use iteration, which means using
+  either <a href="#FP_recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#FP_HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
+  and within that technique make use of the various <el-method>with..</el-method> methods. The <el-method>sum</el-method> function in the
+   <b>Recursive Functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
 function sum(li as List&lt;of Float&gt;) returns Float
   return if(li.length() is 0, 0.0, li.head() + sum(li.tail()))
 end function
 </codeblock>
 
-Note the use of these two dotted-function calls on the list <code>li</code>:
+<p>Note the use of these two dot function calls on the List <code>li</code>(see <a href="LangRef.html#dotSyntax" target="_blank">Dot syntax <i class="fa">&#xf08e;</i></a> in Language Reference):</p>
 
 <ul>
- <li><el-method>head</el-method> returns only the first element of the list.</li>
- <li><el-method>tail</el-method> dotted methods on a list, returns all the elements of the list <i>except</i> the first.</li>
+ <li><el-method>head</el-method> returns only the first item in the List.</li>
+ <li><el-method>tail</el-method> returns all the items of the List <i>except</i> the first.</li>
 </ul>
 
-In FP, algorithms to process lists are often written in terms of the 'head' and 'tail' of the list.
-You could just write e.g. <code>li[0]</code> and <code>li.substring(1, li.length()) instead &mdash; with the same result -
-  but using the <el-method>head</el-method> and <el-method>tail</el-method> Functions
-   makes your code easier to read, and more 'intentional' (makes the intention clearer).
-</code>
+<p>In FP, algorithms to process lists are often written in terms of the 'head' and 'tail' of the list.
+You could just write e.g. <code>li[0]</code> and <code>li.substring(1, li.length())</code> instead, with the same result.
+  But using the <el-method>head</el-method> and <el-method>tail</el-method> methods
+   makes your code easier to read and may make your intention clearer.
 </p>
 
-<p>The next example combines the previous two ideas:
+<p>The next example combines the previous two ideas:</p>
 
 <ul>
-  <li>updating a list by using <el-method>with...</el-method> methods &mdash; which create a copy of the original, with specified differences</li>
-  <li>using recursion to iterate over the elements in a List</li>
+  <li>updating a List by using a <el-method>with..</el-method> method to create a copy of the original List with specified differences.</li>
+  <li>using recursion to iterate over the items in the List.</li>
 </ul>
 
-in a function to reverse the order or elements in a list:
+in a function to reverse the order or items in a List:
 
 <codeblock>
 function reverse(li as List&lt;of Float&gt;) returns List&lt;of Float&gt;
@@ -367,36 +359,35 @@ function reverse(li as List&lt;of Float&gt;) returns List&lt;of Float&gt;
 end function
 </codeblock>
 
-<p>A more advanced example is the <b>Merge Sort</b> demo. In that code, note that:</p>
+<p>A more advanced example is the <b>Merge Sort</b> demo, where:</p>
 
 <ul>
-  <li>the principal function (<el-method>sort</el-method>) defines the algorithm in just one line, by delegating to other, simpler functions.
-  This is a very good example of 'functional decomposition' &mdash; defining a function in terms of other functions each of which does part of the task.</li>
-  <li>as well as testing the principal function, there are unit tests for each of the component functions. This builds confidence and makes de-bugging
+  <li>the principal function (<el-method>sort</el-method>) defines the algorithm in just one line, delegating to other, simpler functions.
+  This is a very good example of 'functional decomposition', that is defining a function in terms of other functions each of which does part of the task.</li>
+  <li>as well as testing the principal function, there are unit tests for each of the component functions. This builds confidence and makes debugging
     simpler. (Recursive functions can be hard to debug otherwise.)</li>
-  <li><a href="http://" target="_blank" rel="noopener noreferrer"></a>t first glance, none of the functions <i>appear</i> to be recursive, because none of them calls <i>itself</i> directly. However,
-  as you study the code you will see,for example, that <el-method>sort</el-method> calls <el-method>sortedFrontHalf</el-method>
+  <li>At first glance, none of the functions <i>appears</i> to be recursive because none of them calls <i>itself</i> directly. However,
+  as you study the code you will see that <el-method>sort</el-method> calls <el-method>sortedFrontHalf</el-method>
   and <el-method>sortedBackHalf</el-method> both of which call
-back into <el-method>sort</el-method> again &mdash; but with approximately half of the original list.
-The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method></li>
+back into <el-method>sort</el-method> again &mdash; crucially with approximately half of the original List.
+The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
+<h1 id="FP_HoFs">Principle 8: A function may be passed into, or returned by, another function</h1>
 
-<h1>Principle 8: A function may be passed into, or returned by, another function</h1>
-
-<p>The alternative to writing your own recursive function is to use 'higher order functions' (HoFs).
-  A Hof is a function that takes in another function as a parameter (the more common case), or that returns a function as its result.
+<p>The alternative to writing your own recursive function is to use Higher-order Functions (see <a href="LibRef.html#HoFs" target="_blank">HoFs <i class="fa">&#xf14c;</i></a> in Library Reference).
+  A HoF is a function that takes in another function as a parameter (the more common case), or one that returns a function as its result.
   Under the covers, HoFs are written using recursion, but you don't see this.</p>
 
-<p>There are many possible HoFs, but three of them &mdash; <el-method>map</el-method>, <el-method>filter</el-method>, and <el-method>reduce</el-method>
-are so widely used in FP, to process lists in many different ways, that they sometimes referred to as the 'Holy Trinity of functional programming'.
-They can be used individually, or in combination. The purpose and operation of each will be explained shortly.</p>
+<p>There are many possible HoFs, but three of them &mdash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &mdash;
+are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
+They can be used individually or in combination. The purpose and operation of each is explained below.</p>
 
-<p>Note. All of the languages supported by Elan have their own versions of  <el-method>map filter reduce</el-method> that are similar in intent
-but have different syntax, and sometimes different names (e.g. 'fold' in place of 'reduce').The Elan library has its own version of these functions
-which work, the same way, in each language. Because they are all dotted methods, they can easily be chained.</p>
+<p>All of the languages supported by Elan have their own versions of <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> that are similar in intent
+but have differing syntax, and sometimes different names (e.g. 'fold' in place of 'reduce').The Elan library has its own version of these functions
+which work the same way in each language.</p>
 
-<p>Start by loading and running the demo program <b>Map Filter Reduce</b>. Then looking at the main routine:
+<p>Start by loading and running the demo program <b>Map, Filter, Reduce</b>, and look at the <b>test</b>:</p>
 
 <codeblock>
 test test_Map_Filter_Reduce
@@ -405,92 +396,97 @@ test test_Map_Filter_Reduce
   assert nums.map(cube) is [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
   assert nums.reduce(1.0, product).floor() is 81480107
   assert nums.filter(lessThan5).map(inverse) is [0.45, 0.4]
-  assert nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat) is "results: 0.45|0.4|"
+  assert nums.filter(lessThan5).map(inverse).map(toString).reduce("results: ", concat) is "results: 0.45|0.4|"
 end test
-
 </codeblock>
-
-Note that:
-
-<ul>
-  <li>each of the three HoFs is applied to a list, as a 'dotted method call'. In this example each is applied to the same list (of floating point numbers),
-    but the list may be of any type.</li>
-  <li>each of the HoFs is passed the <i>name</i> of a function that is defined elsewhere in the program.
-    The function name is given as an argument, without brackets or arguments &mdash; e.g. <el-method>lessThan5</el-method>.
+<p>Each of the three HoFs is applied to a List by a 'dot method call'. In this example each is applied to the same List (of floating point numbers),
+    though the subject List may be of any Type.  Because they are all dot methods, they can easily be chained in dot sequences, as shown.</p>
+<p>Each HoF is passed the <i>name</i> of a function that is defined elsewhere in the program.
+    The function name is given as an argument, without brackets or arguments, e.g. <el-method>lessThan5</el-method>.
     For <el-method>filter</el-method> and <el-method>map</el-method>, this is the only argument; for <el-method>reduce</el-method>
-  there is another argument.</li>
-  <li><el-method>filter</el-method> returns a list that is made up of selected members from the original list. The function passed into
-    <el-method>filter</el-method> is applied to <i>each</i> of the list's members in turn,
-    and determines whether or not each should 'pass' through the filter into the resulting list.
-    In the first example the function passes only those values from the original list that are less than 5.
-    Note from the definition of the function <el-method>lessThan5</el-method> (lower down in the code)
-    that it defines a parameter of type <code>Float</code> (the same type as the members of a list) but returns a <code>Boolean</code> -
-    specifying whether or not a specific member should pass the filter or not.
-    Making sure that types match up as expected can be the trickiest part of learning to use HoFs.</li>
-  <li><el-method>map</el-method> returns a list that will have the same <i>number</i> of members as the original list.
-    They might be of the same type as the on the original list &mdash; but typically different values &mdash; or, depending on the return type of the function
-    passed in, the members of the resulting list might be of a different type to the original list.
-    But each member of the resulting list <i>corresponds</i>> ('maps') to a different member of the
-    original list in the same position. As with <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
-    define a single parameter of the same type as the members of the list, but for use with el-method>map</el-method> the return type of the function may be anything.
-  </li>
-  <li><el-method>reduce</el-method> returns a <i>single</i> value,
-  that is derived by combining each of the values in the original list according to the function passed in. That derived value can be of the same
-type as the members of the list &mdash; for example when <el-method>reduce</el-method> is used to combine a list of numbers by addition, or multiplication,
-but it might be of a different type. The resulting value may be data structure, or even another list.
-Unlike <el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments &mdash; the function being the second one.
-The first parameter is the <i>initial</i> (sometimes called 'see') value that will be progressively refined and eventually returned.
-This initial value must therefore be of the same type as the desired final value.
-The <i>function</i> passed into <el-method>reduce</el-method> must define two parameters: the function's first parameter must be of the same type as that initial (and hence final) value, and the second
-must be of the same type as the members of the list. The return type of the function must be the same type as the 'seed' value (and first parameter of the function).
-Each member of the list is passed into the function as its second parameter in turn; the first parameter passed in is the <i>latest</i> value that has
-'grown' from the seed.
-</li>
-<li><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, in any order, provided that the type of the resulting
-list is the type expected by the next one. Because <el-method>reduce</el-method> transforms a list into a single value, it is <i>typically</i>
-either used in isolation, or forms the end of the chain &mdash; unless it is followed a simpler function (such as <el-method>round</el-method>) is chained on afterwards.</li>
+  there is another argument. Taking each HoF in turn:</p>
+  <p><el-method>filter</el-method></p>
+<ul>
+ <li>returns a List that is made up of selected items from the original List. The function passed into
+    <el-method>filter</el-method> is applied to <i>each</i> of the List's items in turn,
+    and determines whether or not each should 'pass' through the filter into the resulting List.
+    In the first example the function passes only those values from the original List that are less than 5.</li>
+ <li>the definition of the function <el-method>lessThan5</el-method> (lower down in the code)
+    includes a parameter of Type <code>Float</code> (the same Type as of the item in the List) but returns a <code>Boolean</code>
+    specifying whether or not a specific item should pass the filter.
+    Making sure that Types match up as expected can be the trickiest part of learning to use HoFs.</li>
 </ul>
+<p><el-method>map</el-method></p>
+<ul>
+  <li>returns a List that will have the same <i>number</i> of items as in the original List.
+    They might be of the same Type as the in the original List (though typically different values) or, depending on the return Type of the function
+    passed in, the items in the resulting List might be of a Type different from those in the original List.
+    But each item in the resulting List <i>corresponds</i> ('maps') to an item of the
+    original List at the same position</li>
+   <li>as with <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
+    have a single parameter of the same Type as the items in the List, though its return value may be of any Type.
+  </li>
+ </ul>
+<p><el-method>reduce</el-method></p>
+<ul><li> returns a <i>single</i> value, that is derived by combining all of the item values in the original List according to the function passed in. That derived value can be of the same
+Type as the items of the List (for example when used to combine a List of numbers by addition or multiplication),
+but can be of a different Type including a data structure.</li>
+<li>Unlike <el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments:
+<ol><li>the <i>initial</i> value (sometimes called the 'seed') that will be progressively refined and eventually returned.
+This initial value must therefore have the Type of the desired final value.</li>
+<li>the <i>function</i> passed into <el-method>reduce</el-method> must define two parameters:
+<ol>
+<li>the accumulating value, therefore of the same Type as the initial 'seed' value.</li>
+<li>the item to which the function is applied, therefore of the same Type as the items in the List.</li>
+</ol>
+</ol>
+<li>The return Type of the function must have the same Type as the 'seed' value.</li>
+<li>Each item of the List is passed in turn into the function (as second argument), the first argument being the <i>latest</i> value that has
+developed from the seed.</li>
+</ul>
+<p><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, and in any order, provided that the item Type of each resulting
+List is of the Type expected by the next one.</p>
+<p>Because <el-method>reduce</el-method> transforms a List into a single value, it is <i>typically</i>
+used in isolation or as the last of a chain. It can, of course, be followed in the chain by a simpler function (such as <el-method>round</el-method>).
 </p>
 
-<h3class="no-TOC">Lambdas</h3>
+<h3 class="no-TOC">Lambdas</h3>
 
 <p>In the examples above the function being passed into the HoF (using its name) is defined as a 'standalone' (global) function elsewhere in the program.
-  This pattern has two advantages:
+  This pattern has two advantages:>/p>
   <ul>
     <li>The function may be used elsewhere in the program, either to pass into a another HoF, or in the same way as any other function.</li>
     <li>The function can be tested in isolation.</li>
   </ul>
   <p>However, there are many circumstances where the function you need to pass into a HoF, is unlikely to be used in any different context,
-    and where the function is so simple that it hardly warrants its own test &mdash; especially if the whole expression that uses the HoF is being tested.
-  A lambda is a function that is defined 'inline' as an argument to a function call. For example, the expression from the example above</p>
-
-  <code>nums.filter(lessThan5)</code>
-
+    and where the function is so simple that it hardly warrants its own test &mdash; especially if the whole expression that uses the HoF is being tested.</p>
+<p>A <b>lambda</b> is a function that is defined 'inline' as an argument in a function call. For example, the expression from the example above:</p>
+  <codeblock>nums.filter(lessThan5)</codeblock>
   could be written as:
-
-  <code>nums.filter(lambda x as Int => x < 5)</code> thereby eliminating the need to define the <el-method>lessThan5</el-method> function for one use only.</p>
+  <codeblock>nums.filter(lambda x as Int => x < 5)</codeblock>
+<p> thereby eliminating the need to define the <el-method>lessThan5</el-method> function for one use only.</p>
 
 <p>There is a whole branch of <i>mathematics</i> devoted to 'lambda calculus', which in turn provided the theoretical underpinning for the concept
   of function programming (FP). And lambdas have capabilities that are both more subtle and more sophisticated than can be described here, including the
-  idea of 'closure' (which you can look up if you are ready to go much deeper &mdash; and which is supported in Elan). However, you should note that -
-  because of the need for compatibility across all the supported languages &mdash; Elan has a restricted implementation of HoFs and 'function passing' in general,
-  but it is sufficient to grasp the key principles of functional programming. To go further you would need to switch to a pure FP language such as Haskell.
-  <i>Currently</i> Elan does <i>not</i> permit (in any of the supported languages):
+  idea of 'closure' (which you can look up if you are ready to go much deeper &mdash; and which is supported in Elan). However, you should note that,
+  because of the need for compatibility across all the supported languages, Elan has a restricted implementation of HoFs and of 'function passing' in general,
+  but it is sufficient to grasp the key principles of Functional Programming. To go further you would need to switch to a pure FP language such as Haskell.
+  <i>Currently</i> Elan does <i>not</i> permit (in any of the supported languages):</p>
 <ul>
 <li>The definition of a lambda <i>except</i> inline as the argument to a HoF. You cannot, for example, assign a lambda (or a function) to a variable.</li>
 <li>The definition of your own HoFs &mdash; you are restricted to using the HoFs defined in the Elan library.</li>
 </ul>
 
-<h3 class="no-TOC">Using HoFs to iterate over a 2D list</h3>
+<h3 class="no-TOC">Using HoFs to iterate over a 2D List</h3>
 
-<p>If you are using Elan's Block Graphics, or have other need to process a '2D' list (such as working with matrices, or tabular data) and you
+<p>If you are using Elan's Block Graphics, or have another need to process a 2D List (such as working with matrices or tabular data), and you
   want to do this in pure functions, you have the challenge of how to iterate over two dimensions &mdash; something that is straightforward in
-  <i>procedural</i> programming by means of a 'nested loop'. It is certainly possible to iterate over two dimensions of a list using HoFs within a
+  <i>procedural</i> programming by means of 'nested loops'. It is certainly possible to iterate over two dimensions of a List using HoFs within a
   single expression, but until you are <i>fluent</i> in such programming, the recommended approach is to break up the task into an 'inner' function
-  that processes just a single <i>column</i> (or row, if preferred) of the 2D structure and an 'outer' function that then processes each of the columns
-  (or rows) in turn.</p>
+  that processes just a single <i>column</i> (or row, if preferred) of the 2D structure and an 'outer' function that processes each of the columns
+  (or rows).</p>
 
-<p>The following functions are taken from the <b>Life - functional</b> demo, and, together, perform a role equivalent to the
+<p>This is exemplified in the following functions, taken from the <b>Life - functional</b> demo, which together perform a role equivalent to the
   <el-method>nextGeneration</el-method> <i>procedure</i> in the <b>Life - procedural</b> demo:</p>
 
 <codeblock>
@@ -506,23 +502,22 @@ function nextCol(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int) returns Li
 end function
 </codeblock>
 
-Note the use of <el-method>range</el-method> in both functions to create <code>cols</code> and <code>rows</code> respectively &mdash; which are
-just lists of numbers e.g. [0, 1, 2, ... , 39]. The <el-function>map</el-function> HoFs, just iterate over these column- or row-<i>numbers</i>
-and use them to access the appropriate portions of the <code>grid</code> &mdash; a 2D list (<code>List&lt;of List&lt;of Int&gt;&gt;</code>).
+<p>Note the use of <el-method>range</el-method> in both functions to create <code>cols</code> and <code>rows</code> respectively, which are
+just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
+using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
+<h1>Principle 9: User-defined Classes should define their own 'with..' methods for updates</h1>
 
-<h1>Principle 9: User-defined classes should define their own 'with' methods for updates</h1>
+<p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
+  never be mutated. So, when running under the <b>Functional</b> profile, you may define Classes and add properties and function methods,
+  but you may <i>not</i> define any <i>procedure</i> method. (In Object-oriented Programming  you <i>would</i> use procedure methods to mutate an instance or do anything
+  that cannot be done by a function.)</p>
 
-<p>It is possible, indeed highly desirable, to have user-defined types (classes) in FP. However, in true FP, an instance of a class should
-  never be mutated. So, when running under the <b>Functional</b> profile, you may define classes and add properties and function methods,
-  but you may <i>not</i> define any <i>procedure</i> method &mdash; which in OOP you would use to mutate an instance and/or to do do other
-  things not permissible in a function.</p>
-
-<p>But this raises a question: how <i>are we to make changes to an instance of a class?</i>.
-  The answer is similar to that for updating a list, string, or other standard data structure within a function
-  (described in <a href="#list-mutation">Principle 7</a>): you need define <el-method>with...</el-method> methods that
-  return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the class <code>Game</code>
-  has several <el-method>with...</el-method> methods, one of which is shown here:
+<p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
+  The answer is similar to that for updating a List, String, or other standard data structure within a function
+  (described in <a href="#FP_listMutation">Principle 7 <i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
+  return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
+  has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
 <codeblock>
 function withHead(value as Square) returns Game
@@ -534,58 +529,56 @@ end function
 
 Note that it:
 <ul>
-  <li>returns a <code>Game</code></li>
-  <li>creates a copy of <code>this</code> named <code>copyOfThis</code></li>
-  <li>reassigns the <code>x</code> property of <code>copyOfThis</code> to the new value</li>
-  <li>returns the updated <code>copyOfThis</code></li>
+  <li>returns a <code>Game</code> (i.e. a Class instance)</li>
+  <li>creates a copy (i.e. a new instance) of <code>this</code> (instance) named <code>copyOfThis</code></li>
+  <li>reassigns the property <code>head</code> of <code>copyOfThis</code> to the new value</li>
+  <li>returns the updated <code>copyOfThis</code> (instance)</li>
 </ul>
 
-<p>Although a <el-method>with...</el-method> method is a pure function. The standard, simpler form of <el-method>with...</el-method> method, like the one above,
+<p>Although a <el-method>with..</el-method> method is a pure function, the standard form of a <el-method>with..</el-method> method, like the one above,
 must be created using the <b>with method</b> instruction template, which is
-offered only within a class, and only when using the <b>Functional</b> profile.
-The reason is that only within the <el-method>with...</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
+offered only within a Class, and only when using the <b>Functional</b> profile.</p>
+<p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
 a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
-<p>Note, in the same demo, that the class <code>Square</code> does not define any <el-method>with...</el-method> methods, because there is no need
+<p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
   within the program to update any instance of Square &mdash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
-  need to do other work. <el-method>withNewApple</el-method> has been written using the standard <b>function method</b> instruction template.
-</p>
-
+  need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 
 <h1 id="FP_random">Principle 10: Random numbers require a special pattern</h1>
 
 <p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
-it until you are fairly comfortable with all the previous principles.</p>
+it until you are fairly comfortable with all the previous Principles.</p>
 
 <p>In procedural programming you use the 'system methods' <el-method>random</el-method> (for a floating point number in the range 0 to 1) or
-<el-method>randInt</el-method> for an integer in a specified range. You may use these system methods within the main routine or another
+<el-method>randInt</el-method> for an integer in a specified range. You may use these system methods within the main routine or a
 procedure, and you may pass these random values <i>into</i> a function, but you may not generate one or more random values <i>within</i> a function.
-But when writing games or simulations that rely heavily on generating random numbers this can make
-it very difficult to achieve the primary objective of doing all your data transformations within functions. Fortunately, there
-<i>is</i> a mechanism to generate random numbers within functions. Before looking at how to use it, it is important to
-understand the followin:</p>
+When writing games and simulations that rely heavily on generating random numbers this can make
+it very difficult to achieve the primary objective of doing all data transformations within functions. Fortunately, there
+is a mechanism to generate random numbers within functions. Before looking at how to use it, it is important to
+understand the following:</p>
 
 <ul>
   <li>A small number of computers have dedicated hardware that generates true random numbers using advanced physics such as quantum effects or radioactive decay.
-    Most computers, however, rely on 'pseudo random number generation' &mdash; where the 'next' random number is actually derived from the previous one, but
-    in such a way that <i>for most practical purposes</i> the results may be considered as random.</li>
+    Most computers, however, rely on 'pseudo random number' generation. This is where the next random number is derived from the previous one, but
+    in such a way that <i>for most practical purposes</i> the results may be considered random.</li>
   <li>When you use the standard <el-method>random</el-method> or <el-method>randInt</el-method> system methods, the 'system' is keeping track of the
-  previously-generated numbers and using this to generate the next one. This means that the coding using it is dependent upon state of the system
+  previously generated numbers and using them to generate the next ones. This means that your code that uses them is dependent upon state of the system
   as a whole.</li>
-  <li>Functions must be 'deterministic' &mdash; the returned value must depend <i>solely</i> on the values provided as arguments into its parameters. If
-  you call a function with a given set of arguments, it must always return the same result: it cannot change dependent upon the current date/time,
-  or on what the system has done previously, unless all the necessary information was passed in as parameter(s) &mdash; making such functions extremely
-  complicated.</li>
+  <li>A function has to be 'deterministic' in that its returned value must depend <i>solely</i> on the values provided as arguments; for a given set
+  of argument values, a function must always return the same result. Its result cannot be dependent upon the current date, time
+  or what the system has done previously. A function that was given all such information in its parameters would make it extremely
+  complicated and unwieldy!</li>
 </li>
 </ul>
 
 <p>The 'functional Random' pattern, works within these constraints. If you want to <i>generate</i> one or more random numbers within a function,
 you must pass in the 'state' needed to derive that next random value, and you must pass the <i>updated</i> state to the next place where
-a new random is required, either inside or outside the function. This is done using an instance of the type <code>Random</code> (note the capital R,
-which distinguishes this from the procedural methods) &mdash; which may be thought of as an instance of a 'Random Number Generator'.</p>
+a new random is required, either inside or outside the function. This is done using an instance of the Type <code>Random</code> (note the capital R,
+which distinguishes this from the procedural methods) which may be thought of as an instance of a 'Random Number Generator'.</p>
 
-<p>To see how <code>Random</code> works, we will first explore it within a tiny program intended to show the result of rolling the dice 10 times:
+<p>To see how <code>Random</code> works, we will first explore it within a tiny program intended to show the result of rolling a dice 10 times:</p>
 
 <codeblock>
 main
@@ -594,14 +587,14 @@ main
     call print(rollDice(rng))
   end for
 end main
-
 function rollDice(rng as Random) returns Int
   return rng.asInt(1, 6)
 end function
 </codeblock>
 
-If you run this program you will see that it generates the same value &mdash; 3 &mdash; each time! We need to change it so that after each roll
-the variable <code>rng</code> is updated to the <i>next</i> value of the Random number generator. So change just the main routine to:
+If you run this program you will see that it generates the same value (namely 3) each time! We need to change it so that after each roll
+the variable <code>rng</code> is updated to the <i>next</i> value of the Random number generator. So changing just the main routine to
+the following will generate a more random looking sequence:
 
 <codeblock>
 main
@@ -613,10 +606,10 @@ main
 end main
 </codeblock>
 
-which will generate a more random-looking sequence. However, if you run the same program <i>again</i> you will notice that it will
-always produce the same sequence. This effect can be very useful for <i>testing</i> code, but it makes for very predictable games!
-We can overcome this, by initialising the random generator from the system clock &mdash; which given that the latter changes 1000 times per second,
-makes it almost impossible to predict the sequence:
+<p>Now when you run the same program it produces random looking values, but always in the same sequence.
+This effect can be very useful for <i>testing</i> code, but it makes for very predictable games!</p>
+<p>To overcome this predictability, initialise the random generator from the system clock (given that it changes 1,000 times per second)
+which will make it almost impossible to predict the sequence:</p>
 
 <codeblock>
 main
@@ -630,8 +623,8 @@ end main
 </codeblock>
 
 <p>This now works well. But if we are going to have to go back out to the main routine between each use of <code>Random</code>, we might
-as well have used the procedural methods in the first place. However, the following example shows something that could not be done that way de-bugging
-creating a list of random dice-throws entirely within a function:
+as well have used the procedural methods in the first place. The following example shows something that could not be done that way:
+creating a List of random dice-throws entirely within a function:</p>
 <codeblock>
 main
   variable rng set to new Random()
@@ -641,8 +634,8 @@ end main
 
 function randomList(rng as Random) returns (List&lt;of Int&gt;, Random)
   let li be new List&lt;of Int&gt;()
-  let elements be range(0, 10)
-  return elements.reduce((li, rng), appendDiceThrow)
+  let items be range(0, 10)
+  return items.reduce((li, rng), appendDiceThrow)
 end function
 
 function appendDiceThrow(tup as (List&lt;of Int&gt;, Random), row as Int) returns (List&lt;of Int&gt;, Random)
@@ -652,9 +645,9 @@ function appendDiceThrow(tup as (List&lt;of Int&gt;, Random), row as Int) return
 end function
 </codeblock>
 
-<p>In <b>Life - functional</b> you can find this pattern employed to create a randomised initial grid of random black/white blocks.</p>
+<p>In <b>Life - functional</b> you can find this pattern employed to create a randomised initial grid of random black or white blocks.</p>
 
 <hr>
-<p><b>Introduction to Functional Programming with Elan</b> go to the <a href="#top">top <i class="fa">&#xf08e;</i></a></p>
+<p><b>Introduction to Functional Programming with Elan</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
 </body>
 </html>
