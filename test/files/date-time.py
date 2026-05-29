@@ -88,7 +88,7 @@ def test_leap(self) -> None:
   self.assertEqual(leap(2000), True)
 
 def monthDay(startDays: list[int], dayNumber: int) -> tuple[int, int]: # function
-  # get month (1-12) &amp; day (1-31) from dayNumber (1-365 or 1-366)
+  # get month (1-12) & day (1-31) from dayNumber (1-365 or 1-366)
   month = 1 # variable definition
   day = 0 # variable definition
   monthFound = False # variable definition
