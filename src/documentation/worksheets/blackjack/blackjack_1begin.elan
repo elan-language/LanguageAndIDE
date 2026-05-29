@@ -1,4 +1,4 @@
-# a320c7f7d4a20d8b10eb01af13c858bb962461f911b43a26a1fc123d8947cf93 Elan 2.0.0-alpha4 valid
+# 9b4db9c7c04abae34ee73a7669ea4d763b6e5989ccb8a58657387f7465748a01 Elan 2.0.0-alpha5 valid
 
 main
   variable game set to new Game(1000)
@@ -325,16 +325,16 @@ abstract class Player
   procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
     variable playerOutcome set to determinePlayerOutcome(dealer, this)
     if playerOutcome is Outcome.winDouble then
-      call player.changePointsBy(2)
+      call this.changePointsBy(2)
       call dealer.changePointsBy(-2)
     elif playerOutcome is Outcome.win then
-      call player.changePointsBy(1)
+      call this.changePointsBy(1)
       call dealer.changePointsBy(-1)
     elif playerOutcome is Outcome.lose then
-      call player.changePointsBy(-1)
+      call this.changePointsBy(-1)
       call dealer.changePointsBy(1)
     end if
- end procedure
+  end procedure
 
   procedure evaluateStatus(newCard as Card)
     if (this.cardCount() is 2) and (this.handTotal is 21) then
