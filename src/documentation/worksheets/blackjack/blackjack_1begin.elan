@@ -1,4 +1,4 @@
-# a320c7f7d4a20d8b10eb01af13c858bb962461f911b43a26a1fc123d8947cf93 Elan 2.0.0-alpha4 valid
+# 9b4db9c7c04abae34ee73a7669ea4d763b6e5989ccb8a58657387f7465748a01 Elan 2.0.0-alpha5 valid
 
 main
   variable game set to new Game(1000)
@@ -44,19 +44,6 @@ procedure display(game as Game)
   variable html set to $"<style>{styleSheet}</style>{htmlForGame(game)}"
   call displayHtml(html)
   call sleep(1.5)
-end procedure
-
-procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
-  if playerOutcome is Outcome.winDouble then
-    call player.changePointsBy(2)
-    call dealer.changePointsBy(-2)
-  elif playerOutcome is Outcome.win then
-    call player.changePointsBy(1)
-    call dealer.changePointsBy(-1)
-  elif playerOutcome is Outcome.lose then
-    call player.changePointsBy(-1)
-    call dealer.changePointsBy(1)
-  end if
 end procedure
 
 function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outcome
@@ -268,8 +255,7 @@ class Game
 
   procedure updatePoints()
     for player in this.players
-      variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
-      call global.updatePoints(this.dealer, player, playerOutcome)
+      call player.determineOutcomeAndUpdatePoints(this.dealer)
     end for
   end procedure
 
@@ -333,6 +319,20 @@ abstract class Player
   procedure startTurn()
     if this.status is Status.active then
       reassign this.hasTurn to true
+    end if
+  end procedure
+
+  procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
+    variable playerOutcome set to determinePlayerOutcome(dealer, this)
+    if playerOutcome is Outcome.winDouble then
+      call this.changePointsBy(2)
+      call dealer.changePointsBy(-2)
+    elif playerOutcome is Outcome.win then
+      call this.changePointsBy(1)
+      call dealer.changePointsBy(-1)
+    elif playerOutcome is Outcome.lose then
+      call this.changePointsBy(-1)
+      call dealer.changePointsBy(1)
     end if
   end procedure
 
