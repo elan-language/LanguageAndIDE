@@ -10,7 +10,7 @@ final String lowerChars = "abcdefghijklmnopqrstuvwxyz" // constant
 
 final String digitChars = "01234567890" // constant
 
-final String symbolChars = "!$%^&amp;amp;amp;amp;amp;*" // constant
+final String symbolChars = "!$%^&*" // constant
 
 final Int length = 32 // constant
 

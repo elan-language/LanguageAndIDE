@@ -10,7 +10,7 @@ Const lowerChars = "abcdefghijklmnopqrstuvwxyz"
 
 Const digitChars = "01234567890"
 
-Const symbolChars = "!$%^&amp;amp;amp;*"
+Const symbolChars = "!$%^&*"
 
 Const length = 32
 

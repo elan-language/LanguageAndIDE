@@ -1411,7 +1411,7 @@ suite("Parsing Nodes", () => {
       `"&#123;curly braces&#125;"`,
       "",
       `"&#123;curly braces&#125;"`,
-      `"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
+      `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
     );
   });
   test("Embedded Html tags", () => {
@@ -1519,7 +1519,7 @@ suite("Parsing Nodes", () => {
       `$"&#123;curly braces&#125;"`,
       "",
       `$"&#123;curly braces&#125;"`,
-      `$"<el-lit>&amp;#123;curly braces&amp;#125;</el-lit>"`,
+      `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
     );
   });
   test("Bug #290", () => {

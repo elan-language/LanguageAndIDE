@@ -10,7 +10,7 @@ const String lowerChars = "abcdefghijklmnopqrstuvwxyz"
 
 const String digitChars = "01234567890"
 
-const String symbolChars = "!$%^&amp;amp;amp;amp;*"
+const String symbolChars = "!$%^&*"
 
 const Int length = 32
 
