@@ -230,5 +230,6 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
     );
   }
 
-  return `${ct(startTag)}${processed.join("\n")}${ct(endTag)}`;
+  const joiner = startTag === codeBlockTag ? "\n" : "";
+  return `${ct(startTag)}${processed.join(joiner)}${ct(endTag)}`;
 }
