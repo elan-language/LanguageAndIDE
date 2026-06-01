@@ -42,7 +42,7 @@ export class CatchStatement extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "catch";
+    return `${this.language().languageHtmlClass}_catch`;
   }
 
   frameSpecificAnnotation(): string {

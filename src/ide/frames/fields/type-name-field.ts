@@ -26,7 +26,7 @@ export class TypeNameField extends AbstractField {
     source.readUntil(/[^a-zA-Z0-9_]/);
 
   getIdPrefix(): string {
-    return "type";
+    return `${this.language().languageHtmlClass}_type`;
   }
   public textAsHtml(): string {
     if (this.selected) {

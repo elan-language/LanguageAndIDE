@@ -17,7 +17,7 @@ export class EnumValuesField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "enumVals";
+    return `${this.language().languageHtmlClass}_enumVals`;
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new EnumValuesList(this.getFile());

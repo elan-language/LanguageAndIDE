@@ -21,7 +21,7 @@ export class Else extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "else";
+    return `${this.language().languageHtmlClass}_else`;
   }
 
   frameSpecificAnnotation(): string {

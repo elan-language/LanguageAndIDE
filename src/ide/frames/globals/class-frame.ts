@@ -196,7 +196,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
 
   getIdPrefix(): string {
-    return "class";
+    return `${this.language().languageHtmlClass}_class`;
   }
 
   public inheritanceAsHtml(): string {

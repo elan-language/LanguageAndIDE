@@ -703,9 +703,9 @@ export function transform(
   if (node instanceof IdentifierDef) {
     // todo kludge - fix
     if (
-      (fieldId.startsWith("var") ||
-        fieldId.startsWith("ident") ||
-        fieldId.startsWith("enumVals")) &&
+      (fieldId.includes("_var") ||
+        fieldId.includes("_ident") ||
+        fieldId.includes("_enumVals")) &&
       !(scope instanceof SetAsn) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
@@ -717,9 +717,9 @@ export function transform(
   if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
     // todo kludge - fix
     if (
-      (fieldId.startsWith("var") ||
-        fieldId.startsWith("ident") ||
-        fieldId.startsWith("enumVals")) &&
+      (fieldId.includes("_var") ||
+        fieldId.includes("_ident") ||
+        fieldId.includes("_enumVals")) &&
       !(scope instanceof SetAsn) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);

@@ -34,7 +34,7 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "set";
+    return `${this.language().languageHtmlClass}_set`;
   }
 
   frameSpecificAnnotation(): string {

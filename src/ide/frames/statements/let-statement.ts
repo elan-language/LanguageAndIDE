@@ -25,7 +25,7 @@ export class LetStatement extends AbstractDefinitionStatement {
   }
 
   getIdPrefix(): string {
-    return "let";
+    return `${this.language().languageHtmlClass}_let`;
   }
 
   frameSpecificAnnotation(): string {

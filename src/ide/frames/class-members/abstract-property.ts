@@ -44,7 +44,7 @@ export class AbstractProperty extends SingleLineFrame implements MemberFrame {
   }
 
   getIdPrefix(): string {
-    return "prop";
+    return `${this.language().languageHtmlClass}_prop`;
   }
 
   frameSpecificAnnotation(): string {

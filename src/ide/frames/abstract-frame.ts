@@ -37,7 +37,7 @@ export abstract class AbstractFrame implements Frame {
   pasteError: string = "";
   helpActive: boolean = false;
 
-  protected htmlId: string = "";
+  private id: string = "";
   protected ghostable: boolean = true;
   protected canHaveBreakPoint = true;
   protected showContextMenu = false;
@@ -57,9 +57,13 @@ export abstract class AbstractFrame implements Frame {
     this._parent = parent;
     const file = this.getFile();
     const map = file.getMap();
-    this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
+    this.id = `${file.getNextId()}`;
     map.set(this.htmlId, this);
     this.setMap(map);
+  }
+
+  protected get htmlId() {
+    return `${this.getIdPrefix()}${this.id}`;
   }
 
   helpId(): string {

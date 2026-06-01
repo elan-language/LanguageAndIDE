@@ -35,7 +35,7 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
   }
 
   getIdPrefix(): string {
-    return "constructor";
+    return `${this.language().languageHtmlClass}_constructor`;
   }
 
   frameSpecificAnnotation(): string {

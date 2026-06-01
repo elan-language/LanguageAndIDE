@@ -19,7 +19,7 @@ export class ExceptionTypeField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "type";
+    return `${this.language().languageHtmlClass}_type`;
   }
 
   initialiseRoot(): ParseNode {

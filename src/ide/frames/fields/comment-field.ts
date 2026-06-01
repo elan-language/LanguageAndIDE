@@ -26,7 +26,7 @@ export class CommentField extends AbstractField {
     source.readToEndOfLine();
 
   getIdPrefix(): string {
-    return "comment";
+    return `${this.language().languageHtmlClass}_comment`;
   }
   renderAsHtml(): string {
     const txt = this.isSelected()

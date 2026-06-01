@@ -37,7 +37,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "call";
+    return `${this.language().languageHtmlClass}_call`;
   }
 
   frameSpecificAnnotation(): string {

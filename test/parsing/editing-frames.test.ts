@@ -42,60 +42,60 @@ suite("Editing Frames", () => {
     const file = oneConstant();
     file.removeAllSelectorsThatCanBe();
     assert.equal(file.getChildren().length, 1);
-    const c = file.getById("const1") as ConstantGlobal;
+    const c = file.getById("elan_const1") as ConstantGlobal;
     c.select(true, false);
     c.processKey(enter());
     assert.equal(file.getChildren().length, 2);
     const newSel = file.getChildAfter(c);
-    assert.equal(newSel.getHtmlId(), "select4");
+    assert.equal(newSel.getHtmlId(), "elan_select4");
   });
   test("Enter on a frame does not create a selector if there is already one there", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const c = file.getById("const1") as ConstantGlobal;
+    const c = file.getById("elan_const1") as ConstantGlobal;
     c.select(true, false);
     c.processKey(enter());
     assert.equal(file.getChildren().length, 2);
     const select0 = file.getChildAfter(c);
-    assert.equal(select0.getHtmlId(), "select0");
+    assert.equal(select0.getHtmlId(), "elan_select0");
     assert.equal(select0.isSelected(), true);
   });
   test("Enter on a field goes to next field owned by same frame (except the last/field field).", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const ident2 = file.getById("var2") as IdentifierField;
+    const ident2 = file.getById("elan_var2") as IdentifierField;
     ident2.select();
     assert.equal(ident2.isSelected(), true);
     ident2.processKey(enter());
     assert.equal(ident2.isSelected(), false);
-    const text3 = file.getById("text3") as ConstantValueField;
+    const text3 = file.getById("elan_text3") as ConstantValueField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
     assert.equal(file.getChildren().length, 2);
-    const select0 = file.getById("select0") as IdentifierField;
+    const select0 = file.getById("elan_select0") as IdentifierField;
     assert.equal(select0.isSelected(), true);
   });
   test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
     const file = classWithConstructor();
     assert.equal(file.getChildren().length, 2);
-    const className = file.getById("type2") as TypeNameField;
+    const className = file.getById("elan_type2") as TypeNameField;
     className.select();
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("text3") as InheritsFromField;
+    const text3 = file.getById("elan_text3") as InheritsFromField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
-    const selector = file.getById("select4") as MemberSelector;
+    const selector = file.getById("elan_select4") as MemberSelector;
     assert.equal(selector.isSelected(), true);
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
-    const c = file.getById("const1") as ConstantGlobal;
-    const ident2 = file.getById("var2") as IdentifierField;
-    const text3 = file.getById("text3") as ConstantValueField;
+    const c = file.getById("elan_const1") as ConstantGlobal;
+    const ident2 = file.getById("elan_var2") as IdentifierField;
+    const text3 = file.getById("elan_text3") as ConstantValueField;
     c.select(true, false);
     assert.equal(c.isSelected(), true);
     c.processKey(tab());
@@ -120,17 +120,17 @@ suite("Editing Frames", () => {
 
   test("Enter on last field in a frame with statements", () => {
     const file = emptyFunctionOnly();
-    const select2 = file.getById("select2");
+    const select2 = file.getById("elan_select2");
     assert.equal(select2.isSelected(), false);
-    const type5 = file.getById("type5");
+    const type5 = file.getById("elan_type5");
     type5.select(true, false);
     type5.processKey(enter());
     assert.equal(select2.isSelected(), true);
   });
   test("Enter on last field in a last child selects parent", () => {
     const file = emptyFunctionOnly();
-    const func = file.getById("func1");
-    const returnExpr = file.getById("expr7");
+    const func = file.getById("elan_func1");
+    const returnExpr = file.getById("elan_expr7");
     returnExpr.select(true, false);
     assert.equal(func.isSelected(), false);
     returnExpr.processKey(enter());
@@ -139,9 +139,9 @@ suite("Editing Frames", () => {
 
   test("Move", () => {
     const file = twoConstants();
-    const phi = file.getById("const1") as ConstantGlobal;
-    const sel0 = file.getById("select0") as GlobalSelector;
-    const c = file.getById("const4") as ConstantGlobal;
+    const phi = file.getById("elan_const1") as ConstantGlobal;
+    const sel0 = file.getById("elan_select0") as GlobalSelector;
+    const c = file.getById("elan_const4") as ConstantGlobal;
     assert.equal(file.getFirstChild(), phi);
     assert.equal(file.getLastChild(), sel0);
     phi.select(true, false);
@@ -160,9 +160,9 @@ suite("Editing Frames", () => {
   });
   test("Remove selector frame", () => {
     const file = emptyFunctionOnly();
-    const fun = file.getById("func1") as GlobalFunction;
-    const sel = file.getById("select2") as StatementSelector;
-    const ret = file.getById("return6") as ReturnStatement;
+    const fun = file.getById("elan_func1") as GlobalFunction;
+    const sel = file.getById("elan_select2") as StatementSelector;
+    const ret = file.getById("elan_return6") as ReturnStatement;
     assert.equal(fun.getFirstChild(), sel);
     sel.select(true, false);
     sel.processKey(del());
@@ -171,15 +171,15 @@ suite("Editing Frames", () => {
   });
   test("Cannot remove selector that is only statement", () => {
     const file = emptyMainOnly();
-    const main = file.getById("main1") as MainFrame;
-    const sel = file.getById("select2") as StatementSelector;
+    const main = file.getById("elan_main1") as MainFrame;
+    const sel = file.getById("elan_select2") as StatementSelector;
     sel.processKey(del());
     assert.equal(main.getFirstChild(), sel);
   });
   test("Delete frame - Ctrl+Backspace", () => {
     const file = emptyFunctionOnly();
-    const func = file.getById("func1") as GlobalFunction;
-    const sel = file.getById("select0") as GlobalFunction;
+    const func = file.getById("elan_func1") as GlobalFunction;
+    const sel = file.getById("elan_select0") as GlobalFunction;
     assert.equal(file.getFirstChild(), func);
     func.select(true, false);
     func.processKey(ctrl_backspace());
@@ -188,8 +188,8 @@ suite("Editing Frames", () => {
   });
   test("Delete frame - Ctrl+Delete", () => {
     const file = emptyFunctionOnly();
-    const func = file.getById("func1") as GlobalFunction;
-    const sel = file.getById("select0") as GlobalFunction;
+    const func = file.getById("elan_func1") as GlobalFunction;
+    const sel = file.getById("elan_select0") as GlobalFunction;
     assert.equal(file.getFirstChild(), func);
     func.select(true, false);
     func.processKey(ctrl_del());
@@ -198,9 +198,9 @@ suite("Editing Frames", () => {
   });
   test("Delete frame - cannot delete constructor", () => {
     const file = classWithConstructor();
-    const cls = file.getById("class1") as ConcreteClass;
+    const cls = file.getById("elan_class1") as ConcreteClass;
     assert.equal(cls.getChildren().length, 3);
-    const con = file.getById("constructor5") as Constructor;
+    const con = file.getById("elan_constructor5") as Constructor;
     con.select(true, false);
     con.processKey(ctrl_del());
     assert.equal(cls.getChildren().length, 3);
@@ -210,26 +210,26 @@ suite("Editing Frames", () => {
     const file = await loadFileAsModel(`./out/test/files/test644.elan`);
     const runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
-    const var3 = file.getById("var3");
+    const var3 = file.getById("elan_var3");
     var3.select();
     var3.processKey(enter()); //To create selector following
-    const select6 = file.getById("select6");
+    const select6 = file.getById("elan_select6");
     var3.select();
     var3.processKey(ctrl_x());
-    const main = file.getById("main1") as MainFrame;
+    const main = file.getById("elan_main1") as MainFrame;
     assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
   test("#666 able to move a frame past a selector", async () => {
     const file = await loadFileAsModel(`./out/test/files/test666.elan`);
     const runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
-    const var3 = file.getById("var3");
+    const var3 = file.getById("elan_var3");
     var3.select();
     var3.processKey(enter()); //To create selector following
-    const select6 = file.getById("select6");
+    const select6 = file.getById("elan_select6");
     var3.select();
     var3.processKey(ctrl_down());
-    const main = file.getById("main1") as MainFrame;
+    const main = file.getById("elan_main1") as MainFrame;
     assert.equal(main.getChildren()[0].renderAsElanSource(), select6.renderAsElanSource());
     var3.processKey(ctrl_up());
     assert.equal(main.getChildren()[0].renderAsElanSource(), var3.renderAsElanSource());
@@ -237,33 +237,33 @@ suite("Editing Frames", () => {
   test("#653 able to delete a frame that has not been added to", async () => {
     const file = T00_emptyFile();
     // 1. Backspace on the first field
-    const sel0 = file.getById("select0");
+    const sel0 = file.getById("elan_select0");
     sel0.processKey(key("f"));
-    const name = file.getById("ident3");
+    const name = file.getById("elan_ident3");
     assert.equal(name.isSelected(), true);
     name.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 1);
     // 2. Backspace after selecting the frame
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 2);
-    assert.equal(file.getFirstChild().getHtmlId(), "func8");
-    const f2 = file.getById("func8");
+    assert.equal(file.getFirstChild().getHtmlId(), "elan_func8");
+    const f2 = file.getById("elan_func8");
     f2.select();
     f2.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 1);
     // 3. Does not work if field has been edited
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 2);
-    const f3 = file.getById("func15");
-    const name3 = file.getById("ident17");
+    const f3 = file.getById("elan_func15");
+    const name3 = file.getById("elan_ident17");
     name3.processKey(key("x"));
     f3.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 2);
     // 4. Does not work if any child frame has been added
     sel0.processKey(key("f"));
     assert.equal(file.getChildren().length, 3);
-    const f4 = file.getById("func22");
-    const sel4 = file.getById("select23");
+    const f4 = file.getById("elan_func22");
+    const sel4 = file.getById("elan_select23");
     sel4.processKey(key("v"));
     f4.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 3);
@@ -271,9 +271,9 @@ suite("Editing Frames", () => {
 
   test("Test description #936", async () => {
     const file = T00_emptyFile();
-    const sel0 = file.getById("select0");
+    const sel0 = file.getById("elan_select0");
     sel0.processKey(key("t"));
-    const desc = file.getById("ident3") as IdentifierField;
+    const desc = file.getById("elan_ident3") as IdentifierField;
     desc.processKey(key("x"));
     desc.processKey(key("y"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);

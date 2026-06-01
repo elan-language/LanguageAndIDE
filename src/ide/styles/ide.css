@@ -717,10 +717,7 @@ body.functional div.demo-file.functional { display: revert; }
   display: none;
 }
 
-.quad-editor #elan-language {
-  display: none;
-}
-
-.quad-editor button#language {
+.quad-editor #lang-button
+{
   display: none;
 }
