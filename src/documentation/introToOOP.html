@@ -13,7 +13,9 @@
 
 <body id="top">
 <div class="docTitle">10 steps to Object-Oriented Programming with Elan</div>
-<div id="docTOC"><div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
 
 <h1>Getting started</h1>
 
@@ -42,6 +44,79 @@ This will still allow you to do procedural programming, but changes two things: 
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
   Elan will result in better code and fewer problems.<p>
+
+<h1>Principle 1: A class is a user-defined data structure type</h1>
+Class & concrete class
+Most of your code will be implemented in concrete classes
+Look at EXAMPLES
+The various elements of data in this data structure are defined by properties  - EXAMPLE
+Properties
+Define a class. Can leave the constructor and toString methods as is.
+
+<h1>Principle 2: An object is an instance of a class</h1>
+You create an instance like this – and assign it to a variable, or use it within an expression
+You can read, but not modify the ordinary properties defined on an instance. Forward links to methods and private
+
+<h1>Principle 3: The constructor initialises the properties
+
+All properties except numbers must be initialised explicitly in the constructor – EXAMPLE
+The constructor may require the programmer to specify certain information when creating an instance of a class
+
+<h1>Principle 4: Objects may have associations to other objects</h1>
+
+Of same or different types
+Single and multiple
+Mandatory or optional
+
+<h1>Principle 5: Classes provide behaviour through methods<h1>
+
+    <h2>Function method</h2>
+Where properties define state, methods define behaviour
+Function & procedure methods – distinction (like globals) & commonality – optional params EXAMPLES
+Invoked on an instance using dot syntax EXAMPLES
+Implementation of methods
+Why put behaviour onto methods?
+The toString method
+
+<h2>Procedure method</h2>
+
+<h1>Principle 6: Each object an represents an identifiable concept in the application domain</h1>
+This is encapsulation meaning 1
+It is never a complete representation, but it is complete for the purposes of the application
+Most of the objects
+It not only represents its state, but its behaviour. By making objects the fundamental building blocks of programs they are easier to change and extend
+
+<h1>Principle 7: Objects should hide state in favour of methods, where possible</h1>
+Does not mean getter and setter methods
+This is encapsulation meaning 2
+Private properties, public methods – why and how
+Can make methods private too – where they are called by other methods in the same class.
+
+<h1>Principle 8: Type substitutability allows objects of different types to be handled through a common interface</h2>
+
+May be handled through interfaces or inheritance
+Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
+A class can implement multiple interfaces, as long as they don’t clash
+An interface cannot be instantiated – but a concrete class that implements that interface can be
+An interface may extend another interface
+Each class that implements an interface must provide an implemented of each method, but the implementation may differ (EXAMPLES). 
+It is likely that more than one class might have exactly the same implementation, and by the DRY principle it is undesirable to repeat the code. So you delegate, in part or in whole
+
+<h1>Principle 9: methods in different types, may share common implementation delegation or inheritance</h1>
+An abstract class …
+An abstract class is like an interface, but more powerful that it may also define concrete implementations of methods, with some limitations
+The limitation is that a concrete class may (optionally) inherit only from one abstract class – though it may implement additional interfaces
+An abstract class may inherit from another abstract class and/or implement interfaces
+Elan’s model of inheritance – what you can and can’t do
+- 
+
+<h1>Principle 10: Application logic should be well distributed across classes</h1>
+As much as possible of the code should be defined in classes
+With a minimal main and/or standalone (global) constructs
+The logic should be distributed as evenly as possible across the classes
+Be wary of singletons
+In particular of a singleton that is doing most of the work. This pattern is often used to avoid global variables, but be wary of this
+
 
 
 
