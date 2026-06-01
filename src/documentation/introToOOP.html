@@ -46,21 +46,106 @@ This will still allow you to do procedural programming, but changes two things: 
   Elan will result in better code and fewer problems.<p>
 
 <h1>Principle 1: A class is a user-defined data structure type</h1>
-Class & concrete class
-Most of your code will be implemented in concrete classes
-Look at EXAMPLES
-The various elements of data in this data structure are defined by properties  - EXAMPLE
-Properties
-Define a class. Can leave the constructor and toString methods as is.
+
+<p>In <i>procedural</i> programming with Elan, there is a fixed set of types available to you to represent
+    data - the only exception being enums which offer a very limited form of 'user-defined' type (UDT).
+    OOP makes it easy to define far richer forms of UDTs. The simplest and most common way to do this
+    is to define a <b>concrete class</b> which is one of the new options made available at global (file) level
+    when using Elan with the <b>Object Oriented<p> profile selected.</p>
+
+        In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes. 
+        Only the 'signature' of each class is shown <i>here</i> - not the instructions contained within the classes:
+
+<codeblock>
+class Snake
+
+end class
+
+class Apple
+
+end class
+
+class Square
+
+end class
+</codeblock>
+
+<p>Within the definition of each class you will find several <b>property</b> instructions. Each property has unique name (within the class).
+     A class may defined multiple properties of the same type, for example, the <code>Square</code>
+    class in <b>Snake</b> defines:
+
+<codeblock>property x as Int</codeblock>
+<codeblock>property y as Int</codeblock>
+
+or properties may have different types, for example the <code>TuringMachine</code> class in the <b>Roman Numerals Turing Machine</b> demo has these:</[<p>- the class may have multiple properties of the same type but with different names, or define
+
+<codeblock>property initialState as String</codeblock>
+<codeblock>property currentState as String</codeblock>
+<codeblock>property headPosition as Int</codeblock>
+<codeblock>property haltState as String</codeblock>
+<codeblock>property rules as List&lt;of Rule&gt;</codeblock>
+<codeblock> property tape as String</codeblock>
+</p>
+
+<h3>Defining a class</h3>
+
+<p>Selecting <b>concrete class</b> from the <b>new code</b> menu inserts a template like this:
+
+<codeblock>
+class Name
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "undefined"
+  end function
+
+end class
+</codeblock>
+where the only thing you <i>must</i> provide is a unique name for the class, which must start with a capital letter, followed by other letters, digits or underscores.
+(We will look at the roles of the constructor, and the <el-method>toString</el-method> function later on.)</p>
 
 <h1>Principle 2: An object is an instance of a class</h1>
-You create an instance like this – and assign it to a variable, or use it within an expression
-You can read, but not modify the ordinary properties defined on an instance. Forward links to methods and private
+
+<p>Every object in code is an instance of a specific class. An new object may be created and assigned to a variable definition, for example:</p>
+
+<codeblock>variable apple set to new Apple()</codeblock>
+<codeblock>variable snake set to new Snake()</codeblock>
+
+<p>Note that the type of each variable is determined by the class of the instance so that the <code>apple</code> variable
+    may subsequently be reassigned to a different instance of <code>Apple</code> but may not be reassigned to 
+    an instance of a different class (nor any other type).<p>
+
+<p>A new instance may also be created as part of an expression without having to be assigned to a variable, for example:
+
+<codeblock>return new Square(newX, newY)</codeblock>
+
+<h3>Reading properties</h3>
+
+<p>Wherever you have a reference to an object, your code may read and make use of the publicly-visible properties of that object
+    using 'dot syntax', for example (from the <b>Pathfinder</b> demo):
+
+<codeblock>
+if distViaCurrent < neighbour.distFromStart then
+
+end if
+</codeblock>
+
+ is comparing the value of the variable <code>distViaCurrent</code> to the property named <code>distFromStart</code> of the
+ object named <code>neighbour</code>.
 
 <h1>Principle 3: The constructor initialises the properties
 
-All properties except numbers must be initialised explicitly in the constructor – EXAMPLE
-The constructor may require the programmer to specify certain information when creating an instance of a class
+<p>When coding with Elan every class must define a constructor, the template for which is created when you define a new class,
+    and which may be edited, though not deleted. The role of the constructor is to initialise the properties whenever an instance
+    of that class is created.</p>
+
+<p>The only properties that do not need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> - 
+    which are automatically initialised to the default value of each type - <code>0</code>, <code>0.0</code>, or <code>false</code> respectively.
+    All other properties <i>must</i> be explicitly initialised within the constructor - and even the ones that are automatically initialised
+    <i>may</i> be explicitly initialised in the constructor, typically to a different value. 
+
 
 <h1>Principle 4: Objects may have associations to other objects</h1>
 

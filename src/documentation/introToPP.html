@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>OOP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
+    <link href="../ide/styles/documentation.css" rel="stylesheet">
+    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+    <link href="favicon.ico" rel="icon">
+    <script type="text/javascript" src="doc-scripts.js"></script>
+</head>
+
+<body id="top">
+<div class="docTitle">Introduction to Procedural Programming with Elan</div>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
+
+<p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>Procedural</b> profile from the menu at the top of the IDE. 
+This will ensure that: </p>
+
+<ul>
+<li>The list of demo programs will now show only programs that use PP. 
+<li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP
+    <ul>
+    <li>At the global level, it will offer: <b>concrete class</b>, <b>abstract class</b>, and <b>interface</b>
+        Each of these allows you to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>.
+        (Enums - which are single-line instructions - are not directly associated with OOP, but because an enum is a very simple form of user-defined type, it is made available in the same profile.)</li>
+    <li><i>Within</i> a <b>concrete class</b>, <b>abstract class</b>, or <b>interface</b>, the <b>new code</b> menu will show an entirely new list of instructions,
+         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    </ul>
+</ul>
+
+
+Notes to author (RP) only. Candidates for the 10 principles
+
+This is an explanation of core concepts, not a tutorial. Specifics of e.g. library techniques should reference LibRef
+
+1. sequence
+  initially in main, later in functions and procedures
+  contains instructions executed, by default, in order they are defined (later can exercise more control over the flow of control)
+  each instruction is a command that changes the state of the system
+  instructions are of different kinds
+  comments are not instructions but may be added wherever an instruction may be
+2. values
+  value types
+  literal values
+  named values
+  variables
+  constants
+  enums
+3. expressions, operators, and (ready made) functions
+4. tests
+5. UD functions
+6. input/output
+7.selection & iteration
+8. data structures
+   List is the most common
+   String may be considered a data structure, but it is limited
+   Tuple
+9.procedures
+  what they are (commands) and what they do
+  how called
+    library procedures
+    user-defined procedures
+10. exceptions
+  nature
+  try catch
+  throw
+  how/when to use, and not to use
+
