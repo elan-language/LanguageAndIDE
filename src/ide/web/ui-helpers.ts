@@ -614,19 +614,30 @@ export function useChromeFileAPI() {
   return "showOpenFilePicker" in self;
 }
 
-export function getLanguageByClass(cl: string) {
-  const languages = [
+export function getAllLanguages() {
+  return [
     LanguageElan.Instance,
     LanguagePython.Instance,
     LanguageCS.Instance,
     LanguageVB.Instance,
     LanguageJava.Instance,
   ];
+}
+
+export function getLanguageByClass(cl: string) {
+  const languages = getAllLanguages();
   return languages.find((l) => l.languageHtmlClass === cl) ?? LanguageElan.Instance;
 }
 
 export function getLanguagesForQuad(l: Language) {
   switch (l.languageHtmlClass) {
+    case "elan":
+      return [
+        LanguageElan.Instance,
+        LanguagePython.Instance,
+        LanguageVB.Instance,
+        LanguageCS.Instance,
+      ];
     case "python":
       return [
         LanguagePython.Instance,
