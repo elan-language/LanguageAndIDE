@@ -29,6 +29,7 @@ import {
   confirmContinueOnNonChromeBrowser,
   cursorWait,
   domEventType,
+  getAllLanguages,
   getLanguageByClass,
   getLanguagesForQuad,
   handleClickDropDownButton,
@@ -898,16 +899,17 @@ exportButton.addEventListener("click", async (e: Event) => {
 
 toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
-
+  
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
-    if (codeViewModel.getLanguage() === LanguageElan.Instance) {
-      await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, true);
-    }
     const ll = getLanguagesForQuad(codeViewModel.getLanguage());
-    codeContainers[0].classList.remove(LanguageElan.Instance.languageHtmlClass);
+    const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
     for (let i = 0; i < 4; i++) {
-      
-      codeContainers[i].classList.add(ll[i].languageHtmlClass);
+      const cl = codeContainers[i].classList;
+      const className = ll[i].languageHtmlClass;
+      const lName = ll[i].languageFullName;
+      cl.remove(...getAllLanguages().map(l => l.languageHtmlClass));
+      cl.add(className);
+      labels[i].textContent = lName; 
     }
   }
   await ideViewModel.renderAsHtml(false);

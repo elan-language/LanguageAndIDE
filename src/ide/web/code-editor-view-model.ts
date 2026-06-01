@@ -859,7 +859,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       }
 
       function getInput() {
-        return document.querySelector(".focused input") as HTMLInputElement;
+        return codeContainer.querySelector(".focused input") as HTMLInputElement;
       }
 
       const input = getInput();
@@ -885,8 +885,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
       let firstContextItem: HTMLDivElement | undefined;
 
-      if (document.querySelector(".context-menu")) {
-        const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+      if (codeContainer.querySelector(".context-menu")) {
+        const items = codeContainer.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
 
         firstContextItem = items[0];
 
@@ -967,8 +967,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
         codeContainer.focus();
       }
 
-      if (document.querySelector(".autocomplete-popup")) {
-        const items = document.querySelectorAll(".autocomplete-item");
+      if (codeContainer.querySelector(".autocomplete-popup")) {
+        const items = codeContainer.querySelectorAll(".autocomplete-item");
 
         for (const item of items) {
           item.addEventListener("click", async (event) => {
@@ -993,7 +993,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
           });
         }
 
-        const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
+        const ellipsis = codeContainer.querySelectorAll(".autocomplete-ellipsis");
 
         if (ellipsis.length === 1) {
           ellipsis[0].addEventListener("click", async (event) => {
@@ -1020,7 +1020,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
         }
       }
 
-      const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
+      const activeHelp = codeContainer.querySelector("a.active") as HTMLLinkElement | undefined;
 
       if (activeHelp) {
         activeHelp.click();
@@ -1060,6 +1060,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       for (const e of ff) {
         e.scrollIntoView(false);
       }
+
+      (document.querySelector(".focused") as HTMLDivElement | undefined)?.focus();
 
       cursorDefault();
     }
