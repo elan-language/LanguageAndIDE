@@ -108,7 +108,10 @@ where the only thing you <i>must</i> provide is a unique name for the class, whi
 
 <h1>Principle 2: An object is an instance of a class</h1>
 
-<p>Every object in code is an instance of a specific class. An new object may be created and assigned to a variable definition, for example:</p>
+<p>Every object in code is an instance of a specific class. The class may be thought of as a 'template' for defining instances. Each instance
+    holds <i>its own specific value</i> for each of the properties defined in the class.</p>
+    
+<p>An new object may be created and assigned to a variable definition, for example:</p>
 
 <codeblock>variable apple set to new Apple()</codeblock>
 <codeblock>variable snake set to new Snake()</codeblock>
@@ -141,19 +144,120 @@ end if
     and which may be edited, though not deleted. The role of the constructor is to initialise the properties whenever an instance
     of that class is created.</p>
 
-<p>The only properties that do not need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> - 
+<p>The only properties that don't need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> - 
     which are automatically initialised to the default value of each type - <code>0</code>, <code>0.0</code>, or <code>false</code> respectively.
-    All other properties <i>must</i> be explicitly initialised within the constructor - and even the ones that are automatically initialised
-    <i>may</i> be explicitly initialised in the constructor, typically to a different value. 
+    All other properties <i>must</i> be explicitly initialised within the constructor. Here is simple example of properties being initialised
+    within the constructor for <code>Square</code> in the <b>Snake</b> demo:</p>
 
+<codeblock>
+constructor(x as Int, y as Int)
+  reassign this.x to x
+  reassign this.y to y
+end constructor
+</codeblock>
+
+<h3>Note:</h3>
+<ul>
+  <li>Even properties that are automatically initialised <i>may</i> be explicitly initialised in the constructor.</li>
+  <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type, 
+        for example <code>new List&lt;of Int&gt;</code> - though you may choose any value.</li>
+  <li>If you don't you want every instance of a class to be initialised with the same value, the specific value for
+    an instance is specified via paramaters added into the constructor definition.</li>
+  <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
+    so creating a new <code>Square</code> for example takes the form <code>variable tail set to new Square(20, 15)</code></li>
+  <li>A property is initialised within the construction using a <b>reassign variable</b> instruction - since a property may be thought of as 
+    a named variable that holds a value specific to each instance of the class.</li>
+  <li>the name of the property being reassigned must be prefixed by 
+<el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw>
+ followed by a dot.</li>
+</ul>
 
 <h1>Principle 4: Objects may have associations to other objects</h1>
 
-Of same or different types
-Single and multiple
-Mandatory or optional
+<p>So far we have looked at properties where the type is one of the standard library types. However, a class may define one or more
+    properties where the type is a class - either of the same type as the class in which the property is defined, or - more commonly -
+    of a different class. Each such property is referred to as an 'association' or 'associated object'. If the type of a property is
+    a list, or other data structure, where the member type is a class, then it is often referred to as a 'multiple association' - with
+    the ordinary kind of association referred to as 'single association'. The <code>Snake</code> class shows
+    both kinds of association (only relevant parts of the class are shown only here):
+
+<codeblock>
+class Snake
+  constructor()
+    variable tail set to new Square(20, 15)
+    reassign this.currentDir to Direction.right
+    reassign this.body to [tail]
+    reassign this.head to tail.getAdjacentSquare(this.currentDir)
+    reassign this.priorTail to tail
+  end constructor
+
+  private property currentDir as Direction
+
+  private property head as Square
+
+  private property body as List&lt;of Square&gt;
+
+  private property priorTail as Square
+
+end class
+</codeblock>
+
+<h3>Note:</h3>
+<ul>
+  <li>The<code>Snake</code> is always initialised to the same values, so the constructor does not need to define any parameters.</li>
+  <li>The <code>currentDir</code> property is of type <code>Direction</code> (which is an enum) and is initialised to <code>Direction.right</code>.</li>
+  <li>The <code>body</code> property is a multiple association - defined as a list of type <code>Square</li>
+  <li>The constructor defines a variable <code>tail</code> used only for the purpose of initialising properties. 
+    It is first used to initialise the <code>body</code> as a list containing only the <code>tail</code> and
+    is finally used to define the <code>priorTail</code> which is a single association of type <code>Square</code>.
+    In between it is used in an expression to determine the initial value for the <code>head</code> property using a function (more on this in the next heading).
+  <li>It is thus legitimate to call functions within the constructor. A constructor may not call any procedure, however. 
+    And you should avoid doing any work in a constructor <i>other than</i> determining appropriate values for initialising its properties. 
+</ul>
 
 <h1>Principle 5: Classes provide behaviour through methods<h1>
+
+<p>In the last code example <code>tail.getAdjacentSquare(this.currentDir)</code> was calling a function method, using 'dot syntax' on the
+    the variable <code>tail</code> which is an instance of class <code>Square</code>. A class can define both function methods and procedure
+    methods, for the following reasons:
+    <ul>
+        <li>these methods are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
+        <li>they have access to all the properties belonging to that same instance, and they can also invoke other
+            methods on the same object, prefixed by <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
+    </ul>
+
+    <p>This may be seen in the implementation of <el-method>getAdjacentSquare</el-method> in the <code>Square</code> class:</p>
+
+<codeblock>
+function getAdjacentSquare(d as Direction) returns Square
+    variable newX set to this.x
+    variable newY set to this.y
+    if d is Direction.left then
+      reassign newX to this.x - 1
+    elif d is Direction.right then
+      reassign newX to this.x + 1
+    elif d is Direction.up then
+      reassign newY to this.y - 1
+    elif d is Direction.down then
+      reassign newY to this.y + 1
+    end if
+    return new Square(newX, newY)
+end function
+</codeblock>
+
+<p>Function and procedure methods defined on a class have similaries and differences to <i>global</i> functions and procedures. 
+
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+</p>
+
+
+TO STRING
 
     <h2>Function method</h2>
 Where properties define state, methods define behaviour
@@ -195,7 +299,7 @@ An abstract class may inherit from another abstract class and/or implement inter
 Elan’s model of inheritance – what you can and can’t do
 - 
 
-<h1>Principle 10: Application logic should be well distributed across classes</h1>
+<h1>Principle 10: Application logic should be well-distributed across classes</h1>
 As much as possible of the code should be defined in classes
 With a minimal main and/or standalone (global) constructs
 The logic should be distributed as evenly as possible across the classes
