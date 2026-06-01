@@ -290,7 +290,7 @@ export class FileImpl implements File {
   }
 
   getVersionString(lang: string) {
-    const prefix = lang === "Elan" ? "" : `${lang} with `;
+    const prefix = lang === "Reference Language" ? "" : `${lang} with `;
     return `${prefix}Elan ${this.getSemverString()}`;
   }
 
