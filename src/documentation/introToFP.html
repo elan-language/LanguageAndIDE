@@ -15,33 +15,41 @@
 </head>
 
 <body id="top">
-<div class="docTitle">Introduction to Functional Programming with Elan</div>
+<div class="docTitle">10 steps to Functional Programming with Elan</div>
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
 <h1>Getting started</h1>
 
-<p>To undertake Functional Programming (FP) in Elan,
+<p>To undertake functional programming (FP) in Elan,
     you should first be reasonably familiar with procedural programming (PP) with Elan,
      and ideally, with object-oriented programming (OOP) with Elan.
 Then, switch to the <b>Functional</b> profile from the menu at the top of the IDE.
 This changes two things: </p>
 <ol>
-<li>The menu of demo programs will now show only programs that use FP.
+<li>The list of demo programs will now show only programs that use FP.
     A very good place to start is to look at the <b>Snake - functional</b> demo,
     which is functionally identical to the (procedural) original, but it written using FP design and coding patterns.
 </li>
 <li>It will change some of the options available on the <b>new code</b> menus in the editor:
     <ul>
         <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a new instruction named <b>let</b> (plus, of course, comments).</li>
-        <li>Within a concrete or abstract Class, you may add function methods, but not procedure methods.</li>
-        <li>Within a concrete or abstract Class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
+        <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
+        <li>Within a concrete or abstract class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
         of function method which is particularly useful in FP.</li>
     </ul>
     The rationale for disallowing some of the instructions you are used to in PP or OOP, and how to use the new instructions, will become clear as you read through this document.
 </ol>
-<p>In the following sections we will be drawing out the principles, patterns and practices of FP with reference to the various FP demo programs.</p>
+<p>In the following sections we will describe 10 principles that define the essence of FP, illustrated with example code - where possible from the demo programs.</p>
+
+<p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, and every language that supports FP differs in the rules that it enforces.
+  The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages 
+  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling. 
+  The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library. 
+  Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
+  necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
+  Elan will result in better code and fewer problems.<p>
 
 <h1>Principle 1: Functions must be pure</h1>
 
@@ -506,7 +514,7 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
-<h1>Principle 9: User-defined Classes should define their own 'with..' methods for updates</h1>
+<h1>Principle 9: User-defined Classes should be immutable</h1>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
   never be mutated. So, when running under the <b>Functional</b> profile, you may define Classes and add properties and function methods,
@@ -546,7 +554,7 @@ a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
   need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 
-<h1 id="FP_random">Principle 10: Random numbers require a special pattern</h1>
+<h1 id="FP_random">Principle 10: Generating Random numbers within a function is possible, but requires more effort</h1>
 
 <p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
 it until you are fairly comfortable with all the previous Principles.</p>
