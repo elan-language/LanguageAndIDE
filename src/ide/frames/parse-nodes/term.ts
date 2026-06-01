@@ -31,9 +31,7 @@ export class Term extends AbstractAlternatives {
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     if (this.alternatives.length === 0) {
       const thisInstance = this.file.language().THIS_INSTANCE;
-      return new Set<KeywordCompletion>([
-        KeywordCompletion.create(thisInstance),
-      ]);
+      return new Set<KeywordCompletion>([KeywordCompletion.create(thisInstance)]);
     } else {
       return super.symbolCompletion_keywords();
     }

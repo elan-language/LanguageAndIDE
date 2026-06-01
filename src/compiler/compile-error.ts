@@ -226,7 +226,6 @@ export class NotIndexableCompileError extends CompileError {
   }
 }
 
-
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string) {
     super(

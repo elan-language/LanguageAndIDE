@@ -905,9 +905,9 @@ export class FileImpl implements File {
   resetMap(l: Language) {
     const newMap = new Map<string, Selectable>();
 
-    for(const entry of this._map) {
+    for (const entry of this._map) {
       const [key, value] = entry;
-      const newKey = `${l.languageHtmlClass}${key.slice(key.indexOf('_'))}`;
+      const newKey = `${l.languageHtmlClass}${key.slice(key.indexOf("_"))}`;
       newMap.set(newKey, value);
     }
     this._map = newMap;

@@ -7,7 +7,7 @@ import {
   ElanInt,
   elanProcedure,
   ElanT1,
-  FunctionOptions
+  FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { ElanRuntimeError } from "./elan-runtime-error";

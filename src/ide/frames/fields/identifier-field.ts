@@ -24,7 +24,7 @@ export class IdentifierField extends AbstractField {
     source.readUntil(/[^a-zA-Z0-9_]/);
 
   getIdPrefix(): string {
-     return `${this.language().languageHtmlClass}_ident`;
+    return `${this.language().languageHtmlClass}_ident`;
   }
   isEndMarker(key: string) {
     return key === " " || key === "(";

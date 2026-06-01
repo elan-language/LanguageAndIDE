@@ -899,7 +899,7 @@ exportButton.addEventListener("click", async (e: Event) => {
 
 toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
-  
+
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
     const ll = getLanguagesForQuad(codeViewModel.getLanguage());
     const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
@@ -907,9 +907,9 @@ toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
       const cl = codeContainers[i].classList;
       const className = ll[i].languageHtmlClass;
       const lName = ll[i].languageFullName;
-      cl.remove(...getAllLanguages().map(l => l.languageHtmlClass));
+      cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
       cl.add(className);
-      labels[i].textContent = lName; 
+      labels[i].textContent = lName;
     }
   }
   await ideViewModel.renderAsHtml(false);
