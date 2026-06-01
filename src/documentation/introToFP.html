@@ -514,7 +514,7 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
-<h1>Principle 9: User-defined Classes should define their own 'with..' methods for updates</h1>
+<h1>Principle 9: User-defined Classes should be immutable</h1>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
   never be mutated. So, when running under the <b>Functional</b> profile, you may define Classes and add properties and function methods,
@@ -554,7 +554,7 @@ a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
   need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 
-<h1 id="FP_random">Principle 10: Random numbers require a special pattern</h1>
+<h1 id="FP_random">Principle 10: Generating Random numbers within a function is possible, but requires more effort</h1>
 
 <p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
 it until you are fairly comfortable with all the previous Principles.</p>
