@@ -29,7 +29,7 @@ export class ConstantValueField extends AbstractField {
   }
 
   getElanType() {
-    const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
+    const scope = this.getFile().getAst(true)?.getScopeById(this.getHolder().getHtmlId());
     if (isSymbol(scope)) {
       return scope.symbolType().name;
     }
