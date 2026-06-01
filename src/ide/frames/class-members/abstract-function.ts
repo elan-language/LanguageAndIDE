@@ -64,4 +64,9 @@ export class AbstractFunction extends SingleLineFrame {
     source.remove(`) ${returnsKeyword} `);
     this.returnType.parseFrom(source);
   }
+
+    renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
+  }
 }

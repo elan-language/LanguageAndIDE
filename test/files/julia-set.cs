@@ -70,14 +70,21 @@ class Coords {
     this.jx = -0.512; // reassign variable
     this.jy = 0.521; // reassign variable
   } // constructor
+
   public string toString() { // function method
     return "";
   } // function method
+
   public double scale {get; private set;} // property
+
   public double xoff {get; private set;} // property
+
   public double yoff {get; private set;} // property
+
   public double jx {get; private set;} // property
+
   public double jy {get; private set;} // property
+
   // Arrow keys move the virtual camera
   // eg Arrow Up moves the image down
   public void checkkeys() { // procedure method
@@ -121,6 +128,7 @@ class Coords {
       sleep_ms(10); // call procedure
     } // while
   } // procedure method
+
 } // class
 
 [TestMethod] static void test_one() {

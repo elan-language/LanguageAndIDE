@@ -529,7 +529,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Source must evaluate to a List or String.LangRef.html#compile_error",
+      "Source must evaluate to a list or string.LangRef.html#compile_error",
     ]);
   });
 

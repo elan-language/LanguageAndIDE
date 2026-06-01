@@ -59,7 +59,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => global.first(t))
+  call printModified((4, 5), lambda t as (Int, Int) => first(t))
 end main
 
 function first(t as (Int, Int)) returns Int

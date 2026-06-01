@@ -95,15 +95,23 @@ class Solver {
     this.destination = destination; // reassign variable
     this.current = new Node(emptyPoint(), 0, 0); // reassign variable
   } // constructor
+
   public string toString() { // function method
     return "";
   } // function method
+
   public List<Node> nodes {get; private set;} // property
+
   public Point start {get; private set;} // property
+
   public Point destination {get; private set;} // property
+
   public Node current {get; private set;} // property
+
   public Algorithm alg {get; private set;} // property
+
   public bool running {get; private set;} // property
+
   // TODO can this go into the constructor ?
   public void initialise(Algorithm alg) { // procedure method
     this.alg = alg; // reassign variable
@@ -115,6 +123,7 @@ class Solver {
       node.setVisited(false); // call procedure
     } // foreach
   } // procedure method
+
   public void visitNextPoint() { // procedure method
     this.updateNeighbours(); // call procedure
     this.current = this.nextNodeToVisit(); // reassign variable
@@ -125,6 +134,7 @@ class Solver {
       current.setVisited(true); // call procedure
     } // if
   } // procedure method
+
   public void updateNeighbours() { // procedure method
     var distToCurrent = this.current.distFromStart;
     var currentPoint = this.current.point;
@@ -136,6 +146,7 @@ class Solver {
       } // if
     } // foreach
   } // procedure method
+
   public List<Node> currentNeighbours() { // function method
     var currentNode = this.current;
     var currentPoint = currentNode.point;
@@ -149,13 +160,16 @@ class Solver {
     } // foreach
     return neighbours;
   } // function method
+
   public Node getNodeFor(Point p) { // function method
     var matches = this.nodes.filter(Node n => n.point.equals(p));
     return if(matches.length() == 1, matches.head(), emptyNode());
   } // function method
+
   public Point getLastVisited() { // function method
     return this.current.point;
   } // function method
+
   public Node nextNodeToVisit() { // function method
     var lowestCostSoFar = infinity;
     var lowestCostNode = emptyNode();
@@ -169,6 +183,7 @@ class Solver {
     } // foreach
     return lowestCostNode;
   } // function method
+
   public double calculateCost(Node node) { // function method
     var cost = 0.0;
     var fromStart = node.distFromStart;
@@ -182,6 +197,7 @@ class Solver {
     } // if
     return cost;
   } // function method
+
   public (List<Point>, double) getRouteAndLength() { // function method
     var route = [this.destination];
     var length = 0.0;
@@ -195,6 +211,7 @@ class Solver {
     } // while
     return (route, length);
   } // function method
+
 } // class
 
 static Node emptyNode() { // function
@@ -213,24 +230,35 @@ class Node {
     this.via = emptyPoint(); // reassign variable
     this.estDistToDest = estDistToDest; // reassign variable
   } // constructor
+
   public Point point {get; private set;} // property
+
   public bool visited {get; private set;} // property
+
   public double distFromStart {get; private set;} // property
+
   public Point via {get; private set;} // property
+
   public double estDistToDest {get; private set;} // property
+
   public bool isEmpty {get; private set;} // property
+
   public void setVisited(bool value) { // procedure method
     this.visited = value; // reassign variable
   } // procedure method
+
   public void setDistanceFromStart(double d) { // procedure method
     this.distFromStart = d; // reassign variable
   } // procedure method
+
   public void setVia(Point p) { // procedure method
     this.via = p; // reassign variable
   } // procedure method
+
   public string toString() { // function method
     return $"[{this.point.toString()} {this.visited} {this.distFromStart}]";
   } // function method
+
 } // class
 
 static Point emptyPoint() { // function
@@ -240,8 +268,11 @@ static Point emptyPoint() { // function
 class Point {
 
   public int x {get; private set;} // property
+
   public int y {get; private set;} // property
+
   public bool isEmpty {get; private set;} // property
+
   public Point(int x, int y) {
     if ((x < 0) || (y < 0)) {
       this.isEmpty = true; // reassign variable
@@ -250,19 +281,24 @@ class Point {
       this.y = y; // reassign variable
     } // if
   } // constructor
+
   public double minDistTo(Point p) { // function method
     return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2));
   } // function method
+
   public bool isAdjacentTo(Point p) { // function method
     return (this.minDistTo(p) == 1) || (this.minDistTo(p).round(4) == sqrt(2).round(4));
   } // function method
+
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds
   public List<Point> neighbouringPoints() { // function method
     return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)];
   } // function method
+
   public string toString() { // function method
     return $"{this.x},{this.y}";
   } // function method
+
 } // class
 
 enum Algorithm {dijkstra, aStar, heuristic}

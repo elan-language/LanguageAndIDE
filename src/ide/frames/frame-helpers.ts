@@ -110,7 +110,7 @@ export function expandCollapseAll(file: File) {
   }
 }
 export function escapeHtmlChars(str: string): string {
-  return str.replaceAll(/&/g, "&amp;").replaceAll(/</g, "&lt;").replaceAll(/>/g, "&gt;");
+  return str.replaceAll(/</g, "&lt;").replaceAll(/>/g, "&gt;");
 }
 
 export function renderBackslashNasABreak(str: string): string {

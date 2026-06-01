@@ -98,17 +98,22 @@ def test_isValidQuadrant(self) -> None:
 class Point # concrete class
 
   x: int # property
+
   y: int # property
+
   def __init__(self: Point, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+
   def toString(self: Point) -> str: # function method
     return ""
+
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function method
     x = self.x # variable definition
     y = self.y # variable definition
     return [Point(x - 1, y - 1), Point(x, y - 1), Point(x + 1, y - 1), Point(x - 1, y), Point(x + 1, y), Point(x - 1, y + 1), Point(x, y + 1), Point(x + 1, y + 1)]
+
 
 
 def test_neighbouringPoints(self) -> None:

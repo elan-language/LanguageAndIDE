@@ -26,13 +26,19 @@ Class Snake
     Me.head = tail.getAdjacentSquare(Me.currentDir) ' reassign variable
     Me.priorTail = tail ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Private Property currentDir As Direction
+
   Private Property head As Square
+
   Private Property body As List(Of Square)
+
   Private Property priorTail As Square
+
   Sub clockTick(key As String, apple As Apple) ' procedure method
     Me.setDirection(key) ' call procedure
     Me.priorTail = Me.body[0] ' reassign variable
@@ -45,15 +51,18 @@ Class Snake
       Me.body = Me.body.subList(1, Me.body.length()) ' reassign variable
     End If
   End Sub
+
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
     blocks[Me.head.x][Me.head.y] = green ' reassign variable
     If Not Me.body[0].equals(Me.priorTail) Then
       blocks[Me.priorTail.x][Me.priorTail.y] = white ' reassign variable
     End If
   End Sub
+
   Function score() As Integer
     Return Me.body.length() - 1
   End Function
+
   Function bodyCovers(sq As Square) As Boolean
     Dim result = False ' variable definition
     For Each seg In Me.body
@@ -63,9 +72,11 @@ Class Snake
     Next seg
     Return result
   End Function
+
   Function gameOver() As Boolean
     Return Me.bodyCovers(Me.head) Or Me.head.hasHitEdge()
   End Function
+
   Private Sub setDirection(key As String) ' private procedure method
     If key.equals("w") Then
       Me.currentDir = Direction.up ' reassign variable
@@ -77,6 +88,7 @@ Class Snake
       Me.currentDir = Direction.right ' reassign variable
     End If
   End Sub
+
 End Class
 
 Class Apple
@@ -84,10 +96,13 @@ Class Apple
   Sub New()
     Me.location = New Square(0, 0) ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Property location As Square
+
   Sub newRandomPosition(snake As Snake) ' procedure method
     Dim changePosition = True ' variable definition
     While changePosition
@@ -99,9 +114,11 @@ Class Apple
       End If
     End While
   End Sub
+
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
     blocks[Me.location.x][Me.location.y] = red ' reassign variable
   End Sub
+
 End Class
 
 Class Square
@@ -110,11 +127,15 @@ Class Square
     Me.x = x ' reassign variable
     Me.y = y ' reassign variable
   End Sub
+
   Function toString() As String
     Return ""
   End Function
+
   Property x As Integer
+
   Property y As Integer
+
   Function getAdjacentSquare(d As Direction) As Square
     Dim newX = Me.x ' variable definition
     Dim newY = Me.y ' variable definition
@@ -129,9 +150,11 @@ Class Square
     End If
     Return New Square(newX, newY)
   End Function
+
   Function hasHitEdge() As Boolean
     Return (Me.x = -1) Or (Me.y = -1) Or (Me.x = 40) Or (Me.y = 30)
   End Function
+
 End Class
 
 Enum Direction 

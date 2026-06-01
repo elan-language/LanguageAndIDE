@@ -36,7 +36,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "VectorGraphic must be concrete to new.LangRef.html#compile_error",
+      "VectorGraphic must be concrete to create instance.LangRef.html#compile_error",
     ]);
   });
 

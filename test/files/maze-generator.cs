@@ -118,20 +118,25 @@ static bool isValidQuadrant(int q) { // function
 class Point {
 
   public int x {get; private set;} // property
+
   public int y {get; private set;} // property
+
   public Point(int x, int y) {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
   } // constructor
+
   public string toString() { // function method
     return "";
   } // function method
+
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds
   public List<Point> neighbouringPoints() { // function method
     var x = this.x;
     var y = this.y;
     return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)];
   } // function method
+
 } // class
 
 [TestMethod] static void test_neighbouringPoints() {

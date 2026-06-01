@@ -23,12 +23,18 @@ class Snake # concrete class
     self.body = [tail] # reassign variable
     self.head = tail.getAdjacentSquare(self.currentDir) # reassign variable
     self.priorTail = tail # reassign variable
+
   def toString(self: Snake) -> str: # function method
     return ""
+
   currentDir: Direction # private property
+
   head: Square # private property
+
   body: list[Square] # private property
+
   priorTail: Square # private property
+
   def clockTick(self: Snake, key: str, apple: Apple) -> None: # procedure method
     self.setDirection(key) # call procedure
     self.priorTail = self.body[0] # reassign variable
@@ -39,20 +45,25 @@ class Snake # concrete class
       apple.newRandomPosition(self) # call procedure
     else:
       self.body = self.body.subList(1, self.body.length()) # reassign variable
+
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure method
     blocks[self.head.x][self.head.y] = green # reassign variable
     if not self.body[0].equals(self.priorTail):
       blocks[self.priorTail.x][self.priorTail.y] = white # reassign variable
+
   def score(self: Snake) -> int: # function method
     return self.body.length() - 1
+
   def bodyCovers(self: Snake, sq: Square) -> bool: # function method
     result = False # variable definition
     for seg in self.body:
       if (seg.equals(sq)):
         result = True # reassign variable
     return result
+
   def gameOver(self: Snake) -> bool: # function method
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
+
   def setDirection(self: Snake, key: str) -> None: # private procedure method
     if key.equals("w"):
       self.currentDir = Direction.up # reassign variable
@@ -64,13 +75,17 @@ class Snake # concrete class
       self.currentDir = Direction.right # reassign variable
 
 
+
 class Apple # concrete class
 
   def __init__(self: Apple) -> None:
     self.location = Square(0, 0) # reassign variable
+
   def toString(self: Apple) -> str: # function method
     return ""
+
   location: Square # property
+
   def newRandomPosition(self: Apple, snake: Snake) -> None: # procedure method
     changePosition = True # variable definition
     while changePosition:
@@ -79,8 +94,10 @@ class Apple # concrete class
       self.location = Square(ranX, ranY) # reassign variable
       if not snake.bodyCovers(self.location):
         changePosition = False # reassign variable
+
   def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure method
     blocks[self.location.x][self.location.y] = red # reassign variable
+
 
 
 class Square # concrete class
@@ -88,10 +105,14 @@ class Square # concrete class
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+
   def toString(self: Square) -> str: # function method
     return ""
+
   x: int # property
+
   y: int # property
+
   def getAdjacentSquare(self: Square, d: Direction) -> Square: # function method
     newX = self.x # variable definition
     newY = self.y # variable definition
@@ -104,8 +125,10 @@ class Square # concrete class
     elif d == Direction.down: # else if
       newY = self.y + 1 # reassign variable
     return Square(newX, newY)
+
   def hasHitEdge(self: Square) -> bool: # function method
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
+
 
 
 class Direction(Enum):

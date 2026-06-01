@@ -14,7 +14,6 @@ import {
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
-  FunctionRefCompileError,
   GenericParametersCompileError,
   InvalidSourceForForLoopCompileError,
   IsDeprecated,
@@ -31,9 +30,7 @@ import {
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotNewableCompileError,
-  NotRangeableCompileError,
   NotUniqueNameCompileError,
-  OutParameterCompileError,
   ParameterNameCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
@@ -356,21 +353,6 @@ export function mustBeDoubleIndexableType(
     const language = getGlobalScope(scope).language;
     compileErrors.push(
       new NotIndexableCompileError(symbolType.languageSpecificName(language), location, true),
-    );
-  }
-}
-
-export function mustBeRangeableType(
-  symbolType: SymbolType,
-  read: boolean,
-  compileErrors: CompileError[],
-  location: string,
-  scope: Scope,
-) {
-  if (isKnownType(symbolType) && !(read && isIterableType(symbolType))) {
-    const language = getGlobalScope(scope).language;
-    compileErrors.push(
-      new NotRangeableCompileError(symbolType.languageSpecificName(language), location),
     );
   }
 }
@@ -1188,20 +1170,6 @@ export function mustNotBeCopyOfThis(
   }
 }
 
-export function cannotPassAsOutParameter(
-  parameter: AstNode | string,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (typeof parameter === "string") {
-    compileErrors.push(new OutParameterCompileError(parameter, location));
-  } else {
-    if (isKnownType(parameter.symbolType())) {
-      compileErrors.push(new OutParameterCompileError(parameter.toString(), location));
-    }
-  }
-}
-
 export function mustNotBeSameAsMethodName(
   name: string,
   scope: Scope,
@@ -1344,16 +1312,6 @@ export function mustHaveUniqueKeys(
 
 export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(new NotNewableCompileError(type, location));
-}
-
-export function adviseAgainstFunctionRef(
-  symbol: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (symbol.symbolType() instanceof FunctionType) {
-    compileErrors.push(new FunctionRefCompileError(location));
-  }
 }
 
 export function adviseAgainstDiv(compileErrors: CompileError[], location: string) {

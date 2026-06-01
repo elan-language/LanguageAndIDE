@@ -60,4 +60,9 @@ ${this.indent()}end constructor\r
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end constructor");
   }
+
+  renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
+  }
 }

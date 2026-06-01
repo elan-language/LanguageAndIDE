@@ -1,6 +1,5 @@
 import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { globalKeyword, libraryKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class FixedIdAsn extends AbstractAstNode implements AstIdNode {
@@ -13,7 +12,7 @@ export class FixedIdAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-    return this.id === libraryKeyword ? "_stdlib" : this.id === globalKeyword ? "global" : this.id;
+    return this.id;
   }
 
   symbolType() {

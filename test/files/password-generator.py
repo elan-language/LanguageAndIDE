@@ -10,7 +10,7 @@ lowerChars = "abcdefghijklmnopqrstuvwxyz" # constant
 
 digitChars = "01234567890" # constant
 
-symbolChars = "!$%^&amp;amp;*" # constant
+symbolChars = "!$%^&*" # constant
 
 length = 32 # constant
 

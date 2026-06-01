@@ -593,7 +593,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
+      "generic type specifier was not expected here.LangRef.html#GenericParametersCompileError",
       `Code change required. Parameters for class were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });

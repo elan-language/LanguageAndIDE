@@ -13,12 +13,16 @@ def bestFitLine(points: list[Point]) -> tuple[float, float]: # function
 class Point # concrete class
 
   x: float # property
+
   y: float # property
+
   def __init__(self: Point, x: float, y: float) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+
   def toString(self: Point) -> str: # function method
     return f"Point {self.x}, {self.y}"
+
 
 
 def newPoint(x: float, y: float) -> Point: # function

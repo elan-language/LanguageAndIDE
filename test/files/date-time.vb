@@ -106,7 +106,7 @@ End Function
 End Sub
 
 Function monthDay(startDays As List(Of Integer), dayNumber As Integer) As (Integer, Integer)
-  ' get month (1-12) &amp; day (1-31) from dayNumber (1-365 or 1-366)
+  ' get month (1-12) & day (1-31) from dayNumber (1-365 or 1-366)
   Dim month = 1 ' variable definition
   Dim day = 0 ' variable definition
   Dim monthFound = False ' variable definition

@@ -2029,38 +2029,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Pass_LibraryType", async () => {
-    const code = `${testHeader}
-
-main
-  call printNoLine(new library.List<of Int>())
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await _stdlib.printNoLine(system.initialise(await new _stdlib.List()._initialise()));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[]");
-  });
-
   test("Fail_shadowLibraryType", async () => {
     const code = `${testHeader}
 

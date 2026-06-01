@@ -1763,7 +1763,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
+      "generic type specifier was not expected here.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1788,7 +1788,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
+      "generic type specifier was not expected here.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1815,7 +1815,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "'FooBar' is not defined.LangRef.html#compile_error",
       "'FooBar' is not defined.LangRef.html#compile_error",
-      "Cannot new FooBar.LangRef.html#compile_error",
+      "Cannot create instance of FooBar.LangRef.html#compile_error",
     ]);
   });
 
@@ -1839,7 +1839,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot new Int.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot create instance of Int.LangRef.html#compile_error"]);
   });
 
   test("Fail_PropertyIsNotDefined", async () => {

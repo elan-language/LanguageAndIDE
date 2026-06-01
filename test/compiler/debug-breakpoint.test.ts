@@ -720,7 +720,7 @@ end function
 
 class Foo
   constructor(f as Func<of Foo => Int>)
-    reassign this.ff to ref f
+    reassign this.ff to f
   end constructor
   function toString() returns String
     return ""
@@ -735,7 +735,7 @@ class Foo
 end class
 
 main
-  variable a set to new Foo(ref foo)
+  variable a set to new Foo(foo)
   variable b set to a.df()
 end main`;
 

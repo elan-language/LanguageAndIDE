@@ -5,10 +5,10 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { concreteAndAbstractTypes } from "./parse-node-helpers";
-import { TypeNameQualifiedNode } from "./type-name-qualified-node";
+import { TypeNameUse } from "./type-name-use";
 
 export class TypeGenericNode extends AbstractSequence {
-  qualifiedName: TypeNameQualifiedNode | undefined;
+  qualifiedName: TypeNameUse | undefined;
   genericTypes: CSV | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   concreteAndAbstract = new Set<TokenType>(concreteAndAbstractTypes);

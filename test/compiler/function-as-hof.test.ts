@@ -19,7 +19,7 @@ suite("Function as HOF", () => {
     const code = `${testHeader}
 
 main
-  call printModified(3, ref twice)
+  call printModified(3, twice)
 end main
   
 procedure printModified(i as Float, f as Func<of Float => Float>)
@@ -60,9 +60,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
@@ -70,7 +68,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref twice)
+  call printModified(3, twice)
 end main
   
 procedure printModified(i as Float, f as Func<of => Float>)
@@ -111,9 +109,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
@@ -121,7 +117,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printIt("Hello", "e", ref find)
+  call printIt("Hello", "e", find)
 end main
   
 procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
@@ -162,9 +158,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
@@ -177,7 +171,7 @@ main
 end main
   
 function getFunc() returns Func<of Float => Float>
-  return ref twice
+  return twice
 end function
   
 function twice(x as Float) returns Float
@@ -215,9 +209,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
@@ -225,7 +217,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable f set to ref twice
+  variable f set to twice
   call printNoLine(f(5))
 end main
   
@@ -259,9 +251,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
@@ -269,7 +259,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable f set to new Foo(ref ff)
+  variable f set to new Foo(ff)
   call printNoLine(f.pf(5))
 end main
 
@@ -279,7 +269,7 @@ end function
   
 class Foo
   constructor(f as Func<of Int => Int>)
-    reassign this.pf to ref f
+    reassign this.pf to f
   end constructor
   function toString() returns String
     return ""
@@ -331,9 +321,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
@@ -341,7 +329,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(ref ff)
+  call printNoLine(ff)
 end main
 
 function ff(a as Int) returns Int
@@ -373,9 +361,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "function ff");
   });
 
@@ -425,7 +411,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref pow2)
+  call printModified(3, pow2)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -449,7 +435,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameters - Int, Int - returning a Int.LangRef.html#compile_error",
     ]);
   });
@@ -458,7 +443,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(3, ref pow)
+  call printModified(3, pow)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -482,7 +467,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.LangRef.html#compile_error",
     ]);
   });
@@ -496,7 +480,7 @@ main
 end main
 
 function getFunc() returns Func<of Int => Int>
-  return ref twice
+  return twice
 end function
 
 function twice(x as Int) returns Int
@@ -723,7 +707,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable f set to 1 + ref ff
+  variable f set to 1 + ff
 end main
 
 function ff(a as Int) returns Int
@@ -744,7 +728,6 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.LangRef.html#TypesCompileError",
     ]);
   });

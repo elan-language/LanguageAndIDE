@@ -31,7 +31,7 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNameQualifiedNode } from "./parse-nodes/type-name-qualified-node";
+import { TypeNameUse } from "./parse-nodes/type-name-use";
 import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -272,7 +272,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   }
 
   c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
-    node.qualifiedName = new TypeNameQualifiedNode(node.file, node.tokenTypes);
+    node.qualifiedName = new TypeNameUse(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
     node.addElement(node.qualifiedName!);

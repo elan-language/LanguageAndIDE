@@ -106,7 +106,7 @@ static bool leap(int year) { // function
 } // test
 
 static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
-  // get month (1-12) &amp; day (1-31) from dayNumber (1-365 or 1-366)
+  // get month (1-12) & day (1-31) from dayNumber (1-365 or 1-366)
   var month = 1;
   var day = 0;
   var monthFound = false;

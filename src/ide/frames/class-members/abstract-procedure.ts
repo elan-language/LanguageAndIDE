@@ -53,4 +53,9 @@ export class AbstractProcedure extends SingleLineFrame {
     this.params.parseFrom(source);
     source.remove(")");
   }
+
+    renderAsExport(): string {
+    return `${super.renderAsExport()}\r
+`;
+  }
 }

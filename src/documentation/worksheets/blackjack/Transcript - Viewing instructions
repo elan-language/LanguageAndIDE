@@ -1,0 +1,46 @@
+We're now going to look at the code that makes up the blackjack program here in the code editor on the left-hand side of the screen.
+
+Normally, the code editor will look like this - with the language shown determined by this menu - for example C#, or Python.
+
+But I am going to switch to the quad editor view, so that all four languages are shown at the same time, with the live editor - Python in this case - being the top-left.
+
+To explore the code or edit it, we need the editor to have the browser's focus - indicated by the white background. 
+
+If the editor has a blue tint then it doesn't have focus.
+
+To give it focus, mouse-click in blank space, or press Control e - for editor - on the keyboard
+
+Code is made up of instructions. 
+
+Most instructions occupy a single line and if you click anywhere within the code the whole instruction is highlighted in blue.
+
+However, when some instructions are selected the highlight extends beyond the line. 
+
+These are called 'compound' instructions - because they contain other instructions - indicated by the vertical bar - and in some languages
+by a another horizontal part at the end.
+
+A complete program might take only a dozen instructions - though it could be many more. 
+
+Notice that the instructions are numbered, and that the number of instructions in the program is always identical across the four languages.
+
+But there only a few different kinds of instruction and each of these kinds has a name. 
+
+Depending on the language, the name might be indicated either by a keyword at the start of the instruction, and/or by a text label at the end.
+
+This, for example, is a variable definition, and this is an if instruction. 
+
+The syntax of the instruction differs between the languages, but the name, and the purpose of an instruction is the same across all four languages.
+
+And if you select an instruction in the active editor pane, the corresponding instruction in the other languages is also selected - with the same number.
+
+In some cases, the name of the instruction corresponds to the keyword at the start of the line - for example this while instruction.
+
+In other cases, the name of the kind of instruction is given a label at the right hand end - for example here.
+
+And all of this can be done just through the keyboard instead of the mouse. For example, cursor up and down will move the selection.
+
+Also, we can use the home and end keys, but notice that my movement here is constrained. To only moving at the same level of indentation.
+
+If I want to go to the owning compound instruction, I just use the cursor left key. And out again would move to the main.
+
+And cursor right moves me to the first instruction within a compound instruction.
