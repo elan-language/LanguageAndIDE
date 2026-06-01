@@ -64,7 +64,6 @@ export abstract class AbstractField implements Selectable, Field {
     return `${this.getIdPrefix()}${this.id}`;
   }
 
-
   getRootNode(): ParseNode | undefined {
     return this.rootNode;
   }
@@ -503,7 +502,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  language() : Language {
+  language(): Language {
     return this.getFile().language();
   }
 

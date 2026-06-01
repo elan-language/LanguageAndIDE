@@ -703,9 +703,7 @@ export function transform(
   if (node instanceof IdentifierDef) {
     // todo kludge - fix
     if (
-      (fieldId.includes("_var") ||
-        fieldId.includes("_ident") ||
-        fieldId.includes("_enumVals")) &&
+      (fieldId.includes("_var") || fieldId.includes("_ident") || fieldId.includes("_enumVals")) &&
       !(scope instanceof SetAsn) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
@@ -717,9 +715,7 @@ export function transform(
   if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
     // todo kludge - fix
     if (
-      (fieldId.includes("_var") ||
-        fieldId.includes("_ident") ||
-        fieldId.includes("_enumVals")) &&
+      (fieldId.includes("_var") || fieldId.includes("_ident") || fieldId.includes("_enumVals")) &&
       !(scope instanceof SetAsn) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
@@ -973,13 +969,12 @@ export function transform(
   }
 
   if (node instanceof InstanceProcRef) {
-    const q =
-      (transform(node.prefix, fieldId, scope) as AstQualifierNode) ?? EmptyAsn.Instance;
+    const q = (transform(node.prefix, fieldId, scope) as AstQualifierNode) ?? EmptyAsn.Instance;
     const id = node.procName!.matchedText;
     return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
- if (node instanceof ArgListField) {
+  if (node instanceof ArgListField) {
     const rn = node.getRootNode();
     if (rn) {
       return transform(rn, node.getHtmlId(), scope);

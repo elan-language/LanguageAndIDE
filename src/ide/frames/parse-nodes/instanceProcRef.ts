@@ -18,7 +18,7 @@ export class InstanceProcRef extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const instance = new InstanceNode(this.file);
-      this.prefix =new DotAfter(this.file, instance);
+      this.prefix = new DotAfter(this.file, instance);
       this.procName = new MethodNameUse(
         this.file,
         new Set([TokenType.method_procedure]),
@@ -47,9 +47,7 @@ export class InstanceProcRef extends AbstractSequence {
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     const thisInstance = this.file.language().THIS_INSTANCE;
     return this.getElements().length === 0
-      ? new Set<KeywordCompletion>([
-          KeywordCompletion.create(thisInstance, false, true),
-        ])
+      ? new Set<KeywordCompletion>([KeywordCompletion.create(thisInstance, false, true)])
       : super.symbolCompletion_keywords();
   }
 }

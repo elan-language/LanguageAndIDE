@@ -886,7 +886,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       let firstContextItem: HTMLDivElement | undefined;
 
       if (codeContainer.querySelector(".context-menu")) {
-        const items = codeContainer.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+        const items = codeContainer.querySelectorAll(
+          ".context-menu-item",
+        ) as NodeListOf<HTMLDivElement>;
 
         firstContextItem = items[0];
 

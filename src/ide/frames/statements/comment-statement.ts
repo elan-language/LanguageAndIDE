@@ -12,7 +12,7 @@ export class CommentStatement extends SingleLineFrame implements Statement {
   isAbstract = false;
   private = false;
   protected canHaveBreakPoint = false;
-  
+
   public text: CommentField;
   constructor(parent: Parent) {
     super(parent);
