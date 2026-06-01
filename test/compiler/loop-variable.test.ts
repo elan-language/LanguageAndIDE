@@ -3,12 +3,12 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Loop Variable", () => {
@@ -31,8 +31,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  const elan_iterfor5 = [...wordAsPlayed];
-  for (const letter of elan_iterfor5) {
+  const elan_iterelan_for5 = [...wordAsPlayed];
+  for (const letter of elan_iterelan_for5) {
     let x = letter;
     await removeLetter(x);
   }
@@ -83,8 +83,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  const elan_iterfor5 = [...wordAsPlayed];
-  for (const letter of elan_iterfor5) {
+  const elan_iterelan_for5 = [...wordAsPlayed];
+  for (const letter of elan_iterelan_for5) {
     await removeLetter(letter);
   }
 }

@@ -1312,7 +1312,7 @@ end test`;
       ["toString", "*", "*"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "text33", "gr.", expected);
+    await assertSymbolCompletionWithString(fileImpl, "elan_text33", "gr.", expected);
   });
 
   test("Pass_typeName1", async () => {
@@ -1948,7 +1948,7 @@ end main`;
 
     await assertSymbolCompletionWithString(
       fileImpl,
-      "text3",
+      "elan_text3",
       "{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07}}",
       expected,
     );

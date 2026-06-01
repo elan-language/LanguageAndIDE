@@ -11,51 +11,51 @@ suite("Navigation", () => {
     await assertClasses(
       T04_allGlobalsExceptClass,
       (ff) => {
-        const frame = ff.getById("const1");
+        const frame = ff.getById("elan_const1");
         frame.select(true, false);
       },
-      ["const1", "ok multiline", "selected focused ok multiline"],
+      ["elan_const1", "ok multiline", "selected focused ok multiline"],
     );
   });
   test("Select First Child", async () => {
     await assertClasses(
       T04_allGlobalsExceptClass,
       (ff) => {
-        const mn = ff.getById("main4");
+        const mn = ff.getById("elan_main4");
         if (isParent(mn)) {
           const s = mn.getFirstChild();
           s.select(true, false);
         }
       },
-      ["select5", "ok empty", "selected focused ok empty"],
+      ["elan_select5", "ok empty", "selected focused ok empty"],
     );
   });
   test("Collapse Main", async () => {
     await assertClasses(
       T04_allGlobalsExceptClass,
       (ff) => {
-        const mn = ff.getById("main4");
+        const mn = ff.getById("elan_main4");
         if (isParent(mn)) {
           mn.collapse();
         }
       },
-      ["main4", "ok multiline", "collapsed ok multiline"],
+      ["elan_main4", "ok multiline", "collapsed ok multiline"],
     );
   });
   test("Tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
-    const var4 = file.getById("var4") as IdentifierField;
+    const var4 = file.getById("elan_var4") as IdentifierField;
     assert.equal(var4.isSelected(), false);
     file.processKey(tab());
     assert.equal(var4.isSelected(), true);
-    const expr5 = file.getById("expr5") as ExpressionField;
+    const expr5 = file.getById("elan_expr5") as ExpressionField;
     assert.equal(expr5.isSelected(), false);
     var4.processKey(tab());
     assert.equal(var4.isSelected(), false);
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(tab());
     assert.equal(expr5.isSelected(), false);
-    const var3 = file.getById("var3") as VariableStatement;
+    const var3 = file.getById("elan_var3") as VariableStatement;
     assert.equal(var3.isSelected(), true);
     var3.processKey(tab());
     assert.equal(var3.isSelected(), false);
@@ -64,15 +64,15 @@ suite("Navigation", () => {
   test("Shift-tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
 
-    const var3 = file.getById("var3") as VariableStatement;
+    const var3 = file.getById("elan_var3") as VariableStatement;
     var3.select(true, false);
     var3.processKey(shift_tab());
     assert.equal(var3.isSelected(), false);
-    const expr5 = file.getById("expr5") as ExpressionField;
+    const expr5 = file.getById("elan_expr5") as ExpressionField;
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(shift_tab());
     assert.equal(expr5.isSelected(), false);
-    const var4 = file.getById("var4") as IdentifierField;
+    const var4 = file.getById("elan_var4") as IdentifierField;
     assert.equal(var4.isSelected(), true);
     var4.processKey(shift_tab());
     assert.equal(var4.isSelected(), false);
@@ -80,13 +80,13 @@ suite("Navigation", () => {
   });
   test("Selecting frames", () => {
     const file = T03_mainWithAllStatements();
-    const main = file.getById("main1");
-    const global_select = file.getById("select0");
-    const main_st_1 = file.getById("var3");
+    const main = file.getById("elan_main1");
+    const global_select = file.getById("elan_select0");
+    const main_st_1 = file.getById("elan_var3");
     assert.equal(main_st_1.isSelected(), false);
-    const main_st_2 = file.getById("set6");
+    const main_st_2 = file.getById("elan_set6");
     assert.equal(main_st_2.isSelected(), false);
-    const main_st_last = file.getById("select2");
+    const main_st_last = file.getById("elan_select2");
     assert.equal(main_st_last.isSelected(), false);
     assert.equal(main.isSelected(), false);
     assert.equal(global_select.isSelected(), false);

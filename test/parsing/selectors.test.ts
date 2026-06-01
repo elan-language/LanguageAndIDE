@@ -23,7 +23,7 @@ import { emptyMainOnly } from "./model-generating-functions";
 suite("Selector tests", () => {
   test("Options within main", () => {
     const file = emptyMainOnly();
-    const selector = file.getById("select2") as StatementSelector;
+    const selector = file.getById("elan_select2") as StatementSelector;
     assertOptions(selector, [
       "print",
       "variable definition",
@@ -40,23 +40,23 @@ suite("Selector tests", () => {
 
   test("Select - variable", () => {
     const file = emptyMainOnly();
-    const selector = file.getById("select2") as StatementSelector;
+    const selector = file.getById("elan_select2") as StatementSelector;
     selectOption(selector, "variable definition");
-    const v = file.getById("var3").renderAsElanSource();
+    const v = file.getById("elan_var3").renderAsElanSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Select - variable by key", () => {
     const file = emptyMainOnly();
-    file.getById("select2").processKey(key("v"));
-    const v = file.getById("var3").renderAsElanSource();
+    file.getById("elan_select2").processKey(key("v"));
+    const v = file.getById("elan_var3").renderAsElanSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = emptyMainOnly();
-    file.getById("select2").processKey(key("V"));
-    const v = file.getById("var3").renderAsElanSource();
+    file.getById("elan_select2").processKey(key("V"));
+    const v = file.getById("elan_var3").renderAsElanSource();
     assert.equal(v, "  variable  set to ");
   });
 

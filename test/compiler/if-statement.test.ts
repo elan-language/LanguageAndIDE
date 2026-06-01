@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("If Statement", () => {
@@ -678,8 +678,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const elan_iterfor17 = [..._stdlib.range(0, 6)];
-    for (const i of elan_iterfor17) {
+    const elan_iterelan_for17 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterelan_for17) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);
