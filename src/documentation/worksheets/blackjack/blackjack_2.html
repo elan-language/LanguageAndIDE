@@ -3,10 +3,10 @@
 
   <head>
       <meta http-equiv="Cache-Control" content="no-store" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/worksheet.css" rel="stylesheet" />
       <title>Blackjack 2</title>
   </head>
 
@@ -51,7 +51,7 @@
 
 
 <div class="step" id="step1"><h1>Step 1: load the starting code</h1>
-    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 47766b251a04b5040e3c126fa56a0fab91529194373ccd742579113eff4be0fe Elan 2.0.0-alpha4 valid
+    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 04d89ce8229216d73214c86390f7a0e838a04c2692a4cfdddde177179a6aa104 Elan 2.0.0-alpha5 valid
 
 main
   variable points set to 1000
@@ -100,19 +100,6 @@ procedure display(game as Game)
   variable html set to $"&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
   call displayHtml(html)
   call sleep(1.5)
-end procedure
-
-procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
-  if playerOutcome is Outcome.winDouble then
-    call player.changePointsBy(2)
-    call dealer.changePointsBy(-2)
-  elif playerOutcome is Outcome.win then
-    call player.changePointsBy(1)
-    call dealer.changePointsBy(-1)
-  elif playerOutcome is Outcome.lose then
-    call player.changePointsBy(-1)
-    call dealer.changePointsBy(1)
-  end if
 end procedure
 
 function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outcome
@@ -250,8 +237,7 @@ class Game
 
   procedure updatePoints()
     for player in this.players
-      variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
-      call global.updatePoints(this.dealer, player, playerOutcome)
+      call player.determineOutcomeAndUpdatePoints(this.dealer)
     end for
   end procedure
 
@@ -315,6 +301,20 @@ abstract class Player
   procedure startTurn()
     if this.status is Status.active then
       reassign this.hasTurn to true
+    end if
+  end procedure
+
+  procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
+    variable playerOutcome set to determinePlayerOutcome(dealer, this)
+    if playerOutcome is Outcome.winDouble then
+      call this.changePointsBy(2)
+      call dealer.changePointsBy(-2)
+    elif playerOutcome is Outcome.win then
+      call this.changePointsBy(1)
+      call dealer.changePointsBy(-1)
+    elif playerOutcome is Outcome.lose then
+      call this.changePointsBy(-1)
+      call dealer.changePointsBy(1)
     end if
   end procedure
 
@@ -526,7 +526,12 @@ abstract class AutomatedPlayer inherits Player
   end procedure
 
   procedure nextAction(dealerFaceCard as Card)
-    # variable act set to decisionFunc(this, dealerFaceCard)
+    variable choice set to this.getChoice(dealerFaceCard)
+    if choice is Choice.draw then
+      call this.draw()
+    else
+      call this.stand()
+    end if
   end procedure
 
   abstract function getChoice(dealerFaceCard as Card) returns Choice
@@ -730,7 +735,7 @@ constant styleSheet set to ":root {    background-color: darkgreen;    padding-l
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 
-    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
-    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-model-scripts.js"></script>
+    <script src="https://elan-lang.org/diff.js"></script>
+    <script src="https://elan-lang.org/worksheet-model-scripts.js"></script>
   </body>
 </html>
