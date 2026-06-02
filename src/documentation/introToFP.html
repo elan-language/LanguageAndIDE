@@ -207,6 +207,13 @@ a <b>constant</b> in that:</p>
   <li>it may refer to a List or other data structure</li>
 </ul>
 
+<p>In the four languages supported by Elan, <b>let</b> instruction 
+  are really just disguised variable definitions, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
+  <b>let</b> instructions are executed <i>lazily</i>, meaning that within a function, execution starts with the <i>returned</i> expression, and only
+  evaluates the sub-expressions defined in <b>let</b> instructions when - indeed <i>if</i> they are needed. So getting used to 
+  <b>let</b> instructions leaves you better prepared to move onto a pure FP language at a future point.
+</p>
+
 <p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
 
 <ul>
