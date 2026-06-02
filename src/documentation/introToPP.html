@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css">
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="favicon.ico" rel="icon">
+<title>Introduction to Functional Programming with Elan</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+<script type="text/javascript" src="doc-scripts.js"></script>
+</head>
+
+<body id="top">
+<div class="docTitle">Introduction to Procedural Programming with Elan</div>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
+
+<h1>Getting started</h1>
+<p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>Procedural</b> profile from the menu at the top of the IDE. 
+This will ensure that: </p>
+
+<ul>
+<li>The list of demo programs will now show only programs that use PP. 
+<li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP
+    <ul>
+    <li>At the global level, it will offer: <b>concrete class</b>, <b>abstract class</b>, and <b>interface</b>
+        Each of these allows you to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>.
+        (Enums - which are single-line instructions - are not directly associated with OOP, but because an enum is a very simple form of user-defined type, it is made available in the same profile.)</li>
+    <li><i>Within</i> a <b>concrete class</b>, <b>abstract class</b>, or <b>interface</b>, the <b>new code</b> menu will show an entirely new list of instructions,
+         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    </ul>
+</ul>
+
+This is an explanation of core concepts, not a tutorial. Specifics of e.g. library techniques should reference LibRef
+
+<h1>Principle 1: A procedural program consists of sequences of commands</h1>
+  initially in main, later in functions and procedures
+  each instruction is a command that leaves the system in a different state
+  contains instructions executed, by default, in order they are defined (later can exercise more control over the flow of control)
+  each instruction is a command that changes the state of the system
+  instructions are of different kinds
+  comments are not instructions but may be added wherever an instruction may be
+
+<h1>Principle 2: Values may be literal or named, and of different types</h1>
+  value types
+  literal values
+  named values
+  variables
+  constants
+  enums
+
+<h1>Principle 3: Expressions derive more useful information from existing values</h1>
+Can be thought of as queries
+This section covers operators, and library function calls
+
+<h1>Principle 4: Writing automated tests is useful and satisfying</h1>
+
+<h1>Principle 5: Writing your own functions extends the language</h1>
+
+<h1>Principle 6: Selection permits alternative paths through the instructions</h1>
+
+<h1>Principle 7: Iteration allows the same instructions to be executed multiple times</h1>
+
+... on different data
+Iteration also called looping
+<h2>When you know how many iterations in advance, use a 'for' loop</h2>
+<h2>When you don't know how many iterations in advance, use a 'while' loop</h2>
+
+<h1>Principle 8: Data structures hold multiple, related, data items in one name
+   List is the most common
+   List facilitates iteration over related items of the same kind
+   String may be considered a data structure, but it is limited
+   Tuple
+<h1>Principle 9: Input/Output is done in the main routine, or procedures</h1>
+
+What is a procedure
+Ready made and user-defined
+The difference 
+
+<h1>Principle 10: Exceptions handle unexpected behaviour</h1> 
+  nature
+  try catch
+  throw
+  Use exceptions only to handle errors that can't be handled another way
+
