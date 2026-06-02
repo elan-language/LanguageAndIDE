@@ -173,14 +173,14 @@ end constructor
  followed by a dot.</li>
 </ul>
 
-<h1>Principle 4: Objects may have associations to other objects</h1>
+<h1 id="association">Principle 4: Objects may have associations to other objects</h1>
 
 <p>So far we have looked at properties where the type is one of the standard library types. However, a class may define one or more
     properties where the type is a class - either of the same type as the class in which the property is defined, or - more commonly -
     of a different class. Each such property is referred to as an 'association' or 'associated object'. If the type of a property is
     a list, or other data structure, where the member type is a class, then it is often referred to as a 'multiple association' - with
     the ordinary kind of association referred to as 'single association'. The <code>Snake</code> class shows
-    both kinds of association (only relevant parts of the class are shown only here):
+    both kinds of association (only relevant parts of the class are shown only here):</p>
 
 <codeblock>
 class Snake
@@ -216,18 +216,30 @@ end class
     And you should avoid doing any work in a constructor <i>other than</i> determining appropriate values for initialising its properties. 
 </ul>
 
-<h1>Principle 5: Classes provide behaviour through methods<h1>
+<h1>Principle 5: Classes provide behaviour through methods</h1>
 
-<p>In the last code example <code>tail.getAdjacentSquare(this.currentDir)</code> was calling a function method, using 'dot syntax' on the
-    the variable <code>tail</code> which is an instance of class <code>Square</code>. A class can define both function methods and procedure
-    methods, for the following reasons:
+<p>In the last code example <code>tail.getAdjacentSquare(this.currentDir)</code> calls a function method, using 'dot syntax' on the
+    the variable <code>tail</code>, which is an instance of class <code>Square</code>. Defining a function method, or a procedure method,
+    on a class has these advantages:
     <ul>
-        <li>these methods are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
-        <li>they have access to all the properties belonging to that same instance, and they can also invoke other
-            methods on the same object, prefixed by <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
+        <li>they are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
+        <li>they have access to all the properties belonging to that same instance, and  can also invoke other
+            methods on the same object, in both cases prefixed by 
+            <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
     </ul>
 
-    <p>This may be seen in the implementation of <el-method>getAdjacentSquare</el-method> in the <code>Square</code> class:</p>
+    <p>Properties on a class define the <i>data</p> (or 'state') for each instance of the class; methods define the <i>behaviour</i> for the object.</p>
+
+  <h2>Function method</h2>
+
+  <p>Function methods defined on a class, are similar to global functions in that they act like 'queries', returning information that is determined by
+    the values of the parameters. The difference is that a function method defined on a class, may additionally make use of information obtained from
+    the properties of the object (directly or indirectly) - to determine the information to be returned. But like a global function, a function method
+    defined on a class may not cause any side effects, which means that it may not update any property. The body of the 
+    <el-method>getAdjacentSquare</el-method> accesses the objects <code>x</code> and <code>y</code> properties and uses this, together
+    with the <code>Direction</code> parameter to create and return a new instance of <code>Square</code> with different <code>x</code> and <code>y</code>
+    properties:</p>
+
 
 <codeblock>
 function getAdjacentSquare(d as Direction) returns Square
@@ -246,43 +258,113 @@ function getAdjacentSquare(d as Direction) returns Square
 end function
 </codeblock>
 
-<p>Function and procedure methods defined on a class have similaries and differences to <i>global</i> functions and procedures. 
+<p>The <el-method>toString</el-method> function method returns a string that represents the object in some way. It is called automatically
+whenever you call <el-method>print</el-method> with a variable that holds an instance of the class. 
+If you don't need to <i>print</i> an object in text form on the display, it is safe to leave the <i>default</i> implementation
+<el-method>toString</el-method> - that was created when you added the class, and which returns an empty string <code>""</code>.
+If you do intend to print an object in text form then you can define the string to be returned, incorporating
+one or more of the object's properties to help identify the particular object. For example, you might edit the method
+defined on the <code>Snake</code> class to:
 
-<ul>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-</ul>
+<codeblock>
+function toString() returns String
+  return $"A snake with {this.body.length() + 1} segments"
+end function
+</codeblock>
 
-</p>
-
-
-TO STRING
-
-    <h2>Function method</h2>
-Where properties define state, methods define behaviour
-Function & procedure methods – distinction (like globals) & commonality – optional params EXAMPLES
-Invoked on an instance using dot syntax EXAMPLES
-Implementation of methods
-Why put behaviour onto methods?
-The toString method
+(You might like to try this out, <i>temporarily</i>adding the instruction <code>call print(snake)</code> into the main routine.)
 
 <h2>Procedure method</h2>
 
-<h1>Principle 6: Object represent identifiable concepts in the application domain</h1>
-This is encapsulation meaning 1
-It is never a complete representation, but it is complete for the purposes of the application
-Most of the objects
-It not only represents its state, but its behaviour. By making objects the fundamental building blocks of programs they are easier to change and extend
+<p>Procedure methods, like function methods, may define parameters and may also read the values of the object's properties.
+  Like global procedures they may also generate side effects, and this includes changing the values of the object's properties,
+  and may call other procedures, on the same object, or <a href="#association">associated objects</a>. For example, the
+  <el-method>clockTick</el-method> procedure method defined in the <code>Snake</code> class, changes the position of various
+  segments, and, if the <code>head</code> now covers the same space as the <code>apple</code> changes the position of
+  the apple (passed into the method as a parameter) by calling the <el-method>newRandomPosition</el-method>
+  procedure method on <code>apple</code>:</p>
 
-<h1>Principle 7: Objects should hide state behind methods, where possible</h1>
-Does not mean getter and setter methods
-This is encapsulation meaning 2
-Private properties, public methods – why and how
-Can make methods private too – where they are called by other methods in the same class.
+<codeblock>
+procedure clockTick(key as String, apple as Apple)
+  call this.setDirection(key)
+  reassign this.priorTail to this.body[0]
+  variable body set to this.body
+  call body.append(this.head)
+  reassign this.head to this.head.getAdjacentSquare(this.currentDir)
+  if this.head.equals(apple.location) then
+    call apple.newRandomPosition(this)
+  else
+    reassign this.body to this.body.subList(1, this.body.length())
+  end if
+end procedure
+</codeblock>
+
+<h1 id="representation">Principle 6: The objects should represent the principal concepts in the application domain</h1>
+
+<p>The word 'encapsulation' is often used in descriptions of object-oriented programming. But
+  that word has two rather different meanings in plain English. Fortunately, both of the meanings of 'encapsulation' 
+  apply. </p>
+
+<p>The first meaning of encapsulation is similar to 'represents' - as in 'Our school motto <i>encapsulates</i> the ethos and culture of the school'.
+  (The second meaning will be addressed in the <a href="#info-hiding">next principle</a>.)
+  Thus, objects should represent, or encapsulate, the principal objects in the application domain.
+  A rule of thumb is that the classes defined in a program should correspond to the main <i>nouns</i> used when describing the purpose
+  and operation of the program in plain English. You can see this in the <b>Snake</b> demo, where the code defines three classes, named <code>Snake</code>, <code>Apple</code>, and <code>Square</code> - all nouns that
+would be recognised by anyone who understands how to play the game Snake, but who does not necessarily know anything about programming.</p>
+
+<p>One of the claimed benefits of this is that it makes programs easier to read, and to update in response to new
+  requirements, because the structure of the code corresponds more closely to the language of the application domain. 
+  If the user, or the business customer that owns the game, says that they want the snake to be a different colour, or for there to be two
+  apples at once (in different positions) - it will be easier for the programmer to identity where within the program the code must be changed
+  that in a procedural implementation. You can try this for yourself, by asking a user to specify similar small changes to the presentation
+  and/or game rules, and testing how long it takes you to update the procedural, and object-oriented, versions of the Snake program as required.</p>
+
+<p>Importantly, the class does not just represent all the information associated with the noun - it also encapsulates the 
+  behaviour needed from that thing. This is sometimes stated as representing the <i>know-whats<i> for the thing (as properties),
+  and the <i>know how-to's</i> as methods.</p>
+
+<h1 id="info-hiding">Principle 7: Objects should hide state behind methods, where possible</h1>
+
+<p>This principle corresponds to the second meaning of 'encapsulation': sealing. Think of the related word: 'capsule'.
+  You can only access the capabilities of an object through its <i>public</i> interface. All the 'members' 
+  defined on a class (that is: its properties and methods) are public - although properties
+  are public only for <i>reading</i>, not for modifying. However, it is possible to make any property or method <i>private</i>
+  - such that it can be accessed from code within the class, but not from outside. To do this, you bring up the context
+  menu on the instruction (by right-mouse-click or <b>Ctrl-m</b>) and select <b>make private</b> 
+  (a change that can be reversed with <b>make public</b>).A method might be made private because it just provides help to one or more public methods, 
+  but is not expected to be useful in its own right. However, a property is often made private to implement
+the principle of 'information' hiding.</p>
+
+
+<p>Some textbooks suggest that every property - for example <code>dateOfBirth</code> - should be private, and that access should be via a 'getter' - 
+a function method typically named <el-method>getDateOfBirth</el-method>, and a 'setter' - a procedure method typically named <el-method>setDateOfBirth</el-method>.
+But that idea is not really hiding the information. Real information hiding is to prevent external code from accessing the data and instead
+provide them with public methods that provide more useful services. For example, in the <b>Snake</b> demo, <i>all</i> the 
+<code>head</code> and <code>body</code> properties are private, but the function method <el-method>bodyCovers</el-method> allows external
+code to test whether the snake (body or head) covers a given square, passed in as a parameter. This method is called from within the 
+<el-method>newRandomPosition</el-method> defined by the <code>Apple</code> class, to ensure that the next apple is not created
+directly underneath the snake.</p>
 
 <h1>Principle 8: Allow objects of different classes to be handled through a common interface</h2>
+
+<p>Suppose that you were writing some kind of ecological simulation, that had many types of entity - some inanimate such as rocks, some
+  that changed over time such as trees and rivers, and some with complex dynamic behvaiour such as various kind of animals. It is likely
+that each of these nouns would be a class in your code, most of them having many instances. But all of them would have
+a few properties in common specifying their current location within the simulated area. It would be convenient - at minimum for th purpose
+of positioning icons representing each entity on the graphical display to be able to hold all of them in a list, and iterate over
+that list with a loop, to draw the icon in the correct place.</p>
+
+<p>The simplest way to do this is to define a common interface. In object-oriented terms an interface is a bit like a class (and in some
+  languages it has the same signature as a class) - but it can't be instantiated directly - so it has no constructor. An interface can define
+  properties or methods, but they are <i>abstract</i> - which means that they define the signature for the member but they dp not define
+  the implementation. Here, for example are definitions that might be used in 
+  
+  
+  <p>A concrete class, may <i>implement</i> one or more interfaces, which means that
+  it must define metho
+</p>
+
+TODO: Need a better example of something that needs interfaces e.g. a simulation
 
 May be handled through interfaces or inheritance
 Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
