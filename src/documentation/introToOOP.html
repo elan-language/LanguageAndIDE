@@ -325,19 +325,46 @@ would be recognised by anyone who understands how to play the game Snake, but wh
 
 <h1 id="info-hiding">Principle 7: Objects should hide state behind methods, where possible</h1>
 
-<p>This principle corresponds to the second meaning of 'encapsulation' in plain English: 'sealing'. Think of the related word 'capsule'.</p>
+<p>This principle corresponds to the second meaning of 'encapsulation': sealing. Think of the related word: 'capsule'.
+  You can only access the capabilities of an object through its <i>public</i> interface. All the 'members' 
+  defined on a class (that is: its properties and methods) are public - although properties
+  are public only for <i>reading</i>, not for modifying. However, it is possible to make any property or method <i>private</i>
+  - such that it can be accessed from code within the class, but not from outside. To do this, you bring up the context
+  menu on the instruction (by right-mouse-click or <b>Ctrl-m</b>) and select <b>make private</b> 
+  (a change that can be reversed with <b>make public</b>).A method might be made private because it just provides help to one or more public methods, 
+  but is not expected to be useful in its own right. However, a property is often made private to implement
+the principle of 'information' hiding.</p>
 
-<p>An object</p>
 
-Elan automatically enforces an elementary aspect of this in making properties publicly readable, but writable only from within the object - via
-the constructor and/or procedure methods.
-</p>
-Does not mean getter and setter methods
-This is encapsulation meaning 2
-Private properties, public methods – why and how
-Can make methods private too – where they are called by other methods in the same class.
+<p>Some textbooks suggest that every property - for example <code>dateOfBirth</code> - should be private, and that access should be via a 'getter' - 
+a function method typically named <el-method>getDateOfBirth</el-method>, and a 'setter' - a procedure method typically named <el-method>setDateOfBirth</el-method>.
+But that idea is not really hiding the information. Real information hiding is to prevent external code from accessing the data and instead
+provide them with public methods that provide more useful services. For example, in the <b>Snake</b> demo, <i>all</i> the 
+<code>head</code> and <code>body</code> properties are private, but the function method <el-method>bodyCovers</el-method> allows external
+code to test whether the snake (body or head) covers a given square, passed in as a parameter. This method is called from within the 
+<el-method>newRandomPosition</el-method> defined by the <code>Apple</code> class, to ensure that the next apple is not created
+directly underneath the snake.</p>
 
 <h1>Principle 8: Allow objects of different classes to be handled through a common interface</h2>
+
+<p>Suppose that you were writing some kind of ecological simulation, that had many types of entity - some inanimate such as rocks, some
+  that changed over time such as trees and rivers, and some with complex dynamic behvaiour such as various kind of animals. It is likely
+that each of these nouns would be a class in your code, most of them having many instances. But all of them would have
+a few properties in common specifying their current location within the simulated area. It would be convenient - at minimum for th purpose
+of positioning icons representing each entity on the graphical display to be able to hold all of them in a list, and iterate over
+that list with a loop, to draw the icon in the correct place.</p>
+
+<p>The simplest way to do this is to define a common interface. In object-oriented terms an interface is a bit like a class (and in some
+  languages it has the same signature as a class) - but it can't be instantiated directly - so it has no constructor. An interface can define
+  properties or methods, but they are <i>abstract</i> - which means that they define the signature for the member but they dp not define
+  the implementation. Here, for example are definitions that might be used in 
+  
+  
+  <p>A concrete class, may <i>implement</i> one or more interfaces, which means that
+  it must define metho
+</p>
+
+TODO: Need a better example of something that needs interfaces e.g. a simulation
 
 May be handled through interfaces or inheritance
 Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
