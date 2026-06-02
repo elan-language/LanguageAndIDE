@@ -1,14 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
 <head>
-    <title>OOP</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
-    <link href="../ide/styles/documentation.css" rel="stylesheet">
-    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
-    <link href="favicon.ico" rel="icon">
-    <script type="text/javascript" src="doc-scripts.js"></script>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css">
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="favicon.ico" rel="icon">
+<title>Introduction to Functional Programming with Elan</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+<script type="text/javascript" src="doc-scripts.js"></script>
 </head>
 
 <body id="top">
@@ -20,7 +21,7 @@
 <h1>Getting started</h1>
 
 <p>To undertake object-oriented programming (OOP) with Elan, you should first be reasonably familiar with procedural programming with Elan. 
-Then, switch to the <b>Object Oriented</b> profile from the menu at the top of the IDE. 
+Start by switching to the <b>object-oriented</b> profile from the menu at the top of the IDE. 
 This will still allow you to do procedural programming, but changes two things: </p>
 
 <ul>
@@ -138,7 +139,7 @@ end if
  is comparing the value of the variable <code>distViaCurrent</code> to the property named <code>distFromStart</code> of the
  object named <code>neighbour</code>.
 
-<h1>Principle 3: The constructor initialises the properties
+<h1>Principle 3: The constructor initialises the properties</h1>
 
 <p>When coding with Elan every class must define a constructor, the template for which is created when you define a new class,
     and which may be edited, though not deleted. The role of the constructor is to initialise the properties whenever an instance
@@ -269,19 +270,19 @@ The toString method
 
 <h2>Procedure method</h2>
 
-<h1>Principle 6: Each object an represents an identifiable concept in the application domain</h1>
+<h1>Principle 6: Object represent identifiable concepts in the application domain</h1>
 This is encapsulation meaning 1
 It is never a complete representation, but it is complete for the purposes of the application
 Most of the objects
 It not only represents its state, but its behaviour. By making objects the fundamental building blocks of programs they are easier to change and extend
 
-<h1>Principle 7: Objects should hide state in favour of methods, where possible</h1>
+<h1>Principle 7: Objects should hide state behind methods, where possible</h1>
 Does not mean getter and setter methods
 This is encapsulation meaning 2
 Private properties, public methods – why and how
 Can make methods private too – where they are called by other methods in the same class.
 
-<h1>Principle 8: Type substitutability allows objects of different types to be handled through a common interface</h2>
+<h1>Principle 8: Allow objects of different classes to be handled through a common interface</h2>
 
 May be handled through interfaces or inheritance
 Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
@@ -291,7 +292,7 @@ An interface may extend another interface
 Each class that implements an interface must provide an implemented of each method, but the implementation may differ (EXAMPLES). 
 It is likely that more than one class might have exactly the same implementation, and by the DRY principle it is undesirable to repeat the code. So you delegate, in part or in whole
 
-<h1>Principle 9: methods in different types, may share common implementation delegation or inheritance</h1>
+<h1>Principle 9: Common implementations may be shared through delegation or inheritance</h1>
 An abstract class …
 An abstract class is like an interface, but more powerful that it may also define concrete implementations of methods, with some limitations
 The limitation is that a concrete class may (optionally) inherit only from one abstract class – though it may implement additional interfaces
