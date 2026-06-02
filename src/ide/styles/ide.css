@@ -733,3 +733,8 @@ body.functional div.demo-file.functional { display: revert; }
 #ed-2, #ed-3, #ed-4 {
   overflow-y: hidden;
 }
+
+#ed-2 el-field.warning, #ed-3 el-field.warning, #ed-4 el-field.warning,
+#ed-2 .newcode, #ed-3 .newcode, #ed-4 .newcode {
+  display: none;
+}
