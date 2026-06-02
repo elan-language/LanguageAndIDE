@@ -728,3 +728,7 @@ body.functional div.demo-file.functional { display: revert; }
 .quad-editor #rhs {
   margin-left: 0;
 }
+
+#ed-2, #ed-3, #ed-4 {
+  overflow-y: hidden;
+}
