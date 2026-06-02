@@ -29,6 +29,7 @@ import {
   confirmContinueOnNonChromeBrowser,
   cursorWait,
   domEventType,
+  getAllLanguages,
   getLanguageByClass,
   getLanguagesForQuad,
   handleClickDropDownButton,
@@ -742,12 +743,14 @@ class IDEViewModel implements IIDEViewModel {
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
 
-    codeContainers[0].classList.remove("elan");
-    codeContainers[0].classList.remove("python");
-    codeContainers[0].classList.remove("cs");
-    codeContainers[0].classList.remove("vb");
-    codeContainers[0].classList.remove("java");
-    codeContainers[0].classList.add(l.languageHtmlClass);
+    if (!document.querySelector("body")!.classList.contains("quad-editor")) {
+      codeContainers[0].classList.remove("elan");
+      codeContainers[0].classList.remove("python");
+      codeContainers[0].classList.remove("cs");
+      codeContainers[0].classList.remove("vb");
+      codeContainers[0].classList.remove("java");
+      codeContainers[0].classList.add(l.languageHtmlClass);
+    }
 
     this.tvm.setWorksheetLanguage(l.languageHtmlClass);
     this.tvm.setHelpLanguage(l.languageHtmlClass);
@@ -898,13 +901,15 @@ toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
 
   if (document.querySelector("body")!.classList.contains("quad-editor")) {
-    if (codeViewModel.getLanguage() === LanguageElan.Instance) {
-      await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, true);
-    }
     const ll = getLanguagesForQuad(codeViewModel.getLanguage());
-
+    const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
     for (let i = 0; i < 4; i++) {
-      codeContainers[i].classList.add(ll[i].languageHtmlClass);
+      const cl = codeContainers[i].classList;
+      const className = ll[i].languageHtmlClass;
+      const lName = ll[i].languageFullName;
+      cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
+      cl.add(className);
+      labels[i].textContent = lName;
     }
   }
   await ideViewModel.renderAsHtml(false);

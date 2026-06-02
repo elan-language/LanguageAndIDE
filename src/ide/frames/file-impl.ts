@@ -225,7 +225,7 @@ export class FileImpl implements File {
   }
 
   getIdPrefix(): string {
-    return "file";
+    return `${this.language().languageHtmlClass}_file`;
   }
 
   private frNo = 1;
@@ -290,7 +290,7 @@ export class FileImpl implements File {
   }
 
   getVersionString(lang: string) {
-    const prefix = lang === "Elan" ? "" : `${lang} with `;
+    const prefix = lang === "Reference Language" ? "" : `${lang} with `;
     return `${prefix}Elan ${this.getSemverString()}`;
   }
 
@@ -902,10 +902,22 @@ export class FileImpl implements File {
     return "";
   }
 
+  resetMap(l: Language) {
+    const newMap = new Map<string, Selectable>();
+
+    for (const entry of this._map) {
+      const [key, value] = entry;
+      const newKey = `${l.languageHtmlClass}${key.slice(key.indexOf("_"))}`;
+      newMap.set(newKey, value);
+    }
+    this._map = newMap;
+  }
+
   setLanguage(l: Language) {
     if (this._language.languageFullName !== l.languageFullName) {
       this._language = l;
       this.resetFieldText();
+      this.resetMap(l);
       return true;
     }
     return false;

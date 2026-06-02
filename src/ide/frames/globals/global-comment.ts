@@ -25,7 +25,7 @@ export class GlobalComment extends SingleLineFrame implements GlobalFrame {
   }
 
   getIdPrefix(): string {
-    return "com";
+    return `${this.language().languageHtmlClass}_com`;
   }
 
   frameSpecificAnnotation(): string {

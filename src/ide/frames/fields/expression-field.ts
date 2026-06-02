@@ -23,7 +23,7 @@ export class ExpressionField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "expr";
+    return `${this.language().languageHtmlClass}_expr`;
   }
 
   initialiseRoot(): ParseNode {

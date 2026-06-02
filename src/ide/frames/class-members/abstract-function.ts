@@ -38,7 +38,7 @@ export class AbstractFunction extends SingleLineFrame {
   }
 
   getIdPrefix(): string {
-    return "func";
+    return `${this.language().languageHtmlClass}_func`;
   }
 
   frameSpecificAnnotation(): string {
@@ -65,7 +65,7 @@ export class AbstractFunction extends SingleLineFrame {
     this.returnType.parseFrom(source);
   }
 
-    renderAsExport(): string {
+  renderAsExport(): string {
     return `${super.renderAsExport()}\r
 `;
   }

@@ -3,7 +3,7 @@ import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
   singleIndent,
-  togglePrivatePublic
+  togglePrivatePublic,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";

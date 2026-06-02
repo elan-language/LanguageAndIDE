@@ -19,7 +19,7 @@ export class ParamListField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "params";
+    return `${this.language().languageHtmlClass}_params`;
   }
   public contentAsSource(): string {
     if (this.text) {

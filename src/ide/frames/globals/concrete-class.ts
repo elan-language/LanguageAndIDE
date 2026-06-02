@@ -40,7 +40,7 @@ export class ConcreteClass extends ClassFrame {
   }
 
   getIdPrefix(): string {
-    return "class";
+    return `${this.language().languageHtmlClass}_class`;
   }
 
   frameSpecificAnnotation(): string {

@@ -23,7 +23,7 @@ export class FileLoaderField extends AbstractField {
     source.readToEndOfLine();
 
   getIdPrefix(): string {
-    return "comment";
+    return `${this.language().languageHtmlClass}_comment`;
   }
   renderAsHtml(): string {
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>To import code, select this field then press any key</el-txt>${this.helpAsHtml()}</el-field>`;

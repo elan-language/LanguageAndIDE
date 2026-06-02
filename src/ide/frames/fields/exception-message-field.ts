@@ -15,7 +15,7 @@ export class ExceptionMessageField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "msg";
+    return `${this.language().languageHtmlClass}_msg`;
   }
   initialiseRoot(): ParseNode {
     this.rootNode = new ExceptionMsgNode(this.getFile());

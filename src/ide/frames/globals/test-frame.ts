@@ -67,7 +67,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   getIdPrefix(): string {
-    return "test";
+    return `${this.language().languageHtmlClass}_test`;
   }
   frameSpecificAnnotation(): string {
     return "test";

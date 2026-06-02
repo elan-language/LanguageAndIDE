@@ -43,7 +43,7 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
   }
 
   getIdPrefix(): string {
-    return "const";
+    return `${this.language().languageHtmlClass}_const`;
   }
 
   frameSpecificAnnotation(): string {

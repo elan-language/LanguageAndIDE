@@ -37,14 +37,13 @@ export abstract class AbstractFrame implements Frame {
   pasteError: string = "";
   helpActive: boolean = false;
 
-  protected htmlId: string = "";
+  private id: string = "";
   protected ghostable: boolean = true;
   protected canHaveBreakPoint = true;
   protected showContextMenu = false;
   protected paused = false;
 
   private _parent: File | Parent;
-  private _map?: Map<string, Selectable>;
   private _selected: boolean = false;
   private _focused: boolean = false;
   private _collapsed: boolean = false;
@@ -56,10 +55,12 @@ export abstract class AbstractFrame implements Frame {
   constructor(parent: Parent) {
     this._parent = parent;
     const file = this.getFile();
-    const map = file.getMap();
-    this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
-    map.set(this.htmlId, this);
-    this.setMap(map);
+    this.id = `${file.getNextId()}`;
+    file.getMap().set(this.htmlId, this);
+  }
+
+  protected get htmlId() {
+    return `${this.getIdPrefix()}${this.id}`;
   }
 
   helpId(): string {
@@ -499,14 +500,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getMap(): Map<string, Selectable> {
-    if (this._map) {
-      return this._map;
-    }
-    throw new Error(`Frame : ${this.htmlId} has no Map`);
-  }
-
-  setMap(Map: Map<string, Selectable>) {
-    this._map = Map;
+    return this.getFile().getMap();
   }
 
   abstract getIdPrefix(): string;

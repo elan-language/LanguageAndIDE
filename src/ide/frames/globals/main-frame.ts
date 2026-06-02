@@ -23,7 +23,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   getIdPrefix(): string {
-    return "main";
+    return `${this.language().languageHtmlClass}_main`;
   }
 
   frameSpecificAnnotation(): string {

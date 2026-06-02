@@ -18,7 +18,7 @@ export class TypeField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "type";
+    return `${this.language().languageHtmlClass}_type`;
   }
 
   initialiseRoot(): ParseNode {

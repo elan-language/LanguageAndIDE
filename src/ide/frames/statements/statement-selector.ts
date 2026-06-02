@@ -86,9 +86,9 @@ export class StatementSelector extends AbstractSelector {
     let result = true;
     // First apply universal instruction-specific rules
     if (keyword === elseKeyword || keyword === elifKeyword) {
-      result = parent.getIdPrefix() === ifKeyword;
+      result = parent.getIdPrefix().includes(`_${ifKeyword}`);
     } else if (keyword === catchKeyword) {
-      result = parent.getIdPrefix() === tryKeyword;
+      result = parent.getIdPrefix().includes(`_${tryKeyword}`);
     } else if (keyword === callKeyword || keyword === "print") {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === letKeyword) {
@@ -120,7 +120,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   private isWithinATest(): boolean {
-    return this.getParent().getIdPrefix() === "test";
+    return this.getParent().getIdPrefix().includes("_test");
   }
 
   private isWithinAConstructor(): boolean {
@@ -128,7 +128,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   private isWithinContext(parent: Parent, parentPrefix: string): boolean {
-    return parent.getIdPrefix() === parentPrefix
+    return parent.getIdPrefix().includes(`_${parentPrefix}`)
       ? true
       : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }

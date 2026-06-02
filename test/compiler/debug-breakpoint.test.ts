@@ -30,7 +30,7 @@ end main`;
 
     const expected = [] as DebugSymbol[];
 
-    await assertDebugBreakPoint(fileImpl, "main4", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_main4", expected);
   });
 
   test("Pass_LocalvariablesMain", async () => {
@@ -66,7 +66,7 @@ end main`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set15", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set15", expected);
   });
 
   test("Pass_LocalvariablesProcedure", async () => {
@@ -107,7 +107,7 @@ end procedure`;
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set22", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set22", expected);
   });
 
   test("Pass_LocalvariablesFunction", async () => {
@@ -149,7 +149,7 @@ end function`;
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set25", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set25", expected);
   });
 
   test("Pass_LocalvariablesMemberProcedure", async () => {
@@ -205,7 +205,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set42", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set42", expected);
   });
 
   test("Pass_LocalvariablesMemberFunction", async () => {
@@ -262,7 +262,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set45", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set45", expected);
   });
 
   test("Pass_LocalvariablesConstructor", async () => {
@@ -313,7 +313,7 @@ end class`;
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set32", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set32", expected);
   });
 
   test("Pass_InForLoop", async () => {
@@ -343,7 +343,7 @@ end main`;
       asDebugSymbol("tot", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set10", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set10", expected);
   });
 
   test("Pass_InEachLoop", async () => {
@@ -377,7 +377,7 @@ end main`;
       asDebugSymbol("z", 101, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set16", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set16", expected);
   });
 
   test("Pass_InWhileLoop", async () => {
@@ -414,7 +414,7 @@ end main`;
       asDebugSymbol("y", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set21", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set21", expected);
   });
 
   ignore_test("Pass_InTry", async () => {
@@ -443,7 +443,7 @@ end main`;
 
     const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
-    await assertDebugBreakPoint(fileImpl, "set12", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
   ignore_test("Pass_InCatch", async () => {
@@ -508,7 +508,7 @@ end main`;
       asDebugSymbol("b", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set12", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
   test("Pass_InElse", async () => {
@@ -541,7 +541,7 @@ end main`;
       asDebugSymbol("c", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set19", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set19", expected);
   });
 
   test("Pass_InElseIf", async () => {
@@ -574,7 +574,7 @@ end main`;
       asDebugSymbol("c", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set20", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set20", expected);
   });
 
   test("Pass_AsyncBreakPoints", async () => {
@@ -603,7 +603,7 @@ end function
 
     const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
-    await assertDebugBreakPoint(fileImpl, "return14", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_return14", expected);
   });
 
   test("Pass_ClassTypeInfo", async () => {
@@ -652,7 +652,7 @@ end class`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "call6", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
   test("Pass_Enum", async () => {
@@ -678,7 +678,7 @@ enum Fruit apple, pear`;
 
     const expected = [asDebugSymbol("x", "apple", '{"Type":"Enum","OfTypes":{"Type":"Fruit"}}')];
 
-    await assertDebugBreakPoint(fileImpl, "call6", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
   test("Pass_Tuple", async () => {
@@ -708,7 +708,7 @@ end main`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "call6", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
   test("Pass_FunctionProperty", async () => {
@@ -758,6 +758,6 @@ end main`;
       ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "return6", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_return6", expected);
   });
 });

@@ -44,7 +44,7 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   }
 
   getIdPrefix(): string {
-    return "prop";
+    return `${this.language().languageHtmlClass}_prop`;
   }
 
   frameSpecificAnnotation(): string {
@@ -97,7 +97,7 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
 
     return super.processKey(e);
   }
-  
+
   renderAsExport(): string {
     return `${super.renderAsExport()}\r
 `;

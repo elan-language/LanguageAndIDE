@@ -24,7 +24,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   }
 
   getIdPrefix(): string {
-    return "var";
+    return `${this.language().languageHtmlClass}_var`;
   }
 
   frameSpecificAnnotation(): string {

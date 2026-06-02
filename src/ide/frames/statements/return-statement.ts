@@ -30,7 +30,7 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return "return";
+    return `${this.language().languageHtmlClass}_return`;
   }
 
   frameSpecificAnnotation(): string {

@@ -24,7 +24,7 @@ export class ArgListField extends AbstractField {
   }
 
   getIdPrefix(): string {
-    return "args";
+    return `${this.language().languageHtmlClass}_args`;
   }
   public contentAsSource(): string {
     if (this.text) {

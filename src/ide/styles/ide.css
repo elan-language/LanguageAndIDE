@@ -717,10 +717,14 @@ body.functional div.demo-file.functional { display: revert; }
   display: none;
 }
 
-.quad-editor #elan-language {
+.quad-editor #lang-button
+{
   display: none;
 }
 
-.quad-editor button#language {
-  display: none;
+.quad-editor #lhs {
+  margin-right: 0;
+}
+.quad-editor #rhs {
+  margin-left: 0;
 }

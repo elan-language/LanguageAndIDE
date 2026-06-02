@@ -24,7 +24,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return [this.condition];
   }
   getIdPrefix(): string {
-    return "if";
+    return `${this.language().languageHtmlClass}_if`;
   }
 
   frameSpecificAnnotation(): string {

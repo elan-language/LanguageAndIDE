@@ -46,7 +46,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
 
   getIdPrefix(): string {
-    return "func";
+    return `${this.language().languageHtmlClass}_func`;
   }
 
   frameSpecificAnnotation(): string {
