@@ -28,9 +28,9 @@ import { MainFrame } from "./globals/main-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { LanguageExportHelpers } from "./language-export-helpers";
 import { LanguageExportPython } from "./language-export-python";
+import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
@@ -280,7 +280,7 @@ export class LanguagePython extends LanguageAbstract {
     node.name = new IdentifierDef(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
-    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new SpaceNode(node.file, Space.added));
     node.type = new TypeNode(
       node.file,
       new Set<TokenType>([

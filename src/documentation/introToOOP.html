@@ -1,14 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
 <head>
-    <title>OOP</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../ide/styles/colourScheme.css" rel="stylesheet">
-    <link href="../ide/styles/documentation.css" rel="stylesheet">
-    <link href="../ide/styles/elanStyle.css" rel="stylesheet">
-    <link href="favicon.ico" rel="icon">
-    <script type="text/javascript" src="doc-scripts.js"></script>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css">
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="favicon.ico" rel="icon">
+<title>Introduction to Functional Programming with Elan</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+<script type="text/javascript" src="doc-scripts.js"></script>
 </head>
 
 <body id="top">
@@ -20,7 +21,7 @@
 <h1>Getting started</h1>
 
 <p>To undertake object-oriented programming (OOP) with Elan, you should first be reasonably familiar with procedural programming with Elan. 
-Then, switch to the <b>Object Oriented</b> profile from the menu at the top of the IDE. 
+Start by switching to the <b>object-oriented</b> profile from the menu at the top of the IDE. 
 This will still allow you to do procedural programming, but changes two things: </p>
 
 <ul>
@@ -46,29 +47,218 @@ This will still allow you to do procedural programming, but changes two things: 
   Elan will result in better code and fewer problems.<p>
 
 <h1>Principle 1: A class is a user-defined data structure type</h1>
-Class & concrete class
-Most of your code will be implemented in concrete classes
-Look at EXAMPLES
-The various elements of data in this data structure are defined by properties  - EXAMPLE
-Properties
-Define a class. Can leave the constructor and toString methods as is.
+
+<p>In <i>procedural</i> programming with Elan, there is a fixed set of types available to you to represent
+    data - the only exception being enums which offer a very limited form of 'user-defined' type (UDT).
+    OOP makes it easy to define far richer forms of UDTs. The simplest and most common way to do this
+    is to define a <b>concrete class</b> which is one of the new options made available at global (file) level
+    when using Elan with the <b>Object Oriented<p> profile selected.</p>
+
+        In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes. 
+        Only the 'signature' of each class is shown <i>here</i> - not the instructions contained within the classes:
+
+<codeblock>
+class Snake
+
+end class
+
+class Apple
+
+end class
+
+class Square
+
+end class
+</codeblock>
+
+<p>Within the definition of each class you will find several <b>property</b> instructions. Each property has unique name (within the class).
+     A class may defined multiple properties of the same type, for example, the <code>Square</code>
+    class in <b>Snake</b> defines:
+
+<codeblock>property x as Int</codeblock>
+<codeblock>property y as Int</codeblock>
+
+or properties may have different types, for example the <code>TuringMachine</code> class in the <b>Roman Numerals Turing Machine</b> demo has these:</[<p>- the class may have multiple properties of the same type but with different names, or define
+
+<codeblock>property initialState as String</codeblock>
+<codeblock>property currentState as String</codeblock>
+<codeblock>property headPosition as Int</codeblock>
+<codeblock>property haltState as String</codeblock>
+<codeblock>property rules as List&lt;of Rule&gt;</codeblock>
+<codeblock> property tape as String</codeblock>
+</p>
+
+<h3>Defining a class</h3>
+
+<p>Selecting <b>concrete class</b> from the <b>new code</b> menu inserts a template like this:
+
+<codeblock>
+class Name
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return "undefined"
+  end function
+
+end class
+</codeblock>
+where the only thing you <i>must</i> provide is a unique name for the class, which must start with a capital letter, followed by other letters, digits or underscores.
+(We will look at the roles of the constructor, and the <el-method>toString</el-method> function later on.)</p>
 
 <h1>Principle 2: An object is an instance of a class</h1>
-You create an instance like this – and assign it to a variable, or use it within an expression
-You can read, but not modify the ordinary properties defined on an instance. Forward links to methods and private
 
-<h1>Principle 3: The constructor initialises the properties
+<p>Every object in code is an instance of a specific class. The class may be thought of as a 'template' for defining instances. Each instance
+    holds <i>its own specific value</i> for each of the properties defined in the class.</p>
+    
+<p>An new object may be created and assigned to a variable definition, for example:</p>
 
-All properties except numbers must be initialised explicitly in the constructor – EXAMPLE
-The constructor may require the programmer to specify certain information when creating an instance of a class
+<codeblock>variable apple set to new Apple()</codeblock>
+<codeblock>variable snake set to new Snake()</codeblock>
+
+<p>Note that the type of each variable is determined by the class of the instance so that the <code>apple</code> variable
+    may subsequently be reassigned to a different instance of <code>Apple</code> but may not be reassigned to 
+    an instance of a different class (nor any other type).<p>
+
+<p>A new instance may also be created as part of an expression without having to be assigned to a variable, for example:
+
+<codeblock>return new Square(newX, newY)</codeblock>
+
+<h3>Reading properties</h3>
+
+<p>Wherever you have a reference to an object, your code may read and make use of the publicly-visible properties of that object
+    using 'dot syntax', for example (from the <b>Pathfinder</b> demo):
+
+<codeblock>
+if distViaCurrent < neighbour.distFromStart then
+
+end if
+</codeblock>
+
+ is comparing the value of the variable <code>distViaCurrent</code> to the property named <code>distFromStart</code> of the
+ object named <code>neighbour</code>.
+
+<h1>Principle 3: The constructor initialises the properties</h1>
+
+<p>When coding with Elan every class must define a constructor, the template for which is created when you define a new class,
+    and which may be edited, though not deleted. The role of the constructor is to initialise the properties whenever an instance
+    of that class is created.</p>
+
+<p>The only properties that don't need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> - 
+    which are automatically initialised to the default value of each type - <code>0</code>, <code>0.0</code>, or <code>false</code> respectively.
+    All other properties <i>must</i> be explicitly initialised within the constructor. Here is simple example of properties being initialised
+    within the constructor for <code>Square</code> in the <b>Snake</b> demo:</p>
+
+<codeblock>
+constructor(x as Int, y as Int)
+  reassign this.x to x
+  reassign this.y to y
+end constructor
+</codeblock>
+
+<h3>Note:</h3>
+<ul>
+  <li>Even properties that are automatically initialised <i>may</i> be explicitly initialised in the constructor.</li>
+  <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type, 
+        for example <code>new List&lt;of Int&gt;</code> - though you may choose any value.</li>
+  <li>If you don't you want every instance of a class to be initialised with the same value, the specific value for
+    an instance is specified via paramaters added into the constructor definition.</li>
+  <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
+    so creating a new <code>Square</code> for example takes the form <code>variable tail set to new Square(20, 15)</code></li>
+  <li>A property is initialised within the construction using a <b>reassign variable</b> instruction - since a property may be thought of as 
+    a named variable that holds a value specific to each instance of the class.</li>
+  <li>the name of the property being reassigned must be prefixed by 
+<el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw>
+ followed by a dot.</li>
+</ul>
 
 <h1>Principle 4: Objects may have associations to other objects</h1>
 
-Of same or different types
-Single and multiple
-Mandatory or optional
+<p>So far we have looked at properties where the type is one of the standard library types. However, a class may define one or more
+    properties where the type is a class - either of the same type as the class in which the property is defined, or - more commonly -
+    of a different class. Each such property is referred to as an 'association' or 'associated object'. If the type of a property is
+    a list, or other data structure, where the member type is a class, then it is often referred to as a 'multiple association' - with
+    the ordinary kind of association referred to as 'single association'. The <code>Snake</code> class shows
+    both kinds of association (only relevant parts of the class are shown only here):
+
+<codeblock>
+class Snake
+  constructor()
+    variable tail set to new Square(20, 15)
+    reassign this.currentDir to Direction.right
+    reassign this.body to [tail]
+    reassign this.head to tail.getAdjacentSquare(this.currentDir)
+    reassign this.priorTail to tail
+  end constructor
+
+  private property currentDir as Direction
+
+  private property head as Square
+
+  private property body as List&lt;of Square&gt;
+
+  private property priorTail as Square
+
+end class
+</codeblock>
+
+<h3>Note:</h3>
+<ul>
+  <li>The<code>Snake</code> is always initialised to the same values, so the constructor does not need to define any parameters.</li>
+  <li>The <code>currentDir</code> property is of type <code>Direction</code> (which is an enum) and is initialised to <code>Direction.right</code>.</li>
+  <li>The <code>body</code> property is a multiple association - defined as a list of type <code>Square</li>
+  <li>The constructor defines a variable <code>tail</code> used only for the purpose of initialising properties. 
+    It is first used to initialise the <code>body</code> as a list containing only the <code>tail</code> and
+    is finally used to define the <code>priorTail</code> which is a single association of type <code>Square</code>.
+    In between it is used in an expression to determine the initial value for the <code>head</code> property using a function (more on this in the next heading).
+  <li>It is thus legitimate to call functions within the constructor. A constructor may not call any procedure, however. 
+    And you should avoid doing any work in a constructor <i>other than</i> determining appropriate values for initialising its properties. 
+</ul>
 
 <h1>Principle 5: Classes provide behaviour through methods<h1>
+
+<p>In the last code example <code>tail.getAdjacentSquare(this.currentDir)</code> was calling a function method, using 'dot syntax' on the
+    the variable <code>tail</code> which is an instance of class <code>Square</code>. A class can define both function methods and procedure
+    methods, for the following reasons:
+    <ul>
+        <li>these methods are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
+        <li>they have access to all the properties belonging to that same instance, and they can also invoke other
+            methods on the same object, prefixed by <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
+    </ul>
+
+    <p>This may be seen in the implementation of <el-method>getAdjacentSquare</el-method> in the <code>Square</code> class:</p>
+
+<codeblock>
+function getAdjacentSquare(d as Direction) returns Square
+    variable newX set to this.x
+    variable newY set to this.y
+    if d is Direction.left then
+      reassign newX to this.x - 1
+    elif d is Direction.right then
+      reassign newX to this.x + 1
+    elif d is Direction.up then
+      reassign newY to this.y - 1
+    elif d is Direction.down then
+      reassign newY to this.y + 1
+    end if
+    return new Square(newX, newY)
+end function
+</codeblock>
+
+<p>Function and procedure methods defined on a class have similaries and differences to <i>global</i> functions and procedures. 
+
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+</p>
+
+
+TO STRING
 
     <h2>Function method</h2>
 Where properties define state, methods define behaviour
@@ -80,19 +270,19 @@ The toString method
 
 <h2>Procedure method</h2>
 
-<h1>Principle 6: Each object an represents an identifiable concept in the application domain</h1>
+<h1>Principle 6: Object represent identifiable concepts in the application domain</h1>
 This is encapsulation meaning 1
 It is never a complete representation, but it is complete for the purposes of the application
 Most of the objects
 It not only represents its state, but its behaviour. By making objects the fundamental building blocks of programs they are easier to change and extend
 
-<h1>Principle 7: Objects should hide state in favour of methods, where possible</h1>
+<h1>Principle 7: Objects should hide state behind methods, where possible</h1>
 Does not mean getter and setter methods
 This is encapsulation meaning 2
 Private properties, public methods – why and how
 Can make methods private too – where they are called by other methods in the same class.
 
-<h1>Principle 8: Type substitutability allows objects of different types to be handled through a common interface</h2>
+<h1>Principle 8: Allow objects of different classes to be handled through a common interface</h2>
 
 May be handled through interfaces or inheritance
 Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
@@ -102,7 +292,7 @@ An interface may extend another interface
 Each class that implements an interface must provide an implemented of each method, but the implementation may differ (EXAMPLES). 
 It is likely that more than one class might have exactly the same implementation, and by the DRY principle it is undesirable to repeat the code. So you delegate, in part or in whole
 
-<h1>Principle 9: methods in different types, may share common implementation delegation or inheritance</h1>
+<h1>Principle 9: Common implementations may be shared through delegation or inheritance</h1>
 An abstract class …
 An abstract class is like an interface, but more powerful that it may also define concrete implementations of methods, with some limitations
 The limitation is that a concrete class may (optionally) inherit only from one abstract class – though it may implement additional interfaces
@@ -110,7 +300,7 @@ An abstract class may inherit from another abstract class and/or implement inter
 Elan’s model of inheritance – what you can and can’t do
 - 
 
-<h1>Principle 10: Application logic should be well distributed across classes</h1>
+<h1>Principle 10: Application logic should be well-distributed across classes</h1>
 As much as possible of the code should be defined in classes
 With a minimal main and/or standalone (global) constructs
 The logic should be distributed as evenly as possible across the classes
