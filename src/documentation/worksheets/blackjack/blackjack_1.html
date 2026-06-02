@@ -3,10 +3,10 @@
 
   <head>
       <meta http-equiv="Cache-Control" content="no-store" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-lang.org/styles/worksheet.css" rel="stylesheet" />
       <title>Blackjack 1</title>
   </head>
 
@@ -54,7 +54,7 @@
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># a320c7f7d4a20d8b10eb01af13c858bb962461f911b43a26a1fc123d8947cf93 Elan 2.0.0-alpha4 valid
+      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># 9b4db9c7c04abae34ee73a7669ea4d763b6e5989ccb8a58657387f7465748a01 Elan 2.0.0-alpha5 valid
 
 main
   variable game set to new Game(1000)
@@ -100,19 +100,6 @@ procedure display(game as Game)
   variable html set to $"&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
   call displayHtml(html)
   call sleep(1.5)
-end procedure
-
-procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
-  if playerOutcome is Outcome.winDouble then
-    call player.changePointsBy(2)
-    call dealer.changePointsBy(-2)
-  elif playerOutcome is Outcome.win then
-    call player.changePointsBy(1)
-    call dealer.changePointsBy(-1)
-  elif playerOutcome is Outcome.lose then
-    call player.changePointsBy(-1)
-    call dealer.changePointsBy(1)
-  end if
 end procedure
 
 function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outcome
@@ -324,8 +311,7 @@ class Game
 
   procedure updatePoints()
     for player in this.players
-      variable playerOutcome set to determinePlayerOutcome(this.dealer, player)
-      call global.updatePoints(this.dealer, player, playerOutcome)
+      call player.determineOutcomeAndUpdatePoints(this.dealer)
     end for
   end procedure
 
@@ -389,6 +375,20 @@ abstract class Player
   procedure startTurn()
     if this.status is Status.active then
       reassign this.hasTurn to true
+    end if
+  end procedure
+
+  procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
+    variable playerOutcome set to determinePlayerOutcome(dealer, this)
+    if playerOutcome is Outcome.winDouble then
+      call this.changePointsBy(2)
+      call dealer.changePointsBy(-2)
+    elif playerOutcome is Outcome.win then
+      call this.changePointsBy(1)
+      call dealer.changePointsBy(-1)
+    elif playerOutcome is Outcome.lose then
+      call this.changePointsBy(-1)
+      call dealer.changePointsBy(1)
     end if
   end procedure
 
@@ -742,11 +742,11 @@ constant styleSheet set to ":root {    background-color: darkgreen;    padding-l
   <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
   <ul>
     <li>Near the top of <code>main</code>, find this instruction:
-    <codeblock><div class="elan"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-fr>0</el-fr></el-statement></div>
-<div class="python"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-comment> # call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
-<div class="cs"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>);</el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
-<div class="vb"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>New</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-comment> ' call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
-<div class="java"><el-statement class="none" id="call4" tabindex="-1"><el-top><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>);</el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div></codeblock>
+    <codeblock><div class="elan"><el-statement class="none" id="elan_call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="elan_ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="elan_args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-fr>0</el-fr></el-statement></div>
+<div class="python"><el-statement class="none" id="python_call4" tabindex="-1"><el-top><el-field id="python_ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="python_args6" class="optional ok" tabindex="-1"><el-txt><el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-comment> # call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="cs"><el-statement class="none" id="cs_call4" tabindex="-1"><el-top><el-field id="cs_ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="cs_args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>);</el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="vb"><el-statement class="none" id="vb_call4" tabindex="-1"><el-top><el-field id="vb_ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="vb_args6" class="optional ok" tabindex="-1"><el-txt><el-kw>New</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-comment> ' call procedure</el-comment><el-fr>0</el-fr></el-statement></div>
+<div class="java"><el-statement class="none" id="java_call4" tabindex="-1"><el-top><el-field id="java_ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="java_args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-kw></el-txt><el-place><i>arguments</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>);</el-top><el-msg></el-msg><el-comment> // call procedure</el-comment><el-fr>0</el-fr></el-statement></div></codeblock>
     and immediately <i>below</i> it insert a new <code>call</code> instruction.</li>
     <li>Into the <i>two</i> editable fields type in the same code that you see in the instruction immediately above it,
     <i>except</i> that instead of <code>"Player A"</code>, write <code>"Player B"</code>. Note that:
@@ -834,7 +834,7 @@ or immediately afterwards.</p>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 
-    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
-    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-model-scripts.js"></script>
+    <script src="https://elan-lang.org/diff.js"></script>
+    <script src="https://elan-lang.org/worksheet-model-scripts.js"></script>
   </body>
 </html>

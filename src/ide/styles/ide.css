@@ -545,14 +545,15 @@ div.spacer{
 .tab-controls.selected,
 .tab-content.selected
 {
-  background-color: var(--paleTint);
+  background-color: var(--panelBackground);
+  opacity: 80%;
 }
 
 .tab-label.focussed, 
 .tab-controls.focussed,
 .tab-content.focussed
 {
-  background-color: white;
+  opacity: 100%;
 }
 
 #display-tab .tab-controls.selected {
