@@ -903,7 +903,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   resetText() {
-    if (!!this.rootNode) {
+    if (!!this.rootNode && this._parseStatus === ParseStatus.valid) {
       const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
       if (text !== this.text) {
         this.setFieldToKnownValidText(text);

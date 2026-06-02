@@ -154,8 +154,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
-    const languages = getLanguagesForQuad(existingLanguage);
-    const html = [];
+    const languages = getLanguagesForQuad(existingLanguage).slice(1);
+    const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
       this.file!.setLanguage(l);
