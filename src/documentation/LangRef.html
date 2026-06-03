@@ -43,7 +43,7 @@ are passed around in a running program:</p>
  <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
  <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
- any user-defined Type such as the name of a <b>concrete class</b>, <b>abstract class</b> or <b>interface</b>.</li>
+ any <b>concrete class</b> pr <b>abstract class</b>.</li>
 </ul>
 
 <p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
@@ -99,7 +99,6 @@ are passed around in a running program:</p>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#interface"><el-topic>Interface</el-topic><br><code>interface</code> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr>
   <td>Other</td>
   <td></td>
@@ -121,7 +120,7 @@ are passed around in a running program:</p>
   <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
   <li>parameters of functions and procedures</li>
   <li><b>return</b> value of a function</li>
-  <li><b>property</b> of an <b>interface</b>, <b>abstract class</b> or <b>concrete class</b></li>
+  <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
  </ul></li>
 </ul>
 
@@ -201,7 +200,6 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#test"><b>test</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#class"><b>concrete class</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#interface"><b>interface</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a> and
  <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.
 </p>
@@ -209,7 +207,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <ul>
  <li><b>main</b>, <b>procedure</b> and <b>function</b> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions <i class="fa">&#xf14c;</i></a> within them.</li>
  <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a> instruction for testing functions during development of your program.</li>
- <li><b>concrete class</b>, <b>abstract class</b>, and <b>interface</b> define data structures and these always contain <a href="#Member">members <i class="fa">&#xf14c;</i></a>.</li>
+ <li><b>concrete class</b> and <b>abstract class</b> define data structures and these always contain <a href="#Member">members <i class="fa">&#xf14c;</i></a>.</li>
  <li><b>constant</b> and <b>enum</b> do not contain any further instructions: only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
@@ -580,17 +578,15 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
 <el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
 
 <h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b> <el-type>A</el-type> <i class="fa">&#xf14c;</i></a>
- but may additionally inherit from any number of <a href="#interface">interfaces <i class="fa">&#xf14c;</i></a>.
- The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> or any <b>interface</b>(s) that it inherits from, directly or indirectly.</p>
+<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
+  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
+ The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
-  <li>The <b>abstract class</b> (if any) and the <b>interface</b>s (if any) that a <b>concrete class</b> inherits from may not contain duplicates of any abstract member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <b>interface</b>s inherited by the interfaces and/or classes that need them.</li>
+  <li>You cannot override any concrete member defined in an abstract class.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-  <li>The super-Types (<b>abstract class</b> and <b>interface</b>) that a <b>concrete class</b> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
-<li>See also example in <a href="#interface"><b>interface</b> <i class="fa">&#xf14c;</i></a></li>
 </ul>
 
 <h2 id="abstract_class"><b>abstract class</b></h2>
@@ -616,71 +612,6 @@ return discount
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
-
-<h2 id="interface"><b>interface</b></h2>
-<p>An <b>interface</b> is similar to an <b>abstract class</b>, with the difference that it may define only abstract members. The advantage of using an <b>interface</b> instead of an <b>abstract class</b> is that a <b>concrete class</b> can inherit from multiple interfaces.</p>
-<p>An <b>interface</b> may inherit only from other interfaces.</p>
-<p>An <b>interface</b> must not re-declare abstract interfaces that are defined in any interface it inherits from, directly or indirectly.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example using <b>interface</b></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from some code in demo program <b>blackjack</b> of:</p>
-<ul>
- <li>inheritance from <b>interface</b> <code>Player</code> to <b>abstract class</b> <code>Automated</code>
-  and to <b>concrete class</b> <code>HumanPlayer</code>, and</li>
- <li>inheritance from <b>abstract class</b> <code>Automated</code> to <b>concrete class</b> <code>Dealer</code></li>
- <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their abstract declarations.</li>
-</ul>
-<codeblock>
-enum PlayerAction stand, draw
-interface Player
-  abstract property hand as Hand
-  abstract procedure changeScoreBy(amount as Int)
-end interface
-abstract class Automated inherits Player
-  property hand as Hand
-  property score as Int
-  abstract function getAction() returns PlayerAction
-  procedure changeScoreBy(amount as Int)
-    reassign this.score to this.score + amount
-  end procedure
-end class
-class Dealer inherits Automated
-  constructor(startingPoints as Int)
-    reassign this.score to startingPoints
-    reassign this.hand to this.hand
-  end constructor
-  function getAction() returns PlayerAction
-    return if((this.hand.total < 17), PlayerAction.draw, PlayerAction.stand)
-  end function
-  function toString() returns String
-    return "a Dealer"
-  end function
-end class
-class HumanPlayer inherits Player
-  constructor(startingPoints as Int, hand as Hand)
-    reassign this.hand to hand
-  end constructor
-  property hand as Hand
-  procedure changeScoreBy(amount as Int)
-  end procedure
-  function toString() returns String
-    return "a HumanPlayer"
-  end function
-end class
-class Hand
-  constructor()
-    reassign this.total to 0
-  end constructor
-  property total as Int
-  function toString() returns String
-    return "a Hand"
-  end function
-end class
-</codeblock>
-<hr>
-</div></div>
 
 <h2 id="constant"><b>constant</b> </h2>
 <p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
@@ -791,10 +722,7 @@ end function
 <div id="Member"></div>
 <h1 id="MemberInstructions">Member instructions</h1>
 
-<p>Member instructions (also referred to simply as 'members') are located within an
- <b>interface</b>,
- <b>abstract class</b> or
-  <b>concrete class</b>.
+<p>Member instructions (also referred to simply as 'members') are located within an <b>abstract class</b> or <b>concrete class</b>.
 The <b>new code</b> prompt offers a context appropriate subset of the following member instructions:</p>
 <p>
  <a href="#abstract_property"><b>abstract property</b> <i class="fa">&#xf14c;</i></a>,
@@ -819,7 +747,6 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
   <th>notes</th>
  </tr><tr>
   <td width="150"></td>
-  <td width="40"><a href="#interface"><b>interface</b> <i class="fa">&#xf14c;</i></a></td>
   <td width="40"><a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a></td>
   <td width="40"><a href="#class"><b>concrete class</b> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
@@ -1705,32 +1632,29 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
  <p>The Type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the Type is inapplicable,
- or it is an <b>abstract class</b> or <b>interface</b>.</p>
+ or it is an <b>abstract class</b>.</p>
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
 -->
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
- <p>A concrete class may inherit from an abstract class, and/or an interface, but not from another concrete class.
+ <p>A concrete class may inherit from a single abstract class but not from another concrete class.
  In Elan, all classes must be either abstract or 'final': a final class being concrete and not-inheritable.</p>
 
-<h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
- <p>An interface may inherit from other interfaces, but not from any class.</p>
-
-<h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">class/interface ... cannot inherit from itself</h3>
+<h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">class ... cannot inherit from itself</h3>
  <p>The message is self explanatory.</p>
 
 <h3 id="MustBeSingleAbstractCompileError" class="no-TOC">There must be only one abstract superclass ...</h3>
- <p>A class may inherit from only one abstract class. However, it may additionally inherit from one or more interfaces.</p>
+ <p>A class may inherit from only one abstract class.</p>
 
 <h3 id="PrivateMemberCompileError" class="no-TOC">Cannot reference private member ...</h3>
  <p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
  It may not be accessed by any code outside the class hierarchy.</p>
 
 <h3 id="MustImplementCompileError" class="no-TOC">... must implement ...</h3>
- <p>If a concrete class inherits from any abstract class or interface(s) it must implement all abstract methods defined in those Types.</p>
+ <p>If a concrete class inherits from any abstract class it must implement all abstract methods defined in the abstract type (or in any super-type of the abstract class).</p>
 
 <h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
- <p>You cannot create an instance of any abstract class or interface: only of a concrete class.</p>
+ <p>You cannot create an instance of any abstract class: only of a concrete class.</p>
 
 <!--
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
@@ -1799,34 +1723,15 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 
 <h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.</h3>
 
-<h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
- <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
-<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div,
- each, else, empty, end, enum, exception, for, from, function, global, if, image, import, in, inherits, interface, is, isnt, lambda, let, library, main, mod,
- new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try,
- variable, while, with</el-code></p>
-
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
- <p>In addition to Elan keywords there are other 'reserved words' that cannot be used to define the name for a
- value, property, or method. If you encounter this error you may eliminate the error simply by adding
-  more valid characters to the name, but not by merely changing the case of part of the name.</p>
- <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:</p>
- <ul>
-  <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
-  <li>Keywords in all the supported languages.</li>
-  <li>Lowercase versions of Elan Type names, such as <code>Int</code>, <code>Float</code>, <code>String</code>, <code>Boolean</code>, <code>List</code>, <code>Dictionary</code>.
-  It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
-  what it does (for a method), or represents (for a named value).</li>
-  <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
-  use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
-  just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of
-  complexity, especially in regard to debugging and interaction with the Elan editor, just to eliminate
-  the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
- </ul>
-<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
- const, continue, curry, debugger, default, delete, dict, dictionary, do, double, error, eval, export, extends, final, finally, float, goto, ignore, implements,
- instanceof, int, into, list, long, match, myclass, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
- short, static, string, super, switch, system, synchronized, throws, todo, transient, tuple, typeof, void, volatile, var, when, xor, yield</el-code></p>
+ <p>Most programming languages define keywords, or other 'reserved words' that may not be used as identifiers - for technical reasons.
+  Because Elan supports multiple programming languages and guarantees that any program written in one language
+  will convert correctly to the other languages, it must disallow the use of keywords from <i>any</i>
+  of the supported languages - not just the ones defined by the language you are writing. Fortunately many
+  of the keywords are common to more than one of the languages.</p>
+
+  <p>If you see this message, just alter the identifier you have defined - by extending the word, perhaps even just by adding an underscore -
+    or choose a different word altogether.</p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
