@@ -398,6 +398,9 @@ export class LanguageVB extends LanguageAbstract {
         const keyWord = frame.isInterface ? inheritsKw : implementsKw;
         result += `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
       }
+      if (abstractClasses.length === 0 && interfaces.length === 0) {
+        result = ` ${node.renderAsElanSource()}`;
+      }
       result += `<br>`;
     }
     return result;

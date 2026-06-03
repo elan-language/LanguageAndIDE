@@ -1636,15 +1636,14 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
 -->
-<h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
- <p>A concrete class may inherit from a single abstract class but not from another concrete class.
- In Elan, all classes must be either abstract or 'final': a final class being concrete and not-inheritable.</p>
+<h3 id="MustBeAbstractCompileError" class="no-TOC">May inherit from one abstract superclass only</h3>
+ <p>The message is self explanatory.</p>
 
 <h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">class ... cannot inherit from itself</h3>
  <p>The message is self explanatory.</p>
 
-<h3 id="MustBeSingleAbstractCompileError" class="no-TOC">There must be only one abstract superclass ...</h3>
- <p>A class may inherit from only one abstract class.</p>
+<h3 id="MustBeSingleAbstractCompileError" class="no-TOC">May inherit from one abstract superclass only.</h3>
+<p>The message is self explanatory.</p>
 
 <h3 id="PrivateMemberCompileError" class="no-TOC">Cannot reference private member ...</h3>
  <p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
