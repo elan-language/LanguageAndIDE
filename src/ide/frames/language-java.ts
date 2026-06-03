@@ -103,8 +103,6 @@ export class LanguageJava extends LanguageCfamily {
         const keyWord = frame.isInterface ? inheritsKw : implementsKw;
         result += ` ${keyWord}${csvTypes}`;
       }
-    } else {
-      result = field.default_renderasHtml();
     }
     return result;
   }

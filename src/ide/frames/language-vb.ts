@@ -399,8 +399,6 @@ export class LanguageVB extends LanguageAbstract {
         result += `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
       }
       result += `<br>`;
-    } else {
-      result = field.default_renderasHtml();
     }
     return result;
   }

@@ -368,7 +368,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'item_0' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot mutate tuple.LangRef.html#compile_error"]);
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
