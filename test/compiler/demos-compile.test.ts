@@ -10,6 +10,10 @@ suite("Demo compile", () => {
     await testElanFile("binary-search");
   });
 
+  test("test blackjack", async () => {
+    await testElanFile("blackjack");
+  });
+
   test("test bubbles", async () => {
     await testElanFile("bubbles");
   });

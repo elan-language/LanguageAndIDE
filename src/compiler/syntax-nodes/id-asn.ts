@@ -101,7 +101,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     }
 
     if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
-      mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
+      mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
     }
 
     mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);

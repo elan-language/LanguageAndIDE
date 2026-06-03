@@ -287,11 +287,13 @@ export function scopePrefix(
   }
 
   if (isGlobalConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
-    return isGlobalConstant(scope) ? "this." : "global.";
+    return isGlobalConstant(scope) ? `${getGlobalScope(scope).language.THIS_INSTANCE}.` : "global.";
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return isAstIdNode(qualifier) ? `${qualifier.id}.` : `this.`;
+    return isAstIdNode(qualifier)
+      ? `${qualifier.id}.`
+      : `${getGlobalScope(scope).language.THIS_INSTANCE}.`;
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {
@@ -464,6 +466,8 @@ export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScop
     const classSymbol = originalScope.resolveSymbol(classScope.className, true, originalScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
+  } else if (classScope instanceof TupleType) {
+    currentScope = new TupleAsn(classScope, currentScope);
   } else {
     currentScope = originalScope.getParentScope();
   }
@@ -622,7 +626,7 @@ export function implementsAbstractMethodOnClassOrInterface(
 ): [string, boolean] {
   const methodName = nameField.renderAsElanSource();
   const className = classFrame.name.renderAsElanSource();
-  const rootNode = classFrame.getFile().getAst(true)!;
+  const rootNode = classFrame.getFile().getAst(false)!;
   const cls = rootNode.resolveSymbol(className, false, rootNode);
 
   let superCls = "";
