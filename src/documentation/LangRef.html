@@ -20,177 +20,6 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="namedValue">Named values</h1>
-
-<p>In most programming, the term <i><b>variable</b></i> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
- i.e. its value can be varied. In Elan, these data entities are called <b><i>named values</i></b> so that a distinction can be made between:</p>
-<ul>
- <li><b><i>mutable named values</i></b> whose content can be assigned and reassigned, e.g. defined with a <b>variable definition</b> instruction and reassigned with a <b>change variable</b> instruction or,
- for standard data structures, there are methods for their update.</li>
- <li><b><i>immutable named values</i></b> whose content is assigned, e.g. with a <b>constant</b> instruction, or a <b>let</b> instruction in a function, and then cannot be reassigned.
- There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
-</ul>
-<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
-it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication, assist in the modularisation of code and reduce errors.</p>
-<p>Both kinds of named value must be initialised with literals, expressions or initialisation methods. The counter variable in a <b>for</b> loop, however, may be used without having been initialised.</p>
-
-<h2 id="Type">Data Types</h2>
-
-<p>There are two fundamentally different kinds of data Type, differing by how their values
-are passed around in a running program:</p>
-<ul>
- <li><i><b id="ValueType">Value Types</b></i> that contain a single value, and are passed around directly:<br>
- <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
- <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
- <code>String</code>, <code>List</code>, etc. as well as
- any <b>concrete class</b> pr <b>abstract class</b>.</li>
-</ul>
-
-<p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
-<table>
- <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
- </tr><tr>
-  <td>Value data</td>
-  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td rowspan="2">Standard<br>data structures</td>
-  <td rowspan="2"></td>
-  <td rowspan="2"></td>
-  <td rowspan="2"></td>
-  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf14c;</i></a></td>
- </tr><tr>
-  <td><a href="LibRef.html#HashSet"><el-topic>Set</el-topic><br><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
- </tr><tr>
-  <td>Graphics</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
-  <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
- </tr><tr>
-  <td>Data I/O</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><code>TextFileWriter</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><code>TextFileReader</code> <i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td>User-defined</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
- </tr><tr>
-  <td>Other</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
-<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
-  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  </tr>
-</table>
-
-<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
-<ul>
- <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
- <li><i>or</i> specified in the definition of:
- <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
-  <li>parameters of functions and procedures</li>
-  <li><b>return</b> value of a function</li>
-  <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
- </ul></li>
-</ul>
-
-<h2 id="Mutability">Mutability of named values</h2>
-
-<p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
-You can, however, create another instance that is a copy of the original
-with all the same property values except for specific changes that you want to make.
- The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
-
-<p>This table shows which named values can be reassigned and/or mutated depending on how they were defined:</p>
-<table>
- <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
- <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>reassign<br>with <b>reassign</b></th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
-  <td>values are assigned only at compile time</td></tr>
- <tr><td><a href="#variable"><b>variable definition</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
-  <td>values are assigned during execution</td></tr>
- <tr><td><a href="#Parameter_value">parameter (by value) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
-  <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
- <tr><td><a href="#Parameter_reference">parameter (by reference) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
-</table>
-
-<h2 id="Identifier">Identifiers and Type names</h2>
-
-<h3 class="no-TOC">Named value identifier</h3>
-<p>The name given to every named value must follow the rules for an <b>identifier</b>:</p>
-<ul>
- <li>It must start with either a lowercase letter or an underscore, followed by any combination ot letters (upper- or lowercase), digits and underscore symbols.</li>
- <li>It must not contain spaces or symbols other than underscore.</li>
- <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
- <li>Like all the language's keywords, it is case-sensitive.</li>
- <li>You cannot use two identifiers within the same scope that differ only in case, e.g. <code>varx</code> and <code>varX</code>.</li>
-</ul>
-
-<h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <code>List</code>) or user-defined (e.g. <code>class</code> <el-type>MyClass</el-type>), is named like an identifier but
- with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
-
-<div id="global"></div>
-<div id="library"></div>
-<h2 id="Scope">Scope and name qualification</h2>
-<p>'Scope' in the table above refers to where in your code a named value is accessible.
- <a href="#constant">Global <b>constant</b>s <i class="fa">&#xf14c;</i></a> and <a href="#enum"><b>enum</b>s <i class="fa">&#xf14c;</i></a>, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
- Every other kind of named value is <i>local</i> and restricted to the <b>procedure</b> or <b>function</b> within which it is defined.</p>
-<p>Local named values can have the same name as a global <b>constant</b>, <b>function</b>, or <b>procedure</b> (which are all defined at global level or are in the standard library).
- In such cases, when the name is used within the same method, then it will refer to the local definition.</p>
-
-<h2 id="dotSyntax">Dot syntax</h2>
-<p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
-<ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
- <code>variable n set to s.length()</code></li>
- <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
- <code>call li.initialise(10,0)</code></li>
- <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>g</el-id>) of class <el-type>Game</el-type> and, in this example, to get the length of the property's current string value, using
- library methods:<br>
- <code>variable bodyGL set to g.body.toString().length()</code></li>
- <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <code>variable point set to (3, 7)</code><br>
- <code>variable x set to point.item_0</code>
- </li>
- <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
-  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
-  <code>variable suit set to Suit.spades</code></li>
-</ul>
-<p>You cannot use dot syntax with functions and procedures that you define at the global level,
- nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
-
 <h1 id="GlobalInstructions">Global instructions</h1>
 <p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
 They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions. They are:
@@ -217,16 +46,17 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </ul>
 
 <h2 id="main"><b>main</b></h2>
-<p>A program must have a <b>main</b> method, sometimes called its <b>main</b> routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <b>main</b> method, either as a coding exercise or for subsequent use within another program.</p>
-<p>The <b>main</b> method defines the start point of a program when it is run (executed).</p>
+<p>A program must have a main routine, if it is intended to be run as a program. 
+  You may, however, develop and test code that does not have a main routine, either as a coding exercise or for subsequent use within another program.</p>
+<p>The main routine defines the start point of a program when it is run (executed).</p>
 <p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
 <p>It may delegate work to one or more <a href="#procedure">procedures <i class="fa">&#xf14c;</i></a> or <a href="#function">functions <i class="fa">&#xf14c;</i></a>.</p>
-<p>There may not be more than one <b>main</b> in a program file, and the Global prompt will not show <b>main</b> as an option when one already exists in the file.</p>
+<p>There may not be more than one main routine in a program file, and the <b>new code</b> prompt will not show <b>main</b> as an option when one already exists in the file.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a <b>main</b> method</h4>
+<h4 class="no-TOC acc-title">Example of a main routine</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A <b>main</b> method</p>
+
 <codeblock>
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
@@ -239,19 +69,25 @@ end main
 
 <h2 id="procedure"><b>procedure</b></h2>
 <div id="Parameter_value"></div>
-<p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
-<p>Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
+<p id="Argument">A procedure is a named piece of code that may define parameters, 
+  which are given inputs via arguments specified in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
+<p>the procedure's name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
 <p> Unlike a function:</p>
 <ul>
  <li>a <b>procedure</b> can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
  <li>a <b>procedure</b> does not return a value.</li>
- <li>a <b>procedure</b>'s parameter named values (that are mutable) may be changed <i>inside</i> the <b>procedure</b>, but they do not affect the value of arguments in the <b>call procedure</b> instruction outside the <b>procedure</b>.</li>
- <li>to pass a changed parameter back to its calling argument, it must have been called <a href="#CallByRef"><i>by reference</i> <i class="fa">&#xf14c;</i></a>.</li>
+ <li>it is possible for the code inside a <b>procedure</b> to make changes to parameters, such that those changes may be seen by the code that calls it:</li>
+ <ul>
+    <li>If the type of the parameter is <i>mutable</i> - such as a <code>List</code> - then any change made to its contents 
+      within the procedure will be visible outside </li>
+    <li>If the type of the parameter is <i>immutable</i> - such as an <code>int</code> or <code>String</code> then
+      to make changes visible outside the procedure it must be passed <a href="#CallByRef"><i>by reference</i> <i class="fa">&#xf14c;</i></a>.</li>
+ </ul>
 </ul>
-<p>The instructions within a <b>procedure</b> can therefore:</p>
+<p>The instructions within a <b>procedure</b> can:</p>
 <ul>
  <li>include calls to other procedures, or to itself if <a href="#recursion">recursion <i class="fa">&#xf14c;</i></a> is required.</li>
- <li>include data input methods and other system functions such as for random number generation.</li>
+ <li>include data input methods and other system methods such as for random number generation.</li>
 </ul>
 <p>Procedure calls are of two kinds:</p>
 <ul>
@@ -260,7 +96,7 @@ end main
  <li>to apply a <b>procedure</b> to a value using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a>:<br>
  <code>call aList.removeAt(4)</code></li>
 </ul>
-<p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
+<p>Both the examples above are calls are to library procedures, but the same options are applicable to the procedures you write.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Example of a <b>procedure</b></h4>
@@ -1275,6 +1111,7 @@ end function
 <ul>
 <li><a href="#literalValue">Literal value <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#namedValue">Named value <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#namedValue">Indexed value <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
 <li><a href="#functionCall"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
@@ -1295,8 +1132,22 @@ end function
 </table>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.</p>
 
-<div id="range"></div>
-<h2 id="IndexedValue">Indexed values</h2>
+<h2 id="namedValue">Named value</h2>
+
+<p>In most programming, the term <i><b>variable</b></i> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
+ i.e. its value can be varied. In Elan, these data entities are called <b><i>named values</i></b> so that a distinction can be made between:</p>
+<ul>
+ <li><b><i>mutable named values</i></b> whose content can be assigned and reassigned, e.g. defined with a <b>variable definition</b> instruction and reassigned with a <b>change variable</b> instruction or,
+ for standard data structures, there are methods for their update.</li>
+ <li><b><i>immutable named values</i></b> whose content is assigned, e.g. with a <b>constant</b> instruction, or a <b>let</b> instruction in a function, and then cannot be reassigned.
+ There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
+</ul>
+<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
+it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication, assist in the modularisation of code and reduce errors.</p>
+<p>Both kinds of named value must be initialised with literals, expressions or initialisation methods. The counter variable in a <b>for</b> loop, however, may be used without having been initialised.</p>
+
+
+<h2 id="IndexedValue">Indexed value</h2>
 <p>If a named value is of an indexable Type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
  using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
 <p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
@@ -1572,6 +1423,164 @@ Rather, a comment contains information <em>about</em> the program, intended to b
 as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
+
+<h1>Concepts</h1>
+<h2 id="Type">Data Types</h2>
+
+<p>There are two fundamentally different kinds of data Type, differing by how their values
+are passed around in a running program:</p>
+<ul>
+ <li><i><b id="ValueType">Value Types</b></i> that contain a single value, and are passed around directly:<br>
+ <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
+ <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <code>String</code>, <code>List</code>, etc. as well as
+ any <b>concrete class</b> pr <b>abstract class</b>.</li>
+</ul>
+
+<p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
+<table>
+ <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
+ </tr><tr>
+  <td>Value data</td>
+  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td rowspan="2">Standard<br>data structures</td>
+  <td rowspan="2"></td>
+  <td rowspan="2"></td>
+  <td rowspan="2"></td>
+  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf14c;</i></a></td>
+ </tr><tr>
+  <td><a href="LibRef.html#HashSet"><el-topic>Set</el-topic><br><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Graphics</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
+  <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Data I/O</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><code>TextFileWriter</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><code>TextFileReader</code> <i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td>User-defined</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
+ </tr><tr>
+  <td>Other</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
+<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
+  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  </tr>
+</table>
+
+<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
+<ul>
+ <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
+ <li><i>or</i> specified in the definition of:
+ <ul>
+  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
+  <li>parameters of functions and procedures</li>
+  <li><b>return</b> value of a function</li>
+  <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
+ </ul></li>
+</ul>
+
+<h2 id="Mutability">Mutability of named values</h2>
+
+<p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
+You can, however, create another instance that is a copy of the original
+with all the same property values except for specific changes that you want to make.
+ The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
+
+<p>This table shows which named values can be reassigned and/or mutated depending on how they were defined:</p>
+<table>
+ <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>reassign<br>with <b>reassign</b></th><th>mutate</th><th>scope</th></tr>
+ <tr><td><a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+  <td>values are assigned only at compile time</td></tr>
+ <tr><td><a href="#variable"><b>variable definition</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td>values are assigned during execution</td></tr>
+ <tr><td><a href="#Parameter_value">parameter (by value) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
+ <tr><td><a href="#Parameter_reference">parameter (by reference) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
+</table>
+
+<h2 id="Identifier">Identifiers and Type names</h2>
+
+<h3 class="no-TOC">Named value identifier</h3>
+<p>The name given to every named value must follow the rules for an <b>identifier</b>:</p>
+<ul>
+ <li>It must start with either a lowercase letter or an underscore, followed by any combination ot letters (upper- or lowercase), digits and underscore symbols.</li>
+ <li>It must not contain spaces or symbols other than underscore.</li>
+ <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
+ <li>Like all the language's keywords, it is case-sensitive.</li>
+ <li>You cannot use two identifiers within the same scope that differ only in case, e.g. <code>varx</code> and <code>varX</code>.</li>
+</ul>
+
+<h3 class="no-TOC" id="TypeName">Type name</h3>
+<p>Every Type, whether system (e.g. <code>List</code>) or user-defined (e.g. <code>class</code> <el-type>MyClass</el-type>), is named like an identifier but
+ with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
+
+<div id="global"></div>
+<div id="library"></div>
+<h2 id="Scope">Scope and name qualification</h2>
+<p>'Scope' in the table above refers to where in your code a named value is accessible.
+ <a href="#constant">Global <b>constant</b>s <i class="fa">&#xf14c;</i></a> and <a href="#enum"><b>enum</b>s <i class="fa">&#xf14c;</i></a>, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
+ Every other kind of named value is <i>local</i> and restricted to the <b>procedure</b> or <b>function</b> within which it is defined.</p>
+<p>Local named values can have the same name as a global <b>constant</b>, <b>function</b>, or <b>procedure</b> (which are all defined at global level or are in the standard library).
+ In such cases, when the name is used within the same method, then it will refer to the local definition.</p>
+
+<h2 id="dotSyntax">Dot syntax</h2>
+<p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
+<ul>
+ <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
+ <code>variable n set to s.length()</code></li>
+ <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
+ <code>call li.initialise(10,0)</code></li>
+ <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>g</el-id>) of class <el-type>Game</el-type> and, in this example, to get the length of the property's current string value, using
+ library methods:<br>
+ <code>variable bodyGL set to g.body.toString().length()</code></li>
+ <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
+ <code>variable point set to (3, 7)</code><br>
+ <code>variable x set to point.item_0</code>
+ </li>
+ <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
+  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
+  <code>variable suit set to Suit.spades</code></li>
+</ul>
+<p>You cannot use dot syntax with functions and procedures that you define at the global level,
+ nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
 
 <h1 id="compile_error">Compile errors and warnings</h1>
 
