@@ -44,11 +44,11 @@ export class TypeCompileError extends CompileError {
 }
 
 export class ThisCompileError extends CompileError {
-  constructor(location: string) {
+  constructor(prefix: string, location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot use 'this' outside class context.`,
+      `Cannot use '${prefix}' outside class context.`,
       location,
       "LangRef.html#ThisCompileError",
     );
@@ -347,11 +347,11 @@ export class ExtensionCompileError extends CompileError {
 }
 
 export class PropertyCompileError extends CompileError {
-  constructor(location: string) {
+  constructor(prefix: string, location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Must prefix member with 'this'.`,
+      `Must prefix member with '${prefix}'.`,
       location,
       "LangRef.html#compile_error",
     );

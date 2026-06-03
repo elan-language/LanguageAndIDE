@@ -44,10 +44,11 @@ body {
 
 #lhs {
   width: 55%;
-  flex-grow: 0;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 5px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 #rhs {
@@ -65,8 +66,8 @@ body {
 }
 
 #code-controls {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto;
   background-color: var(--ideBackground);
 }
 
@@ -694,7 +695,7 @@ body.functional div.demo-file.functional { display: revert; }
 .quad-editor .quad {
   display: grid;
   grid-template-columns: 50% 50%; 
-  grid-template-rows: 2.5% 47.5% 2.5% 47.5%;
+  grid-template-rows: auto minmax(0, 0.5fr) auto minmax(0, 0.5fr);
   overflow: revert;
 }
 

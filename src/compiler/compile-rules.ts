@@ -518,8 +518,9 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
   }
 }
 
-export function mustBeInsideClass(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new ThisCompileError(location));
+export function mustBeInsideClass(scope: Scope, compileErrors: CompileError[], location: string) {
+  const language = getGlobalScope(scope).language;
+  compileErrors.push(new ThisCompileError(language.THIS_INSTANCE, location));
 }
 
 export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {
@@ -572,11 +573,13 @@ export function mustNotCallNonExtensionViaQualifier(
 
 export function mustbeValidQualifier(
   qualifier: AstNode,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (qualifier === EmptyAsn.Instance) {
-    compileErrors.push(new PropertyCompileError(location));
+    const language = getGlobalScope(scope).language;
+    compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
   }
 }
 
