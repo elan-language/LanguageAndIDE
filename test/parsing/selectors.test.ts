@@ -98,7 +98,6 @@ suite("Selector tests", () => {
       "enum",
       "concrete class",
       "abstract class",
-      "interface",
       "# comment",
     ]);
   });
@@ -359,7 +358,6 @@ suite("Selector tests", () => {
       "enum",
       "concrete class",
       "abstract class",
-      "interface",
       "# comment",
     ]);
   });
