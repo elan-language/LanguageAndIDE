@@ -17,7 +17,7 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
     this.compileErrors = [];
 
     if (!isInsideClass(this.scope)) {
-      mustBeInsideClass(this.compileErrors, this.fieldId);
+      mustBeInsideClass(this.scope, this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
