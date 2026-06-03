@@ -1544,7 +1544,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be inheritable class.LangRef.html#compile_error",
+      "May inherit from one abstract superclass only.LangRef.html#compile_error",
     ]);
   });
 
@@ -1658,7 +1658,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes.LangRef.html#compile_error",
+      "May inherit from one abstract superclass only.LangRef.html#compile_error",
     ]);
   });
 });

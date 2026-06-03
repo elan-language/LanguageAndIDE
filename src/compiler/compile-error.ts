@@ -251,11 +251,11 @@ export class InvalidSourceForForLoopCompileError extends CompileError {
 }
 
 export class MustBeAbstractCompileError extends CompileError {
-  constructor(type: string, location: string) {
+  constructor(_type: string, location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Superclass '${type}' must be inheritable class.`,
+      `May inherit from one abstract superclass only.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -291,7 +291,7 @@ export class MustBeSingleAbstractCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `There must be only one abstract superclass, ${types.join(", ")} are abstract classes.`,
+      `May inherit from one abstract superclass only.`,
       location,
       "LangRef.html#compile_error",
     );

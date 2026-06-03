@@ -159,7 +159,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "elan_assert9")]],
+      [
+        "elan_test3",
+        [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "elan_assert9")],
+      ],
     ]);
   });
 
@@ -204,7 +207,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test3", [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "elan_assert12")]],
+      [
+        "elan_test3",
+        [new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "elan_assert12")],
+      ],
     ]);
   });
 
@@ -548,7 +554,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test3", [new AssertOutcome(TestStatus.error, "Out of range index: 1 size: 0", "", "")]],
+      [
+        "elan_test3",
+        [new AssertOutcome(TestStatus.error, "Out of range index: 1 size: 0", "", "")],
+      ],
     ]);
   });
   test("Pass_VariousTestsOnAssert", async () => {
@@ -669,12 +678,18 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test3", [new AssertOutcome(TestStatus.pass, "[3, 2, 4, 0]", "[3, 2, 4, 0]", "elan_assert12")]],
+      [
+        "elan_test3",
+        [new AssertOutcome(TestStatus.pass, "[3, 2, 4, 0]", "[3, 2, 4, 0]", "elan_assert12")],
+      ],
       [
         "elan_test15",
         [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "elan_assert24")],
       ],
-      ["elan_test27", [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "elan_assert36")]],
+      [
+        "elan_test27",
+        [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "elan_assert36")],
+      ],
       ["elan_test42", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "elan_assert48")]],
       ["elan_test73", [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "elan_assert82")]],
     ]);
@@ -1034,7 +1049,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test3", [new AssertOutcome(TestStatus.pass, " 1  2   3    ", " 1  2   3    ", "elan_assert12")]],
+      [
+        "elan_test3",
+        [new AssertOutcome(TestStatus.pass, " 1  2   3    ", " 1  2   3    ", "elan_assert12")],
+      ],
     ]);
   });
 
