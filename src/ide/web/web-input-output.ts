@@ -318,6 +318,7 @@ export class WebInputOutput implements ElanInputOutput {
   async renderPrintedText(): Promise<void> {
     const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
+    div.scrollIntoView(false);
     return Promise.resolve();
   }
 
