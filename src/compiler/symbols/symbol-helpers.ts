@@ -464,6 +464,8 @@ export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScop
     const classSymbol = originalScope.resolveSymbol(classScope.className, true, originalScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
+  } else if (classScope instanceof TupleType) {
+    currentScope = new TupleAsn(classScope, currentScope);
   } else {
     currentScope = originalScope.getParentScope();
   }
