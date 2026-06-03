@@ -1104,8 +1104,13 @@ export function mustNotSetRangedIndex(compileErrors: CompileError[], location: s
   compileErrors.push(new SyntaxCompileError(`Cannot mutate set a ranged value`, location));
 }
 
-export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix.`, location));
+export function mustBePropertyPrefixedOnMember(
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const language = getGlobalScope(scope).language;
+  compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
 }
 
 function isIndexed(assignable: AstNode) {

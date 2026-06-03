@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Associations and Defaults", () => {
@@ -934,7 +934,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -972,7 +972,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1015,7 +1015,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1057,7 +1057,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1110,7 +1110,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1166,7 +1166,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1221,7 +1221,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix.LangRef.html#compile_error",
+      "Must prefix member with 'this'.LangRef.html#compile_error",
     ]);
   });
 
