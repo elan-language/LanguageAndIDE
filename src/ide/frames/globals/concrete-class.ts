@@ -20,7 +20,7 @@ export class ConcreteClass extends ClassFrame {
     this.getChildren().push(this.constr);
     this.toString = new FunctionMethod(this);
     this.toString.name.setFieldToKnownValidText("toString");
-    this.toString.returnType.setFieldToKnownValidText("String");
+    this.toString.returnType.setFieldToKnownValidText(this.language().STRING_NAME);
     const newCode = this.toString.getFirstChild();
     this.toString.removeChild(newCode);
     (this.toString.getLastChild() as ReturnStatement).expr.setFieldToKnownValidText(`"undefined"`);

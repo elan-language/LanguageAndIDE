@@ -37,8 +37,13 @@ export class InheritsFromField extends AbstractField {
     if (this.isSelected()) {
       result = ` ${super.renderAsHtml()}`;
     } else {
-      const textAsHtml = this.getFile().language().inheritsFromTextAsHtml(this);
-      result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${textAsHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+      const languageHtml = this.getFile().language().inheritsFromTextAsHtml(this);
+      if (languageHtml === "")  {
+        result = super.renderAsHtml();
+      } else {
+        result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${languageHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+
+      }
     }
     return result;
   }

@@ -1,0 +1,596 @@
+' VB.NET with Elan 2.0.0-alpha5
+
+Sub main()
+  Dim game = New Game(1000) ' variable definition
+  game.addPlayer(New HumanPlayer("Player A", 1000)) ' call procedure
+  Dim anotherRound = True ' variable definition
+  While anotherRound
+    playOneRound(game) ' call procedure
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)") ' call procedure
+    clearKeyBuffer() ' call procedure
+    display(game) ' call procedure
+    Dim k = waitForKey().lowerCase() ' variable definition
+    If k.equals("y") Then
+      game.setMessage("") ' call procedure
+    Else
+      anotherRound = False ' reassign variable
+    End If
+  End While
+End Sub
+
+Sub playOneRound(game As Game) ' procedure
+  game.newRound() ' call procedure
+  display(game) ' call procedure
+  Dim dealer = game.dealer ' variable definition
+  Dim faceCard = dealer.faceCard ' variable definition
+  For Each player In game.players
+    player.startTurn() ' call procedure
+    display(game) ' call procedure
+    While player.status = Status.active
+      player.nextAction(faceCard) ' call procedure
+      display(game) ' call procedure
+    End While
+  Next player
+  dealer.play() ' call procedure
+  display(game) ' call procedure
+  While dealer.status = Status.active
+    dealer.nextAction(faceCard) ' call procedure
+    display(game) ' call procedure
+  End While
+  game.updatePoints() ' call procedure
+End Sub
+
+Sub display(game As Game) ' procedure
+  Dim html = $"<style>{styleSheet}</style>{htmlForGame(game)}" ' variable definition
+  displayHtml(html) ' call procedure
+  sleep(1.5) ' call procedure
+End Sub
+
+Function determinePlayerOutcome(dealer As Dealer, player As Player) As Outcome
+  Dim d = dealer.status ' variable definition
+  Dim dTotal = dealer.handTotal ' variable definition
+  Dim p = player.status ' variable definition
+  Dim pTotal = player.handTotal ' variable definition
+  Dim bust = Status.bust ' variable definition
+  Dim bj = Status.blackjack ' variable definition
+  Dim win = Outcome.win ' variable definition
+  Dim winDouble = Outcome.winDouble ' variable definition
+  Dim lose = Outcome.lose ' variable definition
+  Dim draw = Outcome.draw ' variable definition
+  Dim playerOutcome = draw ' variable definition
+  If p = bust Then
+    playerOutcome = lose ' reassign variable
+  ElseIf (p = bj) And (d <> bj) Then
+    playerOutcome = winDouble ' reassign variable
+  ElseIf d = bust Then
+    playerOutcome = win ' reassign variable
+  ElseIf (d = bj) And (p = bj) Then
+    playerOutcome = draw ' reassign variable
+  ElseIf p = bj Then
+    playerOutcome = winDouble ' reassign variable
+  ElseIf d = bj Then
+    playerOutcome = lose ' reassign variable
+  ElseIf pTotal > dTotal Then
+    playerOutcome = win ' reassign variable
+  ElseIf pTotal < dTotal Then
+    playerOutcome = lose ' reassign variable
+  Else
+    ' strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
+    playerOutcome = draw ' reassign variable
+  End If
+  Return playerOutcome
+End Function
+
+<TestMethod> Sub test_determinePlayerOutcome()
+  Dim dbj = (New Dealer(0)).withStatus(Status.blackjack) ' let
+  Assert.AreEqual(Status.blackjack, dbj.status)
+  Dim d21 = (New Dealer(0)).withStatus(Status.standing).withHandTotal(21) ' let
+  Assert.AreEqual(Status.standing, d21.status)
+  Assert.AreEqual(21, d21.handTotal)
+  Dim d17 = (New Dealer(0)).withStatus(Status.standing).withHandTotal(17) ' let
+  Dim dbu = (New Dealer(0)).withStatus(Status.bust) ' let
+  Dim pbj = (New HumanPlayer("", 0)).withStatus(Status.blackjack) ' let
+  Assert.AreEqual(Status.blackjack, pbj.status)
+  Dim p21 = (New HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21) ' let
+  Dim p17 = (New HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17) ' let
+  Dim pbu = (New HumanPlayer("", 0)).withStatus(Status.bust) ' let
+  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj))
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21))
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu))
+  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(d21, pbj))
+  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(d21, p21))
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, p17))
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, pbu))
+  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(dbu, pbj))
+  Assert.AreEqual(Outcome.win, determinePlayerOutcome(dbu, p17))
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbu, pbu))
+End Sub
+
+Function dealCard(random As Double) As Card
+  Dim number = (random*52).floor() ' variable definition
+  Dim rank = rankValue().keys()[divAsInt(number, 4)] ' variable definition
+  Dim suit = number Mod 4 ' variable definition
+  Return New Card(rank, intAsSuit(suit), False)
+End Function
+
+<TestMethod> Sub test_dealCard()
+  Dim c1 = dealCard(0) ' let
+  Assert.AreEqual("2", c1.rank)
+  Assert.AreEqual(Suit.clubs, c1.suit)
+  Dim c2 = dealCard(0.9999999) ' let
+  Assert.AreEqual("A", c2.rank)
+  Assert.AreEqual(Suit.spades, c2.suit)
+  Dim c3 = dealCard(0.5) ' let
+  Assert.AreEqual("8", c3.rank)
+  Assert.AreEqual(Suit.hearts, c3.suit)
+  Dim c4 = dealCard(0.24) ' let
+  Assert.AreEqual("5", c4.rank)
+  Assert.AreEqual(Suit.clubs, c4.suit)
+End Sub
+
+Function intAsSuit(n As Integer) As Suit
+  Dim suit = Suit.clubs ' variable definition
+  If n = 1 Then
+    suit = Suit.diamonds ' reassign variable
+  ElseIf n = 2 Then
+    suit = Suit.hearts ' reassign variable
+  ElseIf n = 3 Then
+    suit = Suit.spades ' reassign variable
+  End If
+  Return suit
+End Function
+
+<TestMethod> Sub test_intAsSuit()
+  Assert.AreEqual(Suit.clubs, intAsSuit(0))
+  Assert.AreEqual(Suit.diamonds, intAsSuit(1))
+  Assert.AreEqual(Suit.hearts, intAsSuit(2))
+  Assert.AreEqual(Suit.spades, intAsSuit(3))
+End Sub
+
+Function htmlForGame(game As Game) As String
+  Dim html = "<div class='game'>" ' variable definition
+  html = html + htmlForPlayer(game.dealer) ' reassign variable
+  For Each player In game.players
+    html = html + htmlForPlayer(player) ' reassign variable
+  Next player
+  html = html + $"<div class='message'>{game.message}</div>" ' reassign variable
+  Return html + "</div>"
+End Function
+
+<TestMethod> Sub test_htmlForGame()
+  Dim c1 = New Card("3", Suit.clubs, False) ' let
+  Dim c2 = New Card("K", Suit.spades, True) ' let
+  Dim p = (New HumanPlayer("fred", 10)).withCards({c1, c2}) ' let
+  Dim players = (New List(Of Player)()).withAppend(p) ' let
+  Dim g2 = (New Game(1)).withPlayers(players) ' let
+  Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2))
+End Sub
+
+Function htmlForPlayer(player As Player) As String
+  Dim html = "<div class='player'>" ' variable definition
+  html = html + $"<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>" ' reassign variable
+  html = html + "<div class='hand'>" ' reassign variable
+  For Each card In player.cards
+    Dim suit = card.suit ' variable definition
+    Dim rank = card.rank ' variable definition
+    html = html + htmlForCard(card) ' reassign variable
+  Next card
+  Return html + "</div></div>"
+End Function
+
+<TestMethod> Sub test_htmlForPlayer()
+  Dim c1 = New Card("3", Suit.clubs, False) ' let
+  Dim c2 = New Card("K", Suit.spades, True) ' let
+  Dim p = (New HumanPlayer("charlie", 10)).withCards({c1, c2}) ' let
+  Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p))
+End Sub
+
+Function htmlForCard(card As Card) As String
+  Dim html = "" ' variable definition
+  If card.faceDown Then
+    html = "<div class='card reversed'>" ' reassign variable
+  Else
+    Dim rank = card.rank ' variable definition
+    Dim suit = card.suit ' variable definition
+    Dim colour = colourForSuit(suit) ' variable definition
+    Dim symbol = symbolForSuit(suit) ' variable definition
+    html = $"<div class='card {colour}'>" ' reassign variable
+    Dim u = htmlForSpot("u", rank) ' variable definition
+    Dim v = htmlForSpot("v", symbol) ' variable definition
+    Dim grid = "" ' variable definition
+    For Each location In gridForRank(rank)
+      If location.equals("royal") Then
+        grid = grid + htmlForSpot(location, rank) ' reassign variable
+      Else
+        grid = grid + htmlForSpot(location, symbol) ' reassign variable
+      End If
+    Next location
+    html = html + $"{u}{v}{grid}" ' reassign variable
+  End If
+  Return html + "</div>"
+End Function
+
+<TestMethod> Sub test_htmlForCard()
+  Dim c1 = New Card("3", Suit.clubs, False) ' variable definition
+  Assert.AreEqual("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1))
+  Dim c2 = New Card("K", Suit.spades, True) ' variable definition
+  Assert.AreEqual("<div class='card reversed'></div>", htmlForCard(c2))
+End Sub
+
+Function htmlForSpot(id As String, content As String) As String
+  Return $"<div class='{id}'>{content}</div>"
+End Function
+
+<TestMethod> Sub test_htmlForSpot()
+  Assert.AreEqual("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"))
+  Assert.AreEqual("<div class='u'>10</div>", htmlForSpot("u", "10"))
+End Sub
+
+Class Game
+
+  Sub New(dealerStartPoints As Integer)
+    Me.dealer = New Dealer(dealerStartPoints) ' reassign variable
+    Me.players = New List(Of Player)() ' reassign variable
+    Me.message = "" ' reassign variable
+  End Sub
+
+  Property dealer As Dealer
+
+  Property players As List(Of Player)
+
+  Property message As String
+
+  Function withPlayers(p As List(Of Player)) As Game
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.players = p ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Sub newRound() ' procedure method
+    Dim dealer = Me.dealer ' variable definition
+    dealer.newHand() ' call procedure
+    For Each player In Me.players
+      player.newHand() ' call procedure
+    Next player
+  End Sub
+
+  Sub updatePoints() ' procedure method
+    For Each player In Me.players
+      player.determineOutcomeAndUpdatePoints(Me.dealer) ' call procedure
+    Next player
+  End Sub
+
+  Sub addPlayer(player As Player) ' procedure method
+    Dim players = Me.players ' variable definition
+    players.append(player) ' call procedure
+  End Sub
+
+  Sub setMessage(message As String) ' procedure method
+    Me.message = message ' reassign variable
+  End Sub
+
+  Function toString() As String
+    Return "undefined"
+  End Function
+
+End Class
+
+Class Card
+
+  Property suit As Suit
+
+  Property rank As String
+
+  Property faceDown As Boolean
+
+  Sub New(rank As String, suit As Suit, facedown As Boolean)
+    Me.rank = rank ' reassign variable
+    Me.suit = suit ' reassign variable
+    Me.faceDown = facedown ' reassign variable
+  End Sub
+
+  Sub turnFaceUp() ' procedure method
+    Me.faceDown = False ' reassign variable
+  End Sub
+
+  Sub turnFaceDown() ' procedure method
+    Me.faceDown = True ' reassign variable
+  End Sub
+
+  Function toString() As String
+    Return "undefined"
+  End Function
+
+End Class
+
+MustInherit Class Player
+
+  Property name As String
+
+  Property points As Integer
+
+  Property cards As List(Of Card)
+
+  Property handTotal As Integer
+
+  Property softAce As Boolean
+
+  Property status As Status
+
+  Property hasTurn As Boolean
+
+  Sub startTurn() ' procedure method
+    If Me.status = Status.active Then
+      Me.hasTurn = True ' reassign variable
+    End If
+  End Sub
+
+  Sub determineOutcomeAndUpdatePoints(dealer As Dealer) ' procedure method
+    Dim playerOutcome = determinePlayerOutcome(dealer, Me) ' variable definition
+    If playerOutcome = Outcome.winDouble Then
+      Me.changePointsBy(2) ' call procedure
+      dealer.changePointsBy(-2) ' call procedure
+    ElseIf playerOutcome = Outcome.win Then
+      Me.changePointsBy(1) ' call procedure
+      dealer.changePointsBy(-1) ' call procedure
+    ElseIf playerOutcome = Outcome.lose Then
+      Me.changePointsBy(-1) ' call procedure
+      dealer.changePointsBy(1) ' call procedure
+    End If
+  End Sub
+
+  Sub evaluateStatus(newCard As Card) ' procedure method
+    If (Me.cardCount() = 2) And (Me.handTotal = 21) Then
+      Me.status = Status.blackjack ' reassign variable
+    ElseIf (Me.handTotal > 21) And (Me.softAce) Then
+      Me.handTotal = Me.handTotal - 10 ' reassign variable
+      Me.softAce = False ' reassign variable
+    ElseIf Me.handTotal > 21 Then
+      Me.status = Status.bust ' reassign variable
+    ElseIf Me.handTotal = 21 Then
+      Me.status = Status.standing ' reassign variable
+    End If
+    If Me.status <> Status.active Then
+      Me.hasTurn = False ' reassign variable
+    End If
+  End Sub
+
+  Sub stand() ' procedure method
+    Me.status = Status.standing ' reassign variable
+    Me.hasTurn = False ' reassign variable
+  End Sub
+
+  Sub draw() ' procedure method
+    Dim newCard = dealCard(random()) ' variable definition
+    Dim cards = Me.cards ' variable definition
+    cards.append(newCard) ' call procedure
+    If newCard.rank.equals("A") Then
+      Me.addAce() ' call procedure
+    Else
+      Me.handTotal = Me.handTotal + rankValue()[newCard.rank] ' reassign variable
+    End If
+    Me.evaluateStatus(newCard) ' call procedure
+  End Sub
+
+  Sub addAce() ' procedure method
+    If Me.softAce Then
+      Me.handTotal = Me.handTotal + 1 ' reassign variable
+    Else
+      Me.handTotal = Me.handTotal + 11 ' reassign variable
+      Me.softAce = True ' reassign variable
+    End If
+  End Sub
+
+  Function cardCount() As Integer
+    Return Me.cards.length()
+  End Function
+
+  Sub changePointsBy(amount As Integer) ' procedure method
+    Me.points = Me.points + amount ' reassign variable
+  End Sub
+
+  MustOverride Sub newHand()
+
+  Sub newHandHelper() ' procedure method
+    Me.hasTurn = False ' reassign variable
+    Me.softAce = False ' reassign variable
+    Me.cards = New List(Of Card)() ' reassign variable
+    Me.handTotal = 0 ' reassign variable
+    Me.status = Status.active ' reassign variable
+    Me.draw() ' call procedure
+    Me.draw() ' call procedure
+  End Sub
+
+  MustOverride Function getMessage() As String
+
+  Function statusAsString() As String
+    Dim msg = "" ' variable definition
+    Dim status = Me.status ' variable definition
+    If Me.hasTurn Then
+      msg = msg + " - PLAYING" ' reassign variable
+    ElseIf status = Status.standing Then
+      msg = msg + " - STANDING" ' reassign variable
+    ElseIf status = Status.blackjack Then
+      msg = msg + " - BLACKJACK" ' reassign variable
+    ElseIf status = Status.bust Then
+      msg = msg + " - BUST" ' reassign variable
+    End If
+    Return msg
+  End Function
+
+  MustOverride Sub nextAction(dealerFaceCard As Card)
+
+End Class
+
+Class Dealer
+  Inherits Player
+
+
+  Sub New(startingPoints As Integer)
+    Me.name = "Dealer" ' reassign variable
+    Me.points = startingPoints ' reassign variable
+    Me.cards = New List(Of Card)() ' reassign variable
+    Me.faceCard = New Card("2", Suit.clubs, True) ' reassign variable
+  End Sub
+
+  Property faceCard As Card
+
+  Property hasPlayed As Boolean
+
+  Function withStatus(status As Status) As Dealer
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.status = status ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Function withHandTotal(ht As Integer) As Dealer
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.handTotal = ht ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Sub play() ' procedure method
+    Me.startTurn() ' call procedure
+    Dim hiddenCard = Me.cards[1] ' variable definition
+    hiddenCard.turnFaceUp() ' call procedure
+    Me.hasPlayed = True ' reassign variable
+  End Sub
+
+  Overrides Sub newHand() ' procedure method
+    Me.hasPlayed = False ' reassign variable
+    Me.newHandHelper() ' call procedure
+    Me.faceCard = Me.cards[0] ' reassign variable
+    Dim hiddenCard = Me.cards[1] ' variable definition
+    hiddenCard.turnFaceDown() ' call procedure
+  End Sub
+
+  Overrides Sub nextAction(faceCard As Card) ' procedure method
+    If Me.handTotal < 17 Then
+      Me.draw() ' call procedure
+    Else
+      Me.stand() ' call procedure
+    End If
+  End Sub
+
+  Overrides Function getMessage() As String
+    Dim msg = "" ' variable definition
+    If Me.hasPlayed Then
+      msg = Me.statusAsString() + $" - hand total: {Me.handTotal}" ' reassign variable
+    End If
+    Return msg
+  End Function
+
+  Function toString() As String
+    Return "undefined"
+  End Function
+
+End Class
+
+Class HumanPlayer
+  Inherits Player
+
+
+  Sub New(name As String, startingPoints As Integer)
+    Me.name = name ' reassign variable
+    Me.points = startingPoints ' reassign variable
+    Me.cards = New List(Of Card)() ' reassign variable
+  End Sub
+
+  Function withStatus(status As Status) As HumanPlayer
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.status = status ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Function withHandTotal(ht As Integer) As HumanPlayer
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.handTotal = ht ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Function withCards(c As List(Of Card)) As HumanPlayer
+    Dim copyOfThis = copy(Me) ' let
+    copyOfThis.cards = c ' reassign variable
+    Return copyOfThis
+  End Function
+
+  Overrides Sub newHand() ' procedure method
+    Me.newHandHelper() ' call procedure
+  End Sub
+
+  Overrides Sub nextAction(dealerFaceCard As Card) ' procedure method
+    Dim key = "" ' variable definition
+    clearKeyBuffer() ' call procedure
+    While key.equals("")
+      key = waitForKey() ' reassign variable
+      If key.equals("d") Then
+        Me.draw() ' call procedure
+      ElseIf key.equals("s") Then
+        Me.stand() ' call procedure
+      Else
+        key = "" ' reassign variable
+      End If
+    End While
+  End Sub
+
+  Overrides Function getMessage() As String
+    Dim msg = Me.statusAsString() + $"- hand total: {Me.handTotal}" ' variable definition
+    If Me.hasTurn Then
+      msg = msg + " - press 'd' to draw, 's' to stand" ' reassign variable
+    End If
+    Return msg
+  End Function
+
+  Function toString() As String
+    Return "undefined"
+  End Function
+
+End Class
+
+Enum Choice 
+  stand = 0
+  draw = 1
+End Enum
+
+Enum Outcome 
+  undecided = 0
+  lose = 1
+  draw = 2
+  win = 3
+  winDouble = 4
+End Enum
+
+Enum Status 
+  active = 0
+  standing = 1
+  blackjack = 2
+  bust = 3
+End Enum
+
+Enum Suit 
+  clubs = 0
+  diamonds = 1
+  hearts = 2
+  spades = 3
+End Enum
+
+Function symbolForSuit(suit As Suit) As String
+  Dim dc = [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"] ' variable definition
+  Return dc[suit]
+End Function
+
+Function rankValue() As Dictionary(Of String, Integer)
+  Return ["2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11]
+End Function
+
+Function gridForRank(rank As String) As List(Of String)
+  Dim dc = ["A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}] ' variable definition
+  Return dc[rank]
+End Function
+
+Function colourForSuit(suit As Suit) As String
+  Dim dc = [Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"] ' variable definition
+  Return dc[suit]
+End Function
+
+Const styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}"
