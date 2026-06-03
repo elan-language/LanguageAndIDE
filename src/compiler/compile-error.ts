@@ -287,7 +287,7 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
 }
 
 export class MustBeSingleAbstractCompileError extends CompileError {
-  constructor(types: string[], location: string) {
+  constructor(_types: string[], location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
