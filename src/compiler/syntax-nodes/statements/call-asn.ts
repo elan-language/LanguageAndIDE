@@ -82,7 +82,7 @@ export class CallAsn extends BreakpointAsn {
     );
 
     if (isMemberOnFieldsClass(procSymbol, this)) {
-      mustbeValidQualifier(qualifier, this.compileErrors, this.fieldId);
+      mustbeValidQualifier(qualifier, this.scope, this.compileErrors, this.fieldId);
     } else {
       mustBePublicMember(procSymbol, this.compileErrors, this.fieldId);
     }
