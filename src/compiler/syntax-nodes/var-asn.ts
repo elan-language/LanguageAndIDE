@@ -86,7 +86,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     );
 
     if (symbol.symbolScope === SymbolScope.member && isEmptyNode(this.qualifier)) {
-      mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
+      mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
     }
 
     const prefix = scopePrefix(
