@@ -76,6 +76,7 @@ import {
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TestType } from "./symbols/test-type";
+import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
@@ -1069,15 +1070,17 @@ export function mustNotBePropertyOnFunctionMethod(
         new ReassignInFunctionCompileError(`property: ${getId(assignable)}`, location),
       );
     } else {
+      let msg = `Cannot set property: ${getId(assignable)} directly.`;
       if (isAstQualifiedNode(assignable)) {
         if (assignable.qualifier instanceof ThisAsn) {
           return;
         }
+        if (assignable.qualifier.symbolType() instanceof TupleType) {
+          msg = "Cannot mutate tuple.";
+        }
       }
 
-      compileErrors.push(
-        new SyntaxCompileError(`Cannot set property: ${getId(assignable)} directly.`, location),
-      );
+      compileErrors.push(new SyntaxCompileError(msg, location));
     }
   }
 }
