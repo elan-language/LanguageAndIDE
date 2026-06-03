@@ -44,10 +44,11 @@ body {
 
 #lhs {
   width: 55%;
-  flex-grow: 0;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 5px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 #rhs {
