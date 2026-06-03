@@ -66,8 +66,8 @@ body {
 }
 
 #code-controls {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto;
   background-color: var(--ideBackground);
 }
 
