@@ -38,7 +38,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div id="main">
 <h2 >main</h2>
 
-<p>Example - from the <b>Burrow</b> demo:</p>
+<p>Example - from the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
 <codeblock>
 main
@@ -106,8 +106,8 @@ main
   end while
 end main 
 </codeblock>
-</div></div>
-<hr>
+</div>
+</div>
 </div>
 
 <div id="procedure">
@@ -188,7 +188,6 @@ procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
 end procedure
 </codeblock>
 </div></div>
-<hr>
 </div>
 
 <div id="function">
@@ -291,50 +290,127 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
 end function
 </codeblock>
 </div></div>
-<hr>
 </div>
 
 <div id="test">
-<h2><b>test</b></h2>
-<p>A <b>test</b> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
-<p>Without having to run your program, the <b>assert</b> equal instructions show whether your assertions pass or fail.
+<h2>test</h2>
 
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example of a set of <b>assert</b> equal instructions that test a <b>function</b></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test function <el-method>binarySearch</el-method> on four test lists</p>
+<p>Example from the <b>Life - procedural</b> demo - a single test method that tests the <el-method>willLive</el-method> function for
+18 different cases:</p>
+
 <codeblock>
-test test_binarySearch
-  variable li1 set to ["lemon", "lime", "orange"]
-  assert binarySearch(li1, "lemon") is true
-  assert binarySearch(li1, "lime") is true
-  assert binarySearch(li1, "orange") is true
-  assert binarySearch(li1, "pear") is false
-  variable li2 set to ["lemon", "orange"]
-  assert binarySearch(li2, "lemon") is true
-  assert binarySearch(li2, "orange") is true
-  assert binarySearch(li2, "pear") is false
-  variable li3 set to ["lemon"]
-  assert binarySearch(li3, "lemon") is true
-  assert binarySearch(li3, "lime") is false
-  variable li4 set to new List&lt;of String&gt;()
-  assert binarySearch(li4, "pear") is false
+test test_willLive
+  assert willLive(white, 0) is false
+  assert willLive(white, 1) is false
+  assert willLive(white, 2) is false
+  assert willLive(white, 3) is true
+  assert willLive(white, 4) is false
+  assert willLive(white, 5) is false
+  assert willLive(white, 6) is false
+  assert willLive(white, 7) is false
+  assert willLive(white, 8) is false
+  assert willLive(black, 0) is false
+  assert willLive(black, 1) is false
+  assert willLive(black, 2) is true
+  assert willLive(black, 3) is true
+  assert willLive(black, 4) is false
+  assert willLive(black, 5) is false
+  assert willLive(black, 6) is false
+  assert willLive(black, 7) is false
+  assert willLive(black, 8) is false
 end test
 </codeblock>
-<hr>
+
+<h4>What you need to know about tests</h4>
+<ul>
+  <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
+  <li>Some languages allow unit tests to be applied to procedures, but this dangerous since running the tests could result
+    in unwanted damage to the system (such as writing to a database); Elan guarantees that tests are safe by restrict them to functions.</li>
+  <li>A test method must be given a name that starts with the prefix `test_` (added automatically) and followed, typically,
+    by the name of the function.</li>
+  <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
+    adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
+  <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
+  <li>A test method must include one or more <b>assert</b> statements - with each one typically covering a different use-case.</li>
+  <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
+    consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
+  <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
+  <li>Instead, all tests in a program are run automatically, each time the code compiles.</li>
+  <li>The result of each assert in each test is shown alongside the assert instruction, and the overall summary is shown in the
+    status panel at the top centre of the Elan IDE.</li>
+  <li>Writing tests for every function is good practice - confirming that your function implementations are correct: when you write them,
+    every time you re-load the program from file.</li>
+    <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you 
+      have inadvertently made then incorrect for certain cases.</li>
+</ul>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">More examples of tests</h4>
+<div class="acc-body">
+
+  <p>Example from the <b>Date Time</b> demo. The comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
+  where errors are more common:</p>
+
+  <codeblock>
+test test_leap
+  # normal cases
+  assert leap(2025) is false
+  assert leap(2024) is true
+  # boundary cases
+  assert leap(1900) is false
+  assert leap(2000) is true
+end test
+
+  </codeblock>
+
+  <p>Example from the <b>Snake - procedural</b> demo, showing the use of a variable to create data to be used within multiple test cases (asserts):</p>
+
+  <codeblock>
+test test_getAdjacentSquare
+  variable sq set to [20, 15]
+  assert getAdjacentSquare(sq, "up") is [20, 14]
+  assert getAdjacentSquare(sq, "down") is [20, 16]
+  assert getAdjacentSquare(sq, "left") is [19, 15]
+  assert getAdjacentSquare(sq, "right") is [21, 15]
+  # boundary
+  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+end test
+  </codeblock>
+
 </div></div>
 
-<h4 class="no-TOC">Notes</h4>
-<ul>
- <li>Elan tests are designed to test functions only. It is not possible to call a <b>procedure</b> or <b>main</b> routine within a test.
-  Nor is it possible to use any <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> (the same rule as for a function).</li>
- <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test.
- You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
- <li><b>test</b> instructions may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <b>test</b> instruction may contain any number of <b>assert</b> equal instructions. The test runner is part of the IDE and it automatically attempts to run all <b>assert</b> equal instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <b>assert</b> equal failure) then execution of the test will stop and remaining <b>assert</b> equals will be shown as 'not run'.</li>
- <li>In addition to <b>assert</b> equal instructions, a <b>test</b> may contain any other instructions that may be added into a <b>function</b>.</li>
- <li>All <b>assert</b> equal statements should be at the top level within the <b>test</b> instruction; none may be put into a loop structure.</li>
-</ul>
+<div class="accordion">
+<h4 class="no-TOC acc-title">More advanced testing techniques</h4>
+<div class="acc-body">
+
+  <h3 class="no-TOC" id="ignore">Ghosting tests</h3>
+<p>To deliberately ensure that a test is not run, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
+<p>Even when <b>test</b>s or <b>assert</b> equals are <code>ghosted</code>, all the tests will be run and their status shown, but
+the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
+
+<p>You can ghost an entire test:</p>
+
+<codeblock>
+[ghosted] test test_overApple
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withApple(new Square(23, 15))
+  assert headOverApple(g2) is false
+  variable g3 set to g2.withHead(new Square(23, 15))
+  assert headOverApple(g3) is true
+end test
+</codeblock>
+
+<p>Or you can ghost any individual assert(s):</p>
+
+<codeblock>
+test test_overApple
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withApple(new Square(23, 15))
+  [ghosted] assert headOverApple(g2) is true
+  variable g3 set to g2.withHead(new Square(23, 15))
+  assert headOverApple(g3) is true
+end test
+</codeblock>
 
 <h3 class="no-TOC">Testing <code>Float</code> values</h3>
 <p>When testing <code>Float</code> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
@@ -367,12 +443,7 @@ end test
 
 <h3 class="no-TOC" >Testing long strings</h3>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
- <i>first</i> character at which the actual (computed) and expected strings differ.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example of testing long strings</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Reporting the first character at which the actual (computed) and expected strings differ:</p>
+ <i>first</i> character at which the actual (computed) and expected strings differ. For example:</p>
 
 <codeblock>
 constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
@@ -384,48 +455,17 @@ test test_setInStyle
   # assert fail message will be "s found at [146] {expected: /)"
 end test
 </codeblock>
-<hr>
-</div></div>
-
-<h3 class="no-TOC" id="ignore">Ignoring tests</h3>
-<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when <b>test</b>s or <b>assert</b> equals are <code>ghosted</code>, all the tests will be run and their status shown, but
-the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples of ghosting tests</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Ghosting an entire test:</p>
-
-<codeblock>
-[ghosted] test test_overApple
-  variable g1 set to new Game(new Random())
-  variable g2 set to g1.withApple(new Square(23, 15))
-  assert headOverApple(g2) is false
-  variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true
-end test
-</codeblock>
-<hr>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Ghosting an assert:</p>
-
-<codeblock>
-test test_overApple
-  variable g1 set to new Game(new Random())
-  variable g2 set to g1.withApple(new Square(23, 15))
-  [ghosted] assert headOverApple(g2) is true
-  variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true
-end test
-</codeblock>
-<hr>
-</div></div>
 
 <h3 class="no-TOC">Non-terminating loops and recursion</h3>
-<p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
+<p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. 
+  This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds
+   (most tests will pass in milliseconds), and an error message will appear. 
+  Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
 </p>
+</div>
+</div>
+</div>
 </div>
 
 <div id="class">
@@ -491,7 +531,6 @@ class Apple
   end procedure
 end class
 </codeblock>
-<hr>
 </div></div>
 
 <h3 class="no-TOC" id="this"><b>this</b></h3>
@@ -617,7 +656,6 @@ main
   variable state set to Status.pending
 end main
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To get a valid option from an abbreviation (in demo program pathfinder.elan):</p>
 <codeblock>
@@ -627,7 +665,6 @@ function getAlgFromLetter(letter as String) returns Algorithm
   return algs[letter]
 end function
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; A function to turn directions held in an <b>enum</b> through 90&deg; clockwise:</p>
 <codeblock>
@@ -649,7 +686,6 @@ function clockwise(d as Compass) returns Compass
 end function
 </codeblock>
 </div></div>
-<hr>
 </div>
 
 <div id="Comment">
@@ -663,7 +699,6 @@ Rather, a comment contains information <em>about</em> the program, intended to b
 as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header'.</p>
-<hr>
 </div>
 </div>
 
@@ -733,7 +768,6 @@ end if
     call body.removeAt(0)
   end if
 </codeblock>
-<hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
 <codeblock>
 main
@@ -747,7 +781,6 @@ main
   end if
 end main
 </codeblock>
-<hr>
 </div></div>
 
 <h2 id="while"><b>while loop</b></h2>
@@ -790,7 +823,6 @@ procedure printPrimes()
   end for
 end procedure
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the Type of a List's items (here <code>String</code>).
 and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
@@ -802,7 +834,6 @@ main
   end for
 end main
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To print first the keys and then the values from a <code>Dictionary</code>:</p>
 <codeblock>
@@ -816,7 +847,6 @@ main
   end for
 end main
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
 <codeblock>
@@ -831,7 +861,6 @@ function reverse(s as String) returns String
   return sReturn
 end function
 </codeblock>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Alternatively the loop variable may be defined as an integer range using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and
 <a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> in order to index into a subject List:</p>
@@ -843,7 +872,6 @@ main
   end for
 end main
 </codeblock>
-<hr>
 </div></div>
 
 <div class="accordion">
@@ -852,7 +880,6 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
 So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
 <p>It is therefore recommended never to reassign the loop variable within the loop.</p>
-<hr>
 </div></div>
 
 <h2 id="call"><b>call procedure</b></h2>
@@ -920,7 +947,6 @@ function foo(torf as Boolean) returns Boolean
 end function
 </codeblock>
 <p>When foo is given argument <el-id>true</el-id>, output is "error in foo()"; when given <el-id>false</el-id>, output is "no error". </p>
-<hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points (each a Tuple) has negative <i>x</i> or <i>y</i>:</p>
 <codeblock>
@@ -936,7 +962,6 @@ function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
   return 0
 end function
 </codeblock>
-<hr>
 </div></div>
 
 <h2 id="throw"><b>throw</b></h2>
@@ -965,7 +990,6 @@ end function
     proportion exceeds 100%
     Error
 </pre>
-<hr>
 </div></div>
 
 <h2 id="assert"><b>assert</b></h2>
@@ -1163,7 +1187,6 @@ class Pupil
   end function
 end class
 </codeblock>
-<hr>
 </div></div>
 
 <h2 id="FunctionMethod"><b>function</b> method</h2>
@@ -1224,7 +1247,6 @@ end class
 
 <h2 ><code># </code>comment</h2>
 <p>See <a href="#Comment">Comments</a></p>
-<hr>
 
 <h1 id="compile_error">Compile errors and warnings</h1>
 
@@ -1528,7 +1550,6 @@ very slow parsing. We strongly recommend that you you simplify the contents of t
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
-<hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
 </body>
 </html>
