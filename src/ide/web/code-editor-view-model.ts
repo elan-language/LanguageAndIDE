@@ -158,11 +158,13 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
-      this.file!.setLanguage(l);
+      this.file?.setLanguage(l);
+      this.file?.showCompletion(false);
       html.push(await this.file!.renderAsHtml());
     }
 
     this.file!.setLanguage(existingLanguage);
+    this.file?.showCompletion(true);
 
     return html;
   }
