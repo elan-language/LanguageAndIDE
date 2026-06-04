@@ -20,179 +20,9 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="namedValue">Named values</h1>
-
-<p>In most programming, the term <i><b>variable</b></i> describes a data entity in a program that contains a value and has a name by which you can read and write its value,
- i.e. its value can be varied. In Elan, these data entities are called <b><i>named values</i></b> so that a distinction can be made between:</p>
-<ul>
- <li><b><i>mutable named values</i></b> whose content can be assigned and reassigned, e.g. defined with a <b>variable definition</b> instruction and reassigned with a <b>change variable</b> instruction or,
- for standard data structures, there are methods for their update.</li>
- <li><b><i>immutable named values</i></b> whose content is assigned, e.g. with a <b>constant</b> instruction, or a <b>let</b> instruction in a function, and then cannot be reassigned.
- There are, however, methods for copying an immutable named value into another (or even the same) named value with specified changes.</li>
-</ul>
-<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in Functional Programming,
-it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication, assist in the modularisation of code and reduce errors.</p>
-<p>Both kinds of named value must be initialised with literals, expressions or initialisation methods. The counter variable in a <b>for</b> loop, however, may be used without having been initialised.</p>
-
-<h2 id="Type">Data Types</h2>
-
-<p>There are two fundamentally different kinds of data Type, differing by how their values
-are passed around in a running program:</p>
-<ul>
- <li><i><b id="ValueType">Value Types</b></i> that contain a single value, and are passed around directly:<br>
- <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
- <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
- <code>String</code>, <code>List</code>, etc. as well as
- any <b>concrete class</b> pr <b>abstract class</b>.</li>
-</ul>
-
-<p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
-<table>
- <tr><th>Type group</th><th colspan="3">Value Types</th><th colspan="4">Reference Types</th>
- </tr><tr>
-  <td>Value data</td>
-  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td rowspan="2">Standard<br>data structures</td>
-  <td rowspan="2"></td>
-  <td rowspan="2"></td>
-  <td rowspan="2"></td>
-  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf14c;</i></a></td>
- </tr><tr>
-  <td><a href="LibRef.html#HashSet"><el-topic>Set</el-topic><br><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
- </tr><tr>
-  <td>Graphics</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
-  <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
- </tr><tr>
-  <td>Data I/O</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><code>TextFileWriter</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><code>TextFileReader</code> <i class="fa">&#xf08e;</i></a></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td>User-defined</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
- </tr><tr>
-  <td>Other</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
-<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
-  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  </tr>
-</table>
-
-<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
-<ul>
- <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
- <li><i>or</i> specified in the definition of:
- <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
-  <li>parameters of functions and procedures</li>
-  <li><b>return</b> value of a function</li>
-  <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
- </ul></li>
-</ul>
-
-<h2 id="Mutability">Mutability of named values</h2>
-
-<p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
-You can, however, create another instance that is a copy of the original
-with all the same property values except for specific changes that you want to make.
- The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
-
-<p>This table shows which named values can be reassigned and/or mutated depending on how they were defined:</p>
-<table>
- <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
- <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>reassign<br>with <b>reassign</b></th><th>mutate</th><th>scope</th></tr>
- <tr><td><a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
-  <td>values are assigned only at compile time</td></tr>
- <tr><td><a href="#variable"><b>variable definition</b> <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
-  <td>values are assigned during execution</td></tr>
- <tr><td><a href="#Parameter_value">parameter (by value) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
-  <td>formal input argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
- <tr><td><a href="#Parameter_reference">parameter (by reference) <i class="fa">&#xf14c;</i></a></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
-  <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
-</table>
-
-<h2 id="Identifier">Identifiers and Type names</h2>
-
-<h3 class="no-TOC">Named value identifier</h3>
-<p>The name given to every named value must follow the rules for an <b>identifier</b>:</p>
-<ul>
- <li>It must start with either a lowercase letter or an underscore, followed by any combination ot letters (upper- or lowercase), digits and underscore symbols.</li>
- <li>It must not contain spaces or symbols other than underscore.</li>
- <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
- <li>Like all the language's keywords, it is case-sensitive.</li>
- <li>You cannot use two identifiers within the same scope that differ only in case, e.g. <code>varx</code> and <code>varX</code>.</li>
-</ul>
-
-<h3 class="no-TOC" id="TypeName">Type name</h3>
-<p>Every Type, whether system (e.g. <code>List</code>) or user-defined (e.g. <code>class</code> <el-type>MyClass</el-type>), is named like an identifier but
- with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p>
-
-<div id="global"></div>
-<div id="library"></div>
-<h2 id="Scope">Scope and name qualification</h2>
-<p>'Scope' in the table above refers to where in your code a named value is accessible.
- <a href="#constant">Global <b>constant</b>s <i class="fa">&#xf14c;</i></a> and <a href="#enum"><b>enum</b>s <i class="fa">&#xf14c;</i></a>, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
- Every other kind of named value is <i>local</i> and restricted to the <b>procedure</b> or <b>function</b> within which it is defined.</p>
-<p>Local named values can have the same name as a global <b>constant</b>, <b>function</b>, or <b>procedure</b> (which are all defined at global level or are in the standard library).
- In such cases, when the name is used within the same method, then it will refer to the local definition.</p>
-
-<h2 id="dotSyntax">Dot syntax</h2>
-<p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
-<ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of <el-type>String</el-type> <el-id>s</el-id> using a library method:<br>
- <code>variable n set to s.length()</code></li>
- <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
- <code>call li.initialise(10,0)</code></li>
- <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>g</el-id>) of class <el-type>Game</el-type> and, in this example, to get the length of the property's current string value, using
- library methods:<br>
- <code>variable bodyGL set to g.body.toString().length()</code></li>
- <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <code>variable point set to (3, 7)</code><br>
- <code>variable x set to point.item_0</code>
- </li>
- <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
-  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
-  <code>variable suit set to Suit.spades</code></li>
-</ul>
-<p>You cannot use dot syntax with functions and procedures that you define at the global level,
- nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
-
-<h1 id="GlobalInstructions">Global instructions</h1>
-<p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
+<div id="GlobalInstructions">
+<h1>Global instructions</h1>
+<p>Global instructions are placed <em>directly</em> in your code file.
 They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions. They are:
  <a href="#main"><b>main</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#procedure"><b>procedure</b> <i class="fa">&#xf14c;</i></a>,
@@ -202,31 +32,56 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a> and
  <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.
+ <a href="#Comment"><code># </code><b>comment</b><i class="fa">&#xf14c;</i></a>. <!-- Code tags used for # so it will be translated-->
 </p>
-<div id="Method"></div>
+
+<div id="main">
+<h2 >main</h2>
+
+<p>Example - from the <b>Burrow</b> demo:</p>
+
+<codeblock>
+main
+  variable blocks set to createBlockGraphics(white)
+  variable x set to 20
+  variable y set to 15
+  while true
+    reassign blocks[x][y] to red
+    call displayBlocks(blocks)
+    reassign blocks[x][y] to black
+    variable direction set to randint(0, 3)
+    if direction is 0 then
+      reassign x to min([x + 1, 39])
+    elif direction is 1 then
+      reassign x to max([x - 1, 0])
+    elif direction is 2 then
+      reassign y to min([y + 1, 29])
+    elif direction is 3 then
+      reassign y to max([y - 1, 0])
+    end if
+  end while
+end main
+</codeblock>
+
+<h4>What you need to know about a <b>main</b> routine</h4>
+
 <ul>
- <li><b>main</b>, <b>procedure</b> and <b>function</b> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions <i class="fa">&#xf14c;</i></a> within them.</li>
- <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a> instruction for testing functions during development of your program.</li>
- <li><b>concrete class</b> and <b>abstract class</b> define data structures and these always contain <a href="#Member">members <i class="fa">&#xf14c;</i></a>.</li>
- <li><b>constant</b> and <b>enum</b> do not contain any further instructions: only names and values.</li>
- <li>The sequence of global instructions in your code is immaterial, with two exceptions:
-  <ul>
-   <li>If one <b>constant</b> is used in the definition of another constant, the first must be declared above the second.</li>
-   <li>An <b>abstract class</b> must be declared above any <b>concrete class</b> that inherits from it.</li>
-  </ul>
+  <li>The first instruction added <i>within</i> is always the first instruction to be executed when the program is run.</li>
+  <li>Without a main routine, there is nothing to run. However you may write and test functions without a main.</li>
+  <li>The main routine does not have to be at the top of the file, but this is a good convention to follow.</li>
+  <li>You may not define more than one main routine.</li>
+  <li>It <i>may</i> form the entire program (as in example above), more commonly it will delegate
+    to procedures and functions defined by the programmer.
+  </li>
 </ul>
 
-<h2 id="main"><b>main</b></h2>
-<p>A program must have a <b>main</b> method, sometimes called its <b>main</b> routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <b>main</b> method, either as a coding exercise or for subsequent use within another program.</p>
-<p>The <b>main</b> method defines the start point of a program when it is run (executed).</p>
-<p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
-<p>It may delegate work to one or more <a href="#procedure">procedures <i class="fa">&#xf14c;</i></a> or <a href="#function">functions <i class="fa">&#xf14c;</i></a>.</p>
-<p>There may not be more than one <b>main</b> in a program file, and the Global prompt will not show <b>main</b> as an option when one already exists in the file.</p>
-
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a <b>main</b> method</h4>
+<h4 class="no-TOC acc-title">More examples of main routines</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A <b>main</b> method</p>
+
+<p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
+  delegates most of the work to the <el-method>inPlaceRippleSort</el-method> procedure (not shown here),
+  then prints the sorted list:</p>
 <codeblock>
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
@@ -234,107 +89,190 @@ main
   call print(li)
 end main
 </codeblock>
-<hr>
-</div></div>
 
-<h2 id="procedure"><b>procedure</b></h2>
-<div id="Parameter_value"></div>
-<p id="Argument">A <b>procedure</b> is a named piece of code that may have <b>parameters</b> that are given inputs via <b>arguments</b> in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
-<p>Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p> Unlike a function:</p>
-<ul>
- <li>a <b>procedure</b> can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
- <li>a <b>procedure</b> does not return a value.</li>
- <li>a <b>procedure</b>'s parameter named values (that are mutable) may be changed <i>inside</i> the <b>procedure</b>, but they do not affect the value of arguments in the <b>call procedure</b> instruction outside the <b>procedure</b>.</li>
- <li>to pass a changed parameter back to its calling argument, it must have been called <a href="#CallByRef"><i>by reference</i> <i class="fa">&#xf14c;</i></a>.</li>
-</ul>
-<p>The instructions within a <b>procedure</b> can therefore:</p>
-<ul>
- <li>include calls to other procedures, or to itself if <a href="#recursion">recursion <i class="fa">&#xf14c;</i></a> is required.</li>
- <li>include data input methods and other system functions such as for random number generation.</li>
-</ul>
-<p>Procedure calls are of two kinds:</p>
-<ul>
- <li>to execute an action:<br>
- <code>call print(aList)</code></li>
- <li>to apply a <b>procedure</b> to a value using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a>:<br>
- <code>call aList.removeAt(4)</code></li>
-</ul>
-<p>These calls are to library procedures, but the same options are applicable to the procedures you write.</p>
+<p>From the <b>Life procedural</b> demo. The whole program is 157 instructions (including tests), but the main routine contains just 9.
+It is good practice to <i>keep the main routine small</i>.</p>
 
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example of a <b>procedure</b></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
-<codeblock>
-procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
-  variable hasChanged set to true
-  variable lastComp set to li.length() - 2
-  while hasChanged is true
-    reassign hasChanged to false
-    for i in range(0, lastComp + 1)
-      if li[i] > li[i + 1] then
-        variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
-      end if
-    end for
-    reassign lastComp to lastComp - 1
-  end while
-end procedure
-</codeblock>
-<hr>
-</div></div>
-
-<div id="AsRef"></div>
-<div id="set_Ref"></div>
-<div id="value_Ref"></div>
-<div id="Parameter_reference"></div>
-<h3 class="no-TOC" id="CallByRef">Call by reference</h3>
-<p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example of a call by reference</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
- so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
 <codeblock>
 main
-  variable arg set to "abc"
-  variable argRef set to new AsRef&lt;of String&gt;(arg)
-  call changeArg(argRef)
-  call print(argRef.value())
-end main
-procedure changeArg(pointer as AsRef&lt;of String&gt;)
-  variable r set to pointer.value()
-  call pointer.set(r.upperCase())
+  variable grid set to createBlockGraphics(white)
+  call fillRandom(grid)
+  while true
+    call displayBlocks(grid)
+    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
+    call nextGeneration(gridRef)
+    reassign grid to gridRef.value()
+    call sleep_ms(50)
+  end while
+end main 
+</codeblock>
+</div></div>
+<hr>
+</div>
+
+<div id="procedure">
+<h2 ><b>procedure</b></h2>
+
+<p>Example - from the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
+
+<codeblock>
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+  for b in bubbles
+    if random() < 0.05 then
+      # 5% chance bubble 'bursts' and starts again tiny at bottom
+      call b.setRadius(0)
+      call b.setCentreY(75)
+    else
+      # bubble rises and grows slightly
+      call b.setCentreY(b.centreY - 1)
+      call b.setRadius(b.radius + 0.2)
+    end if
+  end for
+  call displayVectorGraphics(bubbles)
+  call sleep_ms(5)
 end procedure
 </codeblock>
-<hr>
-</div></div>
 
-<h2 id="function"><b>function</b></h2>
-<p>A <b>function</b> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p>Unlike a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>:</p>
+<p>It is called within the main routine by this instruction: <code>call moveGrowBurst(bubbles)</code></p>
+
+<h4>What you need to know about procedures</h4>
+
 <ul>
- <li>a function always returns a value.</li>
- <li>a function can have no side effects (i.e. no references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods <i class="fa">&#xf08e;</i></a>.</li>
- <li>a function's execution cannot be interrupted by any external event, though a a non-terminating loop in a function may be detected with tests that <a href="#ignore">time out <i class="fa">&#xf14c;</i></a>.</li>
+  <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
+  is delegated, either by the main routine, or by another procedure.</li>
+  <li>The Elan library provides some ready-made procedures such as <el-method>print</el-method> and <el-method>pause</el-method>.</li>
+  <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
+  <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
+  <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies name starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
+    <code>bubbles as List&lt;of CircleVG&gt;</code></li>
+  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
+  which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
+  <li>The procedure always finish on the last instruction defined within it, when the program continues from where the <b>call instruction</b>
+    was located.<li>
+  <li>Changes made to parameter values (where possible) within the procedure (changing the radius and centre of each bubble in the list <code>bubbles</code>) 
+  will be visible to the calling code when the procedure exits.</li>
+  <li>Functions may be called from within a procedure (but not <i>vice versa</i>.</li>
+  <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
 </ul>
-<p id="returns">A function definition is comprised of its unique name and, in brackets, its input parameters with their Types, followed by <code>returns</code>,
-and the Type of the value that will be returned.</p>
-<p id="return">
-A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
-and there can be only one <b>return</b> instruction in a function.
-You follow the <b>return</b> instruction with the value to be returned by the function.
-This may be an expression that will be evaluated before returning.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of <b>function</b>s</h4>
+<h4 class="no-TOC acc-title">More examples of procedures</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
+
+<p>From the <b>Turtle Dragon</b> demo. The procedure defines two parameters of different types. The body of this procedure consists
+of a straight sequence of <b>call procedure</b> instructions, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
+using 'dot-syntax':</p>
+
+<codeblock>
+procedure setupTurtle(t as Turtle, order as Int)
+  call t.turnToHeading(180 + order*45)
+  call t.placeAt(-40, 20)
+  call t.penColour(red)
+  call t.penWidth(10.0/order)
+  call t.penDown()
+  call t.show()
+end procedure
+</codeblock>
+
+<p>From the <b>Life - procedural</b> demo. The code sets each of the cells in the 40x30 <code>grid</code></p>
+
+<codeblock>
+procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
+  for col in range(0, 40)
+    for row in range(0, 30)
+      reassign grid[col][row] to blackOrWhite(random())
+    end for
+  end for
+end procedure
+</codeblock>
+</div></div>
+<hr>
+</div>
+
+<div id="function">
+<h2>function</h2>
+
+<p>Example - from the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
+whether or not the head has gone outside the bounds of the 40x30 grid:</p>
+
+<codeblock>
+function hasHitEdge(headX as Int, headY as Int) returns Boolean
+  return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
+end function
+</codeblock>
+
+<p>It is called within the main routine as part of this instruction:</p>
+
+<codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)</codeblock>
+
+<h4>What you need to know about functions</h4>
+<ul>
+  <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
+  <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
+     a part of a more complex expression (as above).</li>
+  <li>The Elan library provides some ready-made functions such as <el-method>sqrt</el-method>.</li>
+  <li>The <b>function</b> instruction allows you to define your own functions.</li>
+  <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
+  <li>It will usually define one or more <p></p>arameters  (two in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+    <code>headX as Int</code></li>
+  <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code></li>
+  <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
+  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
+  The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
+  <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
+    Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
+  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
+  all the work needed.</li>
+  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
+  <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
+    languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
+  <ul>
+    <li>a function cannot undertake any input/output, or create any other 'side effect' (change to the system that can be observed outside the function).</li>
+    <li>prohibited side-effects including changing any of the values passed in as parameters.</li>
+    <li>the returned result must depend solely, and deterministically, on the values provided as parameters - just as <code>sqrt(2)</code>
+    always produces the same result, irrespective of whatever else might be occurring in the program.</li>
+  </ul>
+</ul>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">More examples of functions</h4>
+<div class="acc-body">
+
+<p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
+
+<codeblock>
+function leap(year as Int) returns Boolean
+  variable leapYear set to false
+  if (year mod 4) is 0 then
+    reassign leapYear to true
+    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
+      reassign leapYear to false
+    end if
+  end if
+  return leapYear
+end function
+</codeblock>
+
+<p>From the <b>Life - procedural</b> demo a function that finds the cell immediately to the north of the cell provided. Both
+the single parameter and return value are 2-tuples, where both elements are of type <code>Int</code>:</p>
+
+<codeblock>
+function north(cell as (Int, Int)) returns (Int, Int)
+  variable x set to cell.item_0
+  variable y set to cell.item_1
+  variable y2 set to y - 1
+  if y2 is -1 then
+    reassign y2 to 29
+  end if
+  return (x, y2)
+end function
+</codeblock>
+
+<p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
+
 <codeblock>
 function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
@@ -352,29 +290,12 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
   return result
 end function
 </codeblock>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A function definition and reference to it:</p>
-<codeblock>
-function score(g as Game) returns Int
-  return g.body.length() - 2
-end function
-main
-  variable g set to new Game()
-  call print(score(g))
-end main
-</codeblock>
-<hr>
 </div></div>
+<hr>
+</div>
 
-<h3 class="no-TOC" id="recursion">Recursion</h3>
-<p>Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:</p>
-<codeblock>
-function factorial(n as Int) returns Int
-  return (if(n > 1, n*factorial(n - 1), 1))
-end function
-</codeblock>
-
-<h2 id="test"><b>test</b></h2>
+<div id="test">
+<h2><b>test</b></h2>
 <p>A <b>test</b> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
 <p>Without having to run your program, the <b>assert</b> equal instructions show whether your assertions pass or fail.
 
@@ -504,8 +425,12 @@ end test
 <h3 class="no-TOC">Non-terminating loops and recursion</h3>
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
+</p>
+</div>
 
-<h2 id="class"><b>concrete class</b></h2>
+<div id="class">
+<h2 ><b>concrete class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 <p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
@@ -588,8 +513,12 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
   <li>You cannot override any concrete member defined in an abstract class.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
 </ul>
+</div>
 
-<h2 id="abstract_class"><b>abstract class</b></h2>
+<div id="abstract_class">
+<h2 ><b>abstract class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
+
 <p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
 <ul>
 <li>a <b>property</b> </li>
@@ -612,8 +541,10 @@ return discount
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
+</div>
 
-<h2 id="constant"><b>constant</b> </h2>
+<div id="constant">
+<h2 id="constant">constant</h2>
 <p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
  Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
 <p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
@@ -657,9 +588,10 @@ end function
 
 <h3 class="no-TOC">System constants</h3>
 Some useful constants are provided: see <a href="LibRef.html#systemConstants">System constants <i class="fa">&#xf08e;</i></a> 
+</div>
 
-<div id="enumValue"></div>
-<h2 id="enum"><b>enum</b></h2>
+<div id="enum">
+<h2 id="enumValue"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
 It is used to provide a fixed set of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
@@ -716,240 +648,27 @@ function clockwise(d as Compass) returns Compass
   return newDir
 end function
 </codeblock>
-<hr>
 </div></div>
-
-<div id="Member"></div>
-<h1 id="MemberInstructions">Member instructions</h1>
-
-<p>Member instructions (also referred to simply as 'members') are located within an <b>abstract class</b> or <b>concrete class</b>.
-The <b>new code</b> prompt offers a context appropriate subset of the following member instructions:</p>
-<p>
- <a href="#abstract_property"><b>abstract property</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#abstract_function"><b>abstract function</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#abstract_procedure"><b>abstract procedure</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#property"><b>property</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#function"><b>function</b> method <i class="fa">&#xf14c;</i></a>,
- <a href="#procedure_method"><b>procedure</b> method <i class="fa">&#xf14c;</i></a> and
- <a href="#constructor"><b>constructor</b> <i class="fa">&#xf14c;</i></a>,
-</p>together with these 'private' versions:<p>
- <a href="#private"><b>private property</b> <i class="fa">&#xf14c;</i></a>,
- <a href="#private"><b>private function</b> <i class="fa">&#xf14c;</i></a> and
- <a href="#private"><b>private procedure</b> <i class="fa">&#xf14c;</i></a>.
-</p>
-
-<p>This table shows which kinds of <b>property</b>, <b>function</b>, <b>procedure</b> and <b>constructor</b> are applicable to the various kinds of class.</p>
-<table class="tableType">
- <tr>
-  <th></th>
-  <th colspan="2">Abstract</th>
-  <th>Concrete</th>
-  <th>notes</th>
- </tr><tr>
-  <td width="150"></td>
-  <td width="40"><a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a></td>
-  <td width="40"><a href="#class"><b>concrete class</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#abstract_property"><b>abstract property</b> <i class="fa">&#xf14c;</i></a></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#abstract_function"><b>abstract function</b> <i class="fa">&#xf14c;</i></a></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td></td>
-  <td>prototype for function reference only</td>
- </tr><tr>
-  <td><a href="#abstract_procedure"><b>abstract procedure</b> <i class="fa">&#xf14c;</i></a></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td></td>
-  <td>prototype for procedure call only</td>
- </tr><tr>
-  <td><a href="#property"><b>property</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr><tr>
-  <td><a href="#function"><b>function</b> method <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td>method <el-method>toString</el-method> must be defined</td>
- </tr><tr>
-  <td><a href="#procedure_method"><b>procedure</b> method <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr><tr>
-  <td><a href="#private"><b>private property</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr><tr>
-  <td><a href="#private"><b>private function</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr><tr>
-  <td><a href="#private"><b>private procedure</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr><tr>
-  <td><a href="#constructor"><b>constructor</b> <i class="fa">&#xf14c;</i></a></td>
-  <td></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td></td>
- </tr>
-</table>
-
-<h2 id="constructor"><b>constructor</b></h2>
-<p>A <b>concrete class</b> may have an optional <b>constructor</b> so as to:</p>
-<ul>
- <li>initialise properties with fixed values</li>
- <li>define parameters which are used to initialise properties</li>
-</ul>
-<p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
-the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
-
-<codeblock>
-class Square
-  constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
-  end constructor
-end class
-</codeblock>
-
-<p>then it may be instantiated like this:<br>
-<code>variable tail set to new Square(20, 15)</code></p>
-
-<h2 id="property"><b>property</b></h2>
-<p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
- and a Type (which may be another class name).</p>
-<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
-<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
-<codeblock>
-class Game
-  property height as Int
-  property board as Board
-  property head as Square
-  property body as List&lt;of Square&gt;
-  constructor()
-  end constructor
-  function toString() returns String
-    return "undefined"
-  end function
-end class
-</codeblock>
-
-<h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
-<p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
-<p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
-If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
-and using <el-method>getValue</el-method> will give a runtime error.</p>
-<p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example using <code>Maybe</code></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Here a pupil (of class <el-type>Pupil</el-type>) need not have a tutor (of class <el-type>Teacher</el-type>):</p>
-<codeblock>
-main
-  variable tTom set to new Teacher()
-  variable pPete set to new Pupil()
-  if pPete.tutor.hasValue() then
-    call print(pPete.tutor)
-  end if
-  call print(p)
-end main
-class Teacher
-  constructor()
-  end constructor
-  function toString() returns String
-    return $"{this}"
-  end function
-end class
-class Pupil
-  constructor()
-    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
-  end constructor
-  property tutor as Maybe&lt;of Teacher&gt;
-  function toString() returns String
-    return "undefined"
-  end function
-end class
-</codeblock>
 <hr>
-</div></div>
+</div>
 
-<h2 id="FunctionMethod"><b>function</b> method</h2>
-<p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf14c;</i></a>. The differences are:</p>
-<ul>
-<li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns a value of type <code>String</code>.
- If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
-  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
-</ul>
+<div id="Comment">
+<h2 id="Comment"><code># </code>comment</h2>
+<p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
+Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
+<p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
+ Your text may contain any characters, except that it must not start with an open square bracket [.</p>
+<p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global <i class="fa">&#xf14c;</i></a>,
+<a href="#MemberInstructions">Member <i class="fa">&#xf14c;</i></a>, or <a href="#StatementInstructions">Statement <i class="fa">&#xf14c;</i></a> instruction levels,
+as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
+<p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
+  This comment is known as the 'file header'.</p>
+<hr>
+</div>
+</div>
 
-<h2 id="procedure_method"><b>procedure</b> method</h2>
-<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>. The differences are:</p>
-<ul>
-<li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A procedure method may read, or write to, any <b>property</b> defined on the class.</li>
-<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an abstract <code>class</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-</ul>
-
-<h2 id="abstract_property"><b>abstract property</b></h2>
-<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
-
-<h2 id="abstract_function"><b>abstract function</b></h2>
-<p>An abstract function method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
-
-<h2 id="abstract_procedure"><b>abstract procedure</b></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
-
-<h2 id="private"><b>private</b> (property, function, procedure)</h2>
-<p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
-if defined on an <b>abstract class</b>, within its subclasses.
- This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
-This action is a toggle used both to reassign and to remove the modifier <b>private</b>.</p>
-<ul>
- <li></li>
- <li>A property that is not private may be read, but not written to.</li>
- <li>A property that is private may </li>
-</ul>
-
-<ul>
-<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property</code>.('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
-</ul>
-<codeblock>
-class Game
-  constructor(board as Board)
-    reassign this.board to board
-  end constructor
-  procedure setHeight(height as Int)
-    reassign this.height to height
-  end procedure
-end class
-</codeblock>
-
-<div id="statement"></div>
-<h1 id="StatementInstructions">Statement instructions</h1>
+<div id="StatementInstructions">
+<h1 id="statement">Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the imperative instructions used in the methods (procedural logic) of a program, and are:</p>
 <p>
  <a href="#variable"><b>variable definition</b> <i class="fa">&#xf14c;</i></a>,
@@ -960,8 +679,7 @@ end class
  <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#throw"><b>throw</b> <i class="fa">&#xf14c;</i></a>
- and, within a test, <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a>.
-</p>
+ and, within a test, <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a>.</p>
 
 <h2 id="variable"><b>variable definition</b></h2>
 <p>The <b>variable definition</b> .. set to .. instruction declares and initialises
@@ -1270,308 +988,243 @@ function numbers() returns (Float, Float)
 end function
 </codeblock>
 
-<h1 id="Expression">Expressions</h1>
-<p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
+<h2 ><code># </code>comment</h2>
+<p>See <a href="#Comment">Comments</a></p>
+
+<div id="Member"></div>
+<h1 id="MemberInstructions">Member instructions</h1>
+
+<p>Member instructions (also referred to simply as 'members') are located within an <b>abstract class</b> or <b>concrete class</b>.
+The <b>new code</b> prompt offers a context appropriate subset of the following member instructions:</p>
+<p>
+ <a href="#abstract_property"><b>abstract property</b> <i class="fa">&#xf14c;</i></a>,
+ <a href="#abstract_function"><b>abstract function</b> <i class="fa">&#xf14c;</i></a>,
+ <a href="#abstract_procedure"><b>abstract procedure</b> <i class="fa">&#xf14c;</i></a>,
+ <a href="#property"><b>property</b> <i class="fa">&#xf14c;</i></a>,
+ <a href="#function"><b>function</b> method <i class="fa">&#xf14c;</i></a>,
+ <a href="#procedure_method"><b>procedure</b> method <i class="fa">&#xf14c;</i></a> and
+ <a href="#constructor"><b>constructor</b> <i class="fa">&#xf14c;</i></a>,
+</p>together with these 'private' versions:<p>
+ <a href="#private"><b>private property</b> <i class="fa">&#xf14c;</i></a>,
+ <a href="#private"><b>private function</b> <i class="fa">&#xf14c;</i></a> and
+ <a href="#private"><b>private procedure</b> <i class="fa">&#xf14c;</i></a>.
+ <a href="#Comment"><code># </code> <b>comment</b> <i class="fa">&#xf14c;</i></a>
+</p>
+
+<p>This table shows which kinds of <b>property</b>, <b>function</b>, <b>procedure</b> and <b>constructor</b> are applicable to the various kinds of class.</p>
+<table class="tableType">
+ <tr>
+  <th></th>
+  <th colspan="2">Abstract</th>
+  <th>Concrete</th>
+  <th>notes</th>
+ </tr><tr>
+  <td width="150"></td>
+  <td width="40"><a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a></td>
+  <td width="40"><a href="#class"><b>concrete class</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#abstract_property"><b>abstract property</b> <i class="fa">&#xf14c;</i></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#abstract_function"><b>abstract function</b> <i class="fa">&#xf14c;</i></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>prototype for function reference only</td>
+ </tr><tr>
+  <td><a href="#abstract_procedure"><b>abstract procedure</b> <i class="fa">&#xf14c;</i></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>prototype for procedure call only</td>
+ </tr><tr>
+  <td><a href="#property"><b>property</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#function"><b>function</b> method <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td>method <el-method>toString</el-method> must be defined</td>
+ </tr><tr>
+  <td><a href="#procedure_method"><b>procedure</b> method <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><b>private property</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><b>private function</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><b>private procedure</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#constructor"><b>constructor</b> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr>
+</table>
+
+<h2 id="constructor"><b>constructor</b></h2>
+<p>A <b>concrete class</b> may have an optional <b>constructor</b> so as to:</p>
 <ul>
-<li><a href="#literalValue">Literal value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#namedValue">Named value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
-<li><a href="#functionCall"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
+ <li>initialise properties with fixed values</li>
+ <li>define parameters which are used to initialise properties</li>
 </ul>
-
-<h2 id="literalValue">Literal value</h2>
-<p>A literal value is where a value is written 'literally' in the code, such as <code>3.142</code>, in contrast to a value that is referred to by a name.</p>
-<p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
-<table>
-<tr><th>Type</th><th>Example of literal</th></tr>
-<tr><td><a href="LibRef.html#Int">Int <i class="fa">&#xf08e;</i></a></td><td><code>3</code></td></tr>
-<tr><td><a href="LibRef.html#Float">Float <i class="fa">&#xf08e;</i></a></td><td><code>2.0</code></td></tr>
-<tr><td><a href="LibRef.html#Boolean">Boolean <i class="fa">&#xf08e;</i></a></td><td><el-id>true</el-id></td></tr>
-<tr><td><a href="LibRef.html#String">String <i class="fa">&#xf08e;</i></a></td><td><code>"Hello"</code></td></tr>
-<tr><td><a href="LibRef.html#Tuple">Tuple <i class="fa">&#xf08e;</i></a></td><td><code>(3, "banana")</code></td></tr>
-<tr><td><a href="LibRef.html#List">List <i class="fa">&#xf08e;</i></a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
-<tr><td><a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a></td><td><code>["a":3, "b":5]</code></td></tr>
-</table>
-<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.</p>
-
-<div id="range"></div>
-<h2 id="IndexedValue">Indexed values</h2>
-<p>If a named value is of an indexable Type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
- using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
-<p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
-<p>If the two index values of a range are equal, or the second is smaller than the first,
-then an empty string or list is returned.</p>
-<p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
-<a href="LibRef.html#put_List"><el-method>put</el-method> <i class="fa">&#xf08e;</i></a>.</p>
-
-<p>Example using indexing on a string:</p>
-<table class="tablePlain">
-<tr>
- <td>
-<codeblock>
-main
-  variable a set to "Hello world!"
-  call print(a[4])
-  call print(a.subString(4, a.length()))
-  call print(a.subString(0, 7))
-end main
-</codeblock>
- </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><el-code><br><br>o</el-type><br>o world!<br>Hello w</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
-</tr>
-</table>
-
-<p>And on a list:</p>
-<table class="tablePlain">
-<tr>
- <td>
-<codeblock>
-main
-  variable li set to new List&lt;of Int&gt;()
-  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  call print(li[4])
-  call print(li.subList(4, li.length()))
-  call print(li.subList(0, 7))
-end main
-</codeblock>
- </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><el-code><br><br><br>4</el-code> &nbsp;&nbsp;&nbsp; (the value of the list item)<br><el-code>[4, 5, 6, 7, 8, 9, 10, 11]</el-code> &nbsp;&nbsp;&nbsp; (a new list)<br><el-code>[0, 1, 2, 3, 4, 5, 6]</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
-</tr>
-</table>
-
-<div id="operator"></div>
-<h2 id="Operators">Operators</h2>
-
-<h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
-
-<p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
-<p>For the  + &minus; *  operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
-<p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
-<div id="power"></div>
-<p>For raising one value to the power of another, use the syntax in these examples:<br></p>
-<code>call print(pow(4, 4))</code><br>
-<code>variable c set to sqrt(pow(a, 2) + pow(b, 2))</code>
-<p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
-<div id="mod"></div>
-<p> The operator <b>mod</b> (integer remainder) is applied only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
-<table class="tablePlain">
-<tr>
- <td><code>2/3.0</code></td><td>&#x27f6;</td><td>0.666..</td>
-</tr><tr>
- <td><code>2*3</code></td><td>&#x27f6;</td><td>6</td>
-</tr><tr>
- <td><code>2 + 3</code></td><td>&#x27f6;</td><td>5</td>
-</tr><tr>
- <td><code>2 - 3</code></td><td>&#x27f6;</td><td>&minus;1</td>
-</tr><tr>
- <td><code>11 mod 3</code></td><td>&#x27f6;</td><td>2</td>
-</tr>
-</table>
-<p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> on <code>Float</code> arguments (which returns an <code>Int</code>):</p>
-<table class="tablePlain">
-<tr>
- <td><code>(11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>3</td>
-</tr><tr>
- <td><code>(-11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>&minus;4</td>
-</tr><tr>
- <td><code>divAsInt(11.0, 3.0)</code></td><td>&#x27f6;</td><td>3</td>
-</tr>
-</table>
-<p>Note that rounding is always down.</p>
-
-<p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <b>mod</b> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
-<table class="tablePlain">
-<tr>
- <td><code>(5 + 6) mod 3</code></td><td>&#x27f6;</td><td>2</td>
-</tr>
-</table>
-<p>Note that <b>mod</b> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
- If both arguments are positive, there is no difference.</p>
-<p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
-<table class="tablePlain">
-<tr>
- <td><code>2*-3</code></td><td>&#x27f6;</td><td>&minus;6</td>
-</tr>
-</table>
-
-<p>The editor automatically puts spaces around the operators + and &minus;, but not around / or *.
-This is just to visually reinforce the precedence.</p>
-
-<div id="and"></div>
-<div id="not"></div>
-<div id="or"></div>
-<h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
-<p>Logical operators are applied to <code>Boolean</code> arguments and return a <code>Boolean</code> result.</p>
-<p><code>and</code> and <code>or</code> are binary operators<br>
-<code>not</code> is a unary operator. </p>
-<p>The operator precedence is <code>not</code> &rarr; <code>and</code> &rarr; <code>or</code>, so this
-example, which implements an 'exclusive or', need not use brackets and can rely on the operator precedence:</p>
+<p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
+the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
 
 <codeblock>
-function exOr(a as Boolean, b as Boolean) returns Boolean
-  return a and not b or b and not a
-end function
+class Square
+  constructor(x as Int, y as Int)
+    reassign this.x to x
+    reassign this.y to y
+  end constructor
+end class
 </codeblock>
 
-<h3 class="no-TOC" id="StringOperators">String operator</h3>
-<p>The + operator is also used for concatenating <code>String</code> values.</p>
+<p>then it may be instantiated like this:<br>
+<code>variable tail set to new Square(20, 15)</code></p>
 
-<h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
-<h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
-<p>Equality testing of these Value Types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
-<ul>
- <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
- <li><code>(a is b)</code> returns <b><el-id>true</el-id></b>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
- The only exception is that if one argument is of Type <code>Float</code> and the other is of Type <code>Int</code>,
-  then <b>is</b> will return <el-id>true</el-id> (and <b>isnt</b> will return <el-id>false</el-id>) if their values are the same,
-  i.e. they are the same whole number.</li>
- <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
-</ul>
-
-<h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference Types</h4>
-<p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
-<ul>
-<li>
+<h2 id="property"><b>property</b></h2>
+<p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
+ and a Type (which may be another class name).</p>
+<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
+<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
 <codeblock>
-if listA.equals(listB) then
-
-end if
-</codeblock>
-</li>
-<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
-</ul>
-<p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
-Two Lists compare equal if they contain the same items in the same order.
-And two instances of the same class compare equal if the values of all their properties compare equal.</p>
-<p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.
-Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property values).</p>
-
-<h3 class="no-TOC">Numeric comparison</h3>
-<p>The numeric comparison operators are:</p>
-<table class="tablePlain">
-<tr>
- <td>&gt;</td><td>for</td><td>greater than</td>
-</tr><tr>
- <td>&lt;</td><td>for</td><td>less than</td>
-</tr><tr>
- <td>&gt;=</td><td>for</td><td>greater than or equal to</td>
-</tr><tr>
- <td>&lt;=</td><td>for</td><td>less than or equal to</td>
-</tr>
-</table>
-
-<p>Each may be applied between two values of Type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
-<p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</p>
-
-<h3 class="no-TOC">Combining operators </h3>
-<p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<code>reassign x to (a > b) and (b < c)</code><br>
-<code>reassign x to (a + b) > (c - d)</code>
-
-<h2 id="functionCall">Function reference</h2>
-An expression may simply be a reference to a function, or it may include several function references within it. Examples:
-<codeblock>
-main
-  call print(sin(radians(30)))
-  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
-  variable name set to input("Your name")
-  call print(name.upperCase())
-end main
+class Game
+  property height as Int
+  property board as Board
+  property head as Square
+  property body as List&lt;of Square&gt;
+  constructor()
+  end constructor
+  function toString() returns String
+    return "undefined"
+  end function
+end class
 </codeblock>
 
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>The third example above is not strictly a function call, but is a 'system method' call.
-System methods may be used only within the <b>main</b> routine or a <b>procedure</b>, because they have external dependencies or side effects.</li>
-<li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of Type <code>String</code>.
-See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</li>
-</ul>
-
-<h2 id="lambda"><b>lambda</b></h2>
-<p>A <b>lambda</b> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).</p>
-<p>You can use a lambda only as an argument to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a>.</p>
-<p>You would typically define a <b>lambda</b> when the functionality it defines is needed in only one location,
-e.g. in a particular call to a Higher-order Function.</p>
-<!-- when you need to capture a local variable in the implementation: this is called 'closing around a variable'. -->
-<p>The syntax for a <b>lambda</b> is as follows:</p>
-<ul>
-<li>Start with the word <b>lambda</b>.</li>
-<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
-<li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
-</ul>
-<p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
-<!-- <p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
- to assign a <b>lambda</b> to a named value, so as to reuse it within the scope of that named value.</p>
-
-Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
-<codeblock>
-function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
-  variable neighbours set to neighbourCells(c)
-  variable live set to neighbours.filter(lambda i as Int => cells[i])
-  return live.length()
-end function
-</codeblock> -->
-
-<h2 id="if_expression"><b>if</b> (expression)</h2>
-
-<p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
-<p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
-<code>variable isBigger set to if(a >= b, true, false)</code>
-<p>Similarly, but returning an evaluated expression:</p>
-  <code>variable d set to if(c < 580, c - 40, c + 60)</code>
-<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
-<p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
+<h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
+<p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
+<p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
+If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
+and using <el-method>getValue</el-method> will give a runtime error.</p>
+<p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
+<h4 class="no-TOC acc-title">Example using <code>Maybe</code></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
-<codeblock>
-function foo() returns Int
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
-end function
-</codeblock>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an <b>if</b> expression in a <b>call procedure</b> <el-method>print</el-method>:</p>
-<table class="tablePlain">
-<tr>
- <td>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Here a pupil (of class <el-type>Pupil</el-type>) need not have a tutor (of class <el-type>Teacher</el-type>):</p>
 <codeblock>
 main
-  variable p set to unicode(0x03c0)
-  call testPi(p, 3)
-  call testPi(p, 4)
+  variable tTom set to new Teacher()
+  variable pPete set to new Pupil()
+  if pPete.tutor.hasValue() then
+    call print(pPete.tutor)
+  end if
+  call print(p)
 end main
-procedure testPi(p as String, v as Float)
-  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
-end procedure
+class Teacher
+  constructor()
+  end constructor
+  function toString() returns String
+    return $"{this}"
+  end function
+end class
+class Pupil
+  constructor()
+    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
+  end constructor
+  property tutor as Maybe&lt;of Teacher&gt;
+  function toString() returns String
+    return "undefined"
+  end function
+end class
 </codeblock>
- </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>
-</tr>
-</table>
 <hr>
 </div></div>
 
-<h2 id="new"><b>new</b></h2>
-<p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
-   or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
-  of a more complex expression. Example of use from demo program snake_PP.elan:</p>
-<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
+<h2 id="FunctionMethod"><b>function</b> method</h2>
+<p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf14c;</i></a>. The differences are:</p>
+<ul>
+<li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
+<li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
+<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
+ This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
+<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns a value of type <code>String</code>.
+ If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
+  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+</ul>
 
-<h1 id="Comment">Comments</h1>
-<h2># comment</h2>
-<p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
-Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-<p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
- Your text may contain any characters, except that it must not start with an open square bracket [.</p>
-<p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global <i class="fa">&#xf14c;</i></a>,
-<a href="#MemberInstructions">Member <i class="fa">&#xf14c;</i></a>, or <a href="#StatementInstructions">Statement <i class="fa">&#xf14c;</i></a> instruction levels,
-as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
-<p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
-  This comment is known as the 'file header' and shows the version of Elan being run.</p>
+<h2 id="procedure_method"><b>procedure</b> method</h2>
+<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>. The differences are:</p>
+<ul>
+<li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
+<li>A procedure method may read, or write to, any <b>property</b> defined on the class.</li>
+<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an abstract <code>class</code>, within its subclasses.
+ This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
+</ul>
+
+<h2 id="abstract_property"><b>abstract property</b></h2>
+<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+
+<h2 id="abstract_function"><b>abstract function</b></h2>
+<p>An abstract function method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+
+<h2 id="abstract_procedure"><b>abstract procedure</b></h2>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
+
+<h2 id="private"><b>private</b> (property, function, procedure)</h2>
+<p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
+if defined on an <b>abstract class</b>, within its subclasses.
+ This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
+This action is a toggle used both to reassign and to remove the modifier <b>private</b>.</p>
+<ul>
+ <li></li>
+ <li>A property that is not private may be read, but not written to.</li>
+ <li>A property that is private may </li>
+</ul>
+
+<ul>
+<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property</code>.('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
+</ul>
+<codeblock>
+class Game
+  constructor(board as Board)
+    reassign this.board to board
+  end constructor
+  procedure setHeight(height as Int)
+    reassign this.height to height
+  end procedure
+end class
+</codeblock>
+
+
+<h2 ><code># </code>comment</h2>
+<p>See <a href="#Comment">Comments</a></p>
+<hr>
 
 <h1 id="compile_error">Compile errors and warnings</h1>
 

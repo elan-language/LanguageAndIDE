@@ -30,9 +30,9 @@ This will still allow you to do procedural programming, but changes two things: 
     We will be referring to code within the OOP demo programs within this text.</li>
 <li>It will change some of the options available on the <b>new code</b> menus in the editor:
     <ul>
-    <li>At the global level, it will offer: <b>concrete class</b>, <b>abstract class</b>, and <b>interface</b>
-   <li><i>Within</i> a <b>concrete class</b>, <b>abstract class</b>, or <b>interface</b>, the <b>new code</b> menu will show an entirely new list of instructions,
-         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    <li>At the global level, it will offer: <b>concrete class</b> and <b>abstract class</b>
+   <li><i>Within</i> a <b>concrete class</b> or <b>abstract class</b> the <b>new code</b> menu will show an entirely new list of instructions,
+         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within within them.</li>
     </ul>
 </ul>
 
@@ -326,7 +326,7 @@ would be recognised by anyone who understands how to play the game Snake, but wh
 <h1 id="info-hiding">Principle 7: Objects should hide state behind methods, where possible</h1>
 
 <p>This principle corresponds to the second meaning of 'encapsulation': sealing. Think of the related word: 'capsule'.
-  You can only access the capabilities of an object through its <i>public</i> interface. All the 'members' 
+  You can only access the capabilities of an object through its <i>public</i> members. All the 'members' 
   defined on a class (that is: its properties and methods) are public - although properties
   are public only for <i>reading</i>, not for modifying. However, it is possible to make any property or method <i>private</i>
   - such that it can be accessed from code within the class, but not from outside. To do this, you bring up the context
@@ -345,40 +345,33 @@ code to test whether the snake (body or head) covers a given square, passed in a
 <el-method>newRandomPosition</el-method> defined by the <code>Apple</code> class, to ensure that the next apple is not created
 directly underneath the snake.</p>
 
-<h1>Principle 8: Allow objects of different classes to be handled through a common interface</h2>
+<h1>Principle 8: A concrete class may optionally inherit from an abstract class</h2>
 
-<p>Suppose that you were writing some kind of ecological simulation, that had many types of entity - some inanimate such as rocks, some
-  that changed over time such as trees and rivers, and some with complex dynamic behvaiour such as various kind of animals. It is likely
-that each of these nouns would be a class in your code, most of them having many instances. But all of them would have
-a few properties in common specifying their current location within the simulated area. It would be convenient - at minimum for th purpose
-of positioning icons representing each entity on the graphical display to be able to hold all of them in a list, and iterate over
-that list with a loop, to draw the icon in the correct place.</p>
+<p>In many applications two or more of the classes will be seen as having quite a lot in common. </p>
 
-<p>The simplest way to do this is to define a common interface. In object-oriented terms an interface is a bit like a class (and in some
-  languages it has the same signature as a class) - but it can't be instantiated directly - so it has no constructor. An interface can define
-  properties or methods, but they are <i>abstract</i> - which means that they define the signature for the member but they dp not define
-  the implementation. Here, for example are definitions that might be used in 
+  Two motivations - the <i>secondary</i> one will be addressed in the next principle.
+Two <i>primary</i> motivation is (or should be) is so that instances of different classes they may be handled by external code <i>as though they were of the same class</i> - indeed
+without that class having to know that there is any difference between them.
+
+'is a' relationship c.f. 'has a'
+
+Definition of 'superclass' and `subclass`
+
+Sometimes it is useful to define an abstract class (or 'super type') for two or more classes just to allow you to hold instances
+of two or more classes in one list or other data structure.
+
+More commonly, you want to write external methods that can process such instances. 
+In this case you can define the signature of all properties and/or methods that are common to all of them in the abstract class - like this.
+
+The sub-classes may each have <i>additional members</i> that differ - but you won't be able to access those members unless you know the specific type
+of the instance.
+
+Importantly, though, classes may implement an abstract method differently. This is an important idea and called polymorphism
   
-  
-  <p>A concrete class, may <i>implement</i> one or more interfaces, which means that
-  it must define metho
-</p>
-
-TODO: Need a better example of something that needs interfaces e.g. a simulation
-
-May be handled through interfaces or inheritance
-Where appropriate it is possible to deal with instances or two or more separate classes without having to know which type each one is
-A class can implement multiple interfaces, as long as they don’t clash
-An interface cannot be instantiated – but a concrete class that implements that interface can be
-An interface may extend another interface
-Each class that implements an interface must provide an implemented of each method, but the implementation may differ (EXAMPLES). 
-It is likely that more than one class might have exactly the same implementation, and by the DRY principle it is undesirable to repeat the code. So you delegate, in part or in whole
-
 <h1>Principle 9: Common implementations may be shared through delegation or inheritance</h1>
-An abstract class …
-An abstract class is like an interface, but more powerful that it may also define concrete implementations of methods, with some limitations
-The limitation is that a concrete class may (optionally) inherit only from one abstract class – though it may implement additional interfaces
-An abstract class may inherit from another abstract class and/or implement interfaces
+In addition to defining abstract members abstract class may also define concrete implementations of methods, with some limitations
+The limitation is that a concrete class may (optionally) inherit only from one abstract class
+An abstract class may optionally inherit from one other abstract class.
 Elan’s model of inheritance – what you can and can’t do
 - 
 
