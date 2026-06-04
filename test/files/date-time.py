@@ -82,8 +82,10 @@ def leap(year: int) -> bool: # function
   return leapYear
 
 def test_leap(self) -> None:
+  # normal cases
   self.assertEqual(leap(2025), False)
   self.assertEqual(leap(2024), True)
+  # boundary cases
   self.assertEqual(leap(1900), False)
   self.assertEqual(leap(2000), True)
 

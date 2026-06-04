@@ -99,8 +99,10 @@ Function leap(year As Integer) As Boolean
 End Function
 
 <TestMethod> Sub test_leap()
+  ' normal cases
   Assert.AreEqual(False, leap(2025))
   Assert.AreEqual(True, leap(2024))
+  ' boundary cases
   Assert.AreEqual(False, leap(1900))
   Assert.AreEqual(True, leap(2000))
 End Sub

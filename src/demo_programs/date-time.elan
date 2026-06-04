@@ -1,4 +1,4 @@
-# 5e70ce4f39ca085d22bb1f23f72ba05a113889c1e0aac8b6b720a65ef9160a44 Elan 2.0.0-alpha5 valid
+# a2dfdaeaaa01ac2d72cd334c964233bf0e0d00c227687a5f100b2b4e84c987c2 Elan 2.0.0-alpha5 valid
 
 main
   variable reply set to ""
@@ -99,8 +99,10 @@ function leap(year as Int) returns Boolean
 end function
 
 test test_leap
+  # normal cases
   assert leap(2025) is false
   assert leap(2024) is true
+  # boundary cases
   assert leap(1900) is false
   assert leap(2000) is true
 end test

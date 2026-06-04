@@ -99,8 +99,10 @@ static bool leap(int year) { // function
 } // function
 
 @Test static void test_leap() {
+  // normal cases
   assertEquals(false, leap(2025))
   assertEquals(true, leap(2024))
+  // boundary cases
   assertEquals(false, leap(1900))
   assertEquals(true, leap(2000))
 } // test
