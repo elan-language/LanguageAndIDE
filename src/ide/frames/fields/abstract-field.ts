@@ -654,7 +654,8 @@ export abstract class AbstractField implements Selectable, Field {
   public textAsHtml(): string {
     let html = "";
     if (this.selected) {
-      html = this.fieldAsInput() + this.symbolCompletion();
+      const show = this.getFile().getShowCompletion();
+      html = this.fieldAsInput() + (show ? this.symbolCompletion() : "");
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
