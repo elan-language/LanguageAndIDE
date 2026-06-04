@@ -36,7 +36,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </p>
 
 <div id="main">
-<h2 >main</h2>
+<h2>Main routine</h2>
 
 <p>Example - from the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
@@ -111,7 +111,7 @@ end main
 </div>
 
 <div id="procedure">
-<h2 ><b>procedure</b></h2>
+<h2 >Procedure</h2>
 
 <p>Example - from the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
@@ -191,7 +191,7 @@ end procedure
 </div>
 
 <div id="function">
-<h2>function</h2>
+<h2>Function</h2>
 
 <p>Example - from the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
 whether or not the head has gone outside the bounds of the 40x30 grid:</p>
@@ -293,7 +293,7 @@ end function
 </div>
 
 <div id="test">
-<h2>test</h2>
+<h2>Test</h2>
 
 <p>Example from the <b>Life - procedural</b> demo - a single test method that tests the <el-method>willLive</el-method> function for
 18 different cases:</p>
@@ -468,122 +468,15 @@ end test
 </div>
 </div>
 
-<div id="class">
-<h2 ><b>concrete class</b></h2>
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
-<p>Like any other Type its name must begin with an uppercase letter.</p>
-
-<h3 class="no-TOC">Defining a concrete class</h3>
-<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
-<p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
-<p>Its properties must all be initialised in the <b>constructor</b>.</p>
-<p>It may contain functions and procedure methods.</p>
-<p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
-<p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
-<p>A simple demonstration of a concrete class is:</p>
-<codeblock>
-main
-  variable x set to new Thing()
-  call print(x)
-  call print(x.names.toString())
-end main
-class Thing
-  property names as List&lt;of String&gt;
-  constructor()
-    reassign this.names to createList(6, "X")
-  end constructor
-  function toString() returns String
-    return "instance of class Thing"
-  end function
-end class
-</codeblock>
-
-<p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example definition of a <b>concrete class</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
-<codeblock>
-class Apple
-  constructor()
-    reassign this.location to new Square(0, 0)
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property location as Square
-  procedure newRandomPosition(snake as Snake)
-    variable changePosition set to true
-    while changePosition
-      variable ranX set to randint(0, 39)
-      variable ranY set to randint(0, 29)
-      reassign this.location to new Square(ranX, ranY)
-      if not snake.bodyCovers(this.location) then
-        reassign changePosition to false
-      end if
-    end while
-  end procedure
-  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
-    reassign blocks[this.location.x][this.location.y] to red
-  end procedure
-end class
-</codeblock>
-</div></div>
-
-<h3 class="no-TOC" id="this"><b>this</b></h3>
-<p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
-you can refer to this instance with <code>this</code>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
-<code> call apple.newRandomPosition(this)</code>
-
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
-<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
-
-<h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
-  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
- The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-  <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
-  <li>You cannot override any concrete member defined in an abstract class.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-</ul>
-</div>
-
-<div id="abstract_class">
-<h2 ><b>abstract class</b></h2>
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-
-<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
-<ul>
-<li>a <b>property</b> </li>
-<li>a <b>function</b></li>
-<li>a <b>procedure</b></li>
-</ul>
-<p>As with a <b>concrete class</b>, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
-<p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
-
-<p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<codeblock>
-function calculateDiscount(a as Float, d as Float) returns Float
-  let discount be a*d
-return discount
-</codeblock>
-
-<p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
-<ul>
-<li>Define the method as <b>abstract</b> on the superclass.</li>
-<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
-<li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
-</ul>
-</div>
-
 <div id="constant">
-<h2 id="constant">constant</h2>
+<h2>Constant</h2>
+
+<p>Example from the <b></b> demo - :</p>
+
+<codeblock>
+constant side set to 100
+</codeblock>
+
 <p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
  Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
 <p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
@@ -700,6 +593,121 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header'.</p>
 </div>
+
+<div id="class">
+<h2 ><b>concrete class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
+<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
+<p>Like any other Type its name must begin with an uppercase letter.</p>
+
+<h3 class="no-TOC">Defining a concrete class</h3>
+<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
+<p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
+<p>Its properties must all be initialised in the <b>constructor</b>.</p>
+<p>It may contain functions and procedure methods.</p>
+<p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
+<p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
+<p>A simple demonstration of a concrete class is:</p>
+<codeblock>
+main
+  variable x set to new Thing()
+  call print(x)
+  call print(x.names.toString())
+end main
+class Thing
+  property names as List&lt;of String&gt;
+  constructor()
+    reassign this.names to createList(6, "X")
+  end constructor
+  function toString() returns String
+    return "instance of class Thing"
+  end function
+end class
+</codeblock>
+
+<p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Example definition of a <b>concrete class</b></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
+<codeblock>
+class Apple
+  constructor()
+    reassign this.location to new Square(0, 0)
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+  property location as Square
+  procedure newRandomPosition(snake as Snake)
+    variable changePosition set to true
+    while changePosition
+      variable ranX set to randint(0, 39)
+      variable ranY set to randint(0, 29)
+      reassign this.location to new Square(ranX, ranY)
+      if not snake.bodyCovers(this.location) then
+        reassign changePosition to false
+      end if
+    end while
+  end procedure
+  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
+    reassign blocks[this.location.x][this.location.y] to red
+  end procedure
+end class
+</codeblock>
+</div></div>
+
+<h3 class="no-TOC" id="this"><b>this</b></h3>
+<p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
+you can refer to this instance with <code>this</code>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
+<code> call apple.newRandomPosition(this)</code>
+
+<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
+<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
+
+<h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
+<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
+  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
+ The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+  <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
+  <li>You cannot override any concrete member defined in an abstract class.</li>
+  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
+</ul>
+</div>
+
+<div id="abstract_class">
+<h2 ><b>abstract class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
+
+<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
+<ul>
+<li>a <b>property</b> </li>
+<li>a <b>function</b></li>
+<li>a <b>procedure</b></li>
+</ul>
+<p>As with a <b>concrete class</b>, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
+<p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
+
+<p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
+<codeblock>
+function calculateDiscount(a as Float, d as Float) returns Float
+  let discount be a*d
+return discount
+</codeblock>
+
+<p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
+<ul>
+<li>Define the method as <b>abstract</b> on the superclass.</li>
+<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
+<li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
+</ul>
+</div>
+
 </div>
 
 <div id="StatementInstructions">

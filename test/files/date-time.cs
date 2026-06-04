@@ -99,8 +99,10 @@ static bool leap(int year) { // function
 } // function
 
 [TestMethod] static void test_leap() {
+  // normal cases
   Assert.AreEqual(false, leap(2025))
   Assert.AreEqual(true, leap(2024))
+  // boundary cases
   Assert.AreEqual(false, leap(1900))
   Assert.AreEqual(true, leap(2000))
 } // test
