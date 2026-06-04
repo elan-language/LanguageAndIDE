@@ -7,13 +7,13 @@ static void main() {
   var head = [20, 15];
   var tail = head;
   var body = [head];
-  var currentDir = "right";
+  var currentDir = Direction.right;
   var gameOn = true;
   var apple = [0, 0];
   setAppleToRandomPosition(apple, body); // call procedure
   while (gameOn) {
     updateDisplay(blocks, head, tail, body, apple); // call procedure
-    var currentDirRef = new AsRef<String>(currentDir);
+    var currentDirRef = new AsRef<Direction>(currentDir);
     var headRef = new AsRef<List<int>>(head);
     var tailRef = new AsRef<List<int>>(tail);
     updateSnake(currentDirRef, tailRef, headRef, body); // call procedure
@@ -31,7 +31,7 @@ static void main() {
   print(String.format("Game Over! Score: %", body.length() - 1));
 } // main
 
-static void updateSnake(AsRef<String> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
+static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
   var head = headRef.value();
   var tail = tailRef.value();
   var currentDir = currentDirRef.value();
@@ -73,29 +73,31 @@ static bool hasHitEdge(int headX, int headY) { // function
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
 } // function
 
-static List<int> getAdjacentSquare(List<int> sq, String dir) { // function
+static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
   var newX = sq[0];
   var newY = sq[1];
-  if (dir.equals("left")) {
+  if (dir == Direction.left) {
     newX = newX - 1; // reassign variable
-  } else if (dir.equals("right")) {
+  } else if (dir == Direction.right) {
     newX = newX + 1; // reassign variable
-  } else if (dir.equals("up")) {
+  } else if (dir == Direction.up) {
     newY = newY - 1; // reassign variable
-  } else if (dir.equals("down")) {
+  } else if (dir == Direction.down) {
     newY = newY + 1; // reassign variable
   } // if
   return [newX, newY];
 } // function
 
-static String directionByKey(String current, String key) { // function
+static Direction directionByKey(Direction current, String key) { // function
   var dirn = current;
-  var d = ["w":"up", "s":"down", "a":"left", "d":"right"];
+  var d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right];
   if (d.keys().contains(key)) {
     dirn = d[key]; // reassign variable
   } // if
   return dirn;
 } // function
+
+enum Direction {up, down, left, right}
 
 @Test static void test_getTailColour() {
   assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
@@ -115,21 +117,21 @@ static String directionByKey(String current, String key) { // function
 
 @Test static void test_getAdjacentSquare() {
   var sq = [20, 15];
-  assertEquals([20, 14], getAdjacentSquare(sq, "up"))
-  assertEquals([20, 16], getAdjacentSquare(sq, "down"))
-  assertEquals([19, 15], getAdjacentSquare(sq, "left"))
-  assertEquals([21, 15], getAdjacentSquare(sq, "right"))
+  assertEquals([20, 14], getAdjacentSquare(sq, Direction.up))
+  assertEquals([20, 16], getAdjacentSquare(sq, Direction.down))
+  assertEquals([19, 15], getAdjacentSquare(sq, Direction.left))
+  assertEquals([21, 15], getAdjacentSquare(sq, Direction.right))
   // boundary
-  assertEquals([-1, 15], getAdjacentSquare([0, 15], "left"))
+  assertEquals([-1, 15], getAdjacentSquare([0, 15], Direction.left))
 } // test
 
 @Test static void test_directionByKey() {
-  var current = "up";
-  assertEquals("up", directionByKey(current, ""))
-  assertEquals("up", directionByKey(current, "x"))
-  assertEquals("up", directionByKey(current, "w"))
-  assertEquals("down", directionByKey(current, "s"))
-  assertEquals("left", directionByKey(current, "a"))
-  assertEquals("right", directionByKey(current, "d"))
-  assertEquals("up", directionByKey(current, "D"))
+  var current = Direction.up;
+  assertEquals(Direction.up, directionByKey(current, ""))
+  assertEquals(Direction.up, directionByKey(current, "x"))
+  assertEquals(Direction.up, directionByKey(current, "w"))
+  assertEquals(Direction.down, directionByKey(current, "s"))
+  assertEquals(Direction.left, directionByKey(current, "a"))
+  assertEquals(Direction.right, directionByKey(current, "d"))
+  assertEquals(Direction.up, directionByKey(current, "D"))
 } // test

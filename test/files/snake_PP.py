@@ -7,13 +7,13 @@ def main() -> None:
   head = [20, 15] # variable definition
   tail = head # variable definition
   body = [head] # variable definition
-  currentDir = "right" # variable definition
+  currentDir = Direction.right # variable definition
   gameOn = True # variable definition
   apple = [0, 0] # variable definition
   setAppleToRandomPosition(apple, body) # call procedure
   while gameOn:
     updateDisplay(blocks, head, tail, body, apple) # call procedure
-    currentDirRef = AsRef[str](currentDir) # variable definition
+    currentDirRef = AsRef[Direction](currentDir) # variable definition
     headRef = AsRef[list[int]](head) # variable definition
     tailRef = AsRef[list[int]](tail) # variable definition
     updateSnake(currentDirRef, tailRef, headRef, body) # call procedure
@@ -28,7 +28,7 @@ def main() -> None:
     sleep_ms(150) # call procedure
   print(f"Game Over! Score: {body.length() - 1}")
 
-def updateSnake(currentDirRef: AsRef[str], tailRef: AsRef[list[int]], headRef: AsRef[list[int]], body: list[list[int]]) -> None: # procedure
+def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], headRef: AsRef[list[int]], body: list[list[int]]) -> None: # procedure
   head = headRef.value() # variable definition
   tail = tailRef.value() # variable definition
   currentDir = currentDirRef.value() # variable definition
@@ -62,25 +62,31 @@ def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
 def hasHitEdge(headX: int, headY: int) -> bool: # function
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 
-def getAdjacentSquare(sq: list[int], dir: str) -> list[int]: # function
+def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
   newX = sq[0] # variable definition
   newY = sq[1] # variable definition
-  if dir.equals("left"):
+  if dir == Direction.left:
     newX = newX - 1 # reassign variable
-  elif dir.equals("right"): # else if
+  elif dir == Direction.right: # else if
     newX = newX + 1 # reassign variable
-  elif dir.equals("up"): # else if
+  elif dir == Direction.up: # else if
     newY = newY - 1 # reassign variable
-  elif dir.equals("down"): # else if
+  elif dir == Direction.down: # else if
     newY = newY + 1 # reassign variable
   return [newX, newY]
 
-def directionByKey(current: str, key: str) -> str: # function
+def directionByKey(current: Direction, key: str) -> Direction: # function
   dirn = current # variable definition
-  d = ["w":"up", "s":"down", "a":"left", "d":"right"] # variable definition
+  d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right] # variable definition
   if d.keys().contains(key):
     dirn = d[key] # reassign variable
   return dirn
+
+class Direction(Enum):
+  up = 1
+  down = 2
+  left = 3
+  right = 4
 
 def test_getTailColour(self) -> None:
   self.assertEqual(getTailColour([3, 4], [[3, 4], [3, 5]]), green)
@@ -98,21 +104,21 @@ def test_hasHitEdge(self) -> None:
 
 def test_getAdjacentSquare(self) -> None:
   sq = [20, 15] # variable definition
-  self.assertEqual(getAdjacentSquare(sq, "up"), [20, 14])
-  self.assertEqual(getAdjacentSquare(sq, "down"), [20, 16])
-  self.assertEqual(getAdjacentSquare(sq, "left"), [19, 15])
-  self.assertEqual(getAdjacentSquare(sq, "right"), [21, 15])
+  self.assertEqual(getAdjacentSquare(sq, Direction.up), [20, 14])
+  self.assertEqual(getAdjacentSquare(sq, Direction.down), [20, 16])
+  self.assertEqual(getAdjacentSquare(sq, Direction.left), [19, 15])
+  self.assertEqual(getAdjacentSquare(sq, Direction.right), [21, 15])
   # boundary
-  self.assertEqual(getAdjacentSquare([0, 15], "left"), [-1, 15])
+  self.assertEqual(getAdjacentSquare([0, 15], Direction.left), [-1, 15])
 
 def test_directionByKey(self) -> None:
-  current = "up" # variable definition
-  self.assertEqual(directionByKey(current, ""), "up")
-  self.assertEqual(directionByKey(current, "x"), "up")
-  self.assertEqual(directionByKey(current, "w"), "up")
-  self.assertEqual(directionByKey(current, "s"), "down")
-  self.assertEqual(directionByKey(current, "a"), "left")
-  self.assertEqual(directionByKey(current, "d"), "right")
-  self.assertEqual(directionByKey(current, "D"), "up")
+  current = Direction.up # variable definition
+  self.assertEqual(directionByKey(current, ""), Direction.up)
+  self.assertEqual(directionByKey(current, "x"), Direction.up)
+  self.assertEqual(directionByKey(current, "w"), Direction.up)
+  self.assertEqual(directionByKey(current, "s"), Direction.down)
+  self.assertEqual(directionByKey(current, "a"), Direction.left)
+  self.assertEqual(directionByKey(current, "d"), Direction.right)
+  self.assertEqual(directionByKey(current, "D"), Direction.up)
 
 main()

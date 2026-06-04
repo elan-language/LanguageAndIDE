@@ -1,4 +1,4 @@
-# dd21daafadd39642f4f9b3086c9070ce9bdb2034cd9d4ad007b6e8b9c4a53f1d Elan 2.0.0-alpha5 valid
+# 239ddf4bd5c9a15651e1db6f3668960ba069c627511644164d6206eaba7ead4c Elan 2.0.0-alpha5 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -6,13 +6,13 @@ main
   variable head set to [20, 15]
   variable tail set to head
   variable body set to [head]
-  variable currentDir set to "right"
+  variable currentDir set to Direction.right
   variable gameOn set to true
   variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of String>(currentDir)
+    variable currentDirRef set to new AsRef<of Direction>(currentDir)
     variable headRef set to new AsRef<of List<of Int>>(head)
     variable tailRef set to new AsRef<of List<of Int>>(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
@@ -30,7 +30,7 @@ main
   call print($"Game Over! Score: {body.length() - 1}")
 end main
 
-procedure updateSnake(currentDirRef as AsRef<of String>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -72,29 +72,31 @@ function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
-function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of Int>
+function getAdjacentSquare(sq as List<of Int>, dir as Direction) returns List<of Int>
   variable newX set to sq[0]
   variable newY set to sq[1]
-  if dir.equals("left") then
+  if dir is Direction.left then
     reassign newX to newX - 1
-  elif dir.equals("right") then
+  elif dir is Direction.right then
     reassign newX to newX + 1
-  elif dir.equals("up") then
+  elif dir is Direction.up then
     reassign newY to newY - 1
-  elif dir.equals("down") then
+  elif dir is Direction.down then
     reassign newY to newY + 1
   end if
   return [newX, newY]
 end function
 
-function directionByKey(current as String, key as String) returns String
+function directionByKey(current as Direction, key as String) returns Direction
   variable dirn set to current
-  variable d set to ["w":"up", "s":"down", "a":"left", "d":"right"]
+  variable d set to ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right]
   if d.keys().contains(key) then
     reassign dirn to d[key]
   end if
   return dirn
 end function
+
+enum Direction up, down, left, right
 
 test test_getTailColour
   assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
@@ -114,21 +116,21 @@ end test
 
 test test_getAdjacentSquare
   variable sq set to [20, 15]
-  assert getAdjacentSquare(sq, "up") is [20, 14]
-  assert getAdjacentSquare(sq, "down") is [20, 16]
-  assert getAdjacentSquare(sq, "left") is [19, 15]
-  assert getAdjacentSquare(sq, "right") is [21, 15]
+  assert getAdjacentSquare(sq, Direction.up) is [20, 14]
+  assert getAdjacentSquare(sq, Direction.down) is [20, 16]
+  assert getAdjacentSquare(sq, Direction.left) is [19, 15]
+  assert getAdjacentSquare(sq, Direction.right) is [21, 15]
   # boundary
-  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+  assert getAdjacentSquare([0, 15], Direction.left) is [-1, 15]
 end test
 
 test test_directionByKey
-  variable current set to "up"
-  assert directionByKey(current, "") is "up"
-  assert directionByKey(current, "x") is "up"
-  assert directionByKey(current, "w") is "up"
-  assert directionByKey(current, "s") is "down"
-  assert directionByKey(current, "a") is "left"
-  assert directionByKey(current, "d") is "right"
-  assert directionByKey(current, "D") is "up"
+  variable current set to Direction.up
+  assert directionByKey(current, "") is Direction.up
+  assert directionByKey(current, "x") is Direction.up
+  assert directionByKey(current, "w") is Direction.up
+  assert directionByKey(current, "s") is Direction.down
+  assert directionByKey(current, "a") is Direction.left
+  assert directionByKey(current, "d") is Direction.right
+  assert directionByKey(current, "D") is Direction.up
 end test
