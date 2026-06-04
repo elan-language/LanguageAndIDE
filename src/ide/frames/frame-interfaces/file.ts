@@ -127,4 +127,7 @@ export interface File extends Parent {
 
   setLanguage(l: Language): boolean;
   language(): Language;
+
+  showCompletion(show: boolean): void;
+  getShowCompletion(): boolean;
 }

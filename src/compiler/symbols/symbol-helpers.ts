@@ -287,13 +287,13 @@ export function scopePrefix(
   }
 
   if (isGlobalConstant(symbol) && symbol.symbolScope === SymbolScope.program) {
-    return isGlobalConstant(scope) ? `${getGlobalScope(scope).language.THIS_INSTANCE}.` : "global.";
+    return isGlobalConstant(scope) ? "this." : "global.";
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
     return isAstIdNode(qualifier)
       ? `${qualifier.id}.`
-      : `${getGlobalScope(scope).language.THIS_INSTANCE}.`;
+      : "this.";
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {
