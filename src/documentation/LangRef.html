@@ -21,7 +21,7 @@
 </div>
 
 <h1 id="GlobalInstructions">Global instructions</h1>
-<p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
+<p>Global instructions are placed <em>directly</em> in your code file.
 They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions. They are:
  <a href="#main"><b>main</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#procedure"><b>procedure</b> <i class="fa">&#xf14c;</i></a>,
@@ -32,20 +32,40 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#constant"><b>constant</b> <i class="fa">&#xf14c;</i></a> and
  <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.
 </p>
-<div id="Method"></div>
+
+<h2 id="main">main</h2>
+
+Example - from the <b>Burrow</b> demo:
+
+<codeblock>
+  main
+  variable blocks set to createBlockGraphics(white)
+  variable x set to 20
+  variable y set to 15
+  while true
+    reassign blocks[x][y] to red
+    call displayBlocks(blocks)
+    reassign blocks[x][y] to black
+    variable direction set to randint(0, 3)
+    if direction is 0 then
+      reassign x to min([x + 1, 39])
+    elif direction is 1 then
+      reassign x to max([x - 1, 0])
+    elif direction is 2 then
+      reassign y to min([y + 1, 29])
+    elif direction is 3 then
+      reassign y to max([y - 1, 0])
+    end if
+  end while
+end main
+</codeblock>
+
+<h4>What you need to know about the <b>main</b> instruction</h4>
+
 <ul>
- <li><b>main</b>, <b>procedure</b> and <b>function</b> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement instructions <i class="fa">&#xf14c;</i></a> within them.</li>
- <li><b>test</b> also contains instructions, in particular the <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a> instruction for testing functions during development of your program.</li>
- <li><b>concrete class</b> and <b>abstract class</b> define data structures and these always contain <a href="#Member">members <i class="fa">&#xf14c;</i></a>.</li>
- <li><b>constant</b> and <b>enum</b> do not contain any further instructions: only names and values.</li>
- <li>The sequence of global instructions in your code is immaterial, with two exceptions:
-  <ul>
-   <li>If one <b>constant</b> is used in the definition of another constant, the first must be declared above the second.</li>
-   <li>An <b>abstract class</b> must be declared above any <b>concrete class</b> that inherits from it.</li>
-  </ul>
+
 </ul>
 
-<h2 id="main"><b>main</b></h2>
 <p>A program must have a main routine, if it is intended to be run as a program. 
   You may, however, develop and test code that does not have a main routine, either as a coding exercise or for subsequent use within another program.</p>
 <p>The main routine defines the start point of a program when it is run (executed).</p>
@@ -54,7 +74,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <p>There may not be more than one main routine in a program file, and the <b>new code</b> prompt will not show <b>main</b> as an option when one already exists in the file.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a main routine</h4>
+<h4 class="no-TOC acc-title">More examples of main routines</h4>
 <div class="acc-body">
 
 <codeblock>
@@ -65,7 +85,6 @@ main
 end main
 </codeblock>
 <hr>
-</div></div>
 
 <h2 id="procedure"><b>procedure</b></h2>
 <div id="Parameter_value"></div>
@@ -342,6 +361,7 @@ end test
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
 
 <h2 id="class"><b>concrete class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 <p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
@@ -426,6 +446,8 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
 </ul>
 
 <h2 id="abstract_class"><b>abstract class</b></h2>
+<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
+
 <p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
 <ul>
 <li>a <b>property</b> </li>
