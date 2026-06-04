@@ -115,6 +115,8 @@ export class FileImpl implements File {
 
   private copiedSource: string[] = [];
 
+  private _showCompletions: boolean = true;
+
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
     public profile: Profile,
@@ -139,6 +141,14 @@ export class FileImpl implements File {
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
+  }
+
+  showCompletion(show: boolean): void {
+    this._showCompletions = show;
+  }
+
+  getShowCompletion(): boolean {
+    return this._showCompletions;
   }
 
   addCopiedSource(source: string): void {
