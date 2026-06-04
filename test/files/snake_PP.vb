@@ -7,13 +7,13 @@ Sub main()
   Dim head = {20, 15} ' variable definition
   Dim tail = head ' variable definition
   Dim body = {head} ' variable definition
-  Dim currentDir = "right" ' variable definition
+  Dim currentDir = Direction.right ' variable definition
   Dim gameOn = True ' variable definition
   Dim apple = {0, 0} ' variable definition
   setAppleToRandomPosition(apple, body) ' call procedure
   While gameOn
     updateDisplay(blocks, head, tail, body, apple) ' call procedure
-    Dim currentDirRef = New AsRef(Of String)(currentDir) ' variable definition
+    Dim currentDirRef = New AsRef(Of Direction)(currentDir) ' variable definition
     Dim headRef = New AsRef(Of List(Of Integer))(head) ' variable definition
     Dim tailRef = New AsRef(Of List(Of Integer))(tail) ' variable definition
     updateSnake(currentDirRef, tailRef, headRef, body) ' call procedure
@@ -31,7 +31,7 @@ Sub main()
   print($"Game Over! Score: {body.length() - 1}")
 End Sub
 
-Sub updateSnake(currentDirRef As AsRef(Of String), tailRef As AsRef(Of List(Of Integer)), headRef As AsRef(Of List(Of Integer)), body As List(Of List(Of Integer))) ' procedure
+Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(Of Integer)), headRef As AsRef(Of List(Of Integer)), body As List(Of List(Of Integer))) ' procedure
   Dim head = headRef.value() ' variable definition
   Dim tail = tailRef.value() ' variable definition
   Dim currentDir = currentDirRef.value() ' variable definition
@@ -73,29 +73,36 @@ Function hasHitEdge(headX As Integer, headY As Integer) As Boolean
   Return (headX < 0) Or (headY < 0) Or (headX > 39) Or (headY > 29)
 End Function
 
-Function getAdjacentSquare(sq As List(Of Integer), dir As String) As List(Of Integer)
+Function getAdjacentSquare(sq As List(Of Integer), dir As Direction) As List(Of Integer)
   Dim newX = sq[0] ' variable definition
   Dim newY = sq[1] ' variable definition
-  If dir.equals("left") Then
+  If dir = Direction.left Then
     newX = newX - 1 ' reassign variable
-  ElseIf dir.equals("right") Then
+  ElseIf dir = Direction.right Then
     newX = newX + 1 ' reassign variable
-  ElseIf dir.equals("up") Then
+  ElseIf dir = Direction.up Then
     newY = newY - 1 ' reassign variable
-  ElseIf dir.equals("down") Then
+  ElseIf dir = Direction.down Then
     newY = newY + 1 ' reassign variable
   End If
   Return {newX, newY}
 End Function
 
-Function directionByKey(current As String, key As String) As String
+Function directionByKey(current As Direction, key As String) As Direction
   Dim dirn = current ' variable definition
-  Dim d = ["w":"up", "s":"down", "a":"left", "d":"right"] ' variable definition
+  Dim d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right] ' variable definition
   If d.keys().contains(key) Then
     dirn = d[key] ' reassign variable
   End If
   Return dirn
 End Function
+
+Enum Direction 
+  up = 0
+  down = 1
+  left = 2
+  right = 3
+End Enum
 
 <TestMethod> Sub test_getTailColour()
   Assert.AreEqual(green, getTailColour({3, 4}, {{3, 4}, {3, 5}}))
@@ -115,21 +122,21 @@ End Sub
 
 <TestMethod> Sub test_getAdjacentSquare()
   Dim sq = {20, 15} ' variable definition
-  Assert.AreEqual({20, 14}, getAdjacentSquare(sq, "up"))
-  Assert.AreEqual({20, 16}, getAdjacentSquare(sq, "down"))
-  Assert.AreEqual({19, 15}, getAdjacentSquare(sq, "left"))
-  Assert.AreEqual({21, 15}, getAdjacentSquare(sq, "right"))
+  Assert.AreEqual({20, 14}, getAdjacentSquare(sq, Direction.up))
+  Assert.AreEqual({20, 16}, getAdjacentSquare(sq, Direction.down))
+  Assert.AreEqual({19, 15}, getAdjacentSquare(sq, Direction.left))
+  Assert.AreEqual({21, 15}, getAdjacentSquare(sq, Direction.right))
   ' boundary
-  Assert.AreEqual({-1, 15}, getAdjacentSquare({0, 15}, "left"))
+  Assert.AreEqual({-1, 15}, getAdjacentSquare({0, 15}, Direction.left))
 End Sub
 
 <TestMethod> Sub test_directionByKey()
-  Dim current = "up" ' variable definition
-  Assert.AreEqual("up", directionByKey(current, ""))
-  Assert.AreEqual("up", directionByKey(current, "x"))
-  Assert.AreEqual("up", directionByKey(current, "w"))
-  Assert.AreEqual("down", directionByKey(current, "s"))
-  Assert.AreEqual("left", directionByKey(current, "a"))
-  Assert.AreEqual("right", directionByKey(current, "d"))
-  Assert.AreEqual("up", directionByKey(current, "D"))
+  Dim current = Direction.up ' variable definition
+  Assert.AreEqual(Direction.up, directionByKey(current, ""))
+  Assert.AreEqual(Direction.up, directionByKey(current, "x"))
+  Assert.AreEqual(Direction.up, directionByKey(current, "w"))
+  Assert.AreEqual(Direction.down, directionByKey(current, "s"))
+  Assert.AreEqual(Direction.left, directionByKey(current, "a"))
+  Assert.AreEqual(Direction.right, directionByKey(current, "d"))
+  Assert.AreEqual(Direction.up, directionByKey(current, "D"))
 End Sub

@@ -63,7 +63,7 @@ main
 end main
 </codeblock>
 
-<h4 class="no-TOC">What you need to know about a <b>main</b> routine</h4>
+ class="no-TOC">What you need to know about a <b>main</b> routine</h4>
 
 <ul>
   <li>The first instruction added <i>within</i> is always the first instruction to be executed when the program is run.</li>
@@ -76,7 +76,7 @@ end main
 </ul>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More examples of main routines</h4>
+ class="no-TOC acc-title">More examples of main routines</h4>
 <div class="acc-body">
 
 <p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
@@ -135,7 +135,7 @@ end procedure
 
 <p>It is called within the main routine by this instruction: <code>call moveGrowBurst(bubbles)</code></p>
 
-<h4 class="no-TOC">What you need to know about procedures</h4>
+ class="no-TOC">What you need to know about procedures</h3>
 
 <ul>
   <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
@@ -157,7 +157,7 @@ end procedure
 </ul>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More examples of procedures</h4>
+<h3 class="no-TOC acc-title">More examples of procedures</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
 
@@ -188,6 +188,66 @@ procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
 end procedure
 </codeblock>
 </div></div>
+
+<div class="accordion">
+ class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+
+<div id="AsRef"></div>
+<div id="set_Ref"></div>
+<div id="value_Ref"></div>
+<div id="Parameter_reference"></div>
+ class="no-TOC" id="CallByRef">Call by reference</h4>
+<p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
+must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
+This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value,
+ as in this example where <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
+ so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
+
+<codeblock>
+main
+  variable arg set to "abc"
+  variable argRef set to new AsRef&lt;of String&gt;(arg)
+  call changeArg(argRef)
+  call print(argRef.value())
+end main
+procedure changeArg(pointer as AsRef&lt;of String&gt;)
+  variable r set to pointer.value()
+  call pointer.set(r.upperCase())
+end procedure
+</codeblock>
+
+ class="no-TOC">Recursive procedure calls</h4>
+
+<p>A procedure may call itself, directly or indirectly (calling another procedure that then calls back to the first one). 
+  The following example is from the <b>Turtle Snowflake</b> demo, you can see that the <el-method>drawSide</el-method> 
+  procedure calls itself from four separate places within its body - in order to achieve the 'fractal' effect, where
+  a basic shape repeats itself at different levels of scale. You can also observe two very important principles of 
+  recursion here:
+  <ul>
+    <li>That calls back into itself are with a smaller version of the problem - in this case a <code>third</code> of the <code>length</code>
+    that the procedure was given.</li>
+    <li>That there is a terminating condition where the recursion 'bottoms out' - in this when the side length gets down to 1.</li>
+  </ul>
+</p>
+
+<codeblock>
+procedure drawSide(length as Float, t as Turtle)
+  if (length > 1) then
+    variable third set to length/3
+    call drawSide(third, t)
+    call t.turn(-60)
+    call drawSide(third, t)
+    call t.turn(120)
+    call drawSide(third, t)
+    call t.turn(-60)
+    call drawSide(third, t)
+  else
+    call t.move(length)
+  end if
+end procedure
+</codeblock>
+</div></div>
 </div>
 
 <div id="function">
@@ -206,7 +266,7 @@ end function
 
 <codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)</codeblock>
 
-<h4 class="no-TOC">What you need to know about functions</h4>
+ class="no-TOC">What you need to know about functions</h3>
 <ul>
   <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
   <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
@@ -237,7 +297,7 @@ end function
 </ul>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More examples of functions</h4>
+<h3 class="no-TOC acc-title">More examples of functions</h3>
 <div class="acc-body">
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
@@ -321,7 +381,7 @@ test test_willLive
 end test
 </codeblock>
 
-<h4 class="no-TOC">What you need to know about tests</h4>
+ class="no-TOC">What you need to know about tests</h3>
 <ul>
   <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
   <li>Some languages allow unit tests to be applied to procedures, but this dangerous since running the tests could result
@@ -345,7 +405,7 @@ end test
 </ul>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More examples of tests</h4>
+<h3 class="no-TOC acc-title">More examples of tests</h3>
 <div class="acc-body">
 
   <p>Example from the <b>Date Time</b> demo. The comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
@@ -368,22 +428,23 @@ end test
   <codeblock>
 test test_getAdjacentSquare
   variable sq set to [20, 15]
-  assert getAdjacentSquare(sq, "up") is [20, 14]
-  assert getAdjacentSquare(sq, "down") is [20, 16]
-  assert getAdjacentSquare(sq, "left") is [19, 15]
-  assert getAdjacentSquare(sq, "right") is [21, 15]
+  assert getAdjacentSquare(sq, Direction.up) is [20, 14]
+  assert getAdjacentSquare(sq, Direction.down) is [20, 16]
+  assert getAdjacentSquare(sq, Direction.left) is [19, 15]
+  assert getAdjacentSquare(sq, Direction.right) is [21, 15]
   # boundary
-  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+  assert getAdjacentSquare([0, 15], Direction.left) is [-1, 15]
 end test
   </codeblock>
 
-</div></div>
+</div>
+</div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More advanced testing techniques</h4>
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-  <h3 class="no-TOC" id="ignore">Ghosting tests</h3>
+   class="no-TOC" id="ignore">Ghosting tests</h4>
 <p>To deliberately ensure that a test is not run, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
 <p>Even when <b>test</b>s or <b>assert</b> equals are <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
@@ -412,7 +473,7 @@ test test_overApple
 end test
 </codeblock>
 
-<h3 class="no-TOC">Testing <code>Float</code> values</h3>
+ class="no-TOC">Testing <code>Float</code> values</h4>
 <p>When testing <code>Float</code> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
 
 <codeblock>
@@ -421,7 +482,7 @@ test test_round
 end test
 </codeblock>
 
-<h3 class="no-TOC">Testing for runtime errors</h3>
+ class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <codeblock>
@@ -441,7 +502,7 @@ test test_message
 end test
 </codeblock>
 
-<h3 class="no-TOC" >Testing long strings</h3>
+ class="no-TOC" >Testing long strings</h4>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
  <i>first</i> character at which the actual (computed) and expected strings differ. For example:</p>
 
@@ -456,7 +517,7 @@ test test_setInStyle
 end test
 </codeblock>
 
-<h3 class="no-TOC">Non-terminating loops and recursion</h3>
+ class="no-TOC">Non-terminating loops and recursion</h4>
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. 
   This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds
@@ -471,23 +532,40 @@ end test
 <div id="constant">
 <h2>Constant</h2>
 
-<p>Example from the <b></b> demo - :</p>
+<p>Example from the <b>Turtle Snowflake</b> demo, a constant is defined here:</p>
 
 <codeblock>
 constant side set to 100
 </codeblock>
 
-<p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
- Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
- <code>String</code>.</p>
-<p>Constants are created at compile time, so cannot be defined with reference to any function, nor can they use any operators in an expression.</p>
-<p>A constant can be defined by reference to a previously defined constant or to a system constant,
- but take care not to re-define a <a href="LibRef.html#Constants">system constant <i class="fa">&#xf08e;</i></a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
-<p>A 'constant' data structure can be defined by using a <b>function</b> which is then referenced from wherever needed.
- See <a href="#constantStructure">Constant data structures <i class="fa">&#xf14c;</i></a>.</p>
+<p>and used within the main routine as an argument to pass into the <el-method>drawSide</el-method> procedure:</p>
 
-<p>Examples of literal definitions of the valid Types of constant:</p>
+<codeblock>
+call drawSide(side, t)
+</codeblock>
+
+ class="no-TOC">What you need to know about constants</h3>
+
+<u>
+  <li>A constant is a named value that never changes while a program is running.</li>
+  <li>The Elan library defines a few constants including <code>pi</code> and a handful of simple colours e.g. <code>red</code>.</li>
+  <li>The <b>constant</b> instruction allows you to define your own constant(s).</li>
+  <li class="python">Even though Python does not natively support the idea of a constant, when writing
+    Python with Elan, having created a constant with <b>constant</b> instruction you will find that you
+    cannot change it with a <b>reassign</b> instruction.</li>
+  <li>When coding with Elan a constant:
+      <ul>
+        <li>may be defined only at global (file) level.</li>
+        <li>must be given a unique name, starting lower-case (<code>side</code> above).</li>
+        <li>must be defined by a liter value, which must be a number, string, or Boolean (true/false).</li>
+      </ul></li>
+  <li>If you define your own constant with the same name as a library constant, you will not be able to access
+    the library one within your program - unless you rename your own version.</li>
+</u>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More examples of constants</h3>
+<div class="acc-body">
 
 <codeblock>
 constant maxHits set to 10
@@ -498,11 +576,18 @@ constant gameOver set to true
 constant euro set to 0x20ac
 constant warningMsg set to "Limit reached"
 </codeblock>
+</div>
+</div>
 
-<h3 class="no-TOC" id="constantStructure">Constant data structures</h3>
-<p>To use a data structure that is to be a constant in your program, you define it as the value of a <b>function</b>
-which cam then be referenced from anywhere in the program, often from within an expression.</p>
-<p>These examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours which
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+
+ class="no-TOC" id="constantStructure">Constant data structures</h4>
+<p>To use a data structure that is to be a constant in your program, you define it as the value returned <b>function</b>
+  that defines no parameters. This function can then be referenced from anywhere in the program, often from within an expression
+  but you need to remember to and empty brackets after the name, when using it.</p>
+<p>The following examples define a constant <code>List</code> and a constant <code>Dictionary</code> of colours which
 are indexable:</p>
 
 <codeblock>
@@ -517,81 +602,133 @@ function suitColours() returns Dictionary<of String, Int>
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
-
-<h3 class="no-TOC">System constants</h3>
-Some useful constants are provided: see <a href="LibRef.html#systemConstants">System constants <i class="fa">&#xf08e;</i></a> 
+</div>
+</div>
 </div>
 
 <div id="enum">
-<h2 id="enumValue"><b>enum</b></h2>
-<p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
-It is used to provide a fixed set of options that are self-explanatory, and the references to its
-those options (its 'values') are checked at compile time.</p>
-<p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
-number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf14c;</i></a>.</p>
-<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the 'values'.</p>
-<p>Reference to the value in an <b>enum</b> is made by using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> with method <el-method>enumValue</el-method>.</p>
-<p>An <b>enum</b> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
-<p>Examples of <b>enum</b> definitions:</p>
+<h2 id="enumValue">Enum</h2>
+
+<p>Example from the <b>Snake - procedural</b> demo, the enum is defined here:</p>
+
+<codeblock>
+enum Direction up, down, left, right
+</codeblock>
+
+<p>and is used in several places in the code, for example:</p>
+
+<codeblock>
+  function getAdjacentSquare(sq as List<of Int>, dir as Direction) returns List<of Int>
+  variable newX set to sq[0]
+  variable newY set to sq[1]
+  if dir is Direction.left then
+    reassign newX to newX - 1
+  elif dir is Direction.right then
+    reassign newX to newX + 1
+  elif dir is Direction.up then
+    reassign newY to newY - 1
+  elif dir is Direction.down then
+    reassign newY to newY + 1
+  end if
+  return [newX, newY]
+end function
+</codeblock>
+
+<h3 class="no-TOC">What you need to know about enums</h3>
+
+<ul>
+  <li><p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; is the simplest form of <i>user-defined</i> type.</li>
+  <li>Because it is a type, the name given to the enum (<code>Direction</code> above must start with an upper-case letter.</li>
+  <li>An enum forces any named value of that type to be one of a fixed number of named values, listed in the enum definition.</li>
+  <li>The instruction <code>variable currentDir set to Direction.right</code> initialises <code>currentDir</code> with the
+  value <code>right</code> defined on the enum named <code>Direction</code>.</li>
+  <li>Because the variable <code>currentDirect</code> has the type code>Direction</code>, it may only be reassigned to 
+  another of the named values defined on <code>currentDir</code></li>
+  <li>A value of a type defined by an enum cannot be converted to anything else - it is a concept relevant to the application domain.</li>
+  <li>The advantages of using enums are:
+    <ul>
+      <li>Readability</li>
+      <li>Safety. If the four directions were defined as strings, e.g. <code>"right"</code> a mis-spelling
+      might not picked up until runtime; writing e.g. <code>Direction.rifht</code>, however, would give a compile
+      error
+    </li>
+    </ul>
+  </li>
+</ul>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More examples of enums</h3>
+<div class="acc-body">
+
 <codeblock>
 enum Suit spades, hearts, diamonds, clubs
 enum Outcome undecided, win, lose, draw, winDouble
-</codeblock>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>enum</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To retrieve a valid 'value':</p>
-<codeblock>
-enum Status pending, playing, standing, blackjack, bust
-main
-  variable state set to Status.pending
-end main
-</codeblock>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To get a valid option from an abbreviation (in demo program pathfinder.elan):</p>
-<codeblock>
 enum Algorithm dijkstra, aStar, heuristic
-function getAlgFromLetter(letter as String) returns Algorithm
-  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
-  return algs[letter]
-end function
-</codeblock>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A function to turn directions held in an <b>enum</b> through 90&deg; clockwise:</p>
-<codeblock>
-enum Compass north, east, south, west
-main
-  variable dir set to Compass.south
-  call print(enumValue(clockwise(dir)))
-end main
-function clockwise(d as Compass) returns Compass
-  variable newDir set to Compass.north
-  if d.equals(Compass.north) then
-    reassign newDir to Compass.east
-  elif d.equals(Compass.east) then
-    reassign newDir to Compass.south
-  elif d.equals(Compass.south) then
-    reassign newDir to Compass.west
-  end if
-  return newDir
-end function
+enum Hole vacant, mole, hit, miss
 </codeblock>
 </div></div>
 </div>
 
 <div id="Comment">
-<h2 id="Comment"><code># </code>comment</h2>
-<p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
-Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-<p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
- Your text may contain any characters, except that it must not start with an open square bracket [.</p>
-<p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global <i class="fa">&#xf14c;</i></a>,
-<a href="#MemberInstructions">Member <i class="fa">&#xf14c;</i></a>, or <a href="#StatementInstructions">Statement <i class="fa">&#xf14c;</i></a> instruction levels,
-as well as from the <b>new code</b> prompt. Every prompt provides a <code>comment</code> option, namely a # symbol.</p>
-<p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
-  This comment is known as the 'file header'.</p>
+<h2 id="Comment">Comment</h2>
+
+<p>Example from the <b>Snake - procedural</b> demo:</p>
+
+<codeblock>
+# Use the w,a,s,d keys to change snake's direction
+</codeblock>
+
+<h3 class="no-TOC">What you need to know about enums</h3>
+<ul>
+  <li>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.</li>
+  <li>Rather, a comment contains information <i>about</i> the program, intended to be read by a person seeking to understand or modify the code.</li>
+  <li>A comment may be entered at any <b>new code</b> prompt by typing the symbol <code># </code> which then provides a field in which you may enter text, or leave blank.</li>
+  <li>Your text may contain any characters, except that it must not start with an open square bracket [.</li>
+  <li>When coding with Elan, a comment added by the programmer always starts on a new line.</li>
+  <li>Comments that you see written after an instruction are generated by the system and may not be edited or deleted.</li>
+  <li>Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user;
+  this comment is known as the 'file header'.</li>
+</ul>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More examples of comments</h3>
+<div class="acc-body">
+ <p>From the <b>Bubbles</b> demo:<p>
+
+  <codeblock>
+procedure moveGrowBurst(bubbles as List<of CircleVG>)
+  for b in bubbles
+    if random() < 0.05 then
+      # 5% chance bubble 'bursts' and starts again tiny at bottom
+      call b.setRadius(0)
+      call b.setCentreY(75)
+    else
+      # bubble rises and grows slightly
+      call b.setCentreY(b.centreY - 1)
+      call b.setRadius(b.radius + 0.2)
+    end if
+  end for
+  call displayVectorGraphics(bubbles)
+  call sleep_ms(5)
+end procedure
+  </codeblock>
+
+  <p>From the <b>Hodgepodge</b> demo:</p>
+<codeblock>
+main
+  # colour grids: hodge for display, podge for working
+  variable podge set to createBlockGraphics(healthy)
+  variable hodge set to new AsRef<of List<of List<of Int>>>(createBlockGraphics(healthy))
+  variable blank set to createBlockGraphics(healthy)
+  # initial colours of grid
+  call updateGrid(hodge, podge, true)
+  while not uniform(hodge.value())
+    # successive updates to grid in blank podge
+    reassign podge to blank
+    call updateGrid(hodge, podge, false)
+  end while
+</codeblock>
+</div></div>
 </div>
 
 <div id="class">

@@ -88,7 +88,7 @@ or properties may have different types, for example the <code>TuringMachine</cod
 <codeblock> property tape as String</codeblock>
 </p>
 
-<h3>Defining a class</h3>
+<h3 class="no-TOC">Defining a class</h3>
 
 <p>Selecting <b>concrete class</b> from the <b>new code</b> menu inserts a template like this:
 
@@ -125,7 +125,7 @@ where the only thing you <i>must</i> provide is a unique name for the class, whi
 
 <codeblock>return new Square(newX, newY)</codeblock>
 
-<h3>Reading properties</h3>
+<h3 class="no-TOC">Reading properties</h3>
 
 <p>Wherever you have a reference to an object, your code may read and make use of the publicly-visible properties of that object
     using 'dot syntax', for example (from the <b>Pathfinder</b> demo):
@@ -157,7 +157,7 @@ constructor(x as Int, y as Int)
 end constructor
 </codeblock>
 
-<h3>Note:</h3>
+<h3 class="no-TOC">Note:</h3>
 <ul>
   <li>Even properties that are automatically initialised <i>may</i> be explicitly initialised in the constructor.</li>
   <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type, 
@@ -203,7 +203,7 @@ class Snake
 end class
 </codeblock>
 
-<h3>Note:</h3>
+<h3 class="no-TOC">Note:</h3>
 <ul>
   <li>The<code>Snake</code> is always initialised to the same values, so the constructor does not need to define any parameters.</li>
   <li>The <code>currentDir</code> property is of type <code>Direction</code> (which is an enum) and is initialised to <code>Direction.right</code>.</li>
@@ -230,7 +230,7 @@ end class
 
     <p>Properties on a class define the <i>data</p> (or 'state') for each instance of the class; methods define the <i>behaviour</i> for the object.</p>
 
-  <h2>Function method</h2>
+  <h2 class="no-TOC">Function method</h2>
 
   <p>Function methods defined on a class, are similar to global functions in that they act like 'queries', returning information that is determined by
     the values of the parameters. The difference is that a function method defined on a class, may additionally make use of information obtained from
@@ -274,7 +274,7 @@ end function
 
 (You might like to try this out, <i>temporarily</i>adding the instruction <code>call print(snake)</code> into the main routine.)
 
-<h2>Procedure method</h2>
+<h2 class="no-TOC">Procedure method</h2>
 
 <p>Procedure methods, like function methods, may define parameters and may also read the values of the object's properties.
   Like global procedures they may also generate side effects, and this includes changing the values of the object's properties,
