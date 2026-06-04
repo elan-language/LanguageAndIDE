@@ -15,7 +15,7 @@ export class InheritanceNode extends CSV {
   }
 
   private rootNode(): RootAstNode {
-    return this.file.getAst(true)!;
+    return this.file.getAst(false)!;
   }
 
   getAbstractClassNames(): string[] {
