@@ -35,10 +35,10 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 
 <h2 id="main">main</h2>
 
-Example - from the <b>Burrow</b> demo:
+<p>Example - from the <b>Burrow</b> demo:</p>
 
 <codeblock>
-  main
+main
   variable blocks set to createBlockGraphics(white)
   variable x set to 20
   variable y set to 15
@@ -60,23 +60,25 @@ Example - from the <b>Burrow</b> demo:
 end main
 </codeblock>
 
-<h4>What you need to know about the <b>main</b> instruction</h4>
+<h4>What you need to know about a <b>main</b> routine</h4>
 
 <ul>
-
+  <li>The first instruction added <i>within</i> is always the first instruction to be executed when the program is run.</li>
+  <li>Without a main routine, there is nothing to run. However you may write and test functions without a main.</li>
+  <li>The main routine does not have to be at the top of the file, but this is a good convention to follow.</li>
+  <li>You may not define more than one main routine.</li>
+  <li>It <i>may</i> form the entire program (as in example above), more commonly it will delegate
+    to procedures and functions defined by the programmer.
+  </li>
 </ul>
-
-<p>A program must have a main routine, if it is intended to be run as a program. 
-  You may, however, develop and test code that does not have a main routine, either as a coding exercise or for subsequent use within another program.</p>
-<p>The main routine defines the start point of a program when it is run (executed).</p>
-<p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
-<p>It may delegate work to one or more <a href="#procedure">procedures <i class="fa">&#xf14c;</i></a> or <a href="#function">functions <i class="fa">&#xf14c;</i></a>.</p>
-<p>There may not be more than one main routine in a program file, and the <b>new code</b> prompt will not show <b>main</b> as an option when one already exists in the file.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">More examples of main routines</h4>
 <div class="acc-body">
 
+<p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
+  delegates most of the work to the <el-method>inPlaceRippleSort</el-method> procedure (not shown here),
+  then prints the sorted list:</p>
 <codeblock>
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
@@ -84,91 +86,100 @@ main
   call print(li)
 end main
 </codeblock>
+
+<p>From the <b>Life procedural</b> demo. The whole program is 157 instructions (including tests), but the main routine contains just 9.
+It is good practice to <i>keep the main routine small</i>.</p>
+
+<codeblock>
+main
+  variable grid set to createBlockGraphics(white)
+  call fillRandom(grid)
+  while true
+    call displayBlocks(grid)
+    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
+    call nextGeneration(gridRef)
+    reassign grid to gridRef.value()
+    call sleep_ms(50)
+  end while
+end main 
+</codeblock>
+</div></div>
 <hr>
 
 <h2 id="procedure"><b>procedure</b></h2>
-<div id="Parameter_value"></div>
-<p id="Argument">A procedure is a named piece of code that may define parameters, 
-  which are given inputs via arguments specified in a <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
-<p>the procedure's name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p> Unlike a function:</p>
+
+<p>Example - from the <b>Bubbles</b> demo:</p>
+
+<codeblock>
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+  for b in bubbles
+    if random() < 0.05 then
+      # 5% chance bubble 'bursts' and starts again tiny at bottom
+      call b.setRadius(0)
+      call b.setCentreY(75)
+    else
+      # bubble rises and grows slightly
+      call b.setCentreY(b.centreY - 1)
+      call b.setRadius(b.radius + 0.2)
+    end if
+  end for
+  call displayVectorGraphics(bubbles)
+  call sleep_ms(5)
+end procedure
+</codeblock>
+
+<h4>What you need to know about a procedure</h4>
+
 <ul>
- <li>a <b>procedure</b> can have side effects: indeed it <i>should</i> have side effects, otherwise there would be no point in calling it.</li>
- <li>a <b>procedure</b> does not return a value.</li>
- <li>it is possible for the code inside a <b>procedure</b> to make changes to parameters, such that those changes may be seen by the code that calls it:</li>
- <ul>
-    <li>If the type of the parameter is <i>mutable</i> - such as a <code>List</code> - then any change made to its contents 
-      within the procedure will be visible outside </li>
-    <li>If the type of the parameter is <i>immutable</i> - such as an <code>int</code> or <code>String</code> then
-      to make changes visible outside the procedure it must be passed <a href="#CallByRef"><i>by reference</i> <i class="fa">&#xf14c;</i></a>.</li>
- </ul>
+  <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
+  is delegated, either by the main routine, or by another procedure.</li>
+  <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
+  <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies name starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
+    <code>bubbles as List&lt;of CircleVG&gt;</code></li>
+  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction e.g. <code>call moveGrowBurst(bubbles)</code>
+  which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
+  <li>The procedure always finish on the last instruction defined within it, when the program continues from where the <b>call instruction</b>
+    was located.<li>
+  <li>Changes made to parameter values (where possible) within the procedure (changing the radius and centre of each bubble in the list <code>bubbles</code>) 
+  will be visible to the calling code when the procedure exits.</li>
+  <li>Functions may be called from within a procedure (but not <i>vice versa</i>.</li>
+  <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
 </ul>
-<p>The instructions within a <b>procedure</b> can:</p>
-<ul>
- <li>include calls to other procedures, or to itself if <a href="#recursion">recursion <i class="fa">&#xf14c;</i></a> is required.</li>
- <li>include data input methods and other system methods such as for random number generation.</li>
-</ul>
-<p>Procedure calls are of two kinds:</p>
-<ul>
- <li>to execute an action:<br>
- <code>call print(aList)</code></li>
- <li>to apply a <b>procedure</b> to a value using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a>:<br>
- <code>call aList.removeAt(4)</code></li>
-</ul>
-<p>Both the examples above are calls are to library procedures, but the same options are applicable to the procedures you write.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a <b>procedure</b></h4>
+<h4 class="no-TOC acc-title">More examples of procedures</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure to order a list of integers:</p>
-<codeblock>
-procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
-  variable hasChanged set to true
-  variable lastComp set to li.length() - 2
-  while hasChanged is true
-    reassign hasChanged to false
-    for i in range(0, lastComp + 1)
-      if li[i] > li[i + 1] then
-        variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
-      end if
-    end for
-    reassign lastComp to lastComp - 1
-  end while
-end procedure
-</codeblock>
-<hr>
-</div></div>
 
-<div id="AsRef"></div>
-<div id="set_Ref"></div>
-<div id="value_Ref"></div>
-<div id="Parameter_reference"></div>
-<h3 class="no-TOC" id="CallByRef">Call by reference</h3>
-<p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example of a call by reference</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
- so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
+<p>From the <b>Turtle Dragon</b> demo. The procedure defines two parameters of different types. The body of this procedure consists
+of a straight sequence of <b>call procedure</b> instructions, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
+using 'dot-syntax':</p>
+
 <codeblock>
-main
-  variable arg set to "abc"
-  variable argRef set to new AsRef&lt;of String&gt;(arg)
-  call changeArg(argRef)
-  call print(argRef.value())
-end main
-procedure changeArg(pointer as AsRef&lt;of String&gt;)
-  variable r set to pointer.value()
-  call pointer.set(r.upperCase())
+procedure setupTurtle(t as Turtle, order as Int)
+  call t.turnToHeading(180 + order*45)
+  call t.placeAt(-40, 20)
+  call t.penColour(red)
+  call t.penWidth(10.0/order)
+  call t.penDown()
+  call t.show()
 end procedure
 </codeblock>
-<hr>
+
+<p>From the <b>Life - procedural</b> demo. The code sets each of the cells in the 40x30 <code>grid</code></p>
+
+<codeblock>
+procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
+  for col in range(0, 40)
+    for row in range(0, 30)
+      reassign grid[col][row] to blackOrWhite(random())
+    end for
+  end for
+end procedure
+</codeblock>
 </div></div>
+<hr>
 
 <h2 id="function"><b>function</b></h2>
 <p>A <b>function</b> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
