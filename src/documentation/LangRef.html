@@ -20,7 +20,8 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="GlobalInstructions">Global instructions</h1>
+<div id="GlobalInstructions">
+<h1>Global instructions</h1>
 <p>Global instructions are placed <em>directly</em> in your code file.
 They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions. They are:
  <a href="#main"><b>main</b> <i class="fa">&#xf14c;</i></a>,
@@ -34,7 +35,8 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <a href="#Comment"><code># </code><b>comment</b><i class="fa">&#xf14c;</i></a>. <!-- Code tags used for # so it will be translated-->
 </p>
 
-<h2 id="main">main</h2>
+<div id="main">
+<h2 >main</h2>
 
 <p>Example - from the <b>Burrow</b> demo:</p>
 
@@ -106,10 +108,12 @@ end main
 </codeblock>
 </div></div>
 <hr>
+</div>
 
-<h2 id="procedure"><b>procedure</b></h2>
+<div id="procedure">
+<h2 ><b>procedure</b></h2>
 
-<p>Example - from the <b>Bubbles</b> demo:</p>
+<p>Example - from the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
 <codeblock>
 procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
@@ -129,16 +133,20 @@ procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
 end procedure
 </codeblock>
 
-<h4>What you need to know about a procedure</h4>
+<p>It is called within the main routine by this instruction: <code>call moveGrowBurst(bubbles)</code></p>
+
+<h4>What you need to know about procedures</h4>
 
 <ul>
   <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
   is delegated, either by the main routine, or by another procedure.</li>
+  <li>The Elan library provides some ready-made procedures such as <el-method>print</el-method> and <el-method>pause</el-method>.</li>
+  <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
   <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
   <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
   <li>Each parameter specifies name starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
     <code>bubbles as List&lt;of CircleVG&gt;</code></li>
-  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction e.g. <code>call moveGrowBurst(bubbles)</code>
+  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
   which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
   <li>The procedure always finish on the last instruction defined within it, when the program continues from where the <b>call instruction</b>
     was located.<li>
@@ -181,27 +189,90 @@ end procedure
 </codeblock>
 </div></div>
 <hr>
+</div>
 
-<h2 id="function"><b>function</b></h2>
-<p>A <b>function</b> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p>Unlike a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>:</p>
+<div id="function">
+<h2>function</h2>
+
+<p>Example - from the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
+whether or not the head has gone outside the bounds of the 40x30 grid:</p>
+
+<codeblock>
+function hasHitEdge(headX as Int, headY as Int) returns Boolean
+  return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
+end function
+</codeblock>
+
+<p>It is called within the main routine as part of this instruction:</p>
+
+<codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)</codeblock>
+
+<h4>What you need to know about functions</h4>
 <ul>
- <li>a function always returns a value.</li>
- <li>a function can have no side effects (i.e. no references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods <i class="fa">&#xf08e;</i></a>.</li>
- <li>a function's execution cannot be interrupted by any external event, though a a non-terminating loop in a function may be detected with tests that <a href="#ignore">time out <i class="fa">&#xf14c;</i></a>.</li>
+  <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
+  <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
+     a part of a more complex expression (as above).</li>
+  <li>The Elan library provides some ready-made functions such as <el-method>sqrt</el-method>.</li>
+  <li>The <b>function</b> instruction allows you to define your own functions.</li>
+  <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
+  <li>It will usually define one or more <p></p>arameters  (two in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+    <code>headX as Int</code></li>
+  <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code></li>
+  <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
+  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
+  The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
+  <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
+    Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
+  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
+  all the work needed.</li>
+  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
+  <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
+    languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
+  <ul>
+    <li>a function cannot undertake any input/output, or create any other 'side effect' (change to the system that can be observed outside the function).</li>
+    <li>prohibited side-effects including changing any of the values passed in as parameters.</li>
+    <li>the returned result must depend solely, and deterministically, on the values provided as parameters - just as <code>sqrt(2)</code>
+    always produces the same result, irrespective of whatever else might be occurring in the program.</li>
+  </ul>
 </ul>
-<p id="returns">A function definition is comprised of its unique name and, in brackets, its input parameters with their Types, followed by <code>returns</code>,
-and the Type of the value that will be returned.</p>
-<p id="return">
-A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
-and there can be only one <b>return</b> instruction in a function.
-You follow the <b>return</b> instruction with the value to be returned by the function.
-This may be an expression that will be evaluated before returning.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of <b>function</b>s</h4>
+<h4 class="no-TOC acc-title">More examples of functions</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to search a list of strings:</p>
+
+<p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
+
+<codeblock>
+function leap(year as Int) returns Boolean
+  variable leapYear set to false
+  if (year mod 4) is 0 then
+    reassign leapYear to true
+    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
+      reassign leapYear to false
+    end if
+  end if
+  return leapYear
+end function
+</codeblock>
+
+<p>From the <b>Life - procedural</b> demo a function that finds the cell immediately to the north of the cell provided. Both
+the single parameter and return value are 2-tuples, where both elements are of type <code>Int</code>:</p>
+
+<codeblock>
+function north(cell as (Int, Int)) returns (Int, Int)
+  variable x set to cell.item_0
+  variable y set to cell.item_1
+  variable y2 set to y - 1
+  if y2 is -1 then
+    reassign y2 to 29
+  end if
+  return (x, y2)
+end function
+</codeblock>
+
+<p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
+
 <codeblock>
 function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
@@ -219,29 +290,12 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
   return result
 end function
 </codeblock>
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A function definition and reference to it:</p>
-<codeblock>
-function score(g as Game) returns Int
-  return g.body.length() - 2
-end function
-main
-  variable g set to new Game()
-  call print(score(g))
-end main
-</codeblock>
-<hr>
 </div></div>
+<hr>
+</div>
 
-<h3 class="no-TOC" id="recursion">Recursion</h3>
-<p>Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:</p>
-<codeblock>
-function factorial(n as Int) returns Int
-  return (if(n > 1, n*factorial(n - 1), 1))
-end function
-</codeblock>
-
-<h2 id="test"><b>test</b></h2>
+<div id="test">
+<h2><b>test</b></h2>
 <p>A <b>test</b> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
 <p>Without having to run your program, the <b>assert</b> equal instructions show whether your assertions pass or fail.
 
@@ -371,8 +425,11 @@ end test
 <h3 class="no-TOC">Non-terminating loops and recursion</h3>
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
+</p>
+</div>
 
-<h2 id="class"><b>concrete class</b></h2>
+<div id="class">
+<h2 ><b>concrete class</b></h2>
 <p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 <p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
@@ -456,8 +513,10 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
   <li>You cannot override any concrete member defined in an abstract class.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
 </ul>
+</div>
 
-<h2 id="abstract_class"><b>abstract class</b></h2>
+<div id="abstract_class">
+<h2 ><b>abstract class</b></h2>
 <p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 
 <p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
@@ -482,8 +541,10 @@ return discount
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
+</div>
 
-<h2 id="constant"><b>constant</b> </h2>
+<div id="constant">
+<h2 id="constant">constant</h2>
 <p>A <b>constant</b> instruction defines a named value that is defined at the global level in a program, is global in scope and cannot be changed.
  Its name follows the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
 <p>A <b>constant</b> is defined by a literal of a value Type, namely <code>Int</code>, <code>Float</code>, <code>Boolean</code> or
@@ -527,9 +588,10 @@ end function
 
 <h3 class="no-TOC">System constants</h3>
 Some useful constants are provided: see <a href="LibRef.html#systemConstants">System constants <i class="fa">&#xf08e;</i></a> 
+</div>
 
-<div id="enumValue"></div>
-<h2 id="enum"><b>enum</b></h2>
+<div id="enum">
+<h2 id="enumValue"><b>enum</b></h2>
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
 It is used to provide a fixed set of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
@@ -588,7 +650,10 @@ end function
 </codeblock>
 </div></div>
 <hr>
-<h2 id="Comment"><code># </code>comment</h1>
+</div>
+
+<div id="Comment">
+<h2 id="Comment"><code># </code>comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
 <p>A comment is entered at any editor prompt by typing the hash symbol # which then provides a field in which you may enter text, or leave blank.
@@ -599,8 +664,11 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header'.</p>
 <hr>
-<div id="statement"></div>
-<h1 id="StatementInstructions">Statement instructions</h1>
+</div>
+</div>
+
+<div id="StatementInstructions">
+<h1 id="statement">Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the imperative instructions used in the methods (procedural logic) of a program, and are:</p>
 <p>
  <a href="#variable"><b>variable definition</b> <i class="fa">&#xf14c;</i></a>,
@@ -611,8 +679,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <a href="#call"><b>call procedure</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a>,
  <a href="#throw"><b>throw</b> <i class="fa">&#xf14c;</i></a>
- and, within a test, <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a>.
-</p>
+ and, within a test, <a href="#assert"><b>assert</b> equal <i class="fa">&#xf14c;</i></a>.</p>
 
 <h2 id="variable"><b>variable definition</b></h2>
 <p>The <b>variable definition</b> .. set to .. instruction declares and initialises
