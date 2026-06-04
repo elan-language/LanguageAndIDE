@@ -2648,7 +2648,12 @@ end procedure`;
 
     const expected = [["bar", "bar", "bar("]] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "elan_args5", "lambda t as Foo => t.b", expected);
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "elan_args5",
+      "lambda t as Foo => t.b",
+      expected,
+    );
   });
 
   ignore_test("Pass_lambdaParameter2", async () => {

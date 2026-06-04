@@ -5,20 +5,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertCompiles,
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertGraphicsContains,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    assertTestObjectCodeExecutes,
-    testHash,
-    testHeader,
-    transforms,
+  assertCompiles,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -710,7 +710,12 @@ return [main, _tests];}`;
       [
         "elan_test1",
         [
-          new AssertOutcome(TestStatus.pass, "3.141592653589793", "3.141592653589793", "elan_assert4"),
+          new AssertOutcome(
+            TestStatus.pass,
+            "3.141592653589793",
+            "3.141592653589793",
+            "elan_assert4",
+          ),
           new AssertOutcome(TestStatus.pass, "3.7", "3.7", "elan_assert7"),
           new AssertOutcome(TestStatus.pass, "1.047", "1.047", "elan_assert10"),
           new AssertOutcome(TestStatus.pass, "0.524", "0.524", "elan_assert13"),
