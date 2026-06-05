@@ -651,28 +651,30 @@ export class FileImpl implements File {
   }
 
   setLanguageFromHeader(l: string) {
+    let lang: Language = LanguageElan.Instance;
     switch (l) {
       case "Elan": {
-        this._language = LanguageElan.Instance;
+        lang = LanguageElan.Instance;
         break;
       }
       case "Python": {
-        this._language = LanguagePython.Instance;
+        lang = LanguagePython.Instance;
         break;
       }
       case "C#": {
-        this._language = LanguageCS.Instance;
+        lang = LanguageCS.Instance;
         break;
       }
       case "VB.NET": {
-        this._language = LanguageVB.Instance;
+        lang = LanguageVB.Instance;
         break;
       }
       case "Java": {
-        this._language = LanguageJava.Instance;
+        lang = LanguageJava.Instance;
         break;
       }
     }
+    this.setLanguage(lang);
   }
 
   async parseFrom(source: CodeSource): Promise<void> {
@@ -695,11 +697,9 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      this.setLanguageFromHeader(language); // string
-      const savedLanguage = this._language; // Instance
       this._language = LanguageElan.Instance;
       this.parseBodyFrom(source);
-      this.setLanguage(savedLanguage); // includes resetting the _map
+      this.setLanguageFromHeader(language);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
