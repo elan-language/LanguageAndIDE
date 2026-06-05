@@ -66,7 +66,7 @@ end main
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of main routines</h3>
+<h3 class="no-TOC acc-title">Further examples of main routines</h3>
 <div class="acc-body">
 
 <p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
@@ -140,14 +140,14 @@ end procedure
   which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
   <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
     was located.</li>
-  <li>Changes made to parameter values (where possible) within the procedure (changing the radius and centre of each bubble in the list <code>bubbles</code> 
-  will be visible to the calling code when the procedure exits.</li>
+  <li>Changes made to parameter values (where possible) within the procedure (such as changing the radius and centre of each bubble
+     in the list <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
   <li>Functions may be called from within a procedure, but not <i>vice versa</i>.</li>
   <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of procedures</h3>
+<h3 class="no-TOC acc-title">Further examples of procedures</h3>
 <div class="acc-body">
 
 <p>From the <b>Turtle Dragon</b> demo. The procedure defines two parameters of different types. The body of this procedure consists
@@ -286,7 +286,7 @@ end function
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of functions</h3>
+<h3 class="no-TOC acc-title">Further examples of functions</h3>
 <div class="acc-body">
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
@@ -344,7 +344,7 @@ end function
 <div id="test">
 <h2>Test</h2>
 
-<p>Example from the <b>Date Time</b> demo testing the function that determines whether a given year is a leap year. 
+<p>Example from the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year. 
   Note that the comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
   where errors are more common:</p>
 
@@ -383,9 +383,8 @@ end test
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of tests</h3>
+<h3 class="no-TOC acc-title">Further examples of tests</h3>
 <div class="acc-body">
-
   
 <p>Example from the <b>Life - procedural</b> demo. It tests <i>all</i> valid combinations of parameter values -
   because the logic of this function is quite unusual:</p>
@@ -551,7 +550,7 @@ call drawSide(side, t)
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of constants</h3>
+<h3 class="no-TOC acc-title">Further examples of constants</h3>
 <div class="acc-body">
 
 <codeblock>
@@ -644,7 +643,7 @@ end function
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of enums</h3>
+<h3 class="no-TOC acc-title">Further examples of enums</h3>
 <div class="acc-body">
 
 <codeblock>
@@ -678,7 +677,7 @@ enum Hole vacant, mole, hit, miss
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of comments</h3>
+<h3 class="no-TOC acc-title">Further examples of comments</h3>
 <div class="acc-body">
  <p>From the <b>Bubbles</b> demo:<p>
 
@@ -753,7 +752,7 @@ of a program.</p>
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of variable definitions</h3>
+<h3 class="no-TOC acc-title">Further examples of variable definitions</h3>
 <div class="acc-body">
 
 <p>Example from the <b>Life - procedural</b> demo shows a variable being initialised using an expression, in this 
@@ -1088,7 +1087,8 @@ end function
 
 </div>
 
-<h1 id="compile_error">Compile errors and warnings</h1>
+<div id="compile_error">
+<h1 >Compile errors and warnings</h1>
 
  <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
  <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
@@ -1215,20 +1215,6 @@ end function
  <p>Attempting to define a literal <code>Dictionary</code> <!--or <code>DictionaryImmutable</code>-->
  with one or more duplicated keys in the definition.</p>
 
-<!-- This message deleted>
-<h3 id="FunctionRefCompileError" class="no-TOC">To evaluate function ... add brackets ...</h3>
- <p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
- defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in
- Functional Programming) then only the name of the function is needed.</p>
-<-->
-
-<h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be used without brackets</h3>
-<!-- this text removed when keyword ref removed>
- The keyword <b>ref</b> may be applied only to functions that you have defined in your own code as a standalone (global) function.
- It may not be applied to a function method defined on a class, nor to a library function.
- You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.
-<-->
-
 <h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
  <p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
  To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.</p>
@@ -1347,7 +1333,7 @@ end function
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
- <p>Valid forms for a procedure call are
+ <p>Valid forms for a procedure call are:</p>
  <ul>
   <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
   <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
@@ -1376,8 +1362,10 @@ end function
 <h2>Advisory</h2>
 
 <h3 id="methodDeprecated" class="no-TOC">Code change suggested. Method was deprecated in v7.1.</h3>
+ </div>
 
-<h1 id="runtime_error">Runtime errors</h1>
+ <div id="runtime_error">
+ <h1 >Runtime errors</h1>
 
 <h2>Messages</h2>
 
@@ -1391,5 +1379,6 @@ breaking out parts of it into separate <b>variable definition</b> instructions; 
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
+</div>
 </body>
 </html>

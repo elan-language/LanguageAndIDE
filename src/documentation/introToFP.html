@@ -386,11 +386,12 @@ back into <el-method>sort</el-method> again &mdash; crucially with approximately
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
-<h1 id="FP_HoFs">Principle 8: A function may be passed into, or returned by, another function</h1>
+<h1 id="FP_HoFs">Principle 8: A function may be passed into another function</h1>
 
 <p>The alternative to writing your own recursive function is to use Higher-order Functions (see <a href="LibRef.html#HoFs" target="_blank">HoFs <i class="fa">&#xf08e;</i></a> in Library Reference).
-  A HoF is a function that takes in another function as a parameter (the more common case), or one that returns a function as its result.
-  Under the covers, HoFs are written using recursion, but you don't see this.</p>
+  A HoF is a function that takes in another function as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,
+  but Elan does not currently support that pattern.)
+  Under the covers, HoFs are written using recursion, but you don't see this. </p>
 
 <p>There are many possible HoFs, but three of them &mdash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &mdash;
 are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
