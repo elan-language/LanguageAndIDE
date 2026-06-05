@@ -695,9 +695,11 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
+      this.setLanguageFromHeader(language); // string
+      const savedLanguage = this._language; // Instance
       this._language = LanguageElan.Instance;
       this.parseBodyFrom(source);
-      this.setLanguageFromHeader(language);
+      this.setLanguage(savedLanguage); // includes resetting the _map
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
