@@ -1,4 +1,4 @@
-# a2dfdaeaaa01ac2d72cd334c964233bf0e0d00c227687a5f100b2b4e84c987c2 Elan 2.0.0-alpha5 valid
+# a15807c50649de86070278858db588afb5afb450e55050dd5d17c9c03ac30591 Elan 2.0.0-alpha5 valid
 
 main
   variable reply set to ""
@@ -88,14 +88,7 @@ test test_dayInYear
 end test
 
 function leap(year as Int) returns Boolean
-  variable leapYear set to false
-  if (year mod 4) is 0 then
-    reassign leapYear to true
-    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
-      reassign leapYear to false
-    end if
-  end if
-  return leapYear
+  return (((year mod 4) is 0) and ((year mod 100) isnt 0)) or ((year mod 400) is 0)
 end function
 
 test test_leap

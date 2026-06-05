@@ -134,7 +134,7 @@ end procedure
   <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
   <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
   <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies name starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
+  <li>Each parameter specifies a name, starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
     <code>bubbles as List&lt;of CircleVG&gt;</code></li>
   <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
   which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
@@ -264,7 +264,7 @@ end function
   <li>The <b>function</b> instruction allows you to define your own functions.</li>
   <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
   <li>It will usually define one or more parameters (two in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+  <li>Each parameter specifies a name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
     <code>headX as Int</code></li>
   <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
   <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
@@ -293,14 +293,7 @@ end function
 
 <codeblock>
 function leap(year as Int) returns Boolean
-  variable leapYear set to false
-  if (year mod 4) is 0 then
-    reassign leapYear to true
-    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
-      reassign leapYear to false
-    end if
-  end if
-  return leapYear
+  return (((year mod 4) is 0) and ((year mod 100) isnt 0)) or ((year mod 400) is 0)
 end function
 </codeblock>
 
@@ -838,7 +831,7 @@ end main
 </div>
 
 <div id="while">
-<h2><b>While loop</h2>
+<h2>While loop</h2>
 <p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if some condition is <el-id>true</el-id>.</p>
 <p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>

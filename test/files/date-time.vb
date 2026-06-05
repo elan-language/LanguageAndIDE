@@ -88,14 +88,7 @@ End Function
 End Sub
 
 Function leap(year As Integer) As Boolean
-  Dim leapYear = False ' variable definition
-  If (year Mod 4) = 0 Then
-    leapYear = True ' reassign variable
-    If ((year Mod 100) = 0) And ((divAsInt(year, 100) Mod 4) <> 0) Then
-      leapYear = False ' reassign variable
-    End If
-  End If
-  Return leapYear
+  Return (((year Mod 4) = 0) And ((year Mod 100) <> 0)) Or ((year Mod 400) = 0)
 End Function
 
 <TestMethod> Sub test_leap()

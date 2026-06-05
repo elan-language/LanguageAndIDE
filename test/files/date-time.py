@@ -74,12 +74,7 @@ def test_dayInYear(self) -> None:
   self.assertEqual(dayInYear(2025, 1), -20087)
 
 def leap(year: int) -> bool: # function
-  leapYear = False # variable definition
-  if (year % 4) == 0:
-    leapYear = True # reassign variable
-    if ((year % 100) == 0) and ((divAsInt(year, 100) % 4) != 0):
-      leapYear = False # reassign variable
-  return leapYear
+  return (((year % 4) == 0) and ((year % 100) != 0)) or ((year % 400) == 0)
 
 def test_leap(self) -> None:
   # normal cases
