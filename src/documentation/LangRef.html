@@ -15,7 +15,7 @@
 <script type="text/javascript" src="accordion.js"></script>
 </head>
 <body id="top">
-<div class="docTitle">Elan Language Reference</div>
+<div class="docTitle">Procedural programming Reference</div>
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
@@ -717,149 +717,79 @@ main
 </codeblock>
 </div></div>
 </div>
-
-<div id="class" class="oop">
-<h2 ><b>Concrete class</b></h2>
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
-<p>Like any other Type its name must begin with an uppercase letter.</p>
-
-<h3 class="no-TOC">Defining a concrete class</h3>
-<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
-<p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
-<p>Its properties must all be initialised in the <b>constructor</b>.</p>
-<p>It may contain functions and procedure methods.</p>
-<p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
-<p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
-<p>A simple demonstration of a concrete class is:</p>
-
-<codeblock>
-main
-  variable x set to new Thing()
-  call print(x)
-  call print(x.names.toString())
-end main
-class Thing
-  property names as List&lt;of String&gt;
-  constructor()
-    reassign this.names to createList(6, "X")
-  end constructor
-  function toString() returns String
-    return "instance of class Thing"
-  end function
-end class
-</codeblock>
-
-<p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example definition of a <b>concrete class</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
-<codeblock>
-class Apple
-  constructor()
-    reassign this.location to new Square(0, 0)
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property location as Square
-  procedure newRandomPosition(snake as Snake)
-    variable changePosition set to true
-    while changePosition
-      variable ranX set to randint(0, 39)
-      variable ranY set to randint(0, 29)
-      reassign this.location to new Square(ranX, ranY)
-      if not snake.bodyCovers(this.location) then
-        reassign changePosition to false
-      end if
-    end while
-  end procedure
-  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
-    reassign blocks[this.location.x][this.location.y] to red
-  end procedure
-end class
-</codeblock>
-</div></div>
-
-<h3 class="no-TOC" id="this"><b>this</b></h3>
-<p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
-you can refer to this instance with <code>this</code>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
-<code> call apple.newRandomPosition(this)</code>
-
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
-<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
-
-<h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
-  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
- The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-  <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
-  <li>You cannot override any concrete member defined in an abstract class.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
-</ul>
-</div>
-
-<div id="abstract_class" class="oop">
-<h2><b>Abstract class</b></h2>
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-
-<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
-<ul>
-<li>a <b>property</b> </li>
-<li>a <b>function</b></li>
-<li>a <b>procedure</b></li>
-</ul>
-<p>As with a <b>concrete class</b>, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
-<p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
-
-<p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<codeblock>
-function calculateDiscount(a as Float, d as Float) returns Float
-  let discount be a*d
-return discount
-</codeblock>
-
-<p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
-<ul>
-<li>Define the method as <b>abstract</b> on the superclass.</li>
-<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
-<li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
-</ul>
-</div>
-
 </div>
 
 <div id="StatementInstructions">
 <h1 id="statement">Statement instructions</h1>
-<p>Statement instructions (sometimes referred to as 'statements') are the imperative instructions used in the methods 
+<p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
 of a program.</p>
 
-<h2 id="variable"><b>variable definition</b></h2>
-<p>The <b>variable definition</b> .. set to .. instruction declares and initialises
- a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.>/p>
-<p>The initial value is given by a following expression. For example:
-  <code>variable note set to 440</code>
-</p>
+<div id="variable">
+<h2>Variable definition</h2>
 
-<h2 id="reassign"><b>reassign variable</b></h2>
+<p>Example from the <b>Burrow</b> demo. The variables named <code>x</code> and <code>y</code>, representing the current
+  coordinates for the burrowing 'animal', are defined - with their initial values - in these instructions:</p>
+
+<codeblock>variable x set to 20</codeblock>
+<codeblock>variable y set to 15</codeblock>
+
+<p>and the values of these variables are used in multiple places within the program, for example here:</p>
+
+<codeblock>reassign blocks[x][y] to red</codeblock>
+
+<h3 class="no-TOC">What you need to know about variable definitions</h3>
+
+<ul>
+  <li>A variable is a named value, were the value may be changed during the course of running the program.</li>
+  <li>The <b>variable definition</b> instruction allows you to define a <i>new</i> variable.</li>
+  <li>The instructions require a name (e.g. <code>x</code>) and an initial value.</li>
+  <li>The initial value may be specified using a literal value (such as <code>20</code>, or <code>"apple"</code>)
+  or by an expression.</li>
+  <li>The type of the initial value determines the type of the variable, so if/when the variable is later
+    changed to a new value, that new value must be of that same type./li>
+  <li>Variables may only be defined within a method (the main routine, a procedure, or function).
+  <li>Elan does not permit 'global variables' to be defined - even though, outside Elan, that would be
+    allowed by all the languages - because it is considered a bad practice.</li>
+</ul>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More examples of variable definitions</h3>
+<div class="acc-body">
+
+<p>Example from the <b>Life - procedural</b> demo shows a variable being initialised using an expression, in this 
+case a function call:</p>
+
+<codeblock>variable grid set to createBlockGraphics(white)</codeblock>
+
+<p>Example from the <b>Ripple Sort</b> demo shows a variable being initialised using a literal llist of integers:</p>
+
+<codeblock>  variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
+</div></div>
+</div>
+
+<div id="reassign">
+<h2>Reassign variable</h2>
+
+<p>Example from the <b>Ripple Sort</b> demo shows the <code>hasChanged</code> variable, which as initialised being initialised using an expression, in this 
+case a function call:</p>
+
+<h3 class="no-TOC">What you need to know about reassigning a variable</h3>
+
+
+
 <p>The <code>reassign a to b</code> instruction assigns a new value to an existing named value:
 the value in <code>b</code> is copied into the named value <code>a</code></p>
 <p>The two named values must be of the same Type.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
+</div>
 
-<div id="if"></div>
+<div id="if">
 <div id="then"></div>
 <div id="else"></div>
 <div id="elif"></div>
-<h2 id="if_statement"><b>if</b> (instruction)</h2>
+<h2 id="if_statement">If</h2>
 <p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li>It is structured like this:
@@ -906,8 +836,10 @@ main
 end main
 </codeblock>
 </div></div>
+</div>
 
-<h2 id="while"><b>while loop</b></h2>
+<div id="while">
+<h2><b>While loop</h2>
 <p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if some condition is <el-id>true</el-id>.</p>
 <p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
@@ -923,8 +855,10 @@ main
   call file.close()
 end main
 </codeblock>
+</div>
 
-<h2 id="for"><b>for loop</b></h2>
+<div id="for">
+<h2><b>For loop</b></h2>
 <p>The construct
 <codeblock>
   for p in q
@@ -1005,8 +939,10 @@ end main
 So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
 <p>It is therefore recommended never to reassign the loop variable within the loop.</p>
 </div></div>
+</div>
 
-<h2 id="call"><b>call procedure</b></h2>
+<div id="call">
+<h2>Call procedure</h2>
 <p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</p>
 <p>The procedure may be:</p>
 <ul>
@@ -1040,9 +976,11 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
  Only one dot is allowed in the procedure name field, or two dots if the first word is <b>property</b>.
  If you need anything more complicated, use a <b>change variable</b> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</p>
+</div>
 
+<div id="try">
 <div id="catch"></div>
-<h2 id="try"><b>try</b></h2>
+<h2>Try</h2>
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
@@ -1087,8 +1025,10 @@ function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
 end function
 </codeblock>
 </div></div>
+</div>
 
-<h2 id="throw"><b>throw</b></h2>
+<div id="throw">
+<h2>Throw</h2>
 <p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw</b> instruction
  which defines an explanatory string.</p>
 <p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
@@ -1115,14 +1055,18 @@ end function
     Error
 </pre>
 </div></div>
+</div>
 
-<h2 id="assert"><b>assert</b></h2>
+<div id="assert">
+<h2>Assert</h2>
 <p>The <b>assert</b> equal instruction is used only within a <a href="#test"><b>test</b> <i class="fa">&#xf14c;</i></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
  In Elan, you can get equivalent functionality by throwing an exception, as described in the <a href="#throw"><b>throw exception</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
+</div>
 
-<h2 id="constant_let"><b>let statement</b></h2>
+<div id="let" class="functional">
+<h2><b>Let statement</b></h2>
 <p>Of use only in <code>test</code> instructions and in Functional Programming functions <code>let</code> is used to define constant values defined by expressions (or literals).</p>
 <p>The <b>let statement</b> instruction declares and initialises an immutable named value whose scope is confined to the function.</p>
 <p>The name defined must be a valid <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
@@ -1135,153 +1079,13 @@ function numbers() returns (Float, Float)
   return (tau, phi)
 end function
 </codeblock>
+</div>
 
-<h2 ><code># </code>comment</h2>
+<div>
+<h2>Comment</h2>
 <p>See <a href="#Comment">Comments</a></p>
 </div>
 
-<div id="MemberInstructions" class="oop">
-<h1 id="Member">Member instructions</h1>
-
-<p>Member instructions (also referred to simply as 'members') are located within a <b>concrete class</b> or <b>abstract class</b>.
-
-<h2 id="constructor"><b>constructor</b></h2>
-<p>A <b>concrete class</b> may have an optional <b>constructor</b> so as to:</p>
-<ul>
- <li>initialise properties with fixed values</li>
- <li>define parameters which are used to initialise properties</li>
-</ul>
-<p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
-the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
-
-<codeblock>
-class Square
-  constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
-  end constructor
-end class
-</codeblock>
-
-<p>then it may be instantiated like this:<br>
-<code>variable tail set to new Square(20, 15)</code></p>
-
-<h2 id="property"><b>property</b></h2>
-<p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
- and a Type (which may be another class name).</p>
-<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
-<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
-<codeblock>
-class Game
-  property height as Int
-  property board as Board
-  property head as Square
-  property body as List&lt;of Square&gt;
-  constructor()
-  end constructor
-  function toString() returns String
-    return "undefined"
-  end function
-end class
-</codeblock>
-
-<h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
-<p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
-<p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
-If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
-and using <el-method>getValue</el-method> will give a runtime error.</p>
-<p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example using <code>Maybe</code></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Here a pupil (of class <el-type>Pupil</el-type>) need not have a tutor (of class <el-type>Teacher</el-type>):</p>
-<codeblock>
-main
-  variable tTom set to new Teacher()
-  variable pPete set to new Pupil()
-  if pPete.tutor.hasValue() then
-    call print(pPete.tutor)
-  end if
-  call print(p)
-end main
-class Teacher
-  constructor()
-  end constructor
-  function toString() returns String
-    return $"{this}"
-  end function
-end class
-class Pupil
-  constructor()
-    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
-  end constructor
-  property tutor as Maybe&lt;of Teacher&gt;
-  function toString() returns String
-    return "undefined"
-  end function
-end class
-</codeblock>
-</div></div>
-
-<h2 id="FunctionMethod"><b>function</b> method</h2>
-<p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf14c;</i></a>. The differences are:</p>
-<ul>
-<li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns a value of type <code>String</code>.
- If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
-  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
-</ul>
-
-<h2 id="procedure_method"><b>procedure</b> method</h2>
-<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>. The differences are:</p>
-<ul>
-<li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A procedure method may read, or write to, any <b>property</b> defined on the class.</li>
-<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an abstract <code>class</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-</ul>
-
-<h2 id="abstract_property"><b>abstract property</b></h2>
-<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
-
-<h2 id="abstract_function"><b>abstract function</b></h2>
-<p>An abstract function method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
-
-<h2 id="abstract_procedure"><b>abstract procedure</b></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
-
-<h2 id="private"><b>private</b> (property, function, procedure)</h2>
-<p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
-if defined on an <b>abstract class</b>, within its subclasses.
- This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
-This action is a toggle used both to reassign and to remove the modifier <b>private</b>.</p>
-<ul>
- <li></li>
- <li>A property that is not private may be read, but not written to.</li>
- <li>A property that is private may </li>
-</ul>
-
-<ul>
-<li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <code>property</code>.('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
-</ul>
-<codeblock>
-class Game
-  constructor(board as Board)
-    reassign this.board to board
-  end constructor
-  procedure setHeight(height as Int)
-    reassign this.height to height
-  end procedure
-end class
-</codeblock>
-
-
-<h2 ><code># </code>comment</h2>
-<p>See <a href="#Comment">Comments</a></p>
 </div>
 
 <h1 id="compile_error">Compile errors and warnings</h1>
