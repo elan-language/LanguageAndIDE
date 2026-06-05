@@ -232,3 +232,11 @@ body.cs span.cs,
 body.java span.java {
   display:inline;
 }
+
+body .oop, body .functional {
+  display: none;
+}
+
+body.oop .oop, body.functional .functional, body.functional .oop { /* All oop options are shown in functional profile also */
+  display: block;
+}
