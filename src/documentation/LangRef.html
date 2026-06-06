@@ -188,7 +188,7 @@ end procedure
 <div id="Parameter_reference"></div>
 <h4 class="no-TOC" id="CallByRef">Call by reference</h4>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
+must use a reference (or pointer) to it, defined as type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value,
  as in this example where <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
@@ -773,7 +773,7 @@ case a function call:</p>
 the value in <code>b</code> is copied into the named value <code>a</code></p>
 <p>The two named values must be of the same Type.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
-<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
+<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
 </div>
 
@@ -863,7 +863,7 @@ specifies looping through a sequence either of characters in a <code>String</cod
 <h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the Type of a List's items (here <code>Int</code>),
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the type of a List's items (here <code>Int</code>),
 and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
 <codeblock>
 procedure printPrimes()
@@ -874,7 +874,7 @@ procedure printPrimes()
 end procedure
 </codeblock>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the Type of a List's items (here <code>String</code>).
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the type of a List's items (here <code>String</code>).
 and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
 <codeblock>
 main
@@ -947,11 +947,11 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
-<li>a procedure method on an object of a Type provided by the standard library<br>
+<li>a procedure method on an object of a type provided by the standard library<br>
   <code>call vg.append(rect)</code>
 </li>
 </ul>
-<p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
+<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
 <ul>
  <li>either a mutable data structure (List or Dictionary)</li>
@@ -959,7 +959,7 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
  <li>or a <b>Ref</b> reference to an immutable data structure (Set, Stack or Queue)</li>
 </ul>
 <p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
-<p>An expression of the correct Type can be used as an argument, but its value cannot be changed in the procedure.</p>
+<p>An expression of the correct type can be used as an argument, but its value cannot be changed in the procedure.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
  They can change the contents of any mutable object passed in as an argument.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
@@ -1093,7 +1093,7 @@ end function
 <h2>Messages</h2>
 
 <h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
- <p>An expression, when evaluated, results in a value of a Type that is not compatible with its 'target',
+ <p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
  an argument into a method call.</p>
 
@@ -1112,7 +1112,7 @@ end function
 <h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
 
 <h3 id="UndefinedSymbolCompileError" class="no-TOC"> ... is not defined for type ...</h3>
- <p>Arises when 'dot calling' a member (method or property) that does not exist on the Type of the named value or expression before the dot.</p>
+ <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
  <p>A function (or function method) is to be used within an expression, not via a <b>call procedure</b> instruction.</p>
@@ -1139,7 +1139,7 @@ end function
  <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
- <p>The Type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the Type is inapplicable,
+ <p>The type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the type is inapplicable,
  or it is an <b>abstract class</b>.</p>
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
@@ -1187,7 +1187,7 @@ end function
  <p>One or more arguments provided to the method are of the wrong Type.</p>
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
- <p>Certain data structure Types, including <code>List</code>, must specify the Type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
+ <p>Certain data structure Types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
  for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
@@ -1238,12 +1238,12 @@ end function
 
 <!--
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
- <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
+ <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
  Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable <i class="fa">&#xf14c;</i></a> the Types for both the key and the value must be immutable ones.</p>
 -->
 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
- <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
+ <p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
 
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
 
@@ -1295,7 +1295,7 @@ end function
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
 
 <h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
- <p>The value of a constant must be a literal value of a Type that is not mutable.
+ <p>The value of a constant must be a literal value of a type that is not mutable.
  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
 
 <h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
@@ -1313,7 +1313,7 @@ end function
 
 <h3 id="InheritsFromField" class="no-TOC">'inherits className' field in a class</h3>
  <p>An inheritance clause, if used, must consist of the keyword <b>inherits</b>
- followed by a space and then one or more Type names separated by commas.</p>
+ followed by a space and then one or more type names separated by commas.</p>
 
 <h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
  <p>A method name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
@@ -1322,7 +1322,7 @@ end function
  <p>Each parameter definition takes the form:</p>
  name as Type
  <p>The name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
- <p>The Type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
+ <p>The type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
