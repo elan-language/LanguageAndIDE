@@ -25,7 +25,7 @@
 <h2 id="Int">Integer</h2>
 <p>An <b>integer</b> is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
 <p><el-lit>100</el-lit> (decimal), <el-lit>0x64</el-lit> (hexadecimal) and <el-lit>0b1100100</el-lit> all have the same value.</p>
-<p>Its Type is <code>Int</code>.</p>
+<p>Its type is <code>Int</code>.</p>
 
 <table class="tableType">
  <tr>
@@ -72,7 +72,7 @@
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>A literal integer or a named value of Type <code>Int</code> may
+ <li>A literal integer or a named value of type <code>Int</code> may
 always be passed into a <b>function</b> or <b>procedure</b> that is expecting a <code>Float</code>.</li>
  <li>The <code>Int</code> type is <i>intended</i> to represent whole numbers
 in the range:</li>
@@ -108,7 +108,7 @@ end main
 <p>It may be written using exponential (scientific) notation, e.g.
  <el-lit>120.0</el-lit> can be written as  <el-lit>1.20e2</el-lit>, and
  <el-lit>0.012</el-lit> as <el-lit>1.20e-2</el-lit></p>
-Its Type is <code>Float</code>.
+Its type is <code>Float</code>.
 <table class="tableType">
  <tr>
   <th>name<br>of Type</th>
@@ -179,10 +179,10 @@ Its Type is <code>Float</code>.
    <li>Maximum value: just over 1.0 &times; 10<sup>308</sup></li>
    <li>Minimum value: approximately 5.0 &times; 10<sup>-324</sup></li>
   </ul></li>
- <li>A variable that has been defined as being of Type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
+ <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of Type <code>Float</code>, but initialise it with an integer value, then add <el-lit>.0</el-lit> on the end of the whole number, as in:<br>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <el-lit>.0</el-lit> on the end of the whole number, as in:<br>
  <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
@@ -474,7 +474,7 @@ it is also possible to make changes via <b>function</b> dot methods,  which retu
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
-<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that Type being specified either explicitly
+<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that type being specified either explicitly
  (as in &lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 
@@ -558,7 +558,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 </table>
 
 <h2 id="List">List</h2>
-<p>The <code>List</code> Type defines a data structure containing <i>n</i> items of any single Type,
+<p>The <code>List</code> type defines a data structure containing <i>n</i> items of any single Type,
  including basic value Types, structure Types such as <code>List</code>,
  and user-defined Types such as a Class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
@@ -597,7 +597,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h3 class="no-TOC" id="ListsOfLists">Lists of lists</h3>
 <h4 class="no-TOC">Two dimensional arrays</h4>
 <p>Understood as a grid, a 2D array is a List of 'columns' each of which is a List of 'row' items, i.e. it is a List of Lists in which the column number is the <i>x</i> coordinate, and the row number is the <i>y</i> coordinate.</p>
-<p>To create a 2D array that holds a value of a single Type in every cell, you define such a List of Lists thus:</p>
+<p>To create a 2D array that holds a value of a single type in every cell, you define such a List of Lists thus:</p>
 <ul>
  <li>Use method <a href="#createListOfLists"><el-method>createListOfLists</el-method> <i class="fa">&#xf14c;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
    <code>variable array2D set to  createListOfLists(cols, rows, value)</code></li>
@@ -622,7 +622,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>and refer to a cell using three indexes in square brackets.
 
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a <code>List</code></h3>
-<p>Where an argument provides a new value for an item in a List, that value must be of the same Type as defined for the List's items.</p>
+<p>Where an argument provides a new value for an item in a List, that value must be of the same type as defined for the List's items.</p>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -750,7 +750,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
   <td>item of <code>List</code> item's Type,<br><code>lambda</code></td>
-  <td>return Type of lambda</td>
+  <td>return type of lambda</td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
   see <a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
@@ -823,7 +823,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h2 id="Dictionary">Dictionary</h2>
 <p>A <code>Dictionary</code> is like a List whose items are pairs but, instead of having a numeric index, each item has a <i>key</i> plus  an  associated <i>value</i>,
 i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
-<p>The key's Type must be one of <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code>.
+<p>The key's type must be one of <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code>.
  The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
 <p>You refer to a dictionary item using one of its (unique) keys:</p>
 <table class="tablePlain">
@@ -914,7 +914,7 @@ end main
  return a new <code>HashSet</code> that is based on the original Set or Sets with specified differences.</li>
 </ul>
 <p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
-<p>When creating a <code>HashSet</code>, the Type of its members must be specified in the form
+<p>When creating a <code>HashSet</code>, the type of its members must be specified in the form
  <code>HashSet&lt;of String&gt;</code></p>
 <p>You can add members: either individually with <el-method>add</el-method>, or many with <el-method>addFromList</el-method>.
 And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
@@ -1053,11 +1053,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <ul>
  <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
- <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the Type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax.
- The Type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
+ <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax.
+ The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
  <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
- <li>The same syntax is used to specify the Type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> Type.</li>
+ <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> Type.</li>
  <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
  <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
  <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
@@ -1231,7 +1231,7 @@ of differing Types held together and referenced by a single identifier.</p>
 </ul>
 <p>Common uses include:</p>
 <ul>
- <li>Holding a pair of <i>x,y</i> coordinates (each of Type <code>Float</code>) as a single unit.</li>
+ <li>Holding a pair of <i>x,y</i> coordinates (each of type <code>Float</code>) as a single unit.</li>
  <li>Allowing a <b>function</b> to pass back a result comprised of both a message in a <code>String</code> and a <code>Boolean</code> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method> <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
@@ -1492,7 +1492,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code> <i class="fa">&#xf14c;</i></a>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
-<p>A set of SVG shapes is defined in either a <code>List&lt;of VectorGraphic&gt;</code> or a <code>List</code> of any specific Type of <code>VectorGraphic</code>
+<p>A set of SVG shapes is defined in either a <code>List&lt;of VectorGraphic&gt;</code> or a <code>List</code> of any specific type of <code>VectorGraphic</code>
  (e.g. <code>List&lt;of CircleVG&gt;</code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
@@ -1808,7 +1808,7 @@ end main
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods <i class="fa">&#xf14c;</i></a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
-<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special Type <code>Random</code>. (Note the upper case <code>R</code> required for a Type name).</p>
+<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case <code>R</code> required for a type name).</p>
 <p>You start by getting a seed random number in your <b>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 <code>variable rnd set to new Random()</code><br>
 <code>call rnd.initialiseFromClock()</code>
@@ -2233,7 +2233,7 @@ end main
 <h1 id="CommonMethods">Common methods</h1>
 <h2 id="CommonDotMethods">Common dot methods</h2>
 
-<p>Click on a Type to go to the Type's function dot methods, or on &#xf14c; to go to the specific method on that Type.</p>
+<p>Click on a type to go to the Type's function dot methods, or on &#xf14c; to go to the specific method on that Type.</p>
 
 <table>
  <tr>
@@ -2652,7 +2652,7 @@ end test
 
 <h2 id="MathsFunctions">Maths functions</h2>
 <p>All the maths functions expect <code>Float</code> arguments, but <code>Int</code> arguments are accepted.
-They all return a value of Type <code>Float</code>, except for <el-method>divAsInt</el-method> which returns an <code>Int</code>.
+They all return a value of type <code>Float</code>, except for <el-method>divAsInt</el-method> which returns an <code>Int</code>.
 <table class="tableMethod">
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="abs"><td><el-method>abs</el-method></td><td><code>Float</code></td><td></td><td>absolute value of the input</td><td></td></tr>
@@ -2843,7 +2843,7 @@ They may not be used inside a <b>function</b> that you have defined, because to 
 <h2 id="MiscMethods">Clock and random numbers</h2>
 Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function</b> because
  of their dependence on external factors, i.e. they are subject to side effects.<br>
- To obtain random numbers within a <b>function</b>, use Type <a href="#Random"><code>Random</code> <i class="fa">&#xf14c;</i></a>.
+ To obtain random numbers within a <b>function</b>, use type <a href="#Random"><code>Random</code> <i class="fa">&#xf14c;</i></a>.
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -2879,7 +2879,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
  </tr><tr id="copy">
   <td><el-method>copy</el-method></td>
   <td>named value of any Type</td>
-  <td>same Type as argument</td>
+  <td>same type as argument</td>
   <td>a copy of the named value</td>
  </tr><tr id="createList">
   <td><el-method>createList</el-method></td>
@@ -2948,7 +2948,8 @@ end function
 </div></div>
 
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
-<p>A <b>higher-order Function</b> (HoF) is one that takes in a reference to another <b>function</b> as a parameter, or (less commonly) that returns a reference to another <b>function</b> as its result. </p>
+<p>A <b>higher-order Function</b> (HoF) is one that takes in a reference to another <b>function</b> as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,
+  but Elan does not currently support that pattern.) </p>
 
 <h2>Standard HoFs</h2>
 <p>The standard library contains several HoFs that are widely recognised and used within Functional Programming, namely
@@ -2986,7 +2987,7 @@ end function
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a <b>function</b> to every item in a <code>List</code>, and return a new List.
-The <b>function</b> to be applied is usually specified as a <code>lambda</code> having a single argument of the Type of the list's items, as in these examples:</p>
+The <b>function</b> to be applied is usually specified as a <code>lambda</code> having a single argument of the type of the list's items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
@@ -3041,25 +3042,25 @@ end main
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
 <p>The function <el-method>reduce</el-method> is used to combine the items in a list in some way to produce
-  a single result. This result may be of the same Type as the items in the list, for example to:
+  a single result. This result may be of the same type as the items in the list, for example to:
 <ul>
  <li>Find the sum or sum-of-squares of a list of numeric values.</li>
  <li>Concatenate, or combine in some other way, the items from a List of Strings.</li>
 </ul>
-<p>The result may, however, be of a different Type than the items in the list, and may even  be a data structure, for example to:</p>
+<p>The result may, however, be of a different type than the items in the list, and may even  be a data structure, for example to:</p>
 <ul>
  <li>Generate a <a href="#Tuple">3-Tuple <i class="fa">&#xf14c;</i></a> of the sum, sum-of-squares, and count of numerical items.</li>
  <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input List</li>
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
 <ol>
- <li>The initial, or 'seed', value, of the Type that you wish to be returned by the <b>function</b> specified in the second argument..
- For example, if you were finding the sum of a list of Type <code>Float</code>, the initial seed value
+ <li>The initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument..
+ For example, if you were finding the sum of a list of type <code>Float</code>, the initial seed value
  would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
  value would be an empty Dictionary of the correct Types.</li>
  <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
 <ol>
- <li>The accumulating value, which is therefore of the same Type as the initial seed value.
+ <li>The accumulating value, which is therefore of the same type as the initial seed value.
  (This will be the return value of the <b>function</b> or <code>lambda</code>).</li>
  <li>The item to which the <b>function</b> is applied, which is therefore of the same Type
    as the items in the input list.</li>
@@ -3183,7 +3184,7 @@ end main
 </div></div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
-<p><el-method>orderBy</el-method> takes a <code>lambda</code> that has two arguments of the same Type as that of the <code>List</code> items to be re-ordered
+<p><el-method>orderBy</el-method> takes a <code>lambda</code> that has two arguments of the same type as that of the <code>List</code> items to be re-ordered
  and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>greater than</i>) for numerics and <i>before</i> (or <i>after</i>) for strings.</p>
 
 <div class="accordion">

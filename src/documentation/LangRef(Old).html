@@ -112,7 +112,7 @@ are passed around in a running program:</p>
   </tr>
 </table>
 
-<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
+<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's type is:
 <ul>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
  <li><i>or</i> specified in the definition of:
@@ -126,7 +126,7 @@ are passed around in a running program:</p>
 
 <h2 id="Mutability">Mutability of named values</h2>
 
-<p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
+<p>The properties or contents of a named value that is of an immutable type may not be changed directly.
 You can, however, create another instance that is a copy of the original
 with all the same property values except for specific changes that you want to make.
  The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
@@ -145,7 +145,7 @@ with all the same property values except for specific changes that you want to m
   <td>formal input and output argument<br> of <b>function</b>, <b>procedure</b> or <b>lambda</b></td></tr>
 </table>
 
-<h2 id="Identifier">Identifiers and Type names</h2>
+<h2 id="Identifier">Identifiers and type names</h2>
 
 <h3 class="no-TOC">Named value identifier</h3>
 <p>The name given to every named value must follow the rules for an <b>identifier</b>:</p>
@@ -293,7 +293,7 @@ end procedure
 <div id="Parameter_reference"></div>
 <h3 class="no-TOC" id="CallByRef">Call by reference</h3>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
+must use a reference (or pointer) to it, defined as type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value, as in this example:
 <div class="accordion">
 <h4 class="no-TOC acc-title">Example of a call by reference</h4>
@@ -324,7 +324,7 @@ end procedure
  <li>a function's execution cannot be interrupted by any external event, though a a non-terminating loop in a function may be detected with tests that <a href="#ignore">time out <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
 <p id="returns">A function definition is comprised of its unique name and, in brackets, its input parameters with their Types, followed by <code>returns</code>,
-and the Type of the value that will be returned.</p>
+and the type of the value that will be returned.</p>
 <p id="return">
 A <b>return</b> instruction is automatically added as the last instruction of a function (since a function <i>must</i> return a value),
 and there can be only one <b>return</b> instruction in a function.
@@ -506,8 +506,8 @@ end test
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
 
 <h2 id="class"><b>concrete class</b></h2>
-<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
-<p>Like any other Type its name must begin with an uppercase letter.</p>
+<p>A <b>concrete class</b> is a user-defined type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
+<p>Like any other type its name must begin with an uppercase letter.</p>
 
 <h3 class="no-TOC">Defining a concrete class</h3>
 <p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
@@ -586,7 +586,7 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
   <li>You cannot override any concrete member defined in an abstract class.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
+  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, type <el-type>A</el-type> inherits from type <el-type>B</el-type>, which inherits from type <code> C</code>, which inherits from type <code>A</code>.</li>
 </ul>
 
 <h2 id="abstract_class"><b>abstract class</b></h2>
@@ -663,9 +663,9 @@ Some useful constants are provided: see <a href="LibRef.html#systemConstants">Sy
 <p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; provides for the simplest form of user-defined Type.
 It is used to provide a fixed set of options that are self-explanatory, and the references to its
 those options (its 'values') are checked at compile time.</p>
-<p>You define an <b>enum</b> with a Type name (so starting with an uppercase letter) followed by a
+<p>You define an <b>enum</b> with a type name (so starting with an uppercase letter) followed by a
 number of 'values' (separated by commas) which must all be valid <a href="#Identifier">identifiers <i class="fa">&#xf14c;</i></a>.</p>
-<p>A reference to an <b>enum</b> by its Type name necessarily holds one of the 'values'.</p>
+<p>A reference to an <b>enum</b> by its type name necessarily holds one of the 'values'.</p>
 <p>Reference to the value in an <b>enum</b> is made by using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> with method <el-method>enumValue</el-method>.</p>
 <p>An <b>enum</b> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
 <p>Examples of <b>enum</b> definitions:</p>
@@ -820,7 +820,7 @@ The <b>new code</b> prompt offers a context appropriate subset of the following 
  <li>define parameters which are used to initialise properties</li>
 </ul>
 <p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
-the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
+the correct type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
 
 <codeblock>
 class Square
@@ -836,7 +836,7 @@ end class
 
 <h2 id="property"><b>property</b></h2>
 <p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
- and a Type (which may be another class name).</p>
+ and a type (which may be another class name).</p>
 <p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
 <p>It may be given an initial value within a <b>constructor</b>, for example:</p>
 <codeblock>
@@ -854,7 +854,7 @@ end class
 </codeblock>
 
 <h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
-<p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
+<p>When a class property is optional, it is defined with the type <code>Maybe</code>.</p>
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
 If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
 and using <el-method>getValue</el-method> will give a runtime error.</p>
@@ -975,7 +975,7 @@ end class
 the value in <code>b</code> is copied into the named value <code>a</code></p>
 <p>The two named values must be of the same Type.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
-<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
+<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
 
 <div id="if"></div>
@@ -1062,7 +1062,7 @@ specifies looping through a sequence either of characters in a <code>String</cod
 <h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the Type of a List's items (here <code>Int</code>),
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the type of a List's items (here <code>Int</code>),
 and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
 <codeblock>
 procedure printPrimes()
@@ -1074,7 +1074,7 @@ end procedure
 </codeblock>
 <hr>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the Type of a List's items (here <code>String</code>).
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the type of a List's items (here <code>String</code>).
 and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
 <codeblock>
 main
@@ -1150,11 +1150,11 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
-<li>a procedure method on an object of a Type provided by the standard library<br>
+<li>a procedure method on an object of a type provided by the standard library<br>
   <code>call vg.append(rect)</code>
 </li>
 </ul>
-<p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
+<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
 <ul>
  <li>either a mutable data structure (List or Dictionary)</li>
@@ -1162,7 +1162,7 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
  <li>or a <b>Ref</b> reference to an immutable data structure (Set, Stack or Queue)</li>
 </ul>
 <p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
-<p>An expression of the correct Type can be used as an argument, but its value cannot be changed in the procedure.</p>
+<p>An expression of the correct type can be used as an argument, but its value cannot be changed in the procedure.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
  They can change the contents of any mutable object passed in as an argument.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
@@ -1297,7 +1297,7 @@ end function
 
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
-<p>If a named value is of an indexable Type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
+<p>If a named value is of an indexable type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
  using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
 <p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
 <p>If the two index values of a range are equal, or the second is smaller than the first,
@@ -1423,8 +1423,8 @@ end function
 <p>Equality testing of these Value Types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
 <ul>
  <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
- <li><code>(a is b)</code> returns <b><el-id>true</el-id></b>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same Type and their values are equal.
- The only exception is that if one argument is of Type <code>Float</code> and the other is of Type <code>Int</code>,
+ <li><code>(a is b)</code> returns <b><el-id>true</el-id></b>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same type and their values are equal.
+ The only exception is that if one argument is of type <code>Float</code> and the other is of type <code>Int</code>,
   then <b>is</b> will return <el-id>true</el-id> (and <b>isnt</b> will return <el-id>false</el-id>) if their values are the same,
   i.e. they are the same whole number.</li>
  <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
@@ -1462,7 +1462,7 @@ Two instances which are subclasses of the same abstract class compare equal only
 </tr>
 </table>
 
-<p>Each may be applied between two values of Type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
+<p>Each may be applied between two values of type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
 <p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</p>
 
 <h3 class="no-TOC">Combining operators </h3>
@@ -1485,7 +1485,7 @@ end main
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
 System methods may be used only within the <b>main</b> routine or a <b>procedure</b>, because they have external dependencies or side effects.</li>
-<li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of Type <code>String</code>.
+<li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of type <code>String</code>.
 See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</li>
 </ul>
 
@@ -1585,7 +1585,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <h2>Messages</h2>
 
 <h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
- <p>An expression, when evaluated, results in a value of a Type that is not compatible with its 'target',
+ <p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
  an argument into a method call.</p>
 
@@ -1604,7 +1604,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
 
 <h3 id="UndefinedSymbolCompileError" class="no-TOC"> ... is not defined for type ...</h3>
- <p>Arises when 'dot calling' a member (method or property) that does not exist on the Type of the named value or expression before the dot.</p>
+ <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
  <p>A function (or function method) is to be used within an expression, not via a <b>call procedure</b> instruction.</p>
@@ -1631,7 +1631,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
- <p>The Type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the Type is inapplicable,
+ <p>The type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the type is inapplicable,
  or it is an <b>abstract class</b>.</p>
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
@@ -1679,7 +1679,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <p>One or more arguments provided to the method are of the wrong Type.</p>
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
- <p>Certain data structure Types, including <code>List</code>, must specify the Type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
+ <p>Certain data structure Types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
  for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
@@ -1744,12 +1744,12 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 
 <!--
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
- <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
+ <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
  Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable <i class="fa">&#xf14c;</i></a> the Types for both the key and the value must be immutable ones.</p>
 -->
 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
- <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
+ <p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
 
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
 
@@ -1801,7 +1801,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
 
 <h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
- <p>The value of a constant must be a literal value of a Type that is not mutable.
+ <p>The value of a constant must be a literal value of a type that is not mutable.
  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
 
 <h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
@@ -1819,7 +1819,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
 
 <h3 id="InheritsFromField" class="no-TOC">'inherits className' field in a class</h3>
  <p>An inheritance clause, if used, must consist of the keyword <b>inherits</b>
- followed by a space and then one or more Type names separated by commas.</p>
+ followed by a space and then one or more type names separated by commas.</p>
 
 <h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
  <p>A method name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
@@ -1828,7 +1828,7 @@ as well as from the <b>new code</b> prompt. Every prompt provides a <code>commen
  <p>Each parameter definition takes the form:</p>
  name as Type
  <p>The name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
- <p>The Type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
+ <p>The type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>

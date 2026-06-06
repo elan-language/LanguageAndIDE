@@ -386,11 +386,12 @@ back into <el-method>sort</el-method> again &mdash; crucially with approximately
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
-<h1 id="FP_HoFs">Principle 8: A function may be passed into, or returned by, another function</h1>
+<h1 id="FP_HoFs">Principle 8: A function may be passed into another function</h1>
 
 <p>The alternative to writing your own recursive function is to use Higher-order Functions (see <a href="LibRef.html#HoFs" target="_blank">HoFs <i class="fa">&#xf08e;</i></a> in Library Reference).
-  A HoF is a function that takes in another function as a parameter (the more common case), or one that returns a function as its result.
-  Under the covers, HoFs are written using recursion, but you don't see this.</p>
+  A HoF is a function that takes in another function as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,
+  but Elan does not currently support that pattern.)
+  Under the covers, HoFs are written using recursion, but you don't see this. </p>
 
 <p>There are many possible HoFs, but three of them &mdash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &mdash;
 are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
@@ -425,40 +426,40 @@ end test
     and determines whether or not each should 'pass' through the filter into the resulting List.
     In the first example the function passes only those values from the original List that are less than 5.</li>
  <li>the definition of the function <el-method>lessThan5</el-method> (lower down in the code)
-    includes a parameter of Type <code>Float</code> (the same Type as of the item in the List) but returns a <code>Boolean</code>
+    includes a parameter of type <code>Float</code> (the same type as of the item in the List) but returns a <code>Boolean</code>
     specifying whether or not a specific item should pass the filter.
     Making sure that Types match up as expected can be the trickiest part of learning to use HoFs.</li>
 </ul>
 <p><el-method>map</el-method></p>
 <ul>
   <li>returns a List that will have the same <i>number</i> of items as in the original List.
-    They might be of the same Type as the in the original List (though typically different values) or, depending on the return Type of the function
-    passed in, the items in the resulting List might be of a Type different from those in the original List.
+    They might be of the same type as the in the original List (though typically different values) or, depending on the return type of the function
+    passed in, the items in the resulting List might be of a type different from those in the original List.
     But each item in the resulting List <i>corresponds</i> ('maps') to an item of the
     original List at the same position</li>
    <li>as with <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
-    have a single parameter of the same Type as the items in the List, though its return value may be of any Type.
+    have a single parameter of the same type as the items in the List, though its return value may be of any Type.
   </li>
  </ul>
 <p><el-method>reduce</el-method></p>
 <ul><li> returns a <i>single</i> value, that is derived by combining all of the item values in the original List according to the function passed in. That derived value can be of the same
 Type as the items of the List (for example when used to combine a List of numbers by addition or multiplication),
-but can be of a different Type including a data structure.</li>
+but can be of a different type including a data structure.</li>
 <li>Unlike <el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments:
 <ol><li>the <i>initial</i> value (sometimes called the 'seed') that will be progressively refined and eventually returned.
-This initial value must therefore have the Type of the desired final value.</li>
+This initial value must therefore have the type of the desired final value.</li>
 <li>the <i>function</i> passed into <el-method>reduce</el-method> must define two parameters:
 <ol>
-<li>the accumulating value, therefore of the same Type as the initial 'seed' value.</li>
-<li>the item to which the function is applied, therefore of the same Type as the items in the List.</li>
+<li>the accumulating value, therefore of the same type as the initial 'seed' value.</li>
+<li>the item to which the function is applied, therefore of the same type as the items in the List.</li>
 </ol>
 </ol>
-<li>The return Type of the function must have the same Type as the 'seed' value.</li>
+<li>The return type of the function must have the same type as the 'seed' value.</li>
 <li>Each item of the List is passed in turn into the function (as second argument), the first argument being the <i>latest</i> value that has
 developed from the seed.</li>
 </ul>
-<p><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, and in any order, provided that the item Type of each resulting
-List is of the Type expected by the next one.</p>
+<p><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, and in any order, provided that the item type of each resulting
+List is of the type expected by the next one.</p>
 <p>Because <el-method>reduce</el-method> transforms a List into a single value, it is <i>typically</i>
 used in isolation or as the last of a chain. It can, of course, be followed in the chain by a simpler function (such as <el-method>round</el-method>).
 </p>
@@ -588,7 +589,7 @@ understand the following:</p>
 
 <p>The 'functional Random' pattern, works within these constraints. If you want to <i>generate</i> one or more random numbers within a function,
 you must pass in the 'state' needed to derive that next random value, and you must pass the <i>updated</i> state to the next place where
-a new random is required, either inside or outside the function. This is done using an instance of the Type <code>Random</code> (note the capital R,
+a new random is required, either inside or outside the function. This is done using an instance of the type <code>Random</code> (note the capital R,
 which distinguishes this from the procedural methods) which may be thought of as an instance of a 'Random Number Generator'.</p>
 
 <p>To see how <code>Random</code> works, we will first explore it within a tiny program intended to show the result of rolling a dice 10 times:</p>

@@ -66,7 +66,7 @@ end main
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of main routines</h3>
+<h3 class="no-TOC acc-title">Further examples of main routines</h3>
 <div class="acc-body">
 
 <p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
@@ -134,20 +134,20 @@ end procedure
   <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
   <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
   <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies name starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
+  <li>Each parameter specifies a name, starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
     <code>bubbles as List&lt;of CircleVG&gt;</code></li>
   <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
   which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
   <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
     was located.</li>
-  <li>Changes made to parameter values (where possible) within the procedure (changing the radius and centre of each bubble in the list <code>bubbles</code> 
-  will be visible to the calling code when the procedure exits.</li>
+  <li>Changes made to parameter values (where possible) within the procedure (such as changing the radius and centre of each bubble
+     in the list <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
   <li>Functions may be called from within a procedure, but not <i>vice versa</i>.</li>
   <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of procedures</h3>
+<h3 class="no-TOC acc-title">Further examples of procedures</h3>
 <div class="acc-body">
 
 <p>From the <b>Turtle Dragon</b> demo. The procedure defines two parameters of different types. The body of this procedure consists
@@ -188,7 +188,7 @@ end procedure
 <div id="Parameter_reference"></div>
 <h4 class="no-TOC" id="CallByRef">Call by reference</h4>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it, defined as Type <code>AsRef</code>.
+must use a reference (or pointer) to it, defined as type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value,
  as in this example where <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
@@ -264,7 +264,7 @@ end function
   <li>The <b>function</b> instruction allows you to define your own functions.</li>
   <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
   <li>It will usually define one or more parameters (two in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+  <li>Each parameter specifies a name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
     <code>headX as Int</code></li>
   <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
   <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
@@ -286,21 +286,14 @@ end function
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of functions</h3>
+<h3 class="no-TOC acc-title">Further examples of functions</h3>
 <div class="acc-body">
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
 
 <codeblock>
 function leap(year as Int) returns Boolean
-  variable leapYear set to false
-  if (year mod 4) is 0 then
-    reassign leapYear to true
-    if ((year mod 100) is 0) and ((divAsInt(year, 100) mod 4) isnt 0) then
-      reassign leapYear to false
-    end if
-  end if
-  return leapYear
+  return (((year mod 4) is 0) and ((year mod 100) isnt 0)) or ((year mod 400) is 0)
 end function
 </codeblock>
 
@@ -344,7 +337,7 @@ end function
 <div id="test">
 <h2>Test</h2>
 
-<p>Example from the <b>Date Time</b> demo testing the function that determines whether a given year is a leap year. 
+<p>Example from the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year. 
   Note that the comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
   where errors are more common:</p>
 
@@ -383,9 +376,8 @@ end test
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of tests</h3>
+<h3 class="no-TOC acc-title">Further examples of tests</h3>
 <div class="acc-body">
-
   
 <p>Example from the <b>Life - procedural</b> demo. It tests <i>all</i> valid combinations of parameter values -
   because the logic of this function is quite unusual:</p>
@@ -551,7 +543,7 @@ call drawSide(side, t)
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of constants</h3>
+<h3 class="no-TOC acc-title">Further examples of constants</h3>
 <div class="acc-body">
 
 <codeblock>
@@ -644,7 +636,7 @@ end function
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of enums</h3>
+<h3 class="no-TOC acc-title">Further examples of enums</h3>
 <div class="acc-body">
 
 <codeblock>
@@ -678,7 +670,7 @@ enum Hole vacant, mole, hit, miss
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of comments</h3>
+<h3 class="no-TOC acc-title">Further examples of comments</h3>
 <div class="acc-body">
  <p>From the <b>Bubbles</b> demo:<p>
 
@@ -753,7 +745,7 @@ of a program.</p>
 </ul>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">More examples of variable definitions</h3>
+<h3 class="no-TOC acc-title">Further examples of variable definitions</h3>
 <div class="acc-body">
 
 <p>Example from the <b>Life - procedural</b> demo shows a variable being initialised using an expression, in this 
@@ -781,7 +773,7 @@ case a function call:</p>
 the value in <code>b</code> is copied into the named value <code>a</code></p>
 <p>The two named values must be of the same Type.</p>
 <p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
-<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of Type <code>AsRef</code>,
+<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
 </div>
 
@@ -839,7 +831,7 @@ end main
 </div>
 
 <div id="while">
-<h2><b>While loop</h2>
+<h2>While loop</h2>
 <p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if some condition is <el-id>true</el-id>.</p>
 <p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
@@ -871,7 +863,7 @@ specifies looping through a sequence either of characters in a <code>String</cod
 <h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the Type of a List's items (here <code>Int</code>),
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the type of a List's items (here <code>Int</code>),
 and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
 <codeblock>
 procedure printPrimes()
@@ -882,7 +874,7 @@ procedure printPrimes()
 end procedure
 </codeblock>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the Type of a List's items (here <code>String</code>).
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the type of a List's items (here <code>String</code>).
 and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
 <codeblock>
 main
@@ -955,11 +947,11 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
   <code>call updateNeighbours()</code></li>
 <li>a procedure provided by the standard library<br>
   <code>call sleep_ms(2000)</code></li>
-<li>a procedure method on an object of a Type provided by the standard library<br>
+<li>a procedure method on an object of a type provided by the standard library<br>
   <code>call vg.append(rect)</code>
 </li>
 </ul>
-<p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
+<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>An argument whose value is changed by the procedure must be:</p>
 <ul>
  <li>either a mutable data structure (List or Dictionary)</li>
@@ -967,7 +959,7 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
  <li>or a <b>Ref</b> reference to an immutable data structure (Set, Stack or Queue)</li>
 </ul>
 <p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
-<p>An expression of the correct Type can be used as an argument, but its value cannot be changed in the procedure.</p>
+<p>An expression of the correct type can be used as an argument, but its value cannot be changed in the procedure.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
  They can change the contents of any mutable object passed in as an argument.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
@@ -1088,7 +1080,8 @@ end function
 
 </div>
 
-<h1 id="compile_error">Compile errors and warnings</h1>
+<div id="compile_error">
+<h1 >Compile errors and warnings</h1>
 
  <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
  <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
@@ -1100,7 +1093,7 @@ end function
 <h2>Messages</h2>
 
 <h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
- <p>An expression, when evaluated, results in a value of a Type that is not compatible with its 'target',
+ <p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
  an argument into a method call.</p>
 
@@ -1119,7 +1112,7 @@ end function
 <h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
 
 <h3 id="UndefinedSymbolCompileError" class="no-TOC"> ... is not defined for type ...</h3>
- <p>Arises when 'dot calling' a member (method or property) that does not exist on the Type of the named value or expression before the dot.</p>
+ <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
  <p>A function (or function method) is to be used within an expression, not via a <b>call procedure</b> instruction.</p>
@@ -1146,7 +1139,7 @@ end function
  <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
- <p>The Type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the Type is inapplicable,
+ <p>The type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the type is inapplicable,
  or it is an <b>abstract class</b>.</p>
 <!--
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
@@ -1194,7 +1187,7 @@ end function
  <p>One or more arguments provided to the method are of the wrong Type.</p>
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
- <p>Certain data structure Types, including <code>List</code>, must specify the Type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
+ <p>Certain data structure Types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
  for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
@@ -1214,20 +1207,6 @@ end function
 <h3 id="DuplicateKeyCompileError" class="no-TOC">Duplicate Dictionary key(s)</h3>
  <p>Attempting to define a literal <code>Dictionary</code> <!--or <code>DictionaryImmutable</code>-->
  with one or more duplicated keys in the definition.</p>
-
-<!-- This message deleted>
-<h3 id="FunctionRefCompileError" class="no-TOC">To evaluate function ... add brackets ...</h3>
- <p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
- defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in
- Functional Programming) then only the name of the function is needed.</p>
-<-->
-
-<h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be used without brackets</h3>
-<!-- this text removed when keyword ref removed>
- The keyword <b>ref</b> may be applied only to functions that you have defined in your own code as a standalone (global) function.
- It may not be applied to a function method defined on a class, nor to a library function.
- You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.
-<-->
 
 <h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
  <p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
@@ -1259,12 +1238,12 @@ end function
 
 <!--
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
- <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
+ <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
  Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable <i class="fa">&#xf14c;</i></a> the Types for both the key and the value must be immutable ones.</p>
 -->
 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
- <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
+ <p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
 
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
 
@@ -1316,7 +1295,7 @@ end function
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
 
 <h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
- <p>The value of a constant must be a literal value of a Type that is not mutable.
+ <p>The value of a constant must be a literal value of a type that is not mutable.
  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
 
 <h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
@@ -1334,7 +1313,7 @@ end function
 
 <h3 id="InheritsFromField" class="no-TOC">'inherits className' field in a class</h3>
  <p>An inheritance clause, if used, must consist of the keyword <b>inherits</b>
- followed by a space and then one or more Type names separated by commas.</p>
+ followed by a space and then one or more type names separated by commas.</p>
 
 <h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
  <p>A method name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
@@ -1343,11 +1322,11 @@ end function
  <p>Each parameter definition takes the form:</p>
  name as Type
  <p>The name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
- <p>The Type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
+ <p>The type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
- <p>Valid forms for a procedure call are
+ <p>Valid forms for a procedure call are:</p>
  <ul>
   <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
   <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
@@ -1376,8 +1355,10 @@ end function
 <h2>Advisory</h2>
 
 <h3 id="methodDeprecated" class="no-TOC">Code change suggested. Method was deprecated in v7.1.</h3>
+ </div>
 
-<h1 id="runtime_error">Runtime errors</h1>
+ <div id="runtime_error">
+ <h1 >Runtime errors</h1>
 
 <h2>Messages</h2>
 
@@ -1391,5 +1372,6 @@ breaking out parts of it into separate <b>variable definition</b> instructions; 
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
+</div>
 </body>
 </html>

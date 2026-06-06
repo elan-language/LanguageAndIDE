@@ -26,8 +26,8 @@
 <div id="class">
 <h2>Concrete class</h2>
 <p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-<p>A <b>concrete class</b> is a user-defined Type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
-<p>Like any other Type its name must begin with an uppercase letter.</p>
+<p>A <b>concrete class</b> is a user-defined type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
+<p>Like any other type its name must begin with an uppercase letter.</p>
 
 <h3 class="no-TOC">Defining a concrete class</h3>
 <p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
@@ -106,7 +106,7 @@ you can refer to this instance with <code>this</code>, as shown by this line in 
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
   <li>You cannot override any concrete member defined in an abstract class.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, Type <el-type>A</el-type> inherits from Type <el-type>B</el-type>, which inherits from Type <code> C</code>, which inherits from Type <code>A</code>.</li>
+  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, type <el-type>A</el-type> inherits from type <el-type>B</el-type>, which inherits from type <code> C</code>, which inherits from type <code>A</code>.</li>
 </ul>
 </div>
 
@@ -152,7 +152,7 @@ return discount
  <li>define parameters which are used to initialise properties</li>
 </ul>
 <p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
-the correct Type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
+the correct type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
 
 <codeblock>
 class Square
@@ -168,7 +168,7 @@ end class
 
 <h2 id="property"><b>property</b></h2>
 <p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
- and a Type (which may be another class name).</p>
+ and a type (which may be another class name).</p>
 <p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
 <p>It may be given an initial value within a <b>constructor</b>, for example:</p>
 <codeblock>
@@ -186,7 +186,7 @@ end class
 </codeblock>
 
 <h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
-<p>When a class property is optional, it is defined with the Type <code>Maybe</code>.</p>
+<p>When a class property is optional, it is defined with the type <code>Maybe</code>.</p>
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
 If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
 and using <el-method>getValue</el-method> will give a runtime error.</p>

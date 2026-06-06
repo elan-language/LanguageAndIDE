@@ -22,21 +22,21 @@
 <h3>Variable statement</h3>
 <p>The <el-code>variable </el-code>statement is used to define, and initialise, a new variable. Unlike a named value defined by a let statement, a variable may be re-assigned from its initial value to a new value.</p>
 <p>The name given to the variable must follow the rules for an <a href="LangRef.html#Identifier">Identifier</a>.</p>
-<p>The value to which the new variable is initialised may be a literal value, or a more complex expression. Either way, the resulting value defines the Type for that variable.</p>
+<p>The value to which the new variable is initialised may be a literal value, or a more complex expression. Either way, the resulting value defines the type for that variable.</p>
 
 <h3>Set statement</h3>
-<p>The <el-code>set</el-code> statement is used to assign a new value to an existing variable. The new value must be of the same Type (or a Type compatible with) that of the variable.</p>
+<p>The <el-code>set</el-code> statement is used to assign a new value to an existing variable. The new value must be of the same type (or a type compatible with) that of the variable.</p>
 <p>A set statement may not assign a new value to a parameter: see <a href="LangRef.html#Parameter">Parameter passing</a>.</p>
 
 
 <h3 id="Parameter_passing_1">Parameter passing</h3>
 <p>The arguments provided to a method (function or procedure) are passed &#8216;by value&#8217; and not &#8216;by reference&#8217;. If you wish to be able to re-assign the value associated with a parameter, such that that change would be visible to the code that calls the procedure, then you can precede the parameter definition with the keyword <el-code>out</el-code>. This is useful when you are passing in, say, an <el-code>Int</el-code> that refers to an index, and you want the procedure to update the index number it is pointing to.</p>
-<p> Note, however, that mutating an instance of a reference Type held in a variable is not the same thing as re-assigning the variable to a different instance. The first changes the contents of the thing, the second changes the thing for another thing!</p>
+<p> Note, however, that mutating an instance of a reference type held in a variable is not the same thing as re-assigning the variable to a different instance. The first changes the contents of the thing, the second changes the thing for another thing!</p>
 <p>Therefore, if</p>
 <ul>
 <li>the method is a <el-code>procedure</el-code> AND</li>
-<li>the Type of the argument is a &#8216;reference Type&#8217; AND</li>
-<li>that Type is mutable such as an <el-code>List</el-code>, <el-code>Dictionary</el-code>, <el-code>Stack</el-code>, <el-code>Queue</el-code>, or a user-defined <el-code>class</el-code></li>
+<li>the type of the argument is a &#8216;reference Type&#8217; AND</li>
+<li>that type is mutable such as an <el-code>List</el-code>, <el-code>Dictionary</el-code>, <el-code>Stack</el-code>, <el-code>Queue</el-code>, or a user-defined <el-code>class</el-code></li>
 </ul>
 <p>then it is possible to mutate the parameter that holds that argument within the procedure, such that any reference to the argument outside the procedure will &#8216;see&#8217; the changes. </p>
 <p>A good example of this is an &#8216;in-place sort&#8217; procedure. In the following code the <el-code>arr</el-code> parameter is mutated in the two <el-code>call arr.PutAt()</el-code> statements:</p>

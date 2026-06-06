@@ -88,14 +88,7 @@ static int dayInYear(int year, int unixDays) { // function
 } // test
 
 static bool leap(int year) { // function
-  var leapYear = false;
-  if ((year % 4) == 0) {
-    leapYear = true; // reassign variable
-    if (((year % 100) == 0) && ((divAsInt(year, 100) % 4) != 0)) {
-      leapYear = false; // reassign variable
-    } // if
-  } // if
-  return leapYear;
+  return (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
 } // function
 
 [TestMethod] static void test_leap() {
