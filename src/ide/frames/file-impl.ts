@@ -651,28 +651,30 @@ export class FileImpl implements File {
   }
 
   setLanguageFromHeader(l: string) {
+    let lang: Language = LanguageElan.Instance;
     switch (l) {
       case "Elan": {
-        this._language = LanguageElan.Instance;
+        lang = LanguageElan.Instance;
         break;
       }
       case "Python": {
-        this._language = LanguagePython.Instance;
+        lang = LanguagePython.Instance;
         break;
       }
       case "C#": {
-        this._language = LanguageCS.Instance;
+        lang = LanguageCS.Instance;
         break;
       }
       case "VB.NET": {
-        this._language = LanguageVB.Instance;
+        lang = LanguageVB.Instance;
         break;
       }
       case "Java": {
-        this._language = LanguageJava.Instance;
+        lang = LanguageJava.Instance;
         break;
       }
     }
+    this.setLanguage(lang);
   }
 
   async parseFrom(source: CodeSource): Promise<void> {
