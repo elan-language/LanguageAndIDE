@@ -1,0 +1,105 @@
+# Python with Elan 2.0.0-alpha5
+
+nDiscs = 7 # constant
+
+delay_ms = 300 # constant
+
+def main() -> None:
+  stacks = create3Stacks(nDiscs) # variable definition
+  display(stacks) # call procedure
+  moveMultiple(nDiscs, stacks, 0, 2, 1) # call procedure
+
+def moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int) -> None: # procedure
+  a = stacks[fromStack] # variable definition
+  b = stacks[toStack] # variable definition
+  if n == 1:
+    moveOne(stacks, fromStack, toStack) # call procedure
+  else:
+    moveMultiple(n - 1, stacks, fromStack, spare, toStack) # call procedure
+    moveOne(stacks, fromStack, toStack) # call procedure
+    moveMultiple(n - 1, stacks, spare, toStack, fromStack) # call procedure
+
+def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None: # procedure
+  disc = top(stacks[fromStack]) # variable definition
+  stacks[fromStack].removeFirst(disc) # call procedure
+  stacks[toStack].append(disc) # call procedure
+  display(stacks) # call procedure
+
+def display(stacks: list[list[int]]) -> None: # procedure
+  clearAllDisplays() # call procedure
+  vg = list[VectorGraphic]() # variable definition
+  drawStack(stacks[0], 1, vg) # call procedure
+  drawStack(stacks[1], 2, vg) # call procedure
+  drawStack(stacks[2], 3, vg) # call procedure
+  displayVectorGraphics(vg) # call procedure
+  sleep_ms(delay_ms) # call procedure
+
+def drawStack(s: list[int], peg: int, vg: list[VectorGraphic]) -> None: # procedure
+  for n in range(0, s.length()):
+    discVG = createDisc(s[n], peg, n) # variable definition
+    vg.append(discVG) # call procedure
+
+def createDisc(disc: int, peg: int, vertical: int) -> RectangleVG: # function
+  r = RectangleVG() # variable definition
+  return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
+
+def test_createDisc(self) -> None:
+  # Normal cases
+  d = createDisc(5, 2, 4) # variable definition
+  self.assertEqual(d.fillColour, green)
+  self.assertEqual(d.strokeWidth, 0.25)
+  self.assertEqual(d.height, 3)
+  self.assertEqual(d.width, 12)
+  self.assertEqual(d.x, 45)
+  self.assertEqual(d.y, 38)
+  # Edge cases
+  d2 = createDisc(1, 1, 0) # variable definition
+  self.assertEqual(d2.fillColour, red)
+  self.assertEqual(d2.strokeWidth, 0.25)
+  self.assertEqual(d2.height, 3)
+  self.assertEqual(d2.width, 4)
+  self.assertEqual(d2.x, 19)
+  self.assertEqual(d2.y, 50)
+  # Error cases - none identified
+
+def create3Stacks(nDiscs: int) -> list[list[int]]: # function
+  s0 = rangeInSteps(nDiscs, 0, -1) # variable definition
+  s1 = list[int]() # variable definition
+  s2 = list[int]() # variable definition
+  return [s0, s1, s2]
+
+def test_create3Stacks(self) -> None:
+  emptyStack = list[int]() # variable definition
+  # Normal case(s)
+  self.assertEqual(create3Stacks(7), [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack])
+  # Edge case(s)
+  self.assertEqual(create3Stacks(1), [[1], emptyStack, emptyStack])
+  self.assertEqual(create3Stacks(0), [emptyStack, emptyStack, emptyStack])
+  # Error case(s)
+  self.assertEqual(create3Stacks(-1), "Loop will not terminate when start < end start with negative step")
+
+def colour(disc: int) -> int: # function
+  colours = [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC] # variable definition
+  return colours[disc - 1]
+
+def test_colour(self) -> None:
+  # Normal cases
+  self.assertEqual(colour(5), green)
+  # Edge cases
+  self.assertEqual(colour(1), red)
+  self.assertEqual(colour(10), 0xFF99CC)
+  # Error cases
+  self.assertEqual(colour(11), "Out of range index: 10 size: 10")
+
+def top(s: list[int]) -> int: # function
+  return s[s.length() - 1]
+
+def test_top(self) -> None:
+  # Normal cases
+  self.assertEqual(top([3, 2, 1]), 1)
+  # Edge cases
+  self.assertEqual(top([7]), 7)
+  # Error cases
+  self.assertEqual(top(list[int]()), "Out of range index: -1 size: 0")
+
+main()

@@ -95,6 +95,14 @@ suite("Demo compile", () => {
     await testElanFile("snake_PP");
   });
 
+  test("test tower-of-hanoi", async () => {
+    await testElanFile("tower-of-hanoi");
+  });
+
+  test("test tower-of-hanoi-recursive", async () => {
+    await testElanFile("tower-of-hanoi-recursive");
+  });
+
   test("test turtle-snowflake", async () => {
     await testElanFile("turtle-snowflake");
   });
