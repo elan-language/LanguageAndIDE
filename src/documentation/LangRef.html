@@ -19,6 +19,84 @@
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
+<h1>Getting started</h1>
+<p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>Procedural</b> profile from the menu at the top of the IDE. 
+This will ensure that: </p>
+
+<ul>
+<li>The list of demo programs will now show only programs that use PP. 
+<li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP
+    <ul>
+    <li>At the global level, it will offer: <b>concrete class</b>, <b>abstract class</b>, and <b>interface</b>
+        Each of these allows you to create a ‘user-defined type’ – that may then be used in a similar fashion to the standard types such <code>Int</code>, <code>String</code>, or <code>List</code>.
+        (Enums - which are single-line instructions - are not directly associated with OOP, but because an enum is a very simple form of user-defined type, it is made available in the same profile.)</li>
+    <li><i>Within</i> a <b>concrete class</b>, <b>abstract class</b>, or <b>interface</b>, the <b>new code</b> menu will show an entirely new list of instructions,
+         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within those three new global instructions.</li>
+    </ul>
+</ul>
+
+<div>
+  <h1>Principles of procedural programming</h1>
+
+
+This is an explanation of core concepts, not a tutorial. Specifics of e.g. library techniques should reference LibRef
+
+TODO - WHAT ABOUT?
+Scoping
+Mutability vs. reassignment
+
+<h2>A procedural program consists of sequences of commands</h2>
+  initially in main, later in functions and procedures
+  each instruction is a command that leaves the system in a different state
+  contains instructions executed, by default, in order they are defined (later can exercise more control over the flow of control)
+  each instruction is a command that changes the state of the system
+  instructions are of different kinds
+  comments are not instructions but may be added wherever an instruction may be
+
+<h2>Values may be literal or named, and of different types</h2>
+  value types
+  literal values
+  named values
+  variables
+  constants
+  enums
+
+<h2>Expressions derive more useful information from existing values</h2>
+Can be thought of as queries
+This section covers operators, and library function calls
+
+<h2>Writing automated tests is useful and satisfying</h2>
+
+<h2>Writing your own functions extends the language</h2>
+
+<h2>Selection permits alternative paths through the instructions</h2>
+
+<h2>Iteration allows the same instructions to be executed multiple times</h2>
+
+... on different data
+Iteration also called looping
+<h3 class="no-TOC">When you know how many iterations in advance, use a 'for' loop</h3>
+<h3 class="no-TOC">When you don't know how many iterations in advance, use a 'while' loop</h3>
+
+<h2>Data structures hold multiple, related, data items in one name
+   List is the most common
+   List facilitates iteration over related items of the same kind
+   String may be considered a data structure, but it is limited
+   Tuple
+
+<h2>Input/Output is done in the main routine, or procedures</h2>
+
+What is a procedure
+Ready made and user-defined
+The difference 
+
+<h2>Principle 10: Exceptions handle unexpected behaviour</h2> 
+  nature
+  try catch
+  throw
+  Use exceptions only to handle errors that can't be handled another way
+
+</div>
 
 <div id="GlobalInstructions">
 <h1>Global instructions</h1>
@@ -1077,301 +1155,6 @@ end function
 <h2>Comment</h2>
 <p>See <a href="#Comment">Comments</a></p>
 </div>
-
-</div>
-
-<div id="compile_error">
-<h1 >Compile errors and warnings</h1>
-
- <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
- <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
- for example adding a definition for an unknown identifier. An error usually indicates
- that you will need to <i>alter</i> code to fix the error.
- But they are similar in that you will not be able to run your program until the issues are fixed. In all programming
- languages it is a good practice 'treat all compile warnings as errors' i.e. fix them as soon as you see them appear.</p>
-
-<h2>Messages</h2>
-
-<h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
- <p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
- for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
- an argument into a method call.</p>
-
-<h3 id="ThisCompileError" class="no-TOC">Cannot use 'this' outside class context</h3>
- <p><code>this</code> may only be used within an instance method on a class to refer to the current instance.</p>
-
-<h3 id="DeclaredAboveCompileError" class="no-TOC">Abstract class ... must be declared before it is used</h3>
- <p>If a class inherits from one or more abstract classes, then the latter must all have already been declared (defined) earlier in the code file.</p>
-
-<h3 id="MemberTypeCompileError" class="no-TOC">Member ... must be of type ...</h3>
- <p>This error occurs when a class is defined as inheriting from an abstract class,
- and has implemented an inherited member (method or property) with the correct name, but with different Types.</p>
-
-<h3 id="TypesCompileError" class="no-TOC">Incompatible types. Expected: ... Provided: ...</h3>
-
-<h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
-
-<h3 id="UndefinedSymbolCompileError" class="no-TOC"> ... is not defined for type ...</h3>
- <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
-
-<h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
- <p>A function (or function method) is to be used within an expression, not via a <b>call procedure</b> instruction.</p>
-
-<h3 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h3>
- <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
- either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <b>main</b> routine.</p>
-
-<h3 id="IsDeprecated" class="no-TOC">Code change required ...</h3>
- <p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
- message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
-
-<h3 id="CannotUseLikeAFunction" class="no-TOC">Cannot call procedure ... within an expression</h3>
- <p>A procedure may be used only within a <b>call procedure</b> instruction.</p>
-
-<h3 id="CannotCallAsAMethod" class="no-TOC">Cannot invoke ... as a method</h3>
- <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
-
-<h3 id="NotIndexableCompileError" class="no-TOC">Cannot ...index ...</h3>
- <p>An index (in square brackets) may be applied only to certain data structure Types: <code>String</code>, <code>List</code>
- and <code>Dictionary</code>.</p>
-
-<h3 id="NotRangeableCompileError" class="no-TOC">Cannot range ...</h3>
- <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
-
-<h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
- <p>The type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the type is inapplicable,
- or it is an <b>abstract class</b>.</p>
-<!--
-<h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h3>
--->
-<h3 id="MustBeAbstractCompileError" class="no-TOC">May inherit from one abstract superclass only</h3>
- <p>The message is self explanatory.</p>
-
-<h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">class ... cannot inherit from itself</h3>
- <p>The message is self explanatory.</p>
-
-<h3 id="MustBeSingleAbstractCompileError" class="no-TOC">May inherit from one abstract superclass only.</h3>
-<p>The message is self explanatory.</p>
-
-<h3 id="PrivateMemberCompileError" class="no-TOC">Cannot reference private member ...</h3>
- <p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
- It may not be accessed by any code outside the class hierarchy.</p>
-
-<h3 id="MustImplementCompileError" class="no-TOC">... must implement ...</h3>
- <p>If a concrete class inherits from any abstract class it must implement all abstract methods defined in the abstract type (or in any super-type of the abstract class).</p>
-
-<h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
- <p>You cannot create an instance of any abstract class: only of a concrete class.</p>
-
-<!--
-<h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
- <p>If a parameter of a procedure is marked with <b>out</b> then this means that the parameter may be
- reassigned within the procedure. Therefore you must pass in a variable that can be reassigned. You cannot pass in: a
- constant, a literal value, or a named value that is defined by a <b>let</b> instruction.</p>
--->
-
-<h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
- <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toString</el-method>, may be called on a named
- value or an expression only using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a>.</p>
-
-<h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
- <p>The prefix <b>property.</b> may only be used before a property name: not a function name.</p>
-
-<h3 id="MissingParameterCompileError" class="no-TOC">Missing argument(s) ...</h3>
- <p>The method being called expects more arguments than have been provided.</p>
-
-<h3 id="ExtraParameterCompileError" class="no-TOC">Too many argument(s) ...</h3>
- <p>A method has been passed more arguments than it expects.</p>
-
-<h3 id="ParameterTypesCompileError" class="no-TOC">Argument types ...</h3>
- <p>One or more arguments provided to the method are of the wrong Type.</p>
-
-<h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
- <p>Certain data structure Types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
- Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
- Dictionaries require Types to be specified for both the keys and the values,
- for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
-
-<h3 id="MutateCompileError" class="no-TOC">May not reassign the ...</h3>
- <p>Attempting to reassign, or mutate, a named value that may not be reassigned in the current context.</p>
-
-<h3 id="NotUniqueNameCompileError" class="no-TOC">Name ... not unique in scope ...</h3>
- <p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
-
-<h3 id="ReassignInFunctionCompileError" class="no-TOC">May not set ... in a function</h3>
- <p>A property can be reassigned only within a procedure method, not within a function, because reassigning a property is a side effect.</p>
-
-<h3 id="RedefinedCompileError" class="no-TOC">The identifier ... is already used for a ... and cannot be re-defined here.</h3>
- <p>An existing named value may not be defined again within the same scope.</p>
-
-<h3 id="DuplicateKeyCompileError" class="no-TOC">Duplicate Dictionary key(s)</h3>
- <p>Attempting to define a literal <code>Dictionary</code> <!--or <code>DictionaryImmutable</code>-->
- with one or more duplicated keys in the definition.</p>
-
-<h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
- <p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
- To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.</p>
-
-<h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean.</h3>
-
-<h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.</h3>
-
-<h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
- <p>Most programming languages define keywords, or other 'reserved words' that may not be used as identifiers - for technical reasons.
-  Because Elan supports multiple programming languages and guarantees that any program written in one language
-  will convert correctly to the other languages, it must disallow the use of keywords from <i>any</i>
-  of the supported languages - not just the ones defined by the language you are writing. Fortunately many
-  of the keywords are common to more than one of the languages.</p>
-
-  <p>If you see this message, just alter the identifier you have defined - by extending the word, perhaps even just by adding an underscore -
-    or choose a different word altogether.</p>
-
-<h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
- <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
- a[&minus;3] then this will generate a compile error.
- If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
-
-<h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
- <p>It is not possible to apply comparison operations to functions or procedures as themselves.
- It is, however, possible to compare the results of two function evaluations.
- You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
-
-<!--
-<h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
- <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf14c;</i></a> must itself be an immutable Type.
- Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable <i class="fa">&#xf14c;</i></a> the Types for both the key and the value must be immutable ones.</p>
--->
-
-<h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
- <p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable Type, and not itself an indexable Type.</p>
-
-<h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
-
-<h3 id="mustBePropertyPrefixedOnMember" class="no-TOC">referencing a property requires a prefix.</h3>
- <p>If you are referring to a property of a class <i>from code defined within the class</i> then the
- property name must be preceded by <b>property</b>.</p>
-
-<h3 id="mustNotBeOutParameter" class="no-TOC">'out' parameters are only supported on procedures.</h3>
- <p>You cannot defined an <b>out</b> parameter in a function (because that would
- imply the possibility of creating a side effect).</p>
-
-<h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one <b>main</b> in a program.</h3>
-
-<h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
- <p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
- or <b>not</b> successively within an expression.</p>
-
-<h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
- <p>A function or procedure named e.g. 'foo' may not define a parameter with that same name.</p>
-
-<h2>Field help</h2>
-
-<h3 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h3>
- <p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
- Each argument may in general be any of:</p>
-<ul>
- <li>A literal value</li>
- <li>A named value</li>
- <li>An expression</li>
-</ul>
- <p>In certain very specific contexts, however, some options are disallowed by the compiler.</p>
-
-<h3 id="AssertActualField" class="no-TOC">'computed value' field in an assert instruction</h3>
- <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
- just a named value or a function evaluation. Generally, if you want to use a more
- complex expression, it is better to evaluate it in a preceding <b>variable definition</b>
- instruction and then use the named value in the 'actual' field of the <b>assert</b> equal
- instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
- <ul>
-  <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
-  must have brackets around it.</li>
-  <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
-  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert</b> equal instruction.</li>
- </ul>
-
-<h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
- <p>The first field in a <b>change variable</b> instruction most commonly takes the name of an existing variable.
-
-<h3 id="CommentField" class="no-TOC">'comment' field</h3>
-
-<h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
- <p>The value of a constant must be a literal value of a type that is not mutable.
- This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
-
-<h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
- <p><b>enum</b> values must each be a valid identifier, separated by commas.</p>
-
-<h3 id="ExceptionMessageField" class="no-TOC">'message' field in a throw instruction</h3>
- <p>An exception message must be either a literal string or a named value holding a string.</p>
-
-<h3 id="ExpressionField" class="no-TOC">expression field - used within multiple instructions</h3>
- <p>This field expects an expression. For the various forms of expression see <a href="#Expression">Expressions <i class="fa">&#xf14c;</i></a>.</p>
-
-<h3 id="IdentifierField" class="no-TOC">identifier field - used within multiple instructions</h3>
-
-<h3 id="IfSelectorField" class="no-TOC">'if' field in an else clause</h3>
-
-<h3 id="InheritsFromField" class="no-TOC">'inherits className' field in a class</h3>
- <p>An inheritance clause, if used, must consist of the keyword <b>inherits</b>
- followed by a space and then one or more type names separated by commas.</p>
-
-<h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
- <p>A method name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-
-<h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
- <p>Each parameter definition takes the form:</p>
- name as Type
- <p>The name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
- <p>The type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
- <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
-
-<h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
- <p>Valid forms for a procedure call are:</p>
- <ul>
-  <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
-  <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
- </ul>
-<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
- procedure with the same name.</p>
-
-<h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
- <p>For certain Types the name may be followed by an <b>of</b> clause, for example:</p>
-<code>List</code>&lt;<b>of</b> <code>Int</code>&gt;<br>
-<code>Dictionary</code>&lt;<b>of</b> <code>String</code>, <code>Int</code>&gt;
-
-<h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
- <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,
- or underscore symbols. Nothing else.</p>
-
-<h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
- <p>The definition for a variable instruction is most commonly
- a simple name. Less commonly, it may take the form of a deconstruction of a
- <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
-<!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutabl</code>e <i class="fa">&#xf08e;</i></a> or-->
- <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
-
-<h2>Advisory</h2>
-
-<h3 id="methodDeprecated" class="no-TOC">Code change suggested. Method was deprecated in v7.1.</h3>
- </div>
-
- <div id="runtime_error">
- <h1 >Runtime errors</h1>
-
-<h2>Messages</h2>
-
-<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
-<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ghosting tests <i class="fa">&#xf14c;</i></a>.</p>
-
-<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
-<p>Overly complex expressions, for example involving a sequence of open brackets, can result in
-very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
-breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
-
-<h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialisation</h3>
-<p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
 </div>
 </body>
 </html>
