@@ -10,8 +10,6 @@ def main() -> None:
   moveMultiple(nDiscs, stacks, 0, 2, 1) # call procedure
 
 def moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int) -> None: # procedure
-  a = stacks[fromStack] # variable definition
-  b = stacks[toStack] # variable definition
   if n == 1:
     moveOne(stacks, fromStack, toStack) # call procedure
   else:

@@ -11,8 +11,6 @@ Sub main()
 End Sub
 
 Sub moveMultiple(n As Integer, stacks As List(Of List(Of Integer)), fromStack As Integer, toStack As Integer, spare As Integer) ' procedure
-  Dim a = stacks[fromStack] ' variable definition
-  Dim b = stacks[toStack] ' variable definition
   If n = 1 Then
     moveOne(stacks, fromStack, toStack) ' call procedure
   Else
