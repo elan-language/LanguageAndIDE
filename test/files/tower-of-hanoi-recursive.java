@@ -11,8 +11,6 @@ static void main() {
 } // main
 
 static void moveMultiple(int n, List<List<int>> stacks, int fromStack, int toStack, int spare) { // procedure
-  var a = stacks[fromStack];
-  var b = stacks[toStack];
   if (n == 1) {
     moveOne(stacks, fromStack, toStack); // call procedure
   } else {
