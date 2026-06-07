@@ -1,4 +1,4 @@
-# 8e83caf6440938cc676e5ac15ff3787387aeb74f5dcc638fb3e064708700ae9a Elan 2.0.0-alpha5 valid
+# 00d4d68e4bc18b92a0f34fe5caf98896225cdf29cab024fe815a75c663d1f5dd Elan 2.0.0-alpha5 valid
 
 constant nDiscs set to 7
 
@@ -11,8 +11,6 @@ main
 end main
 
 procedure moveMultiple(n as Int, stacks as List<of List<of Int>>, fromStack as Int, toStack as Int, spare as Int)
-  variable a set to stacks[fromStack]
-  variable b set to stacks[toStack]
   if n is 1 then
     call moveOne(stacks, fromStack, toStack)
   else
