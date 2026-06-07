@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Equality", () => {
@@ -211,9 +211,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
-      "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
-      "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'p1' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'p1' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'p1' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 

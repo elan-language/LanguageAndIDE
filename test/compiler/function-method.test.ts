@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Function Method", () => {
@@ -910,7 +910,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'times' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'times' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_FunctionisNotDefined", async () => {
@@ -949,7 +949,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'noSuch' is not defined for type 'Foo'.LangRef.html#compile_error",
+      "'noSuch' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -986,7 +986,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1064,7 +1064,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -1099,7 +1099,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1230,7 +1230,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_NestedUpdateProperty", async () => {
@@ -1273,7 +1273,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1321,7 +1321,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1353,7 +1353,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
+      "'bar' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1385,7 +1385,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1417,7 +1417,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 });

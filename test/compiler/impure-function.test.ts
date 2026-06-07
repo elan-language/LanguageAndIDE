@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Impure Function", () => {
@@ -98,7 +98,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call procedure 'foo' within an expression.LangRef.html#compile_error",
+      "Cannot call procedure 'foo' within an expression.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -127,7 +127,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -186,7 +186,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use a system method in a function.LangRef.html#compile_error",
+      "Cannot use a system method in a function.ErrorMessages.html#compile_error",
     ]);
   });
 });

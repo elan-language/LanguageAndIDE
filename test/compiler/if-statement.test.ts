@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("If Statement", () => {
@@ -754,7 +754,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.LangRef.html#compile_error",
+      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -785,7 +785,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.LangRef.html#compile_error",
+      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -813,7 +813,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.LangRef.html#TypeCompileError"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_ElseConditionNotBool", async () => {
@@ -842,7 +842,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.LangRef.html#TypeCompileError"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_RedefineVariable in if", async () => {
@@ -872,7 +872,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -903,7 +903,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -934,7 +934,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -964,6 +964,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
   });
 });

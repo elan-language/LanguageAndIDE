@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("String Manipulation", () => {
@@ -102,7 +102,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -127,7 +127,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -455,7 +455,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -481,7 +481,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -534,7 +534,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'put' is not defined for type 'String'.LangRef.html#compile_error",
+      "'put' is not defined for type 'String'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -564,12 +564,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -596,7 +596,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

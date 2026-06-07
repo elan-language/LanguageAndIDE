@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -362,7 +362,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'p' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'p' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
@@ -402,7 +402,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -426,7 +426,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use 'this' outside class context.LangRef.html#ThisCompileError",
+      "Cannot use 'this' outside class context.ErrorMessages.html#ThisCompileError",
     ]);
   });
 });

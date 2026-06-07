@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Associations and Defaults", () => {
@@ -865,7 +865,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
@@ -898,7 +898,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'break' matches a reserved word.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'break' matches a reserved word.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {
@@ -933,7 +933,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword2", async () => {
@@ -969,7 +969,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
@@ -1010,7 +1010,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword4", async () => {
@@ -1050,7 +1050,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword5", async () => {
@@ -1101,7 +1101,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
@@ -1155,7 +1155,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
@@ -1208,7 +1208,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_noThis", async () => {
@@ -1239,7 +1239,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_notInScope", async () => {
@@ -1275,7 +1275,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'foo' is not defined for type 'Bar'.LangRef.html#compile_error",
+      "'foo' is not defined for type 'Bar'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1310,7 +1310,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'aa' is not defined for type 'Bar'.LangRef.html#compile_error",
+      "'aa' is not defined for type 'Bar'.ErrorMessages.html#compile_error",
     ]);
   });
 });

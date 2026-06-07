@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Conditional Expressions", () => {
@@ -404,7 +404,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Condition of 'if' expression does not evaluate to a Boolean.LangRef.html#compile_error",
+      "Condition of 'if' expression does not evaluate to a Boolean.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -430,7 +430,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Int and String.LangRef.html#compile_error",
+      "Cannot determine common type between Int and String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -457,7 +457,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -484,7 +484,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -517,8 +517,8 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Bar and Foo.LangRef.html#compile_error",
-      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
+      "Cannot determine common type between Bar and Foo.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: Bar, Provided: Foo.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -551,7 +551,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Foo and Bar.LangRef.html#compile_error",
+      "Cannot determine common type between Foo and Bar.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -588,7 +588,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -625,7 +625,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

@@ -725,7 +725,7 @@ function FailCannotCompareProcFunc(compileErrors: CompileError[], location: stri
     new SyntaxCompileError(
       "Cannot do equality operations on Procedures or Functions.",
       location,
-      "LangRef.html#CannotCompareProcFunc",
+      "ErrorMessages.html#CannotCompareProcFunc",
     ),
   );
 }

@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Private Members", () => {
@@ -272,7 +272,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -312,7 +312,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -352,7 +352,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'setP1'.LangRef.html#compile_error",
+      "Cannot reference private member 'setP1'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -392,7 +392,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'ff'.LangRef.html#compile_error",
+      "Cannot reference private member 'ff'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -436,7 +436,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -476,7 +476,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'ff'.LangRef.html#compile_error",
+      "Cannot reference private member 'ff'.ErrorMessages.html#compile_error",
     ]);
   });
 });

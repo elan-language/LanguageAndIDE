@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Method", () => {
@@ -319,7 +319,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'show' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'show' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
@@ -360,7 +360,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'calculate' is not defined for type 'Foo'.LangRef.html#compile_error",
+      "'calculate' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -396,7 +396,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -527,7 +527,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
@@ -564,7 +564,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_standaloneLibProcedureAsExtension", async () => {
@@ -589,7 +589,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'clearPrintedText' is not defined for type 'Int'.LangRef.html#compile_error",
+      "'clearPrintedText' is not defined for type 'Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -618,7 +618,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
+      "'foo' is not defined for type 'Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -650,7 +650,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -682,7 +682,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 });

@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Function Expressions", () => {
@@ -272,7 +272,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'max' is not defined for type 'String'.LangRef.html#compile_error",
+      "'max' is not defined for type 'String'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -296,7 +296,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -342,7 +342,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.ErrorMessages.html#compile_error",
     ]);
   });
 });

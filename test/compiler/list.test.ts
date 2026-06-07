@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedVBis,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedVBis,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -121,7 +121,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of Int>), Provided: Int.LangRef.html#compile_error",
+      "Argument types. Expected: other (List<of Int>), Provided: Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -864,7 +864,7 @@ end function
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+      "Cannot set an indexed value within a function. Use .withPut... functionErrorMessages.html#compile_error",
     ]);
   });
 
@@ -891,7 +891,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -941,7 +941,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot invoke identifier 'a' as a method.LangRef.html#compile_error",
+      "Cannot invoke identifier 'a' as a method.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -966,7 +966,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index Int.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ApplyIndexToUnknown", async () => {
@@ -989,7 +989,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_2DListCreatedByDoubleIndex", async () => {
@@ -1063,7 +1063,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1088,7 +1088,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_IndexTypeIncompatibility", async () => {
@@ -1118,7 +1118,7 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
       "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1144,7 +1144,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (String), Provided: Int.LangRef.html#compile_error",
+      "Argument types. Expected: value (String), Provided: Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1170,7 +1170,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String), Provided: String, String.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: String, String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1195,7 +1195,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Int), Provided: Float, Int.LangRef.html#compile_error",
+      "Argument types. Expected: size (Int), initialValue (Int), Provided: Float, Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1266,7 +1266,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'getRange' is not defined for type 'List'.LangRef.html#compile_error",
+      "'getRange' is not defined for type 'List'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1406,7 +1406,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'withRemove' is not defined for type 'List'.LangRef.html#compile_error",
+      "'withRemove' is not defined for type 'List'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1433,7 +1433,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: List<of String>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1460,9 +1460,9 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: List<of String>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: List<of String>, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1868,7 +1868,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.ErrorMessages.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1893,7 +1893,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot mutate set a ranged valueLangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot mutate set a ranged valueErrorMessages.html#compile_error"]);
   });
 
   test("Fail_negativeIndexCompile", async () => {
@@ -1917,7 +1917,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Index cannot be negative.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Index cannot be negative.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_negativeIndexRuntime", async () => {
@@ -1965,7 +1965,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'getKey' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'getKey' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1996,7 +1996,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'bar' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'bar' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -2020,7 +2020,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.ErrorMessages.html#GenericParametersCompileError",
     ]);
   });
 
@@ -2046,7 +2046,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: List<of (Int, Int)>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of (Int, Int)>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -2072,7 +2072,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of (Int, Int)>), Provided: (Int, Int).LangRef.html#compile_error",
+      "Argument types. Expected: other (List<of (Int, Int)>), Provided: (Int, Int).ErrorMessages.html#compile_error",
     ]);
   });
 

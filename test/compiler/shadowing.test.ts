@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Shadowing", () => {
@@ -261,7 +261,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot invoke identifier 'sin' as a method.LangRef.html#compile_error",
+      "Cannot invoke identifier 'sin' as a method.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -469,7 +469,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -495,7 +495,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -594,7 +594,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -624,7 +624,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 });

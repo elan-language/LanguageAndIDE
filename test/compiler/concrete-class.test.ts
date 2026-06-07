@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Concrete Class", () => {
@@ -1088,7 +1088,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot set property: p1 directly.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot set property: p1 directly.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_OverloadedConstructor", async () => {
@@ -1166,7 +1166,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: val (Int).LangRef.html#compile_error",
+      "Missing argument(s). Expected: val (Int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1206,7 +1206,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: val (Int), Provided: Float.LangRef.html#compile_error",
+      "Argument types. Expected: val (Int), Provided: Float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1245,7 +1245,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none.LangRef.html#compile_error",
+      "Too many argument(s). Expected: none.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1310,7 +1310,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
@@ -1358,7 +1358,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar), Provided: Foo.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1407,7 +1407,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar), Provided: Foo.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1441,7 +1441,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -1482,7 +1482,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -1516,7 +1516,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -1553,7 +1553,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -1588,7 +1588,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -1622,7 +1622,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -1657,7 +1657,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -1693,7 +1693,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ConstructorWithCall", async () => {
@@ -1763,7 +1763,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "generic type specifier was not expected here.LangRef.html#GenericParametersCompileError",
+      "generic type specifier was not expected here.ErrorMessages.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1788,7 +1788,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "generic type specifier was not expected here.LangRef.html#GenericParametersCompileError",
+      "generic type specifier was not expected here.ErrorMessages.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1813,9 +1813,9 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'FooBar' is not defined.LangRef.html#compile_error",
-      "'FooBar' is not defined.LangRef.html#compile_error",
-      "Cannot create instance of FooBar.LangRef.html#compile_error",
+      "'FooBar' is not defined.ErrorMessages.html#compile_error",
+      "'FooBar' is not defined.ErrorMessages.html#compile_error",
+      "Cannot create instance of FooBar.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1839,7 +1839,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot create instance of Int.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot create instance of Int.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_PropertyIsNotDefined", async () => {
@@ -1878,7 +1878,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'noSuch' is not defined for type 'CircleVG'.LangRef.html#compile_error",
+      "'noSuch' is not defined for type 'CircleVG'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1906,7 +1906,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Foo' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Foo' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1942,7 +1942,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Yon' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Yon' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1978,7 +1978,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Bar' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2014,7 +2014,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Bar' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2047,7 +2047,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'constructor' is not defined for type 'Foo'.LangRef.html#compile_error",
+      "'constructor' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2088,7 +2088,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2129,7 +2129,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2181,7 +2181,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2223,7 +2223,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2264,7 +2264,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'copyOfThis' is a restricted to use within the 'with...' instructionLangRef.html#compile_error",
+      "'copyOfThis' is a restricted to use within the 'with...' instructionErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2305,7 +2305,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.LangRef.html#compile_error",
+      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2374,7 +2374,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Property prop_1 must be initialised in constructor.LangRef.html#compile_error",
+      "Property prop_1 must be initialised in constructor.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2410,7 +2410,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Property prop_1 must be initialised in constructor.LangRef.html#compile_error",
+      "Property prop_1 must be initialised in constructor.ErrorMessages.html#compile_error",
     ]);
   });
 });

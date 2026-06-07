@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib HOFs", () => {
@@ -862,7 +862,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: lambdaOrFunctionRef (lambda or function name that takes parameter - String - returning a Float), Provided: lambda or function name that takes parameter - String - returning a String.LangRef.html#compile_error",
+      "Argument types. Expected: lambdaOrFunctionRef (lambda or function name that takes parameter - String - returning a Float), Provided: lambda or function name that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -887,7 +887,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'keys' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'keys' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 });
