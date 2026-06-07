@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Variables", () => {
@@ -414,7 +414,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -572,10 +572,10 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Float.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: String, Provided: List<of Float>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -604,9 +604,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: List<of Float>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: List<of Float>, Provided: List<of String>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: List<of Float>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Float>, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -629,7 +629,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
@@ -653,7 +653,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'createFileForWriting' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'createFileForWriting' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -679,8 +679,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'asList' is not defined.LangRef.html#compile_error",
-      "'x' is not defined for type 'Int'.LangRef.html#compile_error",
+      "'asList' is not defined.ErrorMessages.html#compile_error",
+      "'x' is not defined for type 'Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -704,7 +704,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'copyOfThis' is a restricted to use within the 'with...' instructionLangRef.html#compile_error",
+      "'copyOfThis' is a restricted to use within the 'with...' instructionErrorMessages.html#compile_error",
     ]);
   });
 
@@ -729,7 +729,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'name' already exists. Identifiers must be distinct by more than just case. Either rename 'nAME' or extend it e.g. by adding underscore.LangRef.html#compile_error",
+      "'name' already exists. Identifiers must be distinct by more than just case. Either rename 'nAME' or extend it e.g. by adding underscore.ErrorMessages.html#compile_error",
     ]);
   });
 

@@ -52,7 +52,7 @@ This changes two things: </p>
   Elan will result in better code and fewer problems.<p>
 </div>
 
-<h1>Principle 1: Functions must be pure</h1>
+<h1>Functions must be pure</h1>
 
 <p>A <i>pure</i> function observes the following rules:</p>
 <ul>
@@ -73,7 +73,7 @@ Elan editor enforces the rules automatically.</p>
 and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a procedure</b>, nor can you make use of system methods such as <el-method>input</el-method>,
 <el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
 
-<h1>Principle 2: As much of the code as possible should be in functions</h1>
+<h1>As much of the code as possible should be in functions</h1>
 
 <p>When using FP in Python, VB, C#, or Java, every program still needs a  main routine, which is necessarily procedural in nature,
   because it cannot work without dependencies on the system, and it generates <i>side effects</i> such as output to a display.</p>
@@ -126,7 +126,7 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   </tr>
   </table>
 
-<h1>Principle 3: Every function can and should be unit tested</h1>
+<h1>Every function can and should be unit tested</h1>
 
   <p>The idea of writing automated tests isn't restricted to Functional Programming. The tests offered by Elan are known as 'unit tests', and are
     designed to test <i>functions</i>.</p>
@@ -182,7 +182,7 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
   of the Class are both 100% tested.</li>
 </ul>
 
-<h1>Principle 4: A function consists of a 'return', with optional let instructions</h1>
+<h1>A function consists of a 'return', with optional let instructions</h1>
 
 <p>In the FP demos you will see that a significant number of functions simply <code>return</code> an expression to be evaluated, for example:</p>
 <codeblock>
@@ -227,11 +227,11 @@ a <b>constant</b> in that:</p>
 <p>When running in the <b>functional</b> profile, <b>let statement</b> is the only type of instruction that you may add within a function,
   and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
 
-<h1>Principle 5: Selection is implemented using 'if expressions'</h1>
+<h1>Selection is implemented using 'if expressions'</h1>
 
 <p>When running in the Functional profile, you cannot add an <b>if</b> <i>instruction</i> into a function.
   So how do you implement 'selection' and 'iteration'?
-  Selection is handled by means of a 'conditional expression', whereas iteration will be addressed under <a href="#FP_recursion">Principle 6 <i class="fa">&#xf14c;</i></a>.</p>
+  Selection is handled by means of a 'conditional expression', whereas iteration will be addressed in the next <a href="#FP_recursion">principle<i class="fa">&#xf14c;</i></a>.</p>
 
 <p>All of the languages supported by Elan have their own custom syntax for conditional expressions. For simplicity,
   and understandability, Elan offers an <el-method>if</el-method> <i>function</i> that is used identically in all the languages.
@@ -275,10 +275,10 @@ but differs from it in these important respects:</p>
 <p>Although <el-method>if</el-method> functions can be nested, nesting to more than one level can become very hard to read.
 When required, it is often better to delegate to a new function to perform part of the logic.</p>
 
-<h1 id="FP_recursion">Principle 6: Iteration may be achieved using recursion</h1>
+<h1 id="FP_recursion">Iteration may be achieved using recursion</h1>
 
 <p>There are two ways to implement iteration within a function:</p>
-<p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#FP_HoFs">Principle 8 <i class="fa">&#xf14c;</i></a>.</p>
+<p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#FP_HoFs">later<i class="fa">&#xf14c;</i></a>.</p>
 <p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example.
   In the <b>Recursive Functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
 
@@ -302,7 +302,7 @@ end function
   </li>
 </ul>
 
-<h1 id="FP_listMutation">Principle 7: Lists and other data structures are never mutated</h1>
+<h1 id="FP_listMutation">Lists and other data structures are never mutated</h1>
 
 <p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
 
@@ -388,7 +388,7 @@ back into <el-method>sort</el-method> again &mdash; crucially with approximately
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
-<h1 id="FP_HoFs">Principle 8: A function may be passed into another function</h1>
+<h1 id="FP_HoFs">A function may be passed into another function</h1>
 
 <p>The alternative to writing your own recursive function is to use Higher-order Functions (see <a href="LibRef.html#HoFs" target="_blank">HoFs <i class="fa">&#xf08e;</i></a> in Library Reference).
   A HoF is a function that takes in another function as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,
@@ -522,7 +522,7 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
-<h1>Principle 9: User-defined Classes should be immutable</h1>
+<h1>User-defined Classes should be immutable</h1>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
   never be mutated. So, when running under the <b>functional</b> profile, you may define Classes and add properties and function methods,
@@ -531,7 +531,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 
 <p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
   The answer is similar to that for updating a List, String, or other standard data structure within a function
-  (described in <a href="#FP_listMutation">Principle 7 <i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
+  (described in <a href="#FP_listMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
   return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
@@ -562,7 +562,7 @@ a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
   need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 
-<h1 id="FP_random">Principle 10: Generating Random numbers within a function requires a special pattern</h1>
+<h1 id="FP_random">Generating Random numbers within a function requires a special pattern</h1>
 
 <p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
 it until you are fairly comfortable with all the previous Principles.</p>

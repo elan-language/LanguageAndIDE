@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("While Loop", () => {
@@ -151,7 +151,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {
@@ -250,7 +250,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.LangRef.html#TypeCompileError"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_WhileConditionUnknown", async () => {
@@ -274,6 +274,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.ErrorMessages.html#compile_error"]);
   });
 });

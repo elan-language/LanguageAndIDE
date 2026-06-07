@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
@@ -81,7 +81,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `The identifier 'i' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error`,
+      `The identifier 'i' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error`,
     ]);
   });
 
@@ -368,7 +368,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'i' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'i' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -422,7 +422,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not reassign the loop counter 'i'.LangRef.html#compile_error",
+      "May not reassign the loop counter 'i'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -450,7 +450,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'i' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'i' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_missingEnd", async () => {
@@ -575,7 +575,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'id' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_duplicateId2", async () => {
@@ -601,6 +601,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'id' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 });

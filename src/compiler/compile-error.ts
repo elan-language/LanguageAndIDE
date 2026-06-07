@@ -38,7 +38,7 @@ export class TypeCompileError extends CompileError {
       Severity.error,
       `Expression must be ${type}.`,
       location,
-      "LangRef.html#TypeCompileError",
+      "ErrorMessages.html#TypeCompileError",
     );
   }
 }
@@ -50,7 +50,7 @@ export class ThisCompileError extends CompileError {
       Severity.error,
       `Cannot use '${prefix}' outside class context.`,
       location,
-      "LangRef.html#ThisCompileError",
+      "ErrorMessages.html#ThisCompileError",
     );
   }
 }
@@ -62,7 +62,7 @@ export class DeclaredAboveCompileError extends CompileError {
       Severity.error,
       `Abstract Class '${type}' must be declared before it is used.`,
       location,
-      "LangRef.html#DeclaredAboveCompileError",
+      "ErrorMessages.html#DeclaredAboveCompileError",
     );
   }
 }
@@ -74,7 +74,7 @@ export class MemberTypeCompileError extends CompileError {
       Severity.error,
       `Member '${name}' must be of type ${type}.`,
       location,
-      "LangRef.html#MemberTypeCompileError",
+      "ErrorMessages.html#MemberTypeCompileError",
     );
   }
 }
@@ -86,7 +86,7 @@ export class TypesCompileError extends CompileError {
       Severity.error,
       `Incompatible types. Expected: ${type2}${addInfo}, Provided: ${type1}.`,
       location,
-      "LangRef.html#TypesCompileError",
+      "ErrorMessages.html#TypesCompileError",
     );
   }
 }
@@ -98,14 +98,14 @@ export class TernaryCompileError extends CompileError {
       Severity.error,
       `Cannot determine common type between ${type1} and ${type2}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
 
 export class SyntaxCompileError extends CompileError {
   constructor(message: string, location: string, link = "") {
-    const linkToUse = link === "" ? "LangRef.html#compile_error" : link;
+    const linkToUse = link === "" ? "ErrorMessages.html#compile_error" : link;
     super(DisplayPriority.second, Severity.error, message, location, linkToUse);
   }
 }
@@ -118,7 +118,7 @@ export class UndefinedSymbolCompileError extends CompileError {
       Severity.warning,
       `'${id}' is not defined${postfix}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -130,7 +130,7 @@ export class CannotCallAFunction extends CompileError {
       Severity.error,
       `Cannot call a function as a procedure.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -142,7 +142,7 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
       Severity.error,
       `Cannot use a system method in a function.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -196,7 +196,7 @@ export class CannotUseLikeAFunction extends CompileError {
       Severity.error,
       `Cannot call procedure '${id}' within an expression.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -208,7 +208,7 @@ export class CannotCallAsAMethod extends CompileError {
       Severity.error,
       `Cannot invoke ${symbolType} '${id}' as a method.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -221,7 +221,7 @@ export class NotIndexableCompileError extends CompileError {
       Severity.error,
       `Cannot ${dbl}index ${type}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -233,7 +233,7 @@ export class NotNewableCompileError extends CompileError {
       Severity.error,
       `Cannot create instance of ${type}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -245,7 +245,7 @@ export class InvalidSourceForForLoopCompileError extends CompileError {
       Severity.error,
       `Source must evaluate to a list or string.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -257,7 +257,7 @@ export class MustBeAbstractCompileError extends CompileError {
       Severity.error,
       `May inherit from one abstract superclass only.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -269,7 +269,7 @@ export class MustBeInterfaceCompileError extends CompileError {
       Severity.error,
       `Superclass '${type}' must be an interface.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -281,7 +281,7 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
       Severity.error,
       `Class/interface '${type}' cannot inherit from itself.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -293,7 +293,7 @@ export class MustBeSingleAbstractCompileError extends CompileError {
       Severity.error,
       `May inherit from one abstract superclass only.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -305,7 +305,7 @@ export class PrivateMemberCompileError extends CompileError {
       Severity.error,
       `Cannot reference private member '${id}'.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -317,7 +317,7 @@ export class MustImplementCompileError extends CompileError {
       Severity.error,
       `${classType} must implement ${superClassType}.${id}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -329,7 +329,7 @@ export class MustBeConcreteCompileError extends CompileError {
       Severity.error,
       `${type} must be concrete to create instance.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -341,7 +341,7 @@ export class ExtensionCompileError extends CompileError {
       Severity.error,
       `Cannot call extension method directly.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -353,7 +353,7 @@ export class PropertyCompileError extends CompileError {
       Severity.error,
       `Must prefix member with '${prefix}'.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -365,7 +365,7 @@ export class MissingParameterCompileError extends CompileError {
       Severity.warning,
       `Missing argument(s). Expected: ${description}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -378,7 +378,7 @@ export class ExtraParameterCompileError extends CompileError {
       Severity.error,
       `Too many argument(s). Expected: ${description}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -390,7 +390,7 @@ export class ParameterTypesCompileError extends CompileError {
       Severity.error,
       `Argument types. Expected: ${description}, Provided: ${provided}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -409,7 +409,7 @@ export class GenericParametersCompileError extends CompileError {
     } else {
       msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
-    super(priority, severity, `${msg}`, location, "LangRef.html#GenericParametersCompileError");
+    super(priority, severity, `${msg}`, location, "ErrorMessages.html#GenericParametersCompileError");
   }
 }
 
@@ -420,7 +420,7 @@ export class MutateCompileError extends CompileError {
       Severity.error,
       `May not reassign the ${purpose} '${name}'.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -432,7 +432,7 @@ export class MutateParameterCompileError extends CompileError {
       Severity.error,
       `May not mutate a parameter within a function or constructor.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -444,7 +444,7 @@ export class NotUniqueNameCompileError extends CompileError {
       Severity.error,
       `Name '${name}' not unique in scope${postFix}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -456,7 +456,7 @@ export class ParameterNameCompileError extends CompileError {
       Severity.error,
       `Parameter '${name}' may not have the same name as the method in which it is defined.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -468,7 +468,7 @@ export class ReassignInFunctionCompileError extends CompileError {
       Severity.error,
       `May not set ${thing} in a function.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -480,7 +480,7 @@ export class RedefinedCompileError extends CompileError {
       Severity.error,
       `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -492,7 +492,7 @@ export class DuplicateKeyCompileError extends CompileError {
       Severity.error,
       `Duplicate Dictionary key(s).`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
@@ -504,7 +504,7 @@ export class DivCompileError extends CompileError {
       Severity.advisory,
       `'div' is deprecated. Recommended code for integer division is e.g. (10/3).floor()`,
       location,
-      "LangRef.html#div",
+      "ErrorMessages.html#div",
     );
   }
 }
@@ -516,7 +516,7 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
       Severity.error,
       `Library or class function '${id}' cannot be used without brackets`,
       location,
-      "LangRef.html#NotGlobalFunctionRefCompileError",
+      "ErrorMessages.html#NotGlobalFunctionRefCompileError",
     );
   }
 }
@@ -528,7 +528,7 @@ export class ImmutableCollectionCompileError extends CompileError {
       Severity.error,
       `An ordinary ${list ? "List" : "Dictionary"} cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable ${list ? "List" : "Dictionary"}.`,
       location,
-      "LangRef.html#compile_error",
+      "ErrorMessages.html#compile_error",
     );
   }
 }

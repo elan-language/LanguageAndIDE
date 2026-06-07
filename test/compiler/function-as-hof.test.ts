@@ -3,15 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms
 } from "./compiler-test-helpers";
 
 suite("Function as HOF", () => {
@@ -435,7 +434,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameters - Int, Int - returning a Int.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameters - Int, Int - returning a Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -467,7 +466,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -500,7 +499,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter0 (Int).LangRef.html#compile_error",
+      "Missing argument(s). Expected: parameter0 (Int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -699,7 +698,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -728,7 +727,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

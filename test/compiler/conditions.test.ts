@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Conditions", () => {
@@ -467,12 +467,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -539,7 +539,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

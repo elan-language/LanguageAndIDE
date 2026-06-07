@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Queue", () => {
@@ -156,7 +156,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -182,7 +182,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -279,7 +279,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: generic type specifier.LangRef.html#GenericParametersCompileError",
+      "Expected: generic type specifier.ErrorMessages.html#GenericParametersCompileError",
     ]);
   });
 
@@ -307,7 +307,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Queue cannot be of mutable type 'Foo'.LangRef.html#compile_error",
+      "Queue cannot be of mutable type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 });

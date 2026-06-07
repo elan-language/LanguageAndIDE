@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Complex Types", () => {
@@ -111,7 +111,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>), Provided: String, Dictionary<of String, Int>.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Dictionary<of String, Int>), Provided: String, Dictionary<of String, Int>.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -137,7 +137,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int), Provided: Int, Int.LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int), Provided: Int, Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -163,7 +163,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (List<of Int>), Provided: Int, List<of Int>.LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (List<of Int>), Provided: Int, List<of Int>.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -189,7 +189,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int), Provided: String, Int.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Int), Provided: String, Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -213,7 +213,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UnknowNestedOfType", async () => {
@@ -236,7 +236,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_NotType", async () => {

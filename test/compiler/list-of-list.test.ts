@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List of List", () => {
@@ -768,7 +768,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -817,7 +817,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index Int.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_1DListAccessedAs2D1", async () => {
@@ -842,7 +842,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: index (Int), value (String).LangRef.html#compile_error",
+      "Too many argument(s). Expected: index (Int), value (String).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -868,7 +868,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot double index List<of List<of Int>>.LangRef.html#compile_error",
+      "Cannot double index List<of List<of Int>>.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -894,7 +894,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, String.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -946,7 +946,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, Boolean.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, Boolean.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -972,7 +972,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (List<of String>), Provided: String.LangRef.html#compile_error",
+      "Argument types. Expected: value (List<of String>), Provided: String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -998,7 +998,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1024,7 +1024,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int), Provided: String, Int.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Int), Provided: String, Int.ErrorMessages.html#compile_error",
     ]);
   });
 });

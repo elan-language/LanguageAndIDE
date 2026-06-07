@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Each Loop", () => {
@@ -322,7 +322,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'ints' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'ints' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UndefinedIterable2", async () => {
@@ -362,7 +362,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'li' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'li' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_variableIsScoped", async () => {
@@ -391,7 +391,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'x' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'x' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -419,7 +419,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_variableIsScoped3", async () => {
@@ -448,7 +448,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'xx' already exists. Identifiers must be distinct by more than just case. Either rename 'xX' or extend it e.g. by adding underscore.LangRef.html#compile_error",
+      "'xx' already exists. Identifiers must be distinct by more than just case. Either rename 'xX' or extend it e.g. by adding underscore.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -476,7 +476,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'id' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_NoEndeach", async () => {
@@ -529,7 +529,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Source must evaluate to a list or string.LangRef.html#compile_error",
+      "Source must evaluate to a list or string.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -638,8 +638,8 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'a' is not defined.LangRef.html#compile_error",
-      "'x' is not defined.LangRef.html#compile_error",
+      "'a' is not defined.ErrorMessages.html#compile_error",
+      "'x' is not defined.ErrorMessages.html#compile_error",
     ]);
   });
 });

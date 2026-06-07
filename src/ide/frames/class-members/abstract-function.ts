@@ -20,7 +20,7 @@ export class AbstractFunction extends SingleLineFrame {
   public name: MethodNameField;
   public params: ParamListField;
   public returnType: TypeField;
-  hrefForFrameHelp: string = "LangRef.html#Abstract_function";
+  hrefForFrameHelp: string = "oopRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);

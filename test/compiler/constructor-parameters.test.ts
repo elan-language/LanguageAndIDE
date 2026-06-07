@@ -3,12 +3,12 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertParses,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertParses,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Constructor Parameters", () => {
@@ -44,7 +44,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -105,7 +105,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Must prefix member with 'this'.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_OutParameter", async () => {

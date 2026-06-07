@@ -3,17 +3,17 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Throw Catch", () => {
@@ -701,7 +701,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_RedefineVariableinCatch1", async () => {
@@ -735,7 +735,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -773,7 +773,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only throw or catch CustomError or ElanRuntimeErrorLangRef.html#compile_error",
+      "Can only throw or catch CustomError or ElanRuntimeErrorErrorMessages.html#compile_error",
     ]);
   });
 
@@ -838,7 +838,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Can only throw or catch CustomError or ElanRuntimeErrorLangRef.html#compile_error",
+      "Can only throw or catch CustomError or ElanRuntimeErrorErrorMessages.html#compile_error",
     ]);
   });
 });

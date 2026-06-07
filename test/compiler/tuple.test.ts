@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Tuple", () => {
@@ -343,7 +343,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -368,7 +368,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot mutate tuple.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot mutate tuple.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
@@ -394,7 +394,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String), Provided: (String, String).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String), Provided: (String, String).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -421,7 +421,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String, Int), Provided: (Int, String).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String, Int), Provided: (Int, String).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -448,7 +448,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String), Provided: (Int, String, Int).LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: (Int, String), Provided: (Int, String, Int).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -475,7 +475,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'item_2' is not defined for type '(Int, String)'.LangRef.html#compile_error",
+      "'item_2' is not defined for type '(Int, String)'.ErrorMessages.html#compile_error",
     ]);
   });
 });

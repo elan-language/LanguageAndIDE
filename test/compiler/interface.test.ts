@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Interface", () => {
@@ -1029,7 +1029,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementFunc", async () => {
@@ -1074,7 +1074,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementProc", async () => {
@@ -1119,7 +1119,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementIndirectProp", async () => {
@@ -1169,7 +1169,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementMultipleInheritanceProp", async () => {
@@ -1219,7 +1219,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_InheritSelf", async () => {
@@ -1246,7 +1246,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Foo' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Foo' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1282,7 +1282,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Yon' cannot inherit from itself.LangRef.html#compile_error",
+      "Class/interface 'Yon' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1314,7 +1314,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.LangRef.html#compile_error",
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1346,7 +1346,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be an interface.LangRef.html#compile_error",
+      "Superclass 'Foo' must be an interface.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1383,7 +1383,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be an interface.LangRef.html#compile_error",
+      "Superclass 'Foo' must be an interface.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1463,7 +1463,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'ff2' is not defined for type 'Foo1'.LangRef.html#compile_error",
+      "'ff2' is not defined for type 'Foo1'.ErrorMessages.html#compile_error",
     ]);
   });
 });

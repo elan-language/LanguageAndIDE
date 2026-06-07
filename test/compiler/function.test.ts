@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Function", () => {
@@ -356,8 +356,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: item (String).LangRef.html#compile_error",
-      "Too many argument(s). Expected: item (String).LangRef.html#compile_error",
+      "Missing argument(s). Expected: item (String).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: item (String).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -386,8 +386,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float).LangRef.html#compile_error",
-      "Missing argument(s). Expected: p (Float).LangRef.html#compile_error",
+      "Too many argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -416,8 +416,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int), Provided: Boolean.LangRef.html#compile_error",
-      "Argument types. Expected: p (Int), Provided: Float.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Boolean.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -445,7 +445,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -550,7 +550,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -630,7 +630,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -735,7 +735,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -765,7 +765,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not mutate a parameter within a function or constructor.LangRef.html#compile_error",
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -844,7 +844,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: a (Int), b (Int).LangRef.html#compile_error",
+      "Too many argument(s). Expected: a (Int), b (Int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -873,7 +873,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (Int).LangRef.html#compile_error",
+      "Missing argument(s). Expected: a (Int), b (Int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -902,7 +902,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (Int), Provided: Int, String.LangRef.html#compile_error",
+      "Argument types. Expected: a (Int), b (Int), Provided: Int, String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -966,7 +966,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ReturnUnknownType", async () => {
@@ -993,7 +993,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1119,7 +1119,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1142,7 +1142,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_OutOnParameter", async () => {
@@ -1164,40 +1164,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-  });
-
-  ignore_test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to (p1).equals(p2)
-end main
-
-function p1() returns Int
-  return 0
-end function
-function p2() returns Int
-  return 0
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
-      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
-    ]);
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword2", async () => {
@@ -1227,7 +1193,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1255,7 +1221,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1287,7 +1253,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: lambda or function name that takes no parameters - returning a Int, Provided: lambda or function name that takes parameter - Int - returning a Float.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: lambda or function name that takes no parameters - returning a Int, Provided: lambda or function name that takes parameter - Int - returning a Float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1349,7 +1315,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1377,7 +1343,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1406,7 +1372,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined for type 'lambda or function name that takes no parameters - returning a Int'.LangRef.html#compile_error",
+      "'b' is not defined for type 'lambda or function name that takes no parameters - returning a Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1432,7 +1398,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'length' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'length' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1457,7 +1423,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'abs' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'abs' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1482,7 +1448,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'abs' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'abs' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1512,7 +1478,7 @@ end function`;
 
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+      "Cannot set an indexed value within a function. Use .withPut... functionErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1538,7 +1504,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'asBinary' is not defined for type 'String'.LangRef.html#compile_error",
+      "'asBinary' is not defined for type 'String'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1564,7 +1530,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'.LangRef.html#compile_error",
+      "'reverse' is not defined for type 'String'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1588,7 +1554,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_standaloneLibFunctionAsExtension", async () => {
@@ -1613,7 +1579,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'bitShiftL' is not defined for type 'Int'.LangRef.html#compile_error",
+      "'bitShiftL' is not defined for type 'Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1643,7 +1609,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
+      "'foo' is not defined for type 'Int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1696,7 +1662,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1721,7 +1687,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 });

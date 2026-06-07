@@ -5,20 +5,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertCompiles,
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertCompiles,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertGraphicsContains,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -1715,7 +1715,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfVGs (List<of VectorGraphic>), Provided: List<of Foo>.LangRef.html#compile_error",
+      "Argument types. Expected: listOfVGs (List<of VectorGraphic>), Provided: List<of Foo>.ErrorMessages.html#compile_error",
     ]);
   });
 

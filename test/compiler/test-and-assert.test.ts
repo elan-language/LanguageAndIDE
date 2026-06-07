@@ -5,15 +5,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {
@@ -914,7 +914,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot invoke identifier 'test_squareTest' as a method.LangRef.html#compile_error",
+      "Cannot invoke identifier 'test_squareTest' as a method.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -946,7 +946,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign a test to a variable.LangRef.html#compile_error",
+      "Cannot assign a test to a variable.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1081,7 +1081,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'test_square' not unique in scope.LangRef.html#compile_error",
+      "Name 'test_square' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1110,7 +1110,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'test_proc' not unique in scope.LangRef.html#compile_error",
+      "Name 'test_proc' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1137,7 +1137,7 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'test_cc' not unique in scope.LangRef.html#compile_error",
+      "Name 'test_cc' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 });

@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Logical Operators", () => {
@@ -277,14 +277,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -310,8 +310,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -337,8 +337,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -440,7 +440,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -467,7 +467,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -492,7 +492,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'true' matches a reserved word.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'true' matches a reserved word.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_minusOnNonNumber2", async () => {
@@ -518,7 +518,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

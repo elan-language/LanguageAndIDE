@@ -90,7 +90,7 @@ What is a procedure
 Ready made and user-defined
 The difference 
 
-<h2>Principle 10: Exceptions handle unexpected behaviour</h2> 
+<h2>Exceptions handle unexpected behaviour</h2> 
   nature
   try catch
   throw
@@ -1155,6 +1155,99 @@ end function
 <h2>Comment</h2>
 <p>See <a href="#Comment">Comments</a></p>
 </div>
+</div>
+
+<div>
+  <h1>Miscellaneous</h1>
+
+  <h2>Field help</h2>
+
+<h3 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h3>
+ <p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
+ Each argument may in general be any of:</p>
+<ul>
+ <li>A literal value</li>
+ <li>A named value</li>
+ <li>An expression</li>
+</ul>
+ <p>In certain very specific contexts, however, some options are disallowed by the compiler.</p>
+
+<h3 id="AssertActualField" class="no-TOC">'computed value' field in an assert instruction</h3>
+ <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
+ just a named value or a function evaluation. Generally, if you want to use a more
+ complex expression, it is better to evaluate it in a preceding <b>variable definition</b>
+ instruction and then use the named value in the 'actual' field of the <b>assert</b> equal
+ instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
+ <ul>
+  <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
+  must have brackets around it.</li>
+  <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
+  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert</b> equal instruction.</li>
+ </ul>
+
+<h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
+ <p>The first field in a <b>change variable</b> instruction most commonly takes the name of an existing variable.
+
+<h3 id="CommentField" class="no-TOC">'comment' field</h3>
+
+<h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
+ <p>The value of a constant must be a literal value of a type that is not mutable.
+ This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
+
+<h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
+ <p><b>enum</b> values must each be a valid identifier, separated by commas.</p>
+
+<h3 id="ExceptionMessageField" class="no-TOC">'message' field in a throw instruction</h3>
+ <p>An exception message must be either a literal string or a named value holding a string.</p>
+
+<h3 id="ExpressionField" class="no-TOC">expression field - used within multiple instructions</h3>
+ <p>This field expects an expression. For the various forms of expression see <a href="#Expression">Expressions <i class="fa">&#xf14c;</i></a>.</p>
+
+<h3 id="IdentifierField" class="no-TOC">identifier field - used within multiple instructions</h3>
+
+<h3 id="IfSelectorField" class="no-TOC">'if' field in an else clause</h3>
+
+<h3 id="InheritsFromField" class="no-TOC">'inherits className' field in a class</h3>
+ <p>An inheritance clause, if used, must consist of the keyword <b>inherits</b>
+ followed by a space and then one or more type names separated by commas.</p>
+
+<h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
+ <p>A method name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
+
+<h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
+ <p>Each parameter definition takes the form:</p>
+ name as Type
+ <p>The name must follow the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
+ <p>The type must follow the rules for a <a href="#TypeName">Type <i class="fa">&#xf14c;</i></a>.</p>
+ <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
+
+<h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
+ <p>Valid forms for a procedure call are
+ <ul>
+  <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
+  <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
+ </ul>
+<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+ procedure with the same name.</p>
+
+<h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
+ <p>For certain Types the name may be followed by an <b>of</b> clause, for example:</p>
+<code>List</code>&lt;<b>of</b> <code>Int</code>&gt;<br>
+<code>Dictionary</code>&lt;<b>of</b> <code>String</code>, <code>Int</code>&gt;
+
+<h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
+ <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,
+ or underscore symbols. Nothing else.</p>
+
+<h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
+ <p>The definition for a variable instruction is most commonly
+ a simple name. Less commonly, it may take the form of a deconstruction of a
+ <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
+<!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutabl</code>e <i class="fa">&#xf08e;</i></a> or-->
+ <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
+
 </div>
 </body>
 </html>

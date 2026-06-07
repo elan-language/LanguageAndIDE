@@ -3,18 +3,18 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Procedure Statement", () => {
@@ -967,7 +967,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
@@ -1020,7 +1020,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'main' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'main' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -1050,7 +1050,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none.LangRef.html#compile_error",
+      "Too many argument(s). Expected: none.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1081,7 +1081,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (String).LangRef.html#compile_error",
+      "Missing argument(s). Expected: a (Int), b (String).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1107,8 +1107,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: value (Int).LangRef.html#compile_error",
-      "Too many argument(s). Expected: value (Int).LangRef.html#compile_error",
+      "Missing argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1138,7 +1138,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (String), Provided: Int, Int.LangRef.html#compile_error",
+      "Argument types. Expected: a (Int), b (String), Provided: Int, Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1217,8 +1217,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float).LangRef.html#compile_error",
-      "Missing argument(s). Expected: p (Float).LangRef.html#compile_error",
+      "Too many argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1247,8 +1247,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int), Provided: Boolean.LangRef.html#compile_error",
-      "Argument types. Expected: p (Int), Provided: Float.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Boolean.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1279,7 +1279,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not reassign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1310,7 +1310,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not reassign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1341,7 +1341,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not reassign the parameter 'a'.LangRef.html#compile_error",
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1369,7 +1369,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1518,7 +1518,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1541,7 +1541,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.ErrorMessages.html#compile_error"]);
   });
 
   ignore_test("Fail_OperatorsAndProcedures", async () => {
@@ -1574,8 +1574,8 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure ().LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure ().LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1600,8 +1600,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call procedure 'append' within an expression.LangRef.html#compile_error",
-      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).LangRef.html#TypesCompileError",
+      "Cannot call procedure 'append' within an expression.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1632,7 +1632,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
+      "'bar' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1658,7 +1658,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'.LangRef.html#compile_error",
+      "'reverse' is not defined for type 'String'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1682,7 +1682,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ParameterNameClash1", async () => {
@@ -1706,7 +1706,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1731,7 +1731,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
 });
