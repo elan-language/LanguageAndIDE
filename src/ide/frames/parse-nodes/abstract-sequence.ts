@@ -29,6 +29,10 @@ export abstract class AbstractSequence extends AbstractParseNode {
       const lastNode = i === this.elements.length - 1;
       const nextNode = lastNode ? undefined : this.elements[i + 1];
       node.parseText(this.remainingText);
+      // pass the message up the tree
+      if (node.message && !this.message) {
+        this.message = node.message;
+      }
       this.remainingText = node.remainingText;
       const moreText = this.remainingText.length > 0;
       if (node.isDone()) {
