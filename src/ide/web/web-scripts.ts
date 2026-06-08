@@ -80,8 +80,6 @@ const javaButton = document.getElementById("java-language0") as HTMLDivElement;
 const elanButton = document.getElementById("elan-language0") as HTMLDivElement;
 
 
-
-
 const profileMenu = document.getElementById("profile-menu") as HTMLDivElement;
 const proceduralButton = document.getElementById("profile-procedural") as HTMLDivElement;
 const oopButton = document.getElementById("profile-oop") as HTMLDivElement;
