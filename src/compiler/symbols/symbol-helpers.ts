@@ -291,9 +291,7 @@ export function scopePrefix(
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return isAstIdNode(qualifier)
-      ? `${qualifier.id}.`
-      : "this.";
+    return isAstIdNode(qualifier) ? `${qualifier.id}.` : "this.";
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {

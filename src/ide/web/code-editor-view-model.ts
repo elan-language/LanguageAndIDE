@@ -23,6 +23,7 @@ import {
   delayMessage,
   getEditorMsg,
   getFocused,
+  getLanguageByClass,
   getLanguagesForQuad,
   getModKey,
   handleMenuArrowDown,
@@ -154,7 +155,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
-    const languages = getLanguagesForQuad(existingLanguage).slice(1);
+    const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
+    const lNames = containers.map(c => c.className);
+
+    const languages = lNames.map(ln => getLanguageByClass(ln));
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
