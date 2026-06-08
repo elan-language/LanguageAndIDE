@@ -1,0 +1,116 @@
+# 00d4d68e4bc18b92a0f34fe5caf98896225cdf29cab024fe815a75c663d1f5dd Elan 2.0.0-alpha5 valid
+
+constant nDiscs set to 7
+
+constant delay_ms set to 300
+
+main
+  variable stacks set to create3Stacks(nDiscs)
+  call display(stacks)
+  call moveMultiple(nDiscs, stacks, 0, 2, 1)
+end main
+
+procedure moveMultiple(n as Int, stacks as List<of List<of Int>>, fromStack as Int, toStack as Int, spare as Int)
+  if n is 1 then
+    call moveOne(stacks, fromStack, toStack)
+  else
+    call moveMultiple(n - 1, stacks, fromStack, spare, toStack)
+    call moveOne(stacks, fromStack, toStack)
+    call moveMultiple(n - 1, stacks, spare, toStack, fromStack)
+  end if
+end procedure
+
+procedure moveOne(stacks as List<of List<of Int>>, fromStack as Int, toStack as Int)
+  variable disc set to top(stacks[fromStack])
+  call stacks[fromStack].removeFirst(disc)
+  call stacks[toStack].append(disc)
+  call display(stacks)
+end procedure
+
+procedure display(stacks as List<of List<of Int>>)
+  call clearAllDisplays()
+  variable vg set to new List<of VectorGraphic>()
+  call drawStack(stacks[0], 1, vg)
+  call drawStack(stacks[1], 2, vg)
+  call drawStack(stacks[2], 3, vg)
+  call displayVectorGraphics(vg)
+  call sleep_ms(delay_ms)
+end procedure
+
+procedure drawStack(s as List<of Int>, peg as Int, vg as List<of VectorGraphic>)
+  for n in range(0, s.length())
+    variable discVG set to createDisc(s[n], peg, n)
+    call vg.append(discVG)
+  end for
+end procedure
+
+function createDisc(disc as Int, peg as Int, vertical as Int) returns RectangleVG
+  variable r set to new RectangleVG()
+  return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
+end function
+
+test test_createDisc
+  # Normal cases
+  variable d set to createDisc(5, 2, 4)
+  assert d.fillColour is green
+  assert d.strokeWidth is 0.25
+  assert d.height is 3
+  assert d.width is 12
+  assert d.x is 45
+  assert d.y is 38
+  # Edge cases
+  variable d2 set to createDisc(1, 1, 0)
+  assert d2.fillColour is red
+  assert d2.strokeWidth is 0.25
+  assert d2.height is 3
+  assert d2.width is 4
+  assert d2.x is 19
+  assert d2.y is 50
+  # Error cases - none identified
+end test
+
+function create3Stacks(nDiscs as Int) returns List<of List<of Int>>
+  variable s0 set to rangeInSteps(nDiscs, 0, -1)
+  variable s1 set to new List<of Int>()
+  variable s2 set to new List<of Int>()
+  return [s0, s1, s2]
+end function
+
+test test_create3Stacks
+  variable emptyStack set to new List<of Int>()
+  # Normal case(s)
+  assert create3Stacks(7) is [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack]
+  # Edge case(s)
+  assert create3Stacks(1) is [[1], emptyStack, emptyStack]
+  assert create3Stacks(0) is [emptyStack, emptyStack, emptyStack]
+  # Error case(s)
+  assert create3Stacks(-1) is "Loop will not terminate when start < end start with negative step"
+end test
+
+function colour(disc as Int) returns Int
+  variable colours set to [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC]
+  return colours[disc - 1]
+end function
+
+test test_colour
+  # Normal cases
+  assert colour(5) is green
+  # Edge cases
+  assert colour(1) is red
+  assert colour(10) is 0xFF99CC
+  # Error cases
+  assert colour(11) is "Out of range index: 10 size: 10"
+end test
+
+function top(s as List<of Int>) returns Int
+  return s[s.length() - 1]
+end function
+
+test test_top
+  # Normal cases
+  assert top([3, 2, 1]) is 1
+  # Edge cases
+  assert top([7]) is 7
+  # Error cases
+  assert top(new List<of Int>()) is "Out of range index: -1 size: 0"
+end test
