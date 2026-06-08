@@ -272,7 +272,6 @@ class IDEViewModel implements IIDEViewModel {
           redoButton,
           clearDisplayButton,
           fileButton,
-          //languageButton,
           profileButton,
           loadButton,
           saveAsStandaloneButton,
@@ -292,7 +291,6 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
-      //this.enable(languageButton, "Language");
       this.enable(profileButton, "Profile");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
@@ -752,10 +750,8 @@ class IDEViewModel implements IIDEViewModel {
 
   setDisplayLanguage(l: Language) {
     if (l instanceof LanguageElan) {
-      //languageButton.textContent = "Reference Language";
       exportButton.setAttribute("hidden", "");
     } else {
-      //languageButton.textContent = l.languageFullName;
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
