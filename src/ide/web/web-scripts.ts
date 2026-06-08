@@ -1003,6 +1003,15 @@ languagesButton.addEventListener("click", (event: Event) => {
 
     quadEditorCheckBox.checked = quadView;
 
+    for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>){
+      if (quadView) {
+        dd.classList.add("show");
+      }
+      else {
+        dd.classList.remove("show");
+      }
+    }
+
     setTimeout(() => languagesDialog.showModal(), 1);
   }
 });
@@ -1024,9 +1033,18 @@ quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
       cl.add(className);
       labels[i].textContent = lName;
     }
+
+     for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>){
+      dd.classList.add("show");
+    }
   }
   else {
     quadEditorCheckBox.checked = false;
+
+    for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>){
+       dd.classList.remove("show");
+    }
+
   }
   await ideViewModel.renderAsHtml(false);
  

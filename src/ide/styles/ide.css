@@ -742,3 +742,11 @@ body.functional div.demo-file.functional { display: revert; }
 #ed-2 .newcode, #ed-3 .newcode, #ed-4 .newcode {
   display: none;
 }
+
+.other-pane.show {
+  display: block;
+}
+
+.other-pane{
+  display: none;
+}
