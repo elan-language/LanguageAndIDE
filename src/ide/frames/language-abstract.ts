@@ -66,6 +66,7 @@ export abstract class LanguageAbstract implements Language {
   abstract renderBottomAsHtml(frame: Frame): string;
 
   abstract renderFileImportsAsHtml(): string;
+  abstract renderSpecificHeaderAsHtml(f: FileImpl): string;
   abstract renderFileTrailerAsHtml(f: FileImpl): string;
 
   abstract translateExpression(expr: string): string;

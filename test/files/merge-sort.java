@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Implementation of the Merge sort algorithm demonstrating
 
 // - Decomposition of the principal function 'sort' into smaller functions,
@@ -131,3 +133,5 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var lu = ["lime", "pear", "apple"]; // let
   assertEquals(["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"], merge(lu, l2))
 } // test
+
+}

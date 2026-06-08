@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var start = new Point(5, 5);
   var destination = new Point(34, 24);
@@ -330,3 +332,5 @@ static Algorithm getAlgFromLetter(String letter) { // function
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
   assertEquals(expected, n)
 } // test
+
+}

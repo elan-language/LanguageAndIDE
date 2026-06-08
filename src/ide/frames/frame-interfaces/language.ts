@@ -27,6 +27,7 @@ export interface Language {
   renderBottomAsHtml(frame: Frame): string;
 
   renderFileImportsAsHtml(): string;
+  renderSpecificHeaderAsHtml(f: FileImpl): string;
   renderFileTrailerAsHtml(f: FileImpl): string;
 
   translateExpression(expr: string): string;

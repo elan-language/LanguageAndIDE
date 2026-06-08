@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // After image is displayed, press:  
 
 // - z to zoom in, x to zoom out
@@ -142,3 +144,5 @@ final Int width = 200 // constant
 final Int height = 150 // constant
 
 final Int nmax = 360 // constant
+
+}

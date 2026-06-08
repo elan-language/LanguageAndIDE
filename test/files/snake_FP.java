@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Use the W,A,S,D keys to change Snake direction
 
 static void main() {
@@ -325,3 +327,5 @@ class Square {
   assertEquals("d", game.key)
   assertEquals(true, game.isOn)
 } // test
+
+}

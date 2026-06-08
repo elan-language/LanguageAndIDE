@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static int factorial(int n) { // function
   return if(n < 2, 1, n*factorial(n - 1));
 } // function
@@ -41,3 +43,5 @@ static List<double> reverse(List<double> li) { // function
   var l1 = [0.6]; // let
   assertEquals(l1, reverse(l1))
 } // test
+
+}

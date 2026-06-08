@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var li = [7, 1, 0, 4, 8, 3, 6];
   print(li);
@@ -23,3 +25,5 @@ static void inPlaceRippleSort(List<int> li) { // procedure
     lastComp = lastComp - 1; // reassign variable
   } // while
 } // procedure
+
+}

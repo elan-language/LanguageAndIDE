@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // https://en.wikipedia.org/wiki/Barnsley_fern
 
 // Draws a fractal image
@@ -121,3 +123,5 @@ static List<double> roundtuple2((double, double) n) { // function
 } // function
 
 final Int scale = 7 // constant
+
+}

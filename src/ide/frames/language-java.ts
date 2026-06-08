@@ -114,8 +114,11 @@ export class LanguageJava extends LanguageCfamily {
   renderFileImportsAsHtml(): string {
     return "";
   }
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "<div><el-kw>public class</el-kw> <el-type>Global</el-type> <el-punc>{</el-punc><br><br></div>";
+  }
   renderFileTrailerAsHtml(_f: FileImpl): string {
-    return "";
+    return "\n\n<el-punc>}</el-punc>";
   }
 
   translateExpression(expr: string): string {

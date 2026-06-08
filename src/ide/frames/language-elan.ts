@@ -178,6 +178,9 @@ export class LanguageElan extends LanguageAbstract {
   renderFileImportsAsHtml(): string {
     return "";
   }
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "";
+  }
   renderFileTrailerAsHtml(_f: FileImpl): string {
     return "";
   }

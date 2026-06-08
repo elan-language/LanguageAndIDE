@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // A program to investigate the Collatz Conjecture
 
 // https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -53,3 +55,5 @@ static double scy(int pi, int max) { // function
 } // function
 
 final Int grey = 0x808080 // constant
+
+}

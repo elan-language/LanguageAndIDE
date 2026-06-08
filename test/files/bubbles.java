@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var bubbles = new List<CircleVG>();
   // create 20 small bubbles at the bottom
@@ -27,3 +29,5 @@ static void moveGrowBurst(List<CircleVG> bubbles) { // procedure
   displayVectorGraphics(bubbles); // call procedure
   sleep_ms(5); // call procedure
 } // procedure
+
+}

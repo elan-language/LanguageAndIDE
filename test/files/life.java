@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var grid = createBlockGraphics(white);
   fillRandom(grid); // call procedure
@@ -224,3 +226,5 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(false, willLive(black, 7))
   assertEquals(false, willLive(black, 8))
 } // test
+
+}

@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
   var done = false;
@@ -50,3 +52,5 @@ static bool binarySearch(List<String> li, String item) { // function
   var li4 = new List<String>();
   assertEquals(false, binarySearch(li4, "pear"))
 } // test
+
+}

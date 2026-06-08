@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
 
 // A Cellular Automaton Model of Excitable Media
@@ -123,3 +125,5 @@ static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) {
   } // if
   return if(state > (colours.length() - 1), ill, colours[state]);
 } // function
+
+}

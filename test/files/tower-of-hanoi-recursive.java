@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 final Int nDiscs = 7 // constant
 
 final Int delay_ms = 300 // constant
@@ -114,3 +116,5 @@ static int top(List<int> s) { // function
   // Error cases
   assertEquals("Out of range index: -1 size: 0", top(new List<int>()))
 } // test
+
+}
