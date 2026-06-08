@@ -1038,17 +1038,16 @@ end while
 <div class="acc-body">
 
 <ul>
-  <li></li>
+  <li>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
+  <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
+  <li>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
+  <li>The condition is evaluated at the beginning of each pass through the loop.</li>
+  <li>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</li>
+  <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
+    not executed at all.</li>
+  <li>Conversely, if the condition always evaluates to true, then the loop will executive indefintely; this can be deliberate, but
+  may also be an accidental and unwanted behaviour caused by specifying the condition inaccurately.</li>
 </ul>
-<p>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</p>
-<p>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</p>
-<p>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</p>
-<p>The condition is evaluated at the beginning of each pass through the loop.</p>
-<p>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</p>
-<p>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
-  not executed at all.
-<p>Conversely, if the condition always evaluates to true, then the loop will executive indefintely; this can be deliberate, but
-may also be an accidental and unwanted behaviour caused by specifying the condition inaccurately.</p>
 </div></div>
 
 <div class="accordion">
@@ -1115,16 +1114,26 @@ end procedure
 <h4 class="no-TOC acc-title">What you need to know about for loops</h4>
 <div class="acc-body">
   <ul>
-    <li>TODO: include reference to 'for each'</li>
-    <li>You should not attempt to modify the variable defined in the loop's signature from within the loop.</li>
+    <li class="vb cs java">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in several languages.</li>
+     <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
+    <li>The <b>for loop</b> specifies that a block of statements that is repeated, once for each value in a sequence.</li>
+    <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
+    <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
+    <li>The sequence of values may be specified:</li>
+    <ul>
+      <li>as a literal list (of any kind), or a variable of type list</li>
+      <li>as a string value, in which case each single character that makes up the string is assigned to the variable in succession</li>
+      <li>as any expression that generates a List</li>
+    </ul>
+    <li>When a sequence of consecutive integer values is needed the most common way to do this is by calling one of these two functions</li>
+    <ul>
+      <li><el-method>range</el-method> requires two arguments: the lower and upper bound; the upper bound is 'exclusive' so that <code>range(1,11)</code>
+      creates the sequence 1,2,3,4,5,6,7,8,9,10</li>
+      <li><el-method>rangeInSteps</el-method> requires three arguments: lower bound, upper bound (exclusive), and the 'step' or increment value, which can
+      be negative provided that the upper bound is then less than the lower bound.</li>
+    </ul>
+    <li>The variable is updated each pass around the loop; you should <i>not</i> attempt to modify the variable defined in the loop's signature from within the loop.</li>
   </ul>
-
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">More advanced techniques</h3>
-<div class="acc-body">
-
 </div></div>
 
 <div class="accordion">
@@ -1138,6 +1147,12 @@ end procedure
 
 <div id="call">
 <h2>Call procedure</h2>
+
+
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about procedure calls</h3>
+<div class="acc-body">
 <p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</p>
 <p>The procedure may be:</p>
 <ul>
