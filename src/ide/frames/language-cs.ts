@@ -192,7 +192,6 @@ export class LanguageCS extends LanguageCfamily {
     `double`,
     `else`,
     `enum`,
-    ``,
     `event`,
     `explicit`,
     `extern`,
