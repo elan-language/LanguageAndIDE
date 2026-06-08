@@ -115,10 +115,10 @@ export class LanguageJava extends LanguageCfamily {
     return "";
   }
   renderSpecificHeaderAsHtml(_f: FileImpl): string {
-    return "<div><el-kw>public class</el-kw> <el-type>Global</el-type> <el-punc>{</el-punc><br><br></div>";
+    return "<div><el-kw>public class</el-kw> <el-type>Global</el-type> <el-punc>{</el-punc><br><br></div><div class='global-indent'>";
   }
   renderFileTrailerAsHtml(_f: FileImpl): string {
-    return "\n\n<el-punc>}</el-punc>";
+    return "</div>\n\n<el-punc>}</el-punc>";
   }
 
   translateExpression(expr: string): string {
