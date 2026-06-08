@@ -19,6 +19,8 @@
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
+
+<div>
 <h1>Getting started</h1>
 <h2>Select the procedural programming profile</h2> <!-- to balance the ToC -->
 <p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>Procedural</b> profile from the menu at the top of the IDE. 
@@ -29,7 +31,7 @@ This will ensure that: </p>
 <li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP. These are listed below under
    Global Instructions and Statement Instructions.
 </ul>
-
+</div>
 
 <div>
   <h1>Principles of procedural programming</h1>
@@ -101,8 +103,11 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 
 <div id="main">
 <h2>Main routine</h2>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of main routines</h3>
+<div class="acc-body">
 
-<p>Example - from the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
+p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
 <codeblock>
 main
@@ -126,22 +131,6 @@ main
   end while
 end main
 </codeblock>
-
-<h3 class="no-TOC">What you need to know about a <b>main</b> routine</h3>
-
-<ul>
-  <li>The first instruction added <i>within</i> is always the first instruction to be executed when the program is run.</li>
-  <li>Without a main routine, there is nothing to run. However you may write and test functions without a main.</li>
-  <li>The main routine does not have to be at the top of the file, but this is a good convention to follow.</li>
-  <li>You may not define more than one main routine.</li>
-  <li>It <i>may</i> form the entire program (as in example above), more commonly it will delegate
-    to procedures and functions defined by the programmer.
-  </li>
-</ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of main routines</h3>
-<div class="acc-body">
 
 <p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
   delegates most of the work to the <el-method>inPlaceRippleSort</el-method> procedure (not shown here),
@@ -170,14 +159,30 @@ main
   end while
 end main 
 </codeblock>
-</div>
-</div>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about the main routine</h3>
+<div class="acc-body">
+<ul>
+  <li>The first instruction added <i>within</i> the main routine, is always the first instruction to be executed when the program is run.</li>
+  <li>Without a main routine, there is nothing to run. However you may write and test functions without a main.</li>
+  <li>The main routine does not have to be at the top of the file, but this is a good convention to follow.</li>
+  <li>You may not add another main routine within a program, unless you first ghost the existing one.</li>
+  <li>The main routine <i>may</i> form the entire program (as in the <b>Burrow</b>example above); more commonly it will delegate
+    to procedures and functions defined by the programmer.
+  </li>
+</ul>
+</div></div>
 </div>
 
 <div id="procedure">
 <h2>Procedure</h2>
 
-<p>Example - from the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of procedures</h3>
+<div class="acc-body">
+<p>From the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
 <codeblock>
 procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
@@ -198,31 +203,6 @@ end procedure
 </codeblock>
 
 <p>It is called within the main routine by this instruction: <code>call moveGrowBurst(bubbles)</code></p>
-
-<h3 class="no-TOC">What you need to know about procedures</h3>
-
-<ul>
-  <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
-  is delegated, either by the main routine, or by another procedure.</li>
-  <li>The Elan library provides some ready-made procedures such as <el-method>print</el-method> and <el-method>pause</el-method>.</li>
-  <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
-  <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
-  <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies a name, starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
-    <code>bubbles as List&lt;of CircleVG&gt;</code></li>
-  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
-  which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
-  <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
-    was located.</li>
-  <li>Changes made to parameter values (where possible) within the procedure (such as changing the radius and centre of each bubble
-     in the list <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
-  <li>Functions may be called from within a procedure, but not <i>vice versa</i>.</li>
-  <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
-</ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of procedures</h3>
-<div class="acc-body">
 
 <p>From the <b>Turtle Dragon</b> demo. The procedure defines two parameters of different types. The body of this procedure consists
 of a straight sequence of <b>call procedure</b> instructions, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
@@ -250,6 +230,30 @@ procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   end for
 end procedure
 </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about procedures</h3>
+<div class="acc-body">
+
+<ul>
+  <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
+  is delegated, either by the main routine, or by another procedure.</li>
+  <li>The Elan library provides some ready-made procedures such as <el-method>print</el-method> and <el-method>pause</el-method>.</li>
+  <li>The <b>procedure</b> instruction allows you to define your own procedures.</li>
+  <li>A procedure is defined with a unique name, starting lower-case (<el-method>moveGrowBurst</el-method>).</li>
+  <li>It may optionally define one or more parameters (one in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies a name, starting lower-case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
+    <code>bubbles as List&lt;of CircleVG&gt;</code></li>
+  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction.</code>
+  which specifies the name of the procedure to be called, and includes a value(s) or expressions(s) that match the type(s) for the parameter(s).</li>
+  <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
+    was located.</li>
+  <li>Changes made to parameter values (where possible) within the procedure (such as changing the radius and centre of each bubble
+     in the list <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
+  <li>Functions may be called from within a procedure, but not <i>vice versa</i>.</li>
+  <li>Instructions within a procedure - unlike within a function -  may call other procedures, undertake input/output, and use system methods.</li>
+</ul>
 </div></div>
 
 <div class="accordion">
@@ -316,7 +320,10 @@ end procedure
 <div id="function">
 <h2>Function</h2>
 
-<p>Example - from the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of functions</h3>
+<div class="acc-body">
+<p>From the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
 whether or not the head has gone outside the bounds of the 40x30 grid:</p>
 
 <codeblock>
@@ -329,39 +336,6 @@ end function
 
 <codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)</codeblock>
 
-<h3 class="no-TOC">What you need to know about functions</h3>
-<ul>
-  <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
-  <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
-     a part of a more complex expression (as above).</li>
-  <li>The Elan library provides some ready-made functions such as <el-method>sqrt</el-method>.</li>
-  <li>The <b>function</b> instruction allows you to define your own functions.</li>
-  <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
-  <li>It will usually define one or more parameters (two in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies a name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
-    <code>headX as Int</code></li>
-  <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
-  <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
-  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
-  The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
-  <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
-    Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
-  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
-  all the work needed.</li>
-  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
-  <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
-    languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
-  <ul>
-    <li>a function cannot undertake any input/output, or create any other 'side effect' (change to the system that can be observed outside the function).</li>
-    <li>prohibited side-effects including changing any of the values passed in as parameters.</li>
-    <li>the returned result must depend solely, and deterministically, on the values provided as parameters - just as <code>sqrt(2)</code>
-    always produces the same result, irrespective of whatever else might be occurring in the program.</li>
-  </ul>
-</ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of functions</h3>
-<div class="acc-body">
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
 
@@ -406,12 +380,49 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
 end function
 </codeblock>
 </div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about functions</h3>
+<div class="acc-body">
+<ul>
+  <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
+  <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
+     a part of a more complex expression (as above).</li>
+  <li>The Elan library provides some ready-made functions such as <el-method>sqrt</el-method>.</li>
+  <li>The <b>function</b> instruction allows you to define your own functions.</li>
+  <li>A function is defined with a unique name, starting lower-case (<el-method>hasHitEdge</el-method>).</li>
+  <li>It will usually define one or more parameters (two in the example above), comma-separated if more than one.</li>
+  <li>Each parameter specifies a name starting lower-case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+    <code>headX as Int</code></li>
+  <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
+  <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
+  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
+  The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
+  <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
+    Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
+  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
+  all the work needed.</li>
+  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
+  <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
+    languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
+  <ul>
+    <li>a function cannot undertake any input/output, or create any other 'side effect' (change to the system that can be observed outside the function).</li>
+    <li>prohibited side-effects including changing any of the values passed in as parameters.</li>
+    <li>the returned result must depend solely, and deterministically, on the values provided as parameters - just as <code>sqrt(2)</code>
+    always produces the same result, irrespective of whatever else might be occurring in the program.</li>
+  </ul>
+</ul>
+</div></div>
 </div>
 
 <div id="test">
 <h2>Test</h2>
 
-<p>Example from the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year. 
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of tests</h3>
+<div class="acc-body">
+  
+<p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year. 
   Note that the comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
   where errors are more common:</p>
 
@@ -426,33 +437,6 @@ test test_leap
 end test
   </codeblock>
 
-<h3 class="no-TOC">What you need to know about tests</h3>
-<ul>
-  <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
-  <li>Some languages allow unit tests to be applied to procedures, but this dangerous since running the tests could result
-    in unwanted damage to the system (such as writing to a database); Elan guarantees that tests are safe by restrict them to functions.</li>
-  <li>A test method must be given a name that starts with the prefix `test_` (added automatically) and followed, typically,
-    by the name of the function.</li>
-  <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
-    adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
-  <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
-  <li>A test method must include one or more <b>assert</b> statements - with each one typically covering a different use-case.</li>
-  <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
-    consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
-  <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
-  <li>Instead, all tests in a program are run automatically, each time the code compiles.</li>
-  <li>The result of each assert in each test is shown alongside the assert instruction, and the overall summary is shown in the
-    status panel at the top centre of the Elan IDE.</li>
-  <li>Writing tests for every function is good practice - confirming that your function implementations are correct: when you write them,
-    every time you re-load the program from file.</li>
-    <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you 
-      have inadvertently made then incorrect for certain cases.</li>
-</ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of tests</h3>
-<div class="acc-body">
-  
 <p>Example from the <b>Life - procedural</b> demo. It tests <i>all</i> valid combinations of parameter values -
   because the logic of this function is quite unusual:</p>
 
@@ -492,6 +476,33 @@ test test_getAdjacentSquare
   assert getAdjacentSquare([0, 15], Direction.left) is [-1, 15]
 end test
   </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about tests</h3>
+<div class="acc-body">
+
+<ul>
+  <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
+  <li>Some languages allow unit tests to be applied to procedures, but this dangerous since running the tests could result
+    in unwanted damage to the system (such as writing to a database); Elan guarantees that tests are safe by restrict them to functions.</li>
+  <li>A test method must be given a name that starts with the prefix `test_` (added automatically) and followed, typically,
+    by the name of the function.</li>
+  <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
+    adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
+  <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
+  <li>A test method must include one or more <b>assert</b> statements - with each one typically covering a different use-case.</li>
+  <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
+    consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
+  <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
+  <li>Instead, all tests in a program are run automatically, each time the code compiles.</li>
+  <li>The result of each assert in each test is shown alongside the assert instruction, and the overall summary is shown in the
+    status panel at the top centre of the Elan IDE.</li>
+  <li>Writing tests for every function is good practice - confirming that your function implementations are correct: when you write them,
+    every time you re-load the program from file.</li>
+    <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you 
+      have inadvertently made then incorrect for certain cases.</li>
+</ul>
 </div></div>
 
 <div class="accordion">
@@ -585,7 +596,11 @@ end test
 <div id="constant">
 <h2>Constant</h2>
 
-<p>Example from the <b>Turtle Snowflake</b> demo. The constant value <code>side</code> is defined here:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of constants</h3>
+<div class="acc-body">
+
+<p>From the <b>Turtle Snowflake</b> demo. The constant value <code>side</code> is defined here:</p>
 
 <codeblock>
 constant side set to 100
@@ -597,7 +612,21 @@ constant side set to 100
 call drawSide(side, t)
 </codeblock>
 
-<h3 class="no-TOC">What you need to know about constants</h3>
+<codeblock>
+constant maxHits set to 10
+constant turquoise set to 0x00ced1
+constant liveCell set to black
+constant speedOfLight set to 299792.458
+constant gameOver set to true
+constant euro set to 0x20ac
+constant warningMsg set to "Limit reached"
+</codeblock>
+</div>
+</div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about constants</h3>
+<div class="acc-body">
 
 <ul>
   <li>A constant is a named value that never changes while a program is running.</li>
@@ -615,22 +644,7 @@ call drawSide(side, t)
   <li>If you define your own constant with the same name as a library constant, you will not be able to access
     the library one within your program. If you need to do this: rename your own version.</li>
 </ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of constants</h3>
-<div class="acc-body">
-
-<codeblock>
-constant maxHits set to 10
-constant turquoise set to 0x00ced1
-constant liveCell set to black
-constant speedOfLight set to 299792.458
-constant gameOver set to true
-constant euro set to 0x20ac
-constant warningMsg set to "Limit reached"
-</codeblock>
-</div>
-</div>
+</div></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
@@ -655,14 +669,16 @@ function suitColours() returns Dictionary<of String, Int>
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
-</div>
-</div>
+</div></div>
 </div>
 
 <div id="enum">
 <h2 id="enumValue">Enum</h2>
 
-<p>Example from the <b>Snake - procedural</b> demo, the enum is defined here:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Further examples of enums</h3>
+<div class="acc-body">
+<p>From the <b>Snake - procedural</b> demo, the enum is defined here:</p>
 
 <codeblock>
 enum Direction up, down, left, right
@@ -687,7 +703,17 @@ enum Direction up, down, left, right
 end function
 </codeblock>
 
-<h3 class="no-TOC">What you need to know about enums</h3>
+From the <b>Blackjack</b> demo:
+
+<codeblock>
+enum Suit spades, hearts, diamonds, clubs
+enum Outcome undecided, win, lose, draw, winDouble
+</codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about enums</h3>
+<div class="acc-body">
 
 <ul>
   <li><p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; is the simplest form of <i>user-defined</i> type.</li>
@@ -708,45 +734,22 @@ end function
     </ul>
   </li>
 </ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of enums</h3>
-<div class="acc-body">
-
-<codeblock>
-enum Suit spades, hearts, diamonds, clubs
-enum Outcome undecided, win, lose, draw, winDouble
-enum Algorithm dijkstra, aStar, heuristic
-enum Hole vacant, mole, hit, miss
-</codeblock>
 </div></div>
 </div>
 
 <div id="Comment">
 <h2 id="Comment">Comment</h2>
 
-<p>Example from the <b>Snake - procedural</b> demo:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of comments</h3>
+<div class="acc-body">
+  <p>From the <b>Snake - procedural</b> demo, where a comment at global level describes how to use the program:</p>
 
 <codeblock>
 # Use the w,a,s,d keys to change snake's direction
 </codeblock>
 
-<h3 class="no-TOC">What you need to know about enums</h3>
-<ul>
-  <li>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.</li>
-  <li>Rather, a comment contains information <i>about</i> the program, intended to be read by a person seeking to understand or modify the code.</li>
-  <li>A comment may be entered at any <b>new code</b> prompt by typing the symbol <code># </code> which then provides a field in which you may enter text, or leave blank.</li>
-  <li>Your text may contain any characters, except that it must not start with an open square bracket [.</li>
-  <li>When coding with Elan, a comment added by the programmer always starts on a new line.</li>
-  <li>Comments that you see written after an instruction are generated by the system and may not be edited or deleted.</li>
-  <li>Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user;
-  this comment is known as the 'file header'.</li>
-</ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of comments</h3>
-<div class="acc-body">
- <p>From the <b>Bubbles</b> demo:<p>
+ <p>From the <b>Bubbles</b> demo, where comments explain specific blocks of instructions<p>
 
   <codeblock>
 procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
@@ -766,21 +769,22 @@ procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
 end procedure
   </codeblock>
 
-  <p>From the <b>Hodgepodge</b> demo:</p>
-<codeblock>
-main
-  # colour grids: hodge for display, podge for working
-  variable podge set to createBlockGraphics(healthy)
-  variable hodge set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(createBlockGraphics(healthy))
-  variable blank set to createBlockGraphics(healthy)
-  # initial colours of grid
-  call updateGrid(hodge, podge, true)
-  while not uniform(hodge.value())
-    # successive updates to grid in blank podge
-    reassign podge to blank
-    call updateGrid(hodge, podge, false)
-  end while
-</codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about comments</h3>
+<div class="acc-body">
+
+<ul>
+  <li>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.</li>
+  <li>Rather, a comment contains information <i>about</i> the program, intended to be read by a person seeking to understand or modify the code.</li>
+  <li>A comment may be entered at any <b>new code</b> prompt by typing the symbol <code># </code> which then provides a field in which you may enter text, or leave blank.</li>
+  <li>Your text may contain any characters, except that it must not start with an open square bracket [.</li>
+  <li>When coding with Elan, a comment added by the programmer always starts on a new line.</li>
+  <li>Comments that you see written after an instruction are generated by the system and may not be edited or deleted.</li>
+  <li>Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user;
+  this comment is known as the 'file header'.</li>
+</ul>
 </div></div>
 </div>
 </div>
@@ -788,13 +792,17 @@ main
 <div id="StatementInstructions">
 <h1 id="statement">Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
-of a program.</p>
+of a program: the main routine, functions, and procedures.</p>
 
 <div id="variable">
 <h2>Variable definition</h2>
 
-<p>Example from the <b>Burrow</b> demo. The variables named <code>x</code> and <code>y</code>, representing the current
-  coordinates for the burrowing 'animal', are defined - with their initial values - in these instructions:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of variable definitions</h3>
+<div class="acc-body">
+
+<p>From the <b>Burrow</b> demo, where variables named <code>x</code> and <code>y</code> represent the current
+  coordinates for the burrowing 'animal':</p>
 
 <codeblock>variable x set to 20</codeblock>
 <codeblock>variable y set to 15</codeblock>
@@ -803,7 +811,19 @@ of a program.</p>
 
 <codeblock>reassign blocks[x][y] to red</codeblock>
 
-<h3 class="no-TOC">What you need to know about variable definitions</h3>
+<p>From the <b>Life - procedural</b> demo where a variable is initialised using an expression, in this 
+case a function call:</p>
+
+<codeblock>variable grid set to createBlockGraphics(white)</codeblock>
+
+<p>Example from the <b>Ripple Sort</b> demo where a variable being initialised using a literal llist of integers:</p>
+
+<codeblock>  variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about variable definitions</h3>
+<div class="acc-body">
 
 <ul>
   <li>A variable is a named value, were the value may be changed during the course of running the program.</li>
@@ -817,45 +837,95 @@ of a program.</p>
   <li>Elan does not permit 'global variables' to be defined - even though, outside Elan, that would be
     allowed by all the languages - because it is considered a bad practice.</li>
 </ul>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of variable definitions</h3>
-<div class="acc-body">
-
-<p>Example from the <b>Life - procedural</b> demo shows a variable being initialised using an expression, in this 
-case a function call:</p>
-
-<codeblock>variable grid set to createBlockGraphics(white)</codeblock>
-
-<p>Example from the <b>Ripple Sort</b> demo shows a variable being initialised using a literal llist of integers:</p>
-
-<codeblock>  variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
 </div></div>
 </div>
 
 <div id="reassign">
 <h2>Reassign variable</h2>
 
-<p>Example from the <b>Ripple Sort</b> demo shows the <code>hasChanged</code> variable, which as initialised being initialised using an expression, in this 
-case a function call:</p>
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of variable reassignment</h3>
+<div class="acc-body">
 
-<h3 class="no-TOC">What you need to know about reassigning a variable</h3>
+  <p>From the <b>Ripple sort</b> demo, where the <code>hasChanged</code> variable, having been <i>defined</i> higher up, 
+    is reassigned to <code>false</code> at the start of the while loop,
+  and then to <code>true</code> if two values are swapped:</p>
 
+  <codeblock>
+ procedure inPlaceRippleSort(li as List<of Int>)
+  variable hasChanged set to true
+  variable lastComp set to li.length() - 2
+  while hasChanged is true
+    reassign hasChanged to false
+    for i in range(0, lastComp + 1)
+      if li[i] > li[i + 1] then
+        variable temp set to li[i]
+        reassign li[i] to li[i + 1]
+        reassign li[i + 1] to temp
+        reassign hasChanged to true
+      end if
+    end for
+    reassign lastComp to lastComp - 1
+  end while
+end procedure
+  </codeblock>
 
+  <p>From the <b>Snake -procedural</b> demo, where the variable <code>currentDef</code> is reassigned to a new value by calling the function 
+    <el-method>directionByKey</el-method>, which is passed a keypress that has been read from the keyboard using the <el-method>getKey</el-method>
+  system method:</p>
 
-<p>The <code>reassign a to b</code> instruction assigns a new value to an existing named value:
-the value in <code>b</code> is copied into the named value <code>a</code></p>
-<p>The two named values must be of the same Type.</p>
-<p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
-<p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of type <code>AsRef</code>,
-which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
+<codeblock>
+procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
+  variable head set to headRef.value()
+  variable tail set to tailRef.value()
+  variable currentDir set to currentDirRef.value()
+  reassign currentDir to directionByKey(currentDir, getKey())
+  call tailRef.set(body[0])
+  call body.append(head)
+  call headRef.set(getAdjacentSquare(head, currentDir))
+  call currentDirRef.set(currentDir)
+end procedure
+
+</codeblock>
+
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about reassigning a variable</h3>
+<div class="acc-body">
+
+<ul>
+  <li>The <b>reassign variable</b> instruction assigns a new value to a variable that has been defined earlier within the method.</li>
+  <li>The new value to be assigned may be defined as a literal value, or as the result of evaluating an expression.</li>
+  <li>The new value must be of the same type as the one that the variable was defined with.</li>
+</ul>
+</div></div>
 </div>
 
 <div id="if">
 <div id="then"></div>
 <div id="else"></div>
 <div id="elif"></div>
-<h2 id="if_statement">If</h2>
+<h2 id="if_statement">If statement</h2>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of <b>if</b> statements</h3>
+<div class="acc-body">
+
+<p>From the <b>Life - procedural</b> demo,</p>
+
+<codeblock>
+function blackOrWhite(random as Float) returns Int
+  variable result set to black
+  if random > 0.5 then
+    reassign result to white
+  end if
+  return result
+end function
+</codeblock>
+
+</div></div>
+
 <p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li>It is structured like this:
