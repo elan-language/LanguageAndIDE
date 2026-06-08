@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Turing Machine that converts a Year from decimal to roman numerals
 
 // Run the program, enter the number to convert and watch the machine in action.
@@ -488,3 +490,5 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
 } // procedure
+
+}

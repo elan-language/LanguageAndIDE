@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var reply = "";
   while (!reply.upperCase().equals("Q")) {
@@ -186,3 +188,5 @@ static String pad(String d, String p, String s) { // function
   } // if
   return sR;
 } // function
+
+}

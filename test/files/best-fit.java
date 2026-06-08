@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static (double, double) bestFitLine(List<Point> points) { // function
   var sumX = points.reduce(0.0, (double s, Point p) -> s + p.x); // let
   var sumXsq = points.reduce(0.0, (double s, Point p) -> s + pow(p.x, 2)); // let
@@ -47,3 +49,5 @@ static Point newPoint(double x, double y) { // function
   // NaN means 'Not A Number"
   assertEquals("(NaN, NaN)", a_b.toString())
 } // test
+
+}

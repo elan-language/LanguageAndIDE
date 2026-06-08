@@ -210,7 +210,9 @@ export class LanguagePython extends LanguageAbstract {
   renderFileImportsAsHtml(): string {
     return this.languageExportHelpers.renderFileImportsAsHtml();
   }
-
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "";
+  }
   renderFileTrailerAsHtml(f: FileImpl): string {
     return f.containsMain() ? "\n\n<el-method>main</el-method>()" : "";
   }

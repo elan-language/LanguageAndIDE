@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var t = new Turtle();
   t.placeAt(-100, 75); // call procedure
@@ -10,3 +12,5 @@ static void main() {
     sleep_ms(300); // call procedure
   } // foreach
 } // main
+
+}

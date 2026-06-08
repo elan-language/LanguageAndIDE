@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var blocks = createBlockGraphics(black);
   blocks = createStart(blocks); // reassign variable
@@ -145,3 +147,5 @@ class Point {
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
   assertEquals(expected, n)
 } // test
+
+}

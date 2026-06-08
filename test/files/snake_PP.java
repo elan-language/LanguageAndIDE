@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Use the w,a,s,d keys to change snake's direction
 
 static void main() {
@@ -135,3 +137,5 @@ enum Direction {up, down, left, right}
   assertEquals(Direction.right, directionByKey(current, "d"))
   assertEquals(Direction.up, directionByKey(current, "D"))
 } // test
+
+}

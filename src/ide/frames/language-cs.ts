@@ -91,6 +91,9 @@ export class LanguageCS extends LanguageCfamily {
   renderFileImportsAsHtml(): string {
     return "";
   }
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "";
+  }
   renderFileTrailerAsHtml(_f: FileImpl): string {
     return "";
   }

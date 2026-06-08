@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Ideas for further development
 
 // - rule for no more than 'n' same characters in succession
@@ -82,3 +84,5 @@ static bool hasAtLeastOneFrom(String fromChars, String password) { // function
   assertEquals(true, hasAtLeastOneFrom("C12", "ABC"))
   assertEquals(false, hasAtLeastOneFrom("12", "ABCD"))
 } // test
+
+}

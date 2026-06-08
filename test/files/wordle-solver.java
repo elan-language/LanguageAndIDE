@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
 // Works only for the 2,309 words that may be set by the official online Wordle
@@ -275,3 +277,5 @@ final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   var wordcounts = allRemainingWordCounts(possAnswers); // let
   assertEquals("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString())
 } // test
+
+}

@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var rng = new Random();
   rng.initialiseFromClock(); // call procedure
@@ -299,3 +301,5 @@ static List<int> nextCol(List<List<int>> grid, int x) { // function
   assertEquals(white, col[2])
   assertEquals(black, col[29])
 } // test
+
+}
