@@ -903,16 +903,15 @@ end procedure
 </div>
 
 <div id="if">
-<div id="then"></div>
-<div id="else"></div>
-<div id="elif"></div>
+<div id="then"></div><div id="else"></div><div id="elif"></div>
 <h2 id="if_statement">If statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of <b>if</b> statements</h3>
+<h3 class="no-TOC acc-title">Examples of if statements</h3>
 <div class="acc-body">
 
-<p>From the <b>Life - procedural</b> demo,</p>
+<p>From the <b>Life - procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
+random value (expected to be in the range 0 to 1) is greater than 0.5:</p>
 
 <codeblock>
 function blackOrWhite(random as Float) returns Int
@@ -924,242 +923,338 @@ function blackOrWhite(random as Float) returns Int
 end function
 </codeblock>
 
-</div></div>
+<p>From the <b>Bubbles</b> demo where the <b>if</b> statement includes an <b>else</b> clause,
+  so that one of two separate blocks of statements is always executed depending on the value of a randomly-generated number.</p>
 
-<p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
-<ul>
- <li>It is structured like this:
 <codeblock>
-if (x < 1) then
-  reassign x to 1
-elif x < 2 then
-  reassign x to 2
-elif x < 3 then
-  reassign x to 3
+if random() < 0.05 then
+  # 5% chance bubble 'bursts' and starts again tiny at bottom
+  call b.setRadius(0)
+  call b.setCentreY(75)
 else
-  reassign x to 0
+  # bubble rises and grows slightly
+  call b.setCentreY(b.centreY - 1)
+  call b.setRadius(b.radius + 0.2)
 end if
 </codeblock>
-</li>
- <li>The conditions, one of which is shown above enclosed in brackets, are Boolean values or expressions.</li>
- <li><b>else if</b> and <b>else</b> clauses are optional.</li>
- <li>You can add as many <b>else if</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
-</ul>
-<p>See also <a href="#if_expression"><b>if</b> (expression) <i class="fa">&#xf14c;</i></a> for using the related <b>if</b> to return a value.</p>
+
+<p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
+on the value of the <code>direction</code> variable, one of four different statements is executed:</p>
+
+<codeblock>
+if direction is 0 then
+  reassign x to min([x + 1, 39])
+elif direction is 1 then
+  reassign x to max([x - 1, 0])
+elif direction is 2 then
+  reassign y to min([y + 1, 29])
+elif direction is 3 then
+  reassign y to max([y - 1, 0])
+end if
+</codeblock>
+
+<p>(Note: the <i>last</i> <b>else if</b> clause <i>could</i> have been written as an <b>else</b> clause, 
+  but writing it as an <b>else if</b> makes the intention clearer to a human reader).</p>
+</div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>if</b> instruction</h4>
+<h3 class="no-TOC acc-title">What you need to know about an if statement</h3>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Simple choice between equality and inequality:</p>
-<codeblock>
-  if head is apple then
-    call setAppleToRandomPosition(apple, body)
-  else
-    call body.removeAt(0)
-  end if
-</codeblock>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
-<codeblock>
-main
-  variable result set to false
-  if item.equals(value) then
-    reassign result to true
-  elif item.isBefore(value) then
-    reassign result to binarySearch(li.subList(0, mid), item)
-  else
-    reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
-  end if
-end main
-</codeblock>
+  <ul>
+    <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
+    <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value - <code>true</code> or <code>false</code>.</li>
+    <li>That expression might take any of the following forms:</li>
+    <ul>
+      <li>comparing two values using one of the Boolean operators e.g. <code>random() < 0.05</code> or <code>direction is 0</code></li>
+      <li>a single existing variable that is of Boolean type</li>
+      <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
+    </ul>
+    <li>Within the body of an <b>if</b> expression you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
+    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> statement body</li>
+  </ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body"> 
+  <p><a href="#if_expression"><b>if</b> <i>expression</i>. This is an alternative way to implement conditions. Although 
+    that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> profile.
 </div></div>
 </div>
 
 <div id="while">
 <h2>While loop</h2>
-<p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
- only if some condition is <el-id>true</el-id>.</p>
-<p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
-<p>The value of the condition must a some point become <el-id>false</el-id> otherwise the loop will not terminate and exit.</p>
-<p>While the condition is <el-id>true</el-id> the enclosed code is executed;
- when <el-id>false</el-id> the loop is bypassed. For example:</p>
-<codeblock>
-main
-  variable file set to openFileForReading()
-  while not file.endOfFile()
-    call print(file.readLine())
-  end while
-  call file.close()
-end main
-</codeblock>
-</div>
-
-<div id="for">
-<h2><b>For loop</b></h2>
-<p>The construct
-<codeblock>
-  for p in q
-  end for
-</codeblock>
-specifies looping through a sequence either of characters in a <code>String</code>, or of items in a <code>List</code>.</p>
-<p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
+<h3 class="no-TOC acc-title">Examples of while loops</h3>
 <div class="acc-body">
+  <p>From the <b>Ripple Sort</b> demo, where the loop is executed until a pass right through the loop has left the <code>hasChanged</code>
+  variable as <code>false (meaning that no more swaps have occurred):</code></p>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the type of a List's items (here <code>Int</code>),
-and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
-<codeblock>
-procedure printPrimes()
-  variable primes set to [2, 3, 5, 7, 11]
-  for n in primes
-    call print(n)
+  <codeblock>
+while hasChanged is true
+  reassign hasChanged to false
+  for i in range(0, lastComp + 1)
+    if li[i] > li[i + 1] then
+      variable temp set to li[i]
+      reassign li[i] to li[i + 1]
+      reassign li[i + 1] to temp
+      reassign hasChanged to true
+    end if
   end for
-end procedure
-</codeblock>
+  reassign lastComp to lastComp - 1
+end while
+  </codeblock>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the type of a List's items (here <code>String</code>).
-and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
-<codeblock>
-main
-  variable basket set to ["apple", "banana", "cherry", "date"]
-  for fruit in basket
-    call print(fruit)
-  end for
-end main
-</codeblock>
+  <p>From the <b>Bubbles</b> demo, where the condition is 'hard-wired' to <code>true</code>, which means that the loop will
+  executive <i>indefinitely</i> (until you stop the program manually with the <b>stop</b> button):</p>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To print first the keys and then the values from a <code>Dictionary</code>:</p>
-<codeblock>
-main
-  variable di set to ["A":1, "B":2, "C":3]
-  for s in di.keys()
-    call print(s)
-  end for
-  for n in di.values()
-    call print(n)
-  end for
-end main
-</codeblock>
+  <codeblock>
+while true
+  call moveGrowBurst(bubbles)
+end while
+  </codeblock>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
-<codeblock>
-main
-  call print(reverse("stressed"))
-end main
-function reverse(s as String) returns String
-  variable sReturn set to ""
-  for ch in s
-    reassign sReturn to ch + sReturn
-  end for
-  return sReturn
-end function
-</codeblock>
+  <p>From the <b>Tower of Hanoi</b> demo, which uses a more complicated expression - to exit the loop only when the third stack 
+  has <i>all</i> the discs on it:</p>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Alternatively the loop variable may be defined as an integer range using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and
-<a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> in order to index into a subject List:</p>
-<codeblock>
-main
-  variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
-  for n in range(2, 6)
-    call print(numbers[n])
-  end for
-end main
-</codeblock>
+  <codeblock>
+while stacks[2].length() isnt nDiscs
+  if (stacks[0].length() mod 2) is 0 then
+    call moveBetween(stacks, 0, 1)
+    call moveBetween(stacks, 0, 2)
+    call moveBetween(stacks, 1, 2)
+  else
+    call moveBetween(stacks, 0, 2)
+    call moveBetween(stacks, 0, 1)
+    call moveBetween(stacks, 1, 2)
+  end if
+end while
+  </codeblock>
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Technical note about the <b>for loop</b> variable</h4>
+<h3 class="no-TOC acc-title">What you need to know about a while loop</h3>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
-So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
-<p>It is therefore recommended never to reassign the loop variable within the loop.</p>
+
+<ul>
+  <li>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
+  <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
+  <li>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
+  <li>The condition is evaluated at the beginning of each pass through the loop.</li>
+  <li>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</li>
+  <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
+    not executed at all.</li>
+  <li>Conversely, if the condition always evaluates to true, then the loop will executive indefintely; this can be deliberate, but
+  may also be an accidental and unwanted behaviour caused by specifying the condition inaccurately.</li>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+  <ul>
+    <li><a href="#for">For loop</a></li>
+  </ul>
+</div></div>
+</div>
+
+<div id="for">
+<h2>For loop</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of for loops</h4>
+<div class="acc-body">
+
+  <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method> 
+    function being <i>exclusive</i>) to create 20 bubbles of the same size, but of different (randomised) colours, and spread evenly across
+  the bottom of the display:</p>
+
+  <codeblock>
+  for i in range(1, 21)
+    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white))
+    call bubbles.append(b)
+  end for
+  </codeblock>
+
+  <p>From the <b>Turtle Dragon</b> demo, where the number of times to execute the loop is calculated - based on the number of characters in
+    the string variable named <code>turns</code>:</p>
+
+  <codeblock>
+procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
+  variable p set to (200.0/order).floor()
+  variable turnI set to 0
+  for turn in turns
+    reassign turnI to (if(turn.equals(left), 1, -1))
+    call t.turn(-45*turnI)
+    call t.move(corner)
+    call t.turn(-45*turnI)
+    call t.move(side)
+    call sleep_ms(p)
+  end for
+  call t.penUp()
+  call t.hide()
+end procedure
+  </codeblock>
+
+  <p>From the <b>Life - procedural</b> demo, a 'nested' <b>for loop</b> (one inside another) to apply the two inner instructions to each
+  cell in the 40 x 30 grid:</p>
+
+  <codeblock>
+  for x in range(0, 40)
+    for y in range(0, 30)
+      variable colour set to nextCellValue(grid, x, y)
+      reassign nextGen[x][y] to colour
+    end for
+  end for
+  </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about for loops</h3>
+<div class="acc-body">
+  <ul>
+    <li class="vb cs java">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in several languages.</li>
+     <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
+    <li>The <b>for loop</b> specifies that a block of statements that is repeated, once for each value in a sequence.</li>
+    <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
+    <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
+    <li>The sequence of values may be specified:</li>
+    <ul>
+      <li>as a literal list (of any kind), or a variable of type list</li>
+      <li>as a string value, in which case each single character that makes up the string is assigned to the variable in succession</li>
+      <li>as any expression that generates a List</li>
+    </ul>
+    <li>When a sequence of consecutive integer values is needed the most common way to do this is by calling one of these two functions</li>
+    <ul>
+      <li><el-method>range</el-method> requires two arguments: the lower and upper bound; the upper bound is 'exclusive' so that <code>range(1,11)</code>
+      creates the sequence 1,2,3,4,5,6,7,8,9,10</li>
+      <li><el-method>rangeInSteps</el-method> requires three arguments: lower bound, upper bound (exclusive), and the 'step' or increment value, which can
+      be negative provided that the upper bound is then less than the lower bound.</li>
+    </ul>
+    <li>The variable is updated each pass around the loop; you should <i>not</i> attempt to modify the variable defined in the loop's signature from within the loop.</li>
+  </ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+  <ul>
+    <li><a href="#while">While loop</a></li>
+  </ul>
 </div></div>
 </div>
 
 <div id="call">
 <h2>Call procedure</h2>
-<p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</p>
-<p>The procedure may be:</p>
-<ul>
-<li>a procedure that you have defined at the global level<br>
-  <code>call fillRandom(grid)</code></li>
-<li>a procedure method on an object of a class that you have defined<br>
-  <code>call apple.newRandomPosition(snake)</code>
-</li>
-<li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
-  <code>call updateNeighbours()</code></li>
-<li>a procedure provided by the standard library<br>
-  <code>call sleep_ms(2000)</code></li>
-<li>a procedure method on an object of a type provided by the standard library<br>
-  <code>call vg.append(rect)</code>
-</li>
-</ul>
-<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>An argument whose value is changed by the procedure must be:</p>
-<ul>
- <li>either a mutable data structure (List or Dictionary)</li>
- <li>or a <b>Ref</b> reference to a named value Type</li>
- <li>or a <b>Ref</b> reference to an immutable data structure (Set, Stack or Queue)</li>
-</ul>
-<p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
-<p>An expression of the correct type can be used as an argument, but its value cannot be changed in the procedure.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of procedure calls</h4>
+<div class="acc-body">
+
+<p>From the <b>Burrow</b> demo: a call to the library procedured named <el-method>displayBlocks</el-method>, 
+  passing in the data structure held in variable <code>blocks:</code></p>
+
+  <codeblock>
+    call displayBlocks(blocks)
+  </codeblock>
+
+<p>From the <b>Bubbles</b> demo, a call from within the main routine to the procedure named <el-method>moveGrowBurst</el-method> procedure:</p>
+
+<codeblock>call moveGrowBurst(bubbles)</codeblock>
+
+which is defined immmediately below the main routine at the same (global) level.
+
+<p>From the <b>Snake - procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
+
+<codeblock>
+procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+  variable head set to headRef.value()
+  variable tail set to tailRef.value()
+  variable currentDir set to currentDirRef.value()
+  reassign currentDir to directionByKey(currentDir, getKey())
+  call tailRef.set(body[0])
+  call body.append(head)
+  call headRef.set(getAdjacentSquare(head, currentDir))
+  call currentDirRef.set(currentDir)
+end procedure
+</codeblock>
+
+<p>Note that in each of those
+calls, the name of the procedure being called is preceded by an variable name and dot. This is known as 'dot syntax' and is used when the
+procedure is defined as a procedure method <i>on a specified type</i>. For example, in the call to  <code>body.append(head)</code>, <el-method>append</el-method>
+is a procedure method on the type <code>List</code>, which is the type of the <code>body</code> variable.</p>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about procedure calls</h3>
+<div class="acc-body">
+
+  <ul>
+<li>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
+<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; if there are no parameters, leave the brackets empty.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
- They can change the contents of any mutable object passed in as an argument.
+ 
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
   To enforce this, <b>call procedure</b> instructions are not allowed in functions.</p>
 <p>There is a limit to the complexity of a <b>call procedure</b> instruction.
  Only one dot is allowed in the procedure name field, or two dots if the first word is <b>property</b>.
  If you need anything more complicated, use a <b>change variable</b> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</p>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+TODO: write afresh descriptions of mutating a (mutable) parameter, and, separately passing by Ref.
+</div></div>
 </div>
 
 <div id="try">
 <div id="catch"></div>
 <h2>Try</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples <b>try</b> statements</h4>
+<div class="acc-body">
+
+  <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
+    (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code> 
+  attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try</b> instruction
+is used to intercept (or 'catch') this exception and just ignore that input:</p>
+
+<codeblock>
+  main
+  variable reply set to ""
+  while not reply.upperCase().equals("Q")
+    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    if reply.equals("") then
+      variable now set to divAsInt(clock(), 1000)
+      call print(now)
+      call print(getDate(now))
+    else
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch e as ElanRuntimeError
+      end try
+    end if
+  end while
+end main
+</codeblock>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about try statements</h3>
+<div class="acc-body">
+
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
 <p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p>
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>try</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To check a function input, and throw an exception up:</p>
-<codeblock>
-main
-  try
-    variable t set to foo(true)
-    call print("no error")
-  catch err as CustomError
-    call print(err)
-  end try
-end main
-function foo(torf as Boolean) returns Boolean
-  if torf then
-    throw CustomError "error in foo()"
-  end if
-  return torf
-end function
-</codeblock>
-<p>When foo is given argument <el-id>true</el-id>, output is "error in foo()"; when given <el-id>false</el-id>, output is "no error". </p>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points (each a Tuple) has negative <i>x</i> or <i>y</i>:</p>
-<codeblock>
-main
-  variable a set to (1.0, 2.0)
-  variable b set to (3.0, -6.0)
-  variable fQ set to firstQuadrant(a, b)
-end main
-function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
-  if (a.item_0 < 0) or (a.item_1 < 0) or (b.item_0 < 0) or (b.item_1 < 0) then
-    throw CustomError $"point {a} or (b} is not in the first quadrant"
-  end if
-  return 0
-end function
-</codeblock>
 </div></div>
 </div>
 
