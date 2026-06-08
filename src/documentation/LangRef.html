@@ -1063,85 +1063,68 @@ may also be an accidental and unwanted behaviour caused by specifying the condit
 <div id="for">
 <h2>For loop</h2>
 
-<p>The construct
-<codeblock>
-  for p in q
-  end for
-</codeblock>
-specifies looping through a sequence either of characters in a <code>String</code>, or of items in a <code>List</code>.</p>
-<p>The loop variable <el-id>p</el-id> does not have to have been previously declared or initialised.</p>
-
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using the <b>for loop</b></h4>
+<h4 class="no-TOC acc-title">Examples of for loops</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>n</el-id> is of the type of a List's items (here <code>Int</code>),
-and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n</el-id>:</p>
-<codeblock>
-procedure printPrimes()
-  variable primes set to [2, 3, 5, 7, 11]
-  for n in primes
-    call print(n)
+  <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method> 
+    function being <i>exclusive</i>) to create 20 bubbles of the same size, but of different (randomised) colours, and spread evenly across
+  the bottom of the display:</p>
+
+  <codeblock>
+  for i in range(1, 21)
+    variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white))
+    call bubbles.append(b)
   end for
+  </codeblock>
+
+  <p>From the <b>Turtle Dragon</b> demo, where the number of times to execute the loop is calculated - based on the number of characters in
+    the string variable named <code>turns</code>:</p>
+
+  <codeblock>
+procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
+  variable p set to (200.0/order).floor()
+  variable turnI set to 0
+  for turn in turns
+    reassign turnI to (if(turn.equals(left), 1, -1))
+    call t.turn(-45*turnI)
+    call t.move(corner)
+    call t.turn(-45*turnI)
+    call t.move(side)
+    call sleep_ms(p)
+  end for
+  call t.penUp()
+  call t.hide()
 end procedure
-</codeblock>
+  </codeblock>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The loop variable <el-id>fruit</el-id> is of the type of a List's items (here <code>String</code>).
-and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fruit</el-id>:</p>
-<codeblock>
-main
-  variable basket set to ["apple", "banana", "cherry", "date"]
-  for fruit in basket
-    call print(fruit)
-  end for
-end main
-</codeblock>
+  <p>From the <b>Life - procedural</b> demo, a 'nested' <b>for loop</b> (one inside another) to apply the two inner instructions to each
+  cell in the 40 x 30 grid:</p>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To print first the keys and then the values from a <code>Dictionary</code>:</p>
-<codeblock>
-main
-  variable di set to ["A":1, "B":2, "C":3]
-  for s in di.keys()
-    call print(s)
+  <codeblock>
+  for x in range(0, 40)
+    for y in range(0, 30)
+      variable colour set to nextCellValue(grid, x, y)
+      reassign nextGen[x][y] to colour
+    end for
   end for
-  for n in di.values()
-    call print(n)
-  end for
-end main
-</codeblock>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
-<codeblock>
-main
-  call print(reverse("stressed"))
-end main
-function reverse(s as String) returns String
-  variable sReturn set to ""
-  for ch in s
-    reassign sReturn to ch + sReturn
-  end for
-  return sReturn
-end function
-</codeblock>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Alternatively the loop variable may be defined as an integer range using methods <a href="LibRef.html#range"><el-method>range</el-method> <i class="fa">&#xf08e;</i></a> and
-<a href="LibRef.html#rangeInSteps"><el-method>rangeInSteps</el-method> <i class="fa">&#xf08e;</i></a> in order to index into a subject List:</p>
-<codeblock>
-main
-  variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
-  for n in range(2, 6)
-    call print(numbers[n])
-  end for
-end main
-</codeblock>
+  </codeblock>
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Technical note about the <b>for loop</b> variable</h4>
+<h4 class="no-TOC acc-title">What you need to know about for loops</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
-So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
-<p>It is therefore recommended never to reassign the loop variable within the loop.</p>
+  <ul>
+    <li>TODO: include reference to 'for each'</li>
+    <li>You should not attempt to modify the variable defined in the loop's signature from within the loop.</li>
+  </ul>
+
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+
 </div></div>
 
 <div class="accordion">
