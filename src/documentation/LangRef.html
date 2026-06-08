@@ -903,16 +903,15 @@ end procedure
 </div>
 
 <div id="if">
-<div id="then"></div>
-<div id="else"></div>
-<div id="elif"></div>
+<div id="then"></div><div id="else"></div><div id="elif"></div>
 <h2 id="if_statement">If statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of <b>if</b> statements</h3>
+<h3 class="no-TOC acc-title">Examples of if statements</h3>
 <div class="acc-body">
 
-<p>From the <b>Life - procedural</b> demo,</p>
+<p>From the <b>Life - procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
+random value (expected to be in the range 0 to 1) is greater than 0.5:</p>
 
 <codeblock>
 function blackOrWhite(random as Float) returns Int
@@ -924,77 +923,146 @@ function blackOrWhite(random as Float) returns Int
 end function
 </codeblock>
 
-</div></div>
+<p>From the <b>Bubbles</b> demo where the <b>if</b> statement includes an <b>else</b> clause,
+  so that one of two separate blocks of statements is always executed depending on the value of a randomly-generated number.</p>
 
-<p>The <b>if</b> instruction specifies which of several code sequences is to be executed next.</p>
-<ul>
- <li>It is structured like this:
 <codeblock>
-if (x < 1) then
-  reassign x to 1
-elif x < 2 then
-  reassign x to 2
-elif x < 3 then
-  reassign x to 3
+if random() < 0.05 then
+  # 5% chance bubble 'bursts' and starts again tiny at bottom
+  call b.setRadius(0)
+  call b.setCentreY(75)
 else
-  reassign x to 0
+  # bubble rises and grows slightly
+  call b.setCentreY(b.centreY - 1)
+  call b.setRadius(b.radius + 0.2)
 end if
 </codeblock>
-</li>
- <li>The conditions, one of which is shown above enclosed in brackets, are Boolean values or expressions.</li>
- <li><b>else if</b> and <b>else</b> clauses are optional.</li>
- <li>You can add as many <b>else if</b> clauses as you wish, but only one unconditional <b>else</b> which, if present, must be last.</li>
-</ul>
-<p>See also <a href="#if_expression"><b>if</b> (expression) <i class="fa">&#xf14c;</i></a> for using the related <b>if</b> to return a value.</p>
+
+<p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
+on the value of the <code>direction</code> variable, one of four different statements is executed:</p>
+
+<codeblock>
+if direction is 0 then
+  reassign x to min([x + 1, 39])
+elif direction is 1 then
+  reassign x to max([x - 1, 0])
+elif direction is 2 then
+  reassign y to min([y + 1, 29])
+elif direction is 3 then
+  reassign y to max([y - 1, 0])
+end if
+</codeblock>
+
+<p>(Note: the <i>last</i> <b>else if</b> clause <i>could</i> have been written as an <b>else</b> clause, 
+  but writing it as an <b>else if</b> makes the intention clearer to a human reader).</p>
+</div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>if</b> instruction</h4>
+<h3 class="no-TOC acc-title">What you need to know about an if statement</h3>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Simple choice between equality and inequality:</p>
-<codeblock>
-  if head is apple then
-    call setAppleToRandomPosition(apple, body)
-  else
-    call body.removeAt(0)
-  end if
-</codeblock>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice between an equality, a Boolean and the alternative:</p>
-<codeblock>
-main
-  variable result set to false
-  if item.equals(value) then
-    reassign result to true
-  elif item.isBefore(value) then
-    reassign result to binarySearch(li.subList(0, mid), item)
-  else
-    reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
-  end if
-end main
-</codeblock>
+  <ul>
+    <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
+    <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value - <code>true</code> or <code>false</code>.</li>
+    <li>That expression might take any of the following forms:</li>
+    <ul>
+      <li>comparing two values using one of the Boolean operators e.g. <code>random() < 0.05</code> or <code>direction is 0</code></li>
+      <li>a single existing variable that is of Boolean type</li>
+      <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
+    </ul>
+    <li>Within the body of an <b>if</b> expression you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
+    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> statement body</li>
+  </ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body"> 
+  <p><a href="#if_expression"><b>if</b> <i>expression</i>. This is an alternative way to implement conditions. Although 
+    that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> profile.
 </div></div>
 </div>
 
 <div id="while">
 <h2>While loop</h2>
-<p>The <b>while loop</b> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
- only if some condition is <el-id>true</el-id>.</p>
-<p>The condition is either a <code>Boolean</code> variable or an expression that evaluates to a <code>Boolean</code> value.</p>
-<p>The value of the condition must a some point become <el-id>false</el-id> otherwise the loop will not terminate and exit.</p>
-<p>While the condition is <el-id>true</el-id> the enclosed code is executed;
- when <el-id>false</el-id> the loop is bypassed. For example:</p>
-<codeblock>
-main
-  variable file set to openFileForReading()
-  while not file.endOfFile()
-    call print(file.readLine())
-  end while
-  call file.close()
-end main
-</codeblock>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">Examples of while loops</h3>
+<div class="acc-body">
+  <p>From the <b>Ripple Sort</b> demo, where the loop is executed until a pass right through the loop has left the <code>hasChanged</code>
+  variable as <code>false (meaning that no more swaps have occurred):</code></p>
+
+  <codeblock>
+while hasChanged is true
+  reassign hasChanged to false
+  for i in range(0, lastComp + 1)
+    if li[i] > li[i + 1] then
+      variable temp set to li[i]
+      reassign li[i] to li[i + 1]
+      reassign li[i + 1] to temp
+      reassign hasChanged to true
+    end if
+  end for
+  reassign lastComp to lastComp - 1
+end while
+  </codeblock>
+
+  <p>From the <b>Bubbles</b> demo, where the condition is 'hard-wired' to <code>true</code>, which means that the loop will
+  executive <i>indefinitely</i> (until you stop the program manually with the <b>stop</b> button):</p>
+
+  <codeblock>
+while true
+  call moveGrowBurst(bubbles)
+end while
+  </codeblock>
+
+  <p>From the <b>Tower of Hanoi</b> demo, which uses a more complicated expression - to exit the loop only when the third stack 
+  has <i>all</i> the discs on it:</p>
+
+  <codeblock>
+while stacks[2].length() isnt nDiscs
+  if (stacks[0].length() mod 2) is 0 then
+    call moveBetween(stacks, 0, 1)
+    call moveBetween(stacks, 0, 2)
+    call moveBetween(stacks, 1, 2)
+  else
+    call moveBetween(stacks, 0, 2)
+    call moveBetween(stacks, 0, 1)
+    call moveBetween(stacks, 1, 2)
+  end if
+end while
+  </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about a while loop</h3>
+<div class="acc-body">
+
+<ul>
+  <li></li>
+</ul>
+<p>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</p>
+<p>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</p>
+<p>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</p>
+<p>The condition is evaluated at the beginning of each pass through the loop.</p>
+<p>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</p>
+<p>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
+  not executed at all.
+<p>Conversely, if the condition always evaluates to true, then the loop will executive indefintely; this can be deliberate, but
+may also be an accidental and unwanted behaviour caused by specifying the condition inaccurately.</p>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+  <ul>
+    <li><a href="#for">For loop</a></li>
+  </ul>
+</div></div>
 </div>
 
 <div id="for">
-<h2><b>For loop</b></h2>
+<h2>For loop</h2>
+
 <p>The construct
 <codeblock>
   for p in q
@@ -1074,6 +1142,14 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; The <b>for</b> instruction creates its own working copy of the values through which to loop sequentially.
 So even if the loop variable is changed in any way within the <b>for loop</b>, this will not affect which subject items are referred to.</p>
 <p>It is therefore recommended never to reassign the loop variable within the loop.</p>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+  <ul>
+    <li><a href="#while">While loop</a></li>
+  </ul>
 </div></div>
 </div>
 
