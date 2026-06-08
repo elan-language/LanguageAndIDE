@@ -1111,7 +1111,7 @@ end procedure
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about for loops</h4>
+<h3 class="no-TOC acc-title">What you need to know about for loops</h3>
 <div class="acc-body">
   <ul>
     <li class="vb cs java">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in several languages.</li>
@@ -1148,92 +1148,113 @@ end procedure
 <div id="call">
 <h2>Call procedure</h2>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of procedure calls</h4>
+<div class="acc-body">
 
+<p>From the <b>Burrow</b> demo: a call to the library procedured named <el-method>displayBlocks</el-method>, 
+  passing in the data structure held in variable <code>blocks:</code></p>
+
+  <codeblock>
+    call displayBlocks(blocks)
+  </codeblock>
+
+<p>From the <b>Bubbles</b> demo, a call from within the main routine to the procedure named <el-method>moveGrowBurst</el-method> procedure:</p>
+
+<codeblock>call moveGrowBurst(bubbles)</codeblock>
+
+which is defined immmediately below the main routine at the same (global) level.
+
+<p>From the <b>Snake - procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
+
+<codeblock>
+procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+  variable head set to headRef.value()
+  variable tail set to tailRef.value()
+  variable currentDir set to currentDirRef.value()
+  reassign currentDir to directionByKey(currentDir, getKey())
+  call tailRef.set(body[0])
+  call body.append(head)
+  call headRef.set(getAdjacentSquare(head, currentDir))
+  call currentDirRef.set(currentDir)
+end procedure
+</codeblock>
+
+<p>Note that in each of those
+calls, the name of the procedure being called is preceded by an variable name and dot. This is known as 'dot syntax' and is used when the
+procedure is defined as a procedure method <i>on a specified type</i>. For example, in the call to  <code>body.append(head)</code>, <el-method>append</el-method>
+is a procedure method on the type <code>List</code>, which is the type of the <code>body</code> variable.</p>
+</div></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">What you need to know about procedure calls</h3>
 <div class="acc-body">
-<p>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</p>
-<p>The procedure may be:</p>
-<ul>
-<li>a procedure that you have defined at the global level<br>
-  <code>call fillRandom(grid)</code></li>
-<li>a procedure method on an object of a class that you have defined<br>
-  <code>call apple.newRandomPosition(snake)</code>
-</li>
-<li>a procedure method that belongs to the same class as the procedure that you are calling from<br>
-  <code>call updateNeighbours()</code></li>
-<li>a procedure provided by the standard library<br>
-  <code>call sleep_ms(2000)</code></li>
-<li>a procedure method on an object of a type provided by the standard library<br>
-  <code>call vg.append(rect)</code>
-</li>
-</ul>
-<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>An argument whose value is changed by the procedure must be:</p>
-<ul>
- <li>either a mutable data structure (List or Dictionary)</li>
- <li>or a <b>Ref</b> reference to a named value Type</li>
- <li>or a <b>Ref</b> reference to an immutable data structure (Set, Stack or Queue)</li>
-</ul>
-<p>For procedures that you define yourself, any argument whose value is changed must be of a mutable Type.</p>
-<p>An expression of the correct type can be used as an argument, but its value cannot be changed in the procedure.</p>
+
+  <ul>
+<li>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
+<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; if there are no parameters, leave the brackets empty.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
- They can change the contents of any mutable object passed in as an argument.
+ 
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
   To enforce this, <b>call procedure</b> instructions are not allowed in functions.</p>
 <p>There is a limit to the complexity of a <b>call procedure</b> instruction.
  Only one dot is allowed in the procedure name field, or two dots if the first word is <b>property</b>.
  If you need anything more complicated, use a <b>change variable</b> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</p>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+TODO: write afresh descriptions of mutating a (mutable) parameter, and, separately passing by Ref.
+</div></div>
 </div>
 
 <div id="try">
 <div id="catch"></div>
 <h2>Try</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples <b>try</b> statements</h4>
+<div class="acc-body">
+
+  <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
+    (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code> 
+  attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try</b> instruction
+is used to intercept (or 'catch') this exception and just ignore that input:</p>
+
+<codeblock>
+  main
+  variable reply set to ""
+  while not reply.upperCase().equals("Q")
+    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    if reply.equals("") then
+      variable now set to divAsInt(clock(), 1000)
+      call print(now)
+      call print(getDate(now))
+    else
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch e as ElanRuntimeError
+      end try
+    end if
+  end while
+end main
+</codeblock>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about try statements</h3>
+<div class="acc-body">
+
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
 <p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p>
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>try</b></h4>
-<div class="acc-body">
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To check a function input, and throw an exception up:</p>
-<codeblock>
-main
-  try
-    variable t set to foo(true)
-    call print("no error")
-  catch err as CustomError
-    call print(err)
-  end try
-end main
-function foo(torf as Boolean) returns Boolean
-  if torf then
-    throw CustomError "error in foo()"
-  end if
-  return torf
-end function
-</codeblock>
-<p>When foo is given argument <el-id>true</el-id>, output is "error in foo()"; when given <el-id>false</el-id>, output is "no error". </p>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if one of two points (each a Tuple) has negative <i>x</i> or <i>y</i>:</p>
-<codeblock>
-main
-  variable a set to (1.0, 2.0)
-  variable b set to (3.0, -6.0)
-  variable fQ set to firstQuadrant(a, b)
-end main
-function firstQuadrant(a as (Float, Float), b as (Float, Float)) returns Float
-  if (a.item_0 < 0) or (a.item_1 < 0) or (b.item_0 < 0) or (b.item_1 < 0) then
-    throw CustomError $"point {a} or (b} is not in the first quadrant"
-  end if
-  return 0
-end function
-</codeblock>
 </div></div>
 </div>
 
