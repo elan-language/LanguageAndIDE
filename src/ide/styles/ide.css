@@ -324,7 +324,8 @@ button.icon:active img + label
   opacity: 100%;
 }
 
-#preferences-dialog button {
+#preferences-dialog button,
+#languages-dialog button {
   margin-top: 10px;
   margin-right: 0;
   background-color: var(--ideBackground);
@@ -332,7 +333,8 @@ button.icon:active img + label
   float: right;
 }
 
-#preferences-dialog input  {
+#preferences-dialog input,
+#languages-dialog input  {
   float: right;
   margin-left: 10px;
   margin-top: 5px;
@@ -459,7 +461,8 @@ button.icon:active img + label
   list-style-type: none;
 }
 
-#preferences-dialog {
+#preferences-dialog,
+#languages-dialog {
   font-family: var(--ideTitleFont);
   border: none;
 }
