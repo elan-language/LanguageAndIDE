@@ -4,9 +4,9 @@ public class Global {
 
 static void main() {
   var li = [7, 1, 0, 4, 8, 3, 6];
-  print(li);
+  System.out.println(li) // print
   inPlaceRippleSort(li); // call procedure
-  print(li);
+  System.out.println(li) // print
 } // main
 
 static void inPlaceRippleSort(List<int> li) { // procedure

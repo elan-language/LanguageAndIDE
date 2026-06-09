@@ -32,7 +32,7 @@ static void main() {
     password = pwRef.value(); // reassign variable
     valid = isValid(password, upper, lower, digit, symbol); // reassign variable
   } // while
-  print(password);
+  Console.WriteLine(password); // print
 } // main
 
 static void populatePassword(AsRef<string> password, string all) { // procedure

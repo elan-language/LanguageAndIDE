@@ -1,9 +1,9 @@
-# 0277e29997dc8bde338c75124fad3972e9733bf7cd1a98aaa10334c64d50652e Elan 2.0.0-alpha5 valid
+# 334d51115e9c75a6c0770ca266a2d4ff23d9413dc52091cb9f4f0d94f1a0d38a Elan 2.0.0-alpha5 valid
 
 main
   variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
-  call print($"Dragon of order {order}")
+  print($"Dragon of order {order}")
   variable side set to (75/pow(sqrt(2), order))
   variable corner set to side/12.0/cos(45)
   variable turns set to left

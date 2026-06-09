@@ -32,7 +32,7 @@ Sub main()
     password = pwRef.value() ' reassign variable
     valid = isValid(password, upper, lower, digit, symbol) ' reassign variable
   End While
-  print(password)
+  Console.WriteLine(password) ' print
 End Sub
 
 Sub populatePassword(password As AsRef(Of String), all As String) ' procedure

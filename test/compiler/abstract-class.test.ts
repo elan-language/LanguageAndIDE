@@ -1154,7 +1154,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementFunc", async () => {
@@ -1199,7 +1201,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.func.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementProc", async () => {
@@ -1244,7 +1248,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.proc.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementIndirectProp", async () => {
@@ -1294,7 +1300,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementIndirectProp1", async () => {
@@ -1344,7 +1352,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritSelf", async () => {

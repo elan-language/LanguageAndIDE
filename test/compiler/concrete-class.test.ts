@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Concrete Class", () => {
@@ -1088,7 +1088,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot set property: p1 directly.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot set property: p1 directly.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_OverloadedConstructor", async () => {
@@ -1482,7 +1484,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'Foo' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -1516,7 +1520,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -1553,7 +1559,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -1588,7 +1596,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -1622,7 +1632,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -1657,7 +1669,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -1693,7 +1707,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_ConstructorWithCall", async () => {
@@ -1839,7 +1855,9 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot create instance of Int.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot create instance of Int.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_PropertyIsNotDefined", async () => {

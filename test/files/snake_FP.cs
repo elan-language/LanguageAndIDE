@@ -13,7 +13,7 @@ static void main() {
     sleep_ms(150); // call procedure
     game = clockTick(game, getKey()); // reassign variable
   } // while
-  print($"Game Over! Score: {score(game)}");
+  Console.WriteLine($"Game Over! Score: {score(game)}"); // print
 } // main
 
 static Game clockTick(Game g, string k) { // function

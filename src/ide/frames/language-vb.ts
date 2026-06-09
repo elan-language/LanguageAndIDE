@@ -52,6 +52,7 @@ import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
+import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
 import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
@@ -84,7 +85,8 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof LetStatement ||
       frame instanceof CallStatement ||
-      frame instanceof ReAssignVariable
+      frame instanceof ReAssignVariable ||
+      frame instanceof PrintStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -115,6 +117,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SINGLE_QUOTE} <el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.DIM} <el-kw>${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof PrintStatement) {
+      html = `<el-type>Console</el-type>.<el-method>WriteLine(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

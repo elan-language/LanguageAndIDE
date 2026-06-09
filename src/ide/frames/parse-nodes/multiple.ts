@@ -37,6 +37,10 @@ export class Multiple extends AbstractParseNode {
           toParse = node.remainingText;
           this.activeNodeForSymbolCompl = node.getActiveNode();
         } else {
+          // pass the message up the tree
+          if (node.message && !this.message) {
+            this.message = node.message;
+          }
           cont = false;
         }
         if (this.elements.length === 0 && this.minimum === 0) {

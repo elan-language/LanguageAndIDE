@@ -3,7 +3,7 @@
 Sub main()
   Dim order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) ' variable definition
   clearPrintedText() ' call procedure
-  print($"Dragon of order {order}")
+  Console.WriteLine($"Dragon of order {order}") ' print
   Dim side = (75/pow(sqrt(2), order)) ' variable definition
   Dim corner = side/12.0/cos(45) ' variable definition
   Dim turns = left ' variable definition
