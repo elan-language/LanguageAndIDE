@@ -24,7 +24,7 @@ import {
   delayMessage,
   getEditorMsg,
   getFocused,
-  getLanguagesForQuad,
+  getLanguageByClass,
   getModKey,
   handleMenuArrowDown,
   handleMenuArrowUp,
@@ -155,7 +155,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
-    const languages = getLanguagesForQuad(existingLanguage).slice(1);
+    const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
+    const classNames = containers.map((c) => c.className).slice(1);
+
+    const languages = classNames.map((ln) => getLanguageByClass(ln));
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
@@ -223,7 +226,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
-    const existingLanguage = language ?? this.file?.language() ?? LanguageElan.Instance;
+    const existingLanguage = language ?? this.file?.language() ?? LanguagePython.Instance;
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
@@ -765,6 +768,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
+    if (this.file?.setLanguage(l) || always) {
+      const wasEmptyCode = this.isEmptyCodeHash();
+      vm.setDisplayLanguage(l);
+      await this.refreshAndDisplay(vm, tr, true, false);
+      if (wasEmptyCode) {
+        // save the new hash signifying empty for this language
+        this.saveEmptyCodeHash();
+      }
+    }
+  }
+
+  async refreshOtherPanes(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
     if (this.file?.setLanguage(l) || always) {
       const wasEmptyCode = this.isEmptyCodeHash();
       vm.setDisplayLanguage(l);

@@ -332,20 +332,11 @@ button.icon:active img + label
   float: right;
 }
 
-#preferences-dialog input  {
+#preferences-dialog input
+{
   float: right;
   margin-left: 10px;
   margin-top: 5px;
-}
-
-.dropdown-content button.plain,
-.dropdown-content button.plain:hover,
-.dropdown-content button.plain:active,
-.dropdown-content button.plain:focus
-{
- display:block;
- padding-left: 0px;
- margin-bottom: 0px;
 }
 
 .dropdown-content button.plain:hover,
@@ -459,7 +450,8 @@ button.icon:active img + label
   list-style-type: none;
 }
 
-#preferences-dialog {
+#preferences-dialog,
+#languages-dialog {
   font-family: var(--ideTitleFont);
   border: none;
 }
@@ -739,3 +731,50 @@ body.functional div.demo-file.functional { display: revert; }
 #ed-2 .newcode, #ed-3 .newcode, #ed-4 .newcode {
   display: none;
 }
+
+#languages-dialog .panes {
+  height: 300px;
+  width: 400px;
+  display: grid;
+  margin-top:10px;
+  margin-bottom: 15px;
+}
+
+#languages-dialog.quad-view .panes {
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  padding-right: 10px;
+}
+
+#languages-dialog .dropdown {
+  background-color: var(--paleTint);
+}
+
+#languages-dialog:not(.quad-view) .other-pane {
+  display: none;
+}
+
+#languages-dialog button#confirmLanguagesBtn {
+  background-color: var(--ideBackground);
+  color: white;
+  float: right;
+}
+
+#languages-dialog
+.dropdown-content button.plain,
+.dropdown-content button.plain:hover,
+.dropdown-content button.plain:active,
+.dropdown-content button.plain:focus
+{
+ display:block;
+ padding-left: 0px;
+ margin-bottom: 0px;
+}
+
+#languages-dialog .dropdown-content {
+  top: 25px;
+  width: 150px;
+}
+

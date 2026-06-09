@@ -31,7 +31,6 @@ import {
   domEventType,
   getAllLanguages,
   getLanguageByClass,
-  getLanguagesForQuad,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuKey,
@@ -52,7 +51,6 @@ import { sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
-//const codeContainer = document.querySelector(".code") as HTMLDivElement;
 const codeContainers = document.querySelectorAll(".code") as NodeListOf<HTMLDivElement>;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
@@ -62,12 +60,23 @@ const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
 const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
-const languageMenu = document.getElementById("language-menu") as HTMLDivElement;
-const pythonButton = document.getElementById("python-language") as HTMLDivElement;
-const vbButton = document.getElementById("vb-language") as HTMLDivElement;
-const csButton = document.getElementById("cs-language") as HTMLDivElement;
-const javaButton = document.getElementById("java-language") as HTMLDivElement;
-const elanButton = document.getElementById("elan-language") as HTMLDivElement;
+
+const language0Button = document.getElementById("language0") as HTMLButtonElement;
+const language1Button = document.getElementById("language1") as HTMLButtonElement;
+const language2Button = document.getElementById("language2") as HTMLButtonElement;
+const language3Button = document.getElementById("language3") as HTMLButtonElement;
+
+const language0Menu = document.getElementById("language0-menu") as HTMLDivElement;
+const language1Menu = document.getElementById("language1-menu") as HTMLDivElement;
+const language2Menu = document.getElementById("language2-menu") as HTMLDivElement;
+const language3Menu = document.getElementById("language3-menu") as HTMLDivElement;
+
+const pythonButton = document.querySelectorAll(".python-language") as NodeListOf<HTMLDivElement>;
+const vbButton = document.querySelectorAll(".vb-language") as NodeListOf<HTMLDivElement>;
+const csButton = document.querySelectorAll(".cs-language") as NodeListOf<HTMLDivElement>;
+const javaButton = document.querySelectorAll(".java-language") as NodeListOf<HTMLDivElement>;
+const elanButton = document.querySelectorAll(".elan-language") as NodeListOf<HTMLDivElement>;
+
 const profileMenu = document.getElementById("profile-menu") as HTMLDivElement;
 const proceduralButton = document.getElementById("profile-procedural") as HTMLDivElement;
 const oopButton = document.getElementById("profile-oop") as HTMLDivElement;
@@ -82,12 +91,13 @@ const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
-const languageButton = document.getElementById("language") as HTMLButtonElement;
+
 const profileButton = document.getElementById("profile") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
-const toggleQuadEditorButton = document.getElementById("toggle-quad-editor") as HTMLDivElement;
+
+const languagesButton = document.getElementById("languages") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -128,11 +138,15 @@ const displayTab = document.getElementById("display-tab");
 const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
-const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
-const closePreferencesDialogButton = document.getElementById("confirmBtn");
+const preferencesDialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
+const languagesDialog = document.getElementById("languages-dialog") as HTMLDialogElement;
+const closePreferencesDialogButton = document.getElementById("confirmPreferencesBtn");
+const closeLanguagesDialogButton = document.getElementById("confirmLanguagesBtn");
 const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
 
 const docBody = document.getElementsByTagName("body")[0] as HTMLBodyElement;
+
+const quadEditorCheckBox = document.getElementById("quad-view") as HTMLInputElement;
 
 const elanInputOutput = new WebInputOutput();
 
@@ -265,11 +279,11 @@ class IDEViewModel implements IIDEViewModel {
           redoButton,
           clearDisplayButton,
           fileButton,
-          languageButton,
           profileButton,
           loadButton,
           saveAsStandaloneButton,
           preferencesButton,
+          languagesButton,
         ],
         msg,
       );
@@ -284,7 +298,6 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
-      this.enable(languageButton, "Language");
       this.enable(profileButton, "Profile");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
@@ -296,6 +309,7 @@ class IDEViewModel implements IIDEViewModel {
       );
       this.enable(expandCollapseButton, "Expand / Collapse all code regions");
       this.enable(preferencesButton, "Set preferences");
+      this.enable(languagesButton, "Set languages");
       this.enable(clearDisplayButton, "Clear display");
 
       for (const elem of demoFiles) {
@@ -743,10 +757,8 @@ class IDEViewModel implements IIDEViewModel {
 
   setDisplayLanguage(l: Language) {
     if (l instanceof LanguageElan) {
-      languageButton.textContent = "Reference Language";
       exportButton.setAttribute("hidden", "");
     } else {
-      languageButton.textContent = l.languageFullName;
       exportButton.removeAttribute("hidden");
       exportButton.textContent = `export as .${l.defaultFileExtension} file`;
     }
@@ -849,25 +861,60 @@ newButton?.addEventListener("click", async (event: Event) => {
   }
 });
 
-pythonButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, false);
-});
+async function setLanguage(ll: Language, pane: number) {
+  const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
 
-vbButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageVB.Instance, ideViewModel, testRunner, false);
-});
+  const cl = codeContainers[pane].classList;
+  const className = ll.languageHtmlClass;
+  const fullName = ll.languageFullName;
+  cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
+  cl.add(className);
+  labels[pane].textContent = fullName;
 
-csButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageCS.Instance, ideViewModel, testRunner, false);
-});
+  const dd = document.getElementById(`language${pane}`) as HTMLButtonElement;
+  dd.innerText = fullName;
 
-javaButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageJava.Instance, ideViewModel, testRunner, false);
-});
+  if (pane === 0) {
+    await codeViewModel.changeLanguage(ll, ideViewModel, testRunner, false);
+  } else {
+    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
+  }
+}
 
-elanButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner, false);
-});
+pythonButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguagePython.Instance, pane);
+  }),
+);
+
+vbButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageVB.Instance, pane);
+  }),
+);
+
+csButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageCS.Instance, pane);
+  }),
+);
+
+javaButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageJava.Instance, pane);
+  }),
+);
+
+elanButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageElan.Instance, pane);
+  }),
+);
 
 async function profileEventHandler(this: HTMLDivElement, _event: MouseEvent) {
   // Changing the profile clears the current code
@@ -901,24 +948,6 @@ saveButton.addEventListener("click", async (e: Event) => {
 exportButton.addEventListener("click", async (e: Event) => {
   codeViewModel.setExporting(true);
   await getDownloader()(e);
-});
-
-toggleQuadEditorButton.addEventListener("click", async (_e: Event) => {
-  document.querySelector("body")!.classList.toggle("quad-editor");
-
-  if (document.querySelector("body")!.classList.contains("quad-editor")) {
-    const ll = getLanguagesForQuad(codeViewModel.getLanguage());
-    const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
-    for (let i = 0; i < 4; i++) {
-      const cl = codeContainers[i].classList;
-      const className = ll[i].languageHtmlClass;
-      const lName = ll[i].languageFullName;
-      cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
-      cl.add(className);
-      labels[i].textContent = lName;
-    }
-  }
-  await ideViewModel.renderAsHtml(false);
 });
 
 copyAsUrlButton.addEventListener("click", async (_e: Event) => {
@@ -979,8 +1008,75 @@ preferencesButton.addEventListener("click", (event: Event) => {
     // in case it was set via the cvd parameter in the URL when the page was loaded
     useCvdTickbox.checked = codeViewModel.getCss() === "cvd-colourScheme";
     // otherwise it can pick up click and close immediately
-    setTimeout(() => dialog.showModal(), 1);
+    setTimeout(() => preferencesDialog.showModal(), 1);
   }
+});
+
+function enable(button: HTMLButtonElement, text: string) {
+  button.removeAttribute("disabled");
+  button.innerHTML = text;
+}
+
+function disable(button: HTMLButtonElement, text: string) {
+  button.setAttribute("disabled", "");
+  button.innerText = text;
+}
+
+languagesButton.addEventListener("click", (event: Event) => {
+  if (!isDisabled(event)) {
+    const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
+    const classNames = containers.map((c) => c.className);
+    const languages = classNames.map((cn) => getLanguageByClass(cn));
+
+    enable(language0Button, languages[0].languageFullName);
+
+    const quadView = document.querySelector("body")!.classList.contains("quad-editor");
+
+    quadEditorCheckBox.checked = quadView;
+
+    if (quadView) {
+      enable(language1Button, languages[1].languageFullName);
+      enable(language2Button, languages[2].languageFullName);
+      enable(language3Button, languages[3].languageFullName);
+    } else {
+      disable(language1Button, languages[1].languageFullName);
+      disable(language2Button, languages[2].languageFullName);
+      disable(language3Button, languages[3].languageFullName);
+    }
+
+    setTimeout(() => languagesDialog.showModal(), 1);
+  }
+});
+
+quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
+  document.querySelector("body")!.classList.toggle("quad-editor");
+  document.getElementById("languages-dialog")!.classList.toggle("quad-view");
+  const quadView = document.querySelector("body")!.classList.contains("quad-editor");
+  quadEditorCheckBox.checked = quadView;
+  const classNames = Array.from(codeContainers).map((c) => c.className);
+  const languages = classNames.map((cn) => getLanguageByClass(cn));
+
+  if (quadView) {
+    const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
+    for (let i = 0; i < 4; i++) {
+      const code = codeContainers[i];
+      const cl = code.classList;
+      const className = languages[i].languageHtmlClass;
+      const fullName = languages[i].languageFullName;
+      cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
+      cl.add(className);
+      labels[i].textContent = fullName;
+    }
+    enable(language1Button, languages[1].languageFullName);
+    enable(language2Button, languages[2].languageFullName);
+    enable(language3Button, languages[3].languageFullName);
+  } else {
+    disable(language1Button, languages[1].languageFullName);
+    disable(language2Button, languages[2].languageFullName);
+    disable(language3Button, languages[3].languageFullName);
+  }
+
+  await ideViewModel.renderAsHtml(false);
 });
 
 closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
@@ -988,7 +1084,13 @@ closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
     const newCss = useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme";
     changeCss(newCss);
     codeViewModel.setCss(newCss);
-    dialog.close();
+    preferencesDialog.close();
+  }
+});
+
+closeLanguagesDialogButton?.addEventListener("click", (event: Event) => {
+  if (!isDisabled(event)) {
+    languagesDialog.close();
   }
 });
 
@@ -1066,13 +1168,19 @@ window.addEventListener("keydown", ideViewModel.globalHandler);
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
-languageButton.addEventListener("click", handleClickDropDownButton);
+language0Button.addEventListener("click", handleClickDropDownButton);
+language1Button.addEventListener("click", handleClickDropDownButton);
+language2Button.addEventListener("click", handleClickDropDownButton);
+language3Button.addEventListener("click", handleClickDropDownButton);
 profileButton.addEventListener("click", handleClickDropDownButton);
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
-languageButton.addEventListener("keydown", handleKeyDropDownButton);
+language0Button.addEventListener("keydown", handleKeyDropDownButton);
+language1Button.addEventListener("keydown", handleKeyDropDownButton);
+language2Button.addEventListener("keydown", handleKeyDropDownButton);
+language3Button.addEventListener("keydown", handleKeyDropDownButton);
 profileButton.addEventListener("keydown", handleKeyDropDownButton);
 
 demosMenu.addEventListener("keydown", (e) =>
@@ -1084,9 +1192,23 @@ fileMenu.addEventListener("keydown", (e) =>
 worksheetMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
-languageMenu.addEventListener("keydown", (e) =>
+
+language0Menu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
+
+language1Menu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+
+language2Menu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+
+language3Menu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+
 profileMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
@@ -1094,7 +1216,12 @@ profileMenu.addEventListener("keydown", (e) =>
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
-languageMenu.addEventListener("click", () => collapseMenu(languageButton, false));
+
+language0Menu.addEventListener("click", () => collapseMenu(language0Button, false));
+language1Menu.addEventListener("click", () => collapseMenu(language1Button, false));
+language2Menu.addEventListener("click", () => collapseMenu(language2Button, false));
+language3Menu.addEventListener("click", () => collapseMenu(language3Button, false));
+
 profileMenu.addEventListener("click", () => collapseMenu(profileButton, false));
 
 displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
