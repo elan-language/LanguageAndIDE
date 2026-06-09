@@ -50,6 +50,7 @@ import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
@@ -101,6 +102,8 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof InputStatement) {
+      html = `<el-kw>${this.INPUT} </el-kw>${frame.name.renderAsElanSource()}<el-kw> ${this.SET} ${this.TO} </el-kw><el-method>inputString</el-method>(${frame.prompt.renderAsElanSource()})`;
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.LET} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
@@ -218,6 +221,7 @@ export class LanguageElan extends LanguageAbstract {
   private IMPORT = "import";
   private IN = "in";
   private INHERITS = "inherits";
+  private INPUT = "input";
   private INTERFACE = "interface";
   private lambdaKeyword = "lambda";
   private LET = "let";

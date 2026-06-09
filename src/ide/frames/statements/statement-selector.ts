@@ -36,6 +36,7 @@ export class StatementSelector extends AbstractSelector {
     return [
       [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
       ["print", "p", "<b>p</b>rint", (parent: Parent) => this.factory.newPrint(parent)],
+      ["input", "n", "i<b>n</b>put", (parent: Parent) => this.factory.newInput(parent)],
       [
         letKeyword,
         "l",

@@ -173,6 +173,7 @@ import { Else } from "../frames/statements/else";
 import { ElseIf } from "../frames/statements/elseIf";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
+import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
 import { ReAssignVariable } from "../frames/statements/reassign-variable";
@@ -378,7 +379,21 @@ export function transform(
     return setAsn;
   }
 
-  if (node instanceof PrintStatement) {
+  if (node instanceof MethodCallNode) {
+    const id = node.name!.matchedText;
+    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<AstNode>;
+
+    return new FuncCallAsn(id, parameters, fieldId, scope);
+  }
+
+  if (node instanceof InputStatement) {
+    const id = "input"; // Hard coded method name
+    const parameters = node.prompt; //which is an ArgListField (though it only needs one param - the prompt string for the input)
+    // How do I get the parameters as an AstNode[]. I tried node.prompt.getRootNode(), but this isn't initialised until something is parsed.
+    return new FuncCallAsn(id, parameters, fieldId, scope);
+  }
+
+ if (node instanceof PrintStatement) {
     const callAsn = new CallAsn(node.getHtmlId(), scope);
     callAsn.breakpointStatus = node.breakpointStatus;
 
@@ -732,13 +747,6 @@ export function transform(
     }
 
     return new IdAsn(node.matchedText, fieldId, scope);
-  }
-
-  if (node instanceof MethodCallNode) {
-    const id = node.name!.matchedText;
-    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<AstNode>;
-
-    return new FuncCallAsn(id, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {
