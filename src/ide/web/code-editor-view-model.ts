@@ -155,9 +155,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
     const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
-    const lNames = containers.map((c) => c.className).slice(1);
+    const classNames = containers.map((c) => c.className).slice(1);
 
-    const languages = lNames.map((ln) => getLanguageByClass(ln));
+    const languages = classNames.map((ln) => getLanguageByClass(ln));
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {

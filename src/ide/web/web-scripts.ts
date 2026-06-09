@@ -862,13 +862,13 @@ async function setLanguage(ll: Language, pane: number) {
 
   const cl = codeContainers[pane].classList;
   const className = ll.languageHtmlClass;
-  const lName = ll.languageFullName;
+  const fullName = ll.languageFullName;
   cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
   cl.add(className);
-  labels[pane].textContent = lName;
+  labels[pane].textContent = fullName;
 
   const dd = document.getElementById(`language${pane}`) as HTMLButtonElement;
-  dd.innerText = lName;
+  dd.innerText = fullName;
 
   if (pane === 0) {
     await codeViewModel.changeLanguage(ll, ideViewModel, testRunner, false);
@@ -878,7 +878,7 @@ async function setLanguage(ll: Language, pane: number) {
 }
 
 pythonButton.forEach((b) =>
-  b.addEventListener("click", async (event: Event) => {
+  b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
     await setLanguage(LanguagePython.Instance, pane);
   }),
@@ -1019,8 +1019,8 @@ function disable(button: HTMLButtonElement, text: string) {
 languagesButton.addEventListener("click", (event: Event) => {
   if (!isDisabled(event)) {
     const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
-    const lNames = containers.map((c) => c.className);
-    const languages = lNames.map((ln) => getLanguageByClass(ln));
+    const classNames = containers.map((c) => c.className);
+    const languages = classNames.map((cn) => getLanguageByClass(cn));
 
     enable(language0Button, languages[0].languageFullName);
 
@@ -1042,28 +1042,23 @@ languagesButton.addEventListener("click", (event: Event) => {
   }
 });
 
-function setButtonText(pane: number, name: string) {
-  const dd = document.getElementById(`language${pane}`) as HTMLButtonElement;
-  dd.innerText = name;
-}
-
 quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
   const quadView = document.querySelector("body")!.classList.contains("quad-editor");
   quadEditorCheckBox.checked = quadView;
-  const lNames = Array.from(codeContainers).map((c) => c.className);
-  const languages = lNames.map((ln) => getLanguageByClass(ln));
+  const classNames = Array.from(codeContainers).map((c) => c.className);
+  const languages = classNames.map((cn) => getLanguageByClass(cn));
 
   if (quadView) {
     const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
     for (let i = 0; i < 4; i++) {
       const code = codeContainers[i];
       const cl = code.classList;
-      const className = getLanguageByClass(code.className).languageHtmlClass;
-      const lName = getLanguageByClass(code.className).languageFullName;
+      const className = languages[i].languageHtmlClass;
+      const fullName = languages[i].languageFullName;
       cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
       cl.add(className);
-      labels[i].textContent = lName;
+      labels[i].textContent = fullName;
     }
     enable(language1Button, languages[1].languageFullName);
     enable(language2Button, languages[2].languageFullName);
