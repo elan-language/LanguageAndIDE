@@ -1006,43 +1006,55 @@ preferencesButton.addEventListener("click", (event: Event) => {
   }
 });
 
-languagesButton.addEventListener("click", (event: Event) => {
-  function enable(button: HTMLElement, msg = "") {
-    button.removeAttribute("disabled");
-    button.setAttribute("title", msg);
-    if (button instanceof HTMLDivElement) {
-      button.classList.remove("disabled");
-    }
-  }
+function enable(button: HTMLButtonElement, text: string) {
+  button.removeAttribute("disabled");
+  button.innerHTML = text;
+}
 
+function disable(button: HTMLButtonElement, text: string) {
+  button.setAttribute("disabled", "");
+  button.innerText = text;
+}
+
+languagesButton.addEventListener("click", (event: Event) => {
   if (!isDisabled(event)) {
-    enable(language0Button, "Primary Language");
-    enable(language1Button, "Pane 1 Language");
-    enable(language1Button, "Pane 2 Language");
-    enable(language1Button, "Pane 3 Language");
+    const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
+    const lNames = containers.map((c) => c.className);
+    const languages = lNames.map((ln) => getLanguageByClass(ln));
+
+    enable(language0Button, languages[0].languageFullName);
 
     const quadView = document.querySelector("body")!.classList.contains("quad-editor");
 
     quadEditorCheckBox.checked = quadView;
 
-    for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>) {
-      if (quadView) {
-        dd.classList.add("show");
-      } else {
-        dd.classList.remove("show");
-      }
+    if (quadView) {
+      enable(language1Button, languages[1].languageFullName);
+      enable(language2Button, languages[2].languageFullName);
+      enable(language3Button, languages[3].languageFullName);
+    } else {
+      disable(language1Button, languages[1].languageFullName);
+      disable(language2Button, languages[2].languageFullName);
+      disable(language3Button, languages[3].languageFullName);
     }
 
     setTimeout(() => languagesDialog.showModal(), 1);
   }
 });
 
+function setButtonText(pane: number, name: string) {
+  const dd = document.getElementById(`language${pane}`) as HTMLButtonElement;
+  dd.innerText = name;
+}
+
 quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
+  const quadView = document.querySelector("body")!.classList.contains("quad-editor");
+  quadEditorCheckBox.checked = quadView;
+  const lNames = Array.from(codeContainers).map((c) => c.className);
+  const languages = lNames.map((ln) => getLanguageByClass(ln));
 
-  if (document.querySelector("body")!.classList.contains("quad-editor")) {
-    quadEditorCheckBox.checked = true;
-
+  if (quadView) {
     const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
     for (let i = 0; i < 4; i++) {
       const code = codeContainers[i];
@@ -1052,21 +1064,16 @@ quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
       cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
       cl.add(className);
       labels[i].textContent = lName;
-
-      const dd = document.getElementById(`language${i}`) as HTMLButtonElement;
-      dd.innerText = lName;
     }
-
-    for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>) {
-      dd.classList.add("show");
-    }
+    enable(language1Button, languages[1].languageFullName);
+    enable(language2Button, languages[2].languageFullName);
+    enable(language3Button, languages[3].languageFullName);
   } else {
-    quadEditorCheckBox.checked = false;
-
-    for (const dd of document.querySelectorAll(".other-pane") as NodeListOf<HTMLDivElement>) {
-      dd.classList.remove("show");
-    }
+    disable(language1Button, languages[1].languageFullName);
+    disable(language2Button, languages[2].languageFullName);
+    disable(language3Button, languages[3].languageFullName);
   }
+
   await ideViewModel.renderAsHtml(false);
 });
 
