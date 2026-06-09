@@ -88,8 +88,11 @@
                     </form>
                 </dialog>
                 <dialog id="languages-dialog">
-                   
-                        <div>
+                    <div>
+                        <label for="quad-view">Quad View:</label>
+                        <input type="checkbox" id="quad-view" name="quad-view" value="quad-view">
+                    </div>
+                    <div class="panes">
                             <div class="dropdown">
                                 <button id="language0" class="plain" tabindex="0" aria-haspopup="true"
                                     aria-expanded="false" aria-controls="language0-menu">primary language</button>
@@ -101,10 +104,7 @@
                                     <div class="plain menu-item elan-language" tabindex="-1" id="elan-language0">Reference Language</div>
                                 </div>
                             </div>
-                            <div>
-                            <label for="quad-view">Quad View:</label>
-                            <input type="checkbox" id="quad-view" name="quad-view" value="quad-view">
-                            </div>
+                          
                             <div class="dropdown other-pane">
                                 <button id="language1" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false"
                                     aria-controls="language1-menu">second language</button>
@@ -138,11 +138,10 @@
                                     <div class="plain menu-item elan-language" tabindex="-1" id="elan-language3">Reference Language</div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button id="confirmLanguagesBtn" type="button">close</button>
-                        </div>
-                    
+                    </div>
+                    <div>
+                        <button id="confirmLanguagesBtn" type="button">close</button>
+                    </div>
                 </dialog>
                 <button id="logout" class="plain" tabindex="0" hidden="hidden">logout</button>
                 <div id="code-title"></div>

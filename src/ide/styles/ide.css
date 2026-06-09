@@ -758,10 +758,12 @@ body.functional div.demo-file.functional { display: revert; }
   display: none;
 }
 
-.other-pane.show {
-  display: block;
-}
 
-.other-pane{
-  display: none;
+
+.panes {
+  height: 400px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: 50% 50%; 
+  grid-template-rows: 50% 50%
 }

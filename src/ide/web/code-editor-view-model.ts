@@ -156,9 +156,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
     const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
-    const lNames = containers.map(c => c.className).slice(1);
+    const lNames = containers.map((c) => c.className).slice(1);
 
-    const languages = lNames.map(ln => getLanguageByClass(ln));
+    const languages = lNames.map((ln) => getLanguageByClass(ln));
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
@@ -764,6 +764,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
+    if (this.file?.setLanguage(l) || always) {
+      const wasEmptyCode = this.isEmptyCodeHash();
+      vm.setDisplayLanguage(l);
+      await this.refreshAndDisplay(vm, tr, true, false);
+      if (wasEmptyCode) {
+        // save the new hash signifying empty for this language
+        this.saveEmptyCodeHash();
+      }
+    }
+  }
+
+  async refreshOtherPanes(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
     if (this.file?.setLanguage(l) || always) {
       const wasEmptyCode = this.isEmptyCodeHash();
       vm.setDisplayLanguage(l);

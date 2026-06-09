@@ -858,7 +858,7 @@ newButton?.addEventListener("click", async (event: Event) => {
   }
 });
 
-function setLanguage(ll: Language, pane: number) {
+async function setLanguage(ll: Language, pane: number) {
   const labels = document.querySelectorAll(".editor-label") as NodeListOf<HTMLDivElement>;
 
   const cl = codeContainers[pane].classList;
@@ -867,51 +867,47 @@ function setLanguage(ll: Language, pane: number) {
   cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
   cl.add(className);
   labels[pane].textContent = lName;
+
+  if (pane === 0) {
+    setLanguage(ll, pane);
+    await codeViewModel.changeLanguage(ll, ideViewModel, testRunner, false);
+  } else {
+    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
+  }
 }
 
 pythonButton.forEach((b) =>
   b.addEventListener("click", async (event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    setLanguage(LanguagePython.Instance, pane);
-    await codeViewModel.changeLanguage(LanguagePython.Instance, ideViewModel, testRunner, false);
+    await setLanguage(LanguagePython.Instance, pane);
   }),
 );
 
 vbButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    setLanguage(LanguageVB.Instance, pane);
-    await codeViewModel.changeLanguage(LanguageVB.Instance, ideViewModel, testRunner, false);
+    await setLanguage(LanguageVB.Instance, pane);
   }),
 );
 
 csButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-
-    setLanguage(LanguageCS.Instance, pane);
-
-    await codeViewModel.changeLanguage(LanguageCS.Instance, ideViewModel, testRunner, false);
+    await setLanguage(LanguageCS.Instance, pane);
   }),
 );
 
 javaButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-
-    setLanguage(LanguageJava.Instance, pane);
-
-    await codeViewModel.changeLanguage(LanguageJava.Instance, ideViewModel, testRunner, false);
+    await setLanguage(LanguageJava.Instance, pane);
   }),
 );
 
 elanButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-
-    setLanguage(LanguageElan.Instance, pane);
-
-    await codeViewModel.changeLanguage(LanguageElan.Instance, ideViewModel, testRunner, false);
+    await setLanguage(LanguageElan.Instance, pane);
   }),
 );
 
