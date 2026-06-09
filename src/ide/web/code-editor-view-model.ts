@@ -24,7 +24,6 @@ import {
   getEditorMsg,
   getFocused,
   getLanguageByClass,
-  getLanguagesForQuad,
   getModKey,
   handleMenuArrowDown,
   handleMenuArrowUp,
