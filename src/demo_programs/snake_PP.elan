@@ -27,7 +27,7 @@ main
     end if
     call sleep_ms(150)
   end while
-  call print($"Game Over! Score: {body.length() - 1}")
+  print $"Game Over! Score: {body.length() - 1}"
 end main
 
 procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)

@@ -762,7 +762,7 @@ return [main, _tests];}`;
 main
   variable a set to [2,2]
   reassign a[0] to 1
-  call print(a[0])
+  print a[0]
 end main
 `;
 
@@ -802,7 +802,7 @@ end main
 procedure foo()
   variable a set to [2,2]
   reassign a[0] to 1
-  call print(a[0])
+  print a[0]
 end procedure
 `;
 
@@ -841,7 +841,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call print(foo())
+  print foo()
 end main
 
 function foo() returns Int
@@ -874,7 +874,7 @@ end function
 main
   variable a set to [2,2]
   reassign a[0] to "fred"
-  call print(a[0])
+  print a[0]
 end main
 `;
 

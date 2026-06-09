@@ -66,7 +66,7 @@ suite("Misc Tests", () => {
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  call print(li)
+  print li
 end main
 `;
     const htmlElan = await processInnerCode(code, LanguageElan.Instance);

@@ -472,9 +472,9 @@ end main
 
 main
   try
-    call print("")
+    print ""
   catch e as ElanRuntimeError
-    call print("")
+    print ""
   end try
 end main
 `;

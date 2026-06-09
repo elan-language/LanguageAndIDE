@@ -12,7 +12,7 @@ main
     call sleep_ms(150)
     reassign game to clockTick(game, getKey())
   end while
-  call print($"Game Over! Score: {score(game)}")
+  print $"Game Over! Score: {score(game)}"
 end main
 
 function clockTick(g as Game, k as String) returns Game

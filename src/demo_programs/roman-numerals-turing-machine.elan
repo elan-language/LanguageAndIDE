@@ -16,14 +16,14 @@ main
     call tm.singleStep()
     reassign steps to steps + 1
     call clearPrintedText()
-    call print(tm.tape)
+    print tm.tape
     call printTab(tm.headPosition - 1, "^")
-    call print($"Step: {steps}")
-    call print($"State: {tm.currentState}")
-    call print($"Rule applied: {rule.toString()}")
+    print $"Step: {steps}"
+    print $"State: {tm.currentState}"
+    print $"Rule applied: {rule.toString()}"
     call sleep_ms(40)
   end while
-  call print($"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
+  print $"The roman numeral equivalent for {dec} is {tm.tape.trim()}"
 end main
 
 constant initState set to "init"

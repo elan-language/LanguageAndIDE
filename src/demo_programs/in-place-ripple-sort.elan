@@ -2,9 +2,9 @@
 
 main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
-  call print(li)
+  print li
   call inPlaceRippleSort(li)
-  call print(li)
+  print li
 end main
 
 procedure inPlaceRippleSort(li as List<of Int>)

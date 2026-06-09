@@ -16,22 +16,22 @@ end main
 
 procedure executeOption(choice as Int)
   if choice is 1 then
-    call print("Reduce screen magnification if you can't see all the keys")
+    print "Reduce screen magnification if you can't see all the keys"
     call playGame()
   elif choice is 2 then
-    call print("Mark using: 0 (grey), 1 (yellow), 2 (green), Enter")
+    print "Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"
     call playReverseGame()
   elif choice is 3 then
-    call print("Please wait for analysis to complete ...")
+    print "Please wait for analysis to complete ..."
     call analyse()
   else
     variable word set to inputStringWithLimits("Enter word: ", 5, 5).upperCase()
     if allValidAnswers.contains(word) then
-      call print($"{word} is a valid answer")
+      print $"{word} is a valid answer"
     elif allWords.contains(word) then
-      call print($"{word} is not a valid answer, but is a valid guess word")
+      print $"{word} is not a valid answer, but is a valid guess word"
     else
-      call print($"{word} is not a recognised word")
+      print $"{word} is not a recognised word"
     end if
   end if
 end procedure
@@ -56,7 +56,7 @@ procedure playGame()
   end while
   call clearPrintedText()
   if solved then
-    call print("Well done!")
+    print "Well done!"
   end if
 end procedure
 
@@ -88,7 +88,7 @@ procedure enterAttempt(attemptNo as Int, grid as List<of List<of String>>, used 
       if allWords.contains(word) then
         reassign chNo to chNo + 1
       else
-        call print("Invalid word")
+        print "Invalid word"
       end if
     end if
     call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -135,7 +135,7 @@ procedure playReverseGame()
       reassign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     end if
     if possible.length() is 0 then
-      call print("No possible answer matches marks so far. Press any key to continue")
+      print "No possible answer matches marks so far. Press any key to continue"
       reassign attemptNo to 6
     else
       reassign attempt to possible[divAsInt(possible.length(), 2)]
@@ -193,7 +193,7 @@ procedure analyse()
   variable solved set to (success/2309.0*100).floor()
   variable avg set to divAsFloat(weightedSum, success).round(2)
   variable pc set to "%"
-  call print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
+  print $"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts."
 end procedure
 
 function isUCLetter(k as String) returns Boolean

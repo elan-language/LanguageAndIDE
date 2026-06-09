@@ -27,11 +27,11 @@ main
         reassign vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
       end for
       call displayVectorGraphics(vg)
-      call print(x)
+      print x
       call sleep_ms(100)
     end while
   end while
-  call print("Finished")
+  print "Finished"
 end main
 
 # scale x.  We pass in p just to get its length

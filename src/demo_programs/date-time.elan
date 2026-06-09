@@ -6,13 +6,13 @@ main
     reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
-      call print(now)
-      call print(getDate(now))
+      print now
+      print getDate(now)
     else
       try
         variable td set to int(reply)
         if td >= 0 then
-          call print(getDate(td))
+          print getDate(td)
         end if
       catch e as ElanRuntimeError
       end try

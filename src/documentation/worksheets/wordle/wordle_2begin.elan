@@ -30,7 +30,7 @@ procedure playGame()
   end while
   call clearPrintedText()
   if solved then
-    call print("Well done!")
+    print "Well done!"
   end if
 end procedure
 
@@ -52,7 +52,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
       if allValidAttemptWords.contains(word) then
         reassign chNo to chNo + 1
       else
-        call print("Invalid word")
+        print "Invalid word"
       end if
     end if
     call displayHtml(drawGrid(grid) + drawKeyboard(used))

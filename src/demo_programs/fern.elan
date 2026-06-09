@@ -15,7 +15,7 @@ main
     call vg.append(s.rect)
     call displayVectorGraphics(vg)
   end for
-  call print("Finished")
+  print "Finished"
 end main
 
 # The State class is used as a convenient way to pass multiple
