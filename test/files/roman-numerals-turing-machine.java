@@ -23,19 +23,19 @@ static void main() {
     tm.singleStep(); // call procedure
     steps = steps + 1; // reassign variable
     clearPrintedText(); // call procedure
-    System.out.println(tm.tape) // print
+    System.out.println(tm.tape); // print
     printTab(tm.headPosition - 1, "^"); // call procedure
-    System.out.println(String.format("Step: %", steps)) // print
-    System.out.println(String.format("State: %", tm.currentState)) // print
-    System.out.println(String.format("Rule applied: %", rule.toString())) // print
+    System.out.println(String.format("Step: %", steps)); // print
+    System.out.println(String.format("State: %", tm.currentState)); // print
+    System.out.println(String.format("Rule applied: %", rule.toString())); // print
     sleep_ms(40); // call procedure
   } // while
-  System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())) // print
+  System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print
 } // main
 
-final String initState = "init" // constant
+final String initState = "init"; // constant
 
-final String haltState = "halt" // constant
+final String haltState = "halt"; // constant
 
 class TuringMachine {
 

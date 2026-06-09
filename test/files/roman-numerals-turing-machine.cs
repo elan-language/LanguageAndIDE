@@ -31,9 +31,9 @@ static void main() {
   Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}"); // print
 } // main
 
-const String initState = "init"
+const String initState = "init";
 
-const String haltState = "halt"
+const String haltState = "halt";
 
 class TuringMachine {
 

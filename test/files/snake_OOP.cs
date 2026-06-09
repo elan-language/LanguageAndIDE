@@ -162,11 +162,11 @@ enum Direction {up, down, left, right}
 [TestMethod] static void test_snake() {
   var snake = new Snake();
   // bodyCovers
-  Assert.AreEqual(true, snake.bodyCovers(new Square(20, 15)))
-  Assert.AreEqual(false, snake.bodyCovers(new Square(21, 15)))
+  Assert.AreEqual(true, snake.bodyCovers(new Square(20, 15)));
+  Assert.AreEqual(false, snake.bodyCovers(new Square(21, 15)));
   // gameOver, score - can only test test_for default - which is not thorough test
-  Assert.AreEqual(false, snake.gameOver())
-  Assert.AreEqual(0, snake.score())
+  Assert.AreEqual(false, snake.gameOver());
+  Assert.AreEqual(0, snake.score());
 } // test
 
 [TestMethod] static void test_apple() {
@@ -177,18 +177,18 @@ enum Direction {up, down, left, right}
   // constructor - not testable as properties are private
   // getAdjacentSquare
   var sq1 = new Square(3, 4);
-  Assert.AreEqual(new Square(3, 3), sq1.getAdjacentSquare(Direction.up))
-  Assert.AreEqual(new Square(3, 5), sq1.getAdjacentSquare(Direction.down))
-  Assert.AreEqual(new Square(2, 4), sq1.getAdjacentSquare(Direction.left))
-  Assert.AreEqual(new Square(4, 4), sq1.getAdjacentSquare(Direction.right))
+  Assert.AreEqual(new Square(3, 3), sq1.getAdjacentSquare(Direction.up));
+  Assert.AreEqual(new Square(3, 5), sq1.getAdjacentSquare(Direction.down));
+  Assert.AreEqual(new Square(2, 4), sq1.getAdjacentSquare(Direction.left));
+  Assert.AreEqual(new Square(4, 4), sq1.getAdjacentSquare(Direction.right));
   var sq2 = new Square(0, 0);
   var sq3 = new Square(-1, 0);
-  Assert.AreEqual(sq3, sq2.getAdjacentSquare(Direction.left))
+  Assert.AreEqual(sq3, sq2.getAdjacentSquare(Direction.left));
   // hasHitEdge
-  Assert.AreEqual(false, (new Square(0, 0)).hasHitEdge())
-  Assert.AreEqual(false, (new Square(39, 20)).hasHitEdge())
-  Assert.AreEqual(true, (new Square(-1, 3)).hasHitEdge())
-  Assert.AreEqual(true, (new Square(3, -1)).hasHitEdge())
-  Assert.AreEqual(true, (new Square(40, 3)).hasHitEdge())
-  Assert.AreEqual(true, (new Square(3, 30)).hasHitEdge())
+  Assert.AreEqual(false, (new Square(0, 0)).hasHitEdge());
+  Assert.AreEqual(false, (new Square(39, 20)).hasHitEdge());
+  Assert.AreEqual(true, (new Square(-1, 3)).hasHitEdge());
+  Assert.AreEqual(true, (new Square(3, -1)).hasHitEdge());
+  Assert.AreEqual(true, (new Square(40, 3)).hasHitEdge());
+  Assert.AreEqual(true, (new Square(3, 30)).hasHitEdge());
 } // test
