@@ -3,7 +3,7 @@
 static void main() {
   var order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12);
   clearPrintedText(); // call procedure
-  print($"Dragon of order {order}");
+  Console.WriteLine($"Dragon of order {order}"); // print
   var side = (75/pow(sqrt(2), order));
   var corner = side/12.0/cos(45);
   var turns = left;

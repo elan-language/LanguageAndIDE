@@ -21,14 +21,14 @@ static void main() {
     tm.singleStep(); // call procedure
     steps = steps + 1; // reassign variable
     clearPrintedText(); // call procedure
-    print(tm.tape);
+    Console.WriteLine(tm.tape); // print
     printTab(tm.headPosition - 1, "^"); // call procedure
-    print($"Step: {steps}");
-    print($"State: {tm.currentState}");
-    print($"Rule applied: {rule.toString()}");
+    Console.WriteLine($"Step: {steps}"); // print
+    Console.WriteLine($"State: {tm.currentState}"); // print
+    Console.WriteLine($"Rule applied: {rule.toString()}"); // print
     sleep_ms(40); // call procedure
   } // while
-  print($"The roman numeral equivalent for {dec} is {tm.tape.trim()}");
+  Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}"); // print
 } // main
 
 const String initState = "init"

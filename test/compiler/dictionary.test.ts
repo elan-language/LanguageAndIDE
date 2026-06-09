@@ -3,16 +3,16 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Dictionary", () => {
@@ -624,7 +624,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":2, "b":2]
   reassign a["a"] to 1
-  call print(a["a"])
+  print(a["a"])
 end main
 `;
 
@@ -664,7 +664,7 @@ end main
 procedure foo()
   variable a set to ["a":2,"b":2]
   reassign a["a"] to 1
-  call print(a["a"])
+  print(a["a"])
 end procedure
 `;
 
@@ -709,7 +709,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
   reassign a["a"]["c"] to 1
-  call print(a["a"]["c"])
+  print(a["a"]["c"])
 end procedure
 `;
 
@@ -754,7 +754,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":["e":""]],"b":["d":["f":""]]]
   reassign a["a"]["c"]["e"] to "1"
-  call print(a["a"]["c"]["e"])
+  print(a["a"]["c"]["e"])
 end procedure
 `;
 
@@ -799,7 +799,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
   reassign a["a"]["c"] to ""
-  call print(a["a"]["c"])
+  print(a["a"]["c"])
 end procedure
 `;
 
@@ -824,7 +824,7 @@ end procedure
     const code = `${testHeader}
 
 main
-  call print(foo())
+  print(foo())
 end main
 
 function foo() returns Int
@@ -857,7 +857,7 @@ end function
 main
   variable a set to ["a":2,"b":2]
   reassign a["a"] to "fred"
-  call print(a["a"])
+  print(a["a"])
 end main
 `;
 
@@ -899,7 +899,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s).ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Duplicate Dictionary key(s).ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_InconsistentTypes1", async () => {

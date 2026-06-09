@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertExportedVBis,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    testHeader,
-    testVBHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertExportedVBis,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testHeader,
+  testVBHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -762,7 +762,7 @@ return [main, _tests];}`;
 main
   variable a set to [2,2]
   reassign a[0] to 1
-  call print(a[0])
+  print(a[0])
 end main
 `;
 
@@ -802,7 +802,7 @@ end main
 procedure foo()
   variable a set to [2,2]
   reassign a[0] to 1
-  call print(a[0])
+  print(a[0])
 end procedure
 `;
 
@@ -841,7 +841,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call print(foo())
+  print(foo())
 end main
 
 function foo() returns Int
@@ -874,7 +874,7 @@ end function
 main
   variable a set to [2,2]
   reassign a[0] to "fred"
-  call print(a[0])
+  print(a[0])
 end main
 `;
 
@@ -1088,7 +1088,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index List<of Int>.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot double index List<of Int>.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_IndexTypeIncompatibility", async () => {
@@ -1893,7 +1895,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot mutate set a ranged valueErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot mutate set a ranged valueErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_negativeIndexCompile", async () => {

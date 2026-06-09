@@ -8,6 +8,7 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
 import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
@@ -146,6 +147,24 @@ suite("Parsing Frame Tests", async () => {
     );
     const m = new MainFrame(fl);
     const setTo = new Throw(m);
+    setTo.parseFrom(source);
+    assert.equal(source.hasMoreCode(), false);
+    assert.equal(setTo.renderAsElanSource(), code);
+  });
+  test("parse Frames - print", () => {
+    const code = `  print(3 + 4)`;
+    const source = new CodeSourceFromString(code + "\n");
+    const fl = new FileImpl(
+      hash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const m = new MainFrame(fl);
+    const setTo = new PrintStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -472,9 +491,9 @@ end main
 
 main
   try
-    call print("")
+    print("")
   catch e as ElanRuntimeError
-    call print("")
+    print("")
   end try
 end main
 `;

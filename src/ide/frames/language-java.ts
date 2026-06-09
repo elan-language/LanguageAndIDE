@@ -33,6 +33,7 @@ import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
+import { PrintStatement } from "./statements/print-statement";
 import { ParseStatus } from "./status-enums";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
@@ -63,6 +64,8 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof PrintStatement) {
+      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else if (frame instanceof AbstractProperty) {

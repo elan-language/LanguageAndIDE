@@ -8,13 +8,13 @@ static void main() {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
     if (reply.equals("")) {
       var now = divAsInt(clock(), 1000);
-      print(now);
-      print(getDate(now));
+      System.out.println(now) // print
+      System.out.println(getDate(now)) // print
     } else {
       try {
         var td = int(reply);
         if (td >= 0) {
-          print(getDate(td));
+          System.out.println(getDate(td)) // print
         } // if
       } catch (ElanRuntimeError e) {
       } // try

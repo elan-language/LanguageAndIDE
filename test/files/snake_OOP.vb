@@ -14,7 +14,7 @@ Sub main()
     sleep_ms(150) ' call procedure
     snake.clockTick(getKey(), apple) ' call procedure
   End While
-  print($"Game Over! Score: {snake.score()}")
+  Console.WriteLine($"Game Over! Score: {snake.score()}") ' print
 End Sub
 
 Class Snake

@@ -6,13 +6,13 @@ static void main() {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
     if (reply.equals("")) {
       var now = divAsInt(clock(), 1000);
-      print(now);
-      print(getDate(now));
+      Console.WriteLine(now); // print
+      Console.WriteLine(getDate(now)); // print
     } else {
       try {
         var td = int(reply);
         if (td >= 0) {
-          print(getDate(td));
+          Console.WriteLine(getDate(td)); // print
         } // if
       } catch (ElanRuntimeError e) {
       } // try

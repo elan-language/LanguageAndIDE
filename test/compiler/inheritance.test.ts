@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Inheritance", () => {
@@ -2515,7 +2515,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'Foo' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -2736,7 +2738,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers2", async () => {
@@ -2778,7 +2782,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers3", async () => {
@@ -2821,7 +2827,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers4", async () => {
@@ -2864,7 +2872,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers5", async () => {
@@ -2902,7 +2912,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicatePrivateMembers6", async () => {
@@ -2985,7 +2997,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMembers2", async () => {
@@ -3027,7 +3041,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMembers3", async () => {
@@ -3070,7 +3086,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMembers4", async () => {
@@ -3113,7 +3131,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMembers5", async () => {
@@ -3151,7 +3171,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateMembers6", async () => {
@@ -3190,7 +3212,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_StdLibSuperClass", async () => {
@@ -3421,7 +3445,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DiamondInheritance", async () => {
@@ -3582,7 +3608,9 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_SuperClassUsedBeforeDeclared", async () => {

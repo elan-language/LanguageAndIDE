@@ -1,4 +1,4 @@
-# 239ddf4bd5c9a15651e1db6f3668960ba069c627511644164d6206eaba7ead4c Elan 2.0.0-alpha5 valid
+# f25f4635d64ee980876b883cd519b3ae807f90faf3364a7055b1ca95cbbcdcf2 Elan 2.0.0-alpha5 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -27,7 +27,7 @@ main
     end if
     call sleep_ms(150)
   end while
-  call print($"Game Over! Score: {body.length() - 1}")
+  print($"Game Over! Score: {body.length() - 1}")
 end main
 
 procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
