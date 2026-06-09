@@ -1,8 +1,8 @@
 // C# with Elan 2.0.0-alpha5
 
-const Int nDiscs = 7
+const Int nDiscs = 7;
 
-const Int delay_ms = 300
+const Int delay_ms = 300;
 
 static void main() {
   var stacks = create3Stacks(nDiscs);
@@ -52,20 +52,20 @@ static RectangleVG createDisc(int disc, int peg, int vertical) { // function
 [TestMethod] static void test_createDisc() {
   // Normal cases
   var d = createDisc(5, 2, 4);
-  Assert.AreEqual(green, d.fillColour)
-  Assert.AreEqual(0.25, d.strokeWidth)
-  Assert.AreEqual(3, d.height)
-  Assert.AreEqual(12, d.width)
-  Assert.AreEqual(45, d.x)
-  Assert.AreEqual(38, d.y)
+  Assert.AreEqual(green, d.fillColour);
+  Assert.AreEqual(0.25, d.strokeWidth);
+  Assert.AreEqual(3, d.height);
+  Assert.AreEqual(12, d.width);
+  Assert.AreEqual(45, d.x);
+  Assert.AreEqual(38, d.y);
   // Edge cases
   var d2 = createDisc(1, 1, 0);
-  Assert.AreEqual(red, d2.fillColour)
-  Assert.AreEqual(0.25, d2.strokeWidth)
-  Assert.AreEqual(3, d2.height)
-  Assert.AreEqual(4, d2.width)
-  Assert.AreEqual(19, d2.x)
-  Assert.AreEqual(50, d2.y)
+  Assert.AreEqual(red, d2.fillColour);
+  Assert.AreEqual(0.25, d2.strokeWidth);
+  Assert.AreEqual(3, d2.height);
+  Assert.AreEqual(4, d2.width);
+  Assert.AreEqual(19, d2.x);
+  Assert.AreEqual(50, d2.y);
   // Error cases - none identified
 } // test
 
@@ -79,12 +79,12 @@ static List<List<int>> create3Stacks(int nDiscs) { // function
 [TestMethod] static void test_create3Stacks() {
   var emptyStack = new List<int>();
   // Normal case(s)
-  Assert.AreEqual([[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack], create3Stacks(7))
+  Assert.AreEqual([[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack], create3Stacks(7));
   // Edge case(s)
-  Assert.AreEqual([[1], emptyStack, emptyStack], create3Stacks(1))
-  Assert.AreEqual([emptyStack, emptyStack, emptyStack], create3Stacks(0))
+  Assert.AreEqual([[1], emptyStack, emptyStack], create3Stacks(1));
+  Assert.AreEqual([emptyStack, emptyStack, emptyStack], create3Stacks(0));
   // Error case(s)
-  Assert.AreEqual("Loop will not terminate when start < end start with negative step", create3Stacks(-1))
+  Assert.AreEqual("Loop will not terminate when start < end start with negative step", create3Stacks(-1));
 } // test
 
 static int colour(int disc) { // function
@@ -94,12 +94,12 @@ static int colour(int disc) { // function
 
 [TestMethod] static void test_colour() {
   // Normal cases
-  Assert.AreEqual(green, colour(5))
+  Assert.AreEqual(green, colour(5));
   // Edge cases
-  Assert.AreEqual(red, colour(1))
-  Assert.AreEqual(0xFF99CC, colour(10))
+  Assert.AreEqual(red, colour(1));
+  Assert.AreEqual(0xFF99CC, colour(10));
   // Error cases
-  Assert.AreEqual("Out of range index: 10 size: 10", colour(11))
+  Assert.AreEqual("Out of range index: 10 size: 10", colour(11));
 } // test
 
 static int top(List<int> s) { // function
@@ -108,9 +108,9 @@ static int top(List<int> s) { // function
 
 [TestMethod] static void test_top() {
   // Normal cases
-  Assert.AreEqual(1, top([3, 2, 1]))
+  Assert.AreEqual(1, top([3, 2, 1]));
   // Edge cases
-  Assert.AreEqual(7, top([7]))
+  Assert.AreEqual(7, top([7]));
   // Error cases
-  Assert.AreEqual("Out of range index: -1 size: 0", top(new List<int>()))
+  Assert.AreEqual("Out of range index: -1 size: 0", top(new List<int>()));
 } // test

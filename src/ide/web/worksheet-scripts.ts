@@ -311,9 +311,20 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
 
   if (typeof m.data === "string" && m.data.startsWith("language:")) {
     const l = m.data.slice(9);
-    const ws = document.querySelector("#worksheet")!;
-    ws.classList.remove(...ws.classList);
-    ws.classList.add(l);
+    const ws = document.querySelector("#worksheet");
+    if (ws) {
+      ws.classList.remove("elan", "python", "cs", "vb", "java");
+      ws.classList.add(l);
+    }
+  }
+
+  if (typeof m.data === "string" && m.data.startsWith("profile:")) {
+    const l = m.data.slice(8);
+    const ws = document.querySelector("#worksheet");
+    if (ws) {
+      ws.classList.remove("procedural", "oop", "functional");
+      ws.classList.add(l);
+    }
   }
 
   if (typeof m.data === "string" && m.data.startsWith("code:")) {

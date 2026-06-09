@@ -21,7 +21,7 @@ static void main() {
   } // if
 } // main
 
-const Int displayWidth = 150
+const Int displayWidth = 150;
 
 static void saveAsFile(string name, List<List<int>> b) { // procedure
   var file = createFileForWriting(name);
@@ -88,8 +88,8 @@ static int flip01(int v) { // function
 } // function
 
 [TestMethod] static void test_flip01() {
-  Assert.AreEqual(1, flip01(0))
-  Assert.AreEqual(0, flip01(1))
+  Assert.AreEqual(1, flip01(0));
+  Assert.AreEqual(0, flip01(1));
 } // test
 
 static bool isValidQuadrant(int q) { // function
@@ -97,22 +97,22 @@ static bool isValidQuadrant(int q) { // function
 } // function
 
 [TestMethod] static void test_isValidQuadrant() {
-  Assert.AreEqual(false, isValidQuadrant(0))
-  Assert.AreEqual(true, isValidQuadrant(1))
-  Assert.AreEqual(true, isValidQuadrant(2))
-  Assert.AreEqual(true, isValidQuadrant(3))
-  Assert.AreEqual(true, isValidQuadrant(4))
-  Assert.AreEqual(false, isValidQuadrant(5))
-  Assert.AreEqual(true, isValidQuadrant(6))
-  Assert.AreEqual(true, isValidQuadrant(7))
-  Assert.AreEqual(true, isValidQuadrant(8))
-  Assert.AreEqual(true, isValidQuadrant(9))
-  Assert.AreEqual(false, isValidQuadrant(10))
-  Assert.AreEqual(true, isValidQuadrant(11))
-  Assert.AreEqual(true, isValidQuadrant(12))
-  Assert.AreEqual(true, isValidQuadrant(13))
-  Assert.AreEqual(true, isValidQuadrant(14))
-  Assert.AreEqual(false, isValidQuadrant(15))
+  Assert.AreEqual(false, isValidQuadrant(0));
+  Assert.AreEqual(true, isValidQuadrant(1));
+  Assert.AreEqual(true, isValidQuadrant(2));
+  Assert.AreEqual(true, isValidQuadrant(3));
+  Assert.AreEqual(true, isValidQuadrant(4));
+  Assert.AreEqual(false, isValidQuadrant(5));
+  Assert.AreEqual(true, isValidQuadrant(6));
+  Assert.AreEqual(true, isValidQuadrant(7));
+  Assert.AreEqual(true, isValidQuadrant(8));
+  Assert.AreEqual(true, isValidQuadrant(9));
+  Assert.AreEqual(false, isValidQuadrant(10));
+  Assert.AreEqual(true, isValidQuadrant(11));
+  Assert.AreEqual(true, isValidQuadrant(12));
+  Assert.AreEqual(true, isValidQuadrant(13));
+  Assert.AreEqual(true, isValidQuadrant(14));
+  Assert.AreEqual(false, isValidQuadrant(15));
 } // test
 
 class Point {
@@ -143,5 +143,5 @@ class Point {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
-  Assert.AreEqual(expected, n)
+  Assert.AreEqual(expected, n);
 } // test

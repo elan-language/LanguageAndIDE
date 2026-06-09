@@ -247,6 +247,8 @@ export interface ITabViewModel {
 
   setWorksheetLanguage(l: string): void;
   setHelpLanguage(l: string): void;
+  setWorksheetProfile(l: string): void;
+  setHelpProfile(l: string): void;
 }
 
 export interface IIDEViewModel {

@@ -51,6 +51,7 @@ import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
@@ -86,7 +87,8 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof LetStatement ||
       frame instanceof CallStatement ||
       frame instanceof ReAssignVariable ||
-      frame instanceof PrintStatement
+      frame instanceof PrintStatement ||
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -115,10 +117,13 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.SINGLE_QUOTE} <el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof InputStatement) {
+      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.prompt.renderAsHtml()})<br>
+      <el-kw>${this.DIM}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>()`;
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.DIM} <el-kw>${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-type>Console</el-type>.<el-method>WriteLine(${frame.args.renderAsHtml()})`;
+      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

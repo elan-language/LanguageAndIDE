@@ -44,7 +44,7 @@ static string getDate(int unixSecs) { // function
 } // function
 
 [TestMethod] static void test_getDate() {
-  Assert.AreEqual("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991))
+  Assert.AreEqual("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991));
 } // test
 
 static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
@@ -64,7 +64,7 @@ static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
 } // function
 
 [TestMethod] static void test_dateTime() {
-  Assert.AreEqual((8, 49, 51, 90, 2026, 2), dateTime(1774946991))
+  Assert.AreEqual((8, 49, 51, 90, 2026, 2), dateTime(1774946991));
 } // test
 
 static int dayInYear(int year, int unixDays) { // function
@@ -84,7 +84,7 @@ static int dayInYear(int year, int unixDays) { // function
 } // function
 
 [TestMethod] static void test_dayInYear() {
-  Assert.AreEqual(-20087, dayInYear(2025, 1))
+  Assert.AreEqual(-20087, dayInYear(2025, 1));
 } // test
 
 static bool leap(int year) { // function
@@ -93,11 +93,11 @@ static bool leap(int year) { // function
 
 [TestMethod] static void test_leap() {
   // normal cases
-  Assert.AreEqual(false, leap(2025))
-  Assert.AreEqual(true, leap(2024))
+  Assert.AreEqual(false, leap(2025));
+  Assert.AreEqual(true, leap(2024));
   // boundary cases
-  Assert.AreEqual(false, leap(1900))
-  Assert.AreEqual(true, leap(2000))
+  Assert.AreEqual(false, leap(1900));
+  Assert.AreEqual(true, leap(2000));
 } // test
 
 static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
@@ -129,11 +129,11 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
 
 // Unix epoch is 1970.01.01 00:00:00 Thursday
 
-const Int unixYear = 1970
+const Int unixYear = 1970;
 
-const Int unixWeekday = 4
+const Int unixWeekday = 4;
 
-const Int daySecs = 86400
+const Int daySecs = 86400;
 
 // day and month names, and day numbers
 
@@ -143,8 +143,8 @@ static string getWeekdayName(int weekDay) { // function
 } // function
 
 [TestMethod] static void test_getWeekdayName() {
-  Assert.AreEqual("Sun", getWeekdayName(0))
-  Assert.AreEqual("Sat", getWeekdayName(6))
+  Assert.AreEqual("Sun", getWeekdayName(0));
+  Assert.AreEqual("Sat", getWeekdayName(6));
 } // test
 
 static string getMonthName(int month) { // function
@@ -153,8 +153,8 @@ static string getMonthName(int month) { // function
 } // function
 
 [TestMethod] static void test_getMonthName() {
-  Assert.AreEqual("Jan", getMonthName(1))
-  Assert.AreEqual("Dec", getMonthName(12))
+  Assert.AreEqual("Jan", getMonthName(1));
+  Assert.AreEqual("Dec", getMonthName(12));
 } // test
 
 static List<int> getStartDays() { // function
@@ -166,9 +166,9 @@ static string padLwithZero(int i) { // function
 } // function
 
 [TestMethod] static void test_padLwithZero() {
-  Assert.AreEqual("01", padLwithZero(1))
-  Assert.AreEqual("10", padLwithZero(10))
-  Assert.AreEqual("00", padLwithZero(0))
+  Assert.AreEqual("01", padLwithZero(1));
+  Assert.AreEqual("10", padLwithZero(10));
+  Assert.AreEqual("00", padLwithZero(0));
 } // test
 
 static string pad(string d, string p, string s) { // function

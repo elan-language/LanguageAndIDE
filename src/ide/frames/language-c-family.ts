@@ -41,6 +41,7 @@ import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
@@ -76,7 +77,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof AbstractProperty ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractFunction ||
-      frame instanceof PrintStatement
+      frame instanceof PrintStatement ||
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }

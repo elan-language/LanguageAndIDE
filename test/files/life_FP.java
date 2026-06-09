@@ -21,15 +21,15 @@ static List<List<int>> initialGrid(Random rng) { // function
 
 @Test static void test_initialGrid() {
   var grid = initialGrid(new Random()); // let
-  assertEquals(black, grid[0][0])
-  assertEquals(white, grid[1][0])
-  assertEquals(white, grid[2][0])
-  assertEquals(white, grid[0][1])
-  assertEquals(black, grid[1][1])
-  assertEquals(white, grid[2][1])
-  assertEquals(black, grid[0][2])
-  assertEquals(black, grid[1][2])
-  assertEquals(black, grid[2][2])
+  assertEquals(black, grid[0][0]);
+  assertEquals(white, grid[1][0]);
+  assertEquals(white, grid[2][0]);
+  assertEquals(white, grid[0][1]);
+  assertEquals(black, grid[1][1]);
+  assertEquals(white, grid[2][1]);
+  assertEquals(black, grid[0][2]);
+  assertEquals(black, grid[1][2]);
+  assertEquals(black, grid[2][2]);
 } // test
 
 static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c) { // function
@@ -49,18 +49,18 @@ static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c)
   var result = appendCol((emptyGrid, rng), 0); // let
   var grid1 = result.item_0; // let
   var col = grid1[0]; // let
-  assertEquals(black, col[0])
-  assertEquals(white, col[1])
-  assertEquals(black, col[2])
-  assertEquals(black, col[29])
+  assertEquals(black, col[0]);
+  assertEquals(white, col[1]);
+  assertEquals(black, col[2]);
+  assertEquals(black, col[29]);
   var rng2 = result.item_1; // let
   var result2 = appendCol((grid1, rng2), 1); // let
   var grid2 = result2.item_0; // let
   var col2 = grid2[1]; // let
-  assertEquals(white, col2[0])
-  assertEquals(black, col2[1])
-  assertEquals(black, col2[2])
-  assertEquals(white, col2[29])
+  assertEquals(white, col2[0]);
+  assertEquals(black, col2[1]);
+  assertEquals(black, col2[2]);
+  assertEquals(white, col2[29]);
 } // test
 
 static (List<int>, Random) initialCol(Random rng) { // function
@@ -73,16 +73,16 @@ static (List<int>, Random) initialCol(Random rng) { // function
   var rng = new Random(); // let
   var result = initialCol(rng); // let
   var col = result.item_0; // let
-  assertEquals(black, col[0])
-  assertEquals(white, col[1])
-  assertEquals(black, col[2])
-  assertEquals(black, col[29])
+  assertEquals(black, col[0]);
+  assertEquals(white, col[1]);
+  assertEquals(black, col[2]);
+  assertEquals(black, col[29]);
   var rng2 = result.item_1; // let
   var col2 = initialCol(rng2).item_0; // let
-  assertEquals(white, col2[0])
-  assertEquals(black, col2[1])
-  assertEquals(black, col2[2])
-  assertEquals(white, col2[29])
+  assertEquals(white, col2[0]);
+  assertEquals(black, col2[1]);
+  assertEquals(black, col2[2]);
+  assertEquals(white, col2[29]);
 } // test
 
 static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // function
@@ -96,13 +96,13 @@ static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // fun
   var emptyList = new List<int>(); // let
   var result = appendCell((emptyList, rng), 0); // let
   var col = result.item_0; // let
-  assertEquals(1, col.length())
-  assertEquals(black, col[0])
+  assertEquals(1, col.length());
+  assertEquals(black, col[0]);
   var rng2 = result.item_1; // let
   var result2 = appendCell((col, rng2), 1); // let
   var col2 = result2.item_0; // let
-  assertEquals(2, col2.length())
-  assertEquals(white, col2[1])
+  assertEquals(2, col2.length());
+  assertEquals(white, col2[1]);
 } // test
 
 static int blackOrWhite(Random rng) { // function
@@ -114,10 +114,10 @@ static int blackOrWhite(Random rng) { // function
   var rng1 = rng0.nextGen(); // let
   var rng2 = rng1.nextGen(); // let
   var rng3 = rng2.nextGen(); // let
-  assertEquals(black, blackOrWhite(rng0))
-  assertEquals(white, blackOrWhite(rng1))
-  assertEquals(black, blackOrWhite(rng2))
-  assertEquals(black, blackOrWhite(rng3))
+  assertEquals(black, blackOrWhite(rng0));
+  assertEquals(white, blackOrWhite(rng1));
+  assertEquals(black, blackOrWhite(rng2));
+  assertEquals(black, blackOrWhite(rng3));
 } // test
 
 static (int, int) north((int, int) cell) { // function
@@ -128,10 +128,10 @@ static (int, int) north((int, int) cell) { // function
 } // function
 
 @Test static void test_north() {
-  assertEquals((3, 3), north((3, 4)))
-  assertEquals((39, 29), north((39, 0)))
-  assertEquals((0, 28), north((0, 29)))
-  assertEquals((39, 28), north((39, 29)))
+  assertEquals((3, 3), north((3, 4)));
+  assertEquals((39, 29), north((39, 0)));
+  assertEquals((0, 28), north((0, 29)));
+  assertEquals((39, 28), north((39, 29)));
 } // test
 
 static (int, int) south((int, int) cell) { // function
@@ -142,10 +142,10 @@ static (int, int) south((int, int) cell) { // function
 } // function
 
 @Test static void test_south() {
-  assertEquals((3, 5), south((3, 4)))
-  assertEquals((39, 1), south((39, 0)))
-  assertEquals((0, 0), south((0, 29)))
-  assertEquals((39, 0), south((39, 29)))
+  assertEquals((3, 5), south((3, 4)));
+  assertEquals((39, 1), south((39, 0)));
+  assertEquals((0, 0), south((0, 29)));
+  assertEquals((39, 0), south((39, 29)));
 } // test
 
 static (int, int) east((int, int) cell) { // function
@@ -156,10 +156,10 @@ static (int, int) east((int, int) cell) { // function
 } // function
 
 @Test static void test_east() {
-  assertEquals((11, 2), east((10, 2)))
-  assertEquals((0, 0), east((39, 0)))
-  assertEquals((1, 1), east((0, 1)))
-  assertEquals((0, 29), east((39, 29)))
+  assertEquals((11, 2), east((10, 2)));
+  assertEquals((0, 0), east((39, 0)));
+  assertEquals((1, 1), east((0, 1)));
+  assertEquals((0, 29), east((39, 29)));
 } // test
 
 static (int, int) west((int, int) cell) { // function
@@ -170,10 +170,10 @@ static (int, int) west((int, int) cell) { // function
 } // function
 
 @Test static void test_west() {
-  assertEquals((2, 4), west((3, 4)))
-  assertEquals((38, 0), west((39, 0)))
-  assertEquals((39, 0), west((0, 0)))
-  assertEquals((39, 29), west((0, 29)))
+  assertEquals((2, 4), west((3, 4)));
+  assertEquals((38, 0), west((39, 0)));
+  assertEquals((39, 0), west((0, 0)));
+  assertEquals((39, 29), west((0, 29)));
 } // test
 
 static (int, int) northEast((int, int) cell) { // function
@@ -181,11 +181,11 @@ static (int, int) northEast((int, int) cell) { // function
 } // function
 
 @Test static void test_northEast() {
-  assertEquals((4, 3), northEast((3, 4)))
-  assertEquals((1, 29), northEast((0, 0)))
-  assertEquals((0, 29), northEast((39, 0)))
-  assertEquals((1, 28), northEast((0, 29)))
-  assertEquals((0, 28), northEast((39, 29)))
+  assertEquals((4, 3), northEast((3, 4)));
+  assertEquals((1, 29), northEast((0, 0)));
+  assertEquals((0, 29), northEast((39, 0)));
+  assertEquals((1, 28), northEast((0, 29)));
+  assertEquals((0, 28), northEast((39, 29)));
 } // test
 
 static (int, int) northWest((int, int) cell) { // function
@@ -193,19 +193,19 @@ static (int, int) northWest((int, int) cell) { // function
 } // function
 
 @Test static void test_northWest() {
-  assertEquals((2, 3), northWest((3, 4)))
-  assertEquals((39, 29), northWest((0, 0)))
-  assertEquals((38, 29), northWest((39, 0)))
-  assertEquals((39, 28), northWest((0, 29)))
-  assertEquals((38, 28), northWest((39, 29)))
+  assertEquals((2, 3), northWest((3, 4)));
+  assertEquals((39, 29), northWest((0, 0)));
+  assertEquals((38, 29), northWest((39, 0)));
+  assertEquals((39, 28), northWest((0, 29)));
+  assertEquals((38, 28), northWest((39, 29)));
 } // test
 
 @Test static void test_southEast() {
-  assertEquals((4, 5), southEast((3, 4)))
-  assertEquals((1, 1), southEast((0, 0)))
-  assertEquals((0, 1), southEast((39, 0)))
-  assertEquals((1, 0), southEast((0, 29)))
-  assertEquals((0, 0), southEast((39, 29)))
+  assertEquals((4, 5), southEast((3, 4)));
+  assertEquals((1, 1), southEast((0, 0)));
+  assertEquals((0, 1), southEast((39, 0)));
+  assertEquals((1, 0), southEast((0, 29)));
+  assertEquals((0, 0), southEast((39, 29)));
 } // test
 
 static (int, int) southEast((int, int) cell) { // function
@@ -217,11 +217,11 @@ static (int, int) southWest((int, int) cell) { // function
 } // function
 
 @Test static void test_southWest() {
-  assertEquals((2, 5), southWest((3, 4)))
-  assertEquals((39, 1), southWest((0, 0)))
-  assertEquals((38, 1), southWest((39, 0)))
-  assertEquals((39, 0), southWest((0, 29)))
-  assertEquals((38, 0), southWest((39, 29)))
+  assertEquals((2, 5), southWest((3, 4)));
+  assertEquals((39, 1), southWest((0, 0)));
+  assertEquals((38, 1), southWest((39, 0)));
+  assertEquals((39, 0), southWest((0, 29)));
+  assertEquals((38, 0), southWest((39, 29)));
 } // test
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
@@ -230,9 +230,9 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
 } // function
 
 @Test static void test_neighbourCells() {
-  assertEquals([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4))
-  assertEquals([(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)], neighbourCells(0, 0))
-  assertEquals([(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)], neighbourCells(39, 29))
+  assertEquals([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4));
+  assertEquals([(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)], neighbourCells(0, 0));
+  assertEquals([(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)], neighbourCells(39, 29));
 } // test
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
@@ -243,7 +243,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
 @Test static void test_liveNeighbours() {
   var grid = initialGrid(new Random()); // let
   var live = liveNeighbours(grid, 1, 1); // let
-  assertEquals(4, live)
+  assertEquals(4, live);
 } // test
 
 static bool willLive(int cell, int liveNeighbours) { // function
@@ -251,24 +251,24 @@ static bool willLive(int cell, int liveNeighbours) { // function
 } // function
 
 @Test static void test_willLive() {
-  assertEquals(false, willLive(white, 0))
-  assertEquals(false, willLive(white, 1))
-  assertEquals(false, willLive(white, 2))
-  assertEquals(true, willLive(white, 3))
-  assertEquals(false, willLive(white, 4))
-  assertEquals(false, willLive(white, 5))
-  assertEquals(false, willLive(white, 6))
-  assertEquals(false, willLive(white, 7))
-  assertEquals(false, willLive(white, 8))
-  assertEquals(false, willLive(black, 0))
-  assertEquals(false, willLive(black, 1))
-  assertEquals(true, willLive(black, 2))
-  assertEquals(true, willLive(black, 3))
-  assertEquals(false, willLive(black, 4))
-  assertEquals(false, willLive(black, 5))
-  assertEquals(false, willLive(black, 6))
-  assertEquals(false, willLive(black, 7))
-  assertEquals(false, willLive(black, 8))
+  assertEquals(false, willLive(white, 0));
+  assertEquals(false, willLive(white, 1));
+  assertEquals(false, willLive(white, 2));
+  assertEquals(true, willLive(white, 3));
+  assertEquals(false, willLive(white, 4));
+  assertEquals(false, willLive(white, 5));
+  assertEquals(false, willLive(white, 6));
+  assertEquals(false, willLive(white, 7));
+  assertEquals(false, willLive(white, 8));
+  assertEquals(false, willLive(black, 0));
+  assertEquals(false, willLive(black, 1));
+  assertEquals(true, willLive(black, 2));
+  assertEquals(true, willLive(black, 3));
+  assertEquals(false, willLive(black, 4));
+  assertEquals(false, willLive(black, 5));
+  assertEquals(false, willLive(black, 6));
+  assertEquals(false, willLive(black, 7));
+  assertEquals(false, willLive(black, 8));
 } // test
 
 static int nextCellValue(List<List<int>> grid, int x, int y) { // function
@@ -279,7 +279,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
 @Test static void test_nextCellValue() {
   var grid = initialGrid(new Random()); // let
   var nxt = nextCellValue(grid, 1, 1); // let
-  assertEquals(white, nxt)
+  assertEquals(white, nxt);
 } // test
 
 static List<List<int>> nextGeneration(List<List<int>> grid) { // function
@@ -296,10 +296,10 @@ static List<int> nextCol(List<List<int>> grid, int x) { // function
 @Test static void test_nextCol() {
   var grid = initialGrid(new Random()); // let
   var col = nextCol(grid, 3); // let
-  assertEquals(black, col[0])
-  assertEquals(black, col[1])
-  assertEquals(white, col[2])
-  assertEquals(black, col[29])
+  assertEquals(black, col[0]);
+  assertEquals(black, col[1]);
+  assertEquals(white, col[2]);
+  assertEquals(black, col[29]);
 } // test
 
 }

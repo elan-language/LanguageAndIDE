@@ -6,23 +6,23 @@ public class Global {
 
 // - rule for no more than 'n' same characters in succession
 
-final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" // constant
+final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // constant
 
-final String lowerChars = "abcdefghijklmnopqrstuvwxyz" // constant
+final String lowerChars = "abcdefghijklmnopqrstuvwxyz"; // constant
 
-final String digitChars = "01234567890" // constant
+final String digitChars = "01234567890"; // constant
 
-final String symbolChars = "!$%^&*" // constant
+final String symbolChars = "!$%^&*"; // constant
 
-final Int length = 32 // constant
+final Int length = 32; // constant
 
-final Boolean upper = true // constant
+final Boolean upper = true; // constant
 
-final Boolean lower = true // constant
+final Boolean lower = true; // constant
 
-final Boolean digit = true // constant
+final Boolean digit = true; // constant
 
-final Boolean symbol = true // constant
+final Boolean symbol = true; // constant
 
 static void main() {
   var all = upperChars + lowerChars + digitChars + symbolChars;
@@ -34,7 +34,7 @@ static void main() {
     password = pwRef.value(); // reassign variable
     valid = isValid(password, upper, lower, digit, symbol); // reassign variable
   } // while
-  System.out.println(password) // print
+  System.out.println(password); // print
 } // main
 
 static void populatePassword(AsRef<String> password, String all) { // procedure
@@ -53,11 +53,11 @@ static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, boo
 } // function
 
 @Test static void test_isValid() {
-  assertEquals(true, isValid("$4De", true, true, true, true))
-  assertEquals(false, isValid("$4de", true, true, true, true))
-  assertEquals(true, isValid("$4de", false, true, true, true))
-  assertEquals(true, isValid("eD$4", true, true, true, true))
-  assertEquals(true, isValid("$4De$4De", true, true, true, true))
+  assertEquals(true, isValid("$4De", true, true, true, true));
+  assertEquals(false, isValid("$4de", true, true, true, true));
+  assertEquals(true, isValid("$4de", false, true, true, true));
+  assertEquals(true, isValid("eD$4", true, true, true, true));
+  assertEquals(true, isValid("$4De$4De", true, true, true, true));
 } // test
 
 static bool passesRule(bool rule, String charSet, String password) { // function
@@ -65,10 +65,10 @@ static bool passesRule(bool rule, String charSet, String password) { // function
 } // function
 
 @Test static void test_passesRule() {
-  assertEquals(true, passesRule(true, "12A", "ABC"))
-  assertEquals(true, passesRule(false, "12A", "ABC"))
-  assertEquals(false, passesRule(true, "12", "ABCD"))
-  assertEquals(true, passesRule(false, "12", "ABCD"))
+  assertEquals(true, passesRule(true, "12A", "ABC"));
+  assertEquals(true, passesRule(false, "12A", "ABC"));
+  assertEquals(false, passesRule(true, "12", "ABCD"));
+  assertEquals(true, passesRule(false, "12", "ABCD"));
 } // test
 
 static bool hasAtLeastOneFrom(String fromChars, String password) { // function
@@ -80,9 +80,9 @@ static bool hasAtLeastOneFrom(String fromChars, String password) { // function
 } // function
 
 @Test static void test_hasAtLeastOneFrom() {
-  assertEquals(true, hasAtLeastOneFrom("12A", "ABC"))
-  assertEquals(true, hasAtLeastOneFrom("C12", "ABC"))
-  assertEquals(false, hasAtLeastOneFrom("12", "ABCD"))
+  assertEquals(true, hasAtLeastOneFrom("12A", "ABC"));
+  assertEquals(true, hasAtLeastOneFrom("C12", "ABC"));
+  assertEquals(false, hasAtLeastOneFrom("12", "ABCD"));
 } // test
 
 }
