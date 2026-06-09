@@ -30,6 +30,7 @@ export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
 export const orKeyword = "or";
+export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
@@ -95,6 +96,7 @@ const elanKeywords: string[] = [
   notKeyword,
   ofKeyword,
   orKeyword,
+  printKeyword,
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
