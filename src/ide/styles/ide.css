@@ -332,13 +332,13 @@ button.icon:active img + label
   float: right;
 }
 
-#languages-dialog button {
+/* #languages-dialog button {
   margin-top: 10px;
   margin-right: 0;
   background-color: white;
   color: black;
   float: left;
-}
+} */
 
 #languages-dialog button#confirmLanguagesBtn {
   background-color: var(--ideBackground);
@@ -354,7 +354,6 @@ button.icon:active img + label
 }
 
 #languages-dialog
-
 .dropdown-content button.plain,
 .dropdown-content button.plain:hover,
 .dropdown-content button.plain:active,
@@ -452,6 +451,11 @@ button.icon:active img + label
   /* width of button bar */
   padding-left: 5px;
   padding-right: 5px;
+}
+
+#languages-dialog .dropdown-content {
+  top: 25px;
+  width: 150px;
 }
 
 .menu-item:focus,
@@ -758,10 +762,8 @@ body.functional div.demo-file.functional { display: revert; }
   display: none;
 }
 
-
-
 .panes {
-  height: 400px;
+  height: 300px;
   width: 400px;
   display: grid;
   grid-template-columns: 50% 50%; 

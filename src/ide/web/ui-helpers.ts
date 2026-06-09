@@ -627,5 +627,5 @@ export function getAllLanguages() {
 export function getLanguageByClass(cl: string) {
   const languages = getAllLanguages();
   cl = cl.replace("code", "").trim();
-  return languages.find((l) => l.languageHtmlClass === cl) ?? LanguageElan.Instance;
+  return languages.find((l) => l.languageHtmlClass === cl) ?? LanguagePython.Instance;
 }
