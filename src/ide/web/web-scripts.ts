@@ -181,6 +181,14 @@ class TabViewModel implements ITabViewModel {
   setHelpLanguage(l: string) {
     helpIFrame.contentWindow?.postMessage(`language:${l}`, "*");
   }
+
+  setWorksheetProfile(l: string) {
+    worksheetIFrame.contentWindow?.postMessage(`profile:${l}`, "*");
+  }
+
+  setHelpProfile(l: string) {
+    helpIFrame.contentWindow?.postMessage(`profile:${l}`, "*");
+  }
 }
 
 class IDEViewModel implements IIDEViewModel {
@@ -744,11 +752,7 @@ class IDEViewModel implements IIDEViewModel {
     }
 
     if (!document.querySelector("body")!.classList.contains("quad-editor")) {
-      codeContainers[0].classList.remove("elan");
-      codeContainers[0].classList.remove("python");
-      codeContainers[0].classList.remove("cs");
-      codeContainers[0].classList.remove("vb");
-      codeContainers[0].classList.remove("java");
+      codeContainers[0].classList.remove("elan", "python", "cs", "vb", "java");
       codeContainers[0].classList.add(l.languageHtmlClass);
     }
 
@@ -877,6 +881,8 @@ async function profileEventHandler(this: HTMLDivElement, _event: MouseEvent) {
     const bodyClassList = docBody.classList;
     bodyClassList.remove(oldProfileName);
     bodyClassList.add(profileName);
+    tabViewModel.setWorksheetProfile(profileName);
+    tabViewModel.setHelpProfile(profileName);
   }
 }
 proceduralButton?.addEventListener("click", profileEventHandler);
