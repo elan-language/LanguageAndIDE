@@ -1044,6 +1044,7 @@ languagesButton.addEventListener("click", (event: Event) => {
 
 quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
   document.querySelector("body")!.classList.toggle("quad-editor");
+  document.getElementById("languages-dialog")!.classList.toggle("quad-view");
   const quadView = document.querySelector("body")!.classList.contains("quad-editor");
   quadEditorCheckBox.checked = quadView;
   const classNames = Array.from(codeContainers).map((c) => c.className);
