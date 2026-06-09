@@ -231,7 +231,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  call print(li)
+  print(li)
 end main
 </codeblock>
 <hr>
@@ -256,7 +256,7 @@ end main
 <p>Procedure calls are of two kinds:</p>
 <ul>
  <li>to execute an action:<br>
- <code>call print(aList)</code></li>
+ <code>print(aList)</code></li>
  <li>to apply a <b>procedure</b> to a value using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a>:<br>
  <code>call aList.removeAt(4)</code></li>
 </ul>
@@ -305,7 +305,7 @@ main
   variable arg set to "abc"
   variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
-  call print(argRef.value())
+  print(argRef.value())
 end main
 procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
@@ -360,7 +360,7 @@ function score(g as Game) returns Int
 end function
 main
   variable g set to new Game()
-  call print(score(g))
+  print(score(g))
 end main
 </codeblock>
 <hr>
@@ -520,8 +520,8 @@ end test
 <codeblock>
 main
   variable x set to new Thing()
-  call print(x)
-  call print(x.names.toString())
+  print(x)
+  print(x.names.toString())
 end main
 class Thing
   property names as List&lt;of String&gt;
@@ -702,7 +702,7 @@ end function
 enum Compass north, east, south, west
 main
   variable dir set to Compass.south
-  call print(enumValue(clockwise(dir)))
+  print(enumValue(clockwise(dir)))
 end main
 function clockwise(d as Compass) returns Compass
   variable newDir set to Compass.north
@@ -869,9 +869,9 @@ main
   variable tTom set to new Teacher()
   variable pPete set to new Pupil()
   if pPete.tutor.hasValue() then
-    call print(pPete.tutor)
+    print(pPete.tutor)
   end if
-  call print(p)
+  print(p)
 end main
 class Teacher
   constructor()
@@ -1043,7 +1043,7 @@ end main
 main
   variable file set to openFileForReading()
   while not file.endOfFile()
-    call print(file.readLine())
+    print(file.readLine())
   end while
   call file.close()
 end main
@@ -1068,7 +1068,7 @@ and each integer in the List <el-id>primes</el-id> is in turn put into <el-id>n<
 procedure printPrimes()
   variable primes set to [2, 3, 5, 7, 11]
   for n in primes
-    call print(n)
+    print(n)
   end for
 end procedure
 </codeblock>
@@ -1080,7 +1080,7 @@ and each String in the List <el-id>basket</el-id> is in turn put into <el-id>fru
 main
   variable basket set to ["apple", "banana", "cherry", "date"]
   for fruit in basket
-    call print(fruit)
+    print(fruit)
   end for
 end main
 </codeblock>
@@ -1091,10 +1091,10 @@ end main
 main
   variable di set to ["A":1, "B":2, "C":3]
   for s in di.keys()
-    call print(s)
+    print(s)
   end for
   for n in di.values()
-    call print(n)
+    print(n)
   end for
 end main
 </codeblock>
@@ -1103,7 +1103,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Function to reverse a <code>String</code>:</p>
 <codeblock>
 main
-  call print(reverse("stressed"))
+  print(reverse("stressed"))
 end main
 function reverse(s as String) returns String
   variable sReturn set to ""
@@ -1121,7 +1121,7 @@ end function
 main
   variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
   for n in range(2, 6)
-    call print(numbers[n])
+    print(numbers[n])
   end for
 end main
 </codeblock>
@@ -1189,9 +1189,9 @@ So even if the loop variable is changed in any way within the <b>for loop</b>, t
 main
   try
     variable t set to foo(true)
-    call print("no error")
+    print("no error")
   catch err as CustomError
-    call print(err)
+    print(err)
   end try
 end main
 function foo(torf as Boolean) returns Boolean
@@ -1233,7 +1233,7 @@ end function
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
 <codeblock>
 main
-  call print($"{percent(23, 20)}" + "%")
+  print($"{percent(23, 20)}" + "%")
 end main
 function percent(value as Float, maximum as Float) returns Float
   if value > maximum then
@@ -1312,9 +1312,9 @@ then an empty string or list is returned.</p>
 <codeblock>
 main
   variable a set to "Hello world!"
-  call print(a[4])
-  call print(a.subString(4, a.length()))
-  call print(a.subString(0, 7))
+  print(a[4])
+  print(a.subString(4, a.length()))
+  print(a.subString(0, 7))
 end main
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -1330,9 +1330,9 @@ end main
 main
   variable li set to new List&lt;of Int&gt;()
   reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  call print(li[4])
-  call print(li.subList(4, li.length()))
-  call print(li.subList(0, 7))
+  print(li[4])
+  print(li.subList(4, li.length()))
+  print(li.subList(0, 7))
 end main
 </codeblock>
  </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -1350,7 +1350,7 @@ end main
 <p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 <div id="power"></div>
 <p>For raising one value to the power of another, use the syntax in these examples:<br></p>
-<code>call print(pow(4, 4))</code><br>
+<code>print(pow(4, 4))</code><br>
 <code>variable c set to sqrt(pow(a, 2) + pow(b, 2))</code>
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
 <div id="mod"></div>
@@ -1474,10 +1474,10 @@ Two instances which are subclasses of the same abstract class compare equal only
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>
 main
-  call print(sin(radians(30)))
+  print(sin(radians(30)))
   variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
   variable name set to input("Your name")
-  call print(name.upperCase())
+  print(name.upperCase())
 end main
 </codeblock>
 
@@ -1546,7 +1546,7 @@ main
   call testPi(p, 4)
 end main
 procedure testPi(p as String, v as Float)
-  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
+  print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>

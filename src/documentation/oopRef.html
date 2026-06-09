@@ -281,7 +281,7 @@ function toString() returns String
 end function
 </codeblock>
 
-(You might like to try this out, <i>temporarily</i>adding the instruction <code>call print(snake)</code> into the main routine.)
+(You might like to try this out, <i>temporarily</i>adding the instruction <code>print(snake)</code> into the main routine.)
 
 <h2 class="no-TOC">Procedure method</h2>
 
@@ -413,8 +413,8 @@ In particular of a singleton that is doing most of the work. This pattern is oft
 <codeblock>
 main
   variable x set to new Thing()
-  call print(x)
-  call print(x.names.toString())
+  print(x)
+  print(x.names.toString())
 end main
 class Thing
   property names as List&lt;of String&gt;
@@ -573,9 +573,9 @@ main
   variable tTom set to new Teacher()
   variable pPete set to new Pupil()
   if pPete.tutor.hasValue() then
-    call print(pPete.tutor)
+    print(pPete.tutor)
   end if
-  call print(p)
+  print(p)
 end main
 class Teacher
   constructor()
