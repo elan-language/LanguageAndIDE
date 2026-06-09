@@ -676,7 +676,7 @@ end function
 <h2 id="enumValue">Enum</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Further examples of enums</h3>
+<h3 class="no-TOC acc-title">Examples of enums</h3>
 <div class="acc-body">
 <p>From the <b>Snake - procedural</b> demo, the enum is defined here:</p>
 
@@ -1211,6 +1211,103 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 </div></div>
 </div>
 
+<div id="print_statement">
+<h2>Print statement</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of print statements</h4>
+<div class="acc-body">
+
+  <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
+    inline within the print statement:</code></p>
+
+<codeblock>
+main
+  variable reply set to ""
+  while not reply.upperCase().equals("Q")
+    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    if reply.equals("") then
+      variable now set to divAsInt(clock(), 1000)
+      print(now)
+      print(getDate(now))
+    else
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch e as ElanRuntimeError
+      end try
+    end if
+  end while
+end main
+</codeblock>
+
+<p>From the <b>Ripple sort</b> demo, printing a list:</code></p>
+
+  <codeblock>
+main
+  variable li set to [7, 1, 0, 4, 8, 3, 6]
+  print(li)
+  call inPlaceRippleSort(li)
+  call print(li)
+end main
+  </codeblock>
+
+<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</code></p>
+
+  <codeblock>
+main
+  variable blocks set to createBlockGraphics(white)
+  variable head set to [20, 15]
+  variable tail set to head
+  variable body set to [head]
+  variable currentDir set to Direction.right
+  variable gameOn set to true
+  variable apple set to [0, 0]
+  call setAppleToRandomPosition(apple, body)
+  while gameOn
+    call updateDisplay(blocks, head, tail, body, apple)
+    variable currentDirRef set to new AsRef<of Direction>(currentDir)
+    variable headRef set to new AsRef<of List<of Int>>(head)
+    variable tailRef set to new AsRef<of List<of Int>>(tail)
+    call updateSnake(currentDirRef, tailRef, headRef, body)
+    reassign head to headRef.value()
+    reassign tail to tailRef.value()
+    reassign currentDir to currentDirRef.value()
+    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    if head.equals(apple) then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+    end if
+    call sleep_ms(150)
+  end while
+  call print($"Game Over! Score: {body.length() - 1}")
+end main
+  </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about print statements</h3>
+<div class="acc-body">
+
+  <ul>
+<li>The print statement writes a value to <b>display</b>.</li>
+<li>It automatically prints a new line after the value.</li>
+<li>The value can be any expression, except for an enum value (which has no printed representation)</li>
+<li>You must provide a value; if you just want to print a blank line, just set the value to <code>""</code>.</li>
+<li>The recommended way to print multiple values is to use an interpolated string (see third example above)</li>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+<p><a href="LibRef.html#InterpolatedString">Interpolated string</a></p>
+</div></div>
+</div>
+
 <div id="try">
 <div id="catch"></div>
 <h2>Try</h2>
@@ -1317,6 +1414,297 @@ end function
 <p>See <a href="#Comment">Comments</a></p>
 </div>
 </div>
+
+<h1 id="Expression">Expressions</h1>
+<p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
+<ul>
+<li><a href="#literalValue">Literal value <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#namedValue">Named value <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
+<li><a href="#functionCall"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
+</ul>
+
+<h2 id="literalValue">Literal value</h2>
+<p>A literal value is where a value is written 'literally' in the code, such as <code>3.142</code>, in contrast to a value that is referred to by a name.</p>
+<p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
+<table>
+<tr><th>Type</th><th>Example of literal</th></tr>
+<tr><td><a href="LibRef.html#Int">Int <i class="fa">&#xf08e;</i></a></td><td><code>3</code></td></tr>
+<tr><td><a href="LibRef.html#Float">Float <i class="fa">&#xf08e;</i></a></td><td><code>2.0</code></td></tr>
+<tr><td><a href="LibRef.html#Boolean">Boolean <i class="fa">&#xf08e;</i></a></td><td><el-id>true</el-id></td></tr>
+<tr><td><a href="LibRef.html#String">String <i class="fa">&#xf08e;</i></a></td><td><code>"Hello"</code></td></tr>
+<tr><td><a href="LibRef.html#Tuple">Tuple <i class="fa">&#xf08e;</i></a></td><td><code>(3, "banana")</code></td></tr>
+<tr><td><a href="LibRef.html#List">List <i class="fa">&#xf08e;</i></a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
+<tr><td><a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a></td><td><code>["a":3, "b":5]</code></td></tr>
+</table>
+<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.</p>
+
+<div id="range"></div>
+<h2 id="IndexedValue">Indexed values</h2>
+<p>If a named value is of an indexable type (<code>String</code> or <code>List</code>), then you can refer to a contiguous subset (or range) of its values
+ using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
+<p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
+<p>If the two index values of a range are equal, or the second is smaller than the first,
+then an empty string or list is returned.</p>
+<p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
+<a href="LibRef.html#put_List"><el-method>put</el-method> <i class="fa">&#xf08e;</i></a>.</p>
+
+<p>Example using indexing on a string:</p>
+<table class="tablePlain">
+<tr>
+ <td>
+<codeblock>
+main
+  variable a set to "Hello world!"
+  call print(a[4])
+  call print(a.subString(4, a.length()))
+  call print(a.subString(0, 7))
+end main
+</codeblock>
+ </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><el-code><br><br>o</el-type><br>o world!<br>Hello w</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
+
+<p>And on a list:</p>
+<table class="tablePlain">
+<tr>
+ <td>
+<codeblock>
+main
+  variable li set to new List&lt;of Int&gt;()
+  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  call print(li[4])
+  call print(li.subList(4, li.length()))
+  call print(li.subList(0, 7))
+end main
+</codeblock>
+ </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
+  <td><el-code><br><br><br>4</el-code> &nbsp;&nbsp;&nbsp; (the value of the list item)<br><el-code>[4, 5, 6, 7, 8, 9, 10, 11]</el-code> &nbsp;&nbsp;&nbsp; (a new list)<br><el-code>[0, 1, 2, 3, 4, 5, 6]</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+</tr>
+</table>
+
+<div id="operator"></div>
+<h2 id="Operators">Operators</h2>
+
+<h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
+
+<p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
+<p>For the  + &minus; *  operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
+<p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
+<div id="power"></div>
+<p>For raising one value to the power of another, use the syntax in these examples:<br></p>
+<code>call print(pow(4, 4))</code><br>
+<code>variable c set to sqrt(pow(a, 2) + pow(b, 2))</code>
+<p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
+<div id="mod"></div>
+<p> The operator <b>mod</b> (integer remainder) is applied only to <code>Int</code> arguments, and the result is <code>Int</code>.</p>
+<table class="tablePlain">
+<tr>
+ <td><code>2/3.0</code></td><td>&#x27f6;</td><td>0.666..</td>
+</tr><tr>
+ <td><code>2*3</code></td><td>&#x27f6;</td><td>6</td>
+</tr><tr>
+ <td><code>2 + 3</code></td><td>&#x27f6;</td><td>5</td>
+</tr><tr>
+ <td><code>2 - 3</code></td><td>&#x27f6;</td><td>&minus;1</td>
+</tr><tr>
+ <td><code>11 mod 3</code></td><td>&#x27f6;</td><td>2</td>
+</tr>
+</table>
+<p>For integer division, either use method <el-method>floor</el-method> on a <code>Float</code> result, or use method <el-method>divAsInt</el-method> on <code>Float</code> arguments (which returns an <code>Int</code>):</p>
+<table class="tablePlain">
+<tr>
+ <td><code>(11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>3</td>
+</tr><tr>
+ <td><code>(-11.0/3.0).floor()</code></td><td>&#x27f6;</td><td>&minus;4</td>
+</tr><tr>
+ <td><code>divAsInt(11.0, 3.0)</code></td><td>&#x27f6;</td><td>3</td>
+</tr>
+</table>
+<p>Note that rounding is always down.</p>
+
+<p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
+<p>When combining <b>mod</b> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
+<table class="tablePlain">
+<tr>
+ <td><code>(5 + 6) mod 3</code></td><td>&#x27f6;</td><td>2</td>
+</tr>
+</table>
+<p>Note that <b>mod</b> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
+ If both arguments are positive, there is no difference.</p>
+<p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
+<table class="tablePlain">
+<tr>
+ <td><code>2*-3</code></td><td>&#x27f6;</td><td>&minus;6</td>
+</tr>
+</table>
+
+<p>The editor automatically puts spaces around the operators + and &minus;, but not around / or *.
+This is just to visually reinforce the precedence.</p>
+
+<div id="and"></div>
+<div id="not"></div>
+<div id="or"></div>
+<h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
+<p>Logical operators are applied to <code>Boolean</code> arguments and return a <code>Boolean</code> result.</p>
+<p><code>and</code> and <code>or</code> are binary operators<br>
+<code>not</code> is a unary operator. </p>
+<p>The operator precedence is <code>not</code> &rarr; <code>and</code> &rarr; <code>or</code>, so this
+example, which implements an 'exclusive or', need not use brackets and can rely on the operator precedence:</p>
+
+<codeblock>
+function exOr(a as Boolean, b as Boolean) returns Boolean
+  return a and not b or b and not a
+end function
+</codeblock>
+
+<h3 class="no-TOC" id="StringOperators">String operator</h3>
+<p>The + operator is also used for concatenating <code>String</code> values.</p>
+
+<h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
+<h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
+<p>Equality testing of these Value Types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
+<ul>
+ <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
+ <li><code>(a is b)</code> returns <b><el-id>true</el-id></b>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same type and their values are equal.
+ The only exception is that if one argument is of type <code>Float</code> and the other is of type <code>Int</code>,
+  then <b>is</b> will return <el-id>true</el-id> (and <b>isnt</b> will return <el-id>false</el-id>) if their values are the same,
+  i.e. they are the same whole number.</li>
+ <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
+</ul>
+
+<h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference Types</h4>
+<p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
+<ul>
+<li>
+<codeblock>
+if listA.equals(listB) then
+
+end if
+</codeblock>
+</li>
+<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
+</ul>
+<p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
+Two Lists compare equal if they contain the same items in the same order.
+And two instances of the same class compare equal if the values of all their properties compare equal.</p>
+<p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.
+Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property values).</p>
+
+<h3 class="no-TOC">Numeric comparison</h3>
+<p>The numeric comparison operators are:</p>
+<table class="tablePlain">
+<tr>
+ <td>&gt;</td><td>for</td><td>greater than</td>
+</tr><tr>
+ <td>&lt;</td><td>for</td><td>less than</td>
+</tr><tr>
+ <td>&gt;=</td><td>for</td><td>greater than or equal to</td>
+</tr><tr>
+ <td>&lt;=</td><td>for</td><td>less than or equal to</td>
+</tr>
+</table>
+
+<p>Each may be applied between two values of type <code>Float</code>, but any named value or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</p>
+<p>These operators cannot be applied to strings. Use the dot methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method> to compare strings alphabetically. See <a href="LibRef.html#isAfter">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</p>
+
+<h3 class="no-TOC">Combining operators </h3>
+<p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
+<code>reassign x to (a > b) and (b < c)</code><br>
+<code>reassign x to (a + b) > (c - d)</code>
+
+<h2 id="functionCall">Function reference</h2>
+An expression may simply be a reference to a function, or it may include several function references within it. Examples:
+<codeblock>
+main
+  call print(sin(radians(30)))
+  variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
+  variable name set to input("Your name")
+  call print(name.upperCase())
+end main
+</codeblock>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li>The third example above is not strictly a function call, but is a 'system method' call.
+System methods may be used only within the <b>main</b> routine or a <b>procedure</b>, because they have external dependencies or side effects.</li>
+<li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of type <code>String</code>.
+See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</li>
+</ul>
+
+<h2 id="lambda"><b>lambda</b></h2>
+<p>A <b>lambda</b> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).</p>
+<p>You can use a lambda only as an argument to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a>.</p>
+<p>You would typically define a <b>lambda</b> when the functionality it defines is needed in only one location,
+e.g. in a particular call to a Higher-order Function.</p>
+<!-- when you need to capture a local variable in the implementation: this is called 'closing around a variable'. -->
+<p>The syntax for a <b>lambda</b> is as follows:</p>
+<ul>
+<li>Start with the word <b>lambda</b>.</li>
+<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
+<li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
+<li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
+</ul>
+<p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
+<!-- <p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
+ to assign a <b>lambda</b> to a named value, so as to reuse it within the scope of that named value.</p>
+
+Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
+<codeblock>
+function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
+  variable neighbours set to neighbourCells(c)
+  variable live set to neighbours.filter(lambda i as Int => cells[i])
+  return live.length()
+end function
+</codeblock> -->
+
+<h2 id="if_expression"><b>if</b> (expression)</h2>
+
+<p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
+<p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
+<code>variable isBigger set to if(a >= b, true, false)</code>
+<p>Similarly, but returning an evaluated expression:</p>
+  <code>variable d set to if(c < 580, c - 40, c + 60)</code>
+<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
+<p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
+<codeblock>
+function foo() returns Int
+  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+end function
+</codeblock>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an <b>if</b> expression in a <b>call procedure</b> <el-method>print</el-method>:</p>
+<table class="tablePlain">
+<tr>
+ <td>
+<codeblock>
+main
+  variable p set to unicode(0x03c0)
+  call testPi(p, 3)
+  call testPi(p, 4)
+end main
+procedure testPi(p as String, v as Float)
+  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
+end procedure
+</codeblock>
+ </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>
+</tr>
+</table>
+<hr>
+</div></div>
+
+<h2 id="new"><b>new</b></h2>
+<p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
+   or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
+  of a more complex expression. Example of use from demo program snake_PP.elan:</p>
+<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 
 <div>
   <h1>Miscellaneous</h1>
