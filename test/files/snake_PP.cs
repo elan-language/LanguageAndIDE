@@ -100,38 +100,38 @@ static Direction directionByKey(Direction current, string key) { // function
 enum Direction {up, down, left, right}
 
 [TestMethod] static void test_getTailColour() {
-  Assert.AreEqual(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
-  Assert.AreEqual(white, getTailColour([3, 4], [[3, 5], [3, 6]]))
+  Assert.AreEqual(green, getTailColour([3, 4], [[3, 4], [3, 5]]));
+  Assert.AreEqual(white, getTailColour([3, 4], [[3, 5], [3, 6]]));
 } // test
 
 [TestMethod] static void test_hasHitEdge() {
-  Assert.AreEqual(false, hasHitEdge(0, 0))
-  Assert.AreEqual(false, hasHitEdge(0, 29))
-  Assert.AreEqual(false, hasHitEdge(39, 0))
-  Assert.AreEqual(false, hasHitEdge(29, 29))
-  Assert.AreEqual(true, hasHitEdge(-1, 5))
-  Assert.AreEqual(true, hasHitEdge(5, 30))
-  Assert.AreEqual(true, hasHitEdge(40, 5))
-  Assert.AreEqual(true, hasHitEdge(5, -1))
+  Assert.AreEqual(false, hasHitEdge(0, 0));
+  Assert.AreEqual(false, hasHitEdge(0, 29));
+  Assert.AreEqual(false, hasHitEdge(39, 0));
+  Assert.AreEqual(false, hasHitEdge(29, 29));
+  Assert.AreEqual(true, hasHitEdge(-1, 5));
+  Assert.AreEqual(true, hasHitEdge(5, 30));
+  Assert.AreEqual(true, hasHitEdge(40, 5));
+  Assert.AreEqual(true, hasHitEdge(5, -1));
 } // test
 
 [TestMethod] static void test_getAdjacentSquare() {
   var sq = [20, 15];
-  Assert.AreEqual([20, 14], getAdjacentSquare(sq, Direction.up))
-  Assert.AreEqual([20, 16], getAdjacentSquare(sq, Direction.down))
-  Assert.AreEqual([19, 15], getAdjacentSquare(sq, Direction.left))
-  Assert.AreEqual([21, 15], getAdjacentSquare(sq, Direction.right))
+  Assert.AreEqual([20, 14], getAdjacentSquare(sq, Direction.up));
+  Assert.AreEqual([20, 16], getAdjacentSquare(sq, Direction.down));
+  Assert.AreEqual([19, 15], getAdjacentSquare(sq, Direction.left));
+  Assert.AreEqual([21, 15], getAdjacentSquare(sq, Direction.right));
   // boundary
-  Assert.AreEqual([-1, 15], getAdjacentSquare([0, 15], Direction.left))
+  Assert.AreEqual([-1, 15], getAdjacentSquare([0, 15], Direction.left));
 } // test
 
 [TestMethod] static void test_directionByKey() {
   var current = Direction.up;
-  Assert.AreEqual(Direction.up, directionByKey(current, ""))
-  Assert.AreEqual(Direction.up, directionByKey(current, "x"))
-  Assert.AreEqual(Direction.up, directionByKey(current, "w"))
-  Assert.AreEqual(Direction.down, directionByKey(current, "s"))
-  Assert.AreEqual(Direction.left, directionByKey(current, "a"))
-  Assert.AreEqual(Direction.right, directionByKey(current, "d"))
-  Assert.AreEqual(Direction.up, directionByKey(current, "D"))
+  Assert.AreEqual(Direction.up, directionByKey(current, ""));
+  Assert.AreEqual(Direction.up, directionByKey(current, "x"));
+  Assert.AreEqual(Direction.up, directionByKey(current, "w"));
+  Assert.AreEqual(Direction.down, directionByKey(current, "s"));
+  Assert.AreEqual(Direction.left, directionByKey(current, "a"));
+  Assert.AreEqual(Direction.right, directionByKey(current, "d"));
+  Assert.AreEqual(Direction.up, directionByKey(current, "D"));
 } // test

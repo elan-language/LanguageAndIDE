@@ -307,13 +307,13 @@ enum Algorithm {dijkstra, aStar, heuristic}
 
 // 'infinity' need only be larger than longest possible route
 
-final Float infinity = 2000.0 // constant
+final Float infinity = 2000.0; // constant
 
-final String algPrompt = "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic" // constant
+final String algPrompt = "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"; // constant
 
-final Int lightBlue = 0x80abff // constant
+final Int lightBlue = 0x80abff; // constant
 
-final Int orange = 0xe97132 // constant
+final Int orange = 0xe97132; // constant
 
 static Algorithm getAlgFromLetter(String letter) { // function
   var algs = ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic];
@@ -321,16 +321,16 @@ static Algorithm getAlgFromLetter(String letter) { // function
 } // function
 
 @Test static void test_getAlgFromLetter() {
-  assertEquals(Algorithm.aStar, getAlgFromLetter("a"))
-  assertEquals(Algorithm.heuristic, getAlgFromLetter("h"))
-  assertEquals(Algorithm.dijkstra, getAlgFromLetter("d"))
+  assertEquals(Algorithm.aStar, getAlgFromLetter("a"));
+  assertEquals(Algorithm.heuristic, getAlgFromLetter("h"));
+  assertEquals(Algorithm.dijkstra, getAlgFromLetter("d"));
 } // test
 
 @Test static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
-  assertEquals(expected, n)
+  assertEquals(expected, n);
 } // test
 
 }

@@ -305,13 +305,13 @@ enum Algorithm {dijkstra, aStar, heuristic}
 
 // 'infinity' need only be larger than longest possible route
 
-const Float infinity = 2000.0
+const Float infinity = 2000.0;
 
-const String algPrompt = "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
+const String algPrompt = "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic";
 
-const Int lightBlue = 0x80abff
+const Int lightBlue = 0x80abff;
 
-const Int orange = 0xe97132
+const Int orange = 0xe97132;
 
 static Algorithm getAlgFromLetter(string letter) { // function
   var algs = ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic];
@@ -319,14 +319,14 @@ static Algorithm getAlgFromLetter(string letter) { // function
 } // function
 
 [TestMethod] static void test_getAlgFromLetter() {
-  Assert.AreEqual(Algorithm.aStar, getAlgFromLetter("a"))
-  Assert.AreEqual(Algorithm.heuristic, getAlgFromLetter("h"))
-  Assert.AreEqual(Algorithm.dijkstra, getAlgFromLetter("d"))
+  Assert.AreEqual(Algorithm.aStar, getAlgFromLetter("a"));
+  Assert.AreEqual(Algorithm.heuristic, getAlgFromLetter("h"));
+  Assert.AreEqual(Algorithm.dijkstra, getAlgFromLetter("d"));
 } // test
 
 [TestMethod] static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
-  Assert.AreEqual(expected, n)
+  Assert.AreEqual(expected, n);
 } // test
