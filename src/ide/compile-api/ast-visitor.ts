@@ -387,11 +387,15 @@ export function transform(
   }
 
   if (node instanceof InputStatement) {
+    const varAsn = new VariableAsn(node.getHtmlId(), scope);
+    varAsn.breakpointStatus = node.breakpointStatus;
+
+    varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
+
     const id = "input"; // Hard coded method name
-    //const parameters = node.prompt; //which is an ArgListField (though it only needs one param - the prompt string for the input)
-    // How do I get the parameters as an AstNode[]. I tried node.prompt.getRootNode(), but this isn't initialised until something is parsed.
     const parameter = transform(node.prompt, fieldId, scope)!;
-    return new FuncCallAsn(id, [parameter], fieldId, scope);
+    varAsn.expr =  new FuncCallAsn(id, [parameter], fieldId, scope);
+    return varAsn;
   }
 
   if (node instanceof PrintStatement) {

@@ -103,7 +103,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof InputStatement) {
-      html = `<el-kw>${this.INPUT} </el-kw>${frame.name.renderAsElanSource()}<el-kw> ${this.SET} ${this.TO} </el-kw><el-method>inputString</el-method>(${frame.prompt.renderAsElanSource()})`;
+      html = `<el-kw>${this.INPUT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw><el-method>inputString</el-method>(${frame.prompt.renderAsHtml()})`;
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.LET} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {

@@ -8,19 +8,19 @@
 
 // gW, gH : grid width, height
 
-const Int gW = 40
+const Int gW = 40;
 
-const Int gH = 30
+const Int gH = 30;
 
 // iR : infection rate (1..20)
 
-const Int iR = 1
+const Int iR = 1;
 
 // w1, w2 : weighting factors (low integers)
 
-const Int w1 = 4
+const Int w1 = 4;
 
-const Int w2 = 1
+const Int w2 = 1;
 
 // colours : cellColour.s in descending order of RGB value
 
@@ -28,9 +28,9 @@ const Int w2 = 1
 
 // colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
 
-const Int healthy = white
+const Int healthy = white;
 
-const Int ill = black
+const Int ill = black;
 
 static List<int> getColours() { // function
   return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill];
@@ -38,7 +38,7 @@ static List<int> getColours() { // function
 
 // vN : neighbourhood: von Neumann (4) true, Moore (8) false
 
-const Boolean vN = false
+const Boolean vN = false;
 
 static void main() {
   // colour grids: hodge for display, podge for working

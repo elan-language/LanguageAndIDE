@@ -37,13 +37,13 @@ static Point newPoint(double x, double y) { // function
   var a_b = bestFitLine(l1); // let
   var a = a_b.item_0; // let
   var b = a_b.item_1; // let
-  Assert.AreEqual(0.766, a.round(3))
-  Assert.AreEqual(1.093, b.round(3))
+  Assert.AreEqual(0.766, a.round(3));
+  Assert.AreEqual(1.093, b.round(3));
 } // test
 
 [TestMethod] static void test_bestFit_empty() {
   var l1 = new List<Point>(); // let
   var a_b = bestFitLine(l1); // let
   // NaN means 'Not A Number"
-  Assert.AreEqual("(NaN, NaN)", a_b.toString())
+  Assert.AreEqual("(NaN, NaN)", a_b.toString());
 } // test

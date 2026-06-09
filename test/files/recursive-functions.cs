@@ -5,13 +5,13 @@ static int factorial(int n) { // function
 } // function
 
 [TestMethod] static void test_factorial() {
-  Assert.AreEqual(2, factorial(2))
-  Assert.AreEqual(6, factorial(3))
-  Assert.AreEqual(5040, factorial(7))
-  Assert.AreEqual(3628800, factorial(10))
+  Assert.AreEqual(2, factorial(2));
+  Assert.AreEqual(6, factorial(3));
+  Assert.AreEqual(5040, factorial(7));
+  Assert.AreEqual(3628800, factorial(10));
   // edge cases:
-  Assert.AreEqual(1, factorial(1))
-  Assert.AreEqual(1, factorial(0))
+  Assert.AreEqual(1, factorial(1));
+  Assert.AreEqual(1, factorial(0));
 } // test
 
 static double sum(List<double> li) { // function
@@ -20,12 +20,12 @@ static double sum(List<double> li) { // function
 
 [TestMethod] static void test_sum() {
   var li = [3.1, 5.02, 4, 7.73, 9.9]; // let
-  Assert.AreEqual(29.75, sum(li).round(2))
+  Assert.AreEqual(29.75, sum(li).round(2));
   // edge cases: empty, and one element lists
   var le = new List<double>(); // let
-  Assert.AreEqual(0, sum(le))
+  Assert.AreEqual(0, sum(le));
   var l1 = [0.6]; // let
-  Assert.AreEqual(0.6, sum(l1))
+  Assert.AreEqual(0.6, sum(l1));
 } // test
 
 static List<double> reverse(List<double> li) { // function
@@ -34,10 +34,10 @@ static List<double> reverse(List<double> li) { // function
 
 [TestMethod] static void test_reverse() {
   var l = [3.1, 5.02, 4, 7.73, 9.9]; // let
-  Assert.AreEqual([9.9, 7.73, 4, 5.02, 3.1], reverse(l))
+  Assert.AreEqual([9.9, 7.73, 4, 5.02, 3.1], reverse(l));
   // edge cases: empty, and one element lists
   var le = new List<double>(); // let
-  Assert.AreEqual(le, reverse(le))
+  Assert.AreEqual(le, reverse(le));
   var l1 = [0.6]; // let
-  Assert.AreEqual(l1, reverse(l1))
+  Assert.AreEqual(l1, reverse(l1));
 } // test

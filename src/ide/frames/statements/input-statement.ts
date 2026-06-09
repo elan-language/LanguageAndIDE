@@ -16,7 +16,8 @@ export class InputStatement extends SingleLineFrame implements Statement {
     super(parent);
     this.name = new IdentifierDefField(this);
     this.prompt = new ArgListField(this);
-    this.prompt.setPlaceholder("prompt");
+    this.prompt.setOptional(false);
+    this.prompt.setPlaceholder("prompt message");
   }
 
   initialKeywords(): string {
@@ -44,10 +45,10 @@ export class InputStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "print";
+    return "input";
   }
 
   override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${inputKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} input(${this.prompt.renderAsElanSource})`;
+    return `${this.indent()}${this.sourceAnnotations()}${inputKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} input(${this.prompt.renderAsElanSource()})`;
   }
 }

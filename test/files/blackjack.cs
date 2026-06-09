@@ -83,27 +83,27 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
 
 [TestMethod] static void test_determinePlayerOutcome() {
   var dbj = (new Dealer(0)).withStatus(Status.blackjack); // let
-  Assert.AreEqual(Status.blackjack, dbj.status)
+  Assert.AreEqual(Status.blackjack, dbj.status);
   var d21 = (new Dealer(0)).withStatus(Status.standing).withHandTotal(21); // let
-  Assert.AreEqual(Status.standing, d21.status)
-  Assert.AreEqual(21, d21.handTotal)
+  Assert.AreEqual(Status.standing, d21.status);
+  Assert.AreEqual(21, d21.handTotal);
   var d17 = (new Dealer(0)).withStatus(Status.standing).withHandTotal(17); // let
   var dbu = (new Dealer(0)).withStatus(Status.bust); // let
   var pbj = (new HumanPlayer("", 0)).withStatus(Status.blackjack); // let
-  Assert.AreEqual(Status.blackjack, pbj.status)
+  Assert.AreEqual(Status.blackjack, pbj.status);
   var p21 = (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21); // let
   var p17 = (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17); // let
   var pbu = (new HumanPlayer("", 0)).withStatus(Status.bust); // let
-  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj))
-  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21))
-  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu))
-  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(d21, pbj))
-  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(d21, p21))
-  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, p17))
-  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, pbu))
-  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(dbu, pbj))
-  Assert.AreEqual(Outcome.win, determinePlayerOutcome(dbu, p17))
-  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbu, pbu))
+  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj));
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21));
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu));
+  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(d21, pbj));
+  Assert.AreEqual(Outcome.draw, determinePlayerOutcome(d21, p21));
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, p17));
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(d21, pbu));
+  Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(dbu, pbj));
+  Assert.AreEqual(Outcome.win, determinePlayerOutcome(dbu, p17));
+  Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbu, pbu));
 } // test
 
 static Card dealCard(double random) { // function
@@ -115,17 +115,17 @@ static Card dealCard(double random) { // function
 
 [TestMethod] static void test_dealCard() {
   var c1 = dealCard(0); // let
-  Assert.AreEqual("2", c1.rank)
-  Assert.AreEqual(Suit.clubs, c1.suit)
+  Assert.AreEqual("2", c1.rank);
+  Assert.AreEqual(Suit.clubs, c1.suit);
   var c2 = dealCard(0.9999999); // let
-  Assert.AreEqual("A", c2.rank)
-  Assert.AreEqual(Suit.spades, c2.suit)
+  Assert.AreEqual("A", c2.rank);
+  Assert.AreEqual(Suit.spades, c2.suit);
   var c3 = dealCard(0.5); // let
-  Assert.AreEqual("8", c3.rank)
-  Assert.AreEqual(Suit.hearts, c3.suit)
+  Assert.AreEqual("8", c3.rank);
+  Assert.AreEqual(Suit.hearts, c3.suit);
   var c4 = dealCard(0.24); // let
-  Assert.AreEqual("5", c4.rank)
-  Assert.AreEqual(Suit.clubs, c4.suit)
+  Assert.AreEqual("5", c4.rank);
+  Assert.AreEqual(Suit.clubs, c4.suit);
 } // test
 
 static Suit intAsSuit(int n) { // function
@@ -141,10 +141,10 @@ static Suit intAsSuit(int n) { // function
 } // function
 
 [TestMethod] static void test_intAsSuit() {
-  Assert.AreEqual(Suit.clubs, intAsSuit(0))
-  Assert.AreEqual(Suit.diamonds, intAsSuit(1))
-  Assert.AreEqual(Suit.hearts, intAsSuit(2))
-  Assert.AreEqual(Suit.spades, intAsSuit(3))
+  Assert.AreEqual(Suit.clubs, intAsSuit(0));
+  Assert.AreEqual(Suit.diamonds, intAsSuit(1));
+  Assert.AreEqual(Suit.hearts, intAsSuit(2));
+  Assert.AreEqual(Suit.spades, intAsSuit(3));
 } // test
 
 static string htmlForGame(Game game) { // function
@@ -163,7 +163,7 @@ static string htmlForGame(Game game) { // function
   var p = (new HumanPlayer("fred", 10)).withCards([c1, c2]); // let
   var players = (new List<Player>()).withAppend(p); // let
   var g2 = (new Game(1)).withPlayers(players); // let
-  Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2))
+  Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
 } // test
 
 static string htmlForPlayer(Player player) { // function
@@ -182,7 +182,7 @@ static string htmlForPlayer(Player player) { // function
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
   var p = (new HumanPlayer("charlie", 10)).withCards([c1, c2]); // let
-  Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p))
+  Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
 } // test
 
 static string htmlForCard(Card card) { // function
@@ -212,9 +212,9 @@ static string htmlForCard(Card card) { // function
 
 [TestMethod] static void test_htmlForCard() {
   var c1 = new Card("3", Suit.clubs, false);
-  Assert.AreEqual("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1))
+  Assert.AreEqual("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1));
   var c2 = new Card("K", Suit.spades, true);
-  Assert.AreEqual("<div class='card reversed'></div>", htmlForCard(c2))
+  Assert.AreEqual("<div class='card reversed'></div>", htmlForCard(c2));
 } // test
 
 static string htmlForSpot(string id, string content) { // function
@@ -222,8 +222,8 @@ static string htmlForSpot(string id, string content) { // function
 } // function
 
 [TestMethod] static void test_htmlForSpot() {
-  Assert.AreEqual("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"))
-  Assert.AreEqual("<div class='u'>10</div>", htmlForSpot("u", "10"))
+  Assert.AreEqual("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"));
+  Assert.AreEqual("<div class='u'>10</div>", htmlForSpot("u", "10"));
 } // test
 
 class Game {
@@ -570,4 +570,4 @@ static string colourForSuit(Suit suit) { // function
   return dc[suit];
 } // function
 
-const String styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}"
+const String styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}";

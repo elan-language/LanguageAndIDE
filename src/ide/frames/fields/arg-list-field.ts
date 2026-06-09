@@ -1,5 +1,5 @@
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { printKeyword } from "../../../compiler/elan-keywords";
+import { inputKeyword, printKeyword } from "../../../compiler/elan-keywords";
 import { parameterNames } from "../../../compiler/symbols/symbol-helpers";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { currentParameterIndex } from "../frame-helpers";
@@ -8,6 +8,7 @@ import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { CallStatement } from "../statements/call-statement";
+import { InputStatement } from "../statements/input-statement";
 import { PrintStatement } from "../statements/print-statement";
 import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
@@ -58,6 +59,8 @@ export class ArgListField extends AbstractField {
       procName = (holder as CallStatement).proc.text;
     } else if (holder instanceof PrintStatement) {
       procName = printKeyword;
+    } else if (holder instanceof InputStatement) {
+      procName = inputKeyword;
     }
     const ps = scope?.resolveSymbol(procName, true, scope);
     let descriptions = ["<i>arguments</i>"];
