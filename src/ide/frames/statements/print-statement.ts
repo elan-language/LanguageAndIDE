@@ -21,8 +21,10 @@ export class PrintStatement extends SingleLineFrame implements Statement {
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove(`${printKeyword} `);
+    source.remove(`${printKeyword}`);
+    source.remove("(");
     this.args.parseFrom(source);
+    source.remove(")");
     source.removeNewLine();
   }
   getFields(): Field[] {
@@ -38,6 +40,6 @@ export class PrintStatement extends SingleLineFrame implements Statement {
   }
 
   override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${printKeyword} ${this.args.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${printKeyword}(${this.args.renderAsElanSource()})`;
   }
 }

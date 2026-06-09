@@ -104,7 +104,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.LET} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-kw>${this.PRINT} </el-kw> ${frame.args.renderAsHtml()}`;
+      html = `<el-kw>${this.PRINT}</el-kw>(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

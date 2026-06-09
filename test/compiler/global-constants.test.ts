@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Global Constants", () => {
@@ -558,7 +558,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'a' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseConstantBeforeDefinition1", async () => {

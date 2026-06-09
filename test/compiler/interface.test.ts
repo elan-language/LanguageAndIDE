@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Interface", () => {
@@ -1029,7 +1029,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementFunc", async () => {
@@ -1074,7 +1076,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.func.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementProc", async () => {
@@ -1119,7 +1123,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.proc.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementIndirectProp", async () => {
@@ -1169,7 +1175,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DoesntImplementMultipleInheritanceProp", async () => {
@@ -1219,7 +1227,9 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_InheritSelf", async () => {
