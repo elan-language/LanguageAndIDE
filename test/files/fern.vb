@@ -17,7 +17,7 @@ Sub main()
     vg.append(s.rect) ' call procedure
     displayVectorGraphics(vg) ' call procedure
   Next count
-  print("Finished")
+  Console.WriteLine("Finished") ' print
 End Sub
 
 ' The State class is used as a convenient way to pass multiple

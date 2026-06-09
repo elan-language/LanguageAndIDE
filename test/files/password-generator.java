@@ -34,7 +34,7 @@ static void main() {
     password = pwRef.value(); // reassign variable
     valid = isValid(password, upper, lower, digit, symbol); // reassign variable
   } // while
-  print(password);
+  System.out.println(password) // print
 } // main
 
 static void populatePassword(AsRef<String> password, String all) { // procedure

@@ -1,4 +1,4 @@
-# 7bffc2158885e5ca2df4392f2c9b3b1e92d5acb2be39adbb28952378efc528ee Elan 2.0.0-alpha5 valid
+# baeb23164b4901bbeeb58265cc59d90a0de81cb03a2e40c48584fc0202db4f56 Elan 2.0.0-alpha5 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -15,7 +15,7 @@ main
     call vg.append(s.rect)
     call displayVectorGraphics(vg)
   end for
-  print "Finished"
+  print("Finished")
 end main
 
 # The State class is used as a convenient way to pass multiple

@@ -13,7 +13,7 @@ Sub main()
     sleep_ms(150) ' call procedure
     game = clockTick(game, getKey()) ' reassign variable
   End While
-  print($"Game Over! Score: {score(game)}")
+  Console.WriteLine($"Game Over! Score: {score(game)}") ' print
 End Sub
 
 Function clockTick(g As Game, k As String) As Game

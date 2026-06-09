@@ -16,7 +16,7 @@ main
       reassign paces to paces + 1
     end while
   end for
-  print $"Average number of paces: {paces/20.0}"
+  print($"Average number of paces: {paces/20.0}")
 end main
 
 procedure circle(t as Turtle, radius as Int)

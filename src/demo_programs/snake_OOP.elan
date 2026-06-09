@@ -1,4 +1,4 @@
-# ef1f7a379c4ab3fd25bf4ca7dc8805a5718b7513d01a18275a5adb346c7c1030 Elan 2.0.0-alpha5 valid
+# 3c4c4f2f4e14b6a35ab125a3111f02cee4d3c993c4e55b3fcc7c1dd564b8cab6 Elan 2.0.0-alpha5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -13,7 +13,7 @@ main
     call sleep_ms(150)
     call snake.clockTick(getKey(), apple)
   end while
-  print $"Game Over! Score: {snake.score()}"
+  print($"Game Over! Score: {snake.score()}")
 end main
 
 class Snake

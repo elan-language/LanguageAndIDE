@@ -16,7 +16,7 @@ static void main() {
     sleep_ms(150); // call procedure
     snake.clockTick(getKey(), apple); // call procedure
   } // while
-  print(String.format("Game Over! Score: %", snake.score()));
+  System.out.println(String.format("Game Over! Score: %", snake.score())) // print
 } // main
 
 class Snake {

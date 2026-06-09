@@ -1,4 +1,4 @@
-# 721abd3ddfa11f95fc54b5306d28aaf20e12e9187e3967b9cae901a216f41347 Elan 2.0.0-alpha5 valid
+# 5178bcaf576bdf92526ebfe0370c4878b49ede2cb76f53b622c2a29efb982197 Elan 2.0.0-alpha5 valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -27,11 +27,11 @@ main
         reassign vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
       end for
       call displayVectorGraphics(vg)
-      print x
+      print(x)
       call sleep_ms(100)
     end while
   end while
-  print "Finished"
+  print("Finished")
 end main
 
 # scale x.  We pass in p just to get its length

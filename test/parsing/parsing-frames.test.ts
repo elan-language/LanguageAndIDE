@@ -491,9 +491,9 @@ end main
 
 main
   try
-    print ""
+    print("")
   catch e as ElanRuntimeError
-    print ""
+    print("")
   end try
 end main
 `;

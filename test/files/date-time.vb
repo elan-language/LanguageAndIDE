@@ -6,13 +6,13 @@ Sub main()
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' reassign variable
     If reply.equals("") Then
       Dim now = divAsInt(clock(), 1000) ' variable definition
-      print(now)
-      print(getDate(now))
+      Console.WriteLine(now) ' print
+      Console.WriteLine(getDate(now)) ' print
     Else
       Try 
         Dim td = int(reply) ' variable definition
         If td >= 0 Then
-          print(getDate(td))
+          Console.WriteLine(getDate(td)) ' print
         End If
       Catch e As ElanRuntimeError
       End Try

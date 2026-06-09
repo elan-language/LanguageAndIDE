@@ -1,10 +1,10 @@
-# 3eafe9ee2eb341bd060cd66f41c41ebb93f5c13d12e287e71175ad33e5fd868a Elan 2.0.0-alpha5 valid
+# a69650931d1c0a3b21b99291ca5e2cf6a221f6116ae4b1b4a82a92a85c13d84c Elan 2.0.0-alpha5 valid
 
 main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
-  print li
+  print(li)
   call inPlaceRippleSort(li)
-  print li
+  print(li)
 end main
 
 procedure inPlaceRippleSort(li as List<of Int>)

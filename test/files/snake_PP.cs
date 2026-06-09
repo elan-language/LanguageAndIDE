@@ -28,7 +28,7 @@ static void main() {
     } // if
     sleep_ms(150); // call procedure
   } // while
-  print($"Game Over! Score: {body.length() - 1}");
+  Console.WriteLine($"Game Over! Score: {body.length() - 1}"); // print
 } // main
 
 static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure

@@ -10,9 +10,9 @@ static void main() {
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        print($"\nWe can supply a {wanted}");
+        Console.WriteLine($"\nWe can supply a {wanted}"); // print
       } else {
-        print($"\nSorry, we cannot supply a {wanted}");
+        Console.WriteLine($"\nSorry, we cannot supply a {wanted}"); // print
       } // if
     } // if
   } // while

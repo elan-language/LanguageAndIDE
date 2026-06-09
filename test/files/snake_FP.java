@@ -15,7 +15,7 @@ static void main() {
     sleep_ms(150); // call procedure
     game = clockTick(game, getKey()); // reassign variable
   } // while
-  print(String.format("Game Over! Score: %", score(game)));
+  System.out.println(String.format("Game Over! Score: %", score(game))) // print
 } // main
 
 static Game clockTick(Game g, String k) { // function

@@ -22,7 +22,7 @@ Sub main()
     Dim vg = allpoints(p) ' variable definition
     displayVectorGraphics(vg) ' call procedure
     p.checkkeys() ' call procedure
-    print($"x = {p.jx} y = {p.jy}")
+    Console.WriteLine($"x = {p.jx} y = {p.jy}") ' print
   End While
 End Sub
 

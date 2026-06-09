@@ -19,7 +19,7 @@ static void main() {
     vg.append(s.rect); // call procedure
     displayVectorGraphics(vg); // call procedure
   } // foreach
-  print("Finished");
+  System.out.println("Finished") // print
 } // main
 
 // The State class is used as a convenient way to pass multiple
