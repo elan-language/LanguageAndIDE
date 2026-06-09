@@ -394,7 +394,7 @@ export function transform(
 
     const id = "input"; // Hard coded method name
     const parameter = transform(node.prompt, fieldId, scope)!;
-    varAsn.expr =  new FuncCallAsn(id, [parameter], fieldId, scope);
+    varAsn.expr = new FuncCallAsn(id, [parameter], fieldId, scope);
     return varAsn;
   }
 

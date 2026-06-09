@@ -12,6 +12,7 @@ import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { LanguageElan } from "../frames/language-elan";
+import { LanguagePython } from "../frames/language-python";
 import { Profile } from "../frames/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
@@ -480,7 +481,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean) {
     await vm.clearDisplays();
-    vm.setDisplayLanguage(this.file?.language() ?? LanguageElan.Instance);
+    vm.setDisplayLanguage(this.file?.language() ?? LanguagePython.Instance);
+
+    vm.tvm.setWorksheetProfile("procedural");
+    vm.tvm.setHelpProfile("procedural");
+
     const ps = this.readParseStatus();
     if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
       await this.refreshAndDisplay(vm, tr, false, false);

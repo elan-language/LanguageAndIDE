@@ -139,7 +139,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-        html = `<el-method>print</el-method>(${frame.args.renderAsHtml()})`;
+      html = `<el-method>print</el-method>(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

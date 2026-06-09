@@ -409,7 +409,13 @@ export class GenericParametersCompileError extends CompileError {
     } else {
       msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
-    super(priority, severity, `${msg}`, location, "ErrorMessages.html#GenericParametersCompileError");
+    super(
+      priority,
+      severity,
+      `${msg}`,
+      location,
+      "ErrorMessages.html#GenericParametersCompileError",
+    );
   }
 }
 
