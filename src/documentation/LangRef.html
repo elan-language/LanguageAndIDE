@@ -1212,7 +1212,7 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 </div>
 
 <div id="print_statement">
-<h2>Print statement</h2>
+<h2>Print</h2>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">Examples of print statements</h4>
@@ -1292,8 +1292,8 @@ end main
 <h3 class="no-TOC acc-title">What you need to know about print statements</h3>
 <div class="acc-body">
 
-  <ul>
-<li>The print statement writes a value to <b>display</b>.</li>
+<ul>
+<li>The <b>print</b> instruction writes a value to <b>display</b>.</li>
 <li>It automatically prints a new line after the value.</li>
 <li>The value can be any expression, except for an enum value (which has no printed representation)</li>
 <li>You must provide a value; if you just want to print a blank line, just set the value to <code>""</code>.</li>
@@ -1302,9 +1302,25 @@ end main
 </div></div>
 
 <div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+<p>As an alternative to using the <b>print</b> instruction you call one of these standard library procedures Using
+the <b>call procedure</b> instruction:</p>
+<ul>
+  <li><el-method>printNoLine</el-method></li>
+  <li><el-method>printWithTab</el-method></li>
+</ul>
+<p>which offer more flexible options. These library methods work when running any of the supported languages within Elan but,
+  unlike when using the normal the <b>print</b> instruction, the library procedures do not correspond directly to
+  print methods in the native libraries for those languages.
+</div></div>
+
+<div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body">
 <p><a href="LibRef.html#InterpolatedString">Interpolated string</a></p>
+<p><a href="LibRef.html#printNoLine"><el-method>printNoLine</a></p>
+  p><a href="LibRef.html#printTab"><el-method>printTab</a></p>
 </div></div>
 </div>
 

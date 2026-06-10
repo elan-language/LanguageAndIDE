@@ -444,12 +444,6 @@ export class StdLib {
 
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async print(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
-  }
-
-  @elanProcedure(["any"], ProcedureOptions.async)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async printNoLine(@elanAnyType() s: any) {
     await this.system.elanInputOutput.print(await this.system.toString(s));
   }
@@ -512,7 +506,7 @@ export class StdLib {
 
   //Input functions
   private async prompt(prompt: string) {
-    await this.print(prompt);
+    await this.system.elanInputOutput.print(await this.system.toString(prompt+"\n"));
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)
