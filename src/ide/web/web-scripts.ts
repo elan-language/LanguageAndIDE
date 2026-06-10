@@ -745,6 +745,12 @@ class IDEViewModel implements IIDEViewModel {
         const id = m.data.slice(9);
         const code = await cvm.renderAsSource();
         worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
+
+        const l = cvm.getLanguage().languageHtmlClass;
+        const p = cvm.getProfile()?.name
+
+        worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
+        worksheetIFrame.contentWindow?.postMessage(`profile:${p}`, "*");
       }
 
       if (m.data.startsWith("filename:")) {
