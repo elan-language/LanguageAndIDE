@@ -21,7 +21,10 @@ static void main() {
   var mark = "";
   var attempt = "RAISE";
   while (!mark.equals("*****")) {
-    mark = input("" + attempt); // reassign variable
+    Console.WriteLine("" + attempt);
+
+      var inp = Console.ReadLine(); // input
+    mark = inp; // reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
     attempt = bestAttempt(possible); // reassign variable
   } // while

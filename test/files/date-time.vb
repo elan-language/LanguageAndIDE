@@ -1,10 +1,14 @@
 ' VB.NET with Elan 2.0.0-alpha5
 
 Sub main()
-  Dim reply = "" ' variable definition
-  While Not reply.upperCase().equals("Q")
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") ' reassign variable
-    If reply.equals("") Then
+  Dim quit = False ' variable definition
+  While Not quit
+    Console.WriteLine("t - for time now, q - to quit, or an integer value to convert")
+
+      Dim reply = Console.ReadLine() ' input
+    If reply.upperCase().equals("Q") Then
+      quit = True ' reassign variable
+    ElseIf reply.upperCase().equals("T") Then
       Dim now = divAsInt(clock(), 1000) ' variable definition
       Console.WriteLine(now) ' print
       Console.WriteLine(getDate(now)) ' print

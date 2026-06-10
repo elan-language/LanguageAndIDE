@@ -21,7 +21,8 @@ def main() -> None:
   mark = "" # variable definition
   attempt = "RAISE" # variable definition
   while not mark.equals("*****"):
-    mark = input("" + attempt) # reassign variable
+    inp = input("" + attempt) # input
+    mark = inp # reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark) # reassign variable
     attempt = bestAttempt(possible) # reassign variable
 

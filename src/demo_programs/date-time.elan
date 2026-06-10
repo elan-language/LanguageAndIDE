@@ -1,12 +1,12 @@
-# ed0b2c655c3c4d1d56fc793aa0475b56d4481bee58ccd97365d703bef55ad09e Elan 2.0.0-alpha5 valid
+# 3dc38592f4043160a3f50310d69b938ff649d3a119622b14b2429d4dccc25b94 Elan 2.0.0-alpha5 valid
 
 main
   variable quit set to false
   while not quit
-    variable reply set to inputString("RETURN for time now, or Unix time (positive integer), or Q to quit")
-    if reply.upperCase().equals("Q")
+    input reply set to inputString("t - for time now, q - to quit, or an integer value to convert")
+    if reply.upperCase().equals("Q") then
       reassign quit to true
-    elif reply.equals("") then
+    elif reply.upperCase().equals("T") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
       print(getDate(now))
