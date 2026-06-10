@@ -8,7 +8,8 @@ main
   reassign w to w.filter(lambda w as String => w.matchesRegExp(rgx))
   variable a set to inputStringFromOptions("Clue is an anagram? (y/n)", ["y", "n"])
   if a is "y" then
-    variable source reassign to input("Enter word(s) to match as anagram:")
+    variable inp set to inputString("Enter word(s) to match as anagram:")
+    reassign source to inp
     variable letters set to source.split("").filter(lambda l as String => l isnt " ").join("")
     variable anagram set to sortLettersOfWord(source.trim())
     reassign w to w.filter(lambda w as String => sortLettersOfWord(w) is anagram)

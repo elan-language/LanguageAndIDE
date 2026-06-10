@@ -4,7 +4,9 @@ Sub main()
   Dim fruit = {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"} ' variable definition
   Dim done = False ' variable definition
   While Not done
-    Dim wanted = input("What type of fruit do you want ('x' to exit)? ") ' variable definition
+    Console.WriteLine("What type of fruit do you want ('x' to exit)? ")
+
+      Dim wanted = Console.ReadLine() ' input
     If wanted.equals("x") Then
       done = True ' reassign variable
     Else

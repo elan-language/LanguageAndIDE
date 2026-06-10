@@ -506,7 +506,7 @@ export class StdLib {
 
   //Input functions
   private async prompt(prompt: string) {
-    await this.system.elanInputOutput.print(await this.system.toString(prompt+"\n"));
+    await this.system.elanInputOutput.print(`${await this.system.toString(prompt)}\n`);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)

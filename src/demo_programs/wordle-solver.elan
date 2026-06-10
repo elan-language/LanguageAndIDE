@@ -1,4 +1,4 @@
-# a4d1b307fadc7a3c52aaa7e388cdd98a172db00882df007b7d87d4c4f2104156 Elan 2.0.0-alpha5 valid
+# 8cbf1e699467b423afbf8baf7420dd99187744f87e202992d51a6b71d7b04a8f Elan 2.0.0-alpha5 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -13,7 +13,8 @@ main
   variable mark set to ""
   variable attempt set to "RAISE"
   while not mark.equals("*****")
-    reassign mark to input("" + attempt)
+    input inp set to inputString("" + attempt)
+    reassign mark to inp
     reassign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     reassign attempt to bestAttempt(possible)
   end while

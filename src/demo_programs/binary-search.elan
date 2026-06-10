@@ -1,10 +1,10 @@
-# 717e371d73b9589e9522566b2875f03f0a0109bccfb2054f7e88ba1ff4e4a6e9 Elan 2.0.0-alpha5 valid
+# c7cd6e39365f533ac4458ea4d1686b222adab2303e28349fbb37ef7b38e72af6 Elan 2.0.0-alpha5 valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable done set to false
   while not done
-    variable wanted set to input("What type of fruit do you want ('x' to exit)? ")
+    input wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
       reassign done to true
     else

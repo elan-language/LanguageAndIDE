@@ -794,6 +794,119 @@ end procedure
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
 of a program: the main routine, functions, and procedures.</p>
 
+<div id="print_statement">
+<h2>Print</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of print statements</h4>
+<div class="acc-body">
+
+  <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
+    inline within the print statement:</code></p>
+
+<codeblock>
+main
+  variable reply set to ""
+  while not reply.upperCase().equals("Q")
+    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    if reply.equals("") then
+      variable now set to divAsInt(clock(), 1000)
+      print(now)
+      print(getDate(now))
+    else
+      try
+        variable td set to int(reply)
+        if td >= 0 then
+          call print(getDate(td))
+        end if
+      catch e as ElanRuntimeError
+      end try
+    end if
+  end while
+end main
+</codeblock>
+
+<p>From the <b>Ripple sort</b> demo, printing a list:</code></p>
+
+  <codeblock>
+main
+  variable li set to [7, 1, 0, 4, 8, 3, 6]
+  print(li)
+  call inPlaceRippleSort(li)
+  call print(li)
+end main
+  </codeblock>
+
+<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</code></p>
+
+  <codeblock>
+main
+  variable blocks set to createBlockGraphics(white)
+  variable head set to [20, 15]
+  variable tail set to head
+  variable body set to [head]
+  variable currentDir set to Direction.right
+  variable gameOn set to true
+  variable apple set to [0, 0]
+  call setAppleToRandomPosition(apple, body)
+  while gameOn
+    call updateDisplay(blocks, head, tail, body, apple)
+    variable currentDirRef set to new AsRef<of Direction>(currentDir)
+    variable headRef set to new AsRef<of List<of Int>>(head)
+    variable tailRef set to new AsRef<of List<of Int>>(tail)
+    call updateSnake(currentDirRef, tailRef, headRef, body)
+    reassign head to headRef.value()
+    reassign tail to tailRef.value()
+    reassign currentDir to currentDirRef.value()
+    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    if head.equals(apple) then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+    end if
+    call sleep_ms(150)
+  end while
+  call print($"Game Over! Score: {body.length() - 1}")
+end main
+  </codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about print statements</h3>
+<div class="acc-body">
+
+<ul>
+<li>The <b>print</b> instruction writes a value to <b>display</b>.</li>
+<li>It automatically prints a new line after the value.</li>
+<li>The value can be any expression.</li>
+<li>You must provide a value; if you just want to print a blank line, just set the value to <code>""</code>.</li>
+<li>The recommended way to print multiple values is to use an interpolated string (see third example above)</li>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+<p>As an alternative to using the <b>print</b> instruction you call one of these standard library procedures Using
+the <b>call procedure</b> instruction:</p>
+<ul>
+  <li><el-method>printNoLine</el-method></li>
+  <li><el-method>printWithTab</el-method></li>
+</ul>
+<p>which offer more flexible options. These library methods work when running any of the supported languages within Elan but,
+  unlike when using the normal the <b>print</b> instruction, the library procedures do not correspond directly to
+  print methods in the native libraries for those languages.</p>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">See also</h3>
+<div class="acc-body">
+<p><a href="LibRef.html#InterpolatedString">Interpolated string</a></p>
+<p><a href="LibRef.html#printNoLine"><el-method>printNoLine</a></p>
+<p><a href="LibRef.html#printTab"><el-method>printTab</a></p>
+</div></div>
+</div>
+
 <div id="variable">
 <h2>Variable definition</h2>
 
@@ -899,6 +1012,56 @@ end procedure
   <li>The new value to be assigned may be defined as a literal value, or as the result of evaluating an expression.</li>
   <li>The new value must be of the same type as the one that the variable was defined with.</li>
 </ul>
+</div></div>
+</div>
+
+<div id="input_statement">
+<h2>Input</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Example of input instructions</h4>
+<div class="acc-body">
+
+<p>From the <b>Binary Search</b> demo, showing an <b>input</b> instruction with a clear user-prompt:</p>
+
+<codeblock>input wanted set to inputString("What type of fruit do you want ('x' to exit)? ")</codeblock>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">What you need to know about input instructions</h3>
+<div class="acc-body">
+
+<ul>
+  <li>The <b>input</b> instruction is the simplest way to read a string value typed in by the user (followed by <b>Enter</b>.</li>
+  <li>You must specify a user-prompt string, though this may be an empty string - <code>""</code>.</li>
+  <li>When working in Elan, the user entry will <i>always</i> be on the line below the displayed prompt.</li>
+  <li>The entered value is put into a <i>new</i> variable - equivalent to if it was a <b>variable definition</b>.</li>
+  <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding a <b>reassign variable</b>
+  instruction on the next line.</li>
+  <li>Also in a separate instruction, you can parse the string into a numeric type by applying the <code>int()</code>
+    or <code>float()</code> function to the input variable.</li>
+  <li>See below for more advanced options for handling specific forms of user input.</li>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+
+<h4 class="no-TOC">System methods for keyboard input</h4>
+<p>As an alternative to using the <b>input</b> <i>instruction</i> you may also use a range of system methods from the standard Elan library,
+which offer several advantages, including:</p>
+
+<ul>
+  <li>Enforcing that a user input matches the requirement for an integer, or floating-point number, and then doing the conversion invisibly: </li>
+  <li>Enforcing that either form of numeric input is within specified numeric bounds.</li>
+  <li>Enforcing that a string input is within specified bounds for the number of characters.</li>
+  <li>Enforcing that a string input matches one of a list of valid string responses.</li>
+</ul>
+
+<p>In all these cases, if the user input does not match the specified rules, the user will be advised, and asked to input a value response.</p>
+
+<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system method</a>.</p>
 </div></div>
 </div>
 
@@ -1211,119 +1374,6 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 </div></div>
 </div>
 
-<div id="print_statement">
-<h2>Print</h2>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title">Examples of print statements</h4>
-<div class="acc-body">
-
-  <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
-    inline within the print statement:</code></p>
-
-<codeblock>
-main
-  variable reply set to ""
-  while not reply.upperCase().equals("Q")
-    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
-    if reply.equals("") then
-      variable now set to divAsInt(clock(), 1000)
-      print(now)
-      print(getDate(now))
-    else
-      try
-        variable td set to int(reply)
-        if td >= 0 then
-          call print(getDate(td))
-        end if
-      catch e as ElanRuntimeError
-      end try
-    end if
-  end while
-end main
-</codeblock>
-
-<p>From the <b>Ripple sort</b> demo, printing a list:</code></p>
-
-  <codeblock>
-main
-  variable li set to [7, 1, 0, 4, 8, 3, 6]
-  print(li)
-  call inPlaceRippleSort(li)
-  call print(li)
-end main
-  </codeblock>
-
-<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</code></p>
-
-  <codeblock>
-main
-  variable blocks set to createBlockGraphics(white)
-  variable head set to [20, 15]
-  variable tail set to head
-  variable body set to [head]
-  variable currentDir set to Direction.right
-  variable gameOn set to true
-  variable apple set to [0, 0]
-  call setAppleToRandomPosition(apple, body)
-  while gameOn
-    call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of Direction>(currentDir)
-    variable headRef set to new AsRef<of List<of Int>>(head)
-    variable tailRef set to new AsRef<of List<of Int>>(tail)
-    call updateSnake(currentDirRef, tailRef, headRef, body)
-    reassign head to headRef.value()
-    reassign tail to tailRef.value()
-    reassign currentDir to currentDirRef.value()
-    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
-    if head.equals(apple) then
-      call setAppleToRandomPosition(apple, body)
-    else
-      call body.removeAt(0)
-    end if
-    call sleep_ms(150)
-  end while
-  call print($"Game Over! Score: {body.length() - 1}")
-end main
-  </codeblock>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about print statements</h3>
-<div class="acc-body">
-
-<ul>
-<li>The <b>print</b> instruction writes a value to <b>display</b>.</li>
-<li>It automatically prints a new line after the value.</li>
-<li>The value can be any expression, except for an enum value (which has no printed representation)</li>
-<li>You must provide a value; if you just want to print a blank line, just set the value to <code>""</code>.</li>
-<li>The recommended way to print multiple values is to use an interpolated string (see third example above)</li>
-</ul>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">More advanced techniques</h3>
-<div class="acc-body">
-<p>As an alternative to using the <b>print</b> instruction you call one of these standard library procedures Using
-the <b>call procedure</b> instruction:</p>
-<ul>
-  <li><el-method>printNoLine</el-method></li>
-  <li><el-method>printWithTab</el-method></li>
-</ul>
-<p>which offer more flexible options. These library methods work when running any of the supported languages within Elan but,
-  unlike when using the normal the <b>print</b> instruction, the library procedures do not correspond directly to
-  print methods in the native libraries for those languages.
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">See also</h3>
-<div class="acc-body">
-<p><a href="LibRef.html#InterpolatedString">Interpolated string</a></p>
-<p><a href="LibRef.html#printNoLine"><el-method>printNoLine</a></p>
-  p><a href="LibRef.html#printTab"><el-method>printTab</a></p>
-</div></div>
-</div>
-
 <div id="try">
 <div id="catch"></div>
 <h2>Try</h2>
@@ -1358,11 +1408,29 @@ is used to intercept (or 'catch') this exception and just ignore that input:</p>
   end while
 end main
 </codeblock>
+</div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about try statements</h3>
+<h3 class="no-TOC acc-title">What you need to know about <b>try</b> instructions</h3>
 <div class="acc-body">
 
+<ul>
+  <li>The <b>try</b> instruction is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
+    and to <i>catch</i> that exception without the program being automatically halted.</li>
+  <li>The <b>try</b> instruction is often referred to as a `try-catch` - because it makes no sense to have
+  a <b>try</b> statement <i>without</i> a 'catch' clause.</li>
+  <li>When you add a <b>try</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
+  <li class="python">'except' is Python's word for 'catch'</li>
+  <li>When you add a new <b>try</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
+  <li>Underneath the catch clause you may instructions to handle the exception, for example by advising the user to try again.</li>
+  <li>The catch clause must specify the <i>type</i> of the exception to be caught. When working in Elan, only two types are permitted:</li>
+    <ul>
+    <li><code>ElanRuntimeError</code> which covers all errors thrown by the Elan system, including, for example 'Out of range index ...'</li>
+    <li><code>CustomError</code> an exception explicitly thrown by code by a <b>throw</b> instruction in your own code (see below).</li>
+    </ul>
+  <li>The</li>
+  <li><i>Currently</li> Elan permits only one catch clause to be associated with each <b>try</b>
+</ul>
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
@@ -1378,58 +1446,109 @@ end main
 <p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example using <b>throw</b> exception</h4>
+<h4 class="no-TOC acc-title">Example of a throwing an exception</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
+<p>The following function to calculate factorials <i>deliberately</i> 'throws' an exception (error) if it is given
+  a <i>negative</i> value for the argument:</p>
+
 <codeblock>
-main
-  print($"{percent(23, 20)}" + "%")
-end main
-function percent(value as Float, maximum as Float) returns Float
-  if value > maximum then
-    throw ElanRuntimeError "proportion exceeds 100%"
+function factorial(n as Int) returns Int
+  variable result set to 1
+  if n > 1 then
+    reassign result to n*factorial(n - 1)
+  elif n < 0 then
+    throw CustomError "Factorial cannot be called with a negative argument"
   end if
-  return value/maximum*100
+  return result
 end function
 </codeblock>
-<p>At runtime, if the condition is met, execution will stop and the display will show:</p>
-<pre>
-    proportion exceeds 100%
-    Error
-</pre>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about throwing an exception</h4>
+<div class="acc-body">
+
+<ul>
+  <li>The <b>throw</b> instruction will cause an 'exception' to be 'thrown' (or 'raised' in some languages).</li>
+  <li>Unless the <b>throw</b> instruction is directly or indirectly within a <b>Try</b> instruction (see above),
+  program execution will be halted and the message defined in the <b>throw</b> instruction printed on the <b>display</b>.</li>
+  <li>Because of this drastic effect it is recommended <i>not</i> to throw exceptions only in rare circumstances.</li>
+</ul>
 </div></div>
 </div>
 
 <div id="assert">
 <h2>Assert</h2>
-<p>The <b>assert</b> equal instruction is used only within a <a href="#test"><b>test</b> <i class="fa">&#xf14c;</i></a>,
-which is the mechanism for running unit tests during program development, not during program execution.</p>
-<p>Some programming languages have a feature for making assertions while your program is running.
- In Elan, you can get equivalent functionality by throwing an exception, as described in the <a href="#throw"><b>throw exception</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of asserts</h4>
+<div class="acc-body">
+
+  <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
+
+<codeblock></codeblock>
+  test test_leap
+  # normal cases
+  assert leap(2025) is false
+  assert leap(2024) is true
+  # boundary cases
+  assert leap(1900) is false
+  assert leap(2000) is true
+end test
+</codeblock>
+
+<p>From the <b></b>Tower of Hanoi</p> demo, showing an assert for an error case:
+
+<codeblock>
+test test_colour
+  # Normal cases
+  assert colour(5) is green
+  # Edge cases
+  assert colour(1) is red
+  assert colour(10) is 0xFF99CC
+  # Error cases
+  assert colour(11) is "Out of range index: 10 size: 10"
+end test
+</codeblock>
+
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about asserts</h4>
+<div class="acc-body">
+<ul>
+  <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
+  result values in a single case that returns a data structure.</li>
+  <li>The assert defines two fields that the user must specify:</li>
+  <ul>
+    <li>The <i>actual</i> value as returned by a call to the function being tested.</li>
+    <li>The expected value, which will typically be a literal value of the same type as the actual.</li>
+    <li>When the tests are run (automatically whenever the code <i>compiles</i>) the result - pass or fail - will be
+      shown alongside each assert. </li>
+    <li>A fail indicates that the expected and actual values do not match.</li>
+    <li>The expected value should be of the same type as the actual; if they are not that will be reported as a test failure,
+      without showing the actual values.</li>
+    <li>You can, however, test for an exception having been thrown, by setting the expected value to a the expected error <i>message</i> 
+      (as a <i>string</i>).</li>
+          <li>Unlike on many systems, Elan does not stop at the first failure within each <b>test</b> - it will attempt
+    to evaluate all the asserts.</li>
+    <li>The required <i>order</i> of the actual and expected fields varies between the supported languages;
+    Elan handles this automatically when translating between languages.</li>
+  </ul>
+</ul>
+</div></div>
+
 </div>
 
-<div id="let" class="functional">
-<h2><b>Let statement</b></h2>
-<p>Of use only in <code>test</code> instructions and in Functional Programming functions <code>let</code> is used to define constant values defined by expressions (or literals).</p>
-<p>The <b>let statement</b> instruction declares and initialises an immutable named value whose scope is confined to the function.</p>
-<p>The name defined must be a valid <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>.</p>
-<p>You can declare a such a constant within a loop, so that the named value gets a new value each time it is executed, but its value cannot be changed in any other way.</p>
-<p>Unlike a <a href="#constant">global constant <i class="fa">&#xf14c;</i></a>, the value assigned in a <b>let statement</b> may be any value, literal or expression:</p>
-<codeblock>
-function numbers() returns (Float, Float)
-  let tau be 2*pi
-  let phi be (1 + sqrt(5))/2
-  return (tau, phi)
-end function
-</codeblock>
-</div>
+
 
 <div>
 <h2>Comment</h2>
 <p>See <a href="#Comment">Comments</a></p>
 </div>
-</div>
+</div></div>
+
 
 <h1 id="Expression">Expressions</h1>
 <p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>

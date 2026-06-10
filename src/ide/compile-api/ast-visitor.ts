@@ -67,6 +67,7 @@ import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { LetStatementAsn } from "../../compiler/syntax-nodes/statements/let-statement-asn";
+import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -399,12 +400,10 @@ export function transform(
   }
 
   if (node instanceof PrintStatement) {
-    const callAsn = new CallAsn(node.getHtmlId(), scope);
-    callAsn.breakpointStatus = node.breakpointStatus;
-
-    callAsn.proc = new IdDefAsn("print", fieldId, scope);
-    callAsn.args = transform(node.args, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
-    return callAsn;
+    const printAsn = new PrintAsn(node.getHtmlId(), scope);
+    printAsn.breakpointStatus = node.breakpointStatus;
+    printAsn.expr = transform(node.args, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
+    return printAsn;
   }
 
   if (node instanceof CallStatement) {
