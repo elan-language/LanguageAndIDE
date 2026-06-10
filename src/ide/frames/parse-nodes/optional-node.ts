@@ -26,6 +26,10 @@ export class OptionalNode extends AbstractParseNode {
         this.updateFrom(option);
         this.matchedNode = option;
       } else {
+        // pass the message up the tree
+        if (option.message && !this.message) {
+          this.message = option.message;
+        }
         this.status = ParseStatus.valid;
         this.remainingText = text;
         this._done = true;

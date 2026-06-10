@@ -10,9 +10,9 @@ Sub main()
     Else
       Dim result = binarySearch(fruit, wanted) ' variable definition
       If result Then
-        print($"\nWe can supply a {wanted}")
+        Console.WriteLine($"\nWe can supply a {wanted}") ' print
       Else
-        print($"\nSorry, we cannot supply a {wanted}")
+        Console.WriteLine($"\nSorry, we cannot supply a {wanted}") ' print
       End If
     End If
   End While

@@ -55,7 +55,9 @@ import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
+import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
 import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
@@ -97,7 +99,8 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ProcedureMethod ||
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
-      frame instanceof AbstractProperty
+      frame instanceof AbstractProperty ||
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -131,8 +134,12 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof InputStatement) {
+      html = `${frame.name.renderAsHtml()} = <el-method>input</el-method>(${frame.prompt.renderAsHtml()})`;
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof PrintStatement) {
+      html = `<el-method>print</el-method>(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
@@ -210,7 +217,9 @@ export class LanguagePython extends LanguageAbstract {
   renderFileImportsAsHtml(): string {
     return this.languageExportHelpers.renderFileImportsAsHtml();
   }
-
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "";
+  }
   renderFileTrailerAsHtml(f: FileImpl): string {
     return f.containsMain() ? "\n\n<el-method>main</el-method>()" : "";
   }

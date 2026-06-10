@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var t = new Turtle();
   t.placeAt(-50, 30); // call procedure
@@ -25,4 +27,6 @@ static void drawSide(double length, Turtle t) { // procedure
   } // if
 } // procedure
 
-final Int side = 100 // constant
+final Int side = 100; // constant
+
+}

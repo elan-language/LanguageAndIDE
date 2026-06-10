@@ -1,8 +1,10 @@
 // Java with Elan 2.0.0-alpha5
 
-final Int nDiscs = 7 // constant
+public class Global {
 
-final Int delay_ms = 300 // constant
+final Int nDiscs = 7; // constant
+
+final Int delay_ms = 300; // constant
 
 static void main() {
   var stacks = create3Stacks(nDiscs);
@@ -52,20 +54,20 @@ static RectangleVG createDisc(int disc, int peg, int vertical) { // function
 @Test static void test_createDisc() {
   // Normal cases
   var d = createDisc(5, 2, 4);
-  assertEquals(green, d.fillColour)
-  assertEquals(0.25, d.strokeWidth)
-  assertEquals(3, d.height)
-  assertEquals(12, d.width)
-  assertEquals(45, d.x)
-  assertEquals(38, d.y)
+  assertEquals(green, d.fillColour);
+  assertEquals(0.25, d.strokeWidth);
+  assertEquals(3, d.height);
+  assertEquals(12, d.width);
+  assertEquals(45, d.x);
+  assertEquals(38, d.y);
   // Edge cases
   var d2 = createDisc(1, 1, 0);
-  assertEquals(red, d2.fillColour)
-  assertEquals(0.25, d2.strokeWidth)
-  assertEquals(3, d2.height)
-  assertEquals(4, d2.width)
-  assertEquals(19, d2.x)
-  assertEquals(50, d2.y)
+  assertEquals(red, d2.fillColour);
+  assertEquals(0.25, d2.strokeWidth);
+  assertEquals(3, d2.height);
+  assertEquals(4, d2.width);
+  assertEquals(19, d2.x);
+  assertEquals(50, d2.y);
   // Error cases - none identified
 } // test
 
@@ -79,12 +81,12 @@ static List<List<int>> create3Stacks(int nDiscs) { // function
 @Test static void test_create3Stacks() {
   var emptyStack = new List<int>();
   // Normal case(s)
-  assertEquals([[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack], create3Stacks(7))
+  assertEquals([[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack], create3Stacks(7));
   // Edge case(s)
-  assertEquals([[1], emptyStack, emptyStack], create3Stacks(1))
-  assertEquals([emptyStack, emptyStack, emptyStack], create3Stacks(0))
+  assertEquals([[1], emptyStack, emptyStack], create3Stacks(1));
+  assertEquals([emptyStack, emptyStack, emptyStack], create3Stacks(0));
   // Error case(s)
-  assertEquals("Loop will not terminate when start < end start with negative step", create3Stacks(-1))
+  assertEquals("Loop will not terminate when start < end start with negative step", create3Stacks(-1));
 } // test
 
 static int colour(int disc) { // function
@@ -94,12 +96,12 @@ static int colour(int disc) { // function
 
 @Test static void test_colour() {
   // Normal cases
-  assertEquals(green, colour(5))
+  assertEquals(green, colour(5));
   // Edge cases
-  assertEquals(red, colour(1))
-  assertEquals(0xFF99CC, colour(10))
+  assertEquals(red, colour(1));
+  assertEquals(0xFF99CC, colour(10));
   // Error cases
-  assertEquals("Out of range index: 10 size: 10", colour(11))
+  assertEquals("Out of range index: 10 size: 10", colour(11));
 } // test
 
 static int top(List<int> s) { // function
@@ -108,9 +110,11 @@ static int top(List<int> s) { // function
 
 @Test static void test_top() {
   // Normal cases
-  assertEquals(1, top([3, 2, 1]))
+  assertEquals(1, top([3, 2, 1]));
   // Edge cases
-  assertEquals(7, top([7]))
+  assertEquals(7, top([7]));
   // Error cases
-  assertEquals("Out of range index: -1 size: 0", top(new List<int>()))
+  assertEquals("Out of range index: -1 size: 0", top(new List<int>()));
 } // test
+
+}

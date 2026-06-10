@@ -3,15 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("Enum", () => {
@@ -563,7 +563,9 @@ enum Fruit apple, orange, if`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' matches a reserved word.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "'if' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfReservedWordAsValue", async () => {
@@ -587,7 +589,9 @@ enum Fruit apple, orange, break`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'break' matches a reserved word.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -613,7 +617,9 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'Fruit' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_DuplicateValues", async () => {

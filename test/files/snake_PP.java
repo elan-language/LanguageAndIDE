@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Use the w,a,s,d keys to change snake's direction
 
 static void main() {
@@ -28,7 +30,7 @@ static void main() {
     } // if
     sleep_ms(150); // call procedure
   } // while
-  print(String.format("Game Over! Score: %", body.length() - 1));
+  System.out.println(String.format("Game Over! Score: %", body.length() - 1)); // print
 } // main
 
 static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
@@ -100,38 +102,40 @@ static Direction directionByKey(Direction current, String key) { // function
 enum Direction {up, down, left, right}
 
 @Test static void test_getTailColour() {
-  assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]))
-  assertEquals(white, getTailColour([3, 4], [[3, 5], [3, 6]]))
+  assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]));
+  assertEquals(white, getTailColour([3, 4], [[3, 5], [3, 6]]));
 } // test
 
 @Test static void test_hasHitEdge() {
-  assertEquals(false, hasHitEdge(0, 0))
-  assertEquals(false, hasHitEdge(0, 29))
-  assertEquals(false, hasHitEdge(39, 0))
-  assertEquals(false, hasHitEdge(29, 29))
-  assertEquals(true, hasHitEdge(-1, 5))
-  assertEquals(true, hasHitEdge(5, 30))
-  assertEquals(true, hasHitEdge(40, 5))
-  assertEquals(true, hasHitEdge(5, -1))
+  assertEquals(false, hasHitEdge(0, 0));
+  assertEquals(false, hasHitEdge(0, 29));
+  assertEquals(false, hasHitEdge(39, 0));
+  assertEquals(false, hasHitEdge(29, 29));
+  assertEquals(true, hasHitEdge(-1, 5));
+  assertEquals(true, hasHitEdge(5, 30));
+  assertEquals(true, hasHitEdge(40, 5));
+  assertEquals(true, hasHitEdge(5, -1));
 } // test
 
 @Test static void test_getAdjacentSquare() {
   var sq = [20, 15];
-  assertEquals([20, 14], getAdjacentSquare(sq, Direction.up))
-  assertEquals([20, 16], getAdjacentSquare(sq, Direction.down))
-  assertEquals([19, 15], getAdjacentSquare(sq, Direction.left))
-  assertEquals([21, 15], getAdjacentSquare(sq, Direction.right))
+  assertEquals([20, 14], getAdjacentSquare(sq, Direction.up));
+  assertEquals([20, 16], getAdjacentSquare(sq, Direction.down));
+  assertEquals([19, 15], getAdjacentSquare(sq, Direction.left));
+  assertEquals([21, 15], getAdjacentSquare(sq, Direction.right));
   // boundary
-  assertEquals([-1, 15], getAdjacentSquare([0, 15], Direction.left))
+  assertEquals([-1, 15], getAdjacentSquare([0, 15], Direction.left));
 } // test
 
 @Test static void test_directionByKey() {
   var current = Direction.up;
-  assertEquals(Direction.up, directionByKey(current, ""))
-  assertEquals(Direction.up, directionByKey(current, "x"))
-  assertEquals(Direction.up, directionByKey(current, "w"))
-  assertEquals(Direction.down, directionByKey(current, "s"))
-  assertEquals(Direction.left, directionByKey(current, "a"))
-  assertEquals(Direction.right, directionByKey(current, "d"))
-  assertEquals(Direction.up, directionByKey(current, "D"))
+  assertEquals(Direction.up, directionByKey(current, ""));
+  assertEquals(Direction.up, directionByKey(current, "x"));
+  assertEquals(Direction.up, directionByKey(current, "w"));
+  assertEquals(Direction.down, directionByKey(current, "s"));
+  assertEquals(Direction.left, directionByKey(current, "a"));
+  assertEquals(Direction.right, directionByKey(current, "d"));
+  assertEquals(Direction.up, directionByKey(current, "D"));
 } // test
+
+}

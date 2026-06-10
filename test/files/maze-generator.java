@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var blocks = createBlockGraphics(black);
   blocks = createStart(blocks); // reassign variable
@@ -21,7 +23,7 @@ static void main() {
   } // if
 } // main
 
-final Int displayWidth = 150 // constant
+final Int displayWidth = 150; // constant
 
 static void saveAsFile(String name, List<List<int>> b) { // procedure
   var file = createFileForWriting(name);
@@ -88,8 +90,8 @@ static int flip01(int v) { // function
 } // function
 
 @Test static void test_flip01() {
-  assertEquals(1, flip01(0))
-  assertEquals(0, flip01(1))
+  assertEquals(1, flip01(0));
+  assertEquals(0, flip01(1));
 } // test
 
 static bool isValidQuadrant(int q) { // function
@@ -97,22 +99,22 @@ static bool isValidQuadrant(int q) { // function
 } // function
 
 @Test static void test_isValidQuadrant() {
-  assertEquals(false, isValidQuadrant(0))
-  assertEquals(true, isValidQuadrant(1))
-  assertEquals(true, isValidQuadrant(2))
-  assertEquals(true, isValidQuadrant(3))
-  assertEquals(true, isValidQuadrant(4))
-  assertEquals(false, isValidQuadrant(5))
-  assertEquals(true, isValidQuadrant(6))
-  assertEquals(true, isValidQuadrant(7))
-  assertEquals(true, isValidQuadrant(8))
-  assertEquals(true, isValidQuadrant(9))
-  assertEquals(false, isValidQuadrant(10))
-  assertEquals(true, isValidQuadrant(11))
-  assertEquals(true, isValidQuadrant(12))
-  assertEquals(true, isValidQuadrant(13))
-  assertEquals(true, isValidQuadrant(14))
-  assertEquals(false, isValidQuadrant(15))
+  assertEquals(false, isValidQuadrant(0));
+  assertEquals(true, isValidQuadrant(1));
+  assertEquals(true, isValidQuadrant(2));
+  assertEquals(true, isValidQuadrant(3));
+  assertEquals(true, isValidQuadrant(4));
+  assertEquals(false, isValidQuadrant(5));
+  assertEquals(true, isValidQuadrant(6));
+  assertEquals(true, isValidQuadrant(7));
+  assertEquals(true, isValidQuadrant(8));
+  assertEquals(true, isValidQuadrant(9));
+  assertEquals(false, isValidQuadrant(10));
+  assertEquals(true, isValidQuadrant(11));
+  assertEquals(true, isValidQuadrant(12));
+  assertEquals(true, isValidQuadrant(13));
+  assertEquals(true, isValidQuadrant(14));
+  assertEquals(false, isValidQuadrant(15));
 } // test
 
 class Point {
@@ -143,5 +145,7 @@ class Point {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
-  assertEquals(expected, n)
+  assertEquals(expected, n);
 } // test
+
+}

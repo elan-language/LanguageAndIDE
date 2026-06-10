@@ -28,7 +28,7 @@ Sub main()
     End If
     sleep_ms(150) ' call procedure
   End While
-  print($"Game Over! Score: {body.length() - 1}")
+  Console.WriteLine($"Game Over! Score: {body.length() - 1}") ' print
 End Sub
 
 Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(Of Integer)), headRef As AsRef(Of List(Of Integer)), body As List(Of List(Of Integer))) ' procedure

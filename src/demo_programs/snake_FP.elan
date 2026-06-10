@@ -1,4 +1,4 @@
-# e9c3048377b30876abf814dec443540bb8925deb4165a53a7103018b04de8ec2 Elan 2.0.0-alpha5 valid
+# 37ec3df6a2e3423ae01ef2bc01eb2d8e20bcb4dccd0a7ebc45590c23163ce351 Elan 2.0.0-alpha5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -12,7 +12,7 @@ main
     call sleep_ms(150)
     reassign game to clockTick(game, getKey())
   end while
-  call print($"Game Over! Score: {score(game)}")
+  print($"Game Over! Score: {score(game)}")
 end main
 
 function clockTick(g as Game, k as String) returns Game

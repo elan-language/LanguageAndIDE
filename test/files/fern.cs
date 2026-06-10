@@ -17,7 +17,7 @@ static void main() {
     vg.append(s.rect); // call procedure
     displayVectorGraphics(vg); // call procedure
   } // foreach
-  print("Finished");
+  Console.WriteLine("Finished"); // print
 } // main
 
 // The State class is used as a convenient way to pass multiple
@@ -99,15 +99,15 @@ class State {
 } // class
 
 [TestMethod] static void test_one() {
-  Assert.AreEqual([0.0064, 1.736], roundtuple2(onestep(0.0, 0.16, 0.5)))
-  Assert.AreEqual([-0.0416, 1.6352], roundtuple2(onestep(0.0, 0.16, 0.9)))
+  Assert.AreEqual([0.0064, 1.736], roundtuple2(onestep(0.0, 0.16, 0.5)));
+  Assert.AreEqual([-0.0416, 1.6352], roundtuple2(onestep(0.0, 0.16, 0.9)));
   var s = onepoint(new State(new RectangleVG(), 0.0, 0.16, new Random())); // let
-  Assert.AreEqual("rect at 50.0448, 62.848", s.toString())
+  Assert.AreEqual("rect at 50.0448, 62.848", s.toString());
   var p1 = [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]; // let
   var p2 = [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]; // let
-  Assert.AreEqual(p1, getparams(0.005, [p1, p2], 0.0))
-  Assert.AreEqual(p2, getparams(0.03, [p1, p2], 0.0))
-  Assert.AreEqual(p2, getparams(0.03, [p2], 0.01))
+  Assert.AreEqual(p1, getparams(0.005, [p1, p2], 0.0));
+  Assert.AreEqual(p2, getparams(0.03, [p1, p2], 0.0));
+  Assert.AreEqual(p2, getparams(0.03, [p2], 0.01));
 } // test
 
 // two approaches to rounding a tuple to N decimal places
@@ -120,4 +120,4 @@ static List<double> roundtuple2((double, double) n) { // function
   return [n.item_0, n.item_1].map(double x => x.round(8));
 } // function
 
-const Int scale = 7
+const Int scale = 7;

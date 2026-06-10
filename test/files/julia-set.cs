@@ -22,7 +22,7 @@ static void main() {
     var vg = allpoints(p);
     displayVectorGraphics(vg); // call procedure
     p.checkkeys(); // call procedure
-    print($"x = {p.jx} y = {p.jy}");
+    Console.WriteLine($"x = {p.jx} y = {p.jy}"); // print
   } // while
 } // main
 
@@ -133,12 +133,12 @@ class Coords {
 
 [TestMethod] static void test_one() {
   var p = new Coords();
-  Assert.AreEqual(100, onepoint(0, 0, 100, p))
-  Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p))
+  Assert.AreEqual(100, onepoint(0, 0, 100, p));
+  Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p));
 } // test
 
-const Int width = 200
+const Int width = 200;
 
-const Int height = 150
+const Int height = 150;
 
-const Int nmax = 360
+const Int nmax = 360;

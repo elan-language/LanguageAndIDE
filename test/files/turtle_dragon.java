@@ -1,9 +1,11 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12);
   clearPrintedText(); // call procedure
-  print(String.format("Dragon of order %", order));
+  System.out.println(String.format("Dragon of order %", order)); // print
   var side = (75/pow(sqrt(2), order));
   var corner = side/12.0/cos(45);
   var turns = left;
@@ -15,9 +17,9 @@ static void main() {
   drawDragon(t, order, turns, side, corner); // call procedure
 } // main
 
-final String left = "1" // constant
+final String left = "1"; // constant
 
-final String right = "0" // constant
+final String right = "0"; // constant
 
 static void drawDragon(Turtle t, int order, String turns, double side, double corner) { // procedure
   var p = (200.0/order).floor();
@@ -58,13 +60,15 @@ static String reflect(String s) { // function
 } // function
 
 @Test static void test_setTurns() {
-  assertEquals("11", setTurns("1"))
-  assertEquals("1110", setTurns("11"))
-  assertEquals("110110", setTurns("110"))
-  assertEquals("11011001110010", setTurns("1101100"))
+  assertEquals("11", setTurns("1"));
+  assertEquals("1110", setTurns("11"));
+  assertEquals("110110", setTurns("110"));
+  assertEquals("11011001110010", setTurns("1101100"));
 } // test
 
 @Test static void test_reflect() {
-  assertEquals("100", reflect("110"))
-  assertEquals("01111", reflect("00001"))
+  assertEquals("100", reflect("110"));
+  assertEquals("01111", reflect("00001"));
 } // test
+
+}

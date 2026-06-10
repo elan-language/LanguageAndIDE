@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Turing Machine that converts a Year from decimal to roman numerals
 
 // Run the program, enter the number to convert and watch the machine in action.
@@ -21,19 +23,19 @@ static void main() {
     tm.singleStep(); // call procedure
     steps = steps + 1; // reassign variable
     clearPrintedText(); // call procedure
-    print(tm.tape);
+    System.out.println(tm.tape); // print
     printTab(tm.headPosition - 1, "^"); // call procedure
-    print(String.format("Step: %", steps));
-    print(String.format("State: %", tm.currentState));
-    print(String.format("Rule applied: %", rule.toString()));
+    System.out.println(String.format("Step: %", steps)); // print
+    System.out.println(String.format("State: %", tm.currentState)); // print
+    System.out.println(String.format("Rule applied: %", rule.toString())); // print
     sleep_ms(40); // call procedure
   } // while
-  print(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim()));
+  System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print
 } // main
 
-final String initState = "init" // constant
+final String initState = "init"; // constant
 
-final String haltState = "halt" // constant
+final String haltState = "halt"; // constant
 
 class TuringMachine {
 
@@ -488,3 +490,5 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
 } // procedure
+
+}

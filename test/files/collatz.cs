@@ -29,11 +29,11 @@ static void main() {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // reassign variable
       } // foreach
       displayVectorGraphics(vg); // call procedure
-      print(x);
+      Console.WriteLine(x); // print
       sleep_ms(100); // call procedure
     } // while
   } // while
-  print("Finished");
+  Console.WriteLine("Finished"); // print
 } // main
 
 // scale x.  We pass in p just to get its length
@@ -52,4 +52,4 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 } // function
 
-const Int grey = 0x808080
+const Int grey = 0x808080;

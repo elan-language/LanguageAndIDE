@@ -9,7 +9,9 @@ import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
+import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
+import { PrintStatement } from "./statements/print-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -42,8 +44,14 @@ export class StatementFactoryImpl implements StatementFactory {
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
   }
+  public newInput(parent: Parent): Frame {
+    return new InputStatement(parent);
+  }
   public newLetStatement(parent: Parent): Frame {
     return new LetStatement(parent);
+  }
+  public newPrint(parent: Parent): Frame {
+    return new PrintStatement(parent);
   }
   public newSet(parent: Parent): Frame {
     return new ReAssignVariable(parent);

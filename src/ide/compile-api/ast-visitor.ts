@@ -173,7 +173,9 @@ import { Else } from "../frames/statements/else";
 import { ElseIf } from "../frames/statements/elseIf";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
+import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
+import { PrintStatement } from "../frames/statements/print-statement";
 import { ReAssignVariable } from "../frames/statements/reassign-variable";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { Throw } from "../frames/statements/throw";
@@ -375,6 +377,34 @@ export function transform(
     setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
 
     return setAsn;
+  }
+
+  if (node instanceof MethodCallNode) {
+    const id = node.name!.matchedText;
+    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<AstNode>;
+
+    return new FuncCallAsn(id, parameters, fieldId, scope);
+  }
+
+  if (node instanceof InputStatement) {
+    const varAsn = new VariableAsn(node.getHtmlId(), scope);
+    varAsn.breakpointStatus = node.breakpointStatus;
+
+    varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
+
+    const id = "input"; // Hard coded method name
+    const parameter = transform(node.prompt, fieldId, scope)!;
+    varAsn.expr = new FuncCallAsn(id, [parameter], fieldId, scope);
+    return varAsn;
+  }
+
+  if (node instanceof PrintStatement) {
+    const callAsn = new CallAsn(node.getHtmlId(), scope);
+    callAsn.breakpointStatus = node.breakpointStatus;
+
+    callAsn.proc = new IdDefAsn("print", fieldId, scope);
+    callAsn.args = transform(node.args, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
+    return callAsn;
   }
 
   if (node instanceof CallStatement) {
@@ -722,13 +752,6 @@ export function transform(
     }
 
     return new IdAsn(node.matchedText, fieldId, scope);
-  }
-
-  if (node instanceof MethodCallNode) {
-    const id = node.name!.matchedText;
-    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<AstNode>;
-
-    return new FuncCallAsn(id, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {

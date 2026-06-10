@@ -280,12 +280,12 @@ end test
 <table class="tablePlain">
 <tr>
  <td>
-  <codeblock>call print($"Spanish introduces a question with {unicode(191)}")</codeblock>
+  <codeblock>print($"Spanish introduces a question with {unicode(191)}")</codeblock>
 </td>
 <td>&#x27f6;</td><td>Spanish introduces a question with &#191;</td>
 </tr><tr>
  <td>
-  <codeblock>call print($"This is an up arrow: {unicode(0x2191)}")</codeblock>
+  <codeblock>print($"This is an up arrow: {unicode(0x2191)}")</codeblock>
   </td>
   <td>&#x27f6;</td><td>This is an up arrow: &#x2191;
  </td>
@@ -299,7 +299,7 @@ end test
 <p>Strings can be built from other strings by concatenation using the plus operator, for example:</p>
 <table class="tablePlain">
 <tr>
- <td><code>call print("Hello " + "world")</code>
+ <td><code>print("Hello " + "world")</code>
 </td><td>&#x27f6;</td><td>Hello world</td>
 </tr>
 </table>
@@ -307,7 +307,7 @@ end test
 <p>A newline may be inserted within a string with <el-lit>\n</el-lit>:
 <table class="tablePlain">
 <tr>
- <td><code>call print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
+ <td><code>print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
 </tr>
 </table>
 
@@ -434,7 +434,7 @@ end test
 <p>If <code>a</code> and <code>b</code> have values 3 and 17:</p>
 <table class="tablePlain">
 <tr>
- <td><codeblock>call print($"{a} times {b} equals {a*b}")</codeblock></td>
+ <td><codeblock>print($"{a} times {b} equals {a*b}")</codeblock></td>
  <td>&#x27f6;</td><td>3 times 17 equals 51</td>
 </tr>
 </table>
@@ -443,7 +443,7 @@ end test
 <table class="tablePlain">
 <tr>
  <td><codeblock>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
-  <codeblock>call print(message) </codeblock>
+  <codeblock>print(message) </codeblock>
  </td>
  <td>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
 </tr>
@@ -454,7 +454,7 @@ end test
 <codeblock>
 main
   variable r set to 2.0
-  call print($"area = {(pi*r*r).round(2)}")
+  print($"area = {(pi*r*r).round(2)}")
 end main
 </codeblock>
  </td><td><br><br>&#x27f6;</td><td><br><br>area = 12.57<br></td>
@@ -831,9 +831,9 @@ i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
 <codeblock>
 main
   variable di1 set to ["alpha":1, "beta":2, "gamma":3]
-  call print(di1["beta"])
+  print(di1["beta"])
   variable di2 set to [1:"alpha", 2:"beta", 3:"gamma"]
-  call print(di2[3])
+  print(di2[3])
 end main
 </codeblock>
   </td>
@@ -926,7 +926,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <codeblock>
   variable st set to new HashSet&lt;of Int&gt;()
   reassign st to st.addFromList([3, 5, 7])
-  call print(st.length())
+  print(st.length())
   </codeblock>
   </td><td>
   <br><br>&#x27f6;
@@ -936,7 +936,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  <td>
   <codeblock>
   reassign st to st.add(7)
-  call print(st.length())
+  print(st.length())
   </codeblock>
  </td><td>
  <br>&#x27f6;
@@ -947,18 +947,18 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  <td>
   <codeblock>
   reassign st to st.remove(3)
-  call print(st.length())
+  print(st.length())
   </codeblock>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
  <td>
   <codeblock>
   reassign st to st.remove(3)
-  call print(st.length())
+  print(st.length())
   </codeblock>
  <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
- <td><code>call print(st)</code></td>
+ <td><code>print(st)</code></td>
  <td>&#x27f6;</td><td>[5, 7]</td>
 </tr>
 </table>
@@ -1165,19 +1165,19 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <codeblock>
 main
   variable sk set to new Stack&lt;of String&gt;()
-  call print(sk.length())
+  print(sk.length())
   reassign sk to sk.push("apple")
   reassign sk to sk.push("banana")
   reassign sk to sk.push("cherry")
-  call print(sk.length())
-  call print(sk)
-  call print(sk.peek())
-  call print(sk.pop())
-  call print(sk)
-  call print(sk.pop().item_0)
-  call print(sk)
+  print(sk.length())
+  print(sk)
+  print(sk.peek())
+  print(sk.pop())
+  print(sk)
+  print(sk.pop().item_0)
+  print(sk)
   reassign sk to sk.pop().item_1
-  call print(sk)
+  print(sk)
 end main
 </codeblock>
 </td>
@@ -1192,19 +1192,19 @@ end main
 <codeblock>
 main
   variable qu set to new Queue&lt;of String&gt;()
-  call print(qu.length())
+  print(qu.length())
   reassign qu to qu.enqueue("apple")
   reassign qu to qu.enqueue("banana")
   reassign qu to qu.enqueue("cherry")
-  call print(qu.length())
-  call print(qu)
-  call print(qu.peek())
-  call print(qu.dequeue())
-  call print(qu)
-  call print(qu.dequeue().item_0)
-  call print(qu)
+  print(qu.length())
+  print(qu)
+  print(qu.peek())
+  print(qu.dequeue())
+  print(qu)
+  print(qu.dequeue().item_0)
+  print(qu)
   reassign qu to qu.dequeue().item_1
-  call print(qu)
+  print(qu)
 end main
 </codeblock>
 </td>
@@ -1250,10 +1250,10 @@ of differing Types held together and referenced by a single identifier.</p>
 <codeblock>
 main
   variable t set to (3, "apple", true)
-  call print(t)
-  call print(t.item_0)
-  call print(t.item_1)
-  call print(t.item_2)
+  print(t)
+  print(t.item_0)
+  print(t.item_1)
+  print(t.item_2)
 end main
 </codeblock>
  </td>
@@ -1865,7 +1865,7 @@ main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
-    call print(randomThrow(rnd).item_0)
+    print(randomThrow(rnd).item_0)
     reassign rnd to randomThrow(rnd).item_1
   end for
 end main
@@ -1999,9 +1999,9 @@ end main
 <codeblock>
 main
   call pressAnyKeyToContinue()
-  call print("OK, press A or B")
+  print("OK, press A or B")
   variable key set to waitForKey()
-  call print($"That was {key}")
+  print($"That was {key}")
 end main
 </codeblock>
 
@@ -2080,7 +2080,7 @@ main
   try
     call file.saveAndClose()
   catch CustomError
-    call print("Save cancelled")
+    print("Save cancelled")
   end try
 end main
 </codeblock>
@@ -2120,7 +2120,7 @@ or you could make the code offer the user options: to save again, or to continue
 main
   variable file set to openFileForReading()
   variable text set to file.readWholeFile()
-  call print(text)
+  print(text)
 end main
 </codeblock>
 
@@ -2431,7 +2431,7 @@ end main
  <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <code>Float</code> values, but they can accept <code>Int</code> values without raising an error.</li>
  <li>The length of a <code>Dictionary</code> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
 <table class="tablePlain">
-  <tr><td><code>call print(di.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
+  <tr><td><code>print(di.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
 </table></li>
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
@@ -2518,14 +2518,14 @@ end main
  <td>
 <codeblock>
 main
-  call print("Hello")
+  print("Hello")
   variable a set to 3
   variable b set to 4
-  call print(a*b)
-  call print($"{a} times {b}) equals {a*b}")
+  print(a*b)
+  print($"{a} times {b}) equals {a*b}")
   variable t set to (true, 42)
-  call print(t.item_0)
-  call print(t.item_1)
+  print(t.item_0)
+  print(t.item_1)
 end main
 </codeblock>
  </td>
@@ -2639,7 +2639,7 @@ end test
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using method <el-method>unicode</el-method>:</p>
 <table class="tablePlain">
  <tr>
-  <td><code>call print(unicode(0x2665))</code></td><td>&#x27f6;</td><td>&#x2665</td>
+  <td><code>print(unicode(0x2665))</code></td><td>&#x27f6;</td><td>&#x2665</td>
  </tr>
 </table>
 <hr>
@@ -2923,7 +2923,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 main
   variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
   for n in rangeInSteps(0, numbers.length() + 1, 2)
-    call print(numbers[n])
+    print(numbers[n])
   end for
 end main
 </codeblock>
@@ -2932,7 +2932,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the <a href="#filter">Higher-order Function <el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> to print the prime numbers less than a given limit:</p>
 <codeblock>
 main
-  call print(primesFromList(range(2, 100)))
+  print(primesFromList(range(2, 100)))
 end main
 function primesFromList(li as List<of Int>) returns List<of Int>
   # returns primes from the list assuming it starts with a prime (e.g. 2)
@@ -2996,7 +2996,7 @@ The <b>function</b> to be applied is usually specified as a <code>lambda</code> 
 <codeblock>
 main
   variable li set to [1, 2, 3, 4, 5]
-  call print(li.map(lambda n as Int => pow(n, 3)))
+  print(li.map(lambda n as Int => pow(n, 3)))
 end main
 </codeblock>
 </td>
@@ -3011,7 +3011,7 @@ end main
 <codeblock>
 main
   variable names set to ["Tom", "Dick", "Harriet"]
-  call print(names.map(lambda s as String => s.upperCase()))
+  print(names.map(lambda s as String => s.upperCase()))
 end main
 </codeblock>
 </td>
@@ -3024,7 +3024,7 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<code>call print(names.map(lambda s as String => reverse(s)))</code>
+<code>print(names.map(lambda s as String => reverse(s)))</code>
 </td>
 <td>&#x27f6;</td><td><el-code>[moT, kciD, teirraH]</td>
 </tr>
@@ -3077,7 +3077,7 @@ end main
 <codeblock>
 main
   variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
-  call print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
+  print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
 end main
 </codeblock>
 </td>
@@ -3100,7 +3100,7 @@ main
   variable n set to [2, 3, 5, 7, 11, 13]
   variable nR set to new List&lt;of Int&gt;()
   variable eL set to new List&lt;of Int&gt;()
-  call print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
+  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
@@ -3119,7 +3119,7 @@ main
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
   reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
-  call print(sR)
+  print(sR)
 end main
 </codeblock>
 </td>
@@ -3153,7 +3153,7 @@ They take a <b>function</b> as an argument, and return the list item correspondi
 <codeblock>
 main
   variable a set to [33, 4, 0, 92, 89, 55, 102]
-  call print(a.maxBy(lambda x as Int => x mod 10))
+  print(a.maxBy(lambda x as Int => x mod 10))
 end main
 </codeblock>
 </td>
@@ -3168,7 +3168,7 @@ end main
 <codeblock>
 main
   variable fruit set to ["apple", "orange", "pear"]
-  call print(fruit.minBy(lambda x as String => x.length()))
+  print(fruit.minBy(lambda x as String => x.length()))
 end main
 </codeblock>
 </td>
@@ -3192,7 +3192,7 @@ end main
 <codeblock>
   variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
   variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
-  call print(ordered)
+  print(ordered)
 </codeblock>
 </td>
 <td><br><br><br>&#x27f6;</td><td><br><br><br><el-code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</el-code></td>
@@ -3206,7 +3206,7 @@ end main
 <codeblock>
 main
   variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
-  call print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
+  print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
 end main
 </codeblock>
 </td>

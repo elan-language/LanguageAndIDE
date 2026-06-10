@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // Use the W,A,S,D keys to change Snake direction
 
 static void main() {
@@ -14,7 +16,7 @@ static void main() {
     sleep_ms(150); // call procedure
     snake.clockTick(getKey(), apple); // call procedure
   } // while
-  print(String.format("Game Over! Score: %", snake.score()));
+  System.out.println(String.format("Game Over! Score: %", snake.score())); // print
 } // main
 
 class Snake {
@@ -162,11 +164,11 @@ enum Direction {up, down, left, right}
 @Test static void test_snake() {
   var snake = new Snake();
   // bodyCovers
-  assertEquals(true, snake.bodyCovers(new Square(20, 15)))
-  assertEquals(false, snake.bodyCovers(new Square(21, 15)))
+  assertEquals(true, snake.bodyCovers(new Square(20, 15)));
+  assertEquals(false, snake.bodyCovers(new Square(21, 15)));
   // gameOver, score - can only test test_for default - which is not thorough test
-  assertEquals(false, snake.gameOver())
-  assertEquals(0, snake.score())
+  assertEquals(false, snake.gameOver());
+  assertEquals(0, snake.score());
 } // test
 
 @Test static void test_apple() {
@@ -177,18 +179,20 @@ enum Direction {up, down, left, right}
   // constructor - not testable as properties are private
   // getAdjacentSquare
   var sq1 = new Square(3, 4);
-  assertEquals(new Square(3, 3), sq1.getAdjacentSquare(Direction.up))
-  assertEquals(new Square(3, 5), sq1.getAdjacentSquare(Direction.down))
-  assertEquals(new Square(2, 4), sq1.getAdjacentSquare(Direction.left))
-  assertEquals(new Square(4, 4), sq1.getAdjacentSquare(Direction.right))
+  assertEquals(new Square(3, 3), sq1.getAdjacentSquare(Direction.up));
+  assertEquals(new Square(3, 5), sq1.getAdjacentSquare(Direction.down));
+  assertEquals(new Square(2, 4), sq1.getAdjacentSquare(Direction.left));
+  assertEquals(new Square(4, 4), sq1.getAdjacentSquare(Direction.right));
   var sq2 = new Square(0, 0);
   var sq3 = new Square(-1, 0);
-  assertEquals(sq3, sq2.getAdjacentSquare(Direction.left))
+  assertEquals(sq3, sq2.getAdjacentSquare(Direction.left));
   // hasHitEdge
-  assertEquals(false, (new Square(0, 0)).hasHitEdge())
-  assertEquals(false, (new Square(39, 20)).hasHitEdge())
-  assertEquals(true, (new Square(-1, 3)).hasHitEdge())
-  assertEquals(true, (new Square(3, -1)).hasHitEdge())
-  assertEquals(true, (new Square(40, 3)).hasHitEdge())
-  assertEquals(true, (new Square(3, 30)).hasHitEdge())
+  assertEquals(false, (new Square(0, 0)).hasHitEdge());
+  assertEquals(false, (new Square(39, 20)).hasHitEdge());
+  assertEquals(true, (new Square(-1, 3)).hasHitEdge());
+  assertEquals(true, (new Square(3, -1)).hasHitEdge());
+  assertEquals(true, (new Square(40, 3)).hasHitEdge());
+  assertEquals(true, (new Square(3, 30)).hasHitEdge());
 } // test
+
+}

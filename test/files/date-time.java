@@ -1,18 +1,20 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var reply = "";
   while (!reply.upperCase().equals("Q")) {
     reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
     if (reply.equals("")) {
       var now = divAsInt(clock(), 1000);
-      print(now);
-      print(getDate(now));
+      System.out.println(now); // print
+      System.out.println(getDate(now)); // print
     } else {
       try {
         var td = int(reply);
         if (td >= 0) {
-          print(getDate(td));
+          System.out.println(getDate(td)); // print
         } // if
       } catch (ElanRuntimeError e) {
       } // try
@@ -44,7 +46,7 @@ static String getDate(int unixSecs) { // function
 } // function
 
 @Test static void test_getDate() {
-  assertEquals("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991))
+  assertEquals("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991));
 } // test
 
 static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
@@ -64,7 +66,7 @@ static (int, int, int, int, int, int) dateTime(int unixSecs) { // function
 } // function
 
 @Test static void test_dateTime() {
-  assertEquals((8, 49, 51, 90, 2026, 2), dateTime(1774946991))
+  assertEquals((8, 49, 51, 90, 2026, 2), dateTime(1774946991));
 } // test
 
 static int dayInYear(int year, int unixDays) { // function
@@ -84,7 +86,7 @@ static int dayInYear(int year, int unixDays) { // function
 } // function
 
 @Test static void test_dayInYear() {
-  assertEquals(-20087, dayInYear(2025, 1))
+  assertEquals(-20087, dayInYear(2025, 1));
 } // test
 
 static bool leap(int year) { // function
@@ -93,11 +95,11 @@ static bool leap(int year) { // function
 
 @Test static void test_leap() {
   // normal cases
-  assertEquals(false, leap(2025))
-  assertEquals(true, leap(2024))
+  assertEquals(false, leap(2025));
+  assertEquals(true, leap(2024));
   // boundary cases
-  assertEquals(false, leap(1900))
-  assertEquals(true, leap(2000))
+  assertEquals(false, leap(1900));
+  assertEquals(true, leap(2000));
 } // test
 
 static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
@@ -129,11 +131,11 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
 
 // Unix epoch is 1970.01.01 00:00:00 Thursday
 
-final Int unixYear = 1970 // constant
+final Int unixYear = 1970; // constant
 
-final Int unixWeekday = 4 // constant
+final Int unixWeekday = 4; // constant
 
-final Int daySecs = 86400 // constant
+final Int daySecs = 86400; // constant
 
 // day and month names, and day numbers
 
@@ -143,8 +145,8 @@ static String getWeekdayName(int weekDay) { // function
 } // function
 
 @Test static void test_getWeekdayName() {
-  assertEquals("Sun", getWeekdayName(0))
-  assertEquals("Sat", getWeekdayName(6))
+  assertEquals("Sun", getWeekdayName(0));
+  assertEquals("Sat", getWeekdayName(6));
 } // test
 
 static String getMonthName(int month) { // function
@@ -153,8 +155,8 @@ static String getMonthName(int month) { // function
 } // function
 
 @Test static void test_getMonthName() {
-  assertEquals("Jan", getMonthName(1))
-  assertEquals("Dec", getMonthName(12))
+  assertEquals("Jan", getMonthName(1));
+  assertEquals("Dec", getMonthName(12));
 } // test
 
 static List<int> getStartDays() { // function
@@ -166,9 +168,9 @@ static String padLwithZero(int i) { // function
 } // function
 
 @Test static void test_padLwithZero() {
-  assertEquals("01", padLwithZero(1))
-  assertEquals("10", padLwithZero(10))
-  assertEquals("00", padLwithZero(0))
+  assertEquals("01", padLwithZero(1));
+  assertEquals("10", padLwithZero(10));
+  assertEquals("00", padLwithZero(0));
 } // test
 
 static String pad(String d, String p, String s) { // function
@@ -186,3 +188,5 @@ static String pad(String d, String p, String s) { // function
   } // if
   return sR;
 } // function
+
+}

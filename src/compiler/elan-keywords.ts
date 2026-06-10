@@ -19,6 +19,7 @@ export const functionKeyword = "function";
 export const ifKeyword = "if";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
+export const inputKeyword = "input";
 export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
@@ -30,6 +31,7 @@ export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
 export const orKeyword = "or";
+export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
@@ -84,6 +86,7 @@ const elanKeywords: string[] = [
   ifKeyword,
   inKeyword,
   inheritsKeyword,
+  inputKeyword,
   interfaceKeyword,
   isKeyword,
   isntKeyword,
@@ -95,6 +98,7 @@ const elanKeywords: string[] = [
   notKeyword,
   ofKeyword,
   orKeyword,
+  printKeyword,
   privateKeyword,
   procedureKeyword,
   propertyKeyword,

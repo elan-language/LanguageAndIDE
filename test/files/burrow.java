@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 static void main() {
   var blocks = createBlockGraphics(white);
   var x = 20;
@@ -20,3 +22,5 @@ static void main() {
     } // if
   } // while
 } // main
+
+}

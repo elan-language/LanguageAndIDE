@@ -33,6 +33,8 @@ import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
+import { InputStatement } from "./statements/input-statement";
+import { PrintStatement } from "./statements/print-statement";
 import { ParseStatus } from "./status-enums";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
@@ -59,10 +61,14 @@ export class LanguageJava extends LanguageCfamily {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = "";
     if (frame instanceof AssertStatement) {
-      html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
+      html = `<el-method>assertEquals</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()});`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.FINAL} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()};`;
+    } else if (frame instanceof InputStatement) {
+      html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>(${frame.prompt.renderAsHtml()});`;
+    } else if (frame instanceof PrintStatement) {
+      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else if (frame instanceof AbstractProperty) {
@@ -114,8 +120,11 @@ export class LanguageJava extends LanguageCfamily {
   renderFileImportsAsHtml(): string {
     return "";
   }
+  renderSpecificHeaderAsHtml(_f: FileImpl): string {
+    return "<div><el-kw>public class</el-kw> <el-type>Global</el-type> <el-punc>{</el-punc><br><br></div><div class='global-indent'>";
+  }
   renderFileTrailerAsHtml(_f: FileImpl): string {
-    return "";
+    return "</div>\n\n<el-punc>}</el-punc>";
   }
 
   translateExpression(expr: string): string {

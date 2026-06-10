@@ -1,14 +1,14 @@
 import {
-    Deprecation,
-    DeprecationSeverity,
+  Deprecation,
+  DeprecationSeverity,
 } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
-    ClassOption,
-    elanClass,
-    elanClassExport,
-    elanDeprecated,
-    elanFunction,
-    elanProcedure,
+  ClassOption,
+  elanClass,
+  elanClassExport,
+  elanDeprecated,
+  elanFunction,
+  elanProcedure,
 } from "../../src/compiler/elan-type-annotations";
 import { List } from "../../src/compiler/standard-library/list";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
@@ -17,14 +17,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertCompiles,
-    assertDoesNotCompile,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertCompiles,
+  assertDoesNotCompile,
+  assertObjectCodeIsWithAdvisories,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 @elanClass(ClassOption.concrete)

@@ -139,7 +139,7 @@ end main
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  call print(li)
+  print(li)
 end main
 </codeblock>
 
@@ -276,7 +276,7 @@ main
   variable arg set to "abc"
   variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
-  call print(argRef.value())
+  print(argRef.value())
 end main
 procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
@@ -1344,13 +1344,13 @@ is used to intercept (or 'catch') this exception and just ignore that input:</p>
     reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
-      call print(now)
-      call print(getDate(now))
+      print(now)
+      print(getDate(now))
     else
       try
         variable td set to int(reply)
         if td >= 0 then
-          call print(getDate(td))
+          print(getDate(td))
         end if
       catch e as ElanRuntimeError
       end try
@@ -1384,7 +1384,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To stop the program if a value calculated in a function is out of range:</p>
 <codeblock>
 main
-  call print($"{percent(23, 20)}" + "%")
+  print($"{percent(23, 20)}" + "%")
 end main
 function percent(value as Float, maximum as Float) returns Float
   if value > maximum then

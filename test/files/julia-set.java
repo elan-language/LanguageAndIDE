@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // After image is displayed, press:  
 
 // - z to zoom in, x to zoom out
@@ -22,7 +24,7 @@ static void main() {
     var vg = allpoints(p);
     displayVectorGraphics(vg); // call procedure
     p.checkkeys(); // call procedure
-    print(String.format("x = % y = %", p.jx, p.jy));
+    System.out.println(String.format("x = % y = %", p.jx, p.jy)); // print
   } // while
 } // main
 
@@ -133,12 +135,14 @@ class Coords {
 
 @Test static void test_one() {
   var p = new Coords();
-  assertEquals(100, onepoint(0, 0, 100, p))
-  assertEquals(3, onepoint(0.5, 0.5, 100, p))
+  assertEquals(100, onepoint(0, 0, 100, p));
+  assertEquals(3, onepoint(0.5, 0.5, 100, p));
 } // test
 
-final Int width = 200 // constant
+final Int width = 200; // constant
 
-final Int height = 150 // constant
+final Int height = 150; // constant
 
-final Int nmax = 360 // constant
+final Int nmax = 360; // constant
+
+}

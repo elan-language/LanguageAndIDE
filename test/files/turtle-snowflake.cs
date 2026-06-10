@@ -25,4 +25,4 @@ static void drawSide(double length, Turtle t) { // procedure
   } // if
 } // procedure
 
-const Int side = 100
+const Int side = 100;

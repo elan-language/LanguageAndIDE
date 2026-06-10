@@ -2,9 +2,9 @@
 
 static void main() {
   var li = [7, 1, 0, 4, 8, 3, 6];
-  print(li);
+  Console.WriteLine(li); // print
   inPlaceRippleSort(li); // call procedure
-  print(li);
+  Console.WriteLine(li); // print
 } // main
 
 static void inPlaceRippleSort(List<int> li) { // procedure

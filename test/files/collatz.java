@@ -1,5 +1,7 @@
 // Java with Elan 2.0.0-alpha5
 
+public class Global {
+
 // A program to investigate the Collatz Conjecture
 
 // https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -29,11 +31,11 @@ static void main() {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // reassign variable
       } // foreach
       displayVectorGraphics(vg); // call procedure
-      print(x);
+      System.out.println(x); // print
       sleep_ms(100); // call procedure
     } // while
   } // while
-  print("Finished");
+  System.out.println("Finished"); // print
 } // main
 
 // scale x.  We pass in p just to get its length
@@ -52,4 +54,6 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 } // function
 
-final Int grey = 0x808080 // constant
+final Int grey = 0x808080; // constant
+
+}

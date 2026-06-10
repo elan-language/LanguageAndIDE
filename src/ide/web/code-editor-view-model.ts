@@ -12,6 +12,7 @@ import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { LanguageElan } from "../frames/language-elan";
+import { LanguagePython } from "../frames/language-python";
 import { Profile } from "../frames/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
@@ -23,7 +24,7 @@ import {
   delayMessage,
   getEditorMsg,
   getFocused,
-  getLanguagesForQuad,
+  getLanguageByClass,
   getModKey,
   handleMenuArrowDown,
   handleMenuArrowUp,
@@ -154,7 +155,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async renderAsHtmlAll() {
     const existingLanguage = this.file!.language();
-    const languages = getLanguagesForQuad(existingLanguage).slice(1);
+    const containers = Array.from(document.querySelectorAll(".code")) as HTMLElement[];
+    const classNames = containers.map((c) => c.className).slice(1);
+
+    const languages = classNames.map((ln) => getLanguageByClass(ln));
     const html = [await this.file!.renderAsHtml()];
 
     for (const l of languages) {
@@ -222,7 +226,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
-    const existingLanguage = language ?? this.file?.language() ?? LanguageElan.Instance;
+    const existingLanguage = language ?? this.file?.language() ?? LanguagePython.Instance;
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
@@ -480,7 +484,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean) {
     await vm.clearDisplays();
-    vm.setDisplayLanguage(this.file?.language() ?? LanguageElan.Instance);
+    vm.setDisplayLanguage(this.file?.language() ?? LanguagePython.Instance);
+
+    vm.tvm.setWorksheetProfile("procedural");
+    vm.tvm.setHelpProfile("procedural");
+
     const ps = this.readParseStatus();
     if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
       await this.refreshAndDisplay(vm, tr, false, false);
@@ -760,6 +768,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
+    if (this.file?.setLanguage(l) || always) {
+      const wasEmptyCode = this.isEmptyCodeHash();
+      vm.setDisplayLanguage(l);
+      await this.refreshAndDisplay(vm, tr, true, false);
+      if (wasEmptyCode) {
+        // save the new hash signifying empty for this language
+        this.saveEmptyCodeHash();
+      }
+    }
+  }
+
+  async refreshOtherPanes(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
     if (this.file?.setLanguage(l) || always) {
       const wasEmptyCode = this.isEmptyCodeHash();
       vm.setDisplayLanguage(l);
