@@ -748,6 +748,17 @@ body.functional div.demo-file.functional { display: revert; }
   padding-right: 10px;
 }
 
+#languages-dialog #active {
+  display: none;
+}
+
+#languages-dialog.quad-view #active {
+  display: block;
+  color: white;
+  font-size: large;
+  padding: 4ch;
+}
+
 #languages-dialog .dropdown {
   background-color: var(--paleTint);
 }
