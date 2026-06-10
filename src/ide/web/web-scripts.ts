@@ -747,7 +747,7 @@ class IDEViewModel implements IIDEViewModel {
         worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
 
         const l = cvm.getLanguage().languageHtmlClass;
-        const p = cvm.getProfile()?.name
+        const p = cvm.getProfile()?.name;
 
         worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
         worksheetIFrame.contentWindow?.postMessage(`profile:${p}`, "*");

@@ -30,7 +30,7 @@ export function getWorksheetSubdir(sourceDir: string): string[] {
 }
 
 function wrapInWorkSheetBoilerPlate(content: string, title: string, version: string) {
-  const prodUrl = `https://elan-lang.org/`;
+  const prodUrl = `https://codewithelan.org/`;
   const devUrl = `https://elan-language.github.io/LanguageAndIDE/`;
   const hostUrl = isElanProduction ? prodUrl : devUrl;
 
