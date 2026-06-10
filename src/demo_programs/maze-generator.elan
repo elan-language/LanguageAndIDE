@@ -1,4 +1,4 @@
-# 81f839fc31bfff8b13db20138f1135d336dde4e8c012044d4a2d39293e2a3f96 Elan 2.0.0-alpha5 valid
+# fbff4d34934e844822e2f78332b54d1228477b75c18765c9835ea14bb3f2ac6f Elan 2.0.0-alpha5 valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -15,7 +15,7 @@ main
     end if
   end for
   call displayBlocks(blocks)
-  variable name set to input("File name to save: ")
+  input name set to inputString("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if

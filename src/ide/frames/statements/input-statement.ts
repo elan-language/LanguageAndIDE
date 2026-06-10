@@ -30,7 +30,7 @@ export class InputStatement extends SingleLineFrame implements Statement {
     this.name.parseFrom(source);
     source.remove(` ${setKeyword} ${toKeyword} `);
     //TODO optional prefixCode
-    source.remove(`input(`);
+    source.remove(`inputString(`);
     this.prompt.parseFrom(source);
     source.remove(")");
     //TODO optional afterCode
@@ -49,6 +49,6 @@ export class InputStatement extends SingleLineFrame implements Statement {
   }
 
   override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${inputKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} input(${this.prompt.renderAsElanSource()})`;
+    return `${this.indent()}${this.sourceAnnotations()}${inputKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} inputString(${this.prompt.renderAsElanSource()})`;
   }
 }

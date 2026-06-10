@@ -21,7 +21,10 @@ Sub main()
   Dim mark = "" ' variable definition
   Dim attempt = "RAISE" ' variable definition
   While Not mark.equals("*****")
-    mark = input("" + attempt) ' reassign variable
+    Console.WriteLine("" + attempt)
+
+      Dim inp = Console.ReadLine() ' input
+    mark = inp ' reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' reassign variable
     attempt = bestAttempt(possible) ' reassign variable
   End While

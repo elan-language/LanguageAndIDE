@@ -1,10 +1,12 @@
 # Python with Elan 2.0.0-alpha5
 
 def main() -> None:
-  reply = "" # variable definition
-  while not reply.upperCase().equals("Q"):
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit") # reassign variable
-    if reply.equals(""):
+  quit = False # variable definition
+  while not quit:
+    reply = input("t - for time now, q - to quit, or an integer value to convert") # input
+    if reply.upperCase().equals("Q"):
+      quit = True # reassign variable
+    elif reply.upperCase().equals("T"): # else if
       now = divAsInt(clock(), 1000) # variable definition
       print(now)
       print(getDate(now))

@@ -13,7 +13,7 @@ def main() -> None:
       colour = if(setTo == 1, white, black) # variable definition
       blocks[p.x][p.y] = colour # reassign variable
   displayBlocks(blocks) # call procedure
-  name = input("File name to save: ") # variable definition
+  name = input("File name to save: ") # input
   if not name.equals("x"):
     saveAsFile(name, blocks) # call procedure
 

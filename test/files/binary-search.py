@@ -4,7 +4,7 @@ def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition
   done = False # variable definition
   while not done:
-    wanted = input("What type of fruit do you want ('x' to exit)? ") # variable definition
+    wanted = input("What type of fruit do you want ('x' to exit)? ") # input
     if wanted.equals("x"):
       done = True # reassign variable
     else:

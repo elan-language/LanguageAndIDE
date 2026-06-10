@@ -7,7 +7,7 @@
 <title>Elan Editor</title>
 </head>
 <body>
-<el-header># <el-hash>717e371d73b9589e9522566b2875f03f0a0109bccfb2054f7e88ba1ff4e4a6e9</el-hash> <el-version>Elan 2.0.0-alpha5</el-version></el-header>
+<el-header># <el-hash>c7cd6e39365f533ac4458ea4d1686b222adab2303e28349fbb37ef7b38e72af6</el-hash> <el-version>Elan 2.0.0-alpha5</el-version></el-header>
 <el-main class="selected focused ok multiline" id='elan_main1' tabindex="-1" >
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw>
 <el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#main" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -16,7 +16,7 @@
 <el-statement class="ok multiline" id='elan_while9' tabindex="-1" >
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="elan_expr11" class="ok" tabindex="-1"><el-txt><el-kw>not</el-kw> <el-id>done</el-id></el-txt><el-place><i>condition</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>
 <el-msg></el-msg><el-fr>4</el-fr></el-top>
-<el-statement class="ok" id='elan_var12' tabindex="-1" ><el-top><el-kw>variable </el-kw><el-field id="elan_var13" class="ok" tabindex="-1"><el-txt><el-id>wanted</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="elan_expr14" class="ok" tabindex="-1"><el-txt><el-method>input</el-method>("<el-lit>What type of fruit do you want ('x' to exit)? </el-lit>")</el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>5</el-fr></el-statement>
+<el-statement class="ok" id='elan_print12' tabindex="-1" ><el-top><el-kw>input </el-kw><el-field id="elan_var13" class="ok" tabindex="-1"><el-txt><el-id>wanted</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> set to </el-kw><el-method>inputString</el-method>(<el-field id="elan_args14" class="ok" tabindex="-1"><el-txt>"<el-lit>What type of fruit do you want ('x' to exit)? </el-lit>"</el-txt><el-place>prompt message</el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)</el-top><el-msg></el-msg><el-fr>5</el-fr></el-statement>
 <el-statement class="ok multiline" id='elan_if15' tabindex="-1" >
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="elan_expr17" class="ok" tabindex="-1"><el-txt><el-id>wanted</el-id>.<el-method>equals</el-method>("<el-lit>x</el-lit>")</el-txt><el-place><i>condition</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> then</el-kw>
 <el-msg></el-msg><el-fr>6</el-fr></el-top>

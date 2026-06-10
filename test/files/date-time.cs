@@ -1,10 +1,14 @@
 // C# with Elan 2.0.0-alpha5
 
 static void main() {
-  var reply = "";
-  while (!reply.upperCase().equals("Q")) {
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
-    if (reply.equals("")) {
+  var quit = false;
+  while (!quit) {
+    Console.WriteLine("t - for time now, q - to quit, or an integer value to convert");
+
+      var reply = Console.ReadLine(); // input
+    if (reply.upperCase().equals("Q")) {
+      quit = true; // reassign variable
+    } else if (reply.upperCase().equals("T")) {
       var now = divAsInt(clock(), 1000);
       Console.WriteLine(now); // print
       Console.WriteLine(getDate(now)); // print
