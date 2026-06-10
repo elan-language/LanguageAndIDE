@@ -13,7 +13,7 @@ export class PrintAsn extends BreakpointAsn {
   compile(): string {
     this.compileErrors = [];
 
-    const toPrint = this.expr.compile() || '""';
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await system.print(${toPrint});`;
+    const toPrint = `${this.expr.compile()}`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await _stdlib.print(${toPrint});`;
   }
 }

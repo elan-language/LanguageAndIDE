@@ -504,6 +504,11 @@ export class StdLib {
     return listOfList;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async print(@elanAnyType() s: any) {
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
+  }
+
   //Input functions
   private async prompt(prompt: string) {
     await this.system.elanInputOutput.print(`${await this.system.toString(prompt)}\n`);

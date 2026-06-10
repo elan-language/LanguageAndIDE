@@ -771,7 +771,7 @@ const global = new class {};
 async function main() {
   let a = system.list([2, 2]);
   system.safeSet(a, 1, [0]);
-  await system.print(system.safeIndex(a, 0));
+  await _stdlib.print(system.safeIndex(a, 0));
 }
 return [main, _tests];}`;
 
@@ -789,7 +789,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Pass_SetInProcedure", async () => {
@@ -815,7 +815,7 @@ async function main() {
 async function foo() {
   let a = system.list([2, 2]);
   system.safeSet(a, 1, [0]);
-  await system.print(system.safeIndex(a, 0));
+  await _stdlib.print(system.safeIndex(a, 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -834,7 +834,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Fail_SetInFunction", async () => {
