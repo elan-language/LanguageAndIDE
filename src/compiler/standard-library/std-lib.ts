@@ -504,6 +504,10 @@ export class StdLib {
     return listOfList;
   }
 
+  async print(@elanAnyType() s: any) {
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
+  }
+
   //Input functions
   private async prompt(prompt: string) {
     await this.system.elanInputOutput.print(`${await this.system.toString(prompt)}\n`);
