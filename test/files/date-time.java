@@ -3,10 +3,12 @@
 public class Global {
 
 static void main() {
-  var reply = "";
-  while (!reply.upperCase().equals("Q")) {
-    reply = input("RETURN for time now or Unix time (positive integer) or Q to quit"); // reassign variable
-    if (reply.equals("")) {
+  var quit = false;
+  while (!quit) {
+    var reply = Console.ReadLine("t - for time now, q - to quit, or an integer value to convert"); // input
+    if (reply.upperCase().equals("Q")) {
+      quit = true; // reassign variable
+    } else if (reply.upperCase().equals("T")) {
       var now = divAsInt(clock(), 1000);
       System.out.println(now); // print
       System.out.println(getDate(now)); // print

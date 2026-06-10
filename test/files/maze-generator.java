@@ -17,7 +17,7 @@ static void main() {
     } // if
   } // foreach
   displayBlocks(blocks); // call procedure
-  var name = input("File name to save: ");
+  var name = Console.ReadLine("File name to save: "); // input
   if (!name.equals("x")) {
     saveAsFile(name, blocks); // call procedure
   } // if

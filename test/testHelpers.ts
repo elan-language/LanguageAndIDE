@@ -81,7 +81,7 @@ export async function assertGeneratesSameElanSource(fl : FileImpl, source: strin
 export async function assertGeneratesHtml(fl: FileImpl, path: string) {
   let actualHtml = "";
   let htmlFile = path + ".html";
-  let msg = ""
+  let msg = "";
   
   try {  
     const renderedHtml = await fl.renderAsHtml();

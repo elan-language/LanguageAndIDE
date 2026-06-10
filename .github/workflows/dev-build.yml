@@ -46,6 +46,7 @@ jobs:
     permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
+      security-events: read
 
     # Deploy to the github-pages environment
     environment:

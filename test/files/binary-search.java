@@ -6,7 +6,7 @@ static void main() {
   var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
   var done = false;
   while (!done) {
-    var wanted = input("What type of fruit do you want ('x' to exit)? ");
+    var wanted = Console.ReadLine("What type of fruit do you want ('x' to exit)? "); // input
     if (wanted.equals("x")) {
       done = true; // reassign variable
     } else {

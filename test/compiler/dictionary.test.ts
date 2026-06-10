@@ -633,7 +633,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 2], ["b", 2]]);
   system.safeSet(a, 1, ["a"]);
-  await system.print(system.safeIndex(a, "a"));
+  await _stdlib.print(system.safeIndex(a, "a"));
 }
 return [main, _tests];}`;
 
@@ -651,7 +651,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Pass_SetInProcedure", async () => {
@@ -677,7 +677,7 @@ async function main() {
 async function foo() {
   let a = system.dictionary([["a", 2], ["b", 2]]);
   system.safeSet(a, 1, ["a"]);
-  await system.print(system.safeIndex(a, "a"));
+  await _stdlib.print(system.safeIndex(a, "a"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -696,7 +696,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Pass_SetDictionaryOfDictionary", async () => {
@@ -722,7 +722,7 @@ async function main() {
 async function foo() {
   let a = system.dictionary([["a", system.dictionary([["c", 2]])], ["b", system.dictionary([["d", 3]])]]);
   system.safeSet(a, 1, ["a", "c"]);
-  await system.print(system.safeIndex(system.safeIndex(a, "a"), "c"));
+  await _stdlib.print(system.safeIndex(system.safeIndex(a, "a"), "c"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -741,7 +741,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Pass_SetDictionaryOfDictionaryOfDictionary", async () => {
@@ -767,7 +767,7 @@ async function main() {
 async function foo() {
   let a = system.dictionary([["a", system.dictionary([["c", system.dictionary([["e", ""]])]])], ["b", system.dictionary([["d", system.dictionary([["f", ""]])]])]]);
   system.safeSet(a, "1", ["a", "c", "e"]);
-  await system.print(system.safeIndex(system.safeIndex(system.safeIndex(a, "a"), "c"), "e"));
+  await _stdlib.print(system.safeIndex(system.safeIndex(system.safeIndex(a, "a"), "c"), "e"));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -786,7 +786,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "1\n");
   });
 
   test("Fail_DictionaryOfDictionaryWrongType", async () => {
