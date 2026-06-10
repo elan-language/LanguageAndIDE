@@ -2,7 +2,7 @@
     /* IDE */
     --ideBackground: rgb(68, 114, 196);
     --panelBackground: white;
-    --paleTint: rgb(208, 220, 240);
+    --paleTint: rgb(218, 227, 243); /* Equivalent to white with 80% opacity over the ide background */
     --defaultButton: rgb(171,191, 228);
     --disabledButton:rgb(102, 139, 205);
 

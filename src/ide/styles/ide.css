@@ -4,7 +4,7 @@
 }
 
 #display-tab.selected * {
-  opacity: 75%;
+  opacity: 80%;
 }
 
 #display-tab.focussed * {
@@ -538,14 +538,14 @@ div.spacer{
 .tab-controls.selected,
 .tab-content.selected
 {
-  background-color: var(--panelBackground);
-  opacity: 80%;
+  background-color: var(--paleTint);
 }
 
 .tab-label.focussed, 
 .tab-controls.focussed,
 .tab-content.focussed
 {
+  background-color: var(--panelBackground);
   opacity: 100%;
 }
 
