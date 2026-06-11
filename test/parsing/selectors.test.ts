@@ -146,7 +146,6 @@ suite("Selector tests", () => {
       "property",
       "procedure method",
       "function method",
-      "abstract property",
       "abstract procedure",
       "abstract function",
       "# comment",
@@ -164,7 +163,7 @@ suite("Selector tests", () => {
     );
     const c = new InterfaceFrame(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["abstract property", "abstract procedure", "abstract function", "# comment"]);
+    assertOptions(s, ["abstract procedure", "abstract function", "# comment"]);
   });
 
   test("Selection Context - in a Function - procedural", () => {
