@@ -272,7 +272,7 @@ class Game {
   } // procedure method
 
   public String toString() { // function method
-    return "undefined";
+    return "a Game";
   } // function method
 
 } // class
@@ -300,7 +300,7 @@ class Card {
   } // procedure method
 
   public String toString() { // function method
-    return "undefined";
+    return String.format("%%", this.rank, symbolForSuit(this.suit));
   } // function method
 
 } // class
@@ -481,7 +481,7 @@ class Dealer extends Player {
   } // function method
 
   public String toString() { // function method
-    return "undefined";
+    return "the Dealer";
   } // function method
 
 } // class
@@ -540,7 +540,7 @@ class HumanPlayer extends Player {
   } // function method
 
   public String toString() { // function method
-    return "undefined";
+    return String.format("Player: %", this.name);
   } // function method
 
 } // class

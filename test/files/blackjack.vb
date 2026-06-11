@@ -270,7 +270,7 @@ Class Game
   End Sub
 
   Function toString() As String
-    Return "undefined"
+    Return "a Game"
   End Function
 
 End Class
@@ -298,7 +298,7 @@ Class Card
   End Sub
 
   Function toString() As String
-    Return "undefined"
+    Return $"{Me.rank}{symbolForSuit(Me.suit)}"
   End Function
 
 End Class
@@ -481,7 +481,7 @@ Class Dealer
   End Function
 
   Function toString() As String
-    Return "undefined"
+    Return "the Dealer"
   End Function
 
 End Class
@@ -542,7 +542,7 @@ Class HumanPlayer
   End Function
 
   Function toString() As String
-    Return "undefined"
+    Return $"Player: {Me.name}"
   End Function
 
 End Class

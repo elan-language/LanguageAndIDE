@@ -270,7 +270,7 @@ class Game {
   } // procedure method
 
   public string toString() { // function method
-    return "undefined";
+    return "a Game";
   } // function method
 
 } // class
@@ -298,7 +298,7 @@ class Card {
   } // procedure method
 
   public string toString() { // function method
-    return "undefined";
+    return $"{this.rank}{symbolForSuit(this.suit)}";
   } // function method
 
 } // class
@@ -479,7 +479,7 @@ class Dealer: Player {
   } // function method
 
   public string toString() { // function method
-    return "undefined";
+    return "the Dealer";
   } // function method
 
 } // class
@@ -538,7 +538,7 @@ class HumanPlayer: Player {
   } // function method
 
   public string toString() { // function method
-    return "undefined";
+    return $"Player: {this.name}";
   } // function method
 
 } // class

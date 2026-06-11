@@ -97,7 +97,7 @@ class Solver {
   } // constructor
 
   public string toString() { // function method
-    return "";
+    return "A Solver";
   } // function method
 
   public List<Node> nodes {get; private set;} // property

@@ -95,7 +95,7 @@ Class Game
   End Sub
 
   Function toString() As String
-    Return ""
+    Return "a Game"
   End Function
 
   Function withNewApple() As Game

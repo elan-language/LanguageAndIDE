@@ -97,7 +97,7 @@ Class Solver
   End Sub
 
   Function toString() As String
-    Return ""
+    Return "A Solver"
   End Function
 
   Property nodes As List(Of Node)

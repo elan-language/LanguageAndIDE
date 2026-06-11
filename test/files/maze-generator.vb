@@ -129,7 +129,7 @@ Class Point
   End Sub
 
   Function toString() As String
-    Return ""
+    Return $"Point at {Me.x}, {Me.y}"
   End Function
 
   ' Returns the 8 theoretically-neighbouring points, whether or not within bounds

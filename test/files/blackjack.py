@@ -233,7 +233,7 @@ class Game # concrete class
     self.message = message # reassign variable
 
   def toString(self: Game) -> str: # function method
-    return "undefined"
+    return "a Game"
 
 
 
@@ -257,7 +257,7 @@ class Card # concrete class
     self.faceDown = True # reassign variable
 
   def toString(self: Card) -> str: # function method
-    return "undefined"
+    return f"{self.rank}{symbolForSuit(self.suit)}"
 
 
 
@@ -417,7 +417,7 @@ class Dealer(Player) # concrete class
     return msg
 
   def toString(self: Dealer) -> str: # function method
-    return "undefined"
+    return "the Dealer"
 
 
 
@@ -465,7 +465,7 @@ class HumanPlayer(Player) # concrete class
     return msg
 
   def toString(self: HumanPlayer) -> str: # function method
-    return "undefined"
+    return f"Player: {self.name}"
 
 
 

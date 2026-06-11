@@ -72,7 +72,7 @@ class Coords {
   } // constructor
 
   public string toString() { // function method
-    return "";
+    return "a Coords";
   } // function method
 
   public double scale {get; private set;} // property

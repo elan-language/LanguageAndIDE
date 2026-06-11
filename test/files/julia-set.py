@@ -63,7 +63,7 @@ class Coords # concrete class
     self.jy = 0.521 # reassign variable
 
   def toString(self: Coords) -> str: # function method
-    return ""
+    return "a Coords"
 
   scale: float # property
 

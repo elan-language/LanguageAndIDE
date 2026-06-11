@@ -47,7 +47,7 @@ class TuringMachine {
   } // constructor
 
   public string toString() { // function method
-    return "";
+    return "a TuringMachine";
   } // function method
 
   public string initialState {get; private set;} // property

@@ -29,10 +29,6 @@ class Snake {
     this.priorTail = tail; // reassign variable
   } // constructor
 
-  public String toString() { // function method
-    return "";
-  } // function method
-
   private Direction currentDir; // private property
 
   private Square head; // private property
@@ -91,6 +87,10 @@ class Snake {
     } // if
   } // procedure method
 
+  public String toString() { // function method
+    return String.format("a Snake with head at %", this.head);
+  } // function method
+
 } // class
 
 class Apple {
@@ -98,10 +98,6 @@ class Apple {
   public Apple() {
     this.location = new Square(0, 0); // reassign variable
   } // constructor
-
-  public String toString() { // function method
-    return "";
-  } // function method
 
   public Square location; // property
 
@@ -121,6 +117,10 @@ class Apple {
     blocks[this.location.x][this.location.y] = red; // reassign variable
   } // procedure method
 
+  public String toString() { // function method
+    return String.format("an Apple at %", this.location);
+  } // function method
+
 } // class
 
 class Square {
@@ -129,10 +129,6 @@ class Square {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
   } // constructor
-
-  public String toString() { // function method
-    return "";
-  } // function method
 
   public int x; // property
 
@@ -155,6 +151,10 @@ class Square {
 
   public bool hasHitEdge() { // function method
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
+  } // function method
+
+  public String toString() { // function method
+    return "{this.x}, {this.y}";
   } // function method
 
 } // class

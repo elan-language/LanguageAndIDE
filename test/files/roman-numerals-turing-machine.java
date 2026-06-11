@@ -49,7 +49,7 @@ class TuringMachine {
   } // constructor
 
   public String toString() { // function method
-    return "";
+    return "a TuringMachine";
   } // function method
 
   public String initialState; // property

@@ -47,7 +47,7 @@ Class TuringMachine
   End Sub
 
   Function toString() As String
-    Return ""
+    Return "a TuringMachine"
   End Function
 
   Property initialState As String
