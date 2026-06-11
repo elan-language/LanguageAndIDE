@@ -239,7 +239,7 @@ end class
 
     <p>Properties on a class define the <i>data</i> (or 'state') for each instance of the class; methods define the <i>behaviour</i> for the object.</p>
 
-  <h2 class="no-TOC">Function method</h2>
+  <h2 class="no-TOC">A function method provides information based on the parameters specified in combination with the object's properties</h2>
 
   <p>Function methods defined on a class, are similar to global functions in that they act like 'queries', returning information that is determined by
     the values of the parameters. The difference is that a function method defined on a class, may additionally make use of information obtained from
@@ -283,7 +283,7 @@ end function
 
 (You might like to try this out, <i>temporarily</i>adding the instruction <code>print(snake)</code> into the main routine.)
 
-<h2 class="no-TOC">Procedure method</h2>
+<h2 class="no-TOC">A procedure method changes the state of the object, and/or interacts with the system</h2>
 
 <p>Procedure methods, like function methods, may define parameters and may also read the values of the object's properties.
   Like global procedures they may also generate side effects, and this includes changing the values of the object's properties,
@@ -372,7 +372,7 @@ directly underneath the snake.</p>
 example above, you were to write: <code>new Individual()</code> you will get a compile-error message: <b>Individual must be concrete to create instance.</b>
 <li>an abstract class has no constructor (it also does not need <el-method>toString</el-method> because every concrete class <i>must</i> define one.</li>
 <li>the <b>new code</b> menus, as well as offering the <b>property</b>, <b>procedure method</b>, and <b>function method</b> options as in a concrete class, also
-offer <b>abstract property</b>, <b>abstract procedure method</b>, and <b>abstract function method</b>. A <i>concrete</i> class must provide a concrete (normal)
+offer <b>abstract procedure method</b>, and <b>abstract function method</b>. A <i>concrete</i> class must provide a concrete (normal)
 implementation of each <i>abstract</i> member defined in its superclass, or any abstract class above it in the hierarchy.</li>
     </ul>
 
@@ -405,22 +405,6 @@ For that reason, irrespective of the programming language being used, Elan delib
 
 <p>The last point is controversial - since all the supported programming languages allow overriding. But overriding (of concrete methods)
   breaks the 'O' of the widely-quoted 'SOLID' principles of oop: that classes should be 'Open for extension, but closed for modification'.</p>
-
-<p>If you want sub-classes to be able to define their own implementation of a common method, then it should be made abstract. 
-  If it turns out that several of the sub-classes need the same, or very similar, implementations (and duplication of code is always to be avoided, according to 
-  the DRY principle - Don't Repeat Yourself) then you use the pattern of 'delegation'. This means defining the method as abstract, but also providing a
-  <i>private</i> implementation (or part-implementation) with a slightly different name, which sub-classes may call from their own implementations.
-  You can see an example of this in the <b>Blackjack</b> demo:</p>
-
-  <ul>
-    <li>The abstract class named <code>Player</code> defines <code>abstract procedure newHand()</code>.</li>
-    <li>It also defines a concrete procedure method named <code>newHandHelper</code>.</li>
-    <li>The subclass <code>HumanPlayer</code> defines its implementation of <el-method>newHand</el-method> as just <code>call this.newHandHelper()</code>.</li>
-    <li>The subclass <code>Dealer</code> defines a more complex implementation of <el-method>newHand</el-method> with five instructions, but these include <code>call this.newHandHelper()</code>
-    to do the common part of the task.</li>
-  </ul>
-</p>
-- 
 
 <h2>Application logic should be well-distributed across classes</h2>
 
@@ -600,8 +584,8 @@ end class
 <div class="acc-body">
 
   <p>From the <b>Blackjack</b> demo, the abstract class <code>Player</code> - which is inherited by the concrete classes <code>HumanPlayer</code>
-  and <class>Dealer</class> - defines public concrete properties, public concrete methods, plus two abstract methods with private 'helper methods' 
-to which subclasses</p>
+  and <class>Dealer</class> - defines public concrete properties, public concrete methods, plus three abstract methods, 
+  two of which are accompanied by private 'helper' methods to which subclasses may delegate part or all of their implementations.</p>
 
 <codeblock>
 abstract class Player
@@ -691,10 +675,10 @@ abstract class Player
 
   abstract procedure newHand()
 
-  procedure newHandHelper()
+  private procedure newHandHelper()
     reassign this.hasTurn to false
     reassign this.softAce to false
-    reassign this.cards to new List<of Card>()
+    reassign this.cards to new List&lt;of Card&gacute;t;()
     reassign this.handTotal to 0
     reassign this.status to Status.active
     call this.draw()
@@ -703,7 +687,7 @@ abstract class Player
 
   abstract function getMessage() returns String
 
-  function statusAsString() returns String
+  private function getMessageHelper() returns String
     variable msg set to ""
     variable status set to this.status
     if this.hasTurn then
@@ -728,55 +712,61 @@ end class
 <div class="acc-body">
 
 <ul>
-  <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
-  <li>You cannot override any concrete member defined in an abstract class.</li>
+  <li>An abstract class is like a concrete class <i>except</i> that:
+    <ul>
+      <li>It may not be instantiated directly, and hence has no constructor.</li>
+      <li>A concrete class may inherit from it; this is specified in the concrete class, by entering the name
+       of the desired abstract 'superclass' in the the field labelled <b>inheritance</b>. Note that when 
+       this has been entered the editor will add the syntax for inheritance appropriate to the language being used.</li>
+      <li>It may define concrete members (as found on concrete classes) and/or <i>abstract</i> members.</li>
+      <li>Any concrete class that inherits from an abstract class, must provide concrete implementations
+        of all abstract members defined on its immediate superclass, and on any abstract classes defined in its hierarchy.</li>
+    </ul>
+  </li>
+  <li>An abstract class must be declared in the code above any class that inherits from it.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, type <el-type>A</el-type> inherits from type <el-type>B</el-type>, which inherits from type <code> C</code>, which inherits from type <code>A</code>.</li>
 </ul>
-
 </div></div>
-
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-
-<p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>
-<ul>
-<li>a <b>property</b> </li>
-<li>a <b>function</b></li>
-<li>a <b>procedure</b></li>
-</ul>
-<p>As with a <b>concrete class</b>, any of these members may be made <code>private</code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
-<p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
-
-<p>You may also define abstract methods on an <b>abstract class</b>, i.e. <b>abstract property</b>, <b>abstract function</b>, <b>abstract procedure</b>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <code>end</code> instruction. For example:</p>
-<codeblock>
-function calculateDiscount(a as Float, d as Float) returns Float
-  let discount be a*d
-return discount
-</codeblock>
-
-<p>If you wish to have several subclasses of an <b>abstract class</b> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
-<ul>
-<li>Define the method as <b>abstract</b> on the superclass.</li>
-<li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <code>default</code>.</li>
-<li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
-</ul>
 </div>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title">More advanced techniques</h4>
+<div class="acc-body">
+
+  <h4 class="no-TOC">Delegation</h4>
+  <p>If you want sub-classes to be able to define their own implementation of a common method, then that method should be made abstract. 
+  If it turns out that several of the sub-classes need the same, or very similar, implementations (and duplication of code is always to be avoided, according to 
+  the DRY principle - Don't Repeat Yourself) then you use the pattern of 'delegation'. This means defining the method as abstract, but also providing a
+  <i>private</i> implementation (or part-implementation) with a slightly different name, which sub-classes may call from their own implementations.
+  You can see an example of this in the <b>Blackjack</b> demo:</p>
+
+  <ul>
+    <li>The abstract class named <code>Player</code> defines <code>abstract procedure newHand()</code>.</li>
+    <li>It also defines a concrete procedure method named <code>newHandHelper</code>.</li>
+    <li>The subclass <code>HumanPlayer</code> defines its implementation of <el-method>newHand</el-method> as just <code>call this.newHandHelper()</code>.</li>
+    <li>The subclass <code>Dealer</code> defines a more complex implementation of <el-method>newHand</el-method> with five instructions, but these include <code>call this.newHandHelper()</code>
+    to do the common part of the task.</li>
+  </ul>
+</p>
+
+</div></div>
 </div>
 
 <div id="MemberInstructions" >
 <h1 id="Member">Member instructions</h1>
 
-<p>Member instructions (also referred to simply as 'members') are located within a <b>concrete class</b> or <b>abstract class</b>.
+<p>Member instructions (also referred to simply as 'members') may be added only with a <b>concrete class</b> or <b>abstract class</b>.
+  Hence, these method instructions may be created only when the profile is set to <b>object-oriented</b> 
+  (or <b>functional</b> - which includes all OOP capabilities).
 
-<h2 id="constructor"><b>constructor</b></h2>
-<p>A <b>concrete class</b> may have an optional <b>constructor</b> so as to:</p>
-<ul>
- <li>initialise properties with fixed values</li>
- <li>define parameters which are used to initialise properties</li>
-</ul>
-<p>If a <b>concrete class</b>'s <b>constructor</b> defines parameters then, when the class is instantiated (using <b>new</b>), the values of
-the correct type must be provided. For example, if the class <code>Square</code> has this <b>constructor</b>:</p>
+<div id="constructor">
+<h2>Constructor</h2>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of constructors</h4>
+<div class="acc-body">
+
+<p>From the <b>Snake - object-oriented demo</b>, where the <code>Square</code> class defines this constructor:</p>
 <codeblock>
 class Square
   constructor(x as Int, y as Int)
@@ -786,39 +776,84 @@ class Square
 end class
 </codeblock>
 
-<p>then it may be instantiated like this:<br>
-<code>variable tail set to new Square(20, 15)</code></p>
+<p>which requires the programmer to provide values for parameters <code>x</code> and <code>y</code> when instantiating a <code>Square</code>,
+and assigns these parameters to the corresponding properties of the object.</p>
 
-<h2 id="property"><b>property</b></h2>
-<p>A <b>property</b> is a named value defined on a <b>concrete class</b> with a name conforming to the rules for an <a href="#Identifier">identifier <i class="fa">&#xf14c;</i></a>,
- and a type (which may be another class name).</p>
-<p>It may be read, but not written to: properties may be modified only from outside the class by means of a <a href="#procedure_method">procedure method <i class="fa">&#xf14c;</i></a>.</p>
-<p>It may be given an initial value within a <b>constructor</b>, for example:</p>
+<p>From the <b>Blackjack</b> demo, where the <code>Game</code> class defines this constructor:</p>
+
 <codeblock>
-class Game
-  property height as Int
-  property board as Board
-  property head as Square
-  property body as List&lt;of Square&gt;
-  constructor()
-  end constructor
-  function toString() returns String
-    return "undefined"
-  end function
-end class
+  constructor(dealerStartPoints as Int)
+    reassign this.dealer to new Dealer(dealerStartPoints)
+    reassign this.players to new List&lt;of Player&gt;()
+    reassign this.message to ""
+  end constructor  
 </codeblock>
 
-<h3 class="no-TOC" id="Maybe"><code>Maybe</code></h3>
+<p>Note that the single parameter defined in the instructor does not correspond directly to the any property defined on <code>Game</code>,
+  but is used to create a new instance of <code>Dealer</code> for its own <code>dealer</code> (association) property.
+  Its <code>player</code> property is a 'multiple association' and is initialised to a new (empty) list of type <code>Player</code>.</p>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about a constructors</h4>
+<div class="acc-body">
+
+  <ul>
+    <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
+    <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
+      the default values for those types).</li><
+    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example: <code>reassign this.x to x</code> - 
+      the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</ul>
+    <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
+    <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
+</ul>
+</div></div>
+</div>
+
+<div id="property">
+<h2>Property</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of properties</h4>
+<div class="acc-body">
+
+  <p>From the <b>Snake - object-oriented</b> demo, where the <code>Game</code> class defines these properties:
+
+  <codeblock>property dealer as Dealer</codeblock>
+  <codeblock>property players as List&let;of Player&gt;</codeblock>
+  <codeblock>property message as String</codeblock>
+
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about properties</h4>
+<div class="acc-body">
+
+<ul>
+  <li>A <b>property</b> is a named value defined on a concrete or abstract class with a name conforming to the standard rules for an identifier.</li>
+  <li>The type of a property, unlike a variable, is explicitly defined, as shown in the examples above. 
+    It may be a standard library type (including data structures), or the name of another used-defined class, 
+    or a data structure of another class type (see examples above).</li>
+  <li>Every property must be initialsed within a <b>constructor</b> unless it is of a numeric or Boolean type - which have default values.</li>
+  <li>A property is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
+  action on the context menu (or reverted to public with <b>make public</b>.</li>
+  <li>The public properties of an instance may be <i>read</i> by code outside the class using dot-syntax, but may only be modified (from outside)
+  via an appropriate procedure method.</li>
+</ul>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">More advanced techniques</h4>
+<div class="acc-body">
+  <h3>Optional ('Maybe') associations</h3>
+
 <p>When a class property is optional, it is defined with the type <code>Maybe</code>.</p>
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
 If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
 and using <el-method>getValue</el-method> will give a runtime error.</p>
 <p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
 
-<div class="accordion">
-<h4 class="no-TOC acc-title">Example using <code>Maybe</code></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Here a pupil (of class <el-type>Pupil</el-type>) need not have a tutor (of class <el-type>Teacher</el-type>):</p>
+<p>Here a pupil (of class <el-type>Pupil</el-type>) that <i>optionally</i> has a tutor (of class <el-type>Teacher</el-type>):</p>
 <codeblock>
 main
   variable tTom set to new Teacher()
@@ -832,44 +867,110 @@ class Teacher
   constructor()
   end constructor
   function toString() returns String
-    return $"{this}"
+    return "a Teacher"
   end function
 end class
+
 class Pupil
   constructor()
     reassign this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
   property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
-    return "undefined"
+    return "a Pupil"
   end function
 end class
 </codeblock>
 </div></div>
+</div>
 
-<h2 id="FunctionMethod"><b>function</b> method</h2>
-<p>A function method follows the same syntax and rules as a global <a href="#function">function <i class="fa">&#xf14c;</i></a>. The differences are:</p>
+<div id="FunctionMethod">
+<h2 >Function method</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of function methods</h4>
+<div class="acc-body">
+
+  <p>From the <b>Roman Numerals Turing Machine</b> demo, where the <code>Turing Machine</code> class defines these two function methods:</p>
+
+<codeblock>
+  function isHalted() returns Boolean
+    return this.currentState.equals(this.haltState)
+  end function
+
+  function findMatchingRule() returns Rule
+    variable matches set to this.rules.filter(lambda r as Rule => (r.currentState.equals(this.currentState)) and (r.currentSymbol.equals(this.tape[this.headPosition])))
+    if matches.length() is 0 then
+      throw ElanRuntimeError $"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}"
+    end if
+    return matches.head()
+  end function
+</codeblock>
+
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about function methods</h4>
+<div class="acc-body">
+
 <ul>
-<li>A <code>function</code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A <code>function</code> method may directly reference (read only) any <b>property</b> defined on the class as though it were a variable or parameter.</li>
-<li>A <code>function</code> method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on<b> abstract class</b> <code>A</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
-<li><el-method>toString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns a value of type <code>String</code>.
- If defined for a class then, if an instance of the class is printed, function method <el-method>toString</el-method> will automatically be used.
-  Typically <el-method>toString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+  <li>A function method provides information based on the parameters specified in combination with the object's properties.</li>
+  <li>A function method broadly follows the same rules as an ordinary (global) function - so it may not create any side effects nor.</li>
+  <li>However, a function method may <i>read</i>, and hence depend upon, the properties of the object on which it is defined.</li>
+  <li>A function method is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
+  action on the context menu (or reverted to public with <b>make public</b>).</li>
+  <li>A function method may be called (within an expression) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
+  <li>A function method may be invoked from within another method <i>inside</i> the class using, for example <code>this.methodName()</code>.</li>
 </ul>
 
-<h2 id="procedure_method"><b>procedure</b> method</h2>
-<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>. The differences are:</p>
+</div></div>
+</div>
+
+<div id="procedure_method">
+<h2>Procedure method</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of procedure methods</h4>
+<div class="acc-body">
+
+  <p>From the <b>Roman Numerals Turing Machine</b> demo, where the <code>Turing Machine</code> defines these procedure methods (among others):</p>
+
+<codeblock>
+  procedure setTape(tape as String)
+    reassign this.tape to tape
+  end procedure
+</codeblock>
+
+<p>This is the simplest form of a procedure method, which allows the <code>tape</code> property (a string) to be set to a new value
+by code outside the class.</p>
+
+<codeblock>
+  procedure singleStep()
+    variable rule set to this.findMatchingRule()
+    call this.execute(rule)
+  end procedure
+</codeblock>
+
+<p>This method made use of a function method on the same class - <el-method>findMatchingRule()</el-method> - and then calls
+another procedure on the same instance - <el-method>execute</el-method> - passing it the found <code>rule</code>.</p>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about procedure methods</h4>
+<div class="acc-body">
+
 <ul>
-<li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax <i class="fa">&#xf14c;</i></a> on an instance.</li>
-<li>A procedure method may read, or write to, any <b>property</b> defined on the class.</li>
-<li>A procedure method may be marked <code>private</code>, in which case it is visible only to code within the class and, if defined on an abstract <code>class</code>, within its subclasses.
- This is done by selecting the <b>property</b> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <code>private</code> modifier).</li>
+  <li>A procedure method changes the state of the object, and/or interacts with the system</li>
+  <li>A procedure method broadly follows the same rules as an ordinary (global) function - so it may not create any side effects nor.</li>
+  <li>However, a procedure method may <i>read</i>, and hence depend upon, the properties of the object on which it is defined.</li>
+  <li>A procedure method is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
+  action on the context menu (or reverted to public with <b>make public</b>).</li>
+  <li>A procedure method may be called (using a <b>call procedure</b> instruction) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
+  <li>A procedure method may be called from within another method <i>inside</i> the class using, for example <code>call this.methodName()</code>.</li>
 </ul>
 
-<h2 id="abstract_property"><b>abstract property</b></h2>
-<p>An abstract <code>property</code> may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+</div></div>
+</div>
 
 <h2 id="abstract_function"><b>abstract function</b></h2>
 <p>An abstract function method may be defined only on an <a href="#abstract_class"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
