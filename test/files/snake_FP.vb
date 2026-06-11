@@ -31,8 +31,6 @@ Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of Li
   Return graphicsPut(b3, tail.x, tail.y, tailColour)
 End Function
 
-' Temporary solution pending creation of withPut as an extension method to ListOfList
-
 Function graphicsPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
   Return graphics.withSet(x, graphics[x].withSet(y, colour))
 End Function

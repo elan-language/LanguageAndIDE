@@ -31,8 +31,6 @@ static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
   return graphicsPut(b3, tail.x, tail.y, tailColour);
 } // function
 
-// Temporary solution pending creation of withPut as an extension method to ListOfList
-
 static List<List<int>> graphicsPut(List<List<int>> graphics, int x, int y, int colour) { // function
   return graphics.withSet(x, graphics[x].withSet(y, colour));
 } // function

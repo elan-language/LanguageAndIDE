@@ -27,8 +27,6 @@ def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   tailColour = if(tail.equals(g.priorTail), green, white) # let
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 
-# Temporary solution pending creation of withPut as an extension method to ListOfList
-
 def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
   return graphics.withSet(x, graphics[x].withSet(y, colour))
 
