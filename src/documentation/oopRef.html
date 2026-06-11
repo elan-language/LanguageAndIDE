@@ -517,7 +517,7 @@ end class
   end procedure
 
   function toString() returns String
-    return "a Card"
+    return $"{this.rank}{symbolForSuit(this.suit)}"
   end function
 
 end class
@@ -571,7 +571,7 @@ end class
   <ul>
     <li>A <b>concrete class</b> is a type of user-defined data-structure that holds data in properties, as well as methods to provide behaviour.</li>
     <li>A new class is defined by adding a <b>concrete class</b> instruction at global level, which requires a name (starting with an initial capital) 
-    to be specified.</li>
+    to be specified</li>
     <li>All concrete classes must define a constructor, and a <el-method>toString</el-method> method, but the template for the class provides minimal
     valid implementations of these which you may expand or modify.</li>
     <li>You create an instance of the class using the class name and providing any require arguments (as specified by the class' constructor) for example:
@@ -589,41 +589,152 @@ end class
 </li>
   </ul>
 
-
-
-<h3 class="no-TOC">Defining a concrete class</h3>
-<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
-<p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
-<p>Its properties must all be initialised in the <b>constructor</b>.</p>
-<p>It may contain functions and procedure methods.</p>
-<p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
-<p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
-
 </div></div>
+</div>
 
-<h3 class="no-TOC" id="this"><b>this</b></h3>
-<p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
-you can refer to this instance with <code>this</code>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
-<code> call apple.newRandomPosition(this)</code>
+<div id="abstract_class">
+<h2>Abstract class</h2>
 
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
-<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
+<div class="accordion">
+<h4 class="no-TOC acc-title">Example of an <b>abstract class</b></h4>
+<div class="acc-body">
 
-<h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
-  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
- The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
+  <p>From the <b>Blackjack</b> demo, the abstract class <code>Player</code> - which is inherited by the concrete classes <code>HumanPlayer</code>
+  and <class>Dealer</class> - defines public concrete properties, public concrete methods, plus two abstract methods with private 'helper methods' 
+to which subclasses</p>
 
-<h4 class="no-TOC">Notes</h4>
+<codeblock>
+abstract class Player
+  property name as String
+
+  property points as Int
+
+  property cards as List<of Card>
+
+  property handTotal as Int
+
+  property softAce as Boolean
+
+  property status as Status
+
+  property hasTurn as Boolean
+
+  procedure startTurn()
+    if this.status is Status.active then
+      reassign this.hasTurn to true
+    end if
+  end procedure
+
+  procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
+    variable playerOutcome set to determinePlayerOutcome(dealer, this)
+    if playerOutcome is Outcome.winDouble then
+      call this.changePointsBy(2)
+      call dealer.changePointsBy(-2)
+    elif playerOutcome is Outcome.win then
+      call this.changePointsBy(1)
+      call dealer.changePointsBy(-1)
+    elif playerOutcome is Outcome.lose then
+      call this.changePointsBy(-1)
+      call dealer.changePointsBy(1)
+    end if
+  end procedure
+
+  procedure evaluateStatus(newCard as Card)
+    if (this.cardCount() is 2) and (this.handTotal is 21) then
+      reassign this.status to Status.blackjack
+    elif (this.handTotal > 21) and (this.softAce) then
+      reassign this.handTotal to this.handTotal - 10
+      reassign this.softAce to false
+    elif this.handTotal > 21 then
+      reassign this.status to Status.bust
+    elif this.handTotal is 21 then
+      reassign this.status to Status.standing
+    end if
+    if this.status isnt Status.active then
+      reassign this.hasTurn to false
+    end if
+  end procedure
+
+  procedure stand()
+    reassign this.status to Status.standing
+    reassign this.hasTurn to false
+  end procedure
+
+  procedure draw()
+    variable newCard set to dealCard(random())
+    variable cards set to this.cards
+    call cards.append(newCard)
+    if newCard.rank.equals("A") then
+      call this.addAce()
+    else
+      reassign this.handTotal to this.handTotal + rankValue()[newCard.rank]
+    end if
+    call this.evaluateStatus(newCard)
+  end procedure
+
+  procedure addAce()
+    if this.softAce then
+      reassign this.handTotal to this.handTotal + 1
+    else
+      reassign this.handTotal to this.handTotal + 11
+      reassign this.softAce to true
+    end if
+  end procedure
+
+  function cardCount() returns Int
+    return this.cards.length()
+  end function
+
+  procedure changePointsBy(amount as Int)
+    reassign this.points to this.points + amount
+  end procedure
+
+  abstract procedure newHand()
+
+  procedure newHandHelper()
+    reassign this.hasTurn to false
+    reassign this.softAce to false
+    reassign this.cards to new List<of Card>()
+    reassign this.handTotal to 0
+    reassign this.status to Status.active
+    call this.draw()
+    call this.draw()
+  end procedure
+
+  abstract function getMessage() returns String
+
+  function statusAsString() returns String
+    variable msg set to ""
+    variable status set to this.status
+    if this.hasTurn then
+      reassign msg to msg + " - PLAYING"
+    elif status is Status.standing then
+      reassign msg to msg + " - STANDING"
+    elif status is Status.blackjack then
+      reassign msg to msg + " - BLACKJACK"
+    elif status is Status.bust then
+      reassign msg to msg + " - BUST"
+    end if
+    return msg
+  end function
+
+  abstract procedure nextAction(dealerFaceCard as Card)
+
+end class
+</codeblock>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about as <b>abstract class</b></h4>
+<div class="acc-body">
+
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
   <li>You cannot override any concrete member defined in an abstract class.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, type <el-type>A</el-type> inherits from type <el-type>B</el-type>, which inherits from type <code> C</code>, which inherits from type <code>A</code>.</li>
 </ul>
-</div>
 
-<div id="abstract_class">
-<h2>Abstract class</h2>
+</div></div>
+
 <p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 
 <p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>

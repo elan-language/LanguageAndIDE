@@ -393,7 +393,7 @@ abstract class Player {
 
   abstract void newHand(); // abstract procedure
 
-  public void newHandHelper() { // procedure method
+  protected void newHandHelper() { // private procedure method
     this.hasTurn = false; // reassign variable
     this.softAce = false; // reassign variable
     this.cards = new List<Card>(); // reassign variable
@@ -405,7 +405,7 @@ abstract class Player {
 
   abstract String getMessage(); // abstract function
 
-  public String statusAsString() { // function method
+  protected String getMessageHelper() { // private function method
     var msg = "";
     var status = this.status;
     if (this.hasTurn) {
@@ -475,7 +475,7 @@ class Dealer extends Player {
   public  String getMessage() { // function method
     var msg = "";
     if (this.hasPlayed) {
-      msg = this.statusAsString() + String.format(" - hand total: %", this.handTotal); // reassign variable
+      msg = this.getMessageHelper() + String.format(" - hand total: %", this.handTotal); // reassign variable
     } // if
     return msg;
   } // function method
@@ -532,7 +532,7 @@ class HumanPlayer extends Player {
   } // procedure method
 
   public  String getMessage() { // function method
-    var msg = this.statusAsString() + String.format("- hand total: %", this.handTotal);
+    var msg = this.getMessageHelper() + String.format("- hand total: %", this.handTotal);
     if (this.hasTurn) {
       msg = msg + " - press 'd' to draw, 's' to stand"; // reassign variable
     } // if

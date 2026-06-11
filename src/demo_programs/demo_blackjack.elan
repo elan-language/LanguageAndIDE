@@ -1,4 +1,4 @@
-# 3c6274dd2de5fe489b685aac0d0e9a0e9a2d00fa59aaa20127fda5bd4e12d169 Elan 2.0.0-alpha5 valid
+# 2bbd0e88b8790391dfbb4c7b26e9b28d455d7a2de87e8dd1d232fa1d0e9d0963 Elan 2.0.0-alpha5 valid
 
 main
   variable game set to new Game(1000)
@@ -269,7 +269,7 @@ class Game
   end procedure
 
   function toString() returns String
-    return "a Game"
+    return "undefined"
   end function
 
 end class
@@ -296,7 +296,7 @@ class Card
   end procedure
 
   function toString() returns String
-    return $"{this.rank}{symbolForSuit(this.suit)}"
+    return "undefined"
   end function
 
 end class
@@ -475,7 +475,7 @@ class Dealer inherits Player
   end function
 
   function toString() returns String
-    return "the Dealer"
+    return "undefined"
   end function
 
 end class
@@ -533,7 +533,7 @@ class HumanPlayer inherits Player
   end function
 
   function toString() returns String
-    return $"Player: {this.name}"
+    return "undefined"
   end function
 
 end class

@@ -391,7 +391,7 @@ MustInherit Class Player
 
   MustOverride Sub newHand()
 
-  Sub newHandHelper() ' procedure method
+  Protected Sub newHandHelper() ' private procedure method
     Me.hasTurn = False ' reassign variable
     Me.softAce = False ' reassign variable
     Me.cards = New List(Of Card)() ' reassign variable
@@ -403,7 +403,7 @@ MustInherit Class Player
 
   MustOverride Function getMessage() As String
 
-  Function statusAsString() As String
+  Protected Function getMessageHelper() As String
     Dim msg = "" ' variable definition
     Dim status = Me.status ' variable definition
     If Me.hasTurn Then
@@ -475,7 +475,7 @@ Class Dealer
   Overrides Function getMessage() As String
     Dim msg = "" ' variable definition
     If Me.hasPlayed Then
-      msg = Me.statusAsString() + $" - hand total: {Me.handTotal}" ' reassign variable
+      msg = Me.getMessageHelper() + $" - hand total: {Me.handTotal}" ' reassign variable
     End If
     Return msg
   End Function
@@ -534,7 +534,7 @@ Class HumanPlayer
   End Sub
 
   Overrides Function getMessage() As String
-    Dim msg = Me.statusAsString() + $"- hand total: {Me.handTotal}" ' variable definition
+    Dim msg = Me.getMessageHelper() + $"- hand total: {Me.handTotal}" ' variable definition
     If Me.hasTurn Then
       msg = msg + " - press 'd' to draw, 's' to stand" ' reassign variable
     End If
