@@ -356,40 +356,85 @@ directly underneath the snake.</p>
 
 <h2>A concrete class may optionally inherit from an abstract class</h2>
 
-<p>In many applications two or more of the classes will be seen as having quite a lot in common. </p>
+<p>In many applications two or more of the classes will be seen as having quite a lot in common. 
+  When this situation identified, there <i>might</i> be a case for making them inherit from a common 'abstract' class.
+  For example, in a school administration system, you might define classes named Pupil, Teacher, and Parent, but these
+  might all inherit from a common abstract class named Individual. The Person class can then be described as the 'superclass' 
+  of the other three, and they as the 'subclasses' of Individual.</p>
 
-  Two motivations - the <i>secondary</i> one will be addressed in the next principle.
-Two <i>primary</i> motivation is (or should be) is so that instances of different classes they may be handled by external code <i>as though they were of the same class</i> - indeed
-without that class having to know that there is any difference between them.
+  <p>An abstract class is created, at global level, with an <b>abstract class</b> instruction, and the template requires a name 
+  (beginning with a capital letter) to be specified.</p>
 
-'is a' relationship c.f. 'has a'
+  <p>The main differences between an abstract and a concrete super-class are:
+    
+    <ul>
+      <li>an abstract class <i>cannot be instantiated</i>. If, using the
+example above, you were to write: <code>new Individual()</code> you will get a compile-error message: <b>Individual must be concrete to create instance.</b>
+<li>an abstract class has no constructor (it also does not need <el-method>toString</el-method> because every concrete class <i>must</i> define one.</li>
+<li>the <b>new code</b> menus, as well as offering the <b>property</b>, <b>procedure method</b>, and <b>function method</b> options as in a concrete class, also
+offer <b>abstract property</b>, <b>abstract procedure method</b>, and <b>abstract function method</b>. A <i>concrete</i> class must provide a concrete (normal)
+implementation of each <i>abstract</i> member defined in its superclass, or any abstract class above it in the hierarchy.</li>
+    </ul>
 
-Definition of 'superclass' and `subclass`
+<p>Earlier we learned about <a href="association">association</a> between objects. Association may be characterised by the 'has a' relationship, as in
+a 'Student has a personal tutor' (meaning that the Student class defines a property named 'tutor' - which is of <i>type</i> Teacher. Bt contrast
+inheritance may be characterised as an 'is a' relationship, as in 'a Student is an Individual'.</p>
 
-Sometimes it is useful to define an abstract class (or 'super type') for two or more classes just to allow you to hold instances
-of two or more classes in one list or other data structure.
+<p>There are two principal motivations from making two or more classes inherit from a common abstract class:</p>
 
-More commonly, you want to write external methods that can process such instances. 
-In this case you can define the signature of all properties and/or methods that are common to all of them in the abstract class - like this.
+<ul>
+  <li>To reduce repetition of common properties and methods - which may be defined on the abstract superclass and then not repeated in the subclasses.
+    For example it might be that Individual define a (string) property named 'emailAddress' and define a common procedure method named 'sendMessage'.</li>
+  <li>To allow instances of any of the subclasses to be handled by external code <i>without having to know the individual subclass of each instance.
+    This principle is known as 'type substitutability' and is a form of a more general principle know as 'polymorphism' - meaning 'of multiple forms'.
+    For example, the user might define a special interest group that included some pupils, parents, and teachers, and so would be defined as a list of type
+    Individual. This then makes it easy to send a message to all the members of the group, by invoking the method 'sendMessage' on each member in turn,
+    without having to identify the type each member. </li>
+</ul>
 
-The sub-classes may each have <i>additional members</i> that differ - but you won't be able to access those members unless you know the specific type
-of the instance.
+<p>Some textbooks emphasise the <i>first</i> of those two motivations, but it is the <i>second</i> one that is far more important.
+Indeed, inheritance is the most over-used, and the most frequently abused, concepts in OOP. 
+For that reason, irrespective of the programming language being used, Elan deliberately enforces principles of <i>good</i> OOP from the outset. For example:</p>
 
-Importantly, though, classes may implement an abstract method differently. This is an important idea and called polymorphism
-  
-<h2>Common implementations may be shared through delegation or inheritance</h2>
-In addition to defining abstract members abstract class may also define concrete implementations of methods, with some limitations
-The limitation is that a concrete class may (optionally) inherit only from one abstract class
-An abstract class may optionally inherit from one other abstract class.
-Elan’s model of inheritance – what you can and can’t do
+<ul>
+  <li>Each class may inherit from one superclass only<li>
+  <li>The superclass must be an abstract class - no class may inherit from another concrete class.</li>
+  <li>A abstract class may inherit from another abstract class - to form a 'hierarchy' of abstraction, if desired.</li>
+  <li>A concrete class may inherit concrete (ordinary) members from its superclass, but it may not <i>override</i> them.</li>
+</ul>
+
+<p>The last point is controversial - since all the supported programming languages allow overriding. But overriding (of concrete methods)
+  breaks the 'O' of the widely-quoted 'SOLID' principles of oop: that classes should be 'Open for extension, but closed for modification'.</p>
+
+<p>If you want sub-classes to be able to define their own implementation of a common method, then it should be made abstract. 
+  If it turns out that several of the sub-classes need the same, or very similar, implementations (and duplication of code is always to be avoided, according to 
+  the DRY principle - Don't Repeat Yourself) then you use the pattern of 'delegation'. This means defining the method as abstract, but also providing a
+  <i>private</i> implementation (or part-implementation) with a slightly different name, which sub-classes may call from their own implementations.
+  You can see an example of this in the <b>Blackjack</b> demo:</p>
+
+  <ul>
+    <li>The abstract class named <code>Player</code> defines <code>abstract procedure newHand()</code>.</li>
+    <li>It also defines a concrete procedure method named <code>newHandHelper</code>.</li>
+    <li>The subclass <code>HumanPlayer</code> defines its implementation of <el-method>newHand</el-method> as just <code>call this.newHandHelper()</code>.</li>
+    <li>The subclass <code>Dealer</code> defines a more complex implementation of <el-method>newHand</el-method> with five instructions, but these include <code>call this.newHandHelper()</code>
+    to do the common part of the task.</li>
+  </ul>
+</p>
 - 
 
 <h2>Application logic should be well-distributed across classes</h2>
-As much as possible of the code should be defined in classes
-With a minimal main and/or standalone (global) constructs
-The logic should be distributed as evenly as possible across the classes
-Be wary of singletons
-In particular of a singleton that is doing most of the work. This pattern is often used to avoid global variables, but be wary of this
+
+<p>In Elan, an object-oriented program still needs a procedural main method to execute.</p>
+
+<p>The Java language is unusual in that even the main routine must defined within a class - Elan handles this by including a class named <code>Global</code> as part of the file boilerplate,
+   but treats the instructions directly within this class as being 'global' in nature. Any user-defined classes are added <i>within</i> this, and Elan does not allow properties to be added
+   <i>directly</i> within that <code>Global</code> class since these would be, effectively, just <i>global variables in disguise</i>.</p>
+
+<p>In general good OOP design means aiming to keep the functionality well-distributed among the user-defined classes.
+   Inevitably, some classes are going to define more methods, and/or more-complex methods, than others. But you should be wary of a situation where one class is doing most
+   of the work, and the other classes act as little more than data structures without encapsulated behaviour. All too often that one big class is instantiated only
+   once (this pattern is known as a 'singleton'), by the main routine. While singletons are not always a bad idea, a singleton that does most of the work of the program -
+   sometimes irreverently referred to as a 'god class' - is really just a procedural program in disguise.</p>
 </div>
 
 <div id="GlobalInstructions">
