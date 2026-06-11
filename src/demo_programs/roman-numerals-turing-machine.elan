@@ -41,7 +41,7 @@ class TuringMachine
   end constructor
 
   function toString() returns String
-    return ""
+    return "a TuringMachine"
   end function
 
   property initialState as String

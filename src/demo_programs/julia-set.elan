@@ -63,7 +63,7 @@ class Coords
   end constructor
 
   function toString() returns String
-    return ""
+    return "a Coords"
   end function
 
   property scale as Float

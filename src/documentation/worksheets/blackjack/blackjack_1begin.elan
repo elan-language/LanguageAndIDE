@@ -269,7 +269,7 @@ class Game
   end procedure
 
   function toString() returns String
-    return "undefined"
+    return "a Game"
   end function
 
 end class
@@ -296,7 +296,7 @@ class Card
   end procedure
 
   function toString() returns String
-    return "undefined"
+    return $"{this.rank}{symbolForSuit(this.suit)}"
   end function
 
 end class
@@ -475,7 +475,7 @@ class Dealer inherits Player
   end function
 
   function toString() returns String
-    return "undefined"
+    return "the Dealer"
   end function
 
 end class
@@ -533,7 +533,7 @@ class HumanPlayer inherits Player
   end function
 
   function toString() returns String
-    return "undefined"
+    return $"Player: {this.name}"
   end function
 
 end class

@@ -93,7 +93,7 @@ class Game
   end constructor
 
   function toString() returns String
-    return ""
+    return "a Game"
   end function
 
   function withNewApple() returns Game

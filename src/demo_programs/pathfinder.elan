@@ -96,7 +96,7 @@ class Solver
   end constructor
 
   function toString() returns String
-    return ""
+    return "A Solver"
   end function
 
   property nodes as List<of Node>

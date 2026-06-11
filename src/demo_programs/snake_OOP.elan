@@ -25,10 +25,6 @@ class Snake
     reassign this.priorTail to tail
   end constructor
 
-  function toString() returns String
-    return ""
-  end function
-
   private property currentDir as Direction
 
   private property head as Square
@@ -87,16 +83,16 @@ class Snake
     end if
   end procedure
 
+  function toString() returns String
+    return $"a Snake with head at {this.head}"
+  end function
+
 end class
 
 class Apple
   constructor()
     reassign this.location to new Square(0, 0)
   end constructor
-
-  function toString() returns String
-    return ""
-  end function
 
   property location as Square
 
@@ -116,6 +112,10 @@ class Apple
     reassign blocks[this.location.x][this.location.y] to red
   end procedure
 
+  function toString() returns String
+    return $"an Apple at {this.location}"
+  end function
+
 end class
 
 class Square
@@ -123,10 +123,6 @@ class Square
     reassign this.x to x
     reassign this.y to y
   end constructor
-
-  function toString() returns String
-    return ""
-  end function
 
   property x as Int
 
@@ -149,6 +145,10 @@ class Square
 
   function hasHitEdge() returns Boolean
     return (this.x is -1) or (this.y is -1) or (this.x is 40) or (this.y is 30)
+  end function
+
+  function toString() returns String
+    return "{this.x}, {this.y}"
   end function
 
 end class
