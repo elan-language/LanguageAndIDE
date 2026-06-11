@@ -72,7 +72,7 @@ Class Coords
   End Sub
 
   Function toString() As String
-    Return ""
+    Return "a Coords"
   End Function
 
   Property scale As Double

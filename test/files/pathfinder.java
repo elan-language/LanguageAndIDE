@@ -99,7 +99,7 @@ class Solver {
   } // constructor
 
   public String toString() { // function method
-    return "";
+    return "A Solver";
   } // function method
 
   public List<Node> nodes; // property

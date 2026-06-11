@@ -95,7 +95,7 @@ class Game {
   } // constructor
 
   public string toString() { // function method
-    return "";
+    return "a Game";
   } // function method
 
   public Game withNewApple() { // function method

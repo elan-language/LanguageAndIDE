@@ -1,4 +1,4 @@
-# 1468f7eb5f244c2755b47d1e9fd912499385269af026b02d4455b2c266470489 Elan 2.0.0-alpha5 valid
+# aa45d5cc5b40e84ce533ccad949e8d204cfcaeb45f036024b746a293e58eafe7 Elan 2.0.0-alpha5 valid
 
 main
   variable start set to new Point(5, 5)
@@ -96,7 +96,7 @@ class Solver
   end constructor
 
   function toString() returns String
-    return ""
+    return "A Solver"
   end function
 
   property nodes as List<of Node>

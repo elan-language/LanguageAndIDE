@@ -129,7 +129,7 @@ class Point {
   } // constructor
 
   public string toString() { // function method
-    return "";
+    return $"Point at {this.x}, {this.y}";
   } // function method
 
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds

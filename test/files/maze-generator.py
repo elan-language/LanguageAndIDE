@@ -106,7 +106,7 @@ class Point # concrete class
     self.y = y # reassign variable
 
   def toString(self: Point) -> str: # function method
-    return ""
+    return f"Point at {self.x}, {self.y}"
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   def neighbouringPoints(self: Point) -> list[Point]: # function method

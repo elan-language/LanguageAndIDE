@@ -1,4 +1,4 @@
-# fbff4d34934e844822e2f78332b54d1228477b75c18765c9835ea14bb3f2ac6f Elan 2.0.0-alpha5 valid
+# 779dc749e351bebf7cc3154c68b49770679f1009c515881c639b4ed38638fa9e Elan 2.0.0-alpha5 valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -125,7 +125,7 @@ class Point
   end constructor
 
   function toString() returns String
-    return ""
+    return $"Point at {this.x}, {this.y}"
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds

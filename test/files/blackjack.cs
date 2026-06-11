@@ -270,7 +270,7 @@ class Game {
   } // procedure method
 
   public string toString() { // function method
-    return "undefined";
+    return "a Game";
   } // function method
 
 } // class
@@ -298,7 +298,7 @@ class Card {
   } // procedure method
 
   public string toString() { // function method
-    return "undefined";
+    return $"{this.rank}{symbolForSuit(this.suit)}";
   } // function method
 
 } // class
@@ -391,7 +391,7 @@ abstract class Player {
 
   abstract void newHand(); // abstract procedure
 
-  public void newHandHelper() { // procedure method
+  protected void newHandHelper() { // private procedure method
     this.hasTurn = false; // reassign variable
     this.softAce = false; // reassign variable
     this.cards = new List<Card>(); // reassign variable
@@ -403,7 +403,7 @@ abstract class Player {
 
   abstract string getMessage(); // abstract function
 
-  public string statusAsString() { // function method
+  protected string getMessageHelper() { // private function method
     var msg = "";
     var status = this.status;
     if (this.hasTurn) {
@@ -473,13 +473,13 @@ class Dealer: Player {
   public override string getMessage() { // function method
     var msg = "";
     if (this.hasPlayed) {
-      msg = this.statusAsString() + $" - hand total: {this.handTotal}"; // reassign variable
+      msg = this.getMessageHelper() + $" - hand total: {this.handTotal}"; // reassign variable
     } // if
     return msg;
   } // function method
 
   public string toString() { // function method
-    return "undefined";
+    return "the Dealer";
   } // function method
 
 } // class
@@ -530,7 +530,7 @@ class HumanPlayer: Player {
   } // procedure method
 
   public override string getMessage() { // function method
-    var msg = this.statusAsString() + $"- hand total: {this.handTotal}";
+    var msg = this.getMessageHelper() + $"- hand total: {this.handTotal}";
     if (this.hasTurn) {
       msg = msg + " - press 'd' to draw, 's' to stand"; // reassign variable
     } // if
@@ -538,7 +538,7 @@ class HumanPlayer: Player {
   } // function method
 
   public string toString() { // function method
-    return "undefined";
+    return $"Player: {this.name}";
   } // function method
 
 } // class

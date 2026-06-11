@@ -83,7 +83,7 @@ class Game # concrete class
     self.rnd = rnd # reassign variable
 
   def toString(self: Game) -> str: # function method
-    return ""
+    return "a Game"
 
   def withNewApple(self: Game) -> Game: # function method
     x = self.rnd.asInt(0, 39) # let

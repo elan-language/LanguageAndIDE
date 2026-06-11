@@ -435,6 +435,18 @@ For that reason, irrespective of the programming language being used, Elan delib
    of the work, and the other classes act as little more than data structures without encapsulated behaviour. All too often that one big class is instantiated only
    once (this pattern is known as a 'singleton'), by the main routine. While singletons are not always a bad idea, a singleton that does most of the work of the program -
    sometimes irreverently referred to as a 'god class' - is really just a procedural program in disguise.</p>
+
+<p>A useful check on your design is to look at the distribution of instructions in the program (not counting instructions within tests, which are not part of the executable program) as in the
+  the following summary of the <b>Snake - object-oriented</b> demo:</p>
+
+<table>
+  <tr><th>Class</th><th>Properties</th><th>Methods (excl. constructor & toString)</th><th>No. of instructions</th><th>Notes</th></tr>
+  <tr><td><code>Snake</code></td><td>4</td>6<td></td><td>57</td><td>singleton - but an extended version of the game might have multiple instances.</td></tr>
+  <tr><td><code>Snake</code></td><td>1</td>2<td></td><td>16</td><td>ditto</td></tr>
+  <tr><td><code>Square</code></td><td>2</td>2<td></td><td>22</td><td>Many instances created in the game. Both Snake and Apple have associations to one or more Squares</td></tr>
+  <tr><td>Instructions not in a user-defined class</td><td>12</td><td>13</td><td>e.g. in main method, enums, or global procedures/functions, excluding tests</td></tr>
+  <tr><td>Total instructions</td><td>96</td><td>excluding tests</td></tr>
+</table>
 </div>
 
 <div id="GlobalInstructions">
@@ -442,52 +454,21 @@ For that reason, irrespective of the programming language being used, Elan delib
 
 <div id="class">
 <h2>Concrete class</h2>
-<p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
-<p>A <b>concrete class</b> is a user-defined type offering richer capability than an <a href="#enum"><b>enum</b> <i class="fa">&#xf14c;</i></a>.</p>
-<p>Like any other type its name must begin with an uppercase letter.</p>
-
-<h3 class="no-TOC">Defining a concrete class</h3>
-<p>A <b>concrete class</b> is instantiated using the <b>concrete class</b> instruction followed by the class name, and optional <b>inherits</b> to refer to a <b>menu option class</b> or <b>abstract class</b> defined above in the program.</p>
-<p>A class definition must include properties, a <b>constructor</b> and at least one method called <el-method>toString</el-method>.</p>
-<p>Its properties must all be initialised in the <b>constructor</b>.</p>
-<p>It may contain functions and procedure methods.</p>
-<p>The <b>constructor</b> may optionally define parameters to force the calling code to provide initial values.</p>
-<p> Code in the constructor may make use of any functions, and follows the same constraints as a <b>function</b> (i.e. it may not call any <b>procedure</b>, whether defined in the <b>class</b> or outside).</p>
-<p>A simple demonstration of a concrete class is:</p>
-
-<codeblock>
-main
-  variable x set to new Thing()
-  print(x)
-  print(x.names.toString())
-end main
-class Thing
-  property names as List&lt;of String&gt;
-  constructor()
-    reassign this.names to createList(6, "X")
-  end constructor
-  function toString() returns String
-    return "instance of class Thing"
-  end function
-end class
-</codeblock>
-
-<p>Here is an example of <b>concrete class</b> definition taken from demo program <b>snake - object-oriented</b>:</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example definition of a <b>concrete class</b></h4>
+<h4 class="no-TOC acc-title">Examples of concrete classes</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Apple:</p>
+  <p>From the <b>Snake - object-oriented</b> demo:</p>
+
 <codeblock>
 class Apple
   constructor()
     reassign this.location to new Square(0, 0)
   end constructor
-  function toString() returns String
-    return ""
-  end function
+
   property location as Square
+
   procedure newRandomPosition(snake as Snake)
     variable changePosition set to true
     while changePosition
@@ -499,36 +480,261 @@ class Apple
       end if
     end while
   end procedure
-  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
+
+  procedure updateBlocks(blocks as List<of List<of Int>>)
     reassign blocks[this.location.x][this.location.y] to red
   end procedure
+  
+  function toString() returns String
+    return $"an Apple at {this.location}"
+  end function
+
+end class
+  </codeblock>
+
+  <p>From the <b>Blackjack</b> demo:</p>
+
+<codeblock>
+  class Card
+  property suit as Suit
+
+  property rank as String
+
+  property faceDown as Boolean
+
+  constructor(rank as String, suit as Suit, facedown as Boolean)
+    reassign this.rank to rank
+    reassign this.suit to suit
+    reassign this.faceDown to facedown
+  end constructor
+
+  procedure turnFaceUp()
+    reassign this.faceDown to false
+  end procedure
+
+  procedure turnFaceDown()
+    reassign this.faceDown to true
+  end procedure
+
+  function toString() returns String
+    return $"{this.rank}{symbolForSuit(this.suit)}"
+  end function
+
 end class
 </codeblock>
+
+<p>From the <b>Pathfinder</b> demo:</p>
+
+<codeblock>
+  class Point
+  property x as Int
+
+  property y as Int
+
+  property isEmpty as Boolean
+
+  constructor(x as Int, y as Int)
+    if (x < 0) or (y < 0) then
+      reassign this.isEmpty to true
+    else
+      reassign this.x to x
+      reassign this.y to y
+    end if
+  end constructor
+
+  function minDistTo(p as Point) returns Float
+    return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2))
+  end function
+
+  function isAdjacentTo(p as Point) returns Boolean
+    return (this.minDistTo(p) is 1) or (this.minDistTo(p).round(4) is sqrt(2).round(4))
+  end function
+
+  # Returns the 8 theoretically-neighbouring points, whether or not within bounds
+  function neighbouringPoints() returns List<of Point>
+    return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
+  end function
+
+  function toString() returns String
+    return $"{this.x},{this.y}"
+  end function
+
+end class
+</codeblock>
+
 </div></div>
 
-<h3 class="no-TOC" id="this"><b>this</b></h3>
-<p>If in the code of <code>class</code> <el-type>A</el-type> you want to invoke a method in <code>class</code> <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
-you can refer to this instance with <code>this</code>, as shown by this line in demo program <b>Snake - object-oriented</b>:</p>
-<code> call apple.newRandomPosition(this)</code>
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about a <b>concrete class</b></h4>
+<div class="acc-body">
 
-<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <code>Apple</code> which needs to be passed an instance of class <code>Snake</code>,
-<el-id>apple</el-id> being an instance of class <code>Apple</code>.</p>
+  <ul>
+    <li>A <b>concrete class</b> is a type of user-defined data-structure that holds data in properties, as well as methods to provide behaviour.</li>
+    <li>A new class is defined by adding a <b>concrete class</b> instruction at global level, which requires a name (starting with an initial capital) 
+    to be specified</li>
+    <li>All concrete classes must define a constructor, and a <el-method>toString</el-method> method, but the template for the class provides minimal
+    valid implementations of these which you may expand or modify.</li>
+    <li>You create an instance of the class using the class name and providing any require arguments (as specified by the class' constructor) for example:
+      <code>variable apple set to new Apple()</code> or <code> variable start set to new Point(5, 5)</code>.</li>
+    <li>All properties must be initialised within the constructor (except for numeric or Boolean properties which have the default value for their type until changed) </li>
+    <li>Function methods provide information derived from the properties of the instance, and or from parameters provided to it.</p>
+    <li><el-method>toString</el-method> is an ordinary function method but with a specific name; it is called if an instance of the class is printed,
+    or inserted into an interpolated string; typically <el-method>toString</el-method> will include one or more of the object's properties. </li>
+    <li>Procedure methods make changes to the properties of the instance and/or depend on the system in some way.</p>
+    <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may ony be accessed by
+    code within the same class.</li>
+    <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
+    <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li> 
+    <li>A class may <i>optionally</i> inherit from a single <a href="#abstract_class">abstract class.</li>
+</li>
+  </ul>
 
-<h3 class="no-TOC" id="inherits"><b>inherits</b></h3>
-<p>A <a href="#class">concrete class <i class="fa">&#xf14c;</i></a> (often referred to simply as a class) 
-  may optionally inherit from just one <a href="#abstract_class"><b>abstract class</b><i class="fa">&#xf14c;</i></a>.
- The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <b>abstract class</b> that it inherits from, directly or indirectly.</p>
+</div></div>
+</div>
 
-<h4 class="no-TOC">Notes</h4>
+<div id="abstract_class">
+<h2>Abstract class</h2>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">Example of an <b>abstract class</b></h4>
+<div class="acc-body">
+
+  <p>From the <b>Blackjack</b> demo, the abstract class <code>Player</code> - which is inherited by the concrete classes <code>HumanPlayer</code>
+  and <class>Dealer</class> - defines public concrete properties, public concrete methods, plus two abstract methods with private 'helper methods' 
+to which subclasses</p>
+
+<codeblock>
+abstract class Player
+  property name as String
+
+  property points as Int
+
+  property cards as List<of Card>
+
+  property handTotal as Int
+
+  property softAce as Boolean
+
+  property status as Status
+
+  property hasTurn as Boolean
+
+  procedure startTurn()
+    if this.status is Status.active then
+      reassign this.hasTurn to true
+    end if
+  end procedure
+
+  procedure determineOutcomeAndUpdatePoints(dealer as Dealer)
+    variable playerOutcome set to determinePlayerOutcome(dealer, this)
+    if playerOutcome is Outcome.winDouble then
+      call this.changePointsBy(2)
+      call dealer.changePointsBy(-2)
+    elif playerOutcome is Outcome.win then
+      call this.changePointsBy(1)
+      call dealer.changePointsBy(-1)
+    elif playerOutcome is Outcome.lose then
+      call this.changePointsBy(-1)
+      call dealer.changePointsBy(1)
+    end if
+  end procedure
+
+  procedure evaluateStatus(newCard as Card)
+    if (this.cardCount() is 2) and (this.handTotal is 21) then
+      reassign this.status to Status.blackjack
+    elif (this.handTotal > 21) and (this.softAce) then
+      reassign this.handTotal to this.handTotal - 10
+      reassign this.softAce to false
+    elif this.handTotal > 21 then
+      reassign this.status to Status.bust
+    elif this.handTotal is 21 then
+      reassign this.status to Status.standing
+    end if
+    if this.status isnt Status.active then
+      reassign this.hasTurn to false
+    end if
+  end procedure
+
+  procedure stand()
+    reassign this.status to Status.standing
+    reassign this.hasTurn to false
+  end procedure
+
+  procedure draw()
+    variable newCard set to dealCard(random())
+    variable cards set to this.cards
+    call cards.append(newCard)
+    if newCard.rank.equals("A") then
+      call this.addAce()
+    else
+      reassign this.handTotal to this.handTotal + rankValue()[newCard.rank]
+    end if
+    call this.evaluateStatus(newCard)
+  end procedure
+
+  procedure addAce()
+    if this.softAce then
+      reassign this.handTotal to this.handTotal + 1
+    else
+      reassign this.handTotal to this.handTotal + 11
+      reassign this.softAce to true
+    end if
+  end procedure
+
+  function cardCount() returns Int
+    return this.cards.length()
+  end function
+
+  procedure changePointsBy(amount as Int)
+    reassign this.points to this.points + amount
+  end procedure
+
+  abstract procedure newHand()
+
+  procedure newHandHelper()
+    reassign this.hasTurn to false
+    reassign this.softAce to false
+    reassign this.cards to new List<of Card>()
+    reassign this.handTotal to 0
+    reassign this.status to Status.active
+    call this.draw()
+    call this.draw()
+  end procedure
+
+  abstract function getMessage() returns String
+
+  function statusAsString() returns String
+    variable msg set to ""
+    variable status set to this.status
+    if this.hasTurn then
+      reassign msg to msg + " - PLAYING"
+    elif status is Status.standing then
+      reassign msg to msg + " - STANDING"
+    elif status is Status.blackjack then
+      reassign msg to msg + " - BLACKJACK"
+    elif status is Status.bust then
+      reassign msg to msg + " - BUST"
+    end if
+    return msg
+  end function
+
+  abstract procedure nextAction(dealerFaceCard as Card)
+
+end class
+</codeblock>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about as <b>abstract class</b></h4>
+<div class="acc-body">
+
 <ul>
   <li>An <b>abstract class</b> must be declared in the code above any class that inherits from it.</li>
   <li>You cannot override any concrete member defined in an abstract class.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a circular dependency where, for example, type <el-type>A</el-type> inherits from type <el-type>B</el-type>, which inherits from type <code> C</code>, which inherits from type <code>A</code>.</li>
 </ul>
-</div>
 
-<div id="abstract_class">
-<h2>Abstract class</h2>
+</div></div>
+
 <p>(This instruction is available only if the profile is set for <b>object-oriented</b> or <b>functional</b> programming.)</p>
 
 <p>An <b>abstract class</b> may not be instantiated (and hence may not define a constructor). It may define these concrete members:</p>

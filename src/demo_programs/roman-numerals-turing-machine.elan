@@ -1,4 +1,4 @@
-# 212d03c313c16a870a12f2f9b6333526a1a654d82dbf1096d5d5e1a933bf484d Elan 2.0.0-alpha5 valid
+# 00c0541a5a3359667ce275f08657966ddaa27dfab778af5212c4dacf68472fe2 Elan 2.0.0-alpha5 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -41,7 +41,7 @@ class TuringMachine
   end constructor
 
   function toString() returns String
-    return ""
+    return "a TuringMachine"
   end function
 
   property initialState as String

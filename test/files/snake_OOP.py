@@ -24,9 +24,6 @@ class Snake # concrete class
     self.head = tail.getAdjacentSquare(self.currentDir) # reassign variable
     self.priorTail = tail # reassign variable
 
-  def toString(self: Snake) -> str: # function method
-    return ""
-
   currentDir: Direction # private property
 
   head: Square # private property
@@ -74,15 +71,15 @@ class Snake # concrete class
     elif key.equals("d"): # else if
       self.currentDir = Direction.right # reassign variable
 
+  def toString(self: Snake) -> str: # function method
+    return f"a Snake with head at {self.head}"
+
 
 
 class Apple # concrete class
 
   def __init__(self: Apple) -> None:
     self.location = Square(0, 0) # reassign variable
-
-  def toString(self: Apple) -> str: # function method
-    return ""
 
   location: Square # property
 
@@ -98,6 +95,9 @@ class Apple # concrete class
   def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure method
     blocks[self.location.x][self.location.y] = red # reassign variable
 
+  def toString(self: Apple) -> str: # function method
+    return f"an Apple at {self.location}"
+
 
 
 class Square # concrete class
@@ -105,9 +105,6 @@ class Square # concrete class
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
-
-  def toString(self: Square) -> str: # function method
-    return ""
 
   x: int # property
 
@@ -128,6 +125,9 @@ class Square # concrete class
 
   def hasHitEdge(self: Square) -> bool: # function method
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
+
+  def toString(self: Square) -> str: # function method
+    return "{this.x}, {this.y}"
 
 
 

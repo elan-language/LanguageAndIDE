@@ -81,7 +81,7 @@ class Solver # concrete class
     self.current = Node(emptyPoint(), 0, 0) # reassign variable
 
   def toString(self: Solver) -> str: # function method
-    return ""
+    return "A Solver"
 
   nodes: list[Node] # property
 

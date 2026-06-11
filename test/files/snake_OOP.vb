@@ -27,10 +27,6 @@ Class Snake
     Me.priorTail = tail ' reassign variable
   End Sub
 
-  Function toString() As String
-    Return ""
-  End Function
-
   Private Property currentDir As Direction
 
   Private Property head As Square
@@ -89,6 +85,10 @@ Class Snake
     End If
   End Sub
 
+  Function toString() As String
+    Return $"a Snake with head at {Me.head}"
+  End Function
+
 End Class
 
 Class Apple
@@ -96,10 +96,6 @@ Class Apple
   Sub New()
     Me.location = New Square(0, 0) ' reassign variable
   End Sub
-
-  Function toString() As String
-    Return ""
-  End Function
 
   Property location As Square
 
@@ -119,6 +115,10 @@ Class Apple
     blocks[Me.location.x][Me.location.y] = red ' reassign variable
   End Sub
 
+  Function toString() As String
+    Return $"an Apple at {Me.location}"
+  End Function
+
 End Class
 
 Class Square
@@ -127,10 +127,6 @@ Class Square
     Me.x = x ' reassign variable
     Me.y = y ' reassign variable
   End Sub
-
-  Function toString() As String
-    Return ""
-  End Function
 
   Property x As Integer
 
@@ -153,6 +149,10 @@ Class Square
 
   Function hasHitEdge() As Boolean
     Return (Me.x = -1) Or (Me.y = -1) Or (Me.x = 40) Or (Me.y = 30)
+  End Function
+
+  Function toString() As String
+    Return "{this.x}, {this.y}"
   End Function
 
 End Class

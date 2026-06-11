@@ -233,7 +233,7 @@ class Game # concrete class
     self.message = message # reassign variable
 
   def toString(self: Game) -> str: # function method
-    return "undefined"
+    return "a Game"
 
 
 
@@ -257,7 +257,7 @@ class Card # concrete class
     self.faceDown = True # reassign variable
 
   def toString(self: Card) -> str: # function method
-    return "undefined"
+    return f"{self.rank}{symbolForSuit(self.suit)}"
 
 
 
@@ -337,7 +337,7 @@ class Player(ABC) # abstract class
 def newHand() -> None
   pass # abstract procedure
 
-  def newHandHelper(self: Player) -> None: # procedure method
+  def newHandHelper(self: Player) -> None: # private procedure method
     self.hasTurn = False # reassign variable
     self.softAce = False # reassign variable
     self.cards = list[Card]() # reassign variable
@@ -350,7 +350,7 @@ def newHand() -> None
 def getMessage() -> str:
   pass # abstract function
 
-  def statusAsString(self: Player) -> str: # function method
+  def getMessageHelper(self: Player) -> str: # private function method
     msg = "" # variable definition
     status = self.status # variable definition
     if self.hasTurn:
@@ -413,11 +413,11 @@ class Dealer(Player) # concrete class
   def getMessage(self: Dealer) -> str: # function method
     msg = "" # variable definition
     if self.hasPlayed:
-      msg = self.statusAsString() + f" - hand total: {self.handTotal}" # reassign variable
+      msg = self.getMessageHelper() + f" - hand total: {self.handTotal}" # reassign variable
     return msg
 
   def toString(self: Dealer) -> str: # function method
-    return "undefined"
+    return "the Dealer"
 
 
 
@@ -459,13 +459,13 @@ class HumanPlayer(Player) # concrete class
         key = "" # reassign variable
 
   def getMessage(self: HumanPlayer) -> str: # function method
-    msg = self.statusAsString() + f"- hand total: {self.handTotal}" # variable definition
+    msg = self.getMessageHelper() + f"- hand total: {self.handTotal}" # variable definition
     if self.hasTurn:
       msg = msg + " - press 'd' to draw, 's' to stand" # reassign variable
     return msg
 
   def toString(self: HumanPlayer) -> str: # function method
-    return "undefined"
+    return f"Player: {self.name}"
 
 
 

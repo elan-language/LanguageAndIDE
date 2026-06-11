@@ -74,7 +74,7 @@ class Coords {
   } // constructor
 
   public String toString() { // function method
-    return "";
+    return "a Coords";
   } // function method
 
   public double scale; // property

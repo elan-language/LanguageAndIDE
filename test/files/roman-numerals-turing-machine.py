@@ -44,7 +44,7 @@ class TuringMachine # concrete class
     self.headPosition = 0 # reassign variable
 
   def toString(self: TuringMachine) -> str: # function method
-    return ""
+    return "a TuringMachine"
 
   initialState: str # property
 
