@@ -61,7 +61,7 @@ This will still allow you to do procedural programming, but changes two things: 
     data - the only exception being enums which offer a very limited form of 'user-defined' type (UDT).
     OOP makes it easy to define far richer forms of UDTs. The simplest and most common way to do this
     is to define a <b>concrete class</b> which is one of the new options made available at global (file) level
-    when using Elan with the <b>object-oriented<p> profile selected.</p>
+    when using Elan with the <b>object-oriented</b> profile selected.</p>
 
         In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes. 
         Only the 'signature' of each class is shown <i>here</i> - not the instructions contained within the classes:
@@ -308,7 +308,7 @@ procedure clockTick(key as String, apple as Apple)
 end procedure
 </codeblock>
 
-<h2 id="representation">The objects should represent the principal concepts in the application domain</h2>
+<h2 id="representation">Objects should represent the principal nouns in the application domain</h2>
 
 <p>The word 'encapsulation' is often used in descriptions of object-oriented programming. But
   that word has two rather different meanings in plain English. Fortunately, both of the meanings of 'encapsulation' 
@@ -316,7 +316,7 @@ end procedure
 
 <p>The first meaning of encapsulation is similar to 'represents' - as in 'Our school motto <i>encapsulates</i> the ethos and culture of the school'.
   (The second meaning will be addressed in the <a href="#info-hiding">next principle</a>.)
-  Thus, objects should represent, or encapsulate, the principal objects in the application domain.
+  Thus, objects should represent, or encapsulate, the principal concepts in the application domain.
   A rule of thumb is that the classes defined in a program should correspond to the main <i>nouns</i> used when describing the purpose
   and operation of the program in plain English. You can see this in the <b>Snake</b> demo, where the code defines three classes, named <code>Snake</code>, <code>Apple</code>, and <code>Square</code> - all nouns that
 would be recognised by anyone who understands how to play the game Snake, but who does not necessarily know anything about programming.</p>
@@ -329,7 +329,7 @@ would be recognised by anyone who understands how to play the game Snake, but wh
   and/or game rules, and testing how long it takes you to update the procedural, and object-oriented, versions of the Snake program as required.</p>
 
 <p>Importantly, the class does not just represent all the information associated with the noun - it also encapsulates the 
-  behaviour needed from that thing. This is sometimes stated as representing the <i>know-whats</i> for the thing (as properties),
+  behaviour needed from that thing, in the form of methods. This is sometimes stated as representing the <i>know-whats</i> for the thing (as properties),
   and the <i>know how-to's</i> as methods.</p>
 
 <h2 id="info-hiding">Objects should hide state behind methods, where possible</h2>
