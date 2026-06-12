@@ -14,150 +14,36 @@
 
 <img src="images/logo.png" style="width: 30%;">
 
-<h1>Elan 2.0</h1>
-<ul>
-    <li>It applies the technology and philosophy of Elan to coding in Python, VB, C#, and Java.</li>
-    <li>It can convert code instantly between these languages.</li>
-    <li>Code in all languages is saved as a .elan file in a language neutral format, called the 'Reference Language'. 
-        Only .elan files may be loaded into the IDE,  
-        though after loading they will then be automatically translated into the target language, 
-        which is saved in the 'header comment' of the file.</li>
-    <li>You may 'export' code (via the File menu) as, for example, a .py file, for loading into a different IDE.
-        Note that the exported code may still be using Elan library methods and Types. 
-        However, we will &ndash; before the full 2.0 release &ndash; be making a version of the Elan library available
-         as native .py, .vb, .cs, and .java code to facilitate running a program written in Elan within another IDE.</li>
-    </li> As well as writing code directly in Python, VB, C#, or Java, 
-    you can write and run code directly in the Reference Language.</li>
-    <li>In all the target languages Elan deliberately imposes restrictions on coding patterns 
-        that would not necessarily be imposed when writing in that language in another IDE. 
-    These restrictions are of two distinct forms:</li>
-    <ul>
-        <li>Enforcement of the <a href="#commandments">10 commandments of good programming</a></li>
-        <li><a href="#code_restrictions">Restrictions that ensure 100% compatibility when code is translated</a></li>
-    </ul>
-</ul>    
+<h1>Elan</h1>
 
-<h2>The Elan 2 IDE</h2>
-<ul>
-    <li>Is completely free</li>
-    <li>Runs within a browser, meaning that there is no install required, nor any registration. It <i>may</i>
-    be installed on a school server, or just saved as a web page on the desktop, such that it may
-    be used without Internet access.</li>
-    <li>Has a powerful 'frame-based editor' that:
-        <ul>
-            <li>reduces the need for typing</li>
-            <li>eliminates the possibility of many forms of syntax error</li>
-            <li>provides a common language for kinds of instruction such as 'variable', 'constant', 'set', 'procedure', 'function'</li>
-        </ul>
-    </li>
-    <li>Has a built-in library that works identically in all languages.</li>
-    <li>Provides four kinds of graphics &ndash;  Turtle, Block, Vector, and Html &ndash; that work identically in all languages.</li>
-    <li>Has a simple, but powerful, debugger.</li>
-    <li>Offers integrated documentation that is linked directly from the code.</li>
-    <li>Supports integrated worksheets.</li>
-    <li>Is guaranteed '100% AI-free`.</li>
-    <li>Deliberately prevents pasting in .py, .vb, .cs, or .java, code from an external source.</li>
-</ul>  
-
-<h2 id="commandments">The 10 commandments of good programming</h2>
-
-<p>There are many more than 10 widely recognised principles of good programming practice. These 10
-    have been singled out because the designers of Elan believe that anyone learning to program
-    should never learn to break any of them in the first place, 
-    and that they should ideally be <i>enforced</i> by the programming language.
-    Elan 1.0 was the first language, designed for education, that enforced all 10. 
-    Elan 2.0 enforces them, through its Code Editor, when writing Python, VB.NET, C#, and Java.
-<ol>
-    <li>Thou shalt not define any global variable</li>
-    <li>Thou shalt not change any constant</li>
-    <li>Thou shalt not change the type of any variable</li>
-    <li>Thou shalt not create any null reference</li>
-    <li>Thou shalt not break out of any loop</li>
-    <li>Thou shalt not exit any method before its end</li>
-    <li>Thou shalt not create any impure function</li>
-    <li>Thou shalt not access any private member</li>
-    <li>Thou shalt not inherit from any concrete class</li>
-    <li>Thou shalt not override any concrete method</li>
-</ol>
-
-<p>The nature and rationale for each of these commandments will be more fully explained in future documentation.</p>
-
-<h2 id="code_restrictions">Coding restrictions designed to guarantee portability</h2>
-
-<p>These restrictions exist to ensure that all code generated within the Elan IDE may be automatically
-    translated with 100% correctness from any one supported language into any other.</p>
-<p>It is not necessary to <i>know</i> these rules, because there is either no mechanism to break them or
-    you will receive a clear message if you try to. Each of these restrictions exists to prevent 
-    use of coding features that are supported in some languages, 
-    but have no equivalent syntax in at least one other.
-    The surprising thing, we suggest, is how <i>few</i> such restrictions are necessary.
-</p>
-<ul>
-    <li>Loops
-        <ul>
-            <li>The 'for each' syntax is used even for a traditional 'for' loop, by means of the <el-method>range</el-method> method.</li>
-            <li>A 'repeat...until' loop must be implemented using the 'while' loop syntax.</li>
-        </ul>
-    </li>
-    <li>Literal strings
-        <ul>
-            <li>are always bounded by double quotes: "apple".</li>
-            <li>'interpolated strings' use the syntax specific to each language (for Java that is the <code>String.format</code> method).</li>
-        </ul>
-    </li>
-    <li>Identifiers
-        <ul>
-            <li>are case sensitive, but you cannot have two in the same scope that differ <i>only</i> by case.</li>
-            <li>may not conflict with reserved words <i>in any of the languages</i>. In such a case you
-                may just extend the identifier e.g. using <code>next_</code> instead of <code>next</code>.</li>
-        </ul>
-    </li>
-    <li>Operators
-        <ul>
-            <li>Two <i>integers</i> may not be divided using '/'. You use the <el-method>divAsInt</el-method> or <el-method>divAsFloat</el-method> depending on the result you need.</li>
-            <li>The equality operators <code>is</code> and <code>isnt</code> may be used <i>only for numeric or Boolean Types</i>.
-                To test equality of strings, and all other Types, you must use the <el-method>equals</el-method> or <el-method>notEqualTo</el-method> function.</li>
-            <li>The 'power' operator '^' is not recognised for any language: you use the <el-method>pow</el-method> function instead.</li>
-        </ul>
-    </li>
-    <li>Indexing
-        <ul>
-            <li>A 2D array is implemented as a list of lists, and accessed with double index e.g. [3][4],
-                but it may be initialised (like an an array) using any of: <el-method>createList</el-method>, <el-method>createListOfLists</el-method>, or <el-method>createBlockGraphics</el-method>.</li>
-            <li>An index value cannot be negative.</li>
-        </ul>
-    </li>
-
-    <li>Exceptions and errors. You cannot access the exception <i>instance</i> within a <el-code>catch</el-code> clause(s).
-    </li>
-
-    <li>Tuples. Items are accessed by e.g. <code>myTuple.item_0</code>, <code>myTuple.item_1</code>. They may
-    not be accessed by index, nor is 'tuple deconstruction' (into separate variables) supported.</li>
-
-    <li>Passing by reference is possible only within a <i>procedure</i> and to do this you use the <code>AsRef</code> Type
-    which acts like a wrapper around the instance of interest.</li>
-</ul>
-
-
-<p>Elan supports the three most widely recognised programming paradigms:</p>
+<p>Elan:</p>
 
 <ul>
-    <li>procedural programming</li>
-    <li>object-oriented programming</li>
-    <li>functional programming</li>
-</ul>
-
-<h1>Features</h1>
-
-<ul>
-    <li>A 'frame-based' code editor, that has the <i>look</i> of a text-based language and editor, but <i>feels</i> somewhat like a block-based language.
-        As well as aiding productivity and reducing the need for typing skills, it <i>eliminates</i> the majority of syntax errors.</li>
-    <li>A built-in library, the use of which does <i>not</i> require any <el-code>import</el-code> statement.</li>
-    <li>A display screen alongside the code editor, with the ability to output simple block graphics, turtle graphics, vector graphics, and formatted, styled Html.</li>
-    <li>A built-in debugger.</li>
-    <li>Ready-made demonstration programs (see the <b>Demo</b> button)</li>
-    <li>Ability to display reference documentation or tutorial worksheets alongside the code editor.</li>
-     <li><i>Absolutely no AI</i> &ndash; so teachers and exam boards can be confident that pupils are not getting <i>inappropriate</i> help.</li>
+    <li>is a completely <i>free</i> online tool for teaching programming, aimed specifically:
+        <ul>
+            <li>Key stage 4 & 5</li>
+            <li>First year undergraduate of a computer science degree</li>
+            <li>Programming as a supporting subject in other degrees</li>
+        </ul>
+    </li>
+    <li>can be used with the Python, VB, C#, or Java programming languages.</li>
+    <li>supports the three principal programming <i>paradigms</i> - procedural, object-oriented, and function -
+    with switchable profiles for each.</li>
+    <li>has a unique 'frame-based' editor that makes programming:
+        <ul>
+            <li>easier to learn</li>
+            <li>easier to write</li>
+            <li>far less prone to syntax errors</li>
+        </ul>
+    </li>
+    <li>offers the <i>option</i> to use 'quad view' where code is entered and edited in any of the four supported
+    languages and translated, live, into the other three languages.</li>
+    <li>has full support for simple block graphics, vector graphics, turtle graphics, and Html output</li>
+    <li>has a built-in debugger, automatically showing the state of all in-scope variables at a breakpoint, with drill-down options.</li>
+    <li>has built in comprehensive help and reference documentation - displayed in whichever programming language is active - with a relevant link (<b><u>?</u></b>) from each instruction.</li>
+    <li>compiles and runs code entirely within the browser without any need to reference the server (except for documentation links)</li>
+    <li>uses a built-in library that works identically in all languages with no need for 'import' (or 'using') statements</li>
+    <li>is guaranteed to be 100% AI-free. It eliminates the need to type boilerplate syntax but does not suggest any specific code.</li>
 </ul>
 
 <h1>Team</h1>
@@ -175,100 +61,5 @@
 <p>The Elan language source code is managed on GitHub <a href="https://github.com/elan-language/LanguageAndIDE">here</a>.</p>
 <p>If you have questions not answered in the documentation, can offer feedback, or would like to help, please post a new thread on our Discussion forum <a href="https://github.com/elan-language/LanguageAndIDE/discussions">here</a>.</p>
 
-<h1>FAQs</h1>
-<h3>Is Elan a compiled language?</h3>
-<p>Yes. Elan source is compiled to JavaScript and runs very fast. As with most modern languages
-    the compilation process is invisible to the user.</p>
-
-<h3>Can an Elan program be run without the Elan IDE?</h3>
-
-<p>Yes. When you've written and tested your Elan program, you can simply use <b>File > Save as standalone</b>
-to save the program (compiled to JavaScript) embedded within a standalone .html page. You can email this .html
-file to anyone else. They can open it in their browser and the program will run automatically. All they see
-is a larger version of the <b>Display</b> pane. They don't need to know anything about Elan to use the program.</p>
-
-<h3>Can I install Elan on my school server?</h3>
-
-<p>Yes. If you go to <b>Help > Version history</b> you can download a .zip file for the current
-or previous releases of Elan. These can unzipped into any web server for private access.
-However, unless you have a reason to do this we recommend that you use the online version,
-as this will ensure that you are always using the latest release.</p>
-
-<h3>Why learn (or teach) a programming language that isn't used in industry?</h3>
-
-<p>Elan is designed specifically for teaching and learning programming, at high-school (KS3&mdash;KS5)
-    and in first year university/college. It is <i>not</i> designed for professional developers, nor will
-    we let it evolve into a professional language, which has been the fate of many educational languages -
-    usually to the detriment of their educational merits.</p>
-
-<p>There are very good arguments as to why the requirements for a good educational language
-    are different to those for a good professional language. See, for example,
-    <a href="https://infedu.vu.lt/journal/INFEDU/article/797/info">Principles of Educational Programming Language Design</a> by Michael K&ouml;lling,
-    Informatics in Education Volume 23, Issue 4 (2024). In addition to those arguments, we suggest:</p>
-
-    <ul>
-    <li>Learning to program in a language used in industry isn't as useful as many people imagine.
-        There are <i>many</i> languages used in industry: so what are the chances that
-        the one you have learned happens to be the one used in the organisation you want to join?</li>
-
-    <li>More important than 'Is [the language I am going to learn] used in industry?' is
-        the question, 'Will this language make it easy for me to switch to another language in future?'
-        and, even more important, 'Will this language help me to learn to program <i>well</i>?'.</li>
-
-    <li>Elan is designed to lay a far better foundation than you are going to get from learning
-        Python, VB, C#, Java, or any other language widely used in education today. Elan directly
-        <i>prevents</i> you from learning bad habits that those languages can encourage.
-        To pick just one of many examples: why start off writing 'global' variables only to have to learn, later on, not to
-                use them at all? Elan doesn't allow you to define any global variables in the first place.</li>
-
-    <li>If you pursue programming beyond your current educational level, then you can expect
-        to learn 'functional programming' in a language such as Haskell.
-        The hard part isn't learning the different syntax of Haskell: the hard part is learning how
-        to build systems entirely from pure, side-effect free functions. But if you have learned Elan first,
-        the transition is going to be much easier, because in Elan you could never have learned
-        to create side-effects or system dependencies in functions. Elan prevents them.
-        And while, for most professional programmers, it takes years to get into the habit of writing
-        unit tests for all your functions, Elan encourages that from the very beginning of programming
-        by making it an integral feature of the language and very simple to use.</li>
-</ul>
-
-<h3>Is Elan compatible with GCSE / A-level exams?</h3>
-
-<p>Elan is fully compatible with OCR GCSE and A-level Computer Science -
-    see this <a href="https://www.ocr.org.uk/blog/elan-a-new-programming-language-designed-for-teaching-gcse-and-alevel/">blog post on the OCR web site</a>.
-     Moreover, because Elan syntax is <i>very close</i> to
-    the OCR 'pseudo code' specification &ndash; at least for all the coding constructs expected by OCR
-    &ndash; answers given in Elan will be easily comprehensible to <i>any</i> OCR examiner.
-    We hope that other boards will support Elan in future.</p>
-
-<h3>Can we trust that Elan will <i>remain</i> free to use?</h3>
-<p>Yes. We are committed to this on principle and we have a governance board to ensure that continues.
-    It is also worth pointing out that Elan is just a 'single page app' &ndash; once you have accessed
-    the page, your code is edited, compiled, and run entirely within your browser, and Elan
-    files are saved locally. This means that we have no complex server infrastructure to host, maintain,
-     or fund. Moreover, since Elan, its documentation, and associated teaching resources, are all open
-      source, there is nothing to stop you from serving up this same page and resources from your own server.
-       We recommend that you use our online version
-      (at <a href="https://elan-lang.org">https://elan-lang.org</a>) if you can, simply because that
-    way you will automatically be using the latest version.
-</p>
-
-<h3>How stable is the Elan language?</h3>
-<p>We will continue to extend and improve Elan &ndash; with frequent new, <i>non-breaking</i> releases.
-A non-breaking release means that any programs you have written previously will still load and run
-correctly. Elan is committed to <a href="https://semver.org/">semantic versioning</a>:</p>
-
-<ul>
-<li>Third-level releases(e.g. v1.0.X) are bug fixes, or changes to the IDE only &ndash; but with no change to the language or library.</li>
-
-<li>Second-level releases (e.g. v1.X.0) may <i>extend</i> the language or library, and as such are always 'backwards-compatible'.
-    This means that you will be able to load and run existing programs without modification. However, any <i>new</i> programs you write
-    using the new version, will not necessarily run on an older version of Elan that was <i>installed on a private server</i>.</li>
-
-<li>First-level releases (e.g. vX.0.0) will occur if we were to see a <i>compelling</i> reason to make a small breaking change to any existing part
-    of the language grammar or the library &ndash; and this would always be publicly discussed in advance. Even then, the change would be managed in
-such a way that a clear compile message would be shown alongside any obsolete instruction or library method used in your
-code &ndash; with a link to clear and simple guidance on how to make your code compile and run again.</li>
-</ul>
 </body>
 </html>
