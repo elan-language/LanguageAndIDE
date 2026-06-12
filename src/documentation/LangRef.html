@@ -33,6 +33,134 @@ This will ensure that: </p>
 </ul>
 </div>
 
+<div>
+<h1>What you need to know about coding with Elan, if you have programmed in another environment</h1>
+
+<p>To start programming with Elan, first familiarise yourself using the Elan IDE, and especially with
+  entering and editing code, by watching the videos in this document [LINK REQUIRED].
+  You will learn, therein, that Elan supports programming in Python, VB, C#, or Java (as well as the Reference Language),
+  and offers the option of immediate translation between all four languages - either way - if desired.
+  However, if you have previously programmed in any of those languages you will finds that Elan enforces
+  a few constraints on how code is written. There are three forms of these constraints:</p>
+
+<ul>
+  <li>Enforced best practices in coding</li>
+  <li>Use of a common library across all the supported languages.</li>
+  <li>Some, generally smaller, constraints required by the need for portability across languages.</li>
+</ul>
+
+<p>These are described in more detail below</p>
+
+<div id="best-practices">
+<h2>Enforced best practices in coding</h2>
+
+<p>Elan supports, and in many cases <i>enforces</i> a set of good programming practices. 
+  This applies across all the supported languages - even where 
+  a language, if used outside Elan, would allow you to do otherwise. In the context of procedural programming 
+  - where the <b>procedural</b> profile has been selected in the IDE, there are seven such best practices.</p>
+  
+  <p>Some of these best practices are widely recognised, others less so. 
+    Some programmers will argue that there are very specific circumstances where
+  breaking the rules <i>should</i> be acceptable. The problem with this line of argument is that most of the places where
+  even professional programmers break the rules don't fit those circumstances - they are broken because the programmer just finds
+  it more convenient. It is far better that you learn to program without breaking these rules than that you adopt 
+  bad habits from the beginning. This will result in you writing better code, and encountering fewer unexpected problems.</p>
+  
+  <p>The seven best practices enforced by Elan - for procedural programming, this is -are:</p>
+
+[INSERT TOC of the h3 headings in this section]
+
+  <h3>No global variables</h3>
+  <p>It is widely recognised that global variables are a bad idea - encouraging poor program structure and leading to unexpected
+    behaviour. Yet most programming languages permit them. The Elan editor solves this by offering the <a href="variable"><b>variable definition</b></a>
+    instruction only within the main routine, functions, or procedures. At global level the only permitted definition of a named value
+    is a <a href="constant"><b>constant</b></a>, and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
+
+    <p class="Java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <code>Global</code> to adhere to this rule, 
+    and all code must be added within this, and everything added <i>immediately</i> within the <code>Global</code> is deemed, in Elan terms, to be
+    'global code', so you will not be able to add a variable - even in the form of a 'property' there.</p>
+
+  <h3>Static typing</h3>
+  <p>Static typing means that the <i>type</i> of any variable, or parameter, or value returned by a function, is known at <i>compile</i> time,
+  and that type never changes, even though the value may change. VB, C#, and Java, are inherently statically-typed. Python is inherently dynamically-typed
+but since Python 3.5 has offered the option to add 'type hints' which allow working in a statically typed manner. While some programmers like
+the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that 
+dynamic typing does not work well when building large, complex systems. Moreover, in a pure educational context, using static typing gives a stronger
+understanding that, in all modern languages, statically- or dynamically-typed, all data elements have an associated type - and static typing helps
+you to understand the nature of those types.<span class="Python"> When entering/editing Python, Elan therefore <i>enforces</i> the use of type hints where needed.</span></p>
+
+<p>Elan requires types to be specified for all parameters for procedures or functions, and for the return type of a function.
+<p>Elan does <i>not</i>, however, require the type to be specified explicitly for any variable (or constant) because the type is <i>inferred</i> from the
+initial value given to it.</p>
+
+  <h3>No null references</h3>
+  <p>All programmers have encourntered the notorious 'Null Reference ...` (or 'Null Pointer ...`) error message, and these can sometimes be
+    very hard to track down. Tony Hoare, Turing Medal recipient and one of Britain's greatest computer scientists, magnanimously described his invention
+    of 'null' as a <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/">Billion Dollar Mistake</a>.</p>
+
+  <p>All the supported programming languages inherently permit null reference errors - but when you are coding in Elan it is impossible for one 
+    to arise because:
+
+    <ul>
+      <li>Every variable definition must specify an initial value.</li>
+      <li>It may never be reassigned to null.</li>
+      <li>(Additional, related rules are enforced in object-oriented programming.)</li>
+    </ul>
+  </p>
+
+  <h3>No breaking out of loops before they have completed</h3>
+
+  <p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allow you to break out of 
+  a loop. Elan does not permit any of those instructions to be used. Why?</p>
+
+  <p>The <b>break</b> instruction (or equivalent) was invented when the only possible kind of loops that programming languages
+  supported executed a specified number of times - there were no 'conditional loops'. With the advent of 'structured programming'
+came proper conditional loops, of which the most common form is the 'while loop'. After structured programming it is never <i>necessary</i> 
+to break out from a loop before its natural termination.</p>
+
+  <h3>Return from a function or procedure only after the final instruction</h3>
+
+  <p>This principle is somewhat analogous to the previous one - where programmers find it 'convenient' to include multiple
+    <code>return</code> statements within a procedure or a function. All the supported languages permit this in most
+    other environments. Elan, however, deliberately prevents this practice. In Elan a function always has a return statement as its <i>last</i>
+    instruction (which specifies the value to be returned), and there is no option to add another one earlier. 
+    And in Elan a procedure never has a return instruction - the procedure exits after the last instruction.</p>
+    
+    <p>But where is the harm in 'early returns'? Here are four answers:</p>
+
+    <ul>
+       <li>You cannot jump <i>into</i> the middle of a procedure or function, nor should be able to jump out of it in the middle
+      <li>They lead to poorly-structured code</li>
+      <li>They make it harder to debug code - because you may need to find, and put a separate break-points on each return instruction.</li>
+      <li>When you change the requirements of the function - for example that the returned string is always
+        uppercase - you need to enforce this in several places, and you run the risk of overlooking one them. 
+        (Some languages offer a 'finally' clause to make that easier - but this is really just a kludge to paper over
+        the cracks of poor structure.)  
+      </li>
+    </ul>
+    
+    <p>Some programmers argue that the constraint of no early returns in a function, means you have to write an extra line of code at the start
+      to define a variable that holds the result. True - but that also makes your code far more readable.</p>
+    
+
+  <h3>All functions must be pure functions</h3>
+
+  <h3>Every function should be unit tested</h3>
+
+</div>
+
+<div id="best-practices">
+<h2>Use of a common library across all the supported languages.</h2>
+
+</div>
+
+<div id="other-constraints">
+<h2>Use of a common library across all the supported languages.</h2>
+
+</div>
+
+</div>
+
 <div id="GlobalInstructions">
 <h1>Global instructions</h1>
 <p>Global instructions are placed <em>directly</em> in your code file.
