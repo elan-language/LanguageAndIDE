@@ -184,9 +184,9 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
   of the Class are both 100% tested.</li>
 </ul>
 
-<h2>A function consists of a 'return', with optional let instructions</h2>
+<h2>The function body should consists of a 'return', plus optional let instructions only</h2>
 
-<p>In the FP demos you will see that a significant number of functions simply <code>return</code> an expression to be evaluated, for example:</p>
+<p>In the FP demos you will see that a significant number of functions  that simply <code>return</code> an expression to be evaluated, for example:</p>
 <codeblock>
 function gameOver(g as Game) returns Boolean
   return g.body.contains(g.head) or hasHitEdge(g)
@@ -202,20 +202,19 @@ function hasHitEdge(g as Game) returns Boolean
 end function
 </codeblock>
 
-<p>A <b>let statement</b> works like a <b>variable definition</b> except that the named value created <i>may not be reassigned</i>. But it differs from
-a <b>constant</b> in that:</p>
+<p>A <b>let statement</b> works like a <b>variable definition</b> except that the named value created <i>may not be reassigned</i>. This may sound like
+  a local <b>constant</b>, but a <b>let statement</b> differs from a constant in that:</p>
 
 <ul>
-  <li>it is defined within a <b>function</b> (or a <b>test</b>), whereas a <b>constant</b> is always defined at global (file) level.</li>
   <li>it may be defined by an expression rather than just by a literal value</li>
-  <li>it may refer to a List or other data structure</li>
+  <li>it may refer to a List or other data structure, where as the (global) <b>constant</b> instruction is limited to simple value types or a string.</li>
 </ul>
 
-<p>In the four languages supported by Elan, <b>let</b> instruction 
+<p>In the four languages supported by Elan, <b>let</b> instructions 
   are really just disguised variable definitions, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
-  <b>let</b> instructions are executed <i>lazily</i>, meaning that within a function, execution starts with the <i>returned</i> expression, and only
-  evaluates the sub-expressions defined in <b>let</b> instructions when - indeed <i>if</i> they are needed. So getting used to 
-  <b>let</b> instructions leaves you better prepared to move onto a pure FP language at a future point.
+  <b>let</b> instructions (some languages have 'let <i>clauses</i>') are executed <i>lazily</i>, meaning that execution of a function
+    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let</b> instructions <i>only when or if they are needed</i>. 
+   So getting used to using <b>let</b> instructions in Elan leaves you better prepared to move onto a pure FP language at a future point.
 </p>
 
 <p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
@@ -229,16 +228,14 @@ a <b>constant</b> in that:</p>
 <p>When running in the <b>functional</b> profile, <b>let statement</b> is the only type of instruction that you may add within a function,
   and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
 
-<h2>Selection is implemented using 'if expressions'</h2>
+<h2>Selection is implemented using 'conditional expressions'</h2>
 
 <p>When running in the Functional profile, you cannot add an <b>if</b> <i>instruction</i> into a function.
-  So how do you implement 'selection' and 'iteration'?
-  Selection is handled by means of a 'conditional expression', whereas iteration will be addressed in the next <a href="#FP_recursion">principle<i class="fa">&#xf14c;</i></a>.</p>
+   Selection is handled by means of a 'conditional expression'.</p>
 
 <p>All of the languages supported by Elan have their own custom syntax for conditional expressions. For simplicity,
   and understandability, Elan offers an <el-method>if</el-method> <i>function</i> that is used identically in all the languages.
   (Incidentally, the  <el-method>if</el-method> function works the same way as it does in an Excel spreadsheet).
-  <!--(though 'IF', like all Excel functions, is capitalised, therein).-->
   Here are some examples of conditional expressions from the demo programs:
 </p>
 <codeblock>
@@ -667,17 +664,168 @@ end function
 
 </div>
 
+<div id="GlobalInstructions">
+<h1>Global Instructions</h1>
+
+<h2>Same as for object-oriented programming</h2>
+<p>Coding with Elan using the <b>functional</b> profile offers the same
+  <a href="oopRef.html#GlobalInstructions">global instructions as offered in the <b>object-oriented</b> profile</a>.</p>
+</div>
+
+<div id="StatementInstructions"
 <h1>Statement instructions</h1>
- <h2>Let StatementInstructions</h2>
- TODO functional profiles adds the 'let statement' instruction in the context of a function, but removes all other options (except comment)
+
+
+<p><i>Within the main routine or any procedure</i> coding with Elan using the <b>functional</b> profile offers the same
+  <a href="oopRef.html#StatementInstructions">statement instructions as offered in the <b>object-oriented</b> profile</a>.</p>
+
+<p>However, <i>within a function</i> coding with Elan using the <b>functional</b> profile allows only the <code>return</code> statement</p> -
+which forms part of the function template, plus the option to precede this with one or more ...</p>
+
+<div id="let">
+ <h2>Let Statement</h2>
+ 
+<div class="accordion">
+<h4 class="no-TOC acc-title">Examples of let statements</h4>
+<div class="acc-body">
+
+  <p>From the <b>Life - functional</b> demo:</p>
+
+ <codeblock>
+function north(cell as (Int, Int)) returns (Int, Int)
+  let x be cell.item_0
+  let y be cell.item_1
+  let y2 be if(y is 0, 29, y - 1)
+  return (x, y2)
+end function
+ </codeblock> 
+
+ <p>The first two let statements are used to extract the two values from the 2-tuple <code>cell</code> into named values <code>x</code> and <code>y</code>.
+The third let statement, calculates the y coordinate for the cell immediately to the North, using a conditional expression to 'wrap' around to the bottom
+of the 40x30 grid if necessary.</p>
+
+<p>From the <b>Merge Sort</b> demo:</p>
+
+<codeblock>
+function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
+  let mid be divAsInt(li.length(), 2)
+  let frontHalf be li.subList(0, mid)
+  return sort(frontHalf)
+end function
+</codeblock>
+
+<p>This function could have been written without using any let statements, as:</p>
+
+<codeblock>
+function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
+  return sort(li.subList(0, divAsInt(li.length(), 2)))
+end function
+</codeblock>
+
+<b>but the use of let statements makes the intention much easier to read.</b>
+
+</div></div>
+
+ <div class="accordion">
+<h4 class="no-TOC acc-title">What you need to know about let statements</h4>
+<div class="acc-body">
+
+  <ul>
+    <li>A let statement is like a variable definition, except that the named value created <i>may not then be reassigned to another value</i>.</li>
+    <li>A let statement is therefore <i>somewhat</i> like a constant, except that:
+      <ul>
+        <li>It is defined within a function, not globally</li>
+        <li>The value assigned to the name may be defined by an expression that incorporates function parameters and/or the named values from any (previous) let statements in the function.</li>
+        <li>The value may be a data structure such as a list</li>
+      </ul>
+    </li>
+    <li>The motivations for using let statements is to:
+      <ul>
+        <li>To eliminate duplication, where the same sub-expression would appear more than once within the final expression to be evaluated and returned by the function.</li>
+        <li>To improve readabilty. In theory it is possible to implement <i>any</i> function using just a <code>return</code> statement followed by a single expression,
+        but the expressions can quickly become very hard to read, so it is better out sub-expressions into let statement - or, if the sub-expressions might be useful in
+        in other contexts, as separate functions.</li>
+        <li>Elan does have some limits on the complexity of expressions, and breaking out sub-expressions into lets is a good way to avoid encountering those limits.</li>
+      </ul>    
+    </li>
+  </ul>
+</div></div>
+</div>
 </div>
 
-<h1>Member instructions</h1>
+<div id="MemberInstructions" >
+<h1 id="Member">Member instructions</h1>
+
+<p>When using the <b>functional</b> profile, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
+profile, with two exceptions:</p>
+ <ul>
+  <li>There is an additional member: the <b>with method</b></li>
+  <li>The procedure method is not available for use - because procedure methods cause side effects. 
+    All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</li>
+ </ul>
+
+  <div id="with-method">
   <h2>With method</h2>
-  TODO
-  <h2>Procedure method - removed</h2>
-</div>
 
+    <div class="accordion">
+      <h4 class="no-TOC acc-title">Examples of with methods</h4>
+      <div class="acc-body">
+
+        <p>From the <b>Snake - functional</b> demo, where the </p><code>Game</code> class defines 8 <b>with method</b>s including:</p>
+
+        <codeblock>
+          function withHead(value as Square) returns Game
+            let copyOfThis be copy(this)
+            reassign copyOfThis.head to value
+            return copyOfThis
+          end function
+        </codeblock>
+      </div>
+
+      <p>This method is called from 11 places elsewhere in the code, including within this global method:</p> 
+
+      <codeblock>
+        function moveSnake(g as Game) returns Game
+          let k be g.key
+          let x be g.head.x
+          let y be g.head.y
+          let newX be if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
+          let newY be if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
+          return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
+        end function
+      </codeblock>
+
+      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with method</b>s</p> -
+      because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
+      to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
+    </div>
+
+      <div class="accordion">
+      <h4 class="no-TOC acc-title">What you need to know about methods</h4>
+      <div class="acc-body">
+
+        <ul>
+          <li>A <b>with method</b> is a specific form of function method.</li>
+          <li>Its purpose is to allow an instance of a class to be 'updated' without actually mutating the instance.</li>
+          <li>Instead, the method returns a <i>copy</i> of the current instance, but with the specified differences.</li>
+          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, that are broadly equivalent to 
+            procedure methods, but for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
+            and the function method <el-method>withAppend</el-method>.</li>
+          <li>When you create a new <b>with method</b> within a class, the method includes three templated completed instructions.
+            You should not attempt to change the first or last instructions, nor delete the middle one - if you do this by mistake, delete the
+            whole method and start again.</li>
+          <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>reassign copyOfThis.aPropertyName to theNewValue</code></li>
+          <li><code>copyOfThis</code> is a <i>reserved name</i> within Elan - this variable can only be created by the templated instruction shown above,
+          and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> profile.</li>
+          <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 
+            procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
+            <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
+          <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as in the earlier example:
+          <code>return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>

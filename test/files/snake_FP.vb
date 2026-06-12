@@ -163,18 +163,6 @@ Class Square
     Me.y = y ' reassign variable
   End Sub
 
-  Function withX(value As Integer) As Square
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.x = value ' reassign variable
-    Return copyOfThis
-  End Function
-
-  Function withY(value As Integer) As Square
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.y = value ' reassign variable
-    Return copyOfThis
-  End Function
-
   Function toString() As String
     Return $"{Me.x}, {Me.y}"
   End Function
