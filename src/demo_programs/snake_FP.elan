@@ -1,4 +1,4 @@
-# 4ab4f201bf7bbc1586794e103fcf1fe86ef68ef7ed52d55c7a221cba5f5f0a8f Elan 2.0.0-alpha5 valid
+# 67d39842014721c1a9ed522d7ebaa02a5e11088b97cf39442d0f1b64ee8781d1 Elan 2.0.0-alpha5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -159,18 +159,6 @@ class Square
     reassign this.x to x
     reassign this.y to y
   end constructor
-
-  function withX(value as Int) returns Square
-    let copyOfThis be copy(this)
-    reassign copyOfThis.x to value
-    return copyOfThis
-  end function
-
-  function withY(value as Int) returns Square
-    let copyOfThis be copy(this)
-    reassign copyOfThis.y to value
-    return copyOfThis
-  end function
 
   function toString() returns String
     return $"{this.x}, {this.y}"

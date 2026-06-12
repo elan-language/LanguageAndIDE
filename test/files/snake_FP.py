@@ -141,16 +141,6 @@ class Square # concrete class
     self.x = x # reassign variable
     self.y = y # reassign variable
 
-  def withX(self: Square, value: int) -> Square: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.x = value # reassign variable
-    return copyOfThis
-
-  def withY(self: Square, value: int) -> Square: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.y = value # reassign variable
-    return copyOfThis
-
   def toString(self: Square) -> str: # function method
     return f"{self.x}, {self.y}"
 

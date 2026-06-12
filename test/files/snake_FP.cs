@@ -163,18 +163,6 @@ class Square {
     this.y = y; // reassign variable
   } // constructor
 
-  public Square withX(int value) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.x = value; // reassign variable
-    return copyOfThis;
-  } // function method
-
-  public Square withY(int value) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.y = value; // reassign variable
-    return copyOfThis;
-  } // function method
-
   public string toString() { // function method
     return $"{this.x}, {this.y}";
   } // function method
