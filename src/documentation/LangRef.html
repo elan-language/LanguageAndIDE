@@ -140,25 +140,132 @@ to break out from a loop before its natural termination.</p>
     </ul>
     
     <p>Some programmers argue that the constraint of no early returns in a function, means you have to write an extra line of code at the start
-      to define a variable that holds the result. True - but that also makes your code far more readable.</p>
+      to define a variable that holds the result. True - but that's a small price to pay, and it also makes your code more readable.</p>
     
+  <h3>All functions must be pure</h3>
 
-  <h3>All functions must be pure functions</h3>
+  <p>Many textbooks draw no distinction between procedures and functions, except that the latter return a value to the calling code. 
+    Used properly, the two are distinct in another, very important, respect.</p>
+
+    <h4>Understanding procedures</h4>
+
+    <p>A procedure:</p>
+
+    <ul>
+      <li>can be thought of as a way of adding you own custom <i>instruction</i> to the language</li>
+      <li>makes a change to the state of the system: which might be a result printed on the screen or saved to a file,
+    or maybe changing the data it was given, such as sorting a list (for example, the 'in place' <b>Ripple Sort</b> demo)</li>
+      <li><i>may</i> depend on the system in others ways, for example requesting a response from the user</li>
+      <li>should be called in isolation, never within an expression.</li>
+    </ul>
+
+    <p>By contrast, a <i>proper</i>function:</p>
+    <ul>
+      <li>can be thought of as a way of adding a custom <i>operator</i> to the language - a way to derive a new value from values provided.</li>
+      <li>does <i>not</i> make any change to the state of the system. The only observable effect of calling a function is the returned
+      value, which is held, temporarily, only on the stack, to be consumed by something else. Another way to say this is that a function creates <i>no side-effects</i>,</li>
+      <li>may <i>not</i>  depend on the system. The value returned must depend solely, and deterministically, on the values provided as parameters.</li>
+      <li>should always be called within an expression (or as the complete expression), never in isolation - also known as a 'hanging function call'.</li>
+    </ul>
+
+    <p>Although some programming languages make a <i>syntactic</i> distinction between a procedure and a function (some don't), the
+    only ones that enforce the distinctions made above are the 'pure' functional programming languages, such as Haskell, OCAML, F# ...</p>
+
+    <p>Elan ensures that all functions are proper functions, but places no restrictions on what you can do in a procedure (except return a value).
+      In the long term, if you wish to progress further with programming, laying this foundation will make it far easier for you to
+      transition to 'functional programming' than otherwise. But making this distinction from the outset offers more immediate benefits:</p>
+
+      <ul>
+        <li>Fewer bugs - specifically those arising from the unforseen clashes between the side-effects of procedures.</li>
+        <li>Easier to 'reason about' the correctness of the program, because functions then behave like mathematical functions. 
+          Specifically if function <el-method>foo</el-method> is correct, and function <el-method>bar</el-method> is correct, then
+          combining them in any way is also correct code. That cannot be inferred from combining two procedures.</li>
+        <li>Functions can be more easily tested, which leads us on to our last best practice, here ...</li>
+      </ul>
 
   <h3>Every function should be unit tested</h3>
 
+  <p>Historically, most testing of programs was done by humans, running through a large number of 'test scripts' (or 'cases') manually to check that
+    the delivered system worked correctly, then again after every single change or extension to the system, to ensure that
+    existing functionality had not been broken accidentally. </p>
+
+    <p>In recent years, the emphasis as shifted to automated testing. Although writing the test scripts/cases still takes, once written, all the
+      tests can be run repeatedly at the touch of a button, and even triggered automatically by any change to the code.</p>
+
+    <p>There are many forms of automated testing, but 'unit testing' is the most popular. All modern languages offer a 'unit testing framework',
+      but they vary considerably in how easy they are to write or run.</p>
+
+    <p>Unit tests are intended for testing <i>proper functions</i> though many do not enforce that. But running unit tests on procedures, 
+      or <i>improper</i> functions (that create side effects) is dangerous - running the tests might result in data being written to a file or database,
+      or a network message being sent repeatedly, for example. There are software frameworks for automated tesing of procedures and even whole applications
+      (known as 'end to end testing') - but these frameworks are much harder to use.</p>
+
+    <p>Many professional software development teams <i>enforce</i> the writing of unit tests for <i>every</i> function, but this is typically something
+    that most programmers don't discover unless they turn professional. But it is a practice that even complete beginners would benefit from:</p>
+
+    <ul>
+      <li>It gives you confidence that code is correct, especialy code that you haven't looked at recently.</li>
+      <li>It gives you an immediate sense of reward when all the tests 'go green' (pass).</li>
+      <li>It gives you confidence to improve existing code (also known as 'refactoring') without the fear of unknowingly breaking it in subtle ways.</li>
+    </ul>
+
+    <p>Elan provides unit testing, for all the supported languages, that is even simpler to use (both for writing the tests and running them) than most
+      other tools. Although it does not <i>enforce</i> the rule that every function written should have automated unit tests, it does make it 
+    so easy, that it hopefully encourages learners to use the practice </p>
+
 </div>
 
-<div id="best-practices">
+<div id="common-library">
 <h2>Use of a common library across all the supported languages.</h2>
 
+<p>All programming languages have their own standard libraries for:</p>
+
+<ul>
+  <li>mathematical and scientific functions</li>
+  <li>manipulating strings, lists, and other data structures</li>
+  <li>textual input/output</li>
+  <li>graphics</li>
+</ul>
+
+<p>and more. There are many similarities between the libraries of different languages, but also significant differences. Elan defines its own library
+  which offers the identical functions in each of the supported languages. The Elan library has been designed to find as much common ground as possible but,
+   inevitably, it is not identical to the standard library for any of the supported languages.</p>
+
+<p>One consequence of this is that even though the Python, C#, VB, or Java code generated within Elan is always syntactically valid for the language,
+  you won't <i>typically</i> be able to run exported code in another environment without editing the library calls. (We hope to provide automated, or
+  semi-automated, tools for this in future.)</p>
 </div>
 
 <div id="other-constraints">
-<h2>Use of a common library across all the supported languages.</h2>
+<h2>Other constraints</h2>
+
+<p>Elan enforces a few other constraints that aren't driven by best practices, or by the common library, but because of small arbitrary differences between
+  the target languages. Fortunately these are quite small both in number and impact. There is no need to learn them explicitly, because <i>in all cases</i>
+where you might encounter one, <i>you will get a clear error message that gives you the solution</i>. But here is a list of the most important ones:</p>
+
+<ul>
+  <li>Elan is <i>case-sensitive</i> for identifiers, but you deliberately cannot define two identifiers <i>in the same scope</i> that differ <i>only by case</i>.</li>
+  <li>All languages disallow the use of certain reserved words as identifiers. Elan deliberately disallows the reserved words from all the supported languages
+    - so that translations are guaranteed to run.  </li>
+  <li>Literal strings must be bounded by double-quotes, not by single-quotes</li>
+  <li>Some languages distinguish between a 'for loop' and a 'for each loop'. Elan, like Python, uses the same syntax for both. 
+    When you <b>for loop</b> in Elan the syntax in VB, C#, and Java will be that of a 'for each' loop.</li>
+  <li>Raising a number to a power must be done with the <el-method>pow</el-method> function: the 'power operator' symbols will not be recognised in the
+    languages that have them.</li>
+  <li>Individual values are extracted from a tuple using the syntax <code>myTuple.item_0</code>, <code>myTuple.item_1</code> etc.
+     Dedicated 'Tuple deconstruction' syntax is not recognised for any of the languages.</li>
+  <li>Equality testing of value types uses the equality operator for each language e.g. <code>a is b</code>, but if the types
+  are <i>reference types</i> (e.g. lists or strings) you must use the syntax <code>a.equals(b)</code></li>
+  <li>Division of two floating point numbers (or one floating point and one integer) may use the division operator - e.g. <code>a/b</code> - and 
+    the result will always be floating point. 
+    But if <i>both</i> values are integer type then you must use either <code>divAsInt(a, b)</code> or <code>divAsInt(a, b)</code>
+    to make clear which result you are looking for (<el-method>divAsInt</el-method> will round <i>down</i> the result if necessary).</li>
+  <li>2-dimension arrays are implemented as a list of lists. However, </li>
+  <li>Negative index values, and index <i>ranges</i> are not supported, but you can use <el-method>subString</el-method> or <el-method>subString</el-method> to achieve the same effect.</li>
+  <li>Passing by reference, if wanted, is done by, for example, wrapping a parameter of type <code>Int</code> as a <code>Ref&lt;of Int&gt;</code>.</li>
+</ul>
 
 </div>
-
 </div>
 
 <div id="GlobalInstructions">
