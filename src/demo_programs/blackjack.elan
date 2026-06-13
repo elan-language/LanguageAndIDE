@@ -1,4 +1,4 @@
-# 3c6274dd2de5fe489b685aac0d0e9a0e9a2d00fa59aaa20127fda5bd4e12d169 Elan 2.0.0-alpha5 valid
+# ede2bf624c16fe4949c87406077d4b38255458f52a566ee74ce5051caee37092 Elan 2.0.0-beta valid
 
 main
   variable game set to new Game(1000)

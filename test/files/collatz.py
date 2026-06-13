@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-alpha5
+# Python with Elan 2.0.0-beta
 
 # A program to investigate the Collatz Conjecture
 
