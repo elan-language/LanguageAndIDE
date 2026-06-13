@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha5
+' VB.NET with Elan 2.0.0-beta
 
 ' After image is displayed, press:  
 

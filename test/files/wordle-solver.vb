@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha5
+' VB.NET with Elan 2.0.0-beta
 
 ' Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
