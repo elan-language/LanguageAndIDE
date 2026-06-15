@@ -48,12 +48,12 @@
   There are three forms of these constraints, which are described in more detail below:</p>
 
 <ol>
-  <li><a href="#bestPractices">Enforced best practices in coding <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#bestPractices">Best practices in coding that Elan encourages<i class="fa">&#xf14c;</i></a></li>
   <li><a href="#commonLibrary">Use of a common library across all the supported languages <i class="fa">&#xf14c;</i></a></li>
   <li><a href="#otherConstraints">Some, generally smaller, constraints needed for portability between the supported languages <i class="fa">&#xf14c;</i></a></li>
 </ol>
 
-<h2 id="bestPractices">Enforced best practices in coding</h2>
+<h2 id="bestPractices">Best practices in coding that Elan encourages</h2>
 
 <p>Elan supports, and in many cases <i>enforces</i> good programming practices, which 
   are automatically applied across all the supported languages, even where 
@@ -144,27 +144,26 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <h3 class="no-TOC" id="pureFunctions">All functions must be pure</h3>
 
 <p>Many textbooks draw no distinction between procedures and functions, except that the latter return a value to the calling code. 
-  Used properly, the two are distinct in another, very important, respect.</p>
-
-<h4 class="no-TOC">Understanding procedures</h4>
+  Used properly, the two are distinct in other, very important, respects.</p>
 
 <p>A procedure:</p>
 
 <ul>
   <li>can be thought of as a way of adding you own custom <i>instruction</i> to the language</li>
-  <li>makes a change to the state of the system: which might be a result printed on the screen or saved to a file,
-or maybe changing the data it was given, such as sorting a list (for example, the 'in place' <b>Ripple Sort</b> demo)</li>
-  <li><i>may</i> depend on the system in others ways, for example requesting a response from the user</li>
-  <li>should be called in isolation, never within an expression.</li>
+  <li>makes a change to the state of the system: which might be by printing a result on the screen, saving data to a file,
+or <i>mutating</i> a data structure passed into it, such as sorting a list 'in place' (see the <b>Ripple Sort</b> demo).</li>
+  <li><i>may</i> depend on the system in others ways, for example requesting a response from the user, or reading the system clock.</li>
+  <li>should be called directly, never as part of an expression.</li>
 </ul>
 
 <p>By contrast, a <i>proper</i>function:</p>
 <ul>
-  <li>can be thought of as a way of adding a custom <i>operator</i> to the language - a way to derive a new value from values provided.</li>
+  <li>can be thought of as a way of adding a custom <i>operator</i> to the language - a way to derive a new value from one or more arguments.</li>
   <li>does <i>not</i> make any change to the state of the system. The only observable effect of calling a function is the returned
-  value, which is held, temporarily, only on the stack, to be consumed by something else. Another way to say this is that a function creates <i>no side-effects</i>,</li>
-  <li>may <i>not</i>  depend on the system. The value returned must depend solely, and deterministically, on the values provided as parameters.</li>
-  <li>should always be called within an expression (or as the complete expression), never in isolation - also known as a 'hanging function call'.</li>
+  value, which is held, temporarily, on the system stack, to be consumed by something else. Another way to say this is that a function creates <i>no side-effects</i>.</li>
+  <li>may <i>not</i>  depend on the system: the value returned must depend solely, and deterministically, on the values provided as parameters.</li>
+  <li>should always be called where an expression is required, never in isolation (though the function call <i>may</i> constitute the complete expression).
+  Calling a function in isolation - as you would for a procedure - is known as a 'hanging function call' because the returned value is not captured and used.</li>
 </ul>
 
    <p>Although some programming languages make a <i>syntactic</i> distinction between a procedure and a function (some don't), the
@@ -265,8 +264,9 @@ where you might encounter one, <i>you will get a clear error message that gives 
 </div>
 
 <h1 id="globalInstructions">Global instructions</h1>
-<p>Global instructions are placed <em>directly</em> in your code file.
-They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.</p>
+<p>In Python, VB, C#, or the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
+  and are therefore not indented. Java is slightly different: because <i>all</i> must be within a class. When writing Java with Elan, the file 
+generates a non-editable 'boilerplate' class named <code>Global</code> and all 'global' instructions are created directly within that, and automatically indented.</p>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -964,7 +964,7 @@ of a program: the main routine, functions, and procedures.</p>
 <h2>Print</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of print statements</h4>
+<h3 class="no-TOC acc-title">Examples of print statements</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
@@ -1017,9 +1017,9 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of Direction>(currentDir)
-    variable headRef set to new AsRef<of List<of Int>>(head)
-    variable tailRef set to new AsRef<of List<of Int>>(tail)
+    variable currentDirRef set to new AsRef&lt;of Direction&gt;(currentDir)
+    variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
+    variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
     reassign head to headRef.value()
     reassign tail to tailRef.value()
