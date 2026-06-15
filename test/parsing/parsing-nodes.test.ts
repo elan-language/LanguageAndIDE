@@ -1575,7 +1575,7 @@ suite("Parsing Nodes", () => {
     //   "abc.subList(1, 2)",
     //   "",
     // );
-    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc[1, 2]", "");
+    testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc", "[1, 2]");
     testNodeParse(
       new TermSimpleWithOptIndex(f),
       `abc(defg, hi)[0]`,
