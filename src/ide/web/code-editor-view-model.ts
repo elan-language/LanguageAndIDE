@@ -42,7 +42,6 @@ system.stdlib = stdlib; // to allow injection
 
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
-  private profile?: Profile = undefined;
   private cvdCss?: string = undefined;
   private emptyCodeHash?: string = undefined;
 
@@ -63,12 +62,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   setProfile(p: Profile) {
-    this.profile = p;
     this.file?.setProfile(p);
   }
 
   getProfile() {
-    return this.profile;
+    return this.file!.getProfile();
   }
 
   setCss(stylesheet: string): void {
@@ -227,7 +225,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
     const existingLanguage = language ?? this.file?.language() ?? LanguagePython.Instance;
-    this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib, withMain);
+    const existingProfile = this.file?.getProfile() ?? new Profile("procedural");
+    this.file = new FileImpl(hash, existingProfile, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
   }

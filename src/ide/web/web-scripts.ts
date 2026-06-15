@@ -1137,6 +1137,7 @@ helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
   helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
   tabViewModel.setHelpLanguage(codeViewModel.getLanguage().languageHtmlClass);
+  tabViewModel.setHelpProfile(codeViewModel.getProfile().name);
 });
 
 parseStatus.addEventListener("click", async (event) => {
