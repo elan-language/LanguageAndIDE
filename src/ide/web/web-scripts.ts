@@ -1067,16 +1067,30 @@ quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
     for (let i = 0; i < 4; i++) {
       const code = codeContainers[i];
       const cl = code.classList;
+
+      // temp kludge for beta1
+      if (i === 0 && languages[i] === LanguageVB.Instance) {
+        languages[i] = LanguagePython.Instance;
+        language0Button.innerText = LanguagePython.Instance.languageFullName;
+      }
+
       const className = languages[i].languageHtmlClass;
       const fullName = languages[i].languageFullName;
       cl.remove(...getAllLanguages().map((l) => l.languageHtmlClass));
       cl.add(className);
       labels[i].textContent = fullName;
     }
+
+    // temp kludge for beta1
+    document.getElementById("vb-language0")!.hidden = true;
+
     enable(language1Button, languages[1].languageFullName);
     enable(language2Button, languages[2].languageFullName);
     enable(language3Button, languages[3].languageFullName);
   } else {
+    // temp kludge for beta1
+    document.getElementById("vb-language0")!.hidden = false;
+
     disable(language1Button, languages[1].languageFullName);
     disable(language2Button, languages[2].languageFullName);
     disable(language3Button, languages[3].languageFullName);
