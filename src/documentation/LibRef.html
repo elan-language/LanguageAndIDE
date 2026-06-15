@@ -24,7 +24,7 @@
 
 <h2 id="Int">Integer</h2>
 <p>An <b>integer</b> is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
-<p><el-lit>100</el-lit> (decimal), <el-lit>0x64</el-lit> (hexadecimal) and <el-lit>0b1100100</el-lit> all have the same value.</p>
+<p><code>100</code> (decimal), <code>0x64</code> (hexadecimal) and <code>0b1100100</code> all have the same value.</p>
 <p>Its type is <code>Int</code>.</p>
 
 <table class="tableType">
@@ -56,12 +56,12 @@
   <td><el-method>equals</el-method></td>
   <td><code>Int</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if integer and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if integer and argument values are equal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Int">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Int</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if integer and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if integer and argument values are unequal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="toString_Int">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
@@ -106,8 +106,8 @@ end main
 <p>A <b>floating point number</b> is a decimal number (also known as a <b>Real number</b>) that may have both integer and fractional parts. </p>
 
 <p>It may be written using exponential (scientific) notation, e.g.
- <el-lit>120.0</el-lit> can be written as  <el-lit>1.20e2</el-lit>, and
- <el-lit>0.012</el-lit> as <el-lit>1.20e-2</el-lit></p>
+ <code>120.0</code> can be written as  <code>1.20e2</code>, and
+ <code>0.012</code> as <code>1.20e-2</code></p>
 Its type is <code>Float</code>.
 <table class="tableType">
  <tr>
@@ -138,7 +138,7 @@ Its type is <code>Float</code>.
   <td><el-method>equals</el-method></td>
   <td><code>Float</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if floating point number and argument values are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if floating point number and argument values are equal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="floor_Float">
   <td><el-method>floor</el-method></td>
   <td>(none)</td>
@@ -148,17 +148,17 @@ Its type is <code>Float</code>.
   <td><el-method>isInfinite</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if value would be infinite, e.g. after division by zero<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if value would be infinite, e.g. after division by zero<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isNaN_Float">
   <td><el-method>isNaN</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if value is 'NaN', i.e. Not a Number, e.g. 0/0<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if value is 'NaN', i.e. Not a Number, e.g. 0/0<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Float">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Float</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if floating point number and argument values are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if floating point number and argument values are unequal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="round_Float">
   <td><el-method>round</el-method></td>
   <td><code>Int</code></td>
@@ -182,7 +182,7 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <el-lit>.0</el-lit> on the end of the whole number, as in:<br>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <code>.0</code> on the end of the whole number, as in:<br>
  <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
@@ -210,8 +210,8 @@ end test
 </div></div>
 
 <h2 id="Boolean">Boolean</h2>
-<p>A <b>Boolean</b> value is either <el-id>true</el-id> or <el-id>false</el-id>.</p>
-<p>The words <el-id>true</el-id> and <el-id>false</el-id> must be written in lower case.</p>
+<p>A <b>Boolean</b> value is either <code>true</code> or <code>false</code>.</p>
+<p>The words <code>true</code> and <code>false</code> must be written in lower case.</p>
 <table class="tableType">
  <tr>
   <th>name<br>of Type</th>
@@ -233,17 +233,17 @@ end test
   <td><el-method>equals</el-method></td>
   <td><code>Boolean</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the truth value and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the truth value and argument are equal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Boolean">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Boolean</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the truth value and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the truth value and argument are unequal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="toString_Boolean">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>String "true" if <el-id>true</el-id>,<br>"false" if <el-id>false</el-id></td>
+  <td>String "true" if <code>true</code>,<br>"false" if <code>false</code></td>
  </tr>
  </table>
 
@@ -280,12 +280,12 @@ end test
 <table class="tablePlain">
 <tr>
  <td>
-  <codeblock>print($"Spanish introduces a question with {unicode(191)}")</codeblock>
+  <code>print($"Spanish introduces a question with {unicode(191)}")</code>
 </td>
 <td>&#x27f6;</td><td>Spanish introduces a question with &#191;</td>
 </tr><tr>
  <td>
-  <codeblock>print($"This is an up arrow: {unicode(0x2191)}")</codeblock>
+  <code>print($"This is an up arrow: {unicode(0x2191)}")</code>
   </td>
   <td>&#x27f6;</td><td>This is an up arrow: &#x2191;
  </td>
@@ -304,7 +304,7 @@ end test
 </tr>
 </table>
 
-<p>A newline may be inserted within a string with <el-lit>\n</el-lit>:
+<p>A newline may be inserted within a string with <code>\n</code>:
 <table class="tablePlain">
 <tr>
  <td><code>print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
@@ -337,17 +337,17 @@ end test
   <td><el-method>contains</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the string contains the substring specified as the argument<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the string contains the substring specified as the argument<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="equals_String">
   <td><el-method>equals</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the string and argument are equal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the string and argument are equal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_String">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the string and argument are unequal<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the string and argument are unequal<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="indexOf_String">
   <td><el-method>indexOf</el-method></td>
   <td><code>String</code></td>
@@ -357,22 +357,22 @@ end test
   <td><el-method>isAfter</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if alphabetic comparison finds the string comes strictly 'after' the argument string<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if alphabetic comparison finds the string comes strictly 'after' the argument string<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isAfterOrSameAs">
   <td><el-method>isAfterOrSameAs</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if alphabetic comparison finds the string comes 'after' or equals the argument string<br> &ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if alphabetic comparison finds the string comes 'after' or equals the argument string<br> &ndash; <code>false</code> otherwise</td>
  </tr><tr id="isBefore">
   <td><el-method>isBefore</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if alphabetic comparison finds the string comes strictly 'before' the argument string<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if alphabetic comparison finds the string comes strictly 'before' the argument string<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isBeforeOrSameAs">
   <td><el-method>isBeforeOrSameAs</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if alphabetic comparison finds the string comes 'before' or equals the argument string<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if alphabetic comparison finds the string comes 'before' or equals the argument string<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="length_String">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
@@ -387,7 +387,7 @@ end test
   <td><el-method>matchesRegExp</el-method></td>
   <td><code>RegExp</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the string matches the regular expression<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the string matches the regular expression<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="replace">
   <td><el-method>replace</el-method></td>
   <td><code>String</code>, <code>String</code></td>
@@ -396,7 +396,7 @@ end test
  </tr><tr id="split">
   <td><el-method>split</el-method></td>
   <td><code>String</code></td>
-  <td><codeblock>List&lt;of String&gt;</codeblock></td>
+  <td><code>List&lt;of String&gt;</code></td>
   <td>a <code>List</code> of the substrings found between occurrences of the argument string<br>
   if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="subString">
@@ -434,7 +434,7 @@ end test
 <p>If <code>a</code> and <code>b</code> have values 3 and 17:</p>
 <table class="tablePlain">
 <tr>
- <td><codeblock>print($"{a} times {b} equals {a*b}")</codeblock></td>
+ <td><code>print($"{a} times {b} equals {a*b}")</code></td>
  <td>&#x27f6;</td><td>3 times 17 equals 51</td>
 </tr>
 </table>
@@ -442,10 +442,10 @@ end test
 <p>If <code>velocity</code> and <code>fuel</code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><codeblock>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </codeblock>
-  <codeblock>print(message) </codeblock>
+ <td><code>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </code>
+  <code>print(message) </code>
  </td>
- <td>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
+ <td><br>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
 </tr>
 </table>
 <p>And for the area of a circle:</p>
@@ -497,9 +497,9 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>Type form</td>
   <td><code>List&lt;of Type&gt;</code><br>The type of item can be any, including <code>List</code> for 'jagged' data</td>
   <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code><br>
-  <el-id>keyType</el-id> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
-  <el-id>valueType</el-id> may be any Type</td>
-  <td><code>HashSet&lt;of Type>&gt;</code><br>The type of the item must be immutable</td>
+  <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
+  <code>valueType</code> may be any Type</td>
+  <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
   <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
   <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
  </tr><tr>
@@ -567,11 +567,11 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>Method <a href="#createList"><el-method>createList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
   <code>variable aList set to createList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
- <codeblock>variable aList set to new List&lt;of String&gt;()</codeblock><br>
+ <code>variable aList set to new List&lt;of String&gt;()</code><br>
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <el-id>ix</el-id> in List <el-id>aList</el-id> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
+<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>reassign aList[ix] to "Smith"</code></li>
 </ul>
@@ -605,7 +605,7 @@ with specified changes: that is why all such methods have names starting '<el-me
    <code>variable grid set to createBlockGraphics(value)</code></li>
 </ul>
 
-<p>The item at index <el-id>ix</el-id>,<el-id>iy</el-id> in a 2D array can be accessed and changed
+<p>The item at index <code>ix</code>,<code>iy</code> in a 2D array can be accessed and changed
  using its two coordinates in square brackets:</p>
 <ul>
   <li><code>variable value set to  array2D[ix][iy]</code></li>
@@ -616,7 +616,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>For a 3D array, you can, for example, define:</p>
 <ul>
 <li>
-<code>variable array3D set to new List<of List<of List<of Float>>>()</code>
+<code>variable array3D set to new List&lt;of List&lt;of List&lt;of Float&gt;&gt;&gt;()</code>
 </li>
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
@@ -686,13 +686,13 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-method>contains</el-method></td>
   <td>value</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the List contains the specified item<br>
-  &ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the List contains the specified item<br>
+  &ndash; <code>false</code> otherwise</td>
  </tr><tr id="equals_List">
   <td><el-method>equals</el-method></td>
   <td><code>List</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if list and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if list and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
   <td><code>lambda</code></td>
@@ -741,7 +741,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-method>notEqualTo</el-method></td>
   <td><code>List</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if list and argument differ l<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if list and argument differ l<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
   <td><code>lambda</code></td>
@@ -866,12 +866,12 @@ end main
   <td><el-method>equals</el-method></td>
   <td><code>Dictionary</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if dictionary and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if dictionary and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="hasKey_Dictionary">
   <td><el-method>hasKey</el-method></td>
   <td>item of Dictionary key's Type</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the Dictionary contains the given key<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the Dictionary contains the given key<br>&ndash; <code>false</code> otherwise</td>
 </tr><tr id="keys_Dictionary">
   <td><el-method>keys</el-method></td>
   <td>(none)</td>
@@ -881,7 +881,7 @@ end main
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Dictionary</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if dictionary and argument differ <br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if dictionary and argument differ <br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="toString_Dictionary">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
@@ -924,7 +924,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr>
  <td>
   <codeblock>
-  variable st set to new HashSet&lt;of Int&gt;()
+  variable st set to new HashSet<of Int>()
   reassign st to st.addFromList([3, 5, 7])
   print(st.length())
   </codeblock>
@@ -989,7 +989,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>contains</el-method></td>
   <td>value<br>(of <code>HashSet</code> members' Type)</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the Set contains the item<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the Set contains the item<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
   <td><code>HashSet</code></td>
@@ -999,12 +999,12 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>equals</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if Set and argument Set contain identical values<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if Set and argument Set contain identical values<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Set">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if Set and argument Set differ in their values<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if Set and argument Set differ in their values<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="intersection">
   <td><el-method>intersection</el-method></td>
   <td><code>HashSet</code></td>
@@ -1014,17 +1014,17 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>isDisjointFrom</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the Set has no items in common with the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the Set has no items in common with the argument Set<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isSubsetOf">
   <td><el-method>isSubsetOf</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if all the Set's items are also in the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if all the Set's items are also in the argument Set<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isSupersetOf">
   <td><el-method>isSupersetOf</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the Set contains all the  items that are in the argument Set<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the Set contains all the  items that are in the argument Set<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="length_Set">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
@@ -1074,12 +1074,12 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>equals</el-method></td>
   <td><code>Stack</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if stack and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if stack and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Stack">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Stack</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if stack and argument differ<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if stack and argument differ<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="push">
   <td><el-method>push</el-method></td>
   <td>value<br>(of <code>Stack</code> item's Type)</td>
@@ -1120,12 +1120,12 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><el-method>equals</el-method></td>
   <td><code>Queue</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if queue and argument are identical<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if queue and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Queue">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Queue</code></td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if queue and argument differ<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if queue and argument differ<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="enqueue">
   <td><el-method>enqueue</el-method></td>
   <td>value<br>(of <code>Queue</code> item's Type)</td>
@@ -1164,7 +1164,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr><td>
 <codeblock>
 main
-  variable sk set to new Stack&lt;of String&gt;()
+  variable sk set to new Stack<of String>()
   print(sk.length())
   reassign sk to sk.push("apple")
   reassign sk to sk.push("banana")
@@ -1191,7 +1191,7 @@ end main
 <tr><td>
 <codeblock>
 main
-  variable qu set to new Queue&lt;of String&gt;()
+  variable qu set to new Queue<of String>()
   print(qu.length())
   reassign qu to qu.enqueue("apple")
   reassign qu to qu.enqueue("banana")
@@ -1243,7 +1243,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <code>variable t set to (3, "apple", true)</code>
 
 <h3 class="no-TOC" id="deconstructTuple">Accessing items in a Tuple</h3>
-<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and its special properties <el-id>item_</el-id>N, thus:</p>
+<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and its special properties <code>item_</code>N, thus:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -1268,7 +1268,7 @@ function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Flo
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
 end function
 </codeblock>
-<p>Note that the appropriate <el-id>item_</el-id>Ns will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
+<p>Note that the appropriate <code>item_</code>Ns will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 
 <h3 class="no-TOC">Function dot methods on a Tuple</h3>
 <table class="tableMethod">
@@ -1281,12 +1281,12 @@ end function
   <td><el-method>equals</el-method></td>
   <td>Tuple</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if the Types, item values and order all equal those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if the Types, item values and order all equal those of the argument,<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Tuple">
   <td><el-method>notEqualTo</el-method></td>
   <td>Tuple</td>
   <td><code>Boolean</code></td>
-  <td><el-id>true</el-id> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <el-id>false</el-id> otherwise</td>
+  <td><code>true</code> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="toString_Tuple">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
@@ -1337,7 +1337,7 @@ end main
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
 <p>The origin for turtle units (0,0) is at the centre of the area: positive <i>x</i> rightwards, positive <i>y</i> upwards.
 So the top left corner of the display is at (-100,75).</p>
-<p>A new turtle's default starting position is at (0,0) facing upwards (<el-id>heading</el-id> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
+<p>A new turtle's default starting position is at (0,0) facing upwards (<code>heading</code> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
 <p>You can move and turn a turtle, causing lines to be drawn, whether or not the turtle is showing.</p>
 <h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
@@ -1399,7 +1399,7 @@ So the top left corner of the display is at (-100,75).</p>
 </table>
 <h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
 <p>The current location and heading of the turtle may be read using the properties
-  <el-id>x</el-id>, <el-id>y</el-id>, and <el-id>heading</el-id>.</p>
+  <code>x</code>, <code>y</code>, and <code>heading</code>.</p>
 <table class="tableMethod">
  <tr>
   <th colspan="2">Property</th>
@@ -1410,12 +1410,12 @@ So the top left corner of the display is at (-100,75).</p>
   <th>description</th>
   <th>default</th>
  </tr><tr id="heading">
-  <td><el-id>heading</el-id></td>
+  <td><code>heading</code></td>
   <td><code>Float</code></td>
   <td>the direction in which the turtle is pointing<br>in degrees clockwise from North</td>
   <td>0.0 degrees,<br>i.e. upward in the display</td>
  </tr><tr id="xy_Turtle">
-  <td><el-id>x</el-id>, <el-id>y</el-id></td>
+  <td><code>x</code>, <code>y</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td>the <i>x,y</i> coordinates of the turtle's current position</td>
   <td>0.0, 0.0</td>
@@ -1486,8 +1486,8 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
 <p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
- is assigned with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
-Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
+ is assigned with property <code>strokeWidth</code>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
+Also <code>stroke</code> and <code>fill</code> are set by the properties <code>strokeColour</code> and <code>fillColour</code>.</p>
 
 <p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><code>RawVG</code> <i class="fa">&#xf14c;</i></a>.</p>
 
@@ -1500,9 +1500,9 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <el-id>
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
 in a <b>function</b>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
-<p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours <i class="fa">&#xf14c;</i></a>.
-Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
-<p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
+<p>The <code>fillColour</code> and <code>strokeColour</code> properties may be specified as described under <a href="#Colours">Colours <i class="fa">&#xf14c;</i></a>.
+Only <code>fillColour</code> can be specified as <code>transparent</code>.</p>
+<p>Note that the <code>height</code> and <code>width</code> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
 <h3 class="no-TOC" id="displayVectorGraphics">Displaying Vector graphic shapes</h3>
 <p>As with <a href="#BlockGraphics">Block <i class="fa">&#xf14c;</i></a> graphics, the assembled list of shapes is not displayed until call procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
@@ -1571,7 +1571,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <th>procedure</th>
   <th>function</th>
  </tr><tr>
-  <td id="alt"><el-id>alt</el-id></td>
+  <td id="alt"><code>alt</code></td>
   <td><code>String</code></td>
   <td></td>
   <td>&#x2714;</td>
@@ -1582,7 +1582,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setAlt</el-method></td>
   <td><el-method>withAlt</el-method></td>
  </tr><tr>
-  <td id="centreX"><el-id>centreX</el-id></td>
+  <td id="centreX"><code>centreX</code></td>
   <td><code>Float</code></td>
   <td>&#x2714;</td>
   <td></td>
@@ -1593,7 +1593,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setCentreX</el-method></td>
   <td><el-method>withCentreX</el-method></td>
  </tr><tr>
-  <td id="centreY"><el-id>centreY</el-id></td>
+  <td id="centreY"><code>centreY</code></td>
   <td><code>Float</code></td>
   <td>&#x2714;</td>
   <td></td>
@@ -1604,18 +1604,18 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setCentreY</el-method></td>
   <td><el-method>withCentreY</el-method></td>
  </tr><tr>
-  <td id="fillColour"><el-id>fillColour</el-id></td>
+  <td id="fillColour"><code>fillColour</code></td>
   <td><code>Int</code></td>
   <td>&#x2714;</td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
   <td>colour to fill the shape</td>
-  <td><el-id>yellow</el-id></td>
+  <td><code>yellow</code></td>
   <td><el-method>setFillColour</el-method></td>
   <td><el-method>withFillColour</el-method></td>
  </tr><tr>
-  <td id="height"><el-id>height</el-id></td>
+  <td id="height"><code>height</code></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x2714;</td>
@@ -1626,7 +1626,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setHeight</el-method></td>
   <td><el-method>withHeight</el-method></td>
  </tr><tr>
-  <td id="radius"><el-id>radius</el-id></td>
+  <td id="radius"><code>radius</code></td>
   <td><code>Float</code></td>
   <td>&#x2714;</td>
   <td></td>
@@ -1637,18 +1637,18 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td id="setRadius"><el-method>setRadius</el-method></td>
   <td id="withRadius"><el-method>withRadius</el-method></td>
  </tr><tr>
-  <td id="strokeColour"><el-id>strokeColour</el-id></td>
+  <td id="strokeColour"><code>strokeColour</code></td>
   <td><code>Int</code></td>
   <td>&#x2714;</td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td>colour of the strokes in the shape</td>
-  <td><el-id>black</el-id></td>
+  <td><code>black</code></td>
   <td><el-method>setStrokeColour</el-method></td>
   <td><el-method>withStrokeColour</el-method></td>
  </tr><tr>
-  <td id="strokeWidth"><el-id>strokeWidth</el-id></td>
+  <td id="strokeWidth"><code>strokeWidth</code></td>
   <td><code>Int</code></td>
   <td>&#x2714;</td>
   <td></td>
@@ -1659,7 +1659,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setStrokeWidth</el-method></td>
   <td><el-method>withStrokeWidth</el-method></td>
  </tr><tr>
-  <td id="title"><el-id>title</el-id></td>
+  <td id="title"><code>title</code></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x2714;</td>
@@ -1670,7 +1670,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setTitle</el-method></td>
   <td><el-method>withTitle</el-method></td>
  </tr><tr>
-  <td id="width"><el-id>width</el-id></td>
+  <td id="width"><code>width</code></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x2714;</td>
@@ -1681,7 +1681,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setWidth</el-method></td>
   <td><el-method>withWidth</el-method></td>
  </tr><tr>
-  <td id="xy_VG"><el-id>x, y</el-id></td>
+  <td id="xy_VG"><code>x, y</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
@@ -1692,7 +1692,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX</el-method>, <el-method>setY</el-method></td>
   <td><el-method>withX</el-method>, <el-method>withY</el-method></td>
  </tr><tr>
-  <td id="x1y1_VG"><el-id>x1, y1</el-id></td>
+  <td id="x1y1_VG"><code>x1, y1</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -1703,7 +1703,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX1</el-method>, <el-method>setY1</el-method></td>
   <td><el-method>withX1</el-method>, <el-method>withY1</el-method></td>
  </tr><tr>
-  <td id="x2y2_VG"><el-id>x2, y2</el-id></td>
+  <td id="x2y2_VG"><code>x2, y2</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -1723,7 +1723,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle with a coloured circumference:</p>
 <codeblock>
 main
-  variable vg set to new List&lt;of VectorGraphic&gt;()
+  variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG()
   call circ.setCentreX(20)
   call circ.setCentreY(20)
@@ -1741,7 +1741,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle that changes between red and green every second:</p>
 <codeblock>
 main
-  variable vg set to new List&lt;of VectorGraphic&gt;()
+  variable vg set to new List<of VectorGraphic>()
   variable circ set to new CircleVG()
   call circ.setCentreX(50)
   call circ.setCentreY(37.5)
@@ -1992,8 +1992,8 @@ end main
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
- if <el-id>true</el-id>, the prompt "Press any key to continue" appears,<br>
- if <el-id>false</el-id>, no prompt appears.
+ if <code>true</code>, the prompt "Press any key to continue" appears,<br>
+ if <code>false</code>, no prompt appears.
  </li>
 </ul>
 <codeblock>
@@ -2065,7 +2065,7 @@ end main
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
+<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<code>\n</code>) automatically appended.</li>
 <li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
@@ -2107,8 +2107,8 @@ or you could make the code offer the user options: to save again, or to continue
  </tr><tr id="endOfFile">
   <td><el-method>endOfFile</el-method></td>
   <td>(none)</td>
-  <td>returns <el-id>true</el-id> after the last line has been read<br>
-  &ndash; otherwise <el-id>false</el-id></td>
+  <td>returns <code>true</code> after the last line has been read<br>
+  &ndash; otherwise <code>false</code></td>
  </tr><tr id="close">
   <td><el-method>close</el-method></td>
   <td>(none)</td>
@@ -2154,7 +2154,7 @@ end main
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-id>quotes</el-id> within curly braces as an <a href="#InterpolatedString">interpolated field <i class="fa">&#xf14c;</i></a>.</p>
+    Alternatively, you could use the constant <code>quotes</code> within curly braces as an <a href="#InterpolatedString">interpolated field <i class="fa">&#xf14c;</i></a>.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
@@ -2175,7 +2175,7 @@ end main
 such as in <b>file://host/path</b> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
- <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+ <li>put the Html <code>&lt;img&gt;</code> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <codeblock>
 main
   variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
@@ -2482,15 +2482,15 @@ end main
   <td><code>Boolean</code></td>
   <td>(none)</td>
   <td>pauses execution of the program until a keyboard key is pressed<br>
-  if the argument is <el-id>true</el-id> 'Press any key to continue' is first displayed,<br>
-   if <el-id>false</el-id> nothing is displayed </td>
+  if the argument is <code>true</code> 'Press any key to continue' is first displayed,<br>
+   if <code>false</code> nothing is displayed </td>
  </tr><tr id="printNoLine">
   <td><el-method>printNoLine</el-method></td>
   <td><code>String</code></td>
   <td>(none)</td>
   <td>prints the string to the display without appending a newline so<br>
   a following call will output on the same line.<br>
-  You can put your own <el-lit>\n</el-lit> newlines in the argument string</td>
+  You can put your own <code>\n</code> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><code>Int</code>, <code>String</code></td>
@@ -2591,16 +2591,16 @@ end main
   <td><el-method>parseAsFloat</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code>, <code>Float</code></td>
-  <td>a 2-Tuple in which the first item is <el-id>true</el-id> if the parse was successful,<br>
-  &ndash; <el-id>false</el-id> otherwise<br>
-  and, if <el-id>true</el-id>, the second item is the <code>Float</code> value, otherwise zero</td>
+  <td>a 2-Tuple in which the first item is <code>true</code> if the parse was successful,<br>
+  &ndash; <code>false</code> otherwise<br>
+  and, if <code>true</code>, the second item is the <code>Float</code> value, otherwise zero</td>
  </tr><tr id="parseAsInt">
   <td><el-method>parseAsInt</el-method></td>
   <td><code>String</code></td>
   <td><code>Boolean</code>, <code>Int</code></td>
-  <td>a 2-Tuple in which the first item is <el-id>true</el-id> if the parse was successful,<br>
-  &ndash; <el-id>false</el-id> otherwise<br>
-  and, if <el-id>true</el-id>, the second item is the <code>Int</code> value, otherwise zero</td>
+  <td>a 2-Tuple in which the first item is <code>true</code> if the parse was successful,<br>
+  &ndash; <code>false</code> otherwise<br>
+  and, if <code>true</code>, the second item is the <code>Int</code> value, otherwise zero</td>
  </tr><tr id="unicode">
   <td><el-method>unicode</el-method></td>
   <td><code>Int</code></td>
@@ -2615,7 +2615,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-Tuple returned by <el-method>parseAsInt</el-method>:</p>
   <code>variable success set to parseAsInt(s).item_0</code>
   <code>variable value set to parseAsInt(s).item_1</code>
-<p>Always check the <code>Boolean</code> (<el-id>success</el-id>) before using the returned value (<el-id>value</el-id>) in case the latter is zero only because the parse was unsuccessful.</p>
+<p>Always check the <code>Boolean</code> (<code>success</code>) before using the returned value (<code>value</code>) in case the latter is zero only because the parse was unsuccessful.</p>
 
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
@@ -2658,7 +2658,7 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 <tr id="divAsFloat"><td><el-method>divAsFloat</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value</td><td></td></tr>
 <tr id="divAsInt"><td><el-method>divAsInt</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value<br>and result rounded down to integer</td><td></td></tr>
 <tr>
-  <td id="exp"><el-id><el-method>exp</el-method></el-id></td>
+  <td id="exp"><code><el-method>exp</el-method></code></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td>
@@ -2763,7 +2763,7 @@ test test_bitwise
 end test
 </codeblock>
 
-<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <code>-14</code> , when a is <code>13</code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><code>00000000000000000000000000001101</code>, and applying <el-method>bitNot</el-method> gives<br><code>11111111111111111111111111110010 </code>which is the value <code>-14 </code>in signed two's complement format,<br> the left-most bit being the sign (<code>0</code> positive, <code>1</code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<code>a</code>) being <code>-14</code> , when a is <code>13</code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><code>00000000000000000000000000001101</code>, and applying <el-method>bitNot</el-method> gives<br><code>11111111111111111111111111110010 </code>which is the value <code>-14 </code>in signed two's complement format,<br> the left-most bit being the sign (<code>0</code> positive, <code>1</code> negative).</p>
 <hr>
 </div></div>
 
@@ -2934,7 +2934,7 @@ end main
 main
   print(primesFromList(range(2, 100)))
 end main
-function primesFromList(li as List<of Int>) returns List<of Int>
+function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
   # returns primes from the list assuming it starts with a prime (e.g. 2)
   return if(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) > 0))))
 end function
@@ -2970,7 +2970,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <el-id>nodes</el-id> (of Class <code>Node</code>) to find one that contains <el-id>p</el-id> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
 <codeblock>
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
@@ -3000,7 +3000,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><el-code>[1, 8, 27, 125]</el-code></td>
+<td><br><br>&#x27f6;</td><td><br><br><code>[1, 8, 27, 125]</code></td>
 </tr>
 </table>
 
@@ -3015,7 +3015,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><el-code>[TOM, DICK, HARRIET]</td>
+<td><br><br>&#x27f6;</td><td><br><br><code>[TOM, DICK, HARRIET]</td>
 </tr>
 </table>
 
@@ -3026,7 +3026,7 @@ end main
  <td>
 <code>print(names.map(lambda s as String => reverse(s)))</code>
 </td>
-<td>&#x27f6;</td><td><el-code>[moT, kciD, teirraH]</td>
+<td>&#x27f6;</td><td><code>[moT, kciD, teirraH]</td>
 </tr>
 </table>
 
@@ -3051,7 +3051,7 @@ end main
 <ol>
  <li>The initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument..
  For example, if you were finding the sum of a list of type <code>Float</code>, the initial seed value
- would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
+ would typically be <code>0.0</code>. If you were creating a dictionary of words, the initial seed
  value would be an empty Dictionary of the correct Types.</li>
  <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
 <ol>
@@ -3081,7 +3081,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><el-code>10.94</el-code></td>
+<td><br><br>&#x27f6;</td><td><br><br><code>10.94</code></td>
 </tr>
 </table>
 
@@ -3098,13 +3098,13 @@ end main
 <codeblock>
 main
   variable n set to [2, 3, 5, 7, 11, 13]
-  variable nR set to new List&lt;of Int&gt;()
-  variable eL set to new List&lt;of Int&gt;()
-  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
+  variable nR set to new List<of Int>()
+  variable eL set to new List<of Int>()
+  print(n.reduce(eL, lambda nR as List<of Int>, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
-<td><br><br><br><br>&#x27f6;</td><td><br><br><br><br><el-code>[13, 11, 7, 5, 3, 2]</el-code></td>
+<td><br><br><br><br>&#x27f6;</td><td><br><br><br><br><code>[13, 11, 7, 5, 3, 2]</code></td>
 </tr>
 </table>
 
@@ -3117,13 +3117,13 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
 main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
-  variable eL set to new List&lt;of String&gt;()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
+  variable eL set to new List<of String>()
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>
 </td>
-<td><br><br><br><br><br>&#x27f6;</td><td><br><br><br><br><br><el-code>toves slithy the and brillig 'Twas</el-code></td>
+<td><br><br><br><br><br>&#x27f6;</td><td><br><br><br><br><br><code>toves slithy the and brillig 'Twas</code></td>
 </tr>
 </table>
 
@@ -3157,7 +3157,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><el-code>89</el-code></td>
+<td><br><br>&#x27f6;</td><td><br><br><code>89</code></td>
 </tr>
 </table>
 
@@ -3172,7 +3172,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><el-code>pear</el-code></td>
+<td><br><br>&#x27f6;</td><td><br><br><code>pear</code></td>
 </tr>
 </table>
 <hr>
@@ -3195,7 +3195,7 @@ end main
   print(ordered)
 </codeblock>
 </td>
-<td><br><br><br>&#x27f6;</td><td><br><br><br><el-code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</el-code></td>
+<td><br><br><br>&#x27f6;</td><td><br><br><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
 </tr>
 </table>
 
@@ -3210,7 +3210,7 @@ main
 end main
 </codeblock>
 </td>
-<td><br><br><br>&#x27f6;</td><td><br><br><br><el-code>[Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice]</el-code></td>
+<td><br><br><br>&#x27f6;</td><td><br><br><br><code>[Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice]</code></td>
 </tr>
 </table>
 <hr>
@@ -3228,7 +3228,7 @@ class Pupil
   property mathsPercent as Int
 end class
 main
-  variable allPupils set to new List&lt;of Pupil&gt;()
+  variable allPupils set to new List<of Pupil>()
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 function passedMathsTest(p as Pupil) returns Boolean
@@ -3247,15 +3247,15 @@ end function
  <tr>
   <th>name</th><th>Type</th><th >value</th>
  </tr><tr id="openBrace">
-  <td><el-id>openBrace</el-id></td>
+  <td><code>openBrace</code></td>
   <td><code>String</code></td>
   <td>&nbsp; { </td>
  </tr><tr id="closeBrace">
-  <td><el-id>closeBrace</el-id></td>
+  <td><code>closeBrace</code></td>
   <td><code>String</code></td>
   <td>&nbsp; } </td>
  </tr><tr id="quotes">
-  <td><el-id>quotes</el-id></td>
+  <td><code>quotes</code></td>
   <td><code>String</code></td>
   <td>&nbsp; &quot; </td>
  </tr>
@@ -3265,7 +3265,7 @@ end function
 <table class="tableType">
  <tr><th>name</th><th>Type</th><th>value</th></tr>
 <tr id="pi">
-  <td><el-id>pi</el-id></td>
+  <td><code>pi</code></td>
   <td><code>Float</code></td>
   <td>&#x1d70b = 3.141592653589793..</td>
  </tr>
@@ -3276,11 +3276,11 @@ end function
  <tr>
   <th>name</th><th>Type</th><th >value</th>
  </tr><tr id="true">
-  <td><el-id>true</el-id></td>
+  <td><code>true</code></td>
   <td><code>Boolean</code></td>
   <td><a href="#Boolean"><code>true</code> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="false">
-  <td><el-id>false</el-id></td>
+  <td><code>false</code></td>
   <td><code>Boolean</code></td>
   <td><a href="#Boolean"><code>false</code> <i class="fa">&#xf14c;</i></a></td>
  </tr>
@@ -3290,23 +3290,23 @@ end function
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x000000</code></td></tr>
-    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><code>0xffffff</code></td></tr>
-    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xff0000</code></td></tr>
-    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x008000</code></td></tr>
-    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><code>0x0000ff</code></td></tr>
-    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xffff00</code></td></tr>
-    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><code>0xa52a2a</code></td></tr>
-    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><code>0x808080</code></td></tr>
-    <tr><td><el-id>transparent</el-id> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
+    <tr><td><code>black</code> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x000000</code></td></tr>
+    <tr><td><code>white</code> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><code>0xffffff</code></td></tr>
+    <tr><td><code>red</code>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xff0000</code></td></tr>
+    <tr><td><code>green</code> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0x008000</code></td></tr>
+    <tr><td><code>blue</code>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><code>0x0000ff</code></td></tr>
+    <tr><td><code>yellow</code></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><code>0xffff00</code></td></tr>
+    <tr><td><code>brown</code> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><code>0xa52a2a</code></td></tr>
+    <tr><td><code>grey</code>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><code>0x808080</code></td></tr>
+    <tr><td><code>transparent</code> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
 </table>
 <p>A colour is specified as an <code>Int</code> value using one of these methods:</p>
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
- <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
- <li>a six digit hexadecimal value in the range <el-lit>0x000000</el-lit> &ndash; <el-lit>0xffffff</el-lit>
-    using the same 'RGB' format as used in Html style, for example <el-lit>0xff0000</el-lit> for red.</li>
- <li id="transparent"><el-id>transparent</el-id> is used only for filling <a href="#VectorGraphics">vector graphics <i class="fa">&#xf14c;</i></a> shapes.
+ <li>an integer in the decimal range 0 (<code>black</code>) to 2<sup>24-1</sup> (<code>white</code>).</li>
+ <li>a six digit hexadecimal value in the range <code>0x000000</code> &ndash; <code>0xffffff</code>
+    using the same 'RGB' format as used in Html style, for example <code>0xff0000</code> for red.</li>
+ <li id="transparent"><code>transparent</code> is used only for filling <a href="#VectorGraphics">vector graphics <i class="fa">&#xf14c;</i></a> shapes.
 </ul>
 
 <hr>
