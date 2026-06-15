@@ -30,7 +30,6 @@ import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
-  mustBeDoubleIndexableType,
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
