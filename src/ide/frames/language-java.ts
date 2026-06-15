@@ -37,7 +37,6 @@ import { AssertStatement } from "./statements/assert-statement";
 import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ParseStatus } from "./status-enums";
-import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageJava extends LanguageCfamily {
