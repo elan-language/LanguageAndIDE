@@ -1256,8 +1256,8 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: lambda or function name that takes no parameters - returning a Int, Provided: lambda or function name that takes parameter - Int - returning a Float.ErrorMessages.html#TypesCompileError",
+   assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1351,6 +1351,38 @@ end function`;
     ]);
   });
 
+ test("Fail_AssignFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to a
+end main
+
+function a() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
+    ]);
+  });
+  
+
+
+
   test("Fail_FunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
@@ -1379,6 +1411,8 @@ end function`;
       "'b' is not defined for type 'lambda or function name that takes no parameters - returning a Int'.ErrorMessages.html#compile_error",
     ]);
   });
+
+  
 
   test("Fail_FunctionMethodWithoutRefKeyword", async () => {
     const code = `${testHeader}
