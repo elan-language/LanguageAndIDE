@@ -41,7 +41,6 @@ import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
-import { IndexDoubleAsn } from "../../compiler/syntax-nodes/index-double-asn";
 import { InterpolatedAsn } from "../../compiler/syntax-nodes/interpolated-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";

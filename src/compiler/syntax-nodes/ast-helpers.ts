@@ -45,7 +45,6 @@ import { ClassAsn } from "./globals/class-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
-import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
 
@@ -411,14 +410,8 @@ export function compileSimpleSubscript(
   const index = indices.items[indices.items.length - 1] as IndexAsn;
 
   const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
-  if (index.index instanceof IndexDoubleAsn) {
-    mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId, scope);
-    mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId, scope);
-    mustBeAssignableType(indexType, index.index.index2.symbolType(), compileErrors, fieldId, scope);
-  } else {
     mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
     mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
-  }
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }
 
