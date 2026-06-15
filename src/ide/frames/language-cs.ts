@@ -15,6 +15,7 @@ import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
+import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -26,7 +27,7 @@ import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ARROW } from "./symbols";
+import { ARROW, CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "./symbols";
 
 export class LanguageCS extends LanguageCfamily {
   private constructor() {
@@ -144,6 +145,19 @@ export class LanguageCS extends LanguageCfamily {
     node.addElement(node.expr);
   }
 
+  addNodesForList(node: ListNode): void {
+    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new PunctuationNode(node.file, OPEN_SQ_BRACKET));
+    node.addElement(new PunctuationNode(node.file, CLOSE_SQ_BRACKET));
+    node.addElement(new SpaceNode(node.file, Space.added));
+    this.default_addNodesForList(node);
+  }
+
+  listAsHtml(node: ListNode): string {
+      return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> [] ${this.default_listAsHtml(node)}`;
+  }
+
   lambdaAsHtml(node: Lambda): string {
     return `${node.params!.renderAsHtml()} ${ARROW} ${node.expr!.renderAsHtml()}`;
   }
@@ -164,7 +178,7 @@ export class LanguageCS extends LanguageCfamily {
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return this.c_langs_enumValuesListAsHtml(field);
+    return this.c_langs_enumValues(field);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

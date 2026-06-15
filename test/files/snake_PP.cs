@@ -4,12 +4,12 @@
 
 static void main() {
   var blocks = createBlockGraphics(white);
-  var head = [20, 15];
+  var head = new [] {20, 15};
   var tail = head;
-  var body = [head];
+  var body = new [] {head};
   var currentDir = Direction.right;
   var gameOn = true;
-  var apple = [0, 0];
+  var apple = new [] {0, 0};
   setAppleToRandomPosition(apple, body); // call procedure
   while (gameOn) {
     updateDisplay(blocks, head, tail, body, apple); // call procedure
@@ -85,7 +85,7 @@ static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
   } else if (dir == Direction.down) {
     newY = newY + 1; // reassign variable
   } // if
-  return [newX, newY];
+  return new [] {newX, newY};
 } // function
 
 static Direction directionByKey(Direction current, string key) { // function
@@ -100,8 +100,8 @@ static Direction directionByKey(Direction current, string key) { // function
 enum Direction {up, down, left, right}
 
 [TestMethod] static void test_getTailColour() {
-  Assert.AreEqual(green, getTailColour([3, 4], [[3, 4], [3, 5]]));
-  Assert.AreEqual(white, getTailColour([3, 4], [[3, 5], [3, 6]]));
+  Assert.AreEqual(green, getTailColour(new [] {3, 4}, new [] {new [] {3, 4}, new [] {3, 5}}));
+  Assert.AreEqual(white, getTailColour(new [] {3, 4}, new [] {new [] {3, 5}, new [] {3, 6}}));
 } // test
 
 [TestMethod] static void test_hasHitEdge() {
@@ -116,13 +116,13 @@ enum Direction {up, down, left, right}
 } // test
 
 [TestMethod] static void test_getAdjacentSquare() {
-  var sq = [20, 15];
-  Assert.AreEqual([20, 14], getAdjacentSquare(sq, Direction.up));
-  Assert.AreEqual([20, 16], getAdjacentSquare(sq, Direction.down));
-  Assert.AreEqual([19, 15], getAdjacentSquare(sq, Direction.left));
-  Assert.AreEqual([21, 15], getAdjacentSquare(sq, Direction.right));
+  var sq = new [] {20, 15};
+  Assert.AreEqual(new [] {20, 14}, getAdjacentSquare(sq, Direction.up));
+  Assert.AreEqual(new [] {20, 16}, getAdjacentSquare(sq, Direction.down));
+  Assert.AreEqual(new [] {19, 15}, getAdjacentSquare(sq, Direction.left));
+  Assert.AreEqual(new [] {21, 15}, getAdjacentSquare(sq, Direction.right));
   // boundary
-  Assert.AreEqual([-1, 15], getAdjacentSquare([0, 15], Direction.left));
+  Assert.AreEqual(new [] {-1, 15}, getAdjacentSquare(new [] {0, 15}, Direction.left));
 } // test
 
 [TestMethod] static void test_directionByKey() {

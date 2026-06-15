@@ -6,12 +6,12 @@ public class Global {
 
 static void main() {
   var blocks = createBlockGraphics(white);
-  var head = [20, 15];
+  var head = {20, 15};
   var tail = head;
-  var body = [head];
+  var body = {head};
   var currentDir = Direction.right;
   var gameOn = true;
-  var apple = [0, 0];
+  var apple = {0, 0};
   setAppleToRandomPosition(apple, body); // call procedure
   while (gameOn) {
     updateDisplay(blocks, head, tail, body, apple); // call procedure
@@ -87,7 +87,7 @@ static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
   } else if (dir == Direction.down) {
     newY = newY + 1; // reassign variable
   } // if
-  return [newX, newY];
+  return {newX, newY};
 } // function
 
 static Direction directionByKey(Direction current, String key) { // function
@@ -102,8 +102,8 @@ static Direction directionByKey(Direction current, String key) { // function
 enum Direction {up, down, left, right}
 
 @Test static void test_getTailColour() {
-  assertEquals(green, getTailColour([3, 4], [[3, 4], [3, 5]]));
-  assertEquals(white, getTailColour([3, 4], [[3, 5], [3, 6]]));
+  assertEquals(green, getTailColour({3, 4}, {{3, 4}, {3, 5}}));
+  assertEquals(white, getTailColour({3, 4}, {{3, 5}, {3, 6}}));
 } // test
 
 @Test static void test_hasHitEdge() {
@@ -118,13 +118,13 @@ enum Direction {up, down, left, right}
 } // test
 
 @Test static void test_getAdjacentSquare() {
-  var sq = [20, 15];
-  assertEquals([20, 14], getAdjacentSquare(sq, Direction.up));
-  assertEquals([20, 16], getAdjacentSquare(sq, Direction.down));
-  assertEquals([19, 15], getAdjacentSquare(sq, Direction.left));
-  assertEquals([21, 15], getAdjacentSquare(sq, Direction.right));
+  var sq = {20, 15};
+  assertEquals({20, 14}, getAdjacentSquare(sq, Direction.up));
+  assertEquals({20, 16}, getAdjacentSquare(sq, Direction.down));
+  assertEquals({19, 15}, getAdjacentSquare(sq, Direction.left));
+  assertEquals({21, 15}, getAdjacentSquare(sq, Direction.right));
   // boundary
-  assertEquals([-1, 15], getAdjacentSquare([0, 15], Direction.left));
+  assertEquals({-1, 15}, getAdjacentSquare({0, 15}, Direction.left));
 } // test
 
 @Test static void test_directionByKey() {

@@ -35,7 +35,7 @@ final Int healthy = white; // constant
 final Int ill = black; // constant
 
 static List<int> getColours() { // function
-  return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill];
+  return {healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill};
 } // function
 
 // vN : neighbourhood: von Neumann (4) true, Moore (8) false
@@ -86,14 +86,14 @@ static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // fu
   var sR = grid[(i + 1 + gW) % gW][j];
   var sA = grid[i][(j - 1 + gH) % gH];
   var sB = grid[i][(j + 1 + gH) % gH];
-  var neighbourColours = [sL, sR, sA, sB];
+  var neighbourColours = {sL, sR, sA, sB};
   if (vN == false) {
     // add diagonal neighbours (Moore)
     var sLA = grid[(i - 1 + gW) % gW][(j - 1 + gH) % gH];
     var sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH];
     var sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH];
     var sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH];
-    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB]; // reassign variable
+    neighbourColours = {sL, sR, sA, sB, sLA, sRA, sLB, sRB}; // reassign variable
   } // if
   return neighbourColours;
 } // function

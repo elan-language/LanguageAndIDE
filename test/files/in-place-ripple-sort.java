@@ -3,7 +3,7 @@
 public class Global {
 
 static void main() {
-  var li = [7, 1, 0, 4, 8, 3, 6];
+  var li = {7, 1, 0, 4, 8, 3, 6};
   System.out.println(li); // print
   inPlaceRippleSort(li); // call procedure
   System.out.println(li); // print

@@ -1,7 +1,7 @@
 // C# with Elan 2.0.0-beta
 
 static void main() {
-  var fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"];
+  var fruit = new [] {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"};
   var done = false;
   while (!done) {
     Console.WriteLine("What type of fruit do you want ('x' to exit)? ");
@@ -37,16 +37,16 @@ static bool binarySearch(List<string> li, string item) { // function
 } // function
 
 [TestMethod] static void test_binarySearch() {
-  var li1 = ["lemon", "lime", "orange"];
+  var li1 = new [] {"lemon", "lime", "orange"};
   Assert.AreEqual(true, binarySearch(li1, "lemon"));
   Assert.AreEqual(true, binarySearch(li1, "lime"));
   Assert.AreEqual(true, binarySearch(li1, "orange"));
   Assert.AreEqual(false, binarySearch(li1, "pear"));
-  var li2 = ["lemon", "orange"];
+  var li2 = new [] {"lemon", "orange"};
   Assert.AreEqual(true, binarySearch(li2, "lemon"));
   Assert.AreEqual(true, binarySearch(li2, "orange"));
   Assert.AreEqual(false, binarySearch(li2, "pear"));
-  var li3 = ["lemon"];
+  var li3 = new [] {"lemon"};
   Assert.AreEqual(true, binarySearch(li3, "lemon"));
   Assert.AreEqual(false, binarySearch(li3, "lime"));
   var li4 = new List<string>();

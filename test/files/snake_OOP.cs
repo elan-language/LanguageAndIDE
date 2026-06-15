@@ -22,7 +22,7 @@ class Snake {
   public Snake() {
     var tail = new Square(20, 15);
     this.currentDir = Direction.right; // reassign variable
-    this.body = [tail]; // reassign variable
+    this.body = new [] {tail}; // reassign variable
     this.head = tail.getAdjacentSquare(this.currentDir); // reassign variable
     this.priorTail = tail; // reassign variable
   } // constructor

@@ -1,12 +1,10 @@
+import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
-import { Space } from "./parse-node-helpers";
-import { PunctuationNode } from "./punctuation-node";
-import { SpaceNode } from "./space-node";
 
 export class ListNode extends AbstractSequence {
   csv: CSV | undefined;
@@ -18,13 +16,8 @@ export class ListNode extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    if (text.length > 0) {
-      const lang = this.file.language();
-      this.addElement(new PunctuationNode(this.file, lang.LIST_START));
-      this.csv = new CSV(this.file, this.elementConstructor, 1);
-      this.addElement(this.csv);
-      this.addElement(new SpaceNode(this.file, Space.ignored));
-      this.addElement(new PunctuationNode(this.file, lang.LIST_END));
+    if (text.trim().length > 0) {
+      this.file.language().addNodesForList(this);
       super.parseText(text);
     }
   }
@@ -38,14 +31,12 @@ export class ListNode extends AbstractSequence {
   override renderAsHtml(): string {
     const lang = this.file.language();
     return this.isValid()
-      ? `${lang.LIST_START}${this.csv?.renderAsHtml()}${lang.LIST_END}`
+      ? lang.listAsHtml(this)
       : this.matchedText;
   }
 
   override renderAsExport(): string {
-    const lang = this.file.language();
-    return this.isValid()
-      ? `${lang.LIST_START}${this.csv?.renderAsExport()}${lang.LIST_END}`
-      : this.matchedText;
+      const lang = this.file.language();
+      return this.isValid() ? removeHtmlTagsAndEscChars(lang.listAsHtml(this)) : this.matchedText;
   }
 }
