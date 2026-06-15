@@ -4,6 +4,7 @@ import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -846,7 +847,7 @@ end main
     ]);
   });
 
-  test("Fail_1DListAccessedAs2D2", async () => {
+  test("Fail_useOfCommaInIndex", async () => {
     const code = `${testHeader}
 
 main
@@ -866,10 +867,7 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot double index List<of List<of Int>>.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_2DListAccessedAs1D", async () => {

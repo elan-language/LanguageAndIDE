@@ -123,7 +123,6 @@ import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
-import { IndexDouble } from "../frames/parse-nodes/index-double";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
 import { InstanceNode } from "../frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
@@ -907,12 +906,6 @@ export function transform(
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
     return new TypeAsn(TupleName, gp, fieldId, scope);
-  }
-
-  if (node instanceof IndexDouble) {
-    const index1 = transform(node.index1, fieldId, scope) as AstCollectionNode;
-    const index2 = transform(node.index2, fieldId, scope) as AstCollectionNode;
-    return new IndexDoubleAsn(index1, index2, fieldId, scope);
   }
 
   if (node instanceof Index) {
