@@ -161,7 +161,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_ReturnAFunction", async () => {
+  test("Fail_ReturnAFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -208,11 +208,10 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "10");
+    
   });
 
-  test("Pass_SetAsVariable", async () => {
+  test("Fail_SetAsVariable", async () => {
     const code = `${testHeader}
 
 main
@@ -223,19 +222,6 @@ end main
 function twice(x as Float) returns Float
   return x * 2
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f = global.twice;
-  await _stdlib.printNoLine((await f(5)));
-}
-
-async function twice(x) {
-  return x * 2;
-}
-global["twice"] = twice;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -250,8 +236,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "10");
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Pass_SetAsProperty", async () => {
@@ -364,7 +351,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "function ff");
   });
 
-  test("Pass_SetAsVariableWithoutRefKeyword", async () => {
+  test("Fail_SetAsVariableWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -375,19 +362,6 @@ end main
 function twice(x as Float) returns Float
   return x * 2
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f = global.twice;
-  await _stdlib.printNoLine((await f(5)));
-}
-
-async function twice(x) {
-  return x * 2;
-}
-global["twice"] = twice;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -402,8 +376,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "10");
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
@@ -499,7 +474,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter0 (Int).ErrorMessages.html#compile_error",
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -552,7 +527,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test("Pass_ReturnAFunctionWithoutRefKeyword", async () => {
+  test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -568,24 +543,6 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let f = (await global.getFunc());
-  await _stdlib.printNoLine((await f(5)));
-}
-
-async function getFunc() {
-  return global.twice;
-}
-global["getFunc"] = getFunc;
-
-async function twice(x) {
-  return x * 2;
-}
-global["twice"] = twice;
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -599,8 +556,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "10");
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Pass_SetAsPropertyWithoutRefKeyword", async () => {

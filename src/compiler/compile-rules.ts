@@ -974,6 +974,15 @@ export function mustBeCompatibleDefinitionNode(
     compileErrors.push(new SyntaxCompileError(`Cannot assign a test to a variable.`, location));
   }
 
+  if (rst instanceof FunctionType) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `To evaluate a function in an expression it must have brackets and arguments for required parameters.`,
+        location,
+      ),
+    );
+  }
+
   if (isConstant && !isValueType(rst)) {
     compileErrors.push(
       new SyntaxCompileError(`Can only assign a value type to a constant`, location),

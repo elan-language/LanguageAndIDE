@@ -1651,7 +1651,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[two, three]");
   });
 
-  test("Pass_listOfFunction", async () => {
+  test("Fail_listOfFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -1664,21 +1664,6 @@ end main
 function foo(i as Int) returns Int
   return i
 end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let foo1 = global.foo;
-  let body = system.list([global.foo, foo1]);
-  let foo2 = system.safeIndex(body, 0);
-  await _stdlib.printNoLine((await foo2(1)));
-}
-
-async function foo(i) {
-  return i;
-}
-global["foo"] = foo;
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -1693,8 +1678,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    assertDoesNotCompile(fileImpl, [
+      "To evaluate a function in an expression it must have brackets and arguments for required parameters.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Pass_addElementToList", async () => {
