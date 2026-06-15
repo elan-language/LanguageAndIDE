@@ -65,7 +65,7 @@
   even professional programmers break the rules don't fit those circumstances: they are broken because the programmer just finds
   it more convenient. It is far better to learn to program without breaking these rules than that to adopt 
   bad habits from the beginning. This will result in you writing better code and encountering fewer unexpected problems.</p>  
-  <p>The seven best practices enforced by Elan for procedural programming are:</p>
+  <p>The six best practices enforced by Elan for procedural programming are:</p>
 <ol>
   <li><a href="#noGlobalVars">No global variables <i class="fa">&#xf14c;</i></a></li>
   <li><a href="#staticTyping">Static typing <i class="fa">&#xf14c;</i></a></li>
@@ -73,6 +73,9 @@
   <li><a href="#noEarlyBreaks">No breaking out of loops before they have completed <i class="fa">&#xf14c;</i></a></li>
   <li><a href="#functionReturn">Return from a function or procedure only after the final instruction <i class="fa">&#xf14c;</i></a></li>
   <li><a href="#pureFunctions">All functions must be pure <i class="fa">&#xf14c;</i></a></li>
+</ol>
+together with this seventh best practice that is supported and encouraged by Elan:
+<ol start="7">
   <li><a href="#unitTesting">Every function should be unit tested <i class="fa">&#xf14c;</i></a></li>
 </ol>
 
@@ -264,9 +267,10 @@ where you might encounter one, <i>you will get a clear error message that gives 
 </div>
 
 <h1 id="globalInstructions">Global instructions</h1>
-<p>In Python, VB, C#, or the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
-  and are therefore not indented. Java is slightly different: because <i>all</i> must be within a class. When writing Java with Elan, the file 
-generates a non-editable 'boilerplate' class named <code>Global</code> and all 'global' instructions are created directly within that, and automatically indented.</p>
+<p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
+  and are therefore not indented.</p>
+<img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
+generates a non-editable class named <code>Global</code>, and all global instructions are created directly within that (and automatically indented).</p>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -352,7 +356,7 @@ end main
 <p>From the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
 <codeblock>
-procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+procedure moveGrowBurst(bubbles as List<of CircleVG>)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -389,7 +393,7 @@ end procedure
 <p>From the <b>Life - procedural</b> demo. The code sets each of the cells in the 40x30 <code>grid</code></p>
 
 <codeblock>
-procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
+procedure fillRandom(grid as List<of List<of Int>>)
   for col in range(0, 40)
     for row in range(0, 30)
       reassign grid[col][row] to blackOrWhite(random())
@@ -441,11 +445,11 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <codeblock>
 main
   variable arg set to "abc"
-  variable argRef set to new AsRef&lt;of String&gt;(arg)
+  variable argRef set to new AsRef<of String>(arg)
   call changeArg(argRef)
   print(argRef.value())
 end main
-procedure changeArg(pointer as AsRef&lt;of String&gt;)
+procedure changeArg(pointer as AsRef<of String>)
   variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
@@ -530,7 +534,7 @@ end function
 <p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
 
 <codeblock>
-function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
+function binarySearch(li as List<of String>, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -919,7 +923,7 @@ enum Outcome undecided, win, lose, draw, winDouble
  <p>From the <b>Bubbles</b> demo, where comments explain specific blocks of instructions<p>
 
   <codeblock>
-procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+procedure moveGrowBurst(bubbles as List<of CircleVG>)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -1017,9 +1021,9 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef&lt;of Direction&gt;(currentDir)
-    variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
-    variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
+    variable currentDirRef set to new AsRef<of Direction>(currentDir)
+    variable headRef set to new AsRef<of List<of Int>>(head)
+    variable tailRef set to new AsRef<of List<of Int>>(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
     reassign head to headRef.value()
     reassign tail to tailRef.value()
@@ -1153,7 +1157,7 @@ end procedure
   system method:</p>
 
 <codeblock>
-procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
+procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1766,7 +1770,7 @@ end main
  <td>
 <codeblock>
 main
-  variable li set to new List&lt;of Int&gt;()
+  variable li set to new List<of Int>()
   reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
@@ -1946,7 +1950,7 @@ e.g. in a particular call to a Higher-order Function.</p>
 
 Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
 <codeblock>
-function liveNeighbours(cells as List&lt;of Boolean&gt;, c as Int) returns Int
+function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
   variable neighbours set to neighbourCells(c)
   variable live set to neighbours.filter(lambda i as Int => cells[i])
   return live.length()
@@ -1997,7 +2001,7 @@ end procedure
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
    or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
-<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
+<code>variable headRef set to new AsRef&lt;of List<of Int&gt;&gt;(head)</code>
 
 <div>
   <h1>Miscellaneous</h1>
@@ -2076,8 +2080,8 @@ end procedure
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
  <p>For certain types the name may be followed by an <b>of</b> clause, for example:</p>
-<code>List</code>&lt;<b>of</b> <code>Int</code>&gt;<br>
-<code>Dictionary</code>&lt;<b>of</b> <code>String</code>, <code>Int</code>&gt;
+<code>List&lt;of Int&gt;</code><br>
+<code>Dictionary&lt;of String, Int&gt;</code>
 
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,
