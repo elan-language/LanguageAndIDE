@@ -72,7 +72,7 @@ def addRoute(gr: list[list[int]], route: list[Point]) -> list[list[int]]: # func
   graphics = withPut(graphics, dest.x, dest.y, red) # reassign variable
   return graphics
 
-class Solver # concrete class
+class Solver: # concrete class
 
   def __init__(self: Solver, nodes: list[Node], start: Point, destination: Point) -> None:
     self.nodes = nodes # reassign variable
@@ -181,7 +181,7 @@ class Solver # concrete class
 def emptyNode() -> Node: # function
   return Node(emptyPoint(), 0, 0)
 
-class Node # concrete class
+class Node: # concrete class
 
   def __init__(self: Node, p: Point, distFromStart: float, estDistToDest: float) -> None:
     if p.isEmpty:
@@ -221,7 +221,7 @@ class Node # concrete class
 def emptyPoint() -> Point: # function
   return Point(-1, -1)
 
-class Point # concrete class
+class Point: # concrete class
 
   x: int # property
 

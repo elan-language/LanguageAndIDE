@@ -197,7 +197,7 @@ def test_htmlForSpot(self) -> None:
   self.assertEqual(htmlForSpot("c", "&hearts;"), "<div class='c'>&hearts;</div>")
   self.assertEqual(htmlForSpot("u", "10"), "<div class='u'>10</div>")
 
-class Game # concrete class
+class Game: # concrete class
 
   def __init__(self: Game, dealerStartPoints: int) -> None:
     self.dealer = Dealer(dealerStartPoints) # reassign variable
@@ -237,7 +237,7 @@ class Game # concrete class
 
 
 
-class Card # concrete class
+class Card: # concrete class
 
   suit: Suit # property
 
@@ -261,7 +261,7 @@ class Card # concrete class
 
 
 
-class Player(ABC) # abstract class
+class Player(ABC): # abstract class
 
   name: str # property
 
@@ -369,7 +369,7 @@ def nextAction(dealerFaceCard: Card) -> None
 
 
 
-class Dealer(Player) # concrete class
+class Dealer(Player): # concrete class
 
   def __init__(self: Dealer, startingPoints: int) -> None:
     self.name = "Dealer" # reassign variable
@@ -421,7 +421,7 @@ class Dealer(Player) # concrete class
 
 
 
-class HumanPlayer(Player) # concrete class
+class HumanPlayer(Player): # concrete class
 
   def __init__(self: HumanPlayer, name: str, startingPoints: int) -> None:
     self.name = name # reassign variable
