@@ -14,6 +14,7 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
 import { Lambda } from "./parse-nodes/lambda";
+import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -70,6 +71,13 @@ export abstract class LanguageAbstract implements Language {
   abstract renderFileTrailerAsHtml(f: FileImpl): string;
 
   abstract translateExpression(expr: string): string;
+  
+  abstract addNodesForParamDef(node: ParamDefNode): void;
+  abstract addNodesForNewInstance(node: NewInstance): void;
+  abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
+  abstract addNodesForTypeTuple(node: TypeTupleNode): void;
+  abstract addNodesForLambda(node: Lambda): void;
+  abstract addNodesForList(node: ListNode): void;
 
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
@@ -79,6 +87,21 @@ export abstract class LanguageAbstract implements Language {
   abstract enumValuesListAsHtml(field: EnumValuesField): string;
   abstract inheritsFromTextAsHtml(field: InheritsFromField): string;
   abstract lambdaAsHtml(node: Lambda): string;
+  abstract listAsHtml(node: ListNode): string;
+
+  abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+
+  default_addNodesForList(node: ListNode): void {
+    node.addElement(new PunctuationNode(node.file, this.LIST_START));
+    node.csv = new CSV(node.file, node.elementConstructor, 1);
+    node.addElement(node.csv);
+    node.addElement(new SpaceNode(node.file, Space.ignored));
+    node.addElement(new PunctuationNode(node.file, this.LIST_END));
+  }
+
+  default_listAsHtml(node: ListNode): string {
+    return `${this.LIST_START}${node.csv?.renderAsHtml()}${this.LIST_END}`;
+  }
 
   default_litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return `${this.INTERPOLATED_STRING_PREFIX}"${node.segments!.renderAsHtml()}"`;
@@ -87,13 +110,6 @@ export abstract class LanguageAbstract implements Language {
   default_typeTupleAsHtml(node: TypeTupleNode): string {
     return `(${node.types?.renderAsHtml()})`;
   }
-
-  abstract addNodesForParamDef(node: ParamDefNode): void;
-  abstract addNodesForNewInstance(node: NewInstance): void;
-  abstract addNodesForTypeGeneric(node: TypeGenericNode): void;
-  abstract addNodesForTypeTuple(node: TypeTupleNode): void;
-  abstract addNodesForLambda(node: Lambda): void;
-  abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
     return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;

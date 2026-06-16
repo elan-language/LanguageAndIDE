@@ -235,8 +235,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   NOT = "!";
 
   COMMENT_MARKER: string = "//";
-  LIST_START: string = "[";
-  LIST_END: string = "]";
+  LIST_START: string = "{";
+  LIST_END: string = "}";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";
@@ -293,7 +293,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return `<el-kw>${this.NEW_INSTANCE_PREFIX} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 
-  c_langs_enumValuesListAsHtml(field: EnumValuesField): string {
+  c_langs_enumValues(field: EnumValuesField): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }
+  }  
 }

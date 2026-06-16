@@ -339,6 +339,14 @@ export class LanguagePython extends LanguageAbstract {
     node.addElement(node.expr);
   }
 
+  addNodesForList(node: ListNode): void {
+    this.default_addNodesForList(node);
+  }
+  
+  listAsHtml(node: ListNode): string {
+    return this.default_listAsHtml(node);
+  }
+
   lambdaAsHtml(node: Lambda): string {
     return `<el-kw>${this.LAMBDA}</el-kw> ${node.params!.renderAsHtml()}${COLON} ${node.expr!.renderAsHtml()}`;
   }

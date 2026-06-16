@@ -1,7 +1,7 @@
 // C# with Elan 2.0.0-beta
 
 static void main() {
-  var li = [7, 1, 0, 4, 8, 3, 6];
+  var li = new [] {7, 1, 0, 4, 8, 3, 6};
   Console.WriteLine(li); // print
   inPlaceRippleSort(li); // call procedure
   Console.WriteLine(li); // print

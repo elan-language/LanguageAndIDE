@@ -32,6 +32,7 @@ import { ExprNode } from "./parse-nodes/expr-node";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
+import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -358,6 +359,14 @@ export class LanguageElan extends LanguageAbstract {
 
   lambdaAsHtml(node: Lambda): string {
     return `<el-kw>${lambdaKeyword}</el-kw> ${node.params!.renderAsHtml()} ${ARROW} ${node.expr!.renderAsHtml()}`;
+  }
+
+  addNodesForList(node: ListNode): void {
+    this.default_addNodesForList(node);
+  }
+  
+  listAsHtml(node: ListNode): string {
+    return this.default_listAsHtml(node);
   }
 
   enumValuesListAsHtml(field: EnumValuesField): string {

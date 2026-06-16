@@ -19,12 +19,12 @@ static double sum(List<double> li) { // function
 } // function
 
 [TestMethod] static void test_sum() {
-  var li = [3.1, 5.02, 4, 7.73, 9.9]; // let
+  var li = new [] {3.1, 5.02, 4, 7.73, 9.9}; // let
   Assert.AreEqual(29.75, sum(li).round(2));
   // edge cases: empty, and one element lists
   var le = new List<double>(); // let
   Assert.AreEqual(0, sum(le));
-  var l1 = [0.6]; // let
+  var l1 = new [] {0.6}; // let
   Assert.AreEqual(0.6, sum(l1));
 } // test
 
@@ -33,11 +33,11 @@ static List<double> reverse(List<double> li) { // function
 } // function
 
 [TestMethod] static void test_reverse() {
-  var l = [3.1, 5.02, 4, 7.73, 9.9]; // let
-  Assert.AreEqual([9.9, 7.73, 4, 5.02, 3.1], reverse(l));
+  var l = new [] {3.1, 5.02, 4, 7.73, 9.9}; // let
+  Assert.AreEqual(new [] {9.9, 7.73, 4, 5.02, 3.1}, reverse(l));
   // edge cases: empty, and one element lists
   var le = new List<double>(); // let
   Assert.AreEqual(le, reverse(le));
-  var l1 = [0.6]; // let
+  var l1 = new [] {0.6}; // let
   Assert.AreEqual(l1, reverse(l1));
 } // test

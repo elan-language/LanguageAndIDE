@@ -40,7 +40,7 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   var bHead = b.head(); // let
   var aTail = a.tail(); // let
   var bTail = b.tail(); // let
-  return if(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)));
+  return if(aHead.isBefore(bHead), new [] {aHead}.withAppendList(merge(aTail, b)), new [] {bHead}.withAppendList(merge(a, bTail)));
 } // function
 
 [TestMethod] static void test_sort() {
@@ -48,86 +48,86 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   var l1 = new List<string>(); // let
   Assert.AreEqual(l1, sort(l1));
   // Edge case: one item
-  var li2 = ["plum"]; // let
+  var li2 = new [] {"plum"}; // let
   Assert.AreEqual(li2, sort(li2));
   // Happy case: odd number of members
-  var li3 = ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]; // let
-  var sorted3 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]; // let
+  var li3 = new [] {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}; // let
+  var sorted3 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"}; // let
   Assert.AreEqual(sorted3, sort(li3));
   // Happy case: even number of members
-  var li4 = ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]; // let
-  var sorted4 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]; // let
+  var li4 = new [] {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"}; // let
+  var sorted4 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"}; // let
   Assert.AreEqual(sorted4, sort(li4));
   // Edge case: already sorted
-  var li5 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]; // let
+  var li5 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"}; // let
   Assert.AreEqual(li5, sort(li5));
 } // test
 
 [TestMethod] static void test_sortedFrontHalf() {
   // Edge case: one item - so front half is empty
-  var li1 = ["plum"]; // let
+  var li1 = new [] {"plum"}; // let
   Assert.AreEqual(new List<string>(), sortedFrontHalf(li1));
   // Happy case: odd number of members
-  var li2 = ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]; // let
-  Assert.AreEqual(["apricot", "lemon", "lime", "plum"], sortedFrontHalf(li2));
+  var li2 = new [] {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}; // let
+  Assert.AreEqual(new [] {"apricot", "lemon", "lime", "plum"}, sortedFrontHalf(li2));
   // Happy case: even number of members
-  var li3 = ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]; // let
-  Assert.AreEqual(["apricot", "lemon", "melon", "plum"], sortedFrontHalf(li3));
+  var li3 = new [] {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"}; // let
+  Assert.AreEqual(new [] {"apricot", "lemon", "melon", "plum"}, sortedFrontHalf(li3));
   // Edge case: already sorted
-  var li4 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]; // let
-  Assert.AreEqual(["apple", "apricot", "lemon"], sortedFrontHalf(li4));
+  var li4 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"}; // let
+  Assert.AreEqual(new [] {"apple", "apricot", "lemon"}, sortedFrontHalf(li4));
 } // test
 
 [TestMethod] static void test_sortedBackHalf() {
   // Edge case: one item - so back half is whole list
-  var li1 = ["plum"]; // let
-  Assert.AreEqual(["plum"], sortedBackHalf(li1));
+  var li1 = new [] {"plum"}; // let
+  Assert.AreEqual(new [] {"plum"}, sortedBackHalf(li1));
   // Happy case: odd number of members
-  var li2 = ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]; // let
-  Assert.AreEqual(["apple", "melon", "orange", "pear", "strawberry"], sortedBackHalf(li2));
+  var li2 = new [] {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}; // let
+  Assert.AreEqual(new [] {"apple", "melon", "orange", "pear", "strawberry"}, sortedBackHalf(li2));
   // Happy case: even number of members
-  var li3 = ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]; // let
-  Assert.AreEqual(["apple", "orange", "pear", "strawberry"], sortedBackHalf(li3));
+  var li3 = new [] {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"}; // let
+  Assert.AreEqual(new [] {"apple", "orange", "pear", "strawberry"}, sortedBackHalf(li3));
   // Edge case: already sorted
-  var li4 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]; // let
-  Assert.AreEqual(["lime", "melon", "orange", "pear"], sortedBackHalf(li4));
+  var li4 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"}; // let
+  Assert.AreEqual(new [] {"lime", "melon", "orange", "pear"}, sortedBackHalf(li4));
 } // test
 
 [TestMethod] static void test_merge() {
   // Happy cases:
-  var l1 = ["apple", "lime", "pear"]; // let
-  var l2 = ["apricot", "lemon", "plum", "watermelon"]; // let
-  Assert.AreEqual(["melon", "orange"], merge(["orange"], ["melon"]));
-  Assert.AreEqual(["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"], merge(l1, l2));
-  Assert.AreEqual(["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"], merge(l2, l1));
+  var l1 = new [] {"apple", "lime", "pear"}; // let
+  var l2 = new [] {"apricot", "lemon", "plum", "watermelon"}; // let
+  Assert.AreEqual(new [] {"melon", "orange"}, merge(new [] {"orange"}, new [] {"melon"}));
+  Assert.AreEqual(new [] {"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, merge(l1, l2));
+  Assert.AreEqual(new [] {"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, merge(l2, l1));
   // Edge cases - empty list(s)
   var le = new List<string>(); // let
   Assert.AreEqual(le, merge(le, le));
   Assert.AreEqual(l1, merge(l1, le));
   Assert.AreEqual(l2, merge(le, l2));
   // Edge case - duplication
-  Assert.AreEqual(["apple", "apple", "lime", "lime", "pear", "pear"], merge(l1, l1));
+  Assert.AreEqual(new [] {"apple", "apple", "lime", "lime", "pear", "pear"}, merge(l1, l1));
   // Error case lists not sorted will not produce correct result
-  var lu = ["lime", "pear", "apple"]; // let
-  Assert.AreEqual(["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"], merge(lu, l2));
-  Assert.AreEqual(["lime", "pear", "apple"], merge(lu, le));
+  var lu = new [] {"lime", "pear", "apple"}; // let
+  Assert.AreEqual(new [] {"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2));
+  Assert.AreEqual(new [] {"lime", "pear", "apple"}, merge(lu, le));
 } // test
 
 [TestMethod] static void test_mergeNonEmpty() {
-  var l1 = ["apple", "lime", "pear"]; // let
-  var l2 = ["apricot", "lemon", "plum", "watermelon"]; // let
-  Assert.AreEqual(["melon", "orange"], mergeNonEmpty(["orange"], ["melon"]));
-  Assert.AreEqual(["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"], mergeNonEmpty(l1, l2));
-  Assert.AreEqual(["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"], mergeNonEmpty(l2, l1));
-  Assert.AreEqual(["apple", "apple", "lime", "lime", "pear", "pear"], mergeNonEmpty(l1, l1));
+  var l1 = new [] {"apple", "lime", "pear"}; // let
+  var l2 = new [] {"apricot", "lemon", "plum", "watermelon"}; // let
+  Assert.AreEqual(new [] {"melon", "orange"}, mergeNonEmpty(new [] {"orange"}, new [] {"melon"}));
+  Assert.AreEqual(new [] {"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, mergeNonEmpty(l1, l2));
+  Assert.AreEqual(new [] {"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, mergeNonEmpty(l2, l1));
+  Assert.AreEqual(new [] {"apple", "apple", "lime", "lime", "pear", "pear"}, mergeNonEmpty(l1, l1));
   //  Edge case: duplication
-  Assert.AreEqual(["apple", "apple", "lime", "lime", "pear", "pear"], mergeNonEmpty(l1, l1));
+  Assert.AreEqual(new [] {"apple", "apple", "lime", "lime", "pear", "pear"}, mergeNonEmpty(l1, l1));
   // Edge cases: single elements
-  Assert.AreEqual(["apple", "lemon", "lime", "pear"], mergeNonEmpty(l1, ["lemon"]));
-  Assert.AreEqual(["apple", "lime", "melon", "pear"], mergeNonEmpty(["melon"], l1));
+  Assert.AreEqual(new [] {"apple", "lemon", "lime", "pear"}, mergeNonEmpty(l1, new [] {"lemon"}));
+  Assert.AreEqual(new [] {"apple", "lime", "melon", "pear"}, mergeNonEmpty(new [] {"melon"}, l1));
   // Error case - pass empty list
   Assert.AreEqual("Out of range index: 0 size: 0", mergeNonEmpty(new List<string>(), l1));
   //  Error case unsorted list
-  var lu = ["lime", "pear", "apple"]; // let
-  Assert.AreEqual(["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"], merge(lu, l2));
+  var lu = new [] {"lime", "pear", "apple"}; // let
+  Assert.AreEqual(new [] {"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2));
 } // test

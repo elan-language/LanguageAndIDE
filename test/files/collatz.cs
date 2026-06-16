@@ -9,7 +9,7 @@ static void main() {
   while (x > 0) {
     x = inputInt("Enter a starting number (0 to quit)"); // reassign variable
     // Array of the values we have seen so far
-    var p = [x];
+    var p = new [] {x};
     // capture the max value so we can scale the graph
     var max = x;
     while (x > 1) {

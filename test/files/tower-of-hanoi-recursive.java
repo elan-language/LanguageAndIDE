@@ -75,22 +75,22 @@ static List<List<int>> create3Stacks(int nDiscs) { // function
   var s0 = rangeInSteps(nDiscs, 0, -1);
   var s1 = new List<int>();
   var s2 = new List<int>();
-  return [s0, s1, s2];
+  return {s0, s1, s2};
 } // function
 
 @Test static void test_create3Stacks() {
   var emptyStack = new List<int>();
   // Normal case(s)
-  assertEquals([[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack], create3Stacks(7));
+  assertEquals({{7, 6, 5, 4, 3, 2, 1}, emptyStack, emptyStack}, create3Stacks(7));
   // Edge case(s)
-  assertEquals([[1], emptyStack, emptyStack], create3Stacks(1));
-  assertEquals([emptyStack, emptyStack, emptyStack], create3Stacks(0));
+  assertEquals({{1}, emptyStack, emptyStack}, create3Stacks(1));
+  assertEquals({emptyStack, emptyStack, emptyStack}, create3Stacks(0));
   // Error case(s)
   assertEquals("Loop will not terminate when start < end start with negative step", create3Stacks(-1));
 } // test
 
 static int colour(int disc) { // function
-  var colours = [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC];
+  var colours = {red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC};
   return colours[disc - 1];
 } // function
 
@@ -110,9 +110,9 @@ static int top(List<int> s) { // function
 
 @Test static void test_top() {
   // Normal cases
-  assertEquals(1, top([3, 2, 1]));
+  assertEquals(1, top({3, 2, 1}));
   // Edge cases
-  assertEquals(7, top([7]));
+  assertEquals(7, top({7}));
   // Error cases
   assertEquals("Out of range index: -1 size: 0", top(new List<int>()));
 } // test

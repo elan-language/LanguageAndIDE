@@ -98,7 +98,7 @@ static (int, int) southWest((int, int) cell) { // function
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
   var c = (x, y);
-  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)];
+  return new [] {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
 } // function
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
@@ -201,7 +201,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
 } // test
 
 [TestMethod] static void test_neighbourCells() {
-  Assert.AreEqual([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4));
+  Assert.AreEqual(new [] {(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4));
 } // test
 
 [TestMethod] static void test_willLive() {

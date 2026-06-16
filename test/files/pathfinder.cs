@@ -12,7 +12,7 @@ static void main() {
   displayBlocks(gr); // call procedure
   var solver = new Solver(nodes, start, destination);
   while (true) {
-    var k = inputStringFromOptions(algPrompt, ["a", "d", "h"]);
+    var k = inputStringFromOptions(algPrompt, new [] {"a", "d", "h"});
     clearPrintedText(); // call procedure
     var alg = getAlgFromLetter(k);
     runSolver(gr, start, destination, rocks, solver, alg); // call procedure
@@ -199,7 +199,7 @@ class Solver {
   } // function method
 
   public (List<Point>, double) getRouteAndLength() { // function method
-    var route = [this.destination];
+    var route = new [] {this.destination};
     var length = 0.0;
     var node = this.getNodeFor(this.destination);
     while (!node.point.equals(this.start)) {
@@ -292,7 +292,7 @@ class Point {
 
   // Returns the 8 theoretically-neighbouring points, whether or not within bounds
   public List<Point> neighbouringPoints() { // function method
-    return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)];
+    return new [] {new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)};
   } // function method
 
   public string toString() { // function method
@@ -327,6 +327,6 @@ static Algorithm getAlgFromLetter(string letter) { // function
 [TestMethod] static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
-  var expected = [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)];
+  var expected = new [] {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)};
   Assert.AreEqual(expected, n);
 } // test

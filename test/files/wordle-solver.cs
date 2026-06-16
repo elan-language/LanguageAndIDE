@@ -47,7 +47,7 @@ static string setTargetIfGreen(string attempt, string target, int n) { // functi
 } // function
 
 static List<string> evaluateGreens(string attempt, string target) { // function
-  return range(0, 5).reduce([attempt, target], List<string> a, int x => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)]);
+  return range(0, 5).reduce(new [] {attempt, target}, List<string> a, int x => new [] {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)});
 } // function
 
 static bool isYellow(string attempt, string target, int n) { // function
@@ -67,7 +67,7 @@ static string setTargetIfYellow(string attempt, string target, int n) { // funct
 } // function
 
 static List<string> evaluateYellows(string attempt, string target) { // function
-  return range(0, 5).reduce([attempt, target], List<string> a, int x => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)]);
+  return range(0, 5).reduce(new [] {attempt, target}, List<string> a, int x => new [] {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)});
 } // function
 
 static string markAttempt(string attempt, string target) { // function
@@ -140,17 +140,17 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(b2, betterOf(b2, a3, possAnswers));
   Assert.AreEqual(b2, betterOf(b2, a2, possAnswers));
   Assert.AreEqual(a2, betterOf(a2, b2, possAnswers));
-  var possAnswers2 = ["B"]; // let
+  var possAnswers2 = new [] {"B"}; // let
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers2));
-  var possAnswers3 = ["B", "A"]; // let
+  var possAnswers3 = new [] {"B", "A"}; // let
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers3));
   Assert.AreEqual(a2, betterOf(b2, a2, possAnswers3));
 } // test
 
 [TestMethod] static void test_bestAttempt() {
-  var possAnswers = ["ABCDE", "ABBBB", "EDCBA"]; // let
+  var possAnswers = new [] {"ABCDE", "ABBBB", "EDCBA"}; // let
   Assert.AreEqual("EDCBA", bestAttempt(possAnswers));
-  var possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"]; // let
+  var possAnswers2 = new [] {"ABCDE", "ABBBB", "BCDEA"}; // let
   Assert.AreEqual("BCDEA", bestAttempt(possAnswers2));
 } // test
 
@@ -188,11 +188,11 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 } // test
 
 [TestMethod] static void test_evaluateGreens() {
-  Assert.AreEqual(["*BCDE", ".XXXX"], evaluateGreens("ABCDE", "AXXXX"));
-  Assert.AreEqual(["ABCD*", "XXXX."], evaluateGreens("ABCDE", "XXXXE"));
-  Assert.AreEqual(["*****", "....."], evaluateGreens("ABCDE", "ABCDE"));
-  Assert.AreEqual(["*ACDE", ".XXXX"], evaluateGreens("AACDE", "AXXXX"));
-  Assert.AreEqual(["*BCDE", ".AXXX"], evaluateGreens("ABCDE", "AAXXX"));
+  Assert.AreEqual(new [] {"*BCDE", ".XXXX"}, evaluateGreens("ABCDE", "AXXXX"));
+  Assert.AreEqual(new [] {"ABCD*", "XXXX."}, evaluateGreens("ABCDE", "XXXXE"));
+  Assert.AreEqual(new [] {"*****", "....."}, evaluateGreens("ABCDE", "ABCDE"));
+  Assert.AreEqual(new [] {"*ACDE", ".XXXX"}, evaluateGreens("AACDE", "AXXXX"));
+  Assert.AreEqual(new [] {"*BCDE", ".AXXX"}, evaluateGreens("ABCDE", "AAXXX"));
 } // test
 
 [TestMethod] static void test_isYellow() {
@@ -229,12 +229,12 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 } // test
 
 [TestMethod] static void test_evaluateYellows() {
-  Assert.AreEqual(["+____", "X.XXX"], evaluateYellows("ABCDE", "XAXXX"));
-  Assert.AreEqual(["+____", "XXXX."], evaluateYellows("ABCDE", "XXXXA"));
-  Assert.AreEqual(["____+", "XXXX."], evaluateYellows("ABCDE", "XXXXE"));
-  Assert.AreEqual(["+____", "X.AXX"], evaluateYellows("ABCDE", "XAAXX"));
-  Assert.AreEqual(["+____", "X.XXX"], evaluateYellows("AACDE", "XAXXX"));
-  Assert.AreEqual(["+++++", "....."], evaluateYellows("ABCDE", "BCDEA"));
+  Assert.AreEqual(new [] {"+____", "X.XXX"}, evaluateYellows("ABCDE", "XAXXX"));
+  Assert.AreEqual(new [] {"+____", "XXXX."}, evaluateYellows("ABCDE", "XXXXA"));
+  Assert.AreEqual(new [] {"____+", "XXXX."}, evaluateYellows("ABCDE", "XXXXE"));
+  Assert.AreEqual(new [] {"+____", "X.AXX"}, evaluateYellows("ABCDE", "XAAXX"));
+  Assert.AreEqual(new [] {"+____", "X.XXX"}, evaluateYellows("AACDE", "XAXXX"));
+  Assert.AreEqual(new [] {"+++++", "....."}, evaluateYellows("ABCDE", "BCDEA"));
 } // test
 
 [TestMethod] static void test_markAttempt() {
@@ -249,14 +249,14 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 } // test
 
 [TestMethod] static void test_possibleAnswersAfterAttempt() {
-  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]; // let
-  Assert.AreEqual(["ABCDE"], possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
-  Assert.AreEqual(["BCDEA", "CDEAB", "DEABC", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
-  Assert.AreEqual(["BCDEA", "CDEAB", "EABCD"], possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
+  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
+  Assert.AreEqual(new [] {"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
+  Assert.AreEqual(new [] {"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
+  Assert.AreEqual(new [] {"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
 } // test
 
 [TestMethod] static void test_maxWordCountRemainingAfterAttempt() {
-  var prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]; // let
+  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
   var d = new Dictionary<string, int>(); // let
   Assert.AreEqual(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"));
   Assert.AreEqual(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"));
@@ -274,7 +274,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 } // test
 
 [TestMethod] static void test_allRemainingWordCounts() {
-  var possAnswers = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]; // let
+  var possAnswers = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
   var wordcounts = allRemainingWordCounts(possAnswers); // let
   Assert.AreEqual("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
 } // test

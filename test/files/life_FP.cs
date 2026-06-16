@@ -224,13 +224,13 @@ static (int, int) southWest((int, int) cell) { // function
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
   var c = (x, y); // let
-  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)];
+  return new [] {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
 } // function
 
 [TestMethod] static void test_neighbourCells() {
-  Assert.AreEqual([(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)], neighbourCells(3, 4));
-  Assert.AreEqual([(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)], neighbourCells(0, 0));
-  Assert.AreEqual([(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)], neighbourCells(39, 29));
+  Assert.AreEqual(new [] {(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4));
+  Assert.AreEqual(new [] {(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)}, neighbourCells(0, 0));
+  Assert.AreEqual(new [] {(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)}, neighbourCells(39, 29));
 } // test
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function

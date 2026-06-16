@@ -18,6 +18,7 @@ import { ExprNode } from "./parse-nodes/expr-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
+import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
 import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
@@ -166,6 +167,14 @@ export class LanguageJava extends LanguageCfamily {
     node.addElement(node.expr);
   }
 
+  addNodesForList(node: ListNode): void {
+      this.default_addNodesForList(node);
+  }
+
+  listAsHtml(node: ListNode): string {
+      return this.default_listAsHtml(node);
+  }
+
   lambdaAsHtml(node: Lambda): string {
     return `(${node.params!.renderAsHtml()}) ${this.ARROW} ${node.expr!.renderAsHtml()}`;
   }
@@ -187,7 +196,7 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
-    return this.c_langs_enumValuesListAsHtml(field);
+    return this.c_langs_enumValues(field);
   }
 
   standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {

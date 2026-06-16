@@ -33,7 +33,7 @@ static Point newPoint(double x, double y) { // function
 } // function
 
 [TestMethod] static void test_bestFit() {
-  var l1 = [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]; // let
+  var l1 = new [] {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)}; // let
   var a_b = bestFitLine(l1); // let
   var a = a_b.item_0; // let
   var b = a_b.item_1; // let

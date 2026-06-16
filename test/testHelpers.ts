@@ -129,7 +129,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
 }
 
 export async function assertExportsAll(fl: FileImpl, path: string) {
-  let msgs = [];
+  const msgs = [];
 
   msgs.push(await assertExports(fl, path, LanguagePython.Instance));
   msgs.push(await assertExports(fl, path, LanguageVB.Instance));

@@ -162,7 +162,7 @@ static String htmlForGame(Game game) { // function
 @Test static void test_htmlForGame() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("fred", 10)).withCards([c1, c2]); // let
+  var p = (new HumanPlayer("fred", 10)).withCards({c1, c2}); // let
   var players = (new List<Player>()).withAppend(p); // let
   var g2 = (new Game(1)).withPlayers(players); // let
   assertEquals("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
@@ -183,7 +183,7 @@ static String htmlForPlayer(Player player) { // function
 @Test static void test_htmlForPlayer() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("charlie", 10)).withCards([c1, c2]); // let
+  var p = (new HumanPlayer("charlie", 10)).withCards({c1, c2}); // let
   assertEquals("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
 } // test
 
@@ -563,7 +563,7 @@ static Dictionary<String, int> rankValue() { // function
 } // function
 
 static List<String> gridForRank(String rank) { // function
-  var dc = ["A":["royal"], "2":["b", "c"], "3":["a", "b", "c"], "4":["d", "e", "f", "g"], "5":["a", "d", "e", "f", "g"], "6":["d", "e", "f", "g", "h", "i"], "7":["d", "e", "f", "g", "h", "i", "l"], "8":["d", "e", "f", "g", "h", "i", "l", "m"], "9":["a", "d", "e", "f", "g", "n", "o", "p", "r"], "10":["d", "e", "f", "g", "n", "o", "p", "r", "s", "t"], "J":["royal"], "Q":["royal"], "K":["royal"]];
+  var dc = ["A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}];
   return dc[rank];
 } // function
 

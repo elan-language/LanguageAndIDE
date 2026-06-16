@@ -142,7 +142,7 @@ final Int daySecs = 86400; // constant
 // day and month names, and day numbers
 
 static String getWeekdayName(int weekDay) { // function
-  var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var names = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
   return names[weekDay];
 } // function
 
@@ -152,7 +152,7 @@ static String getWeekdayName(int weekDay) { // function
 } // test
 
 static String getMonthName(int month) { // function
-  var names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var names = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
   return names[month - 1];
 } // function
 
@@ -162,7 +162,7 @@ static String getMonthName(int month) { // function
 } // test
 
 static List<int> getStartDays() { // function
-  return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+  return {1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 } // function
 
 static String padLwithZero(int i) { // function

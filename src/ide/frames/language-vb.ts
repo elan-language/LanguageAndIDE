@@ -33,6 +33,7 @@ import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
+import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -352,6 +353,14 @@ export class LanguageVB extends LanguageAbstract {
     node.addElement(new SpaceNode(node.file, Space.added));
     node.expr = new ExprNode(node.file);
     node.addElement(node.expr);
+  }
+
+  listAsHtml(node: ListNode): string {
+      return this.default_listAsHtml(node);
+  }
+
+  addNodesForList(node: ListNode): void {
+      this.default_addNodesForList(node);
   }
 
   lambdaAsHtml(node: Lambda): string {
