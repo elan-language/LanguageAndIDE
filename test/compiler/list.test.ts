@@ -1140,7 +1140,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_IndexWrongType", async () => {
+  test("Fail_IndexWrongType", async () => {
     const code = `${testHeader}
 
 main
@@ -1162,7 +1162,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String), Provided: String, String.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
