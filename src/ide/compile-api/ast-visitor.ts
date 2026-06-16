@@ -113,7 +113,6 @@ import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression"
 import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CommentNode } from "../frames/parse-nodes/comment-node";
 import { CSV } from "../frames/parse-nodes/csv";
-import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../frames/parse-nodes/dot-after";
 import { DottedTerm } from "../frames/parse-nodes/dotted-term";
 import { EnumValUse } from "../frames/parse-nodes/enum-val-use";
@@ -864,11 +863,6 @@ export function transform(
   if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralListAsn(items, fieldId, scope);
-  }
-
-  if (node instanceof DictionaryNode) {
-    const items = transformMany(node.csv!, fieldId, scope);
-    return new LiteralDictionaryAsn(items, fieldId, scope);
   }
   if (node instanceof TupleNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
