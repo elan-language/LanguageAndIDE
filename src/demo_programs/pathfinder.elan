@@ -1,4 +1,4 @@
-# fb73e86e9d376cea4897599d2d5c8e7333d0286dd581154c9003bdaca465b2ee Elan 2.0.0-beta valid
+# 4e40af174bcff2973e79bb32694a698370acfe2e9e39329ac8d9f6709c73a2f8 Elan 2.0.0-beta valid
 
 main
   variable start set to new Point(5, 5)
@@ -310,8 +310,13 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 function getAlgFromLetter(letter as String) returns Algorithm
-  variable algs set to ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic]
-  return algs[letter]
+  variable alg set to Algorithm.heuristic
+  if letter.equals("a") then
+    reassign alg to Algorithm.aStar
+  elif letter.equals("d") then
+    reassign alg to Algorithm.dijkstra
+  end if
+  return alg
 end function
 
 test test_getAlgFromLetter

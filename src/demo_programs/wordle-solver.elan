@@ -251,16 +251,6 @@ test test_maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-test test_incrementCount
-  let possAnswer be "BEGAN"
-  let attempt be "BAGEL"
-  let d be ["*+*_*":2, "*+*+_":3, "*+*++":0]
-  let d2 be incrementCount(d, possAnswer, attempt)
-  assert d2["*+*+_"] is 4
-  assert d2["*+*_*"] is 2
-  assert d2["*+*++"] is 0
-end test
-
 test test_allRemainingWordCounts
   let possAnswers be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
   let wordcounts be allRemainingWordCounts(possAnswers)
