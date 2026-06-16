@@ -342,7 +342,7 @@ export class LanguagePython extends LanguageAbstract {
   addNodesForList(node: ListNode): void {
     this.default_addNodesForList(node);
   }
-  
+
   listAsHtml(node: ListNode): string {
     return this.default_listAsHtml(node);
   }

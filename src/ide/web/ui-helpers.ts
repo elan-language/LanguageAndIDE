@@ -626,7 +626,7 @@ export function getAllLanguages() {
   ];
 }
 
-export function getLanguageByClass(cl: string) : Language{
+export function getLanguageByClass(cl: string): Language {
   const languages = getAllLanguages();
   cl = cl.replace("code", "").replace("running", "").trim();
   return languages.find((l) => l.languageHtmlClass === cl) ?? LanguagePython.Instance;

@@ -28,11 +28,7 @@ import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
-import {
-  mustBeAssignableType,
-  mustBeIndexableType,
-  mustMatchParameters,
-} from "../compile-rules";
+import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
@@ -409,8 +405,8 @@ export function compileSimpleSubscript(
   const index = indices.items[indices.items.length - 1] as IndexAsn;
 
   const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
-    mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
-    mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
+  mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
+  mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }
 

@@ -42,7 +42,6 @@ export interface Language {
   addNodesForLambda(node: Lambda): void;
   addNodesForList(node: ListNode): void;
 
-
   paramDefAsHtml(node: ParamDefNode): string;
   typeGenericAsHtml(node: TypeGenericNode): string;
   newInstanceAsHtml(node: NewInstance): string;
@@ -53,7 +52,7 @@ export interface Language {
   lambdaAsHtml(node: Lambda): string;
   listAsHtml(node: ListNode): string;
 
-    standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   MOD: string;
   EQUAL: string;

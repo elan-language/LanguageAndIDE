@@ -104,9 +104,9 @@ export class TernaryCompileError extends CompileError {
 }
 
 export class SyntaxCompileError extends CompileError {
-  constructor(message: string, location: string, link = "") {
+  constructor(message: string, location: string, link = "", priority?: DisplayPriority) {
     const linkToUse = link === "" ? "ErrorMessages.html#compile_error" : link;
-    super(DisplayPriority.second, Severity.error, message, location, linkToUse);
+    super(priority ?? DisplayPriority.second, Severity.error, message, location, linkToUse);
   }
 }
 

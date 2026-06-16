@@ -356,11 +356,11 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   listAsHtml(node: ListNode): string {
-      return this.default_listAsHtml(node);
+    return this.default_listAsHtml(node);
   }
 
   addNodesForList(node: ListNode): void {
-      this.default_addNodesForList(node);
+    this.default_addNodesForList(node);
   }
 
   lambdaAsHtml(node: Lambda): string {

@@ -10,6 +10,7 @@ import {
   CannotUseSystemMethodInAFunction,
   CompileError,
   DeclaredAboveCompileError,
+  DisplayPriority,
   DivCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
@@ -767,6 +768,8 @@ export function mustBeValueType(
       new SyntaxCompileError(
         `Can only compare value types with an operator. To compare reference types use '.equals'`,
         location,
+        "",
+        DisplayPriority.fourth,
       ),
     );
   }
