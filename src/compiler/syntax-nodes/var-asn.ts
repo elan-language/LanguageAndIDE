@@ -11,11 +11,14 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
+  mustBeAssignableType,
+  mustBeIndexableType,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
 import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
@@ -66,6 +69,28 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     );
   }
 
+  compileAssignSubscript(symbol: ElanSymbol, prefix: string, postfix: string) {
+    const index = this.indices.items[this.indices.items.length - 1] as IndexAsn;
+    const [indexType] = getIndexAndOfType(this.rootSymbolType(), this.indices.items.length - 1);
+    mustBeIndexableType(
+      symbol.symbolId,
+      this.rootSymbolType(),
+      true,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+    mustBeAssignableType(
+      indexType,
+      index.index.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+
+    return `system.safeSet(${prefix}${this.id}, ${this.rhs}, [${postfix}])`;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -99,8 +124,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     const postfix = !isEmptyNode(this.indices) ? `${this.indices.compile()}` : "";
 
     // handles indexing within call statement
+
     const code = this.rhs
-      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, [${postfix}])`
+      ? this.compileAssignSubscript(symbol, prefix, postfix)
       : this.isSimpleSubscript()
         ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
         : `${prefix}${this.id}${postfix}`;
