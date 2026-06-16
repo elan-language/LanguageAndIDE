@@ -208,7 +208,6 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    
   });
 
   test("Fail_SetAsVariable", async () => {
