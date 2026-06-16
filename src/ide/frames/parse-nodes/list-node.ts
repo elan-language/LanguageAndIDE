@@ -30,13 +30,11 @@ export class ListNode extends AbstractSequence {
 
   override renderAsHtml(): string {
     const lang = this.file.language();
-    return this.isValid()
-      ? lang.listAsHtml(this)
-      : this.matchedText;
+    return this.isValid() ? lang.listAsHtml(this) : this.matchedText;
   }
 
   override renderAsExport(): string {
-      const lang = this.file.language();
-      return this.isValid() ? removeHtmlTagsAndEscChars(lang.listAsHtml(this)) : this.matchedText;
+    const lang = this.file.language();
+    return this.isValid() ? removeHtmlTagsAndEscChars(lang.listAsHtml(this)) : this.matchedText;
   }
 }

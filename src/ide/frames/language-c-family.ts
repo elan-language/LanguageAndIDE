@@ -295,5 +295,5 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   c_langs_enumValues(field: EnumValuesField): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }  
+  }
 }

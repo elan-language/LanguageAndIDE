@@ -1079,7 +1079,6 @@ quadEditorCheckBox?.addEventListener("click", async (_event: Event) => {
     enable(language2Button, languages[2].languageFullName);
     enable(language3Button, languages[3].languageFullName);
   } else {
-
     disable(language1Button, languages[1].languageFullName);
     disable(language2Button, languages[2].languageFullName);
     disable(language3Button, languages[3].languageFullName);

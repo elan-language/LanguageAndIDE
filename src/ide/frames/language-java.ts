@@ -168,11 +168,11 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   addNodesForList(node: ListNode): void {
-      this.default_addNodesForList(node);
+    this.default_addNodesForList(node);
   }
 
   listAsHtml(node: ListNode): string {
-      return this.default_listAsHtml(node);
+    return this.default_listAsHtml(node);
   }
 
   lambdaAsHtml(node: Lambda): string {
