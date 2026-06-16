@@ -867,7 +867,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of String>())
+  variable a set to createPopulatedList(3, new List<of String>())
   reassign a[0] to "foo"
 end main
 `;
@@ -919,7 +919,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of String>())
+  variable a set to createPopulatedList(3, new List<of String>())
   reassign a[0] to true
 end main
 `;
