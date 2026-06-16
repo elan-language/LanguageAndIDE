@@ -3,20 +3,20 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertExportedVBis,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  ignore_test,
-  testHash,
-  testHeader,
-  testVBHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertExportedVBis,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    ignore_test,
+    testHash,
+    testHeader,
+    testVBHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -232,7 +232,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call printNoLine(a[0].length())
   call printNoLine(a)
 end main`;
@@ -240,7 +240,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   await _stdlib.printNoLine(_stdlib.length(system.safeIndex(a, 0)));
   await _stdlib.printNoLine(a);
 }
@@ -267,7 +267,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, Fruit.apple)
+  variable a set to createPopulatedList(3, Fruit.apple)
   call printNoLine(a)
 end main
 
@@ -281,7 +281,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, Fruit.apple);
+  let a = _stdlib.createPopulatedList(3, Fruit.apple);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -385,7 +385,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of Int>())
+  variable a set to createPopulatedList(3, new List<of Int>())
   call printNoLine(a)
 end main`;
 
@@ -409,7 +409,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.put(0, "foo")
   call a.put(2, "yon")
   call printNoLine(a[0])
@@ -419,7 +419,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   a.put(0, "foo");
   a.put(2, "yon");
   await _stdlib.printNoLine(system.safeIndex(a, 0));
@@ -485,7 +485,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.append("foo")
   call a.append("yon")
   call printNoLine(a[3])
@@ -495,7 +495,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   a.append("foo");
   a.append("yon");
   await _stdlib.printNoLine(system.safeIndex(a, 3));
@@ -524,7 +524,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.append("foo")
   call a.append("yon")
   variable c set to ""
@@ -538,7 +538,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   a.append("foo");
   a.append("yon");
   let c = "";
@@ -923,7 +923,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   variable b set to a(0)
 end main
 `;
@@ -1020,7 +1020,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   variable b set to a[3]
 end main
 `;
@@ -1045,7 +1045,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.put(0, true)
 end main
 `;
@@ -1177,7 +1177,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3.1, 1)
+  variable a set to createPopulatedList(3.1, 1)
 end main
 `;
 

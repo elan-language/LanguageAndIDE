@@ -136,7 +136,7 @@ class Point {
   public List<Point> neighbouringPoints() { // function method
     var x = this.x;
     var y = this.y;
-    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)};
+    return list(new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1));
   } // function method
 
 } // class
@@ -144,7 +144,7 @@ class Point {
 @Test static void test_neighbouringPoints() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
-  var expected = {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)};
+  var expected = list(new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1));
   assertEquals(expected, n);
 } // test
 

@@ -5,15 +5,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Test and Assert", () => {
@@ -791,7 +791,7 @@ procedure square(x as Int, y as List<of Int>)
 end procedure
 
 test test_square
-  variable arr set to createList(1, 0)
+  variable arr set to createPopulatedList(1, 0)
   call square(3, arr)
   assert arr[0] is 9
 end test

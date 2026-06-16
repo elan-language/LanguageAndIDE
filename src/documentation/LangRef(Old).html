@@ -526,7 +526,7 @@ end main
 class Thing
   property names as List&lt;of String&gt;
   constructor()
-    reassign this.names to createList(6, "X")
+    reassign this.names to createPopulatedList(6, "X")
   end constructor
   function toString() returns String
     return "instance of class Thing"

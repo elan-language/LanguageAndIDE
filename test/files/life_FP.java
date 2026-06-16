@@ -226,13 +226,13 @@ static (int, int) southWest((int, int) cell) { // function
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
   var c = (x, y); // let
-  return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
+  return list(northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c));
 } // function
 
 @Test static void test_neighbourCells() {
-  assertEquals({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4));
-  assertEquals({(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)}, neighbourCells(0, 0));
-  assertEquals({(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)}, neighbourCells(39, 29));
+  assertEquals(list((2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)), neighbourCells(3, 4));
+  assertEquals(list((39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)), neighbourCells(0, 0));
+  assertEquals(list((38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)), neighbourCells(39, 29));
 } // test
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function

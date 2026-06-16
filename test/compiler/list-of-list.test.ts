@@ -3,17 +3,17 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertObjectCodeIsWithAdvisories,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("List of List", () => {
@@ -58,14 +58,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(0, "")
+  variable a set to createPopulatedList(0, "")
   call printNoLine(a.length())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(0, "");
+  let a = _stdlib.createPopulatedList(0, "");
   await _stdlib.printNoLine(a.length());
 }
 return [main, _tests];}`;
@@ -580,14 +580,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to [createList(2, 0), createList(2, 0), createList(2, 0)]
+  variable a set to [createPopulatedList(2, 0), createPopulatedList(2, 0), createPopulatedList(2, 0)]
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([_stdlib.createList(2, 0), _stdlib.createList(2, 0), _stdlib.createList(2, 0)]);
+  let a = system.list([_stdlib.createPopulatedList(2, 0), _stdlib.createPopulatedList(2, 0), _stdlib.createPopulatedList(2, 0)]);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -613,14 +613,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to [createList(2, 1), createList(2, 1)]
+  variable a set to [createPopulatedList(2, 1), createPopulatedList(2, 1)]
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = system.list([_stdlib.createList(2, 1), _stdlib.createList(2, 1)]);
+  let a = system.list([_stdlib.createPopulatedList(2, 1), _stdlib.createPopulatedList(2, 1)]);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -825,7 +825,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.put(0, 0, "foo")
 end main
 `;
@@ -874,7 +874,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of String>())
+  variable a set to createPopulatedList(3, new List<of String>())
   call a.put(0, "foo")
 end main
 `;
@@ -926,7 +926,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of String>())
+  variable a set to createPopulatedList(3, new List<of String>())
   call a.put(0, true)
 end main
 `;

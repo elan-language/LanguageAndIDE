@@ -50,11 +50,11 @@ static (double, double) onestep(double x, double y, double r) { // function
   // Currently you can't make the params into one long line
   // as it makes the browser use 100% CPU
   // xx xy yx yy cx cy probablity
-  var p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}; // let
-  var p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}; // let
-  var p3 = {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}; // let
-  var p4 = {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}; // let
-  var allPs = {p1, p2, p3, p4}; // let
+  var p1 = list(0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01); // let
+  var p2 = list(0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85); // let
+  var p3 = list(0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07); // let
+  var p4 = list(-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07); // let
+  var allPs = list(p1, p2, p3, p4); // let
   // use the random number r to select one of p1 to p4
   // weighted by the probabilities and put it in pp
   var pp = getparams(r, allPs, 0.0); // let
@@ -101,15 +101,15 @@ class State {
 } // class
 
 @Test static void test_one() {
-  assertEquals({0.0064, 1.736}, roundtuple2(onestep(0.0, 0.16, 0.5)));
-  assertEquals({-0.0416, 1.6352}, roundtuple2(onestep(0.0, 0.16, 0.9)));
+  assertEquals(list(0.0064, 1.736), roundtuple2(onestep(0.0, 0.16, 0.5)));
+  assertEquals(list(-0.0416, 1.6352), roundtuple2(onestep(0.0, 0.16, 0.9)));
   var s = onepoint(new State(new RectangleVG(), 0.0, 0.16, new Random())); // let
   assertEquals("rect at 50.0448, 62.848", s.toString());
-  var p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}; // let
-  var p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}; // let
-  assertEquals(p1, getparams(0.005, {p1, p2}, 0.0));
-  assertEquals(p2, getparams(0.03, {p1, p2}, 0.0));
-  assertEquals(p2, getparams(0.03, {p2}, 0.01));
+  var p1 = list(0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01); // let
+  var p2 = list(0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85); // let
+  assertEquals(p1, getparams(0.005, list(p1, p2), 0.0));
+  assertEquals(p2, getparams(0.03, list(p1, p2), 0.0));
+  assertEquals(p2, getparams(0.03, list(p2), 0.01));
 } // test
 
 // two approaches to rounding a tuple to N decimal places
@@ -119,7 +119,7 @@ static (double, double) roundtuple1((double, double) n) { // function
 } // function
 
 static List<double> roundtuple2((double, double) n) { // function
-  return {n.item_0, n.item_1}.map((double x) -> x.round(8));
+  return list(n.item_0, n.item_1).map((double x) -> x.round(8));
 } // function
 
 final Int scale = 7; // constant
