@@ -10,7 +10,7 @@ def bestFitLine(points: list[Point]) -> tuple[float, float]: # function
   b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) # let
   return (a, b)
 
-class Point # concrete class
+class Point: # concrete class
 
   x: float # property
 

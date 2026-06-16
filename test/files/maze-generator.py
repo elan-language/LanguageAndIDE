@@ -95,7 +95,7 @@ def test_isValidQuadrant(self) -> None:
   self.assertEqual(isValidQuadrant(14), True)
   self.assertEqual(isValidQuadrant(15), False)
 
-class Point # concrete class
+class Point: # concrete class
 
   x: int # property
 

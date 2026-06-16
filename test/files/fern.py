@@ -70,7 +70,7 @@ def getparams(r: float, prms: list[list[float]], cumuprob: float) -> list[float]
 
 # class to hold the working data passed in and out of onepoint()
 
-class State # concrete class
+class State: # concrete class
 
   def __init__(self: State, rect: RectangleVG, x: float, y: float, r: Random) -> None:
     self.rect = rect # reassign variable

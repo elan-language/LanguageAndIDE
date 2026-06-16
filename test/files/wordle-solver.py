@@ -89,7 +89,7 @@ def bestAttempt(possAnswers: list[str]) -> str: # function
   best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount: betterOf(bestSoFar, newWord, possAnswers)) # let
   return best.word
 
-class WordCount # concrete class
+class WordCount: # concrete class
 
   def __init__(self: WordCount, word: str, count: int) -> None:
     self.word = word # reassign variable

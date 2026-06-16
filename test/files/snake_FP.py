@@ -57,7 +57,7 @@ def hasHitEdge(g: Game) -> bool: # function
   y = g.head.y # let
   return (x == -1) or (y == -1) or (x == 40) or (y == 30)
 
-class Game # concrete class
+class Game: # concrete class
 
   head: Square # property
 
@@ -131,7 +131,7 @@ class Game # concrete class
 
 
 
-class Square # concrete class
+class Square: # concrete class
 
   x: int # property
 

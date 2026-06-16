@@ -33,7 +33,7 @@ initState = "init" # constant
 
 haltState = "halt" # constant
 
-class TuringMachine # concrete class
+class TuringMachine: # concrete class
 
   def __init__(self: TuringMachine, initialState: str, haltState: str) -> None:
     self.tape = "" # reassign variable
@@ -96,7 +96,7 @@ class TuringMachine # concrete class
 
 
 
-class Rule # concrete class
+class Rule: # concrete class
 
   currentState: str # property
 
