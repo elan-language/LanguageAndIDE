@@ -592,10 +592,10 @@ end main
   test("Fail_UseConstantBeforeDefinition2", async () => {
     const code = `${testHeader}
 
-constant a set to [ b ]
+constant a set to b
 constant b set to 2
 main
-  call printNoLine(a[0])
+  call printNoLine(a)
 end main
 `;
 

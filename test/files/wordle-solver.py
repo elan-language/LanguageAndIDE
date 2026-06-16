@@ -224,15 +224,6 @@ def test_maxWordCountRemainingAfterAttempt(self) -> None:
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "AXXXX"), 4)
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "XXXXX"), 5)
 
-def test_incrementCount(self) -> None:
-  possAnswer = "BEGAN" # let
-  attempt = "BAGEL" # let
-  d = ["*+*_*":2, "*+*+_":3, "*+*++":0] # let
-  d2 = incrementCount(d, possAnswer, attempt) # let
-  self.assertEqual(d2["*+*+_"], 4)
-  self.assertEqual(d2["*+*_*"], 2)
-  self.assertEqual(d2["*+*++"], 0)
-
 def test_allRemainingWordCounts(self) -> None:
   possAnswers = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
   wordcounts = allRemainingWordCounts(possAnswers) # let

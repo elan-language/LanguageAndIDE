@@ -263,16 +263,6 @@ End Sub
   Assert.AreEqual(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"))
 End Sub
 
-<TestMethod> Sub test_incrementCount()
-  Dim possAnswer = "BEGAN" ' let
-  Dim attempt = "BAGEL" ' let
-  Dim d = ["*+*_*":2, "*+*+_":3, "*+*++":0] ' let
-  Dim d2 = incrementCount(d, possAnswer, attempt) ' let
-  Assert.AreEqual(4, d2["*+*+_"])
-  Assert.AreEqual(2, d2["*+*_*"])
-  Assert.AreEqual(0, d2["*+*++"])
-End Sub
-
 <TestMethod> Sub test_allRemainingWordCounts()
   Dim possAnswers = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' let
   Dim wordcounts = allRemainingWordCounts(possAnswers) ' let

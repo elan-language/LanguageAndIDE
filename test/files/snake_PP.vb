@@ -90,9 +90,14 @@ End Function
 
 Function directionByKey(current As Direction, key As String) As Direction
   Dim dirn = current ' variable definition
-  Dim d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right] ' variable definition
-  If d.keys().contains(key) Then
-    dirn = d[key] ' reassign variable
+  If key.equals("w") Then
+    dirn = Direction.up ' reassign variable
+  ElseIf key.equals("s") Then
+    dirn = Direction.down ' reassign variable
+  ElseIf key.equals("a") Then
+    dirn = Direction.left ' reassign variable
+  ElseIf key.equals("d") Then
+    dirn = Direction.right ' reassign variable
   End If
   Return dirn
 End Function

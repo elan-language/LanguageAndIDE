@@ -388,9 +388,6 @@ main
     variable a set to [1,2,3]
     variable sa set to a.toString()
     call printNoLine(sa)
-    variable d set to ["a":1, "b":3, "z":10]
-    variable sd set to d.toString()
-    call printNoLine(sd)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -402,9 +399,6 @@ async function main() {
   let a = system.list([1, 2, 3]);
   let sa = (await _stdlib.toString(a));
   await _stdlib.printNoLine(sa);
-  let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let sd = (await _stdlib.toString(d));
-  await _stdlib.printNoLine(sd);
 }
 return [main, _tests];}`;
 
@@ -422,6 +416,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][1, 2, 3][a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3][1, 2, 3]");
   });
 });

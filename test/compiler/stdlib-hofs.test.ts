@@ -325,49 +325,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Concat:*o*n*e*t*w*o");
   });
 
-  test("Pass_reduceToDictionary", async () => {
-    const code = `${testHeader}
-
-main
-  variable ed set to ["one":1, "two":2]
-  reassign ed to source().reduce(ed, lambda d as Dictionary<of String, Int>, x as String => d.withSet(x, 1))
-  call printNoLine(ed)
-end main
-
-function source() returns List<of String>
-  return ["three", "four"]
-end function`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let ed = system.dictionary([["one", 1], ["two", 2]]);
-  ed = (await (await global.source()).reduce(ed, async (d, x) => d.withSet(x, 1)));
-  await _stdlib.printNoLine(ed);
-}
-
-async function source() {
-  return system.list(["three", "four"]);
-}
-global["source"] = source;
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[one:1, two:2, three:1, four:1]");
-  });
   test("Pass_maxByList", async () => {
     const code = `${testHeader}
 
@@ -863,31 +820,6 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Argument types. Expected: lambdaOrFunctionRef (lambda or function name that takes parameter - String - returning a Float), Provided: lambda or function name that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_MissingBrackets", async () => {
-    const code = `${testHeader}
-
-main
-  variable source set to ["apple":"apple", "orange":"orange", "pair":"pair"]
-  call printNoLine(source.keys.map(lambda s as String => s))
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Profile(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Library or class function 'keys' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 });

@@ -90,9 +90,14 @@ static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
 
 static Direction directionByKey(Direction current, string key) { // function
   var dirn = current;
-  var d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right];
-  if (d.keys().contains(key)) {
-    dirn = d[key]; // reassign variable
+  if (key.equals("w")) {
+    dirn = Direction.up; // reassign variable
+  } else if (key.equals("s")) {
+    dirn = Direction.down; // reassign variable
+  } else if (key.equals("a")) {
+    dirn = Direction.left; // reassign variable
+  } else if (key.equals("d")) {
+    dirn = Direction.right; // reassign variable
   } // if
   return dirn;
 } // function

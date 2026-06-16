@@ -585,7 +585,6 @@ end main`;
 main
   variable a set to createList(3, "")
   variable b set to [1.0, 2]
-  variable c set to ["a":1.0, "b":3, "z":10]
   reassign a to [1.0, 2]
   reassign b to a
   reassign c to b
@@ -606,7 +605,6 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: List<of String>, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
       "Incompatible types. Expected: List<of Float>, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 

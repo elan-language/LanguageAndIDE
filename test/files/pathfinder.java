@@ -316,8 +316,13 @@ final Int lightBlue = 0x80abff; // constant
 final Int orange = 0xe97132; // constant
 
 static Algorithm getAlgFromLetter(String letter) { // function
-  var algs = ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic];
-  return algs[letter];
+  var alg = Algorithm.heuristic;
+  if (letter.equals("a")) {
+    alg = Algorithm.aStar; // reassign variable
+  } else if (letter.equals("d")) {
+    alg = Algorithm.dijkstra; // reassign variable
+  } // if
+  return alg;
 } // function
 
 @Test static void test_getAlgFromLetter() {

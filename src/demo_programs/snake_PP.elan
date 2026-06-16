@@ -1,4 +1,4 @@
-# 6132ba2294bfd9d1651efdd3e32ccb7eafe6b601dc4a5394acae39838ec993b9 Elan 2.0.0-beta valid
+# 779b4019cd6c414d33180870439b7691066b1f1b74f5ca72a24091bf10b82237 Elan 2.0.0-beta valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -89,9 +89,14 @@ end function
 
 function directionByKey(current as Direction, key as String) returns Direction
   variable dirn set to current
-  variable d set to ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right]
-  if d.keys().contains(key) then
-    reassign dirn to d[key]
+  if key.equals("w") then
+    reassign dirn to Direction.up
+  elif key.equals("s") then
+    reassign dirn to Direction.down
+  elif key.equals("a") then
+    reassign dirn to Direction.left
+  elif key.equals("d") then
+    reassign dirn to Direction.right
   end if
   return dirn
 end function

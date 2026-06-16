@@ -263,16 +263,6 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"));
 } // test
 
-[TestMethod] static void test_incrementCount() {
-  var possAnswer = "BEGAN"; // let
-  var attempt = "BAGEL"; // let
-  var d = ["*+*_*":2, "*+*+_":3, "*+*++":0]; // let
-  var d2 = incrementCount(d, possAnswer, attempt); // let
-  Assert.AreEqual(4, d2["*+*+_"]);
-  Assert.AreEqual(2, d2["*+*_*"]);
-  Assert.AreEqual(0, d2["*+*++"]);
-} // test
-
 [TestMethod] static void test_allRemainingWordCounts() {
   var possAnswers = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
   var wordcounts = allRemainingWordCounts(possAnswers); // let
