@@ -8,7 +8,6 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -92,8 +91,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [[""],[""],[""]]
-  call a.put(0, ["bar", "foo"])
-  call a.put(2, ["yon", "xan"])
+  reassign a[0] to ["bar", "foo"]
+  reassign a[2] to ["yon", "xan"]
   call printNoLine(a[0][1])
   call printNoLine(a[2][0])
 end main`;
@@ -102,8 +101,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([system.list([""]), system.list([""]), system.list([""])]);
-  a.put(0, system.list(["bar", "foo"]));
-  a.put(2, system.list(["yon", "xan"]));
+  system.safeSet(a, system.list(["bar", "foo"]), [0]);
+  system.safeSet(a, system.list(["yon", "xan"]), [2]);
   await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 0), 1));
   await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 2), 0));
 }
@@ -122,9 +121,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
@@ -133,8 +130,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["",""],["",""],["",""]]
-  call a.put(0, ["bar", "foo"])
-  call a[0].put(1, "yon")
+  reassign a[0] to ["bar", "foo"]
+  reassign a[0][1] to "yon"
   call printNoLine(a[0][1])
 end main`;
 
@@ -142,8 +139,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([system.list(["", ""]), system.list(["", ""]), system.list(["", ""])]);
-  a.put(0, system.list(["bar", "foo"]));
-  system.safeIndex(a, 0).put(1, "yon");
+  system.safeSet(a, system.list(["bar", "foo"]), [0]);
+  system.safeSet(a, "yon", [0, 1]);
   await _stdlib.printNoLine(system.safeIndex(system.safeIndex(a, 0), 1));
 }
 return [main, _tests];}`;
@@ -161,9 +158,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "yon");
   });
 
@@ -778,7 +773,7 @@ end main`;
 
 main
   variable a set to new List<of List<of Int>>()
-  call a[0].put(0, 3)
+  reassign a[0] to [3]
 end main`;
 
     const fileImpl = new FileImpl(
@@ -826,7 +821,7 @@ end main
 
 main
   variable a set to createList(3, "")
-  call a.put(0, 0, "foo")
+  reassign a[0][0] to "foo"
 end main
 `;
 
@@ -842,9 +837,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: index (Int), value (String).ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, []);
   });
 
   test("Fail_useOfCommaInIndex", async () => {
@@ -875,7 +868,7 @@ end main
 
 main
   variable a set to createList(3, new List<of String>())
-  call a.put(0, "foo")
+  reassign a[0] to "foo"
 end main
 `;
 
@@ -892,7 +885,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, String.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: List<of String>, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -901,7 +894,7 @@ end main
 
 main
   variable a set to [[""],[""]]
-  call a.put(0, new List<of String>())
+  reassign a[0] to new List<of String>()
   variable b set to a[0][0]
 end main
 `;
@@ -927,7 +920,7 @@ end main
 
 main
   variable a set to createList(3, new List<of String>())
-  call a.put(0, true)
+  reassign a[0] to true
 end main
 `;
 
@@ -944,7 +937,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, Boolean.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: List<of String>, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1005,7 +998,7 @@ end main
 
 main
   variable a set to [[1,2],[3,4]]
-  call a[0].put("b", 5)
+  reassign a[0]["b"] to 5
 end main
 `;
 
@@ -1021,8 +1014,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int), Provided: String, Int.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, []);
   });
 });

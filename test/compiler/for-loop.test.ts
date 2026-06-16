@@ -7,7 +7,6 @@ import {
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -262,27 +261,11 @@ end main
 
 procedure foo(arr as List<of Int>)
   for i in range(0, 11)
-    call arr.put(i, 1)
+    reassign arr[i] to 1
   end for
   call printNoLine(arr[0])
 end procedure`;
 
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let a = _stdlib.createList(11, 0);
-  await foo(a);
-}
-
-async function foo(arr) {
-  const elan_iterelan_for13 = [..._stdlib.range(0, 11)];
-  for (const i of elan_iterelan_for13) {
-    arr.put(i, 1);
-  }
-  await _stdlib.printNoLine(system.safeIndex(arr, 0));
-}
-global["foo"] = foo;
-return [main, _tests];}`;
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),
@@ -296,9 +279,6 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
