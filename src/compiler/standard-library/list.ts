@@ -1,4 +1,3 @@
-import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -13,7 +12,6 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
-  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
@@ -90,12 +88,6 @@ export class List<T1> {
     }
     this.contents = toInit;
     return this;
-  }
-
-  @elanDeprecated(Deprecation.methodRemoved, 1, 9, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
-  @elanProcedure(["index", "value"])
-  put(@elanIntType() index: number, @elanGenericParamT1Type() value: T1) {
-    this.system!.safeListSet(this.contents, index, value);
   }
 
   @elanProcedure(["index", "value"])
@@ -243,7 +235,7 @@ export class List<T1> {
   }
 
   safeSet(value: T1, index: number) {
-    this.put(index, value);
+    this.system!.safeListSet(this.contents, index, value);
   }
 
   safeSlice(index1: number | undefined, index2: number | undefined) {

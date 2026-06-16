@@ -8,7 +8,6 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   ignore_test,
@@ -197,7 +196,7 @@ main
 end main
 
 procedure changeFirst(a as List<of Int>)
-    call a.put(0, 5)
+    reassign a[0] to 5
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -209,7 +208,7 @@ async function main() {
 }
 
 async function changeFirst(a) {
-  a.put(0, 5);
+  system.safeSet(a, 5, [0]);
 }
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
@@ -227,9 +226,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[5, 3]");
   });
 
