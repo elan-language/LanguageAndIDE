@@ -318,8 +318,13 @@ Const lightBlue = &H80abff
 Const orange = &He97132
 
 Function getAlgFromLetter(letter As String) As Algorithm
-  Dim algs = ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic] ' variable definition
-  Return algs[letter]
+  Dim alg = Algorithm.heuristic ' variable definition
+  If letter.equals("a") Then
+    alg = Algorithm.aStar ' reassign variable
+  ElseIf letter.equals("d") Then
+    alg = Algorithm.dijkstra ' reassign variable
+  End If
+  Return alg
 End Function
 
 <TestMethod> Sub test_getAlgFromLetter()

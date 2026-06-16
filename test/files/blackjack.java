@@ -110,7 +110,7 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
 
 static Card dealCard(double random) { // function
   var number = (random*52).floor();
-  var rank = rankValue().keys()[divAsInt(number, 4)];
+  var rank = ranks()[divAsInt(number, 4)];
   var suit = number % 4;
   return new Card(rank, intAsSuit(suit), false);
 } // function
@@ -369,7 +369,7 @@ abstract class Player {
     if (newCard.rank.equals("A")) {
       this.addAce(); // call procedure
     } else {
-      this.handTotal = this.handTotal + rankValue()[newCard.rank]; // reassign variable
+      this.handTotal = this.handTotal + valueForRank(newCard.rank); // reassign variable
     } // if
     this.evaluateStatus(newCard); // call procedure
   } // procedure method
@@ -554,22 +554,29 @@ enum Status {active, standing, blackjack, bust}
 enum Suit {clubs, diamonds, hearts, spades}
 
 static String symbolForSuit(Suit suit) { // function
-  var dc = [Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"];
-  return dc[suit];
+  var suits = {Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades};
+  var symbols = {"&clubs;", "&diams;", "&hearts;", "&spades;"};
+  return symbols[suits.indexOf(suit)];
 } // function
 
-static Dictionary<String, int> rankValue() { // function
-  return ["2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11];
+static List<String> ranks() { // function
+  return {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+} // function
+
+static int valueForRank(String rank) { // function
+  var values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+  return values[ranks().indexOf(rank)];
 } // function
 
 static List<String> gridForRank(String rank) { // function
-  var dc = ["A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}];
-  return dc[rank];
+  var grids = {{"b", "c"}, {"a", "b", "c"}, {"d", "e", "f", "g"}, {"a", "d", "e", "f", "g"}, {"d", "e", "f", "g", "h", "i"}, {"d", "e", "f", "g", "h", "i", "l"}, {"d", "e", "f", "g", "h", "i", "l", "m"}, {"a", "d", "e", "f", "g", "n", "o", "p", "r"}, {"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, {"royal"}, {"royal"}, {"royal"}, {"royal"}};
+  return grids[ranks().indexOf(rank)];
 } // function
 
 static String colourForSuit(Suit suit) { // function
-  var dc = [Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"];
-  return dc[suit];
+  var suits = {Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades};
+  var colours = {"black", "red", "red", "black"};
+  return colours[suits.indexOf(suit)];
 } // function
 
 final String styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}"; // constant

@@ -77,9 +77,14 @@ def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
 
 def directionByKey(current: Direction, key: str) -> Direction: # function
   dirn = current # variable definition
-  d = ["w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right] # variable definition
-  if d.keys().contains(key):
-    dirn = d[key] # reassign variable
+  if key.equals("w"):
+    dirn = Direction.up # reassign variable
+  elif key.equals("s"): # else if
+    dirn = Direction.down # reassign variable
+  elif key.equals("a"): # else if
+    dirn = Direction.left # reassign variable
+  elif key.equals("d"): # else if
+    dirn = Direction.right # reassign variable
   return dirn
 
 class Direction(Enum):

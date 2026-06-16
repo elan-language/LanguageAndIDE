@@ -267,8 +267,12 @@ lightBlue = 0x80abff # constant
 orange = 0xe97132 # constant
 
 def getAlgFromLetter(letter: str) -> Algorithm: # function
-  algs = ["a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic] # variable definition
-  return algs[letter]
+  alg = Algorithm.heuristic # variable definition
+  if letter.equals("a"):
+    alg = Algorithm.aStar # reassign variable
+  elif letter.equals("d"): # else if
+    alg = Algorithm.dijkstra # reassign variable
+  return alg
 
 def test_getAlgFromLetter(self) -> None:
   self.assertEqual(getAlgFromLetter("a"), Algorithm.aStar)
