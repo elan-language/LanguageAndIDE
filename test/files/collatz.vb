@@ -26,7 +26,7 @@ Sub main()
       ' draw what we have got so far, scaled to the canvas
       Dim vg = New List(Of VectorGraphic)() ' variable definition
       For Each i In range(0, p.length() - 1)
-        vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) ' reassign variable
+        vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p(i), max)).withX2(scx(i + 1, p)).withY2(scy(p(i + 1), max)).withStrokeWidth(1)) ' reassign variable
       Next i
       displayVectorGraphics(vg) ' call procedure
       Console.WriteLine(x) ' print

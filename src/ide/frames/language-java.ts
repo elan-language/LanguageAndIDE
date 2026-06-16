@@ -182,6 +182,10 @@ export class LanguageJava extends LanguageCfamily {
     return `(${node.params!.renderAsHtml()}) ${this.ARROW} ${node.expr!.renderAsHtml()}`;
   }
 
+  postProcessHtml(html: string): string {
+   return html;
+  }
+
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {
     let definingString = "";
     let csv = "";

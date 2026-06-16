@@ -233,6 +233,10 @@ export class LanguagePython extends LanguageAbstract {
     return this.languageExportHelpers.translateExpression(expr);
   }
 
+  postProcessHtml(html: string): string {
+      return html;
+  }
+
   private AS = "as";
   private DEF = "def";
   private CLASS = "class";

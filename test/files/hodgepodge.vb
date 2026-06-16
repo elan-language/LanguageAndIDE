@@ -59,10 +59,10 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
   For Each j In range(0, gH)
     For Each i In range(0, gW)
       If initial Then
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)] ' reassign variable
-        podge[1][1] = &H1a001a ' reassign variable
+        podge(i)(j) = colours(randint(0, (colours.length()) - 1)) ' reassign variable
+        podge(1)(1) = &H1a001a ' reassign variable
       Else
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) ' reassign variable
+        podge(i)(j) = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()(i)(j)) ' reassign variable
       End If
     Next i
   Next j
@@ -73,24 +73,24 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
 End Sub
 
 Function uniform(grid As List(Of List(Of Integer))) As Boolean
-  Dim uniformGrid = createBlockGraphics(grid[0][0]) ' variable definition
+  Dim uniformGrid = createBlockGraphics(grid(0)(0)) ' variable definition
   Return if(grid.equals(uniformGrid), True, False)
 End Function
 
 Function getNeighbourColours(grid As List(Of List(Of Integer)), i As Integer, j As Integer) As List(Of Integer)
   ' grid wraps around: all cells have the same number of neighbours
   ' H and V neighbours(von Neumann)
-  Dim sL = grid[(i - 1 + gW) Mod gW][j] ' variable definition
-  Dim sR = grid[(i + 1 + gW) Mod gW][j] ' variable definition
-  Dim sA = grid[i][(j - 1 + gH) Mod gH] ' variable definition
-  Dim sB = grid[i][(j + 1 + gH) Mod gH] ' variable definition
+  Dim sL = grid((i - 1 + gW) Mod gW)(j) ' variable definition
+  Dim sR = grid((i + 1 + gW) Mod gW)(j) ' variable definition
+  Dim sA = grid(i)((j - 1 + gH) Mod gH) ' variable definition
+  Dim sB = grid(i)((j + 1 + gH) Mod gH) ' variable definition
   Dim neighbourColours = {sL, sR, sA, sB} ' variable definition
   If vN = False Then
     ' add diagonal neighbours (Moore)
-    Dim sLA = grid[(i - 1 + gW) Mod gW][(j - 1 + gH) Mod gH] ' variable definition
-    Dim sRA = grid[(i + 1 + gW) Mod gW][(j - 1 + gH) Mod gH] ' variable definition
-    Dim sLB = grid[(i - 1 + gW) Mod gW][(j + 1 + gH) Mod gH] ' variable definition
-    Dim sRB = grid[(i + 1 + gW) Mod gW][(j + 1 + gH) Mod gH] ' variable definition
+    Dim sLA = grid((i - 1 + gW) Mod gW)((j - 1 + gH) Mod gH) ' variable definition
+    Dim sRA = grid((i + 1 + gW) Mod gW)((j - 1 + gH) Mod gH) ' variable definition
+    Dim sLB = grid((i - 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
+    Dim sRB = grid((i + 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
     neighbourColours = {sL, sR, sA, sB, sLA, sRA, sLB, sRB} ' reassign variable
   End If
   Return neighbourColours
@@ -121,5 +121,5 @@ Function updateColour(nowColour As Integer, sumStates As Integer, nInfected As I
   ElseIf nowColour <> ill Then
     state = divAsInt(sumStates, (nInfected + 1)) + iR ' reassign variable
   End If
-  Return if(state > (colours.length() - 1), ill, colours[state])
+  Return if(state > (colours.length() - 1), ill, colours(state))
 End Function

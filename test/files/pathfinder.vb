@@ -68,7 +68,7 @@ Function initialiseGraphics(start As Point, dest As Point, rocks As List(Of Poin
 End Function
 
 Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics[x].withSet(y, colour))
+  Return graphics.withSet(x, graphics(x).withSet(y, colour))
 End Function
 
 Function addVisited(gr As List(Of List(Of Integer)), visited As Point) As List(Of List(Of Integer))
@@ -80,8 +80,8 @@ Function addRoute(gr As List(Of List(Of Integer)), route As List(Of Point)) As L
   For Each p In route
     graphics = withPut(graphics, p.x, p.y, orange) ' reassign variable
   Next p
-  Dim start = route[0] ' variable definition
-  Dim dest = route[route.length() - 1] ' variable definition
+  Dim start = route(0) ' variable definition
+  Dim dest = route(route.length() - 1) ' variable definition
   graphics = withPut(graphics, start.x, start.y, green) ' reassign variable
   graphics = withPut(graphics, dest.x, dest.y, red) ' reassign variable
   Return graphics
@@ -256,7 +256,7 @@ Class Node
   End Sub
 
   Function toString() As String
-    Return $"[{Me.point.toString()} {Me.visited} {Me.distFromStart}]"
+    Return $"({Me.point.toString()} {Me.visited} {Me.distFromStart})"
   End Function
 
 End Class

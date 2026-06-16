@@ -31,7 +31,7 @@ Sub main()
 End Sub
 
 Function isGreen(attempt As String, target As String, n As Integer) As Boolean
-  Return target[n].equals(attempt[n])
+  Return target(n).equals(attempt(n))
 End Function
 
 Function setChar(word As String, n As Integer, newChar As String) As String
@@ -47,33 +47,33 @@ Function setTargetIfGreen(attempt As String, target As String, n As Integer) As 
 End Function
 
 Function evaluateGreens(attempt As String, target As String) As List(Of String)
-  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
+  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfGreen(a(0), a(1), x), setTargetIfGreen(a(0), a(1), x)})
 End Function
 
 Function isYellow(attempt As String, target As String, n As Integer) As Boolean
-  Return target.contains(attempt[n])
+  Return target.contains(attempt(n))
 End Function
 
 Function setAttemptIfYellow(attempt As String, target As String, n As Integer) As String
-  Return if(attempt[n].equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
+  Return if(attempt(n).equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
 End Function
 
 Function isAlreadyMarkedGreen(attempt As String, n As Integer) As Boolean
-  Return attempt[n].equals("*")
+  Return attempt(n).equals("*")
 End Function
 
 Function setTargetIfYellow(attempt As String, target As String, n As Integer) As String
-  Return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
+  Return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt(n)), "."), target))
 End Function
 
 Function evaluateYellows(attempt As String, target As String) As List(Of String)
-  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
+  Return range(0, 5).reduce({attempt, target}, Function (a As List(Of String), x As Integer) {setAttemptIfYellow(a(0), a(1), x), setTargetIfYellow(a(0), a(1), x)})
 End Function
 
 Function markAttempt(attempt As String, target As String) As String
   Dim greens = evaluateGreens(attempt, target) ' let
-  Dim markedAttempt = evaluateYellows(greens[0], greens[1]) ' let
-  Return markedAttempt[0]
+  Dim markedAttempt = evaluateYellows(greens(0), greens(1)) ' let
+  Return markedAttempt(0)
 End Function
 
 Function possibleAnswersAfterAttempt(prior As List(Of String), attempt As String, mark As String) As List(Of String)
@@ -84,13 +84,13 @@ Function maxWordCountRemainingAfterAttempt(possAnswers As List(Of String), attem
   Dim d = New Dictionary(Of String, Integer)() ' let
   Dim d2 = possAnswers.reduce(d, Function (dd As Dictionary(Of String, Integer), answer As String) incrementCount(dd, answer, attempt)) ' let
   Dim keys = d2.keys() ' let
-  Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if(d2(mark) > maxSoFar, d2(mark), maxSoFar))
 End Function
 
 Function incrementCount(d As Dictionary(Of String, Integer), possAnswer As String, attempt As String) As Dictionary(Of String, Integer)
   Dim mark = markAttempt(attempt, possAnswer) ' let
   Dim keys = d.keys() ' let
-  Dim count = if(keys.contains(mark), d[mark], 0) ' let
+  Dim count = if(keys.contains(mark), d(mark), 0) ' let
   Return d.withSet(mark, count + 1)
 End Function
 
@@ -266,5 +266,5 @@ End Sub
 <TestMethod> Sub test_allRemainingWordCounts()
   Dim possAnswers = {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"} ' let
   Dim wordcounts = allRemainingWordCounts(possAnswers) ' let
-  Assert.AreEqual("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString())
+  Assert.AreEqual("(ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4)", wordcounts.toString())
 End Sub

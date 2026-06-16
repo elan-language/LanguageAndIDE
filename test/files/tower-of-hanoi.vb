@@ -7,8 +7,8 @@ Const delay_ms = 300
 Sub main()
   Dim stacks = create3Stacks(nDiscs) ' variable definition
   display(stacks) ' call procedure
-  While stacks[2].length() <> nDiscs
-    If (stacks[0].length() Mod 2) = 0 Then
+  While stacks(2).length() <> nDiscs
+    If (stacks(0).length() Mod 2) = 0 Then
       moveBetween(stacks, 0, 1) ' call procedure
       moveBetween(stacks, 0, 2) ' call procedure
       moveBetween(stacks, 1, 2) ' call procedure
@@ -21,8 +21,8 @@ Sub main()
 End Sub
 
 Sub moveBetween(stacks As List(Of List(Of Integer)), fromStack As Integer, toStack As Integer) ' procedure
-  Dim a = stacks[fromStack] ' variable definition
-  Dim b = stacks[toStack] ' variable definition
+  Dim a = stacks(fromStack) ' variable definition
+  Dim b = stacks(toStack) ' variable definition
   If b.length() < nDiscs Then
     If (a.length() > 0) And ((b.length() = 0) Or (top(a) < top(b))) Then
       Dim disc = top(a) ' variable definition
@@ -40,16 +40,16 @@ End Sub
 Sub display(stacks As List(Of List(Of Integer))) ' procedure
   clearAllDisplays() ' call procedure
   Dim vg = New List(Of VectorGraphic)() ' variable definition
-  drawStack(stacks[0], 1, vg) ' call procedure
-  drawStack(stacks[1], 2, vg) ' call procedure
-  drawStack(stacks[2], 3, vg) ' call procedure
+  drawStack(stacks(0), 1, vg) ' call procedure
+  drawStack(stacks(1), 2, vg) ' call procedure
+  drawStack(stacks(2), 3, vg) ' call procedure
   displayVectorGraphics(vg) ' call procedure
   sleep_ms(delay_ms) ' call procedure
 End Sub
 
 Sub drawStack(s As List(Of Integer), peg As Integer, vg As List(Of VectorGraphic)) ' procedure
   For Each n In range(0, s.length())
-    Dim discVG = createDisc(s[n], peg, n) ' variable definition
+    Dim discVG = createDisc(s(n), peg, n) ' variable definition
     vg.append(discVG) ' call procedure
   Next n
 End Sub
@@ -99,7 +99,7 @@ End Sub
 
 Function colour(disc As Integer) As Integer
   Dim colours = {red, yellow, blue, brown, green, &HFF9900, &H6600FF, &H00CC00, &H3399FF, &HFF99CC} ' variable definition
-  Return colours[disc - 1]
+  Return colours(disc - 1)
 End Function
 
 <TestMethod> Sub test_colour()
@@ -113,7 +113,7 @@ End Function
 End Sub
 
 Function top(s As List(Of Integer)) As Integer
-  Return s[s.length() - 1]
+  Return s(s.length() - 1)
 End Function
 
 <TestMethod> Sub test_top()

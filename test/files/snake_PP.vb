@@ -20,7 +20,7 @@ Sub main()
     head = headRef.value() ' reassign variable
     tail = tailRef.value() ' reassign variable
     currentDir = currentDirRef.value() ' reassign variable
-    gameOn = Not hasHitEdge(head[0], head[1]) And Not body.contains(head) ' reassign variable
+    gameOn = Not hasHitEdge(head(0), head(1)) And Not body.contains(head) ' reassign variable
     If head.equals(apple) Then
       setAppleToRandomPosition(apple, body) ' call procedure
     Else
@@ -36,25 +36,25 @@ Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(O
   Dim tail = tailRef.value() ' variable definition
   Dim currentDir = currentDirRef.value() ' variable definition
   currentDir = directionByKey(currentDir, getKey()) ' reassign variable
-  tailRef.set(body[0]) ' call procedure
+  tailRef.set(body(0)) ' call procedure
   body.append(head) ' call procedure
   headRef.set(getAdjacentSquare(head, currentDir)) ' call procedure
   currentDirRef.set(currentDir) ' call procedure
 End Sub
 
 Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer), tail As List(Of Integer), body As List(Of List(Of Integer)), apple As List(Of Integer)) ' procedure
-  blocks[head[0]][head[1]] = green ' reassign variable
+  blocks(head(0))(head(1)) = green ' reassign variable
   Dim tailColour = getTailColour(tail, body) ' variable definition
-  blocks[tail[0]][tail[1]] = tailColour ' reassign variable
-  blocks[apple[0]][apple[1]] = red ' reassign variable
+  blocks(tail(0))(tail(1)) = tailColour ' reassign variable
+  blocks(apple(0))(apple(1)) = red ' reassign variable
   displayBlocks(blocks) ' call procedure
 End Sub
 
 Sub setAppleToRandomPosition(apple As List(Of Integer), body As List(Of List(Of Integer))) ' procedure
   Dim changePosition = True ' variable definition
   While changePosition
-    apple[0] = randint(0, 39) ' reassign variable
-    apple[1] = randint(0, 29) ' reassign variable
+    apple(0) = randint(0, 39) ' reassign variable
+    apple(1) = randint(0, 29) ' reassign variable
     If Not body.contains(apple) Then
       changePosition = False ' reassign variable
     End If
@@ -63,7 +63,7 @@ End Sub
 
 Function getTailColour(tail As List(Of Integer), body As List(Of List(Of Integer))) As Integer
   Dim colour = white ' variable definition
-  If body[0].equals(tail) Then
+  If body(0).equals(tail) Then
     colour = green ' reassign variable
   End If
   Return colour
@@ -74,8 +74,8 @@ Function hasHitEdge(headX As Integer, headY As Integer) As Boolean
 End Function
 
 Function getAdjacentSquare(sq As List(Of Integer), dir As Direction) As List(Of Integer)
-  Dim newX = sq[0] ' variable definition
-  Dim newY = sq[1] ' variable definition
+  Dim newX = sq(0) ' variable definition
+  Dim newY = sq(1) ' variable definition
   If dir = Direction.left Then
     newX = newX - 1 ' reassign variable
   ElseIf dir = Direction.right Then

@@ -196,6 +196,10 @@ export class LanguageElan extends LanguageAbstract {
     return expr;
   }
 
+  postProcessHtml(html: string): string {
+      return html;
+  }
+
   private ABSTRACT = "abstract";
   private AS = "as";
   private ASSERT = "assert";

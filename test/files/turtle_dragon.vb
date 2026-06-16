@@ -1,7 +1,7 @@
 ' VB.NET with Elan 2.0.0-beta
 
 Sub main()
-  Dim order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) ' variable definition
+  Dim order = inputIntBetween("Enter order of dragon (1..12): ", 1, 12) ' variable definition
   clearPrintedText() ' call procedure
   Console.WriteLine($"Dragon of order {order}") ' print
   Dim side = (75/pow(sqrt(2), order)) ' variable definition
@@ -52,7 +52,7 @@ End Function
 Function reflect(s As String) As String
   Dim sR = "" ' variable definition
   For Each i In range(1, s.length() + 1)
-    sR = if((s[i - 1]).equals(left), right, left) + sR ' reassign variable
+    sR = if((s(i - 1)).equals(left), right, left) + sR ' reassign variable
   Next i
   Return sR
 End Function

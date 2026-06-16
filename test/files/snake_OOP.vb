@@ -37,7 +37,7 @@ Class Snake
 
   Sub clockTick(key As String, apple As Apple) ' procedure method
     Me.setDirection(key) ' call procedure
-    Me.priorTail = Me.body[0] ' reassign variable
+    Me.priorTail = Me.body(0) ' reassign variable
     Dim body = Me.body ' variable definition
     body.append(Me.head) ' call procedure
     Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' reassign variable
@@ -49,9 +49,9 @@ Class Snake
   End Sub
 
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks[Me.head.x][Me.head.y] = green ' reassign variable
-    If Not Me.body[0].equals(Me.priorTail) Then
-      blocks[Me.priorTail.x][Me.priorTail.y] = white ' reassign variable
+    blocks(Me.head.x)(Me.head.y) = green ' reassign variable
+    If Not Me.body(0).equals(Me.priorTail) Then
+      blocks(Me.priorTail.x)(Me.priorTail.y) = white ' reassign variable
     End If
   End Sub
 
@@ -112,7 +112,7 @@ Class Apple
   End Sub
 
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks[Me.location.x][Me.location.y] = red ' reassign variable
+    blocks(Me.location.x)(Me.location.y) = red ' reassign variable
   End Sub
 
   Function toString() As String

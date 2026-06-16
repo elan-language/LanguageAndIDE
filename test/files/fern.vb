@@ -56,7 +56,7 @@ Function onestep(x As Double, y As Double, r As Double) As (Double, Double)
   ' use the random number r to select one of p1 to p4
   ' weighted by the probabilities and put it in pp
   Dim pp = getparams(r, allPs, 0.0) ' let
-  Return (x*pp[0] + y*pp[1] + pp[4], x*pp[2] + y*pp[3] + pp[5])
+  Return (x*pp(0) + y*pp(1) + pp(4), x*pp(2) + y*pp(3) + pp(5))
 End Function
 
 ' select a parameter set depending on random number
@@ -69,7 +69,7 @@ End Function
 
 Function getparams(r As Double, prms As List(Of List(Of Double)), cumuprob As Double) As List(Of Double)
   Dim head = prms.head() ' let
-  Dim cp2 = cumuprob + head[6] ' let
+  Dim cp2 = cumuprob + head(6) ' let
   Return if(r < cp2, head, getparams(r, prms.tail(), cp2))
 End Function
 

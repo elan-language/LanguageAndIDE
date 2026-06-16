@@ -5,9 +5,9 @@ Sub main()
   Dim x = 20 ' variable definition
   Dim y = 15 ' variable definition
   While True
-    blocks[x][y] = red ' reassign variable
+    blocks(x)(y) = red ' reassign variable
     displayBlocks(blocks) ' call procedure
-    blocks[x][y] = black ' reassign variable
+    blocks(x)(y) = black ' reassign variable
     Dim direction = randint(0, 3) ' variable definition
     If direction = 0 Then
       x = min({x + 1, 39}) ' reassign variable

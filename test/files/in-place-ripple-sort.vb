@@ -13,10 +13,10 @@ Sub inPlaceRippleSort(li As List(Of Integer)) ' procedure
   While hasChanged = True
     hasChanged = False ' reassign variable
     For Each i In range(0, lastComp + 1)
-      If li[i] > li[i + 1] Then
-        Dim temp = li[i] ' variable definition
-        li[i] = li[i + 1] ' reassign variable
-        li[i + 1] = temp ' reassign variable
+      If li(i) > li(i + 1) Then
+        Dim temp = li(i) ' variable definition
+        li(i) = li(i + 1) ' reassign variable
+        li(i + 1) = temp ' reassign variable
         hasChanged = True ' reassign variable
       End If
     Next i

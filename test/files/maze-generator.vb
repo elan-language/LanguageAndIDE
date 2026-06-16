@@ -11,7 +11,7 @@ Sub main()
     Dim setTo = (random() + 0.7).floor() ' variable definition
     If okToSet(p, setTo, blocks) Then
       Dim colour = if(setTo = 1, white, black) ' variable definition
-      blocks[p.x][p.y] = colour ' reassign variable
+      blocks(p.x)(p.y) = colour ' reassign variable
     End If
   Next i
   displayBlocks(blocks) ' call procedure
@@ -30,7 +30,7 @@ Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
   For Each row In range(0, 30)
     Dim line = "" ' variable definition
     For Each col In range(0, 40)
-      Dim colour = b[col][row] ' variable definition
+      Dim colour = b(col)(row) ' variable definition
       Dim symbol = if(colour = white, " ", "X") ' variable definition
       line = line + symbol ' reassign variable
     Next col
@@ -62,24 +62,24 @@ Function addRectangle(b As List(Of List(Of Integer)), startX As Integer, startY 
 End Function
 
 Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics[x].withSet(y, colour))
+  Return graphics.withSet(x, graphics(x).withSet(y, colour))
 End Function
 
 ' colour: 0 for black, 1 for white
 
 Function okToSet(p As Point, colour As Integer, g As List(Of List(Of Integer))) As Boolean
   Dim n = p.neighbouringPoints().map(Function (p As Point) getValue(p, g)) ' variable definition
-  Dim q1 = isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8) ' variable definition
-  Dim q2 = isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8) ' variable definition
-  Dim q3 = isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8) ' variable definition
-  Dim q4 = isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8) ' variable definition
+  Dim q1 = isValidQuadrant(n(0) + n(1)*2 + colour*4 + n(3)*8) ' variable definition
+  Dim q2 = isValidQuadrant(n(1) + n(2)*2 + n(4)*4 + colour*8) ' variable definition
+  Dim q3 = isValidQuadrant(colour + n(4)*2 + n(7)*4 + n(6)*8) ' variable definition
+  Dim q4 = isValidQuadrant(n(3) + colour*2 + n(6)*4 + n(5)*8) ' variable definition
   Return q1 And q2 And q3 And q4
 End Function
 
 Function getValue(p As Point, b As List(Of List(Of Integer))) As Integer
   Dim result = 0 ' variable definition
   If (p.x > -1) And (p.x < 40) And (p.y > -1) And (p.y < 30) Then
-    Dim colour = b[p.x][p.y] ' variable definition
+    Dim colour = b(p.x)(p.y) ' variable definition
     result = if(colour = black, 0, 1) ' reassign variable
   End If
   Return result

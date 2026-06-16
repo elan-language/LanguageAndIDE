@@ -173,6 +173,10 @@ export class LanguageCS extends LanguageCfamily {
     return this.default_standardiseInterpolatedString(node, text);
   }
 
+  postProcessHtml(html: string): string {
+      return html;
+  }
+
   typeTupleAsHtml(node: TypeTupleNode): string {
     return this.default_typeTupleAsHtml(node);
   }
