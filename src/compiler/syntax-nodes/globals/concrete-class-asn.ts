@@ -10,14 +10,15 @@ import {
 import {
   getId,
   mustBeDeclaredAbove,
-  mustHaveAsString,
   mustHaveConstructor,
+  mustHaveToString,
   mustImplementSuperClasses,
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { FunctionType } from "../../symbols/function-type";
 import { StringType } from "../../symbols/string-type";
 import { compileNodes, isConstructor } from "../ast-helpers";
+import { FunctionMethodAsn } from "../class-members/function-method-asn";
 import { ClassAsn } from "./class-asn";
 
 export class ConcreteClassAsn extends ClassAsn {
@@ -85,19 +86,21 @@ export class ConcreteClassAsn extends ClassAsn {
       mustHaveConstructor(this.compileErrors, this.fieldId);
     }
 
-    const hasAsString = children.some((m) => {
+    const hasToString = children.some((m) => {
       const st = m.symbolType();
 
       return (
         m.symbolId === "toString" &&
         st instanceof FunctionType &&
         st.parameterTypes.length === 0 &&
-        st.returnType === StringType.Instance
+        st.returnType === StringType.Instance &&
+        m instanceof FunctionMethodAsn &&
+        !m.private
       );
     });
 
-    if (!hasAsString) {
-      mustHaveAsString(this.compileErrors, this.fieldId);
+    if (!hasToString) {
+      mustHaveToString(this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

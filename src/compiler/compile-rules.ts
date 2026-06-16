@@ -501,10 +501,10 @@ export function mustHaveConstructor(compileErrors: CompileError[], location: str
   compileErrors.push(new SyntaxCompileError("Concrete class must have a constructor.", location));
 }
 
-export function mustHaveAsString(compileErrors: CompileError[], location: string) {
+export function mustHaveToString(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "Concrete class must have a 'toString' function taking no parameters and returning a String.",
+      "Concrete class should have a public 'toString' function taking no parameters and returning a String.",
       location,
     ),
   );
