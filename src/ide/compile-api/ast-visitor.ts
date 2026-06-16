@@ -46,7 +46,6 @@ import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
-import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionary-asn";
 import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
 import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
 import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
