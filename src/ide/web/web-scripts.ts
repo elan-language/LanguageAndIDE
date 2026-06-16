@@ -1355,7 +1355,7 @@ async function setup(p: Profile) {
   // It may be an empty string, in which case we want an empty URLSearchParams.
   fragId = fragId.length > 0 ? fragId.substring(1) : "";
   const sp = new URLSearchParams(fragId);
-  const lang = sp.get("lang") ?? "";
+  const lang = sp.get("lang") ?? "python";
   const cvd = sp.get("cvd");
   const code = sp.get("code");
 
