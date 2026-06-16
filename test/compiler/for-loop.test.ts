@@ -3,16 +3,15 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    testHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("For Loop", () => {
@@ -262,7 +261,7 @@ end main
 
 procedure foo(arr as List<of Int>)
   for i in range(0, 11)
-    call arr.put(i, 1)
+    reassign arr[i] to 1
   end for
   call printNoLine(arr[0])
 end procedure`;
@@ -296,9 +295,6 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 

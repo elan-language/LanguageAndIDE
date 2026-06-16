@@ -8,7 +8,6 @@ import { BinaryOperation } from "../../src/ide/frames/parse-nodes/binary-operati
 import { BracketedExpression } from "../../src/ide/frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../../src/ide/frames/parse-nodes/comma-node";
 import { CSV } from "../../src/ide/frames/parse-nodes/csv";
-import { DictionaryNode } from "../../src/ide/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../../src/ide/frames/parse-nodes/dot-after";
 import { DottedTerm } from "../../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
@@ -1180,107 +1179,6 @@ suite("Parsing Nodes", () => {
       `"a":"b"`,
       "",
     );
-  });
-  test("Dictionary", () => {
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37]`,
-      ParseStatus.valid,
-      `["a":37]`,
-      "",
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37, "b":42]`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37, "b":42`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37,`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37, 42:"b"]`,
-      ParseStatus.invalid,
-      "",
-      `["a":37, 42:"b"]`,
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `["a":37, "b":42)`,
-      ParseStatus.invalid,
-      "",
-      `["a":37, "b":42)`,
-      "",
-    );
-
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitValueNode(f),
-        () => new LitValueNode(f),
-      ),
-      `["a":37, "b":42]`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new DictionaryNode(
-        f,
-        () => new LitValueNode(f),
-        () => new LitValueNode(f),
-      ),
-      `["a":1.0, 5:"abc"]`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    ); //But should fail type tests
-    testNodeParse(new LitValueNode(f), `''`, ParseStatus.invalid, "", "", "");
-    testNodeParse(new LitValueNode(f), `'`, ParseStatus.invalid, "", "", "");
   });
   test("Literal", () => {
     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");

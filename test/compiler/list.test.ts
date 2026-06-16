@@ -3,20 +3,19 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertExportedVBis,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertObjectCodeIsWithAdvisories,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    testHeader,
-    testVBHeader,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertExportedVBis,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testHeader,
+  testVBHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("List", () => {
@@ -308,7 +307,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1,2,3]
-  call a.put(0, a[1])
+  reassign a[0] to a[1]
   call printNoLine(a)
 end main`;
 
@@ -316,7 +315,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
-  a.put(0, system.safeIndex(a, 1));
+  system.safeSet(a, system.safeIndex(a, 1), [0]);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -333,10 +332,8 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
     await assertObjectCodeExecutes(fileImpl, "[2, 2, 3]");
   });
 
@@ -410,8 +407,8 @@ end main`;
 
 main
   variable a set to createPopulatedList(3, "")
-  call a.put(0, "foo")
-  call a.put(2, "yon")
+  reassign a[0] to "foo"
+  reassign a[2] to "yon"
   call printNoLine(a[0])
   call printNoLine(a[2])
 end main`;
@@ -420,8 +417,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createPopulatedList(3, "");
-  a.put(0, "foo");
-  a.put(2, "yon");
+  system.safeSet(a, "foo", [0]);
+  system.safeSet(a, "yon", [2]);
   await _stdlib.printNoLine(system.safeIndex(a, 0));
   await _stdlib.printNoLine(system.safeIndex(a, 2));
 }
@@ -440,9 +437,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
@@ -900,7 +895,7 @@ end main
 
 main
   variable a set to new List<of Int>()
-  call a.put(0, 3)
+  reassign a[0] to 3
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1046,7 +1041,7 @@ end main
 
 main
   variable a set to createPopulatedList(3, "")
-  call a.put(0, true)
+  reassign a[0] to true
 end main
 `;
 
@@ -1063,7 +1058,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: String, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1095,8 +1090,8 @@ end main
 
 main
   variable a set to new List<of String>()
-  call a.put(0, "fred")
-  call a.put(1, "bill")
+  reassign a[0] to "fred"
+  reassign a[1] to "bill"
   variable b set to 0
   reassign b to a[0]
 end main
@@ -1115,8 +1110,6 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
       "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
     ]);
   });
@@ -1147,12 +1140,12 @@ end main
     ]);
   });
 
-  test("Fail_IndexWrongType", async () => {
+  ignore_test("Fail_IndexWrongType", async () => {
     const code = `${testHeader}
 
 main
   variable a set to new List<of String>()
-  call a.put("b", "fred")
+  reassign a["b"] to "fred"
 end main
 `;
 

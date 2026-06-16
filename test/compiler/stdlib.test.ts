@@ -741,7 +741,7 @@ main
   variable results set to [0, 0]
   for i in range(1, 10001)
     variable r set to randint(0, 1)
-    call results.put(r, results[r] + 1)
+    reassign results[r] to results[r] + 1
   end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
@@ -755,7 +755,7 @@ async function main() {
   const elan_iterelan_for6 = [..._stdlib.range(1, 10001)];
   for (const i of elan_iterelan_for6) {
     let r = _stdlib.randint(0, 1);
-    results.put(r, system.safeIndex(results, r) + 1);
+    system.safeSet(results, system.safeIndex(results, r) + 1, [r]);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
   await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
@@ -776,9 +776,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
 
@@ -793,7 +791,7 @@ main
   for i in range(1, 10001)
     reassign val to rnd.asInt(0, 1)
     reassign rnd to rnd.nextGen()
-    call results.put(val, results[val] + 1)
+    reassign results[val] to results[val] + 1
   end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
@@ -811,7 +809,7 @@ async function main() {
   for (const i of elan_iterelan_for15) {
     val = rnd.asInt(0, 1);
     rnd = rnd.nextGen();
-    results.put(val, system.safeIndex(results, val) + 1);
+    system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
   }
   await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
   await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
@@ -832,9 +830,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
   test("RandomInFixedSequence", async () => {
@@ -847,7 +843,7 @@ main
   for i in range(1, 10001)
     reassign val to rnd.asInt(3, 5)
     reassign rnd to rnd.nextGen()
-    call results.put(val, results[val] + 1)
+    reassign results[val] to results[val] + 1
   end for
   for i in range(0, 7)
     variable r set to results[i]
@@ -866,7 +862,7 @@ async function main() {
   for (const i of elan_iterelan_for12) {
     val = rnd.asInt(3, 5);
     rnd = rnd.nextGen();
-    results.put(val, system.safeIndex(results, val) + 1);
+    system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
   }
   const elan_iterelan_for25 = [..._stdlib.range(0, 7)];
   for (const i of elan_iterelan_for25) {
@@ -890,9 +886,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
   test("Pass_RandomType", async () => {
@@ -906,7 +900,7 @@ main
     variable t set to rollDice(rnd)
     reassign dice to t.item_0
     reassign rnd to t.item_1
-    call results.put(dice, results[dice] + 1)
+    reassign results[dice] to results[dice] + 1
   end for
   for i in range(0, 7)
     variable r set to results[i]
@@ -930,7 +924,7 @@ async function main() {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
-    results.put(dice, system.safeIndex(results, dice) + 1);
+    system.safeSet(results, system.safeIndex(results, dice) + 1, [dice]);
   }
   const elan_iterelan_for28 = [..._stdlib.range(0, 7)];
   for (const i of elan_iterelan_for28) {
@@ -959,9 +953,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "Advisory: Code change suggested. Method was deprecated in v1.9.LibRef.html#Xxxx",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
   });
 

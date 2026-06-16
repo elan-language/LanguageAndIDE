@@ -1,10 +1,8 @@
-import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
   elanClass,
   ElanClass,
-  elanDeprecated,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -51,13 +49,6 @@ export class Dictionary<T1, T2> {
     this.contents.delete(rk);
   }
 
-  @elanDeprecated(Deprecation.methodRemoved, 1, 9, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
-  @elanProcedure(["key", "value"])
-  put(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
-    const rk = this.findRealKey(key);
-    this.contents.set(rk, value);
-  }
-
   @elanFunction([], FunctionOptions.pure, ElanClass(List, [ElanT1]))
   keys(): List<T1> {
     const lst = [...this.contents.keys()];
@@ -97,7 +88,8 @@ export class Dictionary<T1, T2> {
   }
 
   safeSet(value: T2, key: T1) {
-    this.put(key, value);
+    const rk = this.findRealKey(key);
+    this.contents.set(rk, value);
   }
 
   equals(other: unknown) {
