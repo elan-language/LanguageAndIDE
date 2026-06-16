@@ -21,25 +21,25 @@ Sub moveMultiple(n As Integer, stacks As List(Of List(Of Integer)), fromStack As
 End Sub
 
 Sub moveOne(stacks As List(Of List(Of Integer)), fromStack As Integer, toStack As Integer) ' procedure
-  Dim disc = top(stacks[fromStack]) ' variable definition
-  stacks[fromStack].removeFirst(disc) ' call procedure
-  stacks[toStack].append(disc) ' call procedure
+  Dim disc = top(stacks(fromStack)) ' variable definition
+  stacks(fromStack).removeFirst(disc) ' call procedure
+  stacks(toStack).append(disc) ' call procedure
   display(stacks) ' call procedure
 End Sub
 
 Sub display(stacks As List(Of List(Of Integer))) ' procedure
   clearAllDisplays() ' call procedure
   Dim vg = New List(Of VectorGraphic)() ' variable definition
-  drawStack(stacks[0], 1, vg) ' call procedure
-  drawStack(stacks[1], 2, vg) ' call procedure
-  drawStack(stacks[2], 3, vg) ' call procedure
+  drawStack(stacks(0), 1, vg) ' call procedure
+  drawStack(stacks(1), 2, vg) ' call procedure
+  drawStack(stacks(2), 3, vg) ' call procedure
   displayVectorGraphics(vg) ' call procedure
   sleep_ms(delay_ms) ' call procedure
 End Sub
 
 Sub drawStack(s As List(Of Integer), peg As Integer, vg As List(Of VectorGraphic)) ' procedure
   For Each n In range(0, s.length())
-    Dim discVG = createDisc(s[n], peg, n) ' variable definition
+    Dim discVG = createDisc(s(n), peg, n) ' variable definition
     vg.append(discVG) ' call procedure
   Next n
 End Sub
@@ -89,7 +89,7 @@ End Sub
 
 Function colour(disc As Integer) As Integer
   Dim colours = {red, yellow, blue, brown, green, &HFF9900, &H6600FF, &H00CC00, &H3399FF, &HFF99CC} ' variable definition
-  Return colours[disc - 1]
+  Return colours(disc - 1)
 End Function
 
 <TestMethod> Sub test_colour()
@@ -103,7 +103,7 @@ End Function
 End Sub
 
 Function top(s As List(Of Integer)) As Integer
-  Return s[s.length() - 1]
+  Return s(s.length() - 1)
 End Function
 
 <TestMethod> Sub test_top()

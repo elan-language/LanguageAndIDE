@@ -15,7 +15,7 @@ End Sub
 Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
   For Each col In range(0, 40)
     For Each row In range(0, 30)
-      grid[col][row] = blackOrWhite(random()) ' reassign variable
+      grid(col)(row) = blackOrWhite(random()) ' reassign variable
     Next row
   Next col
 End Sub
@@ -26,7 +26,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
   For Each x In range(0, 40)
     For Each y In range(0, 30)
       Dim colour = nextCellValue(grid, x, y) ' variable definition
-      nextGen[x][y] = colour ' reassign variable
+      nextGen(x)(y) = colour ' reassign variable
     Next y
   Next x
   gridRef.set(nextGen) ' call procedure
@@ -106,7 +106,7 @@ Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As In
   For Each cell In neighbourCells(x, y)
     Dim cx = cell.item_0 ' variable definition
     Dim cy = cell.item_1 ' variable definition
-    If grid[cx][cy] = black Then
+    If grid(cx)(cy) = black Then
       count = count + 1 ' reassign variable
     End If
   Next cell
@@ -125,7 +125,7 @@ End Function
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim colour = white ' variable definition
-  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' variable definition
+  Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' variable definition
   If live Then
     colour = black ' reassign variable
   End If

@@ -54,6 +54,8 @@ export interface Language {
 
   standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
+  postProcessHtml(html: string): string;
+  
   MOD: string;
   EQUAL: string;
   NOT_EQUAL: string;

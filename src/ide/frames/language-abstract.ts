@@ -191,6 +191,8 @@ export abstract class LanguageAbstract implements Language {
     return overridesKw;
   }
 
+  abstract postProcessHtml(html: string): string;
+
   abstract MOD: string;
   abstract EQUAL: string;
   abstract NOT_EQUAL: string;

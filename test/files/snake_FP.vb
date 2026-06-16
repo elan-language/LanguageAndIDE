@@ -26,13 +26,13 @@ End Function
 Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of List(Of Integer))
   Dim b2 = graphicsPut(b, g.apple.x, g.apple.y, red) ' let
   Dim b3 = graphicsPut(b2, g.head.x, g.head.y, green) ' let
-  Dim tail = g.body[0] ' let
+  Dim tail = g.body(0) ' let
   Dim tailColour = if(tail.equals(g.priorTail), green, white) ' let
   Return graphicsPut(b3, tail.x, tail.y, tailColour)
 End Function
 
 Function graphicsPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics[x].withSet(y, colour))
+  Return graphics.withSet(x, graphics(x).withSet(y, colour))
 End Function
 
 Function score(g As Game) As Integer
@@ -49,7 +49,7 @@ Function moveSnake(g As Game) As Game
 End Function
 
 Function eatAppleIfPoss(g As Game) As Game
-  Dim tail = g.body[0] ' let
+  Dim tail = g.body(0) ' let
   Dim moveTail = g.body.subList(1, g.body.length()) ' let
   Return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 End Function
@@ -175,7 +175,7 @@ End Class
   Dim g3 = clockTick(g2, "s") ' let
   Assert.AreEqual(New Square(22, 16), g3.head)
   Assert.AreEqual(2, g3.body.length())
-  Assert.AreEqual(g2.body[0], g3.priorTail)
+  Assert.AreEqual(g2.body(0), g3.priorTail)
   Assert.AreEqual(True, g3.isOn)
   Dim g4 = g3.withApple(New Square(22, 17)) ' let
   Dim g5 = clockTick(g4, "s") ' let
@@ -191,14 +191,14 @@ End Sub
   Dim blocks = createBlockGraphics(white) ' let
   Dim g1 = New Game(New Random()) ' let
   Dim blocks2 = updateGraphics(g1, blocks) ' let
-  Assert.AreEqual(red, blocks2[12][15])
-  Assert.AreEqual(green, blocks2[22][15])
-  Assert.AreEqual(white, blocks2[21][15])
+  Assert.AreEqual(red, blocks2(12)(15))
+  Assert.AreEqual(green, blocks2(22)(15))
+  Assert.AreEqual(white, blocks2(21)(15))
   Dim g3 = clockTick(g1, "d") ' let
   Dim blocks3 = updateGraphics(g3, blocks2) ' let
-  Assert.AreEqual(red, blocks3[12][15])
-  Assert.AreEqual(green, blocks3[22][15])
-  Assert.AreEqual(green, blocks3[23][15])
+  Assert.AreEqual(red, blocks3(12)(15))
+  Assert.AreEqual(green, blocks3(22)(15))
+  Assert.AreEqual(green, blocks3(23)(15))
 End Sub
 
 <TestMethod> Sub test_testnewApple()
@@ -250,7 +250,7 @@ End Sub
   Dim g3 = eatAppleIfPoss(g2) ' let
   Assert.AreEqual(1, g3.body.length())
   Assert.AreEqual(g2.apple, g3.apple)
-  Assert.AreEqual(g2.body[0], g3.priorTail)
+  Assert.AreEqual(g2.body(0), g3.priorTail)
   ' positive case
   Dim g4 = g2.withHead(New Square(23, 15)) ' let
   Dim g5 = eatAppleIfPoss(g4) ' let
@@ -305,8 +305,8 @@ End Sub
   Assert.AreEqual(New Square(22, 15), game.head)
   Dim body = game.body ' let
   Assert.AreEqual(2, body.length())
-  Assert.AreEqual(New Square(20, 15), body[0])
-  Assert.AreEqual(New Square(21, 15), body[1])
+  Assert.AreEqual(New Square(20, 15), body(0))
+  Assert.AreEqual(New Square(21, 15), body(1))
   Assert.AreEqual(New Square(0, 0), game.priorTail)
   Assert.AreEqual("d", game.key)
   Assert.AreEqual(True, game.isOn)

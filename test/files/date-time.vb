@@ -38,7 +38,7 @@ Function getDate(unixSecs As Integer) As String
   Dim s = padLwithZero(second) ' variable definition
   Dim startDays = getStartDays() ' variable definition
   Dim startDaysL = startDaysList(year, startDays) ' variable definition
-  Dim month_day = monthDay(startDaysL, (days Mod startDays[12])) ' variable definition
+  Dim month_day = monthDay(startDaysL, (days Mod startDays(12))) ' variable definition
   Dim month = month_day.item_0 ' variable definition
   Dim day = month_day.item_1 ' variable definition
   Dim dayName = getWeekdayName(weekday) ' variable definition
@@ -110,9 +110,9 @@ Function monthDay(startDays As List(Of Integer), dayNumber As Integer) As (Integ
   Dim day = 0 ' variable definition
   Dim monthFound = False ' variable definition
   While monthFound = False
-    If (dayNumber < startDays[month]) Then
+    If (dayNumber < startDays(month)) Then
       monthFound = True ' reassign variable
-      day = dayNumber - startDays[month - 1] + 1 ' reassign variable
+      day = dayNumber - startDays(month - 1) + 1 ' reassign variable
     Else
       month = month + 1 ' reassign variable
     End If
@@ -125,7 +125,7 @@ Function startDaysList(year As Integer, startDays As List(Of Integer)) As List(O
   Dim startDaysL = getStartDays() ' variable definition
   If leap(year) Then
     For Each m In range(2, 13)
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) ' reassign variable
+      startDaysL = startDaysL.withSet(m, startDaysL(m) + 1) ' reassign variable
     Next m
   End If
   Return startDaysL
@@ -143,7 +143,7 @@ Const daySecs = 86400
 
 Function getWeekdayName(weekDay As Integer) As String
   Dim names = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"} ' variable definition
-  Return names[weekDay]
+  Return names(weekDay)
 End Function
 
 <TestMethod> Sub test_getWeekdayName()
@@ -153,7 +153,7 @@ End Sub
 
 Function getMonthName(month As Integer) As String
   Dim names = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"} ' variable definition
-  Return names[month - 1]
+  Return names(month - 1)
 End Function
 
 <TestMethod> Sub test_getMonthName()

@@ -19,15 +19,15 @@ End Function
 
 <TestMethod> Sub test_initialGrid()
   Dim grid = initialGrid(New Random()) ' let
-  Assert.AreEqual(black, grid[0][0])
-  Assert.AreEqual(white, grid[1][0])
-  Assert.AreEqual(white, grid[2][0])
-  Assert.AreEqual(white, grid[0][1])
-  Assert.AreEqual(black, grid[1][1])
-  Assert.AreEqual(white, grid[2][1])
-  Assert.AreEqual(black, grid[0][2])
-  Assert.AreEqual(black, grid[1][2])
-  Assert.AreEqual(black, grid[2][2])
+  Assert.AreEqual(black, grid(0)(0))
+  Assert.AreEqual(white, grid(1)(0))
+  Assert.AreEqual(white, grid(2)(0))
+  Assert.AreEqual(white, grid(0)(1))
+  Assert.AreEqual(black, grid(1)(1))
+  Assert.AreEqual(white, grid(2)(1))
+  Assert.AreEqual(black, grid(0)(2))
+  Assert.AreEqual(black, grid(1)(2))
+  Assert.AreEqual(black, grid(2)(2))
 End Sub
 
 Function appendCol(tup As (List(Of List(Of Integer)), Random), c As Integer) As (List(Of List(Of Integer)), Random)
@@ -46,19 +46,19 @@ End Function
   Dim rng = New Random() ' let
   Dim result = appendCol((emptyGrid, rng), 0) ' let
   Dim grid1 = result.item_0 ' let
-  Dim col = grid1[0] ' let
-  Assert.AreEqual(black, col[0])
-  Assert.AreEqual(white, col[1])
-  Assert.AreEqual(black, col[2])
-  Assert.AreEqual(black, col[29])
+  Dim col = grid1(0) ' let
+  Assert.AreEqual(black, col(0))
+  Assert.AreEqual(white, col(1))
+  Assert.AreEqual(black, col(2))
+  Assert.AreEqual(black, col(29))
   Dim rng2 = result.item_1 ' let
   Dim result2 = appendCol((grid1, rng2), 1) ' let
   Dim grid2 = result2.item_0 ' let
-  Dim col2 = grid2[1] ' let
-  Assert.AreEqual(white, col2[0])
-  Assert.AreEqual(black, col2[1])
-  Assert.AreEqual(black, col2[2])
-  Assert.AreEqual(white, col2[29])
+  Dim col2 = grid2(1) ' let
+  Assert.AreEqual(white, col2(0))
+  Assert.AreEqual(black, col2(1))
+  Assert.AreEqual(black, col2(2))
+  Assert.AreEqual(white, col2(29))
 End Sub
 
 Function initialCol(rng As Random) As (List(Of Integer), Random)
@@ -71,16 +71,16 @@ End Function
   Dim rng = New Random() ' let
   Dim result = initialCol(rng) ' let
   Dim col = result.item_0 ' let
-  Assert.AreEqual(black, col[0])
-  Assert.AreEqual(white, col[1])
-  Assert.AreEqual(black, col[2])
-  Assert.AreEqual(black, col[29])
+  Assert.AreEqual(black, col(0))
+  Assert.AreEqual(white, col(1))
+  Assert.AreEqual(black, col(2))
+  Assert.AreEqual(black, col(29))
   Dim rng2 = result.item_1 ' let
   Dim col2 = initialCol(rng2).item_0 ' let
-  Assert.AreEqual(white, col2[0])
-  Assert.AreEqual(black, col2[1])
-  Assert.AreEqual(black, col2[2])
-  Assert.AreEqual(white, col2[29])
+  Assert.AreEqual(white, col2(0))
+  Assert.AreEqual(black, col2(1))
+  Assert.AreEqual(black, col2(2))
+  Assert.AreEqual(white, col2(29))
 End Sub
 
 Function appendCell(tup As (List(Of Integer), Random), row As Integer) As (List(Of Integer), Random)
@@ -95,12 +95,12 @@ End Function
   Dim result = appendCell((emptyList, rng), 0) ' let
   Dim col = result.item_0 ' let
   Assert.AreEqual(1, col.length())
-  Assert.AreEqual(black, col[0])
+  Assert.AreEqual(black, col(0))
   Dim rng2 = result.item_1 ' let
   Dim result2 = appendCell((col, rng2), 1) ' let
   Dim col2 = result2.item_0 ' let
   Assert.AreEqual(2, col2.length())
-  Assert.AreEqual(white, col2[1])
+  Assert.AreEqual(white, col2(1))
 End Sub
 
 Function blackOrWhite(rng As Random) As Integer
@@ -235,7 +235,7 @@ End Sub
 
 Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim neighbours = neighbourCells(x, y) ' let
-  Return neighbours.filter(Function (c As (Integer, Integer)) grid[c.item_0][c.item_1] = black).length()
+  Return neighbours.filter(Function (c As (Integer, Integer)) grid(c.item_0)(c.item_1) = black).length()
 End Function
 
 <TestMethod> Sub test_liveNeighbours()
@@ -270,7 +270,7 @@ End Function
 End Sub
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim live = willLive(grid[x][y], liveNeighbours(grid, x, y)) ' let
+  Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' let
   Return if(live, black, white)
 End Function
 
@@ -286,7 +286,7 @@ Function nextGeneration(grid As List(Of List(Of Integer))) As List(Of List(Of In
 End Function
 
 Function nextCol(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
-  Dim col = grid[x] ' let
+  Dim col = grid(x) ' let
   Dim rows = range(0, 30) ' let
   Return rows.map(Function (y As Integer) nextCellValue(grid, x, y))
 End Function
@@ -294,8 +294,8 @@ End Function
 <TestMethod> Sub test_nextCol()
   Dim grid = initialGrid(New Random()) ' let
   Dim col = nextCol(grid, 3) ' let
-  Assert.AreEqual(black, col[0])
-  Assert.AreEqual(black, col[1])
-  Assert.AreEqual(white, col[2])
-  Assert.AreEqual(black, col[29])
+  Assert.AreEqual(black, col(0))
+  Assert.AreEqual(black, col(1))
+  Assert.AreEqual(white, col(2))
+  Assert.AreEqual(black, col(29))
 End Sub

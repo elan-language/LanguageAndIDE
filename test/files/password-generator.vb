@@ -38,7 +38,7 @@ End Sub
 Sub populatePassword(password As AsRef(Of String), all As String) ' procedure
   For Each i In range(1, length + 1)
     Dim rnd = randint(0, all.length() - 1) ' variable definition
-    password.set(password.value() + all[rnd]) ' call procedure
+    password.set(password.value() + all(rnd)) ' call procedure
   Next i
 End Sub
 
