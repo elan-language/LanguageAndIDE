@@ -2,7 +2,6 @@ import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BracketedExpression } from "./bracketed-expression";
-import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
@@ -29,13 +28,6 @@ export class TermSimple extends AbstractAlternatives {
   parseText(text: string): void {
     if (text.trim().length > 0) {
       this.alternatives.push(new ListNode(this.file, () => new ExprNode(this.file)));
-      this.alternatives.push(
-        new DictionaryNode(
-          this.file,
-          () => new ExprNode(this.file),
-          () => new ExprNode(this.file),
-        ),
-      );
       this.alternatives.push(new UnaryExpression(this.file));
       this.alternatives.push(new BracketedExpression(this.file));
       this.alternatives.push(new LitValueNode(this.file));

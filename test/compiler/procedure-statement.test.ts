@@ -68,16 +68,12 @@ return [main, _tests];}`;
 main
   variable a set to [1, 2]
   variable b set to [3, 4]
-  variable c set to ["a":true, "b":false]
-  variable d set to ["a":true, "b":false]
-  call foo(a, b, c, d)
+  call foo(a, b)
 end main
 
-procedure foo(x as List<of Int>, y as List<of Int>, z as Dictionary<of String, Boolean>, t as Dictionary<of String, Boolean>)
+procedure foo(x as List<of Int>, y as List<of Int>)
   call printNoLine(x)
   call printNoLine(y)
-  call printNoLine(z)
-  call printNoLine(t)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -85,16 +81,12 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2]);
   let b = system.list([3, 4]);
-  let c = system.dictionary([["a", true], ["b", false]]);
-  let d = system.dictionary([["a", true], ["b", false]]);
-  await foo(a, b, c, d);
+  await foo(a, b);
 }
 
-async function foo(x, y, z, t) {
+async function foo(x, y) {
   await _stdlib.printNoLine(x);
   await _stdlib.printNoLine(y);
-  await _stdlib.printNoLine(z);
-  await _stdlib.printNoLine(t);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -113,7 +105,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "[1, 2][3, 4][a:true, b:false][a:true, b:false]");
+    await assertObjectCodeExecutes(fileImpl, "[1, 2][3, 4]");
   });
 
   test("Pass_ExternalCall", async () => {

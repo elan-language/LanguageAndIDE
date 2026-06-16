@@ -572,9 +572,9 @@ test test_list_
   assert a is b
 end test
 
-test test_dictionary_
-  variable a set to [3:"a", 2:"b", 4:"c"]
-  variable b set to [3:"a", 2:"b", 4:"c"]
+test test_list2_
+  variable a set to [3, 2, 4, 0]
+  variable b set to [3, 2, 4, 0]
   assert a is b
 end test
 
@@ -624,9 +624,9 @@ _tests.push(["elan_test3", async (_outcomes) => {
 }]);
 
 _tests.push(["elan_test15", async (_outcomes) => {
-  let a = system.dictionary([[3, "a"], [2, "b"], [4, "c"]]);
-  let b = system.dictionary([[3, "a"], [2, "b"], [4, "c"]]);
-  _outcomes.push(await system.assert([async () => a, "Dictionary<of Int, String>"], [b, "Dictionary<of Int, String>"], "elan_assert24", _stdlib, false));
+  let a = system.list([3, 2, 4, 0]);
+  let b = system.list([3, 2, 4, 0]);
+  _outcomes.push(await system.assert([async () => a, "List<of Int>"], [b, "List<of Int>"], "elan_assert24", _stdlib, false));
 }]);
 
 _tests.push(["elan_test27", async (_outcomes) => {
@@ -684,7 +684,7 @@ return [main, _tests];}`;
       ],
       [
         "elan_test15",
-        [new AssertOutcome(TestStatus.pass, "[3:a, 2:b, 4:c]", "[3:a, 2:b, 4:c]", "elan_assert24")],
+        [new AssertOutcome(TestStatus.pass, "[3, 2, 4, 0]", "[3, 2, 4, 0]", "elan_assert24")],
       ],
       [
         "elan_test27",

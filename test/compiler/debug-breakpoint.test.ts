@@ -40,7 +40,6 @@ main
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to [1:2]
   reassign a to 2
 end main`;
 
@@ -59,14 +58,9 @@ end main`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set15", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
   test("Pass_LocalvariablesProcedure", async () => {
@@ -80,7 +74,6 @@ procedure pp(e as Int)
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to [1:2]
   reassign a to 2
 end procedure`;
 
@@ -99,15 +92,10 @@ end procedure`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set22", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set19", expected);
   });
 
   test("Pass_LocalvariablesFunction", async () => {
@@ -121,7 +109,6 @@ function ff(e as Int) returns Int
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  variable d set to [1:2]
   reassign a to 2
   return a
 end function`;
@@ -141,15 +128,10 @@ end function`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set25", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set22", expected);
   });
 
   test("Pass_LocalvariablesMemberProcedure", async () => {
@@ -168,7 +150,6 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to [1:2]
     reassign a to 2
   end procedure
 
@@ -196,16 +177,11 @@ end class`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set42", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set39", expected);
   });
 
   test("Pass_LocalvariablesMemberFunction", async () => {
@@ -224,7 +200,6 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to [1:2]
     reassign a to 2
     return a
   end function
@@ -253,16 +228,11 @@ end class`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set45", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set42", expected);
   });
 
   test("Pass_LocalvariablesConstructor", async () => {
@@ -278,7 +248,6 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    variable d set to [1:2]
     reassign a to 2
   end constructor
   function toString() returns String
@@ -304,16 +273,11 @@ end class`;
       asDebugSymbol("a", 1, '{"Type":"Int"}'),
       asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("c", "fred", '{"Type":"String"}'),
-      asDebugSymbol(
-        "d",
-        { 1: 2 },
-        '{"Type":"Dictionary<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
-      ),
       asDebugSymbol("e", 3, '{"Type":"Int"}'),
       asDebugSymbol("this.f", 0, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "elan_set32", expected);
+    await assertDebugBreakPoint(fileImpl, "elan_set29", expected);
   });
 
   test("Pass_InForLoop", async () => {

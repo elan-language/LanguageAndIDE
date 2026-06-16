@@ -16,6 +16,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Dictionary", () => {
+  /*
   test("Pass_LiteralDictionary", async () => {
     const code = `${testHeader}
 
@@ -1402,7 +1403,7 @@ end class`;
       "Dictionary cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
-
+*/
   test("Fail_DictionaryOfDictionaryKey", async () => {
     const code = `${testHeader}
 
