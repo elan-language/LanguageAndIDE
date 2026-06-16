@@ -3,7 +3,7 @@
 public class Global {
 
 static void main() {
-  var fruit = {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"};
+  var fruit = list("apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon");
   var done = false;
   while (!done) {
     var wanted = Console.ReadLine("What type of fruit do you want ('x' to exit)? "); // input
@@ -37,16 +37,16 @@ static bool binarySearch(List<String> li, String item) { // function
 } // function
 
 @Test static void test_binarySearch() {
-  var li1 = {"lemon", "lime", "orange"};
+  var li1 = list("lemon", "lime", "orange");
   assertEquals(true, binarySearch(li1, "lemon"));
   assertEquals(true, binarySearch(li1, "lime"));
   assertEquals(true, binarySearch(li1, "orange"));
   assertEquals(false, binarySearch(li1, "pear"));
-  var li2 = {"lemon", "orange"};
+  var li2 = list("lemon", "orange");
   assertEquals(true, binarySearch(li2, "lemon"));
   assertEquals(true, binarySearch(li2, "orange"));
   assertEquals(false, binarySearch(li2, "pear"));
-  var li3 = {"lemon"};
+  var li3 = list("lemon");
   assertEquals(true, binarySearch(li3, "lemon"));
   assertEquals(false, binarySearch(li3, "lime"));
   var li4 = new List<String>();

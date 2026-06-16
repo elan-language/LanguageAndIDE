@@ -2210,7 +2210,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(5, "a")
+  variable a set to createPopulatedList(5, "a")
   call printNoLine(a)
 end main
 `;
@@ -2218,7 +2218,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(5, "a");
+  let a = _stdlib.createPopulatedList(5, "a");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -2243,7 +2243,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createListOfLists(3, 2, 5)
+  variable a set to createPopulatedListofLists(3, 2, 5)
   call printNoLine(a)
 end main
 `;
@@ -2251,7 +2251,7 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (await _stdlib.createListOfLists(3, 2, 5));
+  let a = (await _stdlib.createPopulatedListofLists(3, 2, 5));
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;

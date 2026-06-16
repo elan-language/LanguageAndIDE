@@ -53,7 +53,7 @@ export class LanguageExportPython implements LanguageExport {
     if: "($1 if $0 else $2)",
     divAsInt: "math.floor(($0)/($1))",
     divAsFloat: "(($0)/($1))",
-    createList: "[$1 for n in range($0)]",
+    createPopulatedList: "[$1 for n in range($0)]",
     bitAnd: "(($0) & ($1))",
     bitOr: "($0 | $1)",
     bitXor: "($0 ^ $1)",

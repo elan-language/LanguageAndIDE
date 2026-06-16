@@ -791,7 +791,7 @@ procedure square(x as Int, y as List<of Int>)
 end procedure
 
 test test_square
-  variable arr set to createList(1, 0)
+  variable arr set to createPopulatedList(1, 0)
   call square(3, arr)
   assert arr[0] is 9
 end test

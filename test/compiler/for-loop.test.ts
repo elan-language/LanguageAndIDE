@@ -255,7 +255,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(11, 0)
+  variable a set to createPopulatedList(11, 0)
   call foo(a)
 end main
 
@@ -266,6 +266,22 @@ procedure foo(arr as List<of Int>)
   call printNoLine(arr[0])
 end procedure`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.createPopulatedList(11, 0);
+  await foo(a);
+}
+
+async function foo(arr) {
+  const elan_iterelan_for13 = [..._stdlib.range(0, 11)];
+  for (const i of elan_iterelan_for13) {
+    arr.put(i, 1);
+  }
+  await _stdlib.printNoLine(system.safeIndex(arr, 0));
+}
+global["foo"] = foo;
+return [main, _tests];}`;
     const fileImpl = new FileImpl(
       testHash,
       new Profile(""),

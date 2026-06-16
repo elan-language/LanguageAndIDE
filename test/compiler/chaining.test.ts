@@ -627,7 +627,7 @@ class Foo
   end function
 
   function createLst(n as Int) returns List<of Int>
-    return createList(n, 7)
+    return createPopulatedList(n, 7)
   end function
 
 end class`;
@@ -654,7 +654,7 @@ class Foo {
   }
 
   async createLst(n) {
-    return _stdlib.createList(n, 7);
+    return _stdlib.createPopulatedList(n, 7);
   }
 
 }

@@ -88,7 +88,7 @@ class Game {
 
   public Game(Random rnd) {
     this.head = new Square(22, 15); // reassign variable
-    this.body = {new Square(20, 15), new Square(21, 15)}; // reassign variable
+    this.body = list(new Square(20, 15), new Square(21, 15)); // reassign variable
     this.priorTail = new Square(0, 0); // reassign variable
     this.key = "d"; // reassign variable
     this.isOn = true; // reassign variable
@@ -212,7 +212,7 @@ class Square {
   assertEquals(new Square(10, 12), g3.apple);
   // test that apple is never over snake
   var g4 = (new Game(new Random())); // let
-  var g5 = g4.withBody({new Square(10, 12)}); // let
+  var g5 = g4.withBody(list(new Square(10, 12))); // let
   var g6 = g5.withNewApple(); // let
   assertEquals(new Square(12, 15), g4.apple);
 } // test
@@ -220,11 +220,11 @@ class Square {
 @Test static void test_score() {
   var g1 = new Game(new Random()); // let
   assertEquals(0, score(g1));
-  var g2 = g1.withBody({new Square(4, 4), new Square(5, 4)}); // let
+  var g2 = g1.withBody(list(new Square(4, 4), new Square(5, 4))); // let
   assertEquals(0, score(g2));
-  var g3 = g1.withBody({new Square(3, 4), new Square(4, 4), new Square(5, 4)}); // let
+  var g3 = g1.withBody(list(new Square(3, 4), new Square(4, 4), new Square(5, 4))); // let
   assertEquals(1, score(g3));
-  var g4 = g1.withBody({new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)}); // let
+  var g4 = g1.withBody(list(new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5))); // let
   assertEquals(2, score(g4));
 } // test
 

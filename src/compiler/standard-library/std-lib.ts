@@ -468,7 +468,7 @@ export class StdLib {
   }
 
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
-  createList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
+  createPopulatedList<T1>(@elanIntType() x: number, @elanGenericParamT1Type() value: T1) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(`Can only create List with simple value`);
     }
@@ -483,7 +483,7 @@ export class StdLib {
   }
 
   @elanFunction(["colour"], FunctionOptions.pureAsync, ElanClass(List, [ElanClass(List, [ElanT1])]))
-  async createListOfLists<T1>(
+  async createPopulatedListofLists<T1>(
     @elanIntType() x: number,
     @elanIntType() y: number,
     @elanGenericParamT1Type() value: T1,

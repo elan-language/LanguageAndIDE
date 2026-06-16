@@ -231,7 +231,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call printNoLine(a[0].length())
   call printNoLine(a)
 end main`;
@@ -239,7 +239,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   await _stdlib.printNoLine(_stdlib.length(system.safeIndex(a, 0)));
   await _stdlib.printNoLine(a);
 }
@@ -266,7 +266,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, Fruit.apple)
+  variable a set to createPopulatedList(3, Fruit.apple)
   call printNoLine(a)
 end main
 
@@ -280,7 +280,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, Fruit.apple);
+  let a = _stdlib.createPopulatedList(3, Fruit.apple);
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -382,7 +382,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, new List<of Int>())
+  variable a set to createPopulatedList(3, new List<of Int>())
   call printNoLine(a)
 end main`;
 
@@ -406,7 +406,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   reassign a[0] to "foo"
   reassign a[2] to "yon"
   call printNoLine(a[0])
@@ -416,7 +416,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   system.safeSet(a, "foo", [0]);
   system.safeSet(a, "yon", [2]);
   await _stdlib.printNoLine(system.safeIndex(a, 0));
@@ -480,7 +480,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.append("foo")
   call a.append("yon")
   call printNoLine(a[3])
@@ -490,7 +490,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   a.append("foo");
   a.append("yon");
   await _stdlib.printNoLine(system.safeIndex(a, 3));
@@ -519,7 +519,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   call a.append("foo")
   call a.append("yon")
   variable c set to ""
@@ -533,7 +533,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.createList(3, "");
+  let a = _stdlib.createPopulatedList(3, "");
   a.append("foo");
   a.append("yon");
   let c = "";
@@ -918,7 +918,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   variable b set to a(0)
 end main
 `;
@@ -1015,7 +1015,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   variable b set to a[3]
 end main
 `;
@@ -1040,7 +1040,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   reassign a[0] to true
 end main
 `;
@@ -1170,7 +1170,7 @@ end main
     const code = `${testHeader}
 
 main
-  variable a set to createList(3.1, 1)
+  variable a set to createPopulatedList(3.1, 1)
 end main
 `;
 

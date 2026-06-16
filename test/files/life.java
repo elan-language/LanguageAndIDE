@@ -100,7 +100,7 @@ static (int, int) southWest((int, int) cell) { // function
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
   var c = (x, y);
-  return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
+  return list(northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c));
 } // function
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
@@ -203,7 +203,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
 } // test
 
 @Test static void test_neighbourCells() {
-  assertEquals({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4));
+  assertEquals(list((2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)), neighbourCells(3, 4));
 } // test
 
 @Test static void test_willLive() {

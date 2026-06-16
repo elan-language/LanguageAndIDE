@@ -162,7 +162,7 @@ static String htmlForGame(Game game) { // function
 @Test static void test_htmlForGame() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("fred", 10)).withCards({c1, c2}); // let
+  var p = (new HumanPlayer("fred", 10)).withCards(list(c1, c2)); // let
   var players = (new List<Player>()).withAppend(p); // let
   var g2 = (new Game(1)).withPlayers(players); // let
   assertEquals("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
@@ -183,7 +183,7 @@ static String htmlForPlayer(Player player) { // function
 @Test static void test_htmlForPlayer() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("charlie", 10)).withCards({c1, c2}); // let
+  var p = (new HumanPlayer("charlie", 10)).withCards(list(c1, c2)); // let
   assertEquals("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
 } // test
 
@@ -554,28 +554,28 @@ enum Status {active, standing, blackjack, bust}
 enum Suit {clubs, diamonds, hearts, spades}
 
 static String symbolForSuit(Suit suit) { // function
-  var suits = {Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades};
-  var symbols = {"&clubs;", "&diams;", "&hearts;", "&spades;"};
+  var suits = list(Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades);
+  var symbols = list("&clubs;", "&diams;", "&hearts;", "&spades;");
   return symbols[suits.indexOf(suit)];
 } // function
 
 static List<String> ranks() { // function
-  return {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+  return list("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A");
 } // function
 
 static int valueForRank(String rank) { // function
-  var values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+  var values = list(2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11);
   return values[ranks().indexOf(rank)];
 } // function
 
 static List<String> gridForRank(String rank) { // function
-  var grids = {{"b", "c"}, {"a", "b", "c"}, {"d", "e", "f", "g"}, {"a", "d", "e", "f", "g"}, {"d", "e", "f", "g", "h", "i"}, {"d", "e", "f", "g", "h", "i", "l"}, {"d", "e", "f", "g", "h", "i", "l", "m"}, {"a", "d", "e", "f", "g", "n", "o", "p", "r"}, {"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, {"royal"}, {"royal"}, {"royal"}, {"royal"}};
+  var grids = list(list("b", "c"), list("a", "b", "c"), list("d", "e", "f", "g"), list("a", "d", "e", "f", "g"), list("d", "e", "f", "g", "h", "i"), list("d", "e", "f", "g", "h", "i", "l"), list("d", "e", "f", "g", "h", "i", "l", "m"), list("a", "d", "e", "f", "g", "n", "o", "p", "r"), list("d", "e", "f", "g", "n", "o", "p", "r", "s", "t"), list("royal"), list("royal"), list("royal"), list("royal"));
   return grids[ranks().indexOf(rank)];
 } // function
 
 static String colourForSuit(Suit suit) { // function
-  var suits = {Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades};
-  var colours = {"black", "red", "red", "black"};
+  var suits = list(Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades);
+  var colours = list("black", "red", "red", "black");
   return colours[suits.indexOf(suit)];
 } // function
 

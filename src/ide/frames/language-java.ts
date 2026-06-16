@@ -168,11 +168,14 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   addNodesForList(node: ListNode): void {
-    this.default_addNodesForList(node);
+    node.csv = new CSV(node.file, node.elementConstructor, 1);
+    node.addElement(new PunctuationNode(node.file, `list${OPEN_BRACKET}`));
+    node.addElement(node.csv);
+    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
   }
 
   listAsHtml(node: ListNode): string {
-    return this.default_listAsHtml(node);
+    return `<el-method>list<el-method>(${node.csv?.renderAsHtml()})`;
   }
 
   lambdaAsHtml(node: Lambda): string {

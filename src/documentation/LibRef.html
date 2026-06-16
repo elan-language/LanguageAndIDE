@@ -520,8 +520,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>new Queue&lt;of Type&gt;()</code></td>
  </tr><tr>
   <td>create initialised</td>
-  <td><code>createList(number, value)</code><br>
-  <code>createListOfLists(cols, rows, value)</code>
+  <td><code>createPopulatedList(number, value)</code><br>
+  <code>createPopulatedListofLists(cols, rows, value)</code>
   <td>Not available</td>
   <td>Not available</td>
   <td>Not available</td>
@@ -564,8 +564,8 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>To create a List, use either of:</p>
 <ul>
- <li>Method <a href="#createList"><el-method>createList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
-  <code>variable aList set to createList(10, "no one")</code></li>
+ <li>Method <a href="#createPopulatedList"><el-method>createPopulatedList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
+  <code>variable aList set to createPopulatedList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
  <code>variable aList set to new List&lt;of String&gt;()</code><br>
  <code>call aList.initialise(10, "no one")</code><br>
@@ -599,8 +599,8 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>Understood as a grid, a 2D array is a List of 'columns' each of which is a List of 'row' items, i.e. it is a List of Lists in which the column number is the <i>x</i> coordinate, and the row number is the <i>y</i> coordinate.</p>
 <p>To create a 2D array that holds a value of a single type in every cell, you define such a List of Lists thus:</p>
 <ul>
- <li>Use method <a href="#createListOfLists"><el-method>createListOfLists</el-method> <i class="fa">&#xf14c;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
-   <code>variable array2D set to  createListOfLists(cols, rows, value)</code></li>
+ <li>Use method <a href="#createPopulatedListofLists"><el-method>createPopulatedListofLists</el-method> <i class="fa">&#xf14c;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
+   <code>variable array2D set to  createPopulatedListofLists(cols, rows, value)</code></li>
 <li>For the special case of <a href="#BlockGraphics">Block graphics <i class="fa">&#xf14c;</i></a>, use 40 columns and 30 rows or (more simply):<br>
    <code>variable grid set to createBlockGraphics(value)</code></li>
 </ul>
@@ -2876,13 +2876,13 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>named value of any Type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
- </tr><tr id="createList">
-  <td><el-method>createList</el-method></td>
+ </tr><tr id="createPopulatedList">
+  <td><el-method>createPopulatedList</el-method></td>
   <td><code>Int</code>,<br> value of <code>List</code> item's Type</td>
   <td><code>List&lt;of ItemType&gt;</code></td>
   <td>a List containing the specified number of items each initialised to the value in the second argument</td>
- </tr><tr id="createListOfLists">
-  <td><el-method>createListOfLists</el-method></td>
+ </tr><tr id="createPopulatedListofLists">
+  <td><el-method>createPopulatedListofLists</el-method></td>
   <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's Type</td>
   <td><code>List&lt;of List&lt;of ItemType&gt;&gt;</code></td>
   <td>a List of length the first argument containing that number of Lists<br>

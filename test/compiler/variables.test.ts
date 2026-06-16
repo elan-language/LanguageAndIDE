@@ -583,7 +583,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to createList(3, "")
+  variable a set to createPopulatedList(3, "")
   variable b set to [1.0, 2]
   reassign a to [1.0, 2]
   reassign b to a
