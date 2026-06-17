@@ -9,7 +9,7 @@ import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { ParamListField } from "./fields/param-list-field";
 import { FileImpl } from "./file-impl";
-import { selfTypeAsHtml } from "./frame-helpers";
+import { selfTypeAsHtml, singleIndent } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
@@ -110,12 +110,9 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
-    } else if (frame instanceof AbstractProperty) {
-      html =
-        html = `<el-comment>@property</el-comment><br><el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}) -> ${frame.type.renderAsHtml()}:<br>&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
