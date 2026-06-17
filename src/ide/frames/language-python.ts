@@ -9,7 +9,7 @@ import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { ParamListField } from "./fields/param-list-field";
 import { FileImpl } from "./file-impl";
-import { selfTypeAsHtml, singleIndent } from "./frame-helpers";
+import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
