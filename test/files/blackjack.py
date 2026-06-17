@@ -334,7 +334,7 @@ class Player(ABC): # abstract class
     self.points = self.points + amount # reassign variable
 
   @abstractmethod
-def newHand() -> None
+  def newHand() -> None
   pass # abstract procedure
 
   def newHandHelper(self: Player) -> None: # private procedure method
@@ -347,7 +347,7 @@ def newHand() -> None
     self.draw() # call procedure
 
   @abstractmethod
-def getMessage() -> str:
+  def getMessage() -> str:
   pass # abstract function
 
   def getMessageHelper(self: Player) -> str: # private function method
@@ -364,7 +364,7 @@ def getMessage() -> str:
     return msg
 
   @abstractmethod
-def nextAction(dealerFaceCard: Card) -> None
+  def nextAction(dealerFaceCard: Card) -> None
   pass # abstract procedure
 
 
