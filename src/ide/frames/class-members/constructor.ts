@@ -18,6 +18,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
   }
   isPrivate: boolean = false;
 
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
   override isDeletable(): boolean {
     return false;
   }

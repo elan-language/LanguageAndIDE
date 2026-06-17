@@ -31,6 +31,10 @@ export class ConcreteClass extends ClassFrame {
     return classKeyword;
   }
 
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
   doesInherit(): boolean {
     return this.inheritance.text !== "";
   }
