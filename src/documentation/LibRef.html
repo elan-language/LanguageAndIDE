@@ -1493,7 +1493,8 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <code>s
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <code>List&lt;of VectorGraphic&gt;</code> or a <code>List</code> of any specific type of <code>VectorGraphic</code>
- (e.g. <code>List&lt;of CircleVG&gt;</code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
+  (e.g. <code>List&lt;of CircleVG&gt;</code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
+<p><el-method>createVectorGraphics</el-method> is a convenience method that returns an empty <code>List&lt;of VectorGraphic&gt;</code></p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
@@ -1717,13 +1718,13 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
 </table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using simple SVG graphics</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using simple vector graphics</h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle with a coloured circumference:</p>
 <codeblock>
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to createVectorGraphics()
   variable circ set to new CircleVG()
   call circ.setCentreX(20)
   call circ.setCentreY(20)

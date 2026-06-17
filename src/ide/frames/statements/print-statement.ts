@@ -19,6 +19,10 @@ export class PrintStatement extends SingleLineFrame implements Statement {
     return printKeyword;
   }
 
+  override helpId(): string {
+    return "print_statement";
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${printKeyword}`);

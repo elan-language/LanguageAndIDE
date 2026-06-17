@@ -27,7 +27,7 @@ Sub main()
 End Sub
 
 Function allpoints(p As Coords) As List(Of VectorGraphic)
-  Dim vg2 = New List(Of VectorGraphic)() ' variable definition
+  Dim vg2 = createVectorGraphics() ' variable definition
   For Each xp In range(0, width + 1)
     For Each yp In range(0, height + 1)
       ' scale and centre

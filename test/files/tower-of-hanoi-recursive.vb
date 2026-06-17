@@ -29,7 +29,7 @@ End Sub
 
 Sub display(stacks As List(Of List(Of Integer))) ' procedure
   clearAllDisplays() ' call procedure
-  Dim vg = New List(Of VectorGraphic)() ' variable definition
+  Dim vg = createVectorGraphics() ' variable definition
   drawStack(stacks(0), 1, vg) ' call procedure
   drawStack(stacks(1), 2, vg) ' call procedure
   drawStack(stacks(2), 3, vg) ' call procedure
