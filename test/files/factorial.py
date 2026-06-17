@@ -5,7 +5,7 @@ def main() -> None:
     print(f"{n}! is {factorial(n)}")
 
 def factorial(n: int) -> int: # function
-  return if(n < 2, 1, n*factorial(n - 1))
+  return if_(n < 2, 1, n*factorial(n - 1))
 
 def test_factorial(self) -> None:
   self.assertEqual(factorial(2), 2)

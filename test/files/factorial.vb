@@ -7,7 +7,7 @@ Sub main()
 End Sub
 
 Function factorial(n As Integer) As Integer
-  Return if(n < 2, 1, n*factorial(n - 1))
+  Return if_(n < 2, 1, n*factorial(n - 1))
 End Function
 
 <TestMethod> Sub test_factorial()

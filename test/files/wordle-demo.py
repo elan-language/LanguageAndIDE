@@ -235,8 +235,8 @@ def drawGrid(grid: list[list[str]]) -> str: # function
     html = html + "<word>" # reassign variable
     for col in range(0, 5):
       entry = grid[col][row] # constant
-      ch = if(entry.length() > 0, entry[0], "") # constant
-      mark = if(entry.length() > 1, entry.subString(1, entry.length()), "") # constant
+      ch = if_(entry.length() > 0, entry[0], "") # constant
+      mark = if_(entry.length() > 1, entry.subString(1, entry.length()), "") # constant
       html = html + f"<ch class='_{mark}'>{ch}</ch>" # reassign variable
     html = html + "</word>" # reassign variable
   return html + "</grid>"

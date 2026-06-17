@@ -283,8 +283,8 @@ static String drawGrid(List<List<String>> grid) { // function
     html = html + "<word>"; // reassign variable
     foreach (var col in range(0, 5)) {
       static final String entry = grid[col][row]; // constant
-      static final String ch = if(entry.length() > 0, entry[0], ""); // constant
-      static final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
+      static final String ch = if_(entry.length() > 0, entry[0], ""); // constant
+      static final String mark = if_(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
       html = html + String.format("<ch class='_%'>%</ch>", mark, ch); // reassign variable
     }
     html = html + "</word>"; // reassign variable
