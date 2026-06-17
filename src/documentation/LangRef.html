@@ -1008,7 +1008,7 @@ main
 end main
   </codeblock>
 
-<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</code></p>
+<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
 
   <codeblock>
 main
@@ -1022,9 +1022,9 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of Direction>(currentDir)
-    variable headRef set to new AsRef<of List<of Int>>(head)
-    variable tailRef set to new AsRef<of List<of Int>>(tail)
+    variable currentDirRef set to new AsRef&lt;of Direction&gt;(currentDir)
+    variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
+    variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
     reassign head to headRef.value()
     reassign tail to tailRef.value()
