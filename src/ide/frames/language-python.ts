@@ -229,7 +229,7 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   postProcessHtml(html: string): string {
-      return html;
+    return html;
   }
 
   private AS = "as";

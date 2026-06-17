@@ -152,7 +152,7 @@ end main`;
     assertCompiles(fileImpl);
   });
 
-  ignore_test("Pass_Bug2576_3", async () => {
+  test("Pass_Bug2576_3", async () => {
     const code = `${testHeader}
 
 main

@@ -197,7 +197,7 @@ export class LanguageElan extends LanguageAbstract {
   }
 
   postProcessHtml(html: string): string {
-      return html;
+    return html;
   }
 
   private ABSTRACT = "abstract";
