@@ -39,11 +39,11 @@ static String setChar(String word, int n, String newChar) { // function
 } // function
 
 static String setAttemptIfGreen(String attempt, String target, int n) { // function
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
+  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
 } // function
 
 static String setTargetIfGreen(String attempt, String target, int n) { // function
-  return if(isGreen(attempt, target, n), setChar(target, n, "."), target);
+  return if_(isGreen(attempt, target, n), setChar(target, n, "."), target);
 } // function
 
 static List<String> evaluateGreens(String attempt, String target) { // function
@@ -55,7 +55,7 @@ static bool isYellow(String attempt, String target, int n) { // function
 } // function
 
 static String setAttemptIfYellow(String attempt, String target, int n) { // function
-  return if(attempt[n].equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
+  return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
 } // function
 
 static bool isAlreadyMarkedGreen(String attempt, int n) { // function
@@ -63,7 +63,7 @@ static bool isAlreadyMarkedGreen(String attempt, int n) { // function
 } // function
 
 static String setTargetIfYellow(String attempt, String target, int n) { // function
-  return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
+  return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
 } // function
 
 static List<String> evaluateYellows(String attempt, String target) { // function
@@ -84,13 +84,13 @@ static int maxWordCountRemainingAfterAttempt(List<String> possAnswers, String at
   var d = new Dictionary<String, int>(); // let
   var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt)); // let
   var keys = d2.keys(); // let
-  return keys.reduce(0, (int maxSoFar, String mark) -> if(d2[mark] > maxSoFar, d2[mark], maxSoFar));
+  return keys.reduce(0, (int maxSoFar, String mark) -> if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 } // function
 
 static Dictionary<String, int> incrementCount(Dictionary<String, int> d, String possAnswer, String attempt) { // function
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
-  var count = if(keys.contains(mark), d[mark], 0); // let
+  var count = if_(keys.contains(mark), d[mark], 0); // let
   return d.withSet(mark, count + 1);
 } // function
 
@@ -101,7 +101,7 @@ static List<WordCount> allRemainingWordCounts(List<String> possAnswers) { // fun
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<String> possAnswers) { // function
   var isBetter = wc2.count < wc1.count; // let
   var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
-  return if(isBetter || isEqualAndPossAnswer, wc2, wc1);
+  return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
 } // function
 
 static String bestAttempt(List<String> possAnswers) { // function

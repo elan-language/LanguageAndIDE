@@ -66,7 +66,7 @@ def onestep(x: float, y: float, r: float) -> tuple[float, float]: # function
 def getparams(r: float, prms: list[list[float]], cumuprob: float) -> list[float]: # function
   head = prms.head() # let
   cp2 = cumuprob + head[6] # let
-  return if(r < cp2, head, getparams(r, prms.tail(), cp2))
+  return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 
 # class to hold the working data passed in and out of onepoint()
 

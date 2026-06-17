@@ -1,7 +1,7 @@
 // C# with Elan 2.0.0-alpha4
 
 static void main() {
-  foreach (n in range(1, 21)) {
+  foreach (var n in range(1, 21)) {
     print($"{n}! is {factorial(n)}");
   }
 }

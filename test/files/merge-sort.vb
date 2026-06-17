@@ -15,7 +15,7 @@
 '   cases, and edge cases (where appropriate)
 
 Function sort(li As List(Of String)) As List(Of String)
-  Return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+  Return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
 End Function
 
 Function sortedFrontHalf(li As List(Of String)) As List(Of String)
@@ -32,7 +32,7 @@ End Function
 
 Function merge(a As List(Of String), b As List(Of String)) As List(Of String)
   Dim oneIsEmpty = (a.length() = 0) Or (b.length() = 0) ' let
-  Return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+  Return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
 End Function
 
 Function mergeNonEmpty(a As List(Of String), b As List(Of String)) As List(Of String)
@@ -40,7 +40,7 @@ Function mergeNonEmpty(a As List(Of String), b As List(Of String)) As List(Of St
   Dim bHead = b.head() ' let
   Dim aTail = a.tail() ' let
   Dim bTail = b.tail() ' let
-  Return if(aHead.isBefore(bHead), {aHead}.withAppendList(merge(aTail, b)), {bHead}.withAppendList(merge(a, bTail)))
+  Return if_(aHead.isBefore(bHead), {aHead}.withAppendList(merge(aTail, b)), {bHead}.withAppendList(merge(a, bTail)))
 End Function
 
 <TestMethod> Sub test_sort()

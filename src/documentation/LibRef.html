@@ -2936,7 +2936,7 @@ main
 end main
 function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
   # returns primes from the list assuming it starts with a prime (e.g. 2)
-  return if(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) > 0))))
+  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) > 0))))
 end function
 </codeblock>
 <hr>
@@ -2974,7 +2974,7 @@ The subset is chosen by a lambda function that tests list item values and return
 <codeblock>
 function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
-  return if(matches.length() is 1,  matches.head(), emptyNode())
+  return if_(matches.length() is 1,  matches.head(), emptyNode())
 end function
 </codeblock>
 <hr>

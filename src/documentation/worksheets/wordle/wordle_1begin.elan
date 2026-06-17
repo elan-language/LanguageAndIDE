@@ -95,8 +95,8 @@ function drawGrid(grid as Array2D<of String>) returns String
     reassign html to html + "<word>"
     for col in range(0, 5)
       variable entry set to grid[col, row]
-      variable ch set to if(entry.length() > 0, entry[0], "")
-      variable mark set to if(entry.length() > 1, entry.subString(1, entry.length()), "")
+      variable ch set to if_(entry.length() > 0, entry[0], "")
+      variable mark set to if_(entry.length() > 1, entry.subString(1, entry.length()), "")
       reassign html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
     reassign html to html + "</word>"

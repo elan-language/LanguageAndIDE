@@ -1116,7 +1116,7 @@ class Foo
     return ""
   end function
 
-  function if(a as Int) returns Int
+  function if_(a as Int) returns Int
     return 0
   end function
 end class`;

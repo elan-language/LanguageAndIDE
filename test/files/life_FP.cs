@@ -104,7 +104,7 @@ static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // fun
 } // test
 
 static int blackOrWhite(Random rng) { // function
-  return if(rng.asFloat() > 0.5, white, black);
+  return if_(rng.asFloat() > 0.5, white, black);
 } // function
 
 [TestMethod] static void test_blackOrWhite() {
@@ -121,7 +121,7 @@ static int blackOrWhite(Random rng) { // function
 static (int, int) north((int, int) cell) { // function
   var x = cell.item_0; // let
   var y = cell.item_1; // let
-  var y2 = if(y == 0, 29, y - 1); // let
+  var y2 = if_(y == 0, 29, y - 1); // let
   return (x, y2);
 } // function
 
@@ -135,7 +135,7 @@ static (int, int) north((int, int) cell) { // function
 static (int, int) south((int, int) cell) { // function
   var x = cell.item_0; // let
   var y = cell.item_1; // let
-  var y2 = if(y == 29, 0, y + 1); // let
+  var y2 = if_(y == 29, 0, y + 1); // let
   return (x, y2);
 } // function
 
@@ -149,7 +149,7 @@ static (int, int) south((int, int) cell) { // function
 static (int, int) east((int, int) cell) { // function
   var x = cell.item_0; // let
   var y = cell.item_1; // let
-  var x2 = if(x == 39, 0, x + 1); // let
+  var x2 = if_(x == 39, 0, x + 1); // let
   return (x2, y);
 } // function
 
@@ -163,7 +163,7 @@ static (int, int) east((int, int) cell) { // function
 static (int, int) west((int, int) cell) { // function
   var x = cell.item_0; // let
   var y = cell.item_1; // let
-  var x2 = if(x == 0, 39, x - 1); // let
+  var x2 = if_(x == 0, 39, x - 1); // let
   return (x2, y);
 } // function
 
@@ -271,7 +271,7 @@ static bool willLive(int cell, int liveNeighbours) { // function
 
 static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var live = willLive(grid[x][y], liveNeighbours(grid, x, y)); // let
-  return if(live, black, white);
+  return if_(live, black, white);
 } // function
 
 [TestMethod] static void test_nextCellValue() {

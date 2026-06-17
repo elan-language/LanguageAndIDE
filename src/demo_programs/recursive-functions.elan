@@ -1,7 +1,7 @@
-# 71cbdebbe69e371cb20ae95c0c67450fcc0c20705edac2dfd252395c11014102 Elan 2.0.0-beta valid
+# 2e12e9d0e787554e6d050e8a66d63a69c7a2915d855d03cd7308753d298f74d4 Elan 2.0.0-beta valid
 
 function factorial(n as Int) returns Int
-  return if(n < 2, 1, n*factorial(n - 1))
+  return if_(n < 2, 1, n*factorial(n - 1))
 end function
 
 test test_factorial
@@ -15,7 +15,7 @@ test test_factorial
 end test
 
 function sum(li as List<of Float>) returns Float
-  return if(li.length() is 0, 0.0, li.head() + sum(li.tail()))
+  return if_(li.length() is 0, 0.0, li.head() + sum(li.tail()))
 end function
 
 test test_sum
@@ -29,7 +29,7 @@ test test_sum
 end test
 
 function reverse(li as List<of Float>) returns List<of Float>
-  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+  return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 end function
 
 test test_reverse

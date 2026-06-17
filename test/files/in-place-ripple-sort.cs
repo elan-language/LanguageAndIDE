@@ -12,7 +12,7 @@ static void inPlaceRippleSort(List<int> li) { // procedure
   var lastComp = li.length() - 2;
   while (hasChanged == true) {
     hasChanged = false; // reassign variable
-    foreach (i in range(0, lastComp + 1)) {
+    foreach (var i in range(0, lastComp + 1)) {
       if (li[i] > li[i + 1]) {
         var temp = li[i];
         li[i] = li[i + 1]; // reassign variable

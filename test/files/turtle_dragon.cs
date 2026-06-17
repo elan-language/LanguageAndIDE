@@ -7,7 +7,7 @@ static void main() {
   var side = (75/pow(sqrt(2), order));
   var corner = side/12.0/cos(45);
   var turns = left;
-  foreach (i in range(1, order + 1)) {
+  foreach (var i in range(1, order + 1)) {
     turns = setTurns(turns); // reassign variable
   } // foreach
   var t = new Turtle();
@@ -22,8 +22,8 @@ const String right = "0";
 static void drawDragon(Turtle t, int order, string turns, double side, double corner) { // procedure
   var p = (200.0/order).floor();
   var turnI = 0;
-  foreach (turn in turns) {
-    turnI = (if(turn.equals(left), 1, -1)); // reassign variable
+  foreach (var turn in turns) {
+    turnI = (if_(turn.equals(left), 1, -1)); // reassign variable
     t.turn(-45*turnI); // call procedure
     t.move(corner); // call procedure
     t.turn(-45*turnI); // call procedure
@@ -51,8 +51,8 @@ static string setTurns(string turns) { // function
 
 static string reflect(string s) { // function
   var sR = "";
-  foreach (i in range(1, s.length() + 1)) {
-    sR = if((s[i - 1]).equals(left), right, left) + sR; // reassign variable
+  foreach (var i in range(1, s.length() + 1)) {
+    sR = if_((s[i - 1]).equals(left), right, left) + sR; // reassign variable
   } // foreach
   return sR;
 } // function

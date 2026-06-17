@@ -9,5 +9,5 @@ function sort(li as List<of String>) returns List<of String>
     variable backHalf set to sort(li.subList(mid, li.length()))
     reassign result to merge(frontHalf, backHalf)
   end if
-  return if(len > 1, merge(sort(frontHalf(li)), sort(backhalf(li))), li)
+  return if_(len > 1, merge(sort(frontHalf(li)), sort(backhalf(li))), li)
 end function

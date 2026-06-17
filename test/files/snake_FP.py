@@ -15,16 +15,16 @@ def main() -> None:
   print(f"Game Over! Score: {score(game)}")
 
 def clockTick(g: Game, k: str) -> Game: # function
-  g2 = if(k.equals(""), g, g.withKey(k)) # let
+  g2 = if_(k.equals(""), g, g.withKey(k)) # let
   g3 = moveSnake(g2) # let
   g4 = eatAppleIfPoss(g3) # let
-  return if(gameOver(g4), g4.withIsOn(False), g4)
+  return if_(gameOver(g4), g4.withIsOn(False), g4)
 
 def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # let
   b3 = graphicsPut(b2, g.head.x, g.head.y, green) # let
   tail = g.body[0] # let
-  tailColour = if(tail.equals(g.priorTail), green, white) # let
+  tailColour = if_(tail.equals(g.priorTail), green, white) # let
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 
 def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
@@ -37,14 +37,14 @@ def moveSnake(g: Game) -> Game: # function
   k = g.key # let
   x = g.head.x # let
   y = g.head.y # let
-  newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) # let
-  newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) # let
+  newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) # let
+  newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) # let
   return g.withBody(g.body.withAppend(g.head)).withHead(Square(newX, newY))
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # let
   moveTail = g.body.subList(1, g.body.length()) # let
-  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+  return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 
 def headOverApple(g: Game) -> bool: # function
   return g.head.equals(g.apple)
@@ -92,7 +92,7 @@ class Game: # concrete class
     rnd3 = rnd2.nextGen() # let
     apple2 = Square(x, y) # let
     g2 = self.withApple(apple2).withRnd(rnd3) # let
-    return if(g2.body.contains(apple2), g2.withNewApple(), g2)
+    return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
 
   def withHead(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let

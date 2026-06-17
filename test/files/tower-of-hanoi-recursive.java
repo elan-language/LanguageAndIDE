@@ -40,7 +40,7 @@ static void display(List<List<int>> stacks) { // procedure
 } // procedure
 
 static void drawStack(List<int> s, int peg, List<VectorGraphic> vg) { // procedure
-  foreach (n in range(0, s.length())) {
+  foreach (var n in range(0, s.length())) {
     var discVG = createDisc(s[n], peg, n);
     vg.append(discVG); // call procedure
   } // foreach

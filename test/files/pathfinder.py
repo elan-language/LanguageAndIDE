@@ -136,7 +136,7 @@ class Solver: # concrete class
 
   def getNodeFor(self: Solver, p: Point) -> Node: # function method
     matches = self.nodes.filter(lambda n: Node: n.point.equals(p)) # variable definition
-    return if(matches.length() == 1, matches.head(), emptyNode())
+    return if_(matches.length() == 1, matches.head(), emptyNode())
 
   def getLastVisited(self: Solver) -> Point: # function method
     return self.current.point

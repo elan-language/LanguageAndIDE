@@ -1,4 +1,4 @@
-# 312828a38dd9c9c29f57f0a7ce2973c230d870b1adbee1aaae8456d5c78ddecd Elan 2.0.0-beta valid
+# 341790df30e1e2c8a9acbc47ad1a30d1ebb7705040835c2ff5baf7a437e6444d Elan 2.0.0-beta valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -64,7 +64,7 @@ end procedure
 
 function uniform(grid as List<of List<of Int>>) returns Boolean
   variable uniformGrid set to createBlockGraphics(grid[0][0])
-  return if(grid.equals(uniformGrid), true, false)
+  return if_(grid.equals(uniformGrid), true, false)
 end function
 
 function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) returns List<of Int>
@@ -111,5 +111,5 @@ function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll
   elif nowColour isnt ill then
     reassign state to divAsInt(sumStates, (nInfected + 1)) + iR
   end if
-  return if(state > (colours.length() - 1), ill, colours[state])
+  return if_(state > (colours.length() - 1), ill, colours[state])
 end function

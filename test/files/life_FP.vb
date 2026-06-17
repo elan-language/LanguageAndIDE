@@ -104,7 +104,7 @@ End Function
 End Sub
 
 Function blackOrWhite(rng As Random) As Integer
-  Return if(rng.asFloat() > 0.5, white, black)
+  Return if_(rng.asFloat() > 0.5, white, black)
 End Function
 
 <TestMethod> Sub test_blackOrWhite()
@@ -121,7 +121,7 @@ End Sub
 Function north(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' let
   Dim y = cell.item_1 ' let
-  Dim y2 = if(y = 0, 29, y - 1) ' let
+  Dim y2 = if_(y = 0, 29, y - 1) ' let
   Return (x, y2)
 End Function
 
@@ -135,7 +135,7 @@ End Sub
 Function south(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' let
   Dim y = cell.item_1 ' let
-  Dim y2 = if(y = 29, 0, y + 1) ' let
+  Dim y2 = if_(y = 29, 0, y + 1) ' let
   Return (x, y2)
 End Function
 
@@ -149,7 +149,7 @@ End Sub
 Function east(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' let
   Dim y = cell.item_1 ' let
-  Dim x2 = if(x = 39, 0, x + 1) ' let
+  Dim x2 = if_(x = 39, 0, x + 1) ' let
   Return (x2, y)
 End Function
 
@@ -163,7 +163,7 @@ End Sub
 Function west(cell As (Integer, Integer)) As (Integer, Integer)
   Dim x = cell.item_0 ' let
   Dim y = cell.item_1 ' let
-  Dim x2 = if(x = 0, 39, x - 1) ' let
+  Dim x2 = if_(x = 0, 39, x - 1) ' let
   Return (x2, y)
 End Function
 
@@ -271,7 +271,7 @@ End Sub
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
   Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' let
-  Return if(live, black, white)
+  Return if_(live, black, white)
 End Function
 
 <TestMethod> Sub test_nextCellValue()

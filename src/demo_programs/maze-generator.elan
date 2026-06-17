@@ -1,4 +1,4 @@
-# e2513c11ca74a0f1125ea5fbdd043d7423ee21deb779ae91351fc65447026ca4 Elan 2.0.0-beta valid
+# fea5602479f395583cb998338d8e85baf47c57aa6d49e9b781ab6180b3cf842f Elan 2.0.0-beta valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -10,7 +10,7 @@ main
     variable existing set to getValue(p, blocks)
     variable setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
-      variable colour set to if(setTo is 1, white, black)
+      variable colour set to if_(setTo is 1, white, black)
       reassign blocks[p.x][p.y] to colour
     end if
   end for
@@ -29,7 +29,7 @@ procedure saveAsFile(name as String, b as List<of List<of Int>>)
     variable line set to ""
     for col in range(0, 40)
       variable colour set to b[col][row]
-      variable symbol set to if(colour is white, " ", "X")
+      variable symbol set to if_(colour is white, " ", "X")
       reassign line to line + symbol
     end for
     call file.writeLine(line)
@@ -77,13 +77,13 @@ function getValue(p as Point, b as List<of List<of Int>>) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
     variable colour set to b[p.x][p.y]
-    reassign result to if(colour is black, 0, 1)
+    reassign result to if_(colour is black, 0, 1)
   end if
   return result
 end function
 
 function flip01(v as Int) returns Int
-  return if(v is 0, 1, 0)
+  return if_(v is 0, 1, 0)
 end function
 
 test test_flip01

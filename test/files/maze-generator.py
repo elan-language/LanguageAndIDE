@@ -10,7 +10,7 @@ def main() -> None:
     existing = getValue(p, blocks) # variable definition
     setTo = (random() + 0.7).floor() # variable definition
     if okToSet(p, setTo, blocks):
-      colour = if(setTo == 1, white, black) # variable definition
+      colour = if_(setTo == 1, white, black) # variable definition
       blocks[p.x][p.y] = colour # reassign variable
   displayBlocks(blocks) # call procedure
   name = input("File name to save: ") # input
@@ -25,7 +25,7 @@ def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
     line = "" # variable definition
     for col in range(0, 40):
       colour = b[col][row] # variable definition
-      symbol = if(colour == white, " ", "X") # variable definition
+      symbol = if_(colour == white, " ", "X") # variable definition
       line = line + symbol # reassign variable
     file.writeLine(line) # call procedure
   file.saveAndClose() # call procedure
@@ -64,11 +64,11 @@ def getValue(p: Point, b: list[list[int]]) -> int: # function
   result = 0 # variable definition
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30):
     colour = b[p.x][p.y] # variable definition
-    result = if(colour == black, 0, 1) # reassign variable
+    result = if_(colour == black, 0, 1) # reassign variable
   return result
 
 def flip01(v: int) -> int: # function
-  return if(v == 0, 1, 0)
+  return if_(v == 0, 1, 0)
 
 def test_flip01(self) -> None:
   self.assertEqual(flip01(0), 1)

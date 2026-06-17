@@ -78,7 +78,7 @@ static int dayInYear(int year, int unixDays) { // function
     // discount previous nominal years
     dayNumber = dayNumber - 365*(year - unixYear); // reassign variable
     // discount previous leap days
-    foreach (y in range(unixYear, year)) {
+    foreach (var y in range(unixYear, year)) {
       if (leap(y)) {
         dayNumber = dayNumber - 1; // reassign variable
       } // if
@@ -124,7 +124,7 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
   // alter month start days if leap year
   var startDaysL = getStartDays();
   if (leap(year)) {
-    foreach (m in range(2, 13)) {
+    foreach (var m in range(2, 13)) {
       startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // reassign variable
     } // foreach
   } // if

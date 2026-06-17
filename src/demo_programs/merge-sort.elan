@@ -1,4 +1,4 @@
-# c21b88f4a5d3bf99c8acd20cb48c55c9436eacf5303d9e8cd5a903a5ca22deba Elan 2.0.0-beta valid
+# 496ed8b2d594c69562b3e01ad15c9a63d19221ff48de1511f5fcb013ef1bfd13 Elan 2.0.0-beta valid
 
 # Implementation of the Merge sort algorithm demonstrating
 # - Decomposition of the principal function 'sort' into smaller functions,
@@ -8,7 +8,7 @@
 # - Testing. ALL functions are independently unit-tested, with normal ('happy') 
 #   cases, and edge cases (where appropriate)
 function sort(li as List<of String>) returns List<of String>
-  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+  return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
 end function
 
 function sortedFrontHalf(li as List<of String>) returns List<of String>
@@ -25,7 +25,7 @@ end function
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   let oneIsEmpty be (a.length() is 0) or (b.length() is 0)
-  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+  return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
 end function
 
 function mergeNonEmpty(a as List<of String>, b as List<of String>) returns List<of String>
@@ -33,7 +33,7 @@ function mergeNonEmpty(a as List<of String>, b as List<of String>) returns List<
   let bHead be b.head()
   let aTail be a.tail()
   let bTail be b.tail()
-  return if(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+  return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
 end function
 
 test test_sort

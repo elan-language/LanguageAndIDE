@@ -4,7 +4,6 @@ import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { ExprNode } from "./expr-node";
-import { KeywordNode } from "./keyword-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class IfExpr extends AbstractSequence {
@@ -14,8 +13,7 @@ export class IfExpr extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(this.file, ifKeyword));
-      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
+      this.addElement(new PunctuationNode(this.file, `if_${OPEN_BRACKET}`));
       this.condition = new ExprNode(this.file);
       this.condition.setSyntaxCompletionWhenEmpty("<i>condition </i>");
       this.addElement(this.condition);
@@ -38,7 +36,7 @@ export class IfExpr extends AbstractSequence {
 
   override renderAsHtml(): string {
     return this.isValid()
-      ? `<el-method>${ifKeyword}</el-method>(${this.condition?.renderAsHtml()}, ${this.whenTrue?.renderAsHtml()}, ${this.whenFalse?.renderAsHtml()})`
+      ? `<el-method>if_</el-method>(${this.condition?.renderAsHtml()}, ${this.whenTrue?.renderAsHtml()}, ${this.whenFalse?.renderAsHtml()})`
       : this.matchedText;
   }
 }

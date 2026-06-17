@@ -30,12 +30,12 @@ static void main() {
 
 static List<VectorGraphic> allpoints(Coords p) { // function
   var vg2 = new List<VectorGraphic>();
-  foreach (xp in range(0, width + 1)) {
-    foreach (yp in range(0, height + 1)) {
+  foreach (var xp in range(0, width + 1)) {
+    foreach (var yp in range(0, height + 1)) {
       // scale and centre
       var n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p);
       // colour depends on how many iterations were done for that point
-      var col = if(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
+      var col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
       vg2 = vg2.withAppend(rect); // reassign variable
     } // foreach

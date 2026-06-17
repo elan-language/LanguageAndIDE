@@ -1003,7 +1003,7 @@ main
   
 end main
 
-function if(a as Int) returns Int
+function if_(a as Int) returns Int
   return 0
 end function`;
 

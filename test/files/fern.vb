@@ -70,7 +70,7 @@ End Function
 Function getparams(r As Double, prms As List(Of List(Of Double)), cumuprob As Double) As List(Of Double)
   Dim head = prms.head() ' let
   Dim cp2 = cumuprob + head(6) ' let
-  Return if(r < cp2, head, getparams(r, prms.tail(), cp2))
+  Return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 End Function
 
 ' class to hold the working data passed in and out of onepoint()

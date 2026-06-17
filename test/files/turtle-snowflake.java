@@ -6,7 +6,7 @@ static void main() {
   var t = new Turtle();
   t.placeAt(-50, 30); // call procedure
   t.turn(90); // call procedure
-  foreach (i in range(1, 4)) {
+  foreach (var i in range(1, 4)) {
     drawSide(side, t); // call procedure
     t.turn(120); // call procedure
   } // foreach

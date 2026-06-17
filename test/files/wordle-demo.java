@@ -40,7 +40,7 @@ static void playGame() { // procedure
   var grid = new List<List<String>>();
   initialiseGrid(grid); // call procedure
   var used = new Dictionary<String, String>();
-  foreach (letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+  foreach (var letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
     used[letter] = " "; // reassign variable
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
@@ -61,9 +61,9 @@ static void playGame() { // procedure
 }
 
 static void initialiseGrid(List<List<String>> grid) { // procedure
-  foreach (i in range(0, 5)) {
+  foreach (var i in range(0, 5)) {
     var sa = new List<String>();
-    foreach (j in range(0, 6)) {
+    foreach (var j in range(0, 6)) {
       sa.append(""); // call procedure
     }
     grid.append(sa); // call procedure
@@ -98,7 +98,7 @@ static void enterAttempt(int attemptNo, List<List<String>> grid, Dictionary<Stri
 static void colourAttempt(int attemptNo, List<List<String>> grid, String target, AsRef<bool> solved, Dictionary<String, String> used) { // procedure
   var attempt = getWord(attemptNo, grid);
   var marks = markAttempt(attempt, target);
-  foreach (i in range(0, 5)) {
+  foreach (var i in range(0, 5)) {
     var letter = grid[i][attemptNo];
     var mark = marks[i];
     grid[i][attemptNo] = letter + mark; // reassign variable
@@ -120,7 +120,7 @@ static void playReverseGame() { // procedure
   var possible = allValidAnswers.split(" ");
   var attempt = "ARISE";
   while ((attemptNo < 6) && (!solved)) {
-    foreach (i in range(0, 5)) {
+    foreach (var i in range(0, 5)) {
       grid[i][attemptNo] = attempt[i]; // reassign variable
     }
     displayHtml(drawGrid(grid)); // call procedure
@@ -170,7 +170,7 @@ static void enterMark(int attemptNo, List<List<String>> grid, AsRef<String> mark
 static void analyse() { // procedure
   var outcomes = new List<int>();
   outcomes.initialise(10, 0); // call procedure
-  foreach (word in allValidAnswers.split(" ")) {
+  foreach (var word in allValidAnswers.split(" ")) {
     var possible = allValidAnswers.split(" ");
     var mark = "";
     var attempt = "RAISE";
@@ -185,7 +185,7 @@ static void analyse() { // procedure
   }
   var success = 0;
   var weightedSum = 0;
-  foreach (i in range(1, 7)) {
+  foreach (var i in range(1, 7)) {
     success = success + outcomes[i]; // reassign variable
     weightedSum = weightedSum + (i*outcomes[i]); // reassign variable
   }
@@ -211,7 +211,7 @@ static bool isUCLetter(String k) { // function
 
 static String getWord(int attemptNo, List<List<String>> grid) { // function
   var guessWord = "";
-  foreach (i in range(0, 5)) {
+  foreach (var i in range(0, 5)) {
     guessWord = guessWord + grid[i][attemptNo]; // reassign variable
   }
   return guessWord;
@@ -229,13 +229,13 @@ static String setChar(String word, int n, String newChar) { // function
 static String markAttempt(String attempt, String target) { // function
   var mark = "00000";
   var unused = target;
-  foreach (n in range(0, 5)) {
+  foreach (var n in range(0, 5)) {
     if (attempt[n].equals(unused[n])) {
       mark = setChar(mark, n, "2"); // reassign variable
       unused = setChar(unused, n, " "); // reassign variable
     }
   }
-  foreach (n in range(0, 5)) {
+  foreach (var n in range(0, 5)) {
     if ((!mark[n].equals("2")) && unused.contains(attempt[n])) {
       mark = setChar(mark, n, "1"); // reassign variable
       unused = setChar(unused, unused.indexOf(attempt[n]), " "); // reassign variable
@@ -259,7 +259,7 @@ static String markAttempt(String attempt, String target) { // function
 
 static List<String> possibleAnswersAfterAttempt(List<String> possible, String attempt, String mark) { // function
   var newPossible = new List<String>();
-  foreach (word in possible) {
+  foreach (var word in possible) {
     final String markForWord = markAttempt(attempt, word); // constant
     if (markForWord.equals(mark)) {
       newPossible = newPossible.withAppend(word); // reassign variable
@@ -279,9 +279,9 @@ static List<String> possibleAnswersAfterAttempt(List<String> possible, String at
 
 static String drawGrid(List<List<String>> grid) { // function
   var html = String.format("<style>%</style> <grid>", style);
-  foreach (row in range(0, 6)) {
+  foreach (var row in range(0, 6)) {
     html = html + "<word>"; // reassign variable
-    foreach (col in range(0, 5)) {
+    foreach (var col in range(0, 5)) {
       final String entry = grid[col][row]; // constant
       final String ch = if(entry.length() > 0, entry[0], ""); // constant
       final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
@@ -294,7 +294,7 @@ static String drawGrid(List<List<String>> grid) { // function
 
 static String drawKeyboard(Dictionary<String, String> used) { // function
   var html = "<keyboard><div>";
-  foreach (k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM") {
+  foreach (var k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM") {
     if (k.equals("-")) {
       html = html + "</div><div>"; // reassign variable
     } else {

@@ -29,7 +29,7 @@ suite("process worksheets", () => {
     const code = `procedure fillRandom(grid as List<of List<of Int>>)
   for col in range(0, 40)
     for row in range(0, 30)
-      variable cell set to if(random() > 0.5, black, white)
+      variable cell set to if_(random() > 0.5, black, white)
       reassign grid[col][row] to cell
     end for
   end for
@@ -43,7 +43,7 @@ end procedure`;
   test("process statement", async () => {
     const code = `for col in range(0, 40)
   for row in range(0, 30)
-    variable cell set to if(random() > 0.5, black, white)
+    variable cell set to if_(random() > 0.5, black, white)
     reassign grid[col][row] to cell
   end for
 end for`;

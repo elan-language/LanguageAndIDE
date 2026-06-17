@@ -3,7 +3,7 @@
 public class Global {
 
 static int factorial(int n) { // function
-  return if(n < 2, 1, n*factorial(n - 1));
+  return if_(n < 2, 1, n*factorial(n - 1));
 } // function
 
 @Test static void test_factorial() {
@@ -17,7 +17,7 @@ static int factorial(int n) { // function
 } // test
 
 static double sum(List<double> li) { // function
-  return if(li.length() == 0, 0.0, li.head() + sum(li.tail()));
+  return if_(li.length() == 0, 0.0, li.head() + sum(li.tail()));
 } // function
 
 @Test static void test_sum() {
@@ -31,7 +31,7 @@ static double sum(List<double> li) { // function
 } // test
 
 static List<double> reverse(List<double> li) { // function
-  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()));
+  return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()));
 } // function
 
 @Test static void test_reverse() {

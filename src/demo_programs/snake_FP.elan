@@ -1,4 +1,4 @@
-# d80b751281c528f8fbff65317fcb9704f52a4604d3484f2365702b4af74d0bd1 Elan 2.0.0-beta valid
+# caf2c8f15ab7d9c36a76d0f66906fa56bd11b16a87c165f4ab11b74f0b4d26af Elan 2.0.0-beta valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -16,17 +16,17 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  let g2 be if(k.equals(""), g, g.withKey(k))
+  let g2 be if_(k.equals(""), g, g.withKey(k))
   let g3 be moveSnake(g2)
   let g4 be eatAppleIfPoss(g3)
-  return if(gameOver(g4), g4.withIsOn(false), g4)
+  return if_(gameOver(g4), g4.withIsOn(false), g4)
 end function
 
 function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
   let b2 be graphicsPut(b, g.apple.x, g.apple.y, red)
   let b3 be graphicsPut(b2, g.head.x, g.head.y, green)
   let tail be g.body[0]
-  let tailColour be if(tail.equals(g.priorTail), green, white)
+  let tailColour be if_(tail.equals(g.priorTail), green, white)
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 end function
 
@@ -42,15 +42,15 @@ function moveSnake(g as Game) returns Game
   let k be g.key
   let x be g.head.x
   let y be g.head.y
-  let newX be if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
-  let newY be if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
+  let newX be if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
+  let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
   return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
   let tail be g.body[0]
   let moveTail be g.body.subList(1, g.body.length())
-  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+  return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 end function
 
 function headOverApple(g as Game) returns Boolean
@@ -103,7 +103,7 @@ class Game
     let rnd3 be rnd2.nextGen()
     let apple2 be new Square(x, y)
     let g2 be this.withApple(apple2).withRnd(rnd3)
-    return if(g2.body.contains(apple2), g2.withNewApple(), g2)
+    return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
   function withHead(value as Square) returns Game

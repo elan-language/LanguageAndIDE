@@ -1,4 +1,4 @@
-# 1058f49753529f8b98b86f962c1b624ff1d66a1b617de438b4b9efd7b10d1d5f Elan 2.0.0-beta valid
+# 63224d12b72ec37fc2e6ebda6baf1ce72820cf05dd772c46725b742c315cb9c4 Elan 2.0.0-beta valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -29,11 +29,11 @@ function setChar(word as String, n as Int, newChar as String) returns String
 end function
 
 function setAttemptIfGreen(attempt as String, target as String, n as Int) returns String
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 end function
 
 function setTargetIfGreen(attempt as String, target as String, n as Int) returns String
-  return if(isGreen(attempt, target, n), setChar(target, n, "."), target)
+  return if_(isGreen(attempt, target, n), setChar(target, n, "."), target)
 end function
 
 function evaluateGreens(attempt as String, target as String) returns List<of String>
@@ -45,7 +45,7 @@ function isYellow(attempt as String, target as String, n as Int) returns Boolean
 end function
 
 function setAttemptIfYellow(attempt as String, target as String, n as Int) returns String
-  return if(attempt[n].equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
+  return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
 end function
 
 function isAlreadyMarkedGreen(attempt as String, n as Int) returns Boolean
@@ -53,7 +53,7 @@ function isAlreadyMarkedGreen(attempt as String, n as Int) returns Boolean
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) returns String
-  return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
+  return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
 end function
 
 function evaluateYellows(attempt as String, target as String) returns List<of String>
@@ -74,13 +74,13 @@ function maxWordCountRemainingAfterAttempt(possAnswers as List<of String>, attem
   let d be new Dictionary<of String, Int>()
   let d2 be possAnswers.reduce(d, lambda dd as Dictionary<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
   let keys be d2.keys()
-  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 end function
 
 function incrementCount(d as Dictionary<of String, Int>, possAnswer as String, attempt as String) returns Dictionary<of String, Int>
   let mark be markAttempt(attempt, possAnswer)
   let keys be d.keys()
-  let count be if(keys.contains(mark), d[mark], 0)
+  let count be if_(keys.contains(mark), d[mark], 0)
   return d.withSet(mark, count + 1)
 end function
 
@@ -91,7 +91,7 @@ end function
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
   let isBetter be wc2.count < wc1.count
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
-  return if(isBetter or isEqualAndPossAnswer, wc2, wc1)
+  return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
 end function
 
 function bestAttempt(possAnswers as List<of String>) returns String

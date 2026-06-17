@@ -41,8 +41,8 @@ static void runSolver(List<List<int>> gr, Point start, Point destination, List<P
 } // procedure
 
 static void createRocksAndNodes(int percentRocks, List<Point> rocks, List<Node> nodes, Point start, Point dest) { // procedure
-  foreach (x in range(0, 40)) {
-    foreach (y in range(1, 30)) {
+  foreach (var x in range(0, 40)) {
+    foreach (var y in range(1, 30)) {
       var p = new Point(x, y);
       if (p.equals(start)) {
         nodes.append(new Node(p, 0, p.minDistTo(dest))); // call procedure
@@ -59,7 +59,7 @@ static void createRocksAndNodes(int percentRocks, List<Point> rocks, List<Node> 
 
 static List<List<int>> initialiseGraphics(Point start, Point dest, List<Point> rocks) { // function
   var gr = createBlockGraphics(white);
-  foreach (rock in rocks) {
+  foreach (var rock in rocks) {
     gr = withPut(gr, rock.x, rock.y, black); // reassign variable
   } // foreach
   gr = withPut(gr, start.x, start.y, green); // reassign variable
@@ -77,7 +77,7 @@ static List<List<int>> addVisited(List<List<int>> gr, Point visited) { // functi
 
 static List<List<int>> addRoute(List<List<int>> gr, List<Point> route) { // function
   var graphics = gr;
-  foreach (p in route) {
+  foreach (var p in route) {
     graphics = withPut(graphics, p.x, p.y, orange); // reassign variable
   } // foreach
   var start = route[0];
@@ -117,7 +117,7 @@ class Solver {
     this.alg = alg; // reassign variable
     this.current = new Node(this.start, 0, infinity); // reassign variable
     this.running = true; // reassign variable
-    foreach (node in this.nodes) {
+    foreach (var node in this.nodes) {
       node.setDistanceFromStart(infinity); // call procedure
       node.setVia(emptyPoint()); // call procedure
       node.setVisited(false); // call procedure
@@ -138,7 +138,7 @@ class Solver {
   public void updateNeighbours() { // procedure method
     var distToCurrent = this.current.distFromStart;
     var currentPoint = this.current.point;
-    foreach (neighbour in this.currentNeighbours()) {
+    foreach (var neighbour in this.currentNeighbours()) {
       var distViaCurrent = distToCurrent + currentPoint.minDistTo(neighbour.point);
       if (distViaCurrent < neighbour.distFromStart) {
         neighbour.setVia(currentPoint); // call procedure
@@ -151,7 +151,7 @@ class Solver {
     var currentNode = this.current;
     var currentPoint = currentNode.point;
     var neighbours = new List<Node>();
-    foreach (p in currentPoint.neighbouringPoints()) {
+    foreach (var p in currentPoint.neighbouringPoints()) {
       var node = this.getNodeFor(p);
       var point = node.point;
       if (!point.isEmpty) {
@@ -163,7 +163,7 @@ class Solver {
 
   public Node getNodeFor(Point p) { // function method
     var matches = this.nodes.filter(Node n => n.point.equals(p));
-    return if(matches.length() == 1, matches.head(), emptyNode());
+    return if_(matches.length() == 1, matches.head(), emptyNode());
   } // function method
 
   public Point getLastVisited() { // function method
@@ -174,7 +174,7 @@ class Solver {
     var lowestCostSoFar = infinity;
     var lowestCostNode = emptyNode();
     var possibilities = this.nodes.filter(Node nd => (!nd.visited) && (nd.distFromStart < infinity));
-    foreach (nd in possibilities) {
+    foreach (var nd in possibilities) {
       var cost = this.calculateCost(nd);
       if (cost < lowestCostSoFar) {
         lowestCostSoFar = cost; // reassign variable

@@ -17,12 +17,12 @@ suite("if Expression", () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(if(true, 1, 2))
-  call printNoLine(if(false, 3, 4))
-  call printNoLine(if(true, if(true, "A", "B"), if(true, "C", "D")))
-  call printNoLine(if(true, if(false, "A", "B"), if(true, "C", "D")))
-  call printNoLine(if(false, if(true, "A", "B"), if(true, "C", "D")))
-  call printNoLine(if(false, if(true, "A", "B"), if(false, "C", "D")))
+  call printNoLine(if_(true, 1, 2))
+  call printNoLine(if_(false, 3, 4))
+  call printNoLine(if_(true, if_(true, "A", "B"), if_(true, "C", "D")))
+  call printNoLine(if_(true, if_(false, "A", "B"), if_(true, "C", "D")))
+  call printNoLine(if_(false, if_(true, "A", "B"), if_(true, "C", "D")))
+  call printNoLine(if_(false, if_(true, "A", "B"), if_(false, "C", "D")))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

@@ -1,4 +1,4 @@
-# 4e40af174bcff2973e79bb32694a698370acfe2e9e39329ac8d9f6709c73a2f8 Elan 2.0.0-beta valid
+# 98ca7c415220315a2cc0abe6c952a235f07598d79a08fe73f8a14f50c2ec8e1d Elan 2.0.0-beta valid
 
 main
   variable start set to new Point(5, 5)
@@ -162,7 +162,7 @@ class Solver
 
   function getNodeFor(p as Point) returns Node
     variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
-    return if(matches.length() is 1, matches.head(), emptyNode())
+    return if_(matches.length() is 1, matches.head(), emptyNode())
   end function
 
   function getLastVisited() returns Point

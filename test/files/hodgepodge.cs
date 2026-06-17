@@ -56,8 +56,8 @@ static void main() {
 
 static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool initial) { // procedure
   var colours = getColours();
-  foreach (j in range(0, gH)) {
-    foreach (i in range(0, gW)) {
+  foreach (var j in range(0, gH)) {
+    foreach (var i in range(0, gW)) {
       if (initial) {
         podge[i][j] = colours[randint(0, (colours.length()) - 1)]; // reassign variable
         podge[1][1] = 0x1a001a; // reassign variable
@@ -74,7 +74,7 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
 
 static bool uniform(List<List<int>> grid) { // function
   var uniformGrid = createBlockGraphics(grid[0][0]);
-  return if(grid.equals(uniformGrid), true, false);
+  return if_(grid.equals(uniformGrid), true, false);
 } // function
 
 static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // function
@@ -101,7 +101,7 @@ static int newColour(List<int> neighbourColours, int nowColour) { // function
   var nInfected = 0;
   var nIll = 0;
   var sumStates = colours.indexOf(nowColour);
-  foreach (colour in neighbourColours) {
+  foreach (var colour in neighbourColours) {
     sumStates = sumStates + colours.indexOf(colour); // reassign variable
     if (colour < healthy) {
       nInfected = nInfected + 1; // reassign variable
@@ -121,5 +121,5 @@ static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) {
   } else if (nowColour != ill) {
     state = divAsInt(sumStates, (nInfected + 1)) + iR; // reassign variable
   } // if
-  return if(state > (colours.length() - 1), ill, colours[state]);
+  return if_(state > (colours.length() - 1), ill, colours[state]);
 } // function

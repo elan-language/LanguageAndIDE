@@ -1,4 +1,4 @@
-# 2291dd5264d4e6ddbce53520487f2cf2e7881a2bfc0d5a566a80dbb563717a30 Elan 2.0.0-beta valid
+# aeddfa5e10ee01a8bdd3c5dcdfaa6eb86cc1a22a17e5cf2ab4a5e02958fa7ddd Elan 2.0.0-beta valid
 
 main
   variable rng set to new Random()
@@ -104,7 +104,7 @@ test test_appendCell
 end test
 
 function blackOrWhite(rng as Random) returns Int
-  return if(rng.asFloat() > 0.5, white, black)
+  return if_(rng.asFloat() > 0.5, white, black)
 end function
 
 test test_blackOrWhite
@@ -121,7 +121,7 @@ end test
 function north(cell as (Int, Int)) returns (Int, Int)
   let x be cell.item_0
   let y be cell.item_1
-  let y2 be if(y is 0, 29, y - 1)
+  let y2 be if_(y is 0, 29, y - 1)
   return (x, y2)
 end function
 
@@ -135,7 +135,7 @@ end test
 function south(cell as (Int, Int)) returns (Int, Int)
   let x be cell.item_0
   let y be cell.item_1
-  let y2 be if(y is 29, 0, y + 1)
+  let y2 be if_(y is 29, 0, y + 1)
   return (x, y2)
 end function
 
@@ -149,7 +149,7 @@ end test
 function east(cell as (Int, Int)) returns (Int, Int)
   let x be cell.item_0
   let y be cell.item_1
-  let x2 be if(x is 39, 0, x + 1)
+  let x2 be if_(x is 39, 0, x + 1)
   return (x2, y)
 end function
 
@@ -163,7 +163,7 @@ end test
 function west(cell as (Int, Int)) returns (Int, Int)
   let x be cell.item_0
   let y be cell.item_1
-  let x2 be if(x is 0, 39, x - 1)
+  let x2 be if_(x is 0, 39, x - 1)
   return (x2, y)
 end function
 
@@ -271,7 +271,7 @@ end test
 
 function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
   let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
-  return if(live, black, white)
+  return if_(live, black, white)
 end function
 
 test test_nextCellValue

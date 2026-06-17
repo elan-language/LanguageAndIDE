@@ -17,7 +17,7 @@ public class Global {
 //   cases, and edge cases (where appropriate)
 
 static List<String> sort(List<String> li) { // function
-  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)));
+  return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)));
 } // function
 
 static List<String> sortedFrontHalf(List<String> li) { // function
@@ -34,7 +34,7 @@ static List<String> sortedBackHalf(List<String> li) { // function
 
 static List<String> merge(List<String> a, List<String> b) { // function
   var oneIsEmpty = (a.length() == 0) || (b.length() == 0); // let
-  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
+  return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
 } // function
 
 static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
@@ -42,7 +42,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var bHead = b.head(); // let
   var aTail = a.tail(); // let
   var bTail = b.tail(); // let
-  return if(aHead.isBefore(bHead), list(aHead).withAppendList(merge(aTail, b)), list(bHead).withAppendList(merge(a, bTail)));
+  return if_(aHead.isBefore(bHead), list(aHead).withAppendList(merge(aTail, b)), list(bHead).withAppendList(merge(a, bTail)));
 } // function
 
 @Test static void test_sort() {

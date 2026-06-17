@@ -144,7 +144,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOREACH} </el-kw></el-kw>(${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw>) {`;
+      html = `<el-kw>${this.FOREACH} </el-kw>(<el-kw>${this.VAR}</el-kw> <${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw>) {`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof GlobalProcedure) {
