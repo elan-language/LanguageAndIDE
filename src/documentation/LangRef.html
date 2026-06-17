@@ -127,8 +127,8 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <h3 class="no-TOC" id="functionReturn">Return from a function or procedure only after the final instruction</h3>
 
 <p>This principle is somewhat analogous to the previous one, in that programmers find it convenient to include multiple
- <code>return</code> statements within a procedure or a function. All the supported languages permit this.
- Elan, however, deliberately prevents this practice. In Elan a function always has one <b>return</b> as its <i>last</i>
+ <code>return</code> instructions within a procedure or a function. All the supported languages permit this.
+ Elan, however, deliberately prevents this practice. In Elan a function always has one <b>return</b> instruction as its <i>last</i>
  instruction (which specifies the value to be returned), and there is no option to add another one earlier. 
  An Elan <b>procedure</b> cannot have a <b>return</b> instruction: the procedure exits after its last instruction.</p> 
 <p>Some programmers may argue that the constraint of no early returns in a function means you have to write an extra line of code at the start
@@ -568,13 +568,13 @@ end function
     <code>headX as Int</code></li>
   <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
   <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
-  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
+  <li>A function always has a <code>return</code> instruction as its last instruction, which specifies a value, or an expression to be evaluated.
   The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
   <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
     Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
-  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
+  <li>The body of a function <i>may</i> consist only of the <code>return</code> instruction - with the expression following <code>return</code> doing
   all the work needed.</li>
-  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
+  <li>More generally, the <code>return</code> instruction will be preceded by other  instructions to determine the result in several steps.</li>
   <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
     languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
   <ul>
@@ -663,7 +663,7 @@ end test
   <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
     adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
   <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
-  <li>A test method must include one or more <b>assert</b> statements - with each one typically covering a different use-case.</li>
+  <li>A test method must include one or more <code>assert</code> instructionss - with each one typically covering a different use-case.</li>
   <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
     consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
   <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
@@ -970,11 +970,11 @@ of a program: the main routine, functions, and procedures.</p>
 <h2>Print</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of print statements</h3>
+<h3 class="no-TOC acc-title">Examples of print instructions</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
-    inline within the print statement:</code></p>
+    inline within the print instruction:</code></p>
 
 <codeblock>
 main
@@ -1044,7 +1044,7 @@ end main
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about print statements</h3>
+<h3 class="no-TOC acc-title">What you need to know about print instructions</h3>
 <div class="acc-body">
 
 <ul>
@@ -1238,10 +1238,10 @@ which offer several advantages, including:</p>
 
 <div id="if">
 <div id="then"></div><div id="else"></div><div id="elif"></div>
-<h2 id="if_statement">If statement</h2>
+<h2 id="ifStatement">If</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of if statements</h3>
+<h3 class="no-TOC acc-title">Examples of <b>if</b> instructions</h3>
 <div class="acc-body">
 
 <p>From the <b>Life - procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
@@ -1257,8 +1257,8 @@ function blackOrWhite(random as Float) returns Int
 end function
 </codeblock>
 
-<p>From the <b>Bubbles</b> demo where the <b>if</b> statement includes an <b>else</b> clause,
-  so that one of two separate blocks of statements is always executed depending on the value of a randomly-generated number.</p>
+<p>From the <b>Bubbles</b> demo where the <b>if</b> instruction includes an <b>else</b> clause,
+  so that one of two separate blocks of instructions is always executed depending on the value of a randomly-generated number.</p>
 
 <codeblock>
 if random() < 0.05 then
@@ -1273,7 +1273,7 @@ end if
 </codeblock>
 
 <p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
-on the value of the <code>direction</code> variable, one of four different statements is executed:</p>
+on the value of the <code>direction</code> variable, one of four different instructions is executed:</p>
 
 <codeblock>
 if direction is 0 then
@@ -1292,7 +1292,7 @@ end if
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about an if statement</h3>
+<h3 class="no-TOC acc-title">What you need to know about an <b>if</b> instruction</h3>
 <div class="acc-body">
   <ul>
     <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
@@ -1303,15 +1303,15 @@ end if
       <li>a single existing variable that is of Boolean type</li>
       <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
     </ul>
-    <li>Within the body of an <b>if</b> expression you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
-    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> statement body</li>
+    <li>Within the body of an <b>if</b> instruction you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
+    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> instruction body</li>
   </ul>
 </div></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body"> 
-  <p><a href="#if_expression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although 
+  <p><a href="#ifExpression"><b>if</b> <i>expression</i>. This is an alternative way to implement conditions. Although 
     that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> profile.
 </div></div>
 </div>
@@ -1372,9 +1372,9 @@ end while
 <div class="acc-body">
 
 <ul>
-  <li>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
+  <li>The <b>while loop</b> specifies that a block of instructions is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
   <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
-  <li>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
+  <li>As on an <b>if</b> instruction, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
   <li>The condition is evaluated at the beginning of each pass through the loop.</li>
   <li>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</li>
   <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
@@ -1419,7 +1419,7 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
-    reassign turnI to (if_(turn.equals(left), 1, -1))
+    reassign turnI to (if(turn.equals(left), 1, -1))
     call t.turn(-45*turnI)
     call t.move(corner)
     call t.turn(-45*turnI)
@@ -1450,7 +1450,7 @@ end procedure
   <ul>
     <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
-    <li>The <b>for loop</b> specifies that a block of statements that is repeated, once for each value in a sequence.</li>
+    <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
     <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
     <li>The sequence of values may be specified:</li>
@@ -1547,10 +1547,12 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 
 <div id="try">
 <div id="catch"></div>
+<div id="CustomError"></div>
+<div id="ElanRuntimeError"></div>
 <h2>Try</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples <b>try</b> statements</h3>
+<h4 class="no-TOC acc-title">Examples <b>try</b></h4>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
@@ -1589,7 +1591,7 @@ end main
   <li>The <b>try</b> instruction is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
     and to <i>catch</i> that exception without the program being automatically halted.</li>
   <li>The <b>try</b> instruction is often referred to as a `try-catch` - because it makes no sense to have
-  a <b>try</b> statement <i>without</i> a 'catch' clause.</li>
+  a <b>try</b> instruction <i>without</i> a 'catch' clause.</li>
   <li>When you add a <b>try</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
   <li class="python">'except' is Python's word for 'catch'</li>
   <li>When you add a new <b>try</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
@@ -1955,13 +1957,13 @@ function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
 end function
 </codeblock> -->
 
-<h2 id="if_expression"><b>if</b> (expression)</h2>
+<h2 id="ifExpression"><b>if</b> expression</h2>
 
-<p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
+<p>The <b>if</b> expression returns one of two values dependent upon the evaulation of a Boolean value:</p>
 <p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
-<code>variable isBigger set to if_(a >= b, true, false)</code>
+<code>variable isBigger set to if(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
-  <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
+  <code>variable d set to if(c < 580, c - 40, c + 60)</code>
 <p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
@@ -1971,7 +1973,7 @@ end function
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
 function foo() returns Int
-  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 end function
 </codeblock>
 <hr>
@@ -1986,7 +1988,7 @@ main
   call testPi(p, 4)
 end main
 procedure testPi(p as String, v as Float)
-  call print(if_(pi > v, $"{p} > {v}", $"{p} < {v}"))
+  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>
@@ -2065,7 +2067,7 @@ end procedure
  <p>The type must follow the rules for a <a href="#TypeName">type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
-<h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
+<h3 id="ProcRefField" class="no-TOC">'procedureName' in a <b>call procedure</b> instruction</h3>
  <p>Valid forms for a procedure call are
  <ul>
   <li><code>call procedureName()</code> to call a library procedure, or user-defined procedure.</li>
