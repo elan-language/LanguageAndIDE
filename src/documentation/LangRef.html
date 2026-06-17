@@ -269,8 +269,9 @@ where you might encounter one, <i>you will get a clear error message that gives 
 <h1 id="globalInstructions">Global instructions</h1>
 <p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
   and are therefore not indented.</p>
-<img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
+<div class="java"><img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
 generates a non-editable class named <code>Global</code>, and all global instructions are created directly within that (and automatically indented).</p>
+</div>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -1188,7 +1189,7 @@ end procedure
 <h2>Input</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of input instructions</h4>
+<h3 class="no-TOC acc-title">Example of input instructions</h3>
 <div class="acc-body">
 
 <p>From the <b>Binary Search</b> demo, showing an <b>input</b> instruction with a clear user-prompt:</p>
@@ -1309,7 +1310,7 @@ end if
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body"> 
-  <p><a href="#if_expression"><b>if</b> <i>expression</i>. This is an alternative way to implement conditions. Although 
+  <p><a href="#if_expression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although 
     that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> profile.
 </div></div>
 </div>
@@ -1395,7 +1396,7 @@ end while
 <h2>For loop</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of for loops</h4>
+<h3 class="no-TOC acc-title">Examples of for loops</h3>
 <div class="acc-body">
 
   <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method> 
@@ -1446,7 +1447,7 @@ end procedure
 <h3 class="no-TOC acc-title">What you need to know about for loops</h3>
 <div class="acc-body">
   <ul>
-    <li class="vb cs java">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in several languages.</li>
+    <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
     <li>The <b>for loop</b> specifies that a block of statements that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
@@ -1481,7 +1482,7 @@ end procedure
 <h2>Call procedure</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of procedure calls</h4>
+<h3 class="no-TOC acc-title">Examples of procedure calls</h3>
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>, 
@@ -1548,7 +1549,7 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 <h2>Try</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples <b>try</b> statements</h4>
+<h3 class="no-TOC acc-title">Examples <b>try</b> statements</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
@@ -1609,12 +1610,8 @@ end main
 
 <div id="throw">
 <h2>Throw</h2>
-<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw</b> instruction
- which defines an explanatory string.</p>
-<p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
-
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a throwing an exception</h4>
+<h3 class="no-TOC acc-title">Example of a throwing an exception</h3>
 <div class="acc-body">
 
 <p>The following function to calculate factorials <i>deliberately</i> 'throws' an exception (error) if it is given
@@ -1634,7 +1631,7 @@ end function
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about throwing an exception</h4>
+<h3 class="no-TOC acc-title">What you need to know about throwing an exception</h3>
 <div class="acc-body">
 
 <ul>
@@ -1650,7 +1647,7 @@ end function
 <h2>Assert</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of asserts</h4>
+<h3 class="no-TOC acc-title">Examples of asserts</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
@@ -1683,7 +1680,7 @@ end test
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about asserts</h4>
+<h3 class="no-TOC acc-title">What you need to know about asserts</h3>
 <div class="acc-body">
 <ul>
   <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
@@ -1968,7 +1965,7 @@ end function
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
+<h3 class="no-TOC acc-title">Examples using <b>if</b> expression:</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
