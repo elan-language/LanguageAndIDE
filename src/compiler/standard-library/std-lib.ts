@@ -925,22 +925,4 @@ export class StdLib {
   async createVectorGraphics(): Promise<List<VectorGraphic>> {
     return this.system.initialise(await new List<VectorGraphic>()._initialise());
   }
-
-  @elanProcedure(["list", "x", "y", "value"], ProcedureOptions.async)
-  async initialise<T1>(
-    @elanClassType(List, [ElanClass(List, [ElanT1])]) listOfList: List<List<T1>>,
-    @elanIntType() x: number,
-    @elanIntType() y: number,
-    @elanGenericParamT1Type() value: T1,
-  ) {
-    listOfList.initialise(x, new List<T1>());
-
-    for (let i = 0; i < x; i++) {
-      const subArr = this.system.initialise(await new List<T1>()._initialise());
-      for (let j = 0; j < y; j++) {
-        subArr.append(value);
-      }
-      listOfList.safeSet(subArr, i);
-    }
-  }
 }

@@ -1,4 +1,4 @@
-# fbb20b1f326fb6c7000f8d7bd731fa0a908201c958cb6976076bb322766de794 Elan 2.0.0-beta valid
+# f3ac2abaf49294f196087e58fd4da87120ac2d23cd1d0433d205623ff4aa5463 Elan 2.0.0-beta valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -22,7 +22,7 @@ main
       end if
       call p.append(x)
       # draw what we have got so far, scaled to the canvas
-      variable vg set to new List<of VectorGraphic>()
+      variable vg set to createVectorGraphics()
       for i in range(0, p.length() - 1)
         reassign vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
       end for
