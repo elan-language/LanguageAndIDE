@@ -2067,18 +2067,15 @@ end procedure
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
  <p>Valid forms for a procedure call are
  <ul>
-  <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
-  <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
+  <li><code>call procedureName()</code> to call a library procedure, or user-defined procedure.</li>
+  <li><code>call instanceName.procedureMethodName()</code> to call a procedure method associated with a specific type using 'dot-syntax'.</li>
  </ul>
-<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
- procedure with the same name.</p>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
- <p>For certain types the name may be followed by an <b>of</b> clause, for example:</p>
+ <p>For certain data structure types the name may be followed by a 'generic' clause, which specifies the type(s)
+  of the elements that make up the data structure, for example:</p>
 <code>List&lt;of Int&gt;</code><br>
-<code>Dictionary&lt;of String, Int&gt;</code>
+<code>Dictionary&lt;of String, Int&gt;</code> specifies that the keys are of type <code>Sting</code> and the values of type <code>Int</code>.
 
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,
