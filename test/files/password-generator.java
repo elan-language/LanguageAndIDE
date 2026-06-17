@@ -38,7 +38,7 @@ static void main() {
 } // main
 
 static void populatePassword(AsRef<String> password, String all) { // procedure
-  foreach (i in range(1, length + 1)) {
+  foreach (var i in range(1, length + 1)) {
     var rnd = randint(0, all.length() - 1);
     password.set(password.value() + all[rnd]); // call procedure
   } // foreach
@@ -73,7 +73,7 @@ static bool passesRule(bool rule, String charSet, String password) { // function
 
 static bool hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
-  foreach (ch in password) {
+  foreach (var ch in password) {
     hasOne = hasOne || fromChars.contains(ch); // reassign variable
   } // foreach
   return hasOne;

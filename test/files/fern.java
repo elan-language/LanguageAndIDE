@@ -14,7 +14,7 @@ static void main() {
   t.initialiseFromClock(); // call procedure
   // don't set the count limit too high
   // or the browser will run out of memory
-  foreach (count in range(0, 1000)) {
+  foreach (var count in range(0, 1000)) {
     s = onepoint(s); // reassign variable
     vg.append(s.rect); // call procedure
     displayVectorGraphics(vg); // call procedure

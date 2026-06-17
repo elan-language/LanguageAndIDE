@@ -25,7 +25,7 @@ static void playOneRound(Game game) { // procedure
   display(game); // call procedure
   var dealer = game.dealer;
   var faceCard = dealer.faceCard;
-  foreach (player in game.players) {
+  foreach (var player in game.players) {
     player.startTurn(); // call procedure
     display(game); // call procedure
     while (player.status == Status.active) {
@@ -152,7 +152,7 @@ static Suit intAsSuit(int n) { // function
 static String htmlForGame(Game game) { // function
   var html = "<div class='game'>";
   html = html + htmlForPlayer(game.dealer); // reassign variable
-  foreach (player in game.players) {
+  foreach (var player in game.players) {
     html = html + htmlForPlayer(player); // reassign variable
   } // foreach
   html = html + String.format("<div class='message'>%</div>", game.message); // reassign variable
@@ -172,7 +172,7 @@ static String htmlForPlayer(Player player) { // function
   var html = "<div class='player'>";
   html = html + String.format("<div class='details'>% - % points %</div>", player.name, player.points, player.getMessage()); // reassign variable
   html = html + "<div class='hand'>"; // reassign variable
-  foreach (card in player.cards) {
+  foreach (var card in player.cards) {
     var suit = card.suit;
     var rank = card.rank;
     html = html + htmlForCard(card); // reassign variable
@@ -200,7 +200,7 @@ static String htmlForCard(Card card) { // function
     var u = htmlForSpot("u", rank);
     var v = htmlForSpot("v", symbol);
     var grid = "";
-    foreach (location in gridForRank(rank)) {
+    foreach (var location in gridForRank(rank)) {
       if (location.equals("royal")) {
         grid = grid + htmlForSpot(location, rank); // reassign variable
       } else {
@@ -251,13 +251,13 @@ class Game {
   public void newRound() { // procedure method
     var dealer = this.dealer;
     dealer.newHand(); // call procedure
-    foreach (player in this.players) {
+    foreach (var player in this.players) {
       player.newHand(); // call procedure
     } // foreach
   } // procedure method
 
   public void updatePoints() { // procedure method
-    foreach (player in this.players) {
+    foreach (var player in this.players) {
       player.determineOutcomeAndUpdatePoints(this.dealer); // call procedure
     } // foreach
   } // procedure method

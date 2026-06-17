@@ -61,7 +61,7 @@ class Snake {
 
   public bool bodyCovers(Square sq) { // function method
     var result = false;
-    foreach (seg in this.body) {
+    foreach (var seg in this.body) {
       if ((seg.equals(sq))) {
         result = true; // reassign variable
       } // if

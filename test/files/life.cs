@@ -13,8 +13,8 @@ static void main() {
 } // main
 
 static void fillRandom(List<List<int>> grid) { // procedure
-  foreach (col in range(0, 40)) {
-    foreach (row in range(0, 30)) {
+  foreach (var col in range(0, 40)) {
+    foreach (var row in range(0, 30)) {
       grid[col][row] = blackOrWhite(random()); // reassign variable
     } // foreach
   } // foreach
@@ -23,8 +23,8 @@ static void fillRandom(List<List<int>> grid) { // procedure
 static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   var nextGen = createBlockGraphics(white);
   var grid = gridRef.value();
-  foreach (x in range(0, 40)) {
-    foreach (y in range(0, 30)) {
+  foreach (var x in range(0, 40)) {
+    foreach (var y in range(0, 30)) {
       var colour = nextCellValue(grid, x, y);
       nextGen[x][y] = colour; // reassign variable
     } // foreach
@@ -103,7 +103,7 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   var count = 0;
-  foreach (cell in neighbourCells(x, y)) {
+  foreach (var cell in neighbourCells(x, y)) {
     var cx = cell.item_0;
     var cy = cell.item_1;
     if (grid[cx][cy] == black) {

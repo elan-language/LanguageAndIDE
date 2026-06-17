@@ -5,7 +5,7 @@ public class Global {
 static void main() {
   var blocks = createBlockGraphics(black);
   blocks = createStart(blocks); // reassign variable
-  foreach (i in range(0, displayWidth + 1)) {
+  foreach (var i in range(0, displayWidth + 1)) {
     var x = randint(0, 39);
     var y = randint(0, 29);
     var p = new Point(x, y);
@@ -27,9 +27,9 @@ final Int displayWidth = 150; // constant
 
 static void saveAsFile(String name, List<List<int>> b) { // procedure
   var file = createFileForWriting(name);
-  foreach (row in range(0, 30)) {
+  foreach (var row in range(0, 30)) {
     var line = "";
-    foreach (col in range(0, 40)) {
+    foreach (var col in range(0, 40)) {
       var colour = b[col][row];
       var symbol = if_(colour == white, " ", "X");
       line = line + symbol; // reassign variable
@@ -41,7 +41,7 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
 
 static List<List<int>> createStart(List<List<int>> b) { // function
   var b2 = b;
-  foreach (i in rangeInSteps(0, 16, 2)) {
+  foreach (var i in rangeInSteps(0, 16, 2)) {
     b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i); // reassign variable
   } // foreach
   return b2;
@@ -50,11 +50,11 @@ static List<List<int>> createStart(List<List<int>> b) { // function
 static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, int width, int depth) { // function
   var paint = white;
   var b2 = b;
-  foreach (x in range(startX, startX + width + 1)) {
+  foreach (var x in range(startX, startX + width + 1)) {
     b2 = withPut(b2, x, startY, paint); // reassign variable
     b2 = withPut(b2, x, startY + depth, paint); // reassign variable
   } // foreach
-  foreach (y in range(startY, startY + depth + 1)) {
+  foreach (var y in range(startY, startY + depth + 1)) {
     b2 = withPut(b2, startX, y, paint); // reassign variable
     b2 = withPut(b2, startX + width, y, paint); // reassign variable
   } // foreach
