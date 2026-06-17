@@ -31,6 +31,10 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     this.canHaveBreakPoint = false;
   }
 
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
   isOnAbstractClass(): boolean {
     return this.getParent() instanceof AbstractClass;
   }

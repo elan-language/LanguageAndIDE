@@ -184,7 +184,7 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   postProcessHtml(html: string): string {
-   return html;
+    return html;
   }
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated) {

@@ -14,6 +14,10 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
     return variableKeyword;
   }
 
+  override helpId(): string {
+    return "variableDefinition";
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${variableKeyword} `);

@@ -23,6 +23,15 @@ export class AbstractProcedure extends SingleLineFrame {
   initialKeywords(): string {
     return abstractProcedureKeywords;
   }
+
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
+  override helpId(): string {
+    return "abstract_procedure";
+  }
+
   getFields(): Field[] {
     return [this.name, this.params];
   }

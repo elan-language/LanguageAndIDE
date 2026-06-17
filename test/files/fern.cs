@@ -5,7 +5,7 @@
 // Draws a fractal image
 
 static void main() {
-  var vg = new List<VectorGraphic>();
+  var vg = createVectorGraphics();
   var s = new State(new RectangleVG(), 0.0, 0.16, new Random());
   // can't call s.r.initialiseFromClock() directly
   var t = s.r;

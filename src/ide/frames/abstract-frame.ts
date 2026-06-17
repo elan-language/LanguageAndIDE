@@ -63,16 +63,18 @@ export abstract class AbstractFrame implements Frame {
     return `${this.getIdPrefix()}${this.id}`;
   }
 
+  helpDocument(): string {
+    return "LangRef.html";
+  }
   helpId(): string {
     return this.initialKeywords().replace(/\s/g, "");
   }
-
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
 
     return this._selected
-      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
+      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/${this.helpDocument()}#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
 

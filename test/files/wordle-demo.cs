@@ -283,8 +283,8 @@ static string drawGrid(List<List<string>> grid) { // function
     html = html + "<word>"; // reassign variable
     foreach (var col in range(0, 5)) {
       const String entry = grid[col][row];
-      const String ch = if(entry.length() > 0, entry[0], "");
-      const String mark = if(entry.length() > 1, entry.subString(1, entry.length()), "");
+      const String ch = if_(entry.length() > 0, entry[0], "");
+      const String mark = if_(entry.length() > 1, entry.subString(1, entry.length()), "");
       html = html + $"<ch class='_{mark}'>{ch}</ch>"; // reassign variable
     }
     html = html + "</word>"; // reassign variable

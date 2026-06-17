@@ -25,6 +25,10 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return this.getParent() instanceof AbstractClass;
   }
 
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
   override helpId(): string {
     return "procedure_method";
   }

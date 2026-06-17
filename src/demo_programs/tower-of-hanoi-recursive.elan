@@ -1,4 +1,4 @@
-# 47f46e120cf22fe5062e3d8a71d0f875218dd5019fac867b000e07de1dc75a70 Elan 2.0.0-beta valid
+# c64faeb8784d2f95f04fcf4271f4e36086404980bd587200c810348eaf23c6d1 Elan 2.0.0-beta valid
 
 constant nDiscs set to 7
 
@@ -29,7 +29,7 @@ end procedure
 
 procedure display(stacks as List<of List<of Int>>)
   call clearAllDisplays()
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to createVectorGraphics()
   call drawStack(stacks[0], 1, vg)
   call drawStack(stacks[1], 2, vg)
   call drawStack(stacks[2], 3, vg)

@@ -269,8 +269,9 @@ where you might encounter one, <i>you will get a clear error message that gives 
 <h1 id="globalInstructions">Global instructions</h1>
 <p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
   and are therefore not indented.</p>
-<img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
+<div class="java"><img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
 generates a non-editable class named <code>Global</code>, and all global instructions are created directly within that (and automatically indented).</p>
+</div>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -964,6 +965,7 @@ end procedure
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
 of a program: the main routine, functions, and procedures.</p>
 
+<div id="print"></div>
 <div id="print_statement">
 <h2>Print</h2>
 
@@ -1007,7 +1009,7 @@ main
 end main
   </codeblock>
 
-<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</code></p>
+<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
 
   <codeblock>
 main
@@ -1021,9 +1023,9 @@ main
   call setAppleToRandomPosition(apple, body)
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of Direction>(currentDir)
-    variable headRef set to new AsRef<of List<of Int>>(head)
-    variable tailRef set to new AsRef<of List<of Int>>(tail)
+    variable currentDirRef set to new AsRef&lt;of Direction&gt;(currentDir)
+    variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
+    variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
     reassign head to headRef.value()
     reassign tail to tailRef.value()
@@ -1188,7 +1190,7 @@ end procedure
 <h2>Input</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of input instructions</h4>
+<h3 class="no-TOC acc-title">Example of input instructions</h3>
 <div class="acc-body">
 
 <p>From the <b>Binary Search</b> demo, showing an <b>input</b> instruction with a clear user-prompt:</p>
@@ -1395,7 +1397,7 @@ end while
 <h2>For loop</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of for loops</h4>
+<h3 class="no-TOC acc-title">Examples of for loops</h3>
 <div class="acc-body">
 
   <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method> 
@@ -1446,7 +1448,7 @@ end procedure
 <h3 class="no-TOC acc-title">What you need to know about for loops</h3>
 <div class="acc-body">
   <ul>
-    <li class="vb cs java">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in several languages.</li>
+    <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
     <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
@@ -1481,7 +1483,7 @@ end procedure
 <h2>Call procedure</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of procedure calls</h4>
+<h3 class="no-TOC acc-title">Examples of procedure calls</h3>
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>, 
@@ -1611,12 +1613,8 @@ end main
 
 <div id="throw">
 <h2>Throw</h2>
-<p>You can deliberately generate, or 'throw', an error exception when a specific circumstance is identified, using a <b>throw</b> instruction
- which defines an explanatory string.</p>
-<p>For the program to retain control when an exception is raised, use the <a href="#try"><b>try</b> <i class="fa">&#xf14c;</i></a> instruction.</p>
-
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of a throwing an exception</h4>
+<h3 class="no-TOC acc-title">Example of a throwing an exception</h3>
 <div class="acc-body">
 
 <p>The following function to calculate factorials <i>deliberately</i> 'throws' an exception (error) if it is given
@@ -1636,7 +1634,7 @@ end function
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about throwing an exception</h4>
+<h3 class="no-TOC acc-title">What you need to know about throwing an exception</h3>
 <div class="acc-body">
 
 <ul>
@@ -1652,7 +1650,7 @@ end function
 <h2>Assert</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of asserts</h4>
+<h3 class="no-TOC acc-title">Examples of asserts</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
@@ -1685,7 +1683,7 @@ end test
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about asserts</h4>
+<h3 class="no-TOC acc-title">What you need to know about asserts</h3>
 <div class="acc-body">
 <ul>
   <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
@@ -1970,7 +1968,7 @@ end function
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples using <b>if</b> expression:</h4>
+<h3 class="no-TOC acc-title">Examples using <b>if</b> expression:</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
@@ -2072,18 +2070,15 @@ end procedure
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a <b>call procedure</b> instruction</h3>
  <p>Valid forms for a procedure call are
  <ul>
-  <li><b>call procedure</b> <el-method>procedureName</el-method>()</li>
-  <li><b>call procedure</b> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>property</b>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
-  <li><b>call procedure</b> <b>library</b>.<el-method>procedureName</el-method>()</li>
+  <li><code>call procedureName()</code> to call a library procedure, or user-defined procedure.</li>
+  <li><code>call instanceName.procedureMethodName()</code> to call a procedure method associated with a specific type using 'dot-syntax'.</li>
  </ul>
-<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
- procedure with the same name.</p>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
- <p>For certain types the name may be followed by an <b>of</b> clause, for example:</p>
+ <p>For certain data structure types the name may be followed by a 'generic' clause, which specifies the type(s)
+  of the elements that make up the data structure, for example:</p>
 <code>List&lt;of Int&gt;</code><br>
-<code>Dictionary&lt;of String, Int&gt;</code>
+<code>Dictionary&lt;of String, Int&gt;</code> specifies that the keys are of type <code>Sting</code> and the values of type <code>Int</code>.
 
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,

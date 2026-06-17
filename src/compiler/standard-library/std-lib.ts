@@ -920,4 +920,9 @@ export class StdLib {
   ) {
     await this.system!.elanInputOutput.tone(duration, frequency, volume);
   }
+
+  @elanFunction([], FunctionOptions.pureAsync, ElanClass(List, [ElanClass(VectorGraphic)]))
+  async createVectorGraphics(): Promise<List<VectorGraphic>> {
+    return this.system.initialise(await new List<VectorGraphic>()._initialise());
+  }
 }
