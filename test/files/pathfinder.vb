@@ -163,7 +163,7 @@ Class Solver
 
   Function getNodeFor(p As Point) As Node
     Dim matches = Me.nodes.filter(Function (n As Node) n.point.equals(p)) ' variable definition
-    Return if(matches.length() = 1, matches.head(), emptyNode())
+    Return if_(matches.length() = 1, matches.head(), emptyNode())
   End Function
 
   Function getLastVisited() As Point

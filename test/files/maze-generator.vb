@@ -10,7 +10,7 @@ Sub main()
     Dim existing = getValue(p, blocks) ' variable definition
     Dim setTo = (random() + 0.7).floor() ' variable definition
     If okToSet(p, setTo, blocks) Then
-      Dim colour = if(setTo = 1, white, black) ' variable definition
+      Dim colour = if_(setTo = 1, white, black) ' variable definition
       blocks(p.x)(p.y) = colour ' reassign variable
     End If
   Next i
@@ -31,7 +31,7 @@ Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
     Dim line = "" ' variable definition
     For Each col In range(0, 40)
       Dim colour = b(col)(row) ' variable definition
-      Dim symbol = if(colour = white, " ", "X") ' variable definition
+      Dim symbol = if_(colour = white, " ", "X") ' variable definition
       line = line + symbol ' reassign variable
     Next col
     file.writeLine(line) ' call procedure
@@ -80,13 +80,13 @@ Function getValue(p As Point, b As List(Of List(Of Integer))) As Integer
   Dim result = 0 ' variable definition
   If (p.x > -1) And (p.x < 40) And (p.y > -1) And (p.y < 30) Then
     Dim colour = b(p.x)(p.y) ' variable definition
-    result = if(colour = black, 0, 1) ' reassign variable
+    result = if_(colour = black, 0, 1) ' reassign variable
   End If
   Return result
 End Function
 
 Function flip01(v As Integer) As Integer
-  Return if(v = 0, 1, 0)
+  Return if_(v = 0, 1, 0)
 End Function
 
 <TestMethod> Sub test_flip01()

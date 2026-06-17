@@ -33,7 +33,7 @@ Function allpoints(p As Coords) As List(Of VectorGraphic)
       ' scale and centre
       Dim n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) ' variable definition
       ' colour depends on how many iterations were done for that point
-      Dim col = if(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
+      Dim col = if_(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
       Dim rect = (New RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) ' variable definition
       vg2 = vg2.withAppend(rect) ' reassign variable
     Next yp

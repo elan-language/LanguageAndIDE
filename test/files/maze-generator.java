@@ -12,7 +12,7 @@ static void main() {
     var existing = getValue(p, blocks);
     var setTo = (random() + 0.7).floor();
     if (okToSet(p, setTo, blocks)) {
-      var colour = if(setTo == 1, white, black);
+      var colour = if_(setTo == 1, white, black);
       blocks[p.x][p.y] = colour; // reassign variable
     } // if
   } // foreach
@@ -31,7 +31,7 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
     var line = "";
     foreach (col in range(0, 40)) {
       var colour = b[col][row];
-      var symbol = if(colour == white, " ", "X");
+      var symbol = if_(colour == white, " ", "X");
       line = line + symbol; // reassign variable
     } // foreach
     file.writeLine(line); // call procedure
@@ -80,13 +80,13 @@ static int getValue(Point p, List<List<int>> b) { // function
   var result = 0;
   if ((p.x > -1) && (p.x < 40) && (p.y > -1) && (p.y < 30)) {
     var colour = b[p.x][p.y];
-    result = if(colour == black, 0, 1); // reassign variable
+    result = if_(colour == black, 0, 1); // reassign variable
   } // if
   return result;
 } // function
 
 static int flip01(int v) { // function
-  return if(v == 0, 1, 0);
+  return if_(v == 0, 1, 0);
 } // function
 
 @Test static void test_flip01() {

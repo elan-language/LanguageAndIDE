@@ -26,7 +26,7 @@ main
 end main
 
 function grade(score as Float) returns String
-  return if(score > 80, "Distinction", if(score > 60, "Merit", if(score > 40, "Pass", "Fail")))
+  return if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -66,7 +66,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70
-  variable grade set to if(score > 80, "Distinction", if(score > 60, "Merit", if(score > 40, "Pass", "Fail")))
+  variable grade set to if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))
   call printNoLine(grade)
 end main
 `;
@@ -102,7 +102,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70
-  reassign score to score + if(score is 70, 1, 2)
+  reassign score to score + if_(score is 70, 1, 2)
   call printNoLine(score)
 end main
 `;
@@ -138,7 +138,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  reassign score to if(true, 60.1, 60)
+  reassign score to if_(true, 60.1, 60)
   call printNoLine(score)
 end main
 `;
@@ -174,7 +174,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  reassign score to if(false, 60, 60.1)
+  reassign score to if_(false, 60, 60.1)
   call printNoLine(score)
 end main
 `;
@@ -210,7 +210,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  reassign score to if(false, new Bar(), cast(new Bar()))
+  reassign score to if_(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -284,7 +284,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  reassign score to if(false, cast(new Bar()), new Bar())
+  reassign score to if_(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 
@@ -364,7 +364,7 @@ main
 end main
 
 function grade(score as Int) as String
-    if(score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40, "Pass", "Fail" end if)
+    if_(score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40, "Pass", "Fail" end if)
 end function
 `;
 
@@ -386,7 +386,7 @@ end function
     const code = `${testHeader}
 
 main
- variable a set to if(2, 5, 7)
+ variable a set to if_(2, 5, 7)
  call printNoLine(a)
 end main`;
 
@@ -412,7 +412,7 @@ end main`;
     const code = `${testHeader}
 
 main
- variable a set to if(true, "five", 7)
+ variable a set to if_(true, "five", 7)
  call printNoLine(a)
 end main`;
 
@@ -439,7 +439,7 @@ end main`;
 
 main
  variable a set to 10
- reassign a to if(true, 0.5, 10)
+ reassign a to if_(true, 0.5, 10)
  call printNoLine(a)
 end main`;
 
@@ -466,7 +466,7 @@ end main`;
 
 main
  variable a set to 10
- reassign a to if(true, 10, 0.5)
+ reassign a to if_(true, 10, 0.5)
  call printNoLine(a)
 end main`;
 
@@ -493,7 +493,7 @@ end main`;
 
 main
   variable score set to new Bar()
-  reassign score to if(false, new Foo(), new Bar())
+  reassign score to if_(false, new Foo(), new Bar())
   call printNoLine(score)
 end main
 
@@ -527,7 +527,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  reassign score to if(false, new Bar(), new Foo())
+  reassign score to if_(false, new Bar(), new Foo())
   call printNoLine(score)
 end main
 
@@ -560,7 +560,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  reassign score to if(false, new Bar(), cast(new Bar()))
+  reassign score to if_(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -597,7 +597,7 @@ end function`;
 
 main
   variable score set to new Bar()
-  reassign score to if(false, cast(new Bar()), new Bar())
+  reassign score to if_(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 

@@ -15,7 +15,7 @@
 #   cases, and edge cases (where appropriate)
 
 def sort(li: list[str]) -> list[str]: # function
-  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+  return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
 
 def sortedFrontHalf(li: list[str]) -> list[str]: # function
   mid = divAsInt(li.length(), 2) # let
@@ -29,14 +29,14 @@ def sortedBackHalf(li: list[str]) -> list[str]: # function
 
 def merge(a: list[str], b: list[str]) -> list[str]: # function
   oneIsEmpty = (a.length() == 0) or (b.length() == 0) # let
-  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+  return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
 
 def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
   aHead = a.head() # let
   bHead = b.head() # let
   aTail = a.tail() # let
   bTail = b.tail() # let
-  return if(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+  return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
 
 def test_sort(self) -> None:
   # Edge case: empty

@@ -74,7 +74,7 @@ End Sub
 
 Function uniform(grid As List(Of List(Of Integer))) As Boolean
   Dim uniformGrid = createBlockGraphics(grid(0)(0)) ' variable definition
-  Return if(grid.equals(uniformGrid), True, False)
+  Return if_(grid.equals(uniformGrid), True, False)
 End Function
 
 Function getNeighbourColours(grid As List(Of List(Of Integer)), i As Integer, j As Integer) As List(Of Integer)
@@ -121,5 +121,5 @@ Function updateColour(nowColour As Integer, sumStates As Integer, nInfected As I
   ElseIf nowColour <> ill Then
     state = divAsInt(sumStates, (nInfected + 1)) + iR ' reassign variable
   End If
-  Return if(state > (colours.length() - 1), ill, colours(state))
+  Return if_(state > (colours.length() - 1), ill, colours(state))
 End Function

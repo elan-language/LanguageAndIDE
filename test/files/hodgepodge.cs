@@ -74,7 +74,7 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
 
 static bool uniform(List<List<int>> grid) { // function
   var uniformGrid = createBlockGraphics(grid[0][0]);
-  return if(grid.equals(uniformGrid), true, false);
+  return if_(grid.equals(uniformGrid), true, false);
 } // function
 
 static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // function
@@ -121,5 +121,5 @@ static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) {
   } else if (nowColour != ill) {
     state = divAsInt(sumStates, (nInfected + 1)) + iR; // reassign variable
   } // if
-  return if(state > (colours.length() - 1), ill, colours[state]);
+  return if_(state > (colours.length() - 1), ill, colours[state]);
 } // function

@@ -70,7 +70,7 @@ static (double, double) onestep(double x, double y, double r) { // function
 static List<double> getparams(double r, List<List<double>> prms, double cumuprob) { // function
   var head = prms.head(); // let
   var cp2 = cumuprob + head[6]; // let
-  return if(r < cp2, head, getparams(r, prms.tail(), cp2));
+  return if_(r < cp2, head, getparams(r, prms.tail(), cp2));
 } // function
 
 // class to hold the working data passed in and out of onepoint()

@@ -419,6 +419,7 @@ export class LanguageElan extends LanguageAbstract {
     `function`,
     `global`,
     `if`,
+    `if_`,
     `in`,
     `inherits`,
     `interface`,

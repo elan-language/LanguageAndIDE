@@ -39,11 +39,11 @@ Function setChar(word As String, n As Integer, newChar As String) As String
 End Function
 
 Function setAttemptIfGreen(attempt As String, target As String, n As Integer) As String
-  Return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+  Return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 End Function
 
 Function setTargetIfGreen(attempt As String, target As String, n As Integer) As String
-  Return if(isGreen(attempt, target, n), setChar(target, n, "."), target)
+  Return if_(isGreen(attempt, target, n), setChar(target, n, "."), target)
 End Function
 
 Function evaluateGreens(attempt As String, target As String) As List(Of String)
@@ -55,7 +55,7 @@ Function isYellow(attempt As String, target As String, n As Integer) As Boolean
 End Function
 
 Function setAttemptIfYellow(attempt As String, target As String, n As Integer) As String
-  Return if(attempt(n).equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
+  Return if_(attempt(n).equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
 End Function
 
 Function isAlreadyMarkedGreen(attempt As String, n As Integer) As Boolean
@@ -63,7 +63,7 @@ Function isAlreadyMarkedGreen(attempt As String, n As Integer) As Boolean
 End Function
 
 Function setTargetIfYellow(attempt As String, target As String, n As Integer) As String
-  Return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt(n)), "."), target))
+  Return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt(n)), "."), target))
 End Function
 
 Function evaluateYellows(attempt As String, target As String) As List(Of String)
@@ -84,13 +84,13 @@ Function maxWordCountRemainingAfterAttempt(possAnswers As List(Of String), attem
   Dim d = New Dictionary(Of String, Integer)() ' let
   Dim d2 = possAnswers.reduce(d, Function (dd As Dictionary(Of String, Integer), answer As String) incrementCount(dd, answer, attempt)) ' let
   Dim keys = d2.keys() ' let
-  Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if(d2(mark) > maxSoFar, d2(mark), maxSoFar))
+  Return keys.reduce(0, Function (maxSoFar As Integer, mark As String) if_(d2(mark) > maxSoFar, d2(mark), maxSoFar))
 End Function
 
 Function incrementCount(d As Dictionary(Of String, Integer), possAnswer As String, attempt As String) As Dictionary(Of String, Integer)
   Dim mark = markAttempt(attempt, possAnswer) ' let
   Dim keys = d.keys() ' let
-  Dim count = if(keys.contains(mark), d(mark), 0) ' let
+  Dim count = if_(keys.contains(mark), d(mark), 0) ' let
   Return d.withSet(mark, count + 1)
 End Function
 
@@ -101,7 +101,7 @@ End Function
 Function betterOf(wc1 As WordCount, wc2 As WordCount, possAnswers As List(Of String)) As WordCount
   Dim isBetter = wc2.count < wc1.count ' let
   Dim isEqualAndPossAnswer = (wc2.count = wc1.count) And possAnswers.contains(wc2.word) ' let
-  Return if(isBetter Or isEqualAndPossAnswer, wc2, wc1)
+  Return if_(isBetter Or isEqualAndPossAnswer, wc2, wc1)
 End Function
 
 Function bestAttempt(possAnswers As List(Of String)) As String

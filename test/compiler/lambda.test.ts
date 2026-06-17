@@ -543,7 +543,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable l set to lambda x => if(x is 1, x, l(x-1))
+  variable l set to lambda x => if_(x is 1, x, l(x-1))
 end main`;
 
     const fileImpl = new FileImpl(

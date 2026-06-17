@@ -17,17 +17,17 @@ static void main() {
 } // main
 
 static Game clockTick(Game g, string k) { // function
-  var g2 = if(k.equals(""), g, g.withKey(k)); // let
+  var g2 = if_(k.equals(""), g, g.withKey(k)); // let
   var g3 = moveSnake(g2); // let
   var g4 = eatAppleIfPoss(g3); // let
-  return if(gameOver(g4), g4.withIsOn(false), g4);
+  return if_(gameOver(g4), g4.withIsOn(false), g4);
 } // function
 
 static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
   var b2 = graphicsPut(b, g.apple.x, g.apple.y, red); // let
   var b3 = graphicsPut(b2, g.head.x, g.head.y, green); // let
   var tail = g.body[0]; // let
-  var tailColour = if(tail.equals(g.priorTail), green, white); // let
+  var tailColour = if_(tail.equals(g.priorTail), green, white); // let
   return graphicsPut(b3, tail.x, tail.y, tailColour);
 } // function
 
@@ -43,15 +43,15 @@ static Game moveSnake(Game g) { // function
   var k = g.key; // let
   var x = g.head.x; // let
   var y = g.head.y; // let
-  var newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)); // let
-  var newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)); // let
+  var newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)); // let
+  var newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)); // let
   return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY));
 } // function
 
 static Game eatAppleIfPoss(Game g) { // function
   var tail = g.body[0]; // let
   var moveTail = g.body.subList(1, g.body.length()); // let
-  return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail));
+  return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail));
 } // function
 
 static bool headOverApple(Game g) { // function
@@ -105,7 +105,7 @@ class Game {
     var rnd3 = rnd2.nextGen(); // let
     var apple2 = new Square(x, y); // let
     var g2 = this.withApple(apple2).withRnd(rnd3); // let
-    return if(g2.body.contains(apple2), g2.withNewApple(), g2);
+    return if_(g2.body.contains(apple2), g2.withNewApple(), g2);
   } // function method
 
   public Game withHead(Square value) { // function method

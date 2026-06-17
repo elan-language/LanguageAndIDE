@@ -17,17 +17,17 @@ Sub main()
 End Sub
 
 Function clockTick(g As Game, k As String) As Game
-  Dim g2 = if(k.equals(""), g, g.withKey(k)) ' let
+  Dim g2 = if_(k.equals(""), g, g.withKey(k)) ' let
   Dim g3 = moveSnake(g2) ' let
   Dim g4 = eatAppleIfPoss(g3) ' let
-  Return if(gameOver(g4), g4.withIsOn(False), g4)
+  Return if_(gameOver(g4), g4.withIsOn(False), g4)
 End Function
 
 Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of List(Of Integer))
   Dim b2 = graphicsPut(b, g.apple.x, g.apple.y, red) ' let
   Dim b3 = graphicsPut(b2, g.head.x, g.head.y, green) ' let
   Dim tail = g.body(0) ' let
-  Dim tailColour = if(tail.equals(g.priorTail), green, white) ' let
+  Dim tailColour = if_(tail.equals(g.priorTail), green, white) ' let
   Return graphicsPut(b3, tail.x, tail.y, tailColour)
 End Function
 
@@ -43,15 +43,15 @@ Function moveSnake(g As Game) As Game
   Dim k = g.key ' let
   Dim x = g.head.x ' let
   Dim y = g.head.y ' let
-  Dim newX = if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x)) ' let
-  Dim newY = if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y)) ' let
+  Dim newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) ' let
+  Dim newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) ' let
   Return g.withBody(g.body.withAppend(g.head)).withHead(New Square(newX, newY))
 End Function
 
 Function eatAppleIfPoss(g As Game) As Game
   Dim tail = g.body(0) ' let
   Dim moveTail = g.body.subList(1, g.body.length()) ' let
-  Return if(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+  Return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
 End Function
 
 Function headOverApple(g As Game) As Boolean
@@ -105,7 +105,7 @@ Class Game
     Dim rnd3 = rnd2.nextGen() ' let
     Dim apple2 = New Square(x, y) ' let
     Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' let
-    Return if(g2.body.contains(apple2), g2.withNewApple(), g2)
+    Return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
 
   Function withHead(value As Square) As Game

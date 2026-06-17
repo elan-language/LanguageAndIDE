@@ -1,7 +1,7 @@
 # Python with Elan 2.0.0-beta
 
 def factorial(n: int) -> int: # function
-  return if(n < 2, 1, n*factorial(n - 1))
+  return if_(n < 2, 1, n*factorial(n - 1))
 
 def test_factorial(self) -> None:
   self.assertEqual(factorial(2), 2)
@@ -13,7 +13,7 @@ def test_factorial(self) -> None:
   self.assertEqual(factorial(0), 1)
 
 def sum(li: list[float]) -> float: # function
-  return if(li.length() == 0, 0.0, li.head() + sum(li.tail()))
+  return if_(li.length() == 0, 0.0, li.head() + sum(li.tail()))
 
 def test_sum(self) -> None:
   li = [3.1, 5.02, 4, 7.73, 9.9] # let
@@ -25,7 +25,7 @@ def test_sum(self) -> None:
   self.assertEqual(sum(l1), 0.6)
 
 def reverse(li: list[float]) -> list[float]: # function
-  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+  return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 
 def test_reverse(self) -> None:
   l = [3.1, 5.02, 4, 7.73, 9.9] # let

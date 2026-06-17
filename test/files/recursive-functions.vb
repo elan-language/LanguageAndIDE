@@ -1,7 +1,7 @@
 ' VB.NET with Elan 2.0.0-beta
 
 Function factorial(n As Integer) As Integer
-  Return if(n < 2, 1, n*factorial(n - 1))
+  Return if_(n < 2, 1, n*factorial(n - 1))
 End Function
 
 <TestMethod> Sub test_factorial()
@@ -15,7 +15,7 @@ End Function
 End Sub
 
 Function sum(li As List(Of Double)) As Double
-  Return if(li.length() = 0, 0.0, li.head() + sum(li.tail()))
+  Return if_(li.length() = 0, 0.0, li.head() + sum(li.tail()))
 End Function
 
 <TestMethod> Sub test_sum()
@@ -29,7 +29,7 @@ End Function
 End Sub
 
 Function reverse(li As List(Of Double)) As List(Of Double)
-  Return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+  Return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 End Function
 
 <TestMethod> Sub test_reverse()

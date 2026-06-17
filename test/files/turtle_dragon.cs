@@ -23,7 +23,7 @@ static void drawDragon(Turtle t, int order, string turns, double side, double co
   var p = (200.0/order).floor();
   var turnI = 0;
   foreach (turn in turns) {
-    turnI = (if(turn.equals(left), 1, -1)); // reassign variable
+    turnI = (if_(turn.equals(left), 1, -1)); // reassign variable
     t.turn(-45*turnI); // call procedure
     t.move(corner); // call procedure
     t.turn(-45*turnI); // call procedure
@@ -52,7 +52,7 @@ static string setTurns(string turns) { // function
 static string reflect(string s) { // function
   var sR = "";
   foreach (i in range(1, s.length() + 1)) {
-    sR = if((s[i - 1]).equals(left), right, left) + sR; // reassign variable
+    sR = if_((s[i - 1]).equals(left), right, left) + sR; // reassign variable
   } // foreach
   return sR;
 } // function

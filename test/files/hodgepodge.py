@@ -67,7 +67,7 @@ def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: b
 
 def uniform(grid: list[list[int]]) -> bool: # function
   uniformGrid = createBlockGraphics(grid[0][0]) # variable definition
-  return if(grid.equals(uniformGrid), True, False)
+  return if_(grid.equals(uniformGrid), True, False)
 
 def getNeighbourColours(grid: list[list[int]], i: int, j: int) -> list[int]: # function
   # grid wraps around: all cells have the same number of neighbours
@@ -106,6 +106,6 @@ def updateColour(nowColour: int, sumStates: int, nInfected: int, nIll: int) -> i
     state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # reassign variable
   elif nowColour != ill: # else if
     state = divAsInt(sumStates, (nInfected + 1)) + iR # reassign variable
-  return if(state > (colours.length() - 1), ill, colours[state])
+  return if_(state > (colours.length() - 1), ill, colours[state])
 
 main()

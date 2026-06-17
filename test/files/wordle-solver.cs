@@ -39,11 +39,11 @@ static string setChar(string word, int n, string newChar) { // function
 } // function
 
 static string setAttemptIfGreen(string attempt, string target, int n) { // function
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
+  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
 } // function
 
 static string setTargetIfGreen(string attempt, string target, int n) { // function
-  return if(isGreen(attempt, target, n), setChar(target, n, "."), target);
+  return if_(isGreen(attempt, target, n), setChar(target, n, "."), target);
 } // function
 
 static List<string> evaluateGreens(string attempt, string target) { // function
@@ -55,7 +55,7 @@ static bool isYellow(string attempt, string target, int n) { // function
 } // function
 
 static string setAttemptIfYellow(string attempt, string target, int n) { // function
-  return if(attempt[n].equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
+  return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
 } // function
 
 static bool isAlreadyMarkedGreen(string attempt, int n) { // function
@@ -63,7 +63,7 @@ static bool isAlreadyMarkedGreen(string attempt, int n) { // function
 } // function
 
 static string setTargetIfYellow(string attempt, string target, int n) { // function
-  return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
+  return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
 } // function
 
 static List<string> evaluateYellows(string attempt, string target) { // function
@@ -84,13 +84,13 @@ static int maxWordCountRemainingAfterAttempt(List<string> possAnswers, string at
   var d = new Dictionary<string, int>(); // let
   var d2 = possAnswers.reduce(d, Dictionary<string, int> dd, string answer => incrementCount(dd, answer, attempt)); // let
   var keys = d2.keys(); // let
-  return keys.reduce(0, int maxSoFar, string mark => if(d2[mark] > maxSoFar, d2[mark], maxSoFar));
+  return keys.reduce(0, int maxSoFar, string mark => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 } // function
 
 static Dictionary<string, int> incrementCount(Dictionary<string, int> d, string possAnswer, string attempt) { // function
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
-  var count = if(keys.contains(mark), d[mark], 0); // let
+  var count = if_(keys.contains(mark), d[mark], 0); // let
   return d.withSet(mark, count + 1);
 } // function
 
@@ -101,7 +101,7 @@ static List<WordCount> allRemainingWordCounts(List<string> possAnswers) { // fun
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<string> possAnswers) { // function
   var isBetter = wc2.count < wc1.count; // let
   var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
-  return if(isBetter || isEqualAndPossAnswer, wc2, wc1);
+  return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
 } // function
 
 static string bestAttempt(List<string> possAnswers) { // function

@@ -94,7 +94,7 @@ def test_appendCell(self) -> None:
   self.assertEqual(col2[1], white)
 
 def blackOrWhite(rng: Random) -> int: # function
-  return if(rng.asFloat() > 0.5, white, black)
+  return if_(rng.asFloat() > 0.5, white, black)
 
 def test_blackOrWhite(self) -> None:
   rng0 = Random() # let
@@ -109,7 +109,7 @@ def test_blackOrWhite(self) -> None:
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # let
   y = cell.item_1 # let
-  y2 = if(y == 0, 29, y - 1) # let
+  y2 = if_(y == 0, 29, y - 1) # let
   return (x, y2)
 
 def test_north(self) -> None:
@@ -121,7 +121,7 @@ def test_north(self) -> None:
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # let
   y = cell.item_1 # let
-  y2 = if(y == 29, 0, y + 1) # let
+  y2 = if_(y == 29, 0, y + 1) # let
   return (x, y2)
 
 def test_south(self) -> None:
@@ -133,7 +133,7 @@ def test_south(self) -> None:
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # let
   y = cell.item_1 # let
-  x2 = if(x == 39, 0, x + 1) # let
+  x2 = if_(x == 39, 0, x + 1) # let
   return (x2, y)
 
 def test_east(self) -> None:
@@ -145,7 +145,7 @@ def test_east(self) -> None:
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # let
   y = cell.item_1 # let
-  x2 = if(x == 0, 39, x - 1) # let
+  x2 = if_(x == 0, 39, x - 1) # let
   return (x2, y)
 
 def test_west(self) -> None:
@@ -237,7 +237,7 @@ def test_willLive(self) -> None:
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # let
-  return if(live, black, white)
+  return if_(live, black, white)
 
 def test_nextCellValue(self) -> None:
   grid = initialGrid(Random()) # let

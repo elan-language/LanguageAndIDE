@@ -33,10 +33,10 @@ def setChar(word: str, n: int, newChar: str) -> str: # function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
 
 def setAttemptIfGreen(attempt: str, target: str, n: int) -> str: # function
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 
 def setTargetIfGreen(attempt: str, target: str, n: int) -> str: # function
-  return if(isGreen(attempt, target, n), setChar(target, n, "."), target)
+  return if_(isGreen(attempt, target, n), setChar(target, n, "."), target)
 
 def evaluateGreens(attempt: str, target: str) -> list[str]: # function
   return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
@@ -45,13 +45,13 @@ def isYellow(attempt: str, target: str, n: int) -> bool: # function
   return target.contains(attempt[n])
 
 def setAttemptIfYellow(attempt: str, target: str, n: int) -> str: # function
-  return if(attempt[n].equals("*"), attempt, if(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
+  return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
 
 def isAlreadyMarkedGreen(attempt: str, n: int) -> bool: # function
   return attempt[n].equals("*")
 
 def setTargetIfYellow(attempt: str, target: str, n: int) -> str: # function
-  return if(isAlreadyMarkedGreen(attempt, n), target, if(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
+  return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
 
 def evaluateYellows(attempt: str, target: str) -> list[str]: # function
   return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
@@ -68,12 +68,12 @@ def maxWordCountRemainingAfterAttempt(possAnswers: list[str], attempt: str) -> i
   d = Dictionary[str, int]() # let
   d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str: incrementCount(dd, answer, attempt)) # let
   keys = d2.keys() # let
-  return keys.reduce(0, lambda maxSoFar: int, mark: str: if(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  return keys.reduce(0, lambda maxSoFar: int, mark: str: if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 
 def incrementCount(d: Dictionary[str, int], possAnswer: str, attempt: str) -> Dictionary[str, int]: # function
   mark = markAttempt(attempt, possAnswer) # let
   keys = d.keys() # let
-  count = if(keys.contains(mark), d[mark], 0) # let
+  count = if_(keys.contains(mark), d[mark], 0) # let
   return d.withSet(mark, count + 1)
 
 def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # function
@@ -82,7 +82,7 @@ def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # functio
 def betterOf(wc1: WordCount, wc2: WordCount, possAnswers: list[str]) -> WordCount: # function
   isBetter = wc2.count < wc1.count # let
   isEqualAndPossAnswer = (wc2.count == wc1.count) and possAnswers.contains(wc2.word) # let
-  return if(isBetter or isEqualAndPossAnswer, wc2, wc1)
+  return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
 
 def bestAttempt(possAnswers: list[str]) -> str: # function
   wordCounts = allRemainingWordCounts(possAnswers) # let

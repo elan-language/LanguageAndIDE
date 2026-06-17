@@ -1,4 +1,4 @@
-# 9402a06d2b4b6164b7bb80d004e08ac85c121bd602aba48fb90903c5cff86aed Elan 2.0.0-beta valid
+# bfbd6402860bacaea38272885cc3c951c9b6396e5fe013bf1abc722e9af9c38c Elan 2.0.0-beta valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -57,7 +57,7 @@ end function
 function getparams(r as Float, prms as List<of List<of Float>>, cumuprob as Float) returns List<of Float>
   let head be prms.head()
   let cp2 be cumuprob + head[6]
-  return if(r < cp2, head, getparams(r, prms.tail(), cp2))
+  return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 end function
 
 # class to hold the working data passed in and out of onepoint()

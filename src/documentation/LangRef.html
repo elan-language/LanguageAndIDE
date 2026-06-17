@@ -1417,7 +1417,7 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
-    reassign turnI to (if(turn.equals(left), 1, -1))
+    reassign turnI to (if_(turn.equals(left), 1, -1))
     call t.turn(-45*turnI)
     call t.move(corner)
     call t.turn(-45*turnI)
@@ -1961,9 +1961,9 @@ end function
 
 <p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
 <p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
-<code>variable isBigger set to if(a >= b, true, false)</code>
+<code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
-  <code>variable d set to if(c < 580, c - 40, c + 60)</code>
+  <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
 <p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
@@ -1973,7 +1973,7 @@ end function
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>
 function foo() returns Int
-  return if(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+  return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 end function
 </codeblock>
 <hr>
@@ -1988,7 +1988,7 @@ main
   call testPi(p, 4)
 end main
 procedure testPi(p as String, v as Float)
-  call print(if(pi > v, $"{p} > {v}", $"{p} < {v}"))
+  call print(if_(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>

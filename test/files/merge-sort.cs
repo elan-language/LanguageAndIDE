@@ -15,7 +15,7 @@
 //   cases, and edge cases (where appropriate)
 
 static List<string> sort(List<string> li) { // function
-  return if(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)));
+  return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)));
 } // function
 
 static List<string> sortedFrontHalf(List<string> li) { // function
@@ -32,7 +32,7 @@ static List<string> sortedBackHalf(List<string> li) { // function
 
 static List<string> merge(List<string> a, List<string> b) { // function
   var oneIsEmpty = (a.length() == 0) || (b.length() == 0); // let
-  return if(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
+  return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
 } // function
 
 static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
@@ -40,7 +40,7 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   var bHead = b.head(); // let
   var aTail = a.tail(); // let
   var bTail = b.tail(); // let
-  return if(aHead.isBefore(bHead), new [] {aHead}.withAppendList(merge(aTail, b)), new [] {bHead}.withAppendList(merge(a, bTail)));
+  return if_(aHead.isBefore(bHead), new [] {aHead}.withAppendList(merge(aTail, b)), new [] {bHead}.withAppendList(merge(a, bTail)));
 } // function
 
 [TestMethod] static void test_sort() {

@@ -1368,7 +1368,7 @@ main
   
 end main
 
-procedure if(a as Int)
+procedure if_(a as Int)
 
 end procedure`;
 

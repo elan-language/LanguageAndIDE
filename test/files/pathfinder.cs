@@ -163,7 +163,7 @@ class Solver {
 
   public Node getNodeFor(Point p) { // function method
     var matches = this.nodes.filter(Node n => n.point.equals(p));
-    return if(matches.length() == 1, matches.head(), emptyNode());
+    return if_(matches.length() == 1, matches.head(), emptyNode());
   } // function method
 
   public Point getLastVisited() { // function method

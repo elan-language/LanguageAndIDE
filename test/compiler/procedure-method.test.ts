@@ -413,7 +413,7 @@ class Foo
     return ""
   end function
 
-  procedure if(a as Int)
+  procedure if_(a as Int)
 
   end procedure
 end class`;
