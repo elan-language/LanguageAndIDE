@@ -30,7 +30,7 @@ static void main() {
   } // while
 } // main
 
-static bool isGreen(String attempt, String target, int n) { // function
+static boolean isGreen(String attempt, String target, int n) { // function
   return target[n].equals(attempt[n]);
 } // function
 
@@ -50,7 +50,7 @@ static List<String> evaluateGreens(String attempt, String target) { // function
   return range(0, 5).reduce(list(attempt, target), (List<String> a, int x) -> list(setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)));
 } // function
 
-static bool isYellow(String attempt, String target, int n) { // function
+static boolean isYellow(String attempt, String target, int n) { // function
   return target.contains(attempt[n]);
 } // function
 
@@ -58,7 +58,7 @@ static String setAttemptIfYellow(String attempt, String target, int n) { // func
   return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
 } // function
 
-static bool isAlreadyMarkedGreen(String attempt, int n) { // function
+static boolean isAlreadyMarkedGreen(String attempt, int n) { // function
   return attempt[n].equals("*");
 } // function
 

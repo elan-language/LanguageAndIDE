@@ -49,7 +49,7 @@ static void playGame() { // procedure
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {
     enterAttempt(attemptNo, grid, used); // call procedure
-    var solvedRef = new AsRef<bool>(solved);
+    var solvedRef = new AsRef<boolean>(solved);
     colourAttempt(attemptNo, grid, target, solvedRef, used); // call procedure
     solved = solvedRef.value(); // reassign variable
     attemptNo = attemptNo + 1; // reassign variable
@@ -95,7 +95,7 @@ static void enterAttempt(int attemptNo, List<List<String>> grid, Dictionary<Stri
   }
 }
 
-static void colourAttempt(int attemptNo, List<List<String>> grid, String target, AsRef<bool> solved, Dictionary<String, String> used) { // procedure
+static void colourAttempt(int attemptNo, List<List<String>> grid, String target, AsRef<boolean> solved, Dictionary<String, String> used) { // procedure
   var attempt = getWord(attemptNo, grid);
   var marks = markAttempt(attempt, target);
   foreach (var i in range(0, 5)) {
@@ -196,7 +196,7 @@ static void analyse() { // procedure
   print(String.format("For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved %% within 6 attempts,\nwith an average of % attempts.", solved, pc, avg));
 }
 
-static bool isUCLetter(String k) { // function
+static boolean isUCLetter(String k) { // function
   final Int unicode = k.asUnicode(); // constant
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }

@@ -283,9 +283,9 @@ class Card {
 
   public String rank; // property
 
-  public bool faceDown; // property
+  public boolean faceDown; // property
 
-  public Card(String rank, Suit suit, bool facedown) {
+  public Card(String rank, Suit suit, boolean facedown) {
     this.rank = rank; // reassign variable
     this.suit = suit; // reassign variable
     this.faceDown = facedown; // reassign variable
@@ -315,11 +315,11 @@ abstract class Player {
 
   public int handTotal; // property
 
-  public bool softAce; // property
+  public boolean softAce; // property
 
   public Status status; // property
 
-  public bool hasTurn; // property
+  public boolean hasTurn; // property
 
   public void startTurn() { // procedure method
     if (this.status == Status.active) {
@@ -435,7 +435,7 @@ class Dealer extends Player {
 
   public Card faceCard; // property
 
-  public bool hasPlayed; // property
+  public boolean hasPlayed; // property
 
   public Dealer withStatus(Status status) { // function method
     var copyOfThis = copy(this); // let

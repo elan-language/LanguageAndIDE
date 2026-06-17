@@ -56,7 +56,7 @@ static void main() {
   } // while
 } // main
 
-static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool initial) { // procedure
+static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, boolean initial) { // procedure
   var colours = getColours();
   foreach (var j in range(0, gH)) {
     foreach (var i in range(0, gW)) {
@@ -74,7 +74,7 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
   sleep_ms(50); // call procedure
 } // procedure
 
-static bool uniform(List<List<int>> grid) { // function
+static boolean uniform(List<List<int>> grid) { // function
   var uniformGrid = createBlockGraphics(grid[0][0]);
   return if_(grid.equals(uniformGrid), true, false);
 } // function

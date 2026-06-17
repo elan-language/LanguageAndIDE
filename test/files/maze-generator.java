@@ -67,7 +67,7 @@ static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colou
 
 // colour: 0 for black, 1 for white
 
-static bool okToSet(Point p, int colour, List<List<int>> g) { // function
+static boolean okToSet(Point p, int colour, List<List<int>> g) { // function
   var n = p.neighbouringPoints().map((Point p) -> getValue(p, g));
   var q1 = isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8);
   var q2 = isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8);
@@ -94,7 +94,7 @@ static int flip01(int v) { // function
   assertEquals(0, flip01(1));
 } // test
 
-static bool isValidQuadrant(int q) { // function
+static boolean isValidQuadrant(int q) { // function
   return (q % 5) != 0;
 } // function
 

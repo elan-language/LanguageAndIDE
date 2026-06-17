@@ -112,7 +112,7 @@ class Solver {
 
   public Algorithm alg; // property
 
-  public bool running; // property
+  public boolean running; // property
 
   // TODO can this go into the constructor ?
   public void initialise(Algorithm alg) { // procedure method
@@ -235,7 +235,7 @@ class Node {
 
   public Point point; // property
 
-  public bool visited; // property
+  public boolean visited; // property
 
   public double distFromStart; // property
 
@@ -243,9 +243,9 @@ class Node {
 
   public double estDistToDest; // property
 
-  public bool isEmpty; // property
+  public boolean isEmpty; // property
 
-  public void setVisited(bool value) { // procedure method
+  public void setVisited(boolean value) { // procedure method
     this.visited = value; // reassign variable
   } // procedure method
 
@@ -273,7 +273,7 @@ class Point {
 
   public int y; // property
 
-  public bool isEmpty; // property
+  public boolean isEmpty; // property
 
   public Point(int x, int y) {
     if ((x < 0) || (y < 0)) {
@@ -288,7 +288,7 @@ class Point {
     return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2));
   } // function method
 
-  public bool isAdjacentTo(Point p) { // function method
+  public boolean isAdjacentTo(Point p) { // function method
     return (this.minDistTo(p) == 1) || (this.minDistTo(p).round(4) == sqrt(2).round(4));
   } // function method
 

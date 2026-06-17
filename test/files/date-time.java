@@ -91,7 +91,7 @@ static int dayInYear(int year, int unixDays) { // function
   assertEquals(-20087, dayInYear(2025, 1));
 } // test
 
-static bool leap(int year) { // function
+static boolean leap(int year) { // function
   return (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
 } // function
 

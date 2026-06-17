@@ -44,7 +44,7 @@ static void populatePassword(AsRef<String> password, String all) { // procedure
   } // foreach
 } // procedure
 
-static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, bool mustHaveDigit, bool mustHaveSymbol) { // function
+static boolean isValid(String password, boolean mustHaveUpper, boolean mustHaveLower, boolean mustHaveDigit, boolean mustHaveSymbol) { // function
   var validForUpper = passesRule(mustHaveUpper, upperChars, password);
   var validForLower = passesRule(mustHaveLower, lowerChars, password);
   var validForDigits = passesRule(mustHaveDigit, digitChars, password);
@@ -60,7 +60,7 @@ static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, boo
   assertEquals(true, isValid("$4De$4De", true, true, true, true));
 } // test
 
-static bool passesRule(bool rule, String charSet, String password) { // function
+static boolean passesRule(boolean rule, String charSet, String password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
 } // function
 
@@ -71,7 +71,7 @@ static bool passesRule(bool rule, String charSet, String password) { // function
   assertEquals(true, passesRule(false, "12", "ABCD"));
 } // test
 
-static bool hasAtLeastOneFrom(String fromChars, String password) { // function
+static boolean hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
   foreach (var ch in password) {
     hasOne = hasOne || fromChars.contains(ch); // reassign variable

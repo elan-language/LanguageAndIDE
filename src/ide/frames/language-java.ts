@@ -136,6 +136,7 @@ export class LanguageJava extends LanguageCfamily {
   OVERRIDES = "";
   EXTENDS = "extends";
   IMPLEMENTS = "implements";
+  BOOL_NAME: string = "boolean";
 
   public STRING_NAME: string = "String";
 

@@ -61,7 +61,7 @@ class Snake {
     return this.body.length() - 1;
   } // function method
 
-  public bool bodyCovers(Square sq) { // function method
+  public boolean bodyCovers(Square sq) { // function method
     var result = false;
     foreach (var seg in this.body) {
       if ((seg.equals(sq))) {
@@ -71,7 +71,7 @@ class Snake {
     return result;
   } // function method
 
-  public bool gameOver() { // function method
+  public boolean gameOver() { // function method
     return this.bodyCovers(this.head) || this.head.hasHitEdge();
   } // function method
 
@@ -149,7 +149,7 @@ class Square {
     return new Square(newX, newY);
   } // function method
 
-  public bool hasHitEdge() { // function method
+  public boolean hasHitEdge() { // function method
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
   } // function method
 

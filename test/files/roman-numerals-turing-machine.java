@@ -77,7 +77,7 @@ class TuringMachine {
     this.execute(rule); // call procedure
   } // procedure method
 
-  public bool isHalted() { // function method
+  public boolean isHalted() { // function method
     return this.currentState.equals(this.haltState);
   } // function method
 
