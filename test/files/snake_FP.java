@@ -56,15 +56,15 @@ static Game eatAppleIfPoss(Game g) { // function
   return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail));
 } // function
 
-static bool headOverApple(Game g) { // function
+static boolean headOverApple(Game g) { // function
   return g.head.equals(g.apple);
 } // function
 
-static bool gameOver(Game g) { // function
+static boolean gameOver(Game g) { // function
   return g.body.contains(g.head) || hasHitEdge(g);
 } // function
 
-static bool hasHitEdge(Game g) { // function
+static boolean hasHitEdge(Game g) { // function
   var x = g.head.x; // let
   var y = g.head.y; // let
   return (x == -1) || (y == -1) || (x == 40) || (y == 30);
@@ -80,7 +80,7 @@ class Game {
 
   public Square apple; // property
 
-  public bool isOn; // property
+  public boolean isOn; // property
 
   public Random rnd; // property
 
@@ -134,7 +134,7 @@ class Game {
     return copyOfThis;
   } // function method
 
-  public Game withIsOn(bool value) { // function method
+  public Game withIsOn(boolean value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.isOn = value; // reassign variable
     return copyOfThis;

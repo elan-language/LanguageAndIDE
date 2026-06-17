@@ -11,7 +11,7 @@ public class Global {
   assertEquals("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat));
 } // test
 
-static bool lessThan5(double n) { // function
+static boolean lessThan5(double n) { // function
   return n < 5;
 } // function
 

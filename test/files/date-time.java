@@ -91,7 +91,7 @@ static int dayInYear(int year, int unixDays) { // function
   assertEquals(-20087, dayInYear(2025, 1));
 } // test
 
-static bool leap(int year) { // function
+static boolean leap(int year) { // function
   return (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
 } // function
 
@@ -133,11 +133,11 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
 
 // Unix epoch is 1970.01.01 00:00:00 Thursday
 
-final Int unixYear = 1970; // constant
+static final Int unixYear = 1970; // constant
 
-final Int unixWeekday = 4; // constant
+static final Int unixWeekday = 4; // constant
 
-final Int daySecs = 86400; // constant
+static final Int daySecs = 86400; // constant
 
 // day and month names, and day numbers
 

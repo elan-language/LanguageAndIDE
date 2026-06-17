@@ -115,7 +115,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   return count;
 } // function
 
-static bool willLive(int cell, int liveNeighbours) { // function
+static boolean willLive(int cell, int liveNeighbours) { // function
   var result = false;
   if (cell == black) {
     result = (liveNeighbours > 1) && (liveNeighbours < 4); // reassign variable

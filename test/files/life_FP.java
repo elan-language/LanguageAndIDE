@@ -246,7 +246,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   assertEquals(4, live);
 } // test
 
-static bool willLive(int cell, int liveNeighbours) { // function
+static boolean willLive(int cell, int liveNeighbours) { // function
   return ((cell == black) && (liveNeighbours > 1) && (liveNeighbours < 4)) || ((cell == white) && (liveNeighbours == 3));
 } // function
 

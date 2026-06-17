@@ -122,6 +122,6 @@ static List<double> roundtuple2((double, double) n) { // function
   return list(n.item_0, n.item_1).map((double x) -> x.round(8));
 } // function
 
-final Int scale = 7; // constant
+static final Int scale = 7; // constant
 
 }

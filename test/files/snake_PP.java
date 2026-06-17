@@ -71,7 +71,7 @@ static int getTailColour(List<int> tail, List<List<int>> body) { // function
   return colour;
 } // function
 
-static bool hasHitEdge(int headX, int headY) { // function
+static boolean hasHitEdge(int headX, int headY) { // function
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
 } // function
 

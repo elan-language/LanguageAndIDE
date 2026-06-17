@@ -20,7 +20,7 @@ static void main() {
   } // while
 } // main
 
-static bool binarySearch(List<String> li, String item) { // function
+static boolean binarySearch(List<String> li, String item) { // function
   var result = false;
   if (li.length() > 0) {
     var mid = divAsInt(li.length(), 2);

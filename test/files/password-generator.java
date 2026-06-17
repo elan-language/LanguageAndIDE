@@ -6,23 +6,23 @@ public class Global {
 
 // - rule for no more than 'n' same characters in succession
 
-final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // constant
+static final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // constant
 
-final String lowerChars = "abcdefghijklmnopqrstuvwxyz"; // constant
+static final String lowerChars = "abcdefghijklmnopqrstuvwxyz"; // constant
 
-final String digitChars = "01234567890"; // constant
+static final String digitChars = "01234567890"; // constant
 
-final String symbolChars = "!$%^&*"; // constant
+static final String symbolChars = "!$%^&*"; // constant
 
-final Int length = 32; // constant
+static final Int length = 32; // constant
 
-final Boolean upper = true; // constant
+static final Boolean upper = true; // constant
 
-final Boolean lower = true; // constant
+static final Boolean lower = true; // constant
 
-final Boolean digit = true; // constant
+static final Boolean digit = true; // constant
 
-final Boolean symbol = true; // constant
+static final Boolean symbol = true; // constant
 
 static void main() {
   var all = upperChars + lowerChars + digitChars + symbolChars;
@@ -44,7 +44,7 @@ static void populatePassword(AsRef<String> password, String all) { // procedure
   } // foreach
 } // procedure
 
-static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, bool mustHaveDigit, bool mustHaveSymbol) { // function
+static boolean isValid(String password, boolean mustHaveUpper, boolean mustHaveLower, boolean mustHaveDigit, boolean mustHaveSymbol) { // function
   var validForUpper = passesRule(mustHaveUpper, upperChars, password);
   var validForLower = passesRule(mustHaveLower, lowerChars, password);
   var validForDigits = passesRule(mustHaveDigit, digitChars, password);
@@ -60,7 +60,7 @@ static bool isValid(String password, bool mustHaveUpper, bool mustHaveLower, boo
   assertEquals(true, isValid("$4De$4De", true, true, true, true));
 } // test
 
-static bool passesRule(bool rule, String charSet, String password) { // function
+static boolean passesRule(boolean rule, String charSet, String password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
 } // function
 
@@ -71,7 +71,7 @@ static bool passesRule(bool rule, String charSet, String password) { // function
   assertEquals(true, passesRule(false, "12", "ABCD"));
 } // test
 
-static bool hasAtLeastOneFrom(String fromChars, String password) { // function
+static boolean hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
   foreach (var ch in password) {
     hasOne = hasOne || fromChars.contains(ch); // reassign variable

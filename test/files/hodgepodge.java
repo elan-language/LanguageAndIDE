@@ -10,19 +10,19 @@ public class Global {
 
 // gW, gH : grid width, height
 
-final Int gW = 40; // constant
+static final Int gW = 40; // constant
 
-final Int gH = 30; // constant
+static final Int gH = 30; // constant
 
 // iR : infection rate (1..20)
 
-final Int iR = 1; // constant
+static final Int iR = 1; // constant
 
 // w1, w2 : weighting factors (low integers)
 
-final Int w1 = 4; // constant
+static final Int w1 = 4; // constant
 
-final Int w2 = 1; // constant
+static final Int w2 = 1; // constant
 
 // colours : cellColour.s in descending order of RGB value
 
@@ -30,9 +30,9 @@ final Int w2 = 1; // constant
 
 // colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
 
-final Int healthy = white; // constant
+static final Int healthy = white; // constant
 
-final Int ill = black; // constant
+static final Int ill = black; // constant
 
 static List<int> getColours() { // function
   return list(healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill);
@@ -40,7 +40,7 @@ static List<int> getColours() { // function
 
 // vN : neighbourhood: von Neumann (4) true, Moore (8) false
 
-final Boolean vN = false; // constant
+static final Boolean vN = false; // constant
 
 static void main() {
   // colour grids: hodge for display, podge for working
@@ -56,7 +56,7 @@ static void main() {
   } // while
 } // main
 
-static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool initial) { // procedure
+static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, boolean initial) { // procedure
   var colours = getColours();
   foreach (var j in range(0, gH)) {
     foreach (var i in range(0, gW)) {
@@ -74,7 +74,7 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
   sleep_ms(50); // call procedure
 } // procedure
 
-static bool uniform(List<List<int>> grid) { // function
+static boolean uniform(List<List<int>> grid) { // function
   var uniformGrid = createBlockGraphics(grid[0][0]);
   return if_(grid.equals(uniformGrid), true, false);
 } // function

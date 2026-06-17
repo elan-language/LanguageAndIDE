@@ -240,7 +240,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";
-  BOOL_NAME: string = "bool";
+  // BOOL_NAME: string = "bool"; // lang specific
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
   NEW_INSTANCE_PREFIX = "new";

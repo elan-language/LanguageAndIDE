@@ -76,6 +76,7 @@ export class LanguageCS extends LanguageCfamily {
   OVERRIDES = "override";
   IMPLEMENTS = "";
   INTERPOLATED_STRING_PREFIX: string = "$";
+  BOOL_NAME: string = "bool";
 
   renderTopAsHtml(frame: Frame): string {
     let html = "";
