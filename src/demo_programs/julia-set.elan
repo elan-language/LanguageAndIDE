@@ -1,4 +1,4 @@
-# ad1450c0651d064ea34bc554b2ec9a0f76d8647cf7339cc59576a3fb88d5962f Elan 2.0.0-beta valid
+# e8feaa873872dd4fe14b06174830abcfa549d136e851df5a066e694441fc4b2b Elan 2.0.0-beta valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -19,7 +19,7 @@ main
 end main
 
 function allpoints(p as Coords) returns List<of VectorGraphic>
-  variable vg2 set to new List<of VectorGraphic>()
+  variable vg2 set to createVectorGraphics()
   for xp in range(0, width + 1)
     for yp in range(0, height + 1)
       # scale and centre

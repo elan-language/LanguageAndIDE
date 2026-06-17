@@ -25,7 +25,7 @@ def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None: # pr
 
 def display(stacks: list[list[int]]) -> None: # procedure
   clearAllDisplays() # call procedure
-  vg = list[VectorGraphic]() # variable definition
+  vg = createVectorGraphics() # variable definition
   drawStack(stacks[0], 1, vg) # call procedure
   drawStack(stacks[1], 2, vg) # call procedure
   drawStack(stacks[2], 3, vg) # call procedure

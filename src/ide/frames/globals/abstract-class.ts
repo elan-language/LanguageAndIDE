@@ -19,6 +19,13 @@ export class AbstractClass extends ClassFrame {
     return abstractClassKeywords;
   }
 
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+  override helpId(): string {
+    return "abstract_class";
+  }
+
   doesInherit(): boolean {
     return this.inheritance.text !== "";
   }

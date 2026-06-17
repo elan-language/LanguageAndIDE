@@ -5,7 +5,7 @@
 ' Draws a fractal image
 
 Sub main()
-  Dim vg = New List(Of VectorGraphic)() ' variable definition
+  Dim vg = createVectorGraphics() ' variable definition
   Dim s = New State(New RectangleVG(), 0.0, 0.16, New Random()) ' variable definition
   ' can't call s.r.initialiseFromClock() directly
   Dim t = s.r ' variable definition

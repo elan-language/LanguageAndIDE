@@ -25,7 +25,7 @@ def main() -> None:
     print(f"x = {p.jx} y = {p.jy}")
 
 def allpoints(p: Coords) -> list[VectorGraphic]: # function
-  vg2 = list[VectorGraphic]() # variable definition
+  vg2 = createVectorGraphics() # variable definition
   for xp in range(0, width + 1):
     for yp in range(0, height + 1):
       # scale and centre

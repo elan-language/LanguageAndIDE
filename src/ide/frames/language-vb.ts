@@ -234,7 +234,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   postProcessHtml(html: string): string {
-      return html.replaceAll("[","(").replaceAll("]",")");
+    return html.replaceAll("[", "(").replaceAll("]", ")");
   }
 
   private AS = "As";
