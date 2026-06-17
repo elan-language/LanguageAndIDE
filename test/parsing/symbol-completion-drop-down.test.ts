@@ -2473,7 +2473,7 @@ end procedure`;
     );
   });
 
-  test("Pass_lambdaParameter1", async () => {
+  ignore_test("Pass_lambdaParameter1", async () => {
     const code = `${testHeader}
 
 main

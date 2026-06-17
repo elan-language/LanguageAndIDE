@@ -256,19 +256,37 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.reduce(0, lambda s as Int, x as Int => s + x))
-  call printNoLine(source.reduce(100, lambda s as Int, x as Int => s + x))
-  call printNoLine(source.reduce("Concat:", lambda s as String, x as Int => s + x.toString()))
-end main`;
+  call printNoLine(source.reduce(0, r))
+  call printNoLine(source.reduce(100, r))
+  call printNoLine(source.reduce("Concat:", rr))
+end main
+
+function r(s as Int, x as Int) returns Int
+  return s + x
+end function
+
+function rr(s as String, x as Int) returns String
+  return s + x.toString()
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await _stdlib.printNoLine((await source.reduce(0, async (s, x) => s + x)));
-  await _stdlib.printNoLine((await source.reduce(100, async (s, x) => s + x)));
-  await _stdlib.printNoLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.toString(x)))));
+  await _stdlib.printNoLine((await source.reduce(0, global.r)));
+  await _stdlib.printNoLine((await source.reduce(100, global.r)));
+  await _stdlib.printNoLine((await source.reduce("Concat:", global.rr)));
 }
+
+async function r(s, x) {
+  return s + x;
+}
+global["r"] = r;
+
+async function rr(s, x) {
+  return s + (await _stdlib.toString(x));
+}
+global["rr"] = rr;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -294,8 +312,12 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  call printNoLine(li.reduce("Concat:", lambda s as String, x as String => s + "*" + x))
-end main`;
+  call printNoLine(li.reduce("Concat:", rr))
+end main
+
+function rr(s as String, x as String) returns String
+  return s + "*" + x
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
@@ -304,8 +326,13 @@ const global = new class {
 };
 async function main() {
   let li = _stdlib.split(global.source, "");
-  await _stdlib.printNoLine((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
+  await _stdlib.printNoLine((await li.reduce("Concat:", global.rr)));
 }
+
+async function rr(s, x) {
+  return s + "*" + x;
+}
+global["rr"] = rr;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

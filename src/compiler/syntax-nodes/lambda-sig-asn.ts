@@ -2,20 +2,22 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { getGlobalScope, isDefinitionScope } from "../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, isDefinitionScope, match } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(
-    private readonly parameters: ParamDefAsn[],
+    public readonly parameters: ParamDefAsn[],
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
   }
+
+  private _pTypes: SymbolType[] = [];
 
   getParentScope(): Scope {
     return this.scope;
@@ -25,9 +27,13 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return UnknownType.Instance;
   }
 
+  setParameterTypes(pTypes: SymbolType[]) {
+    this._pTypes = pTypes;
+  }
+
   parameterNamesAndTypes(): [string[], SymbolType[]] {
     const names = this.parameters.map((p) => p.id);
-    const types = this.parameters.map((p) => p.symbolType());
+    const types = this._pTypes;
     return [names, types];
   }
 
@@ -40,10 +46,15 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    for (const p of this.parameters) {
-      const ss = p.resolveSymbol(id, caseSensitive, initialScope);
-      if (!(ss instanceof UnknownSymbol)) {
-        return ss;
+    for (let i = 0; i < this.parameters.length; i++) {
+      const p = this.parameters[i];
+      if (match(p.id.trim(), id, caseSensitive)) {
+        return {
+          symbolId: id,
+          symbolType: () => this._pTypes[i] ?? UnknownType.Instance,
+          symbolScope: SymbolScope.parameter,
+          symbolIsType: false,
+        };
       }
     }
 

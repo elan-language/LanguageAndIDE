@@ -36,6 +36,9 @@ export class SetAsn extends BreakpointAsn {
 
     const id = getId(this.assignable);
 
+    // compile before type checks as that allows lambda types to be established
+    const rhs = exprAstNode.compile();
+
     mustNotBePropertyOnFunctionMethod(assignableAstNode, this, this.compileErrors, this.fieldId);
 
     mustBeCompatibleNode(
@@ -65,8 +68,6 @@ export class SetAsn extends BreakpointAsn {
     }
 
     const lhs = assignableAstNode.compile();
-
-    const rhs = exprAstNode.compile();
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

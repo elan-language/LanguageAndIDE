@@ -8,6 +8,7 @@ import {
   scopePrefix,
   updateScopeAndQualifier,
 } from "../../../compiler/symbols/symbol-helpers";
+import { ExtraParameterCompileError, MissingParameterCompileError } from "../../compile-error";
 import {
   checkForDeprecation,
   getQualifierId,
@@ -19,6 +20,7 @@ import {
   mustCallMemberViaQualifier,
   mustNotCallNonExtensionViaQualifier,
 } from "../../compile-rules";
+import { FunctionType } from "../../symbols/function-type";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import {
   isAstCollectionNode,
@@ -118,6 +120,34 @@ export class CallAsn extends BreakpointAsn {
         if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
           callParameters = [qualifier.value as AstNode].concat(callParameters);
           qualifier = EmptyAsn.Instance;
+        }
+
+        for (let i = 0; i < callParameters.length; i++) {
+          const p = callParameters[i];
+          if (p instanceof LambdaAsn) {
+            const _match = procSymbolType.parameterTypes[i];
+
+            if (_match instanceof FunctionType) {
+              const lambdaParams = _match.parameterTypes;
+              p.signature.setParameterTypes(lambdaParams);
+
+              if (lambdaParams.length > p.signature.parameters.length) {
+                this.compileErrors.push(
+                  new MissingParameterCompileError(
+                    `${lambdaParams.length} Actual: ${p.signature.parameters.length}`,
+                    this.fieldId,
+                  ),
+                );
+              } else if (lambdaParams.length < p.signature.parameters.length) {
+                this.compileErrors.push(
+                  new ExtraParameterCompileError(
+                    `${lambdaParams.length} Actual: ${p.signature.parameters.length}`,
+                    this.fieldId,
+                  ),
+                );
+              }
+            }
+          }
         }
 
         matchParametersAndTypes(

@@ -458,7 +458,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes no parameters - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: 0 Actual: 1.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -486,7 +486,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: 1 Actual: 0.ErrorMessages.html#compile_error",
     ]);
   });
 

@@ -33,6 +33,7 @@ import {
   matchParametersAndTypes,
 } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
+import { LambdaAsn } from "./lambda-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -124,6 +125,18 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
         this.isExtensionMethod = true;
         parameters = [this.precedingNode].concat(parameters);
+      }
+
+      for (let i = 0; i < parameters.length; i++) {
+        const p = parameters[i];
+        if (p instanceof LambdaAsn) {
+          const _match = funcSymbolType.parameterTypes[i];
+
+          if (_match instanceof FunctionType) {
+            const lambdaParams = _match.parameterTypes;
+            p.signature.setParameterTypes(lambdaParams);
+          }
+        }
       }
 
       matchParametersAndTypes(
