@@ -283,8 +283,8 @@ Function drawGrid(grid As List(Of List(Of String))) As String
     html = html + "<word>" ' reassign variable
     For Each col In range(0, 5)
       Const entry = grid[col][row]
-      Const ch = if(entry.length() > 0, entry[0], "")
-      Const mark = if(entry.length() > 1, entry.subString(1, entry.length()), "")
+      Const ch = if_(entry.length() > 0, entry[0], "")
+      Const mark = if_(entry.length() > 1, entry.subString(1, entry.length()), "")
       html = html + $"<ch class='_{mark}'>{ch}</ch>" ' reassign variable
     Next col
     html = html + "</word>" ' reassign variable

@@ -7,7 +7,7 @@ static void main() {
 }
 
 static int factorial(int n) { // function
-  return if(n < 2, 1, n*factorial(n - 1));
+  return if_(n < 2, 1, n*factorial(n - 1));
 }
 
 @Test static void test_factorial() {
