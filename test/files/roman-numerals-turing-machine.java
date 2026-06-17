@@ -33,9 +33,9 @@ static void main() {
   System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print
 } // main
 
-final String initState = "init"; // constant
+static final String initState = "init"; // constant
 
-final String haltState = "halt"; // constant
+static final String haltState = "halt"; // constant
 
 class TuringMachine {
 

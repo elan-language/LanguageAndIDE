@@ -1,12 +1,12 @@
 // Java with Elan 2.0.0-alpha4
 
-final String allWords = "AAHED ZYMIC" // constant
+static final String allWords = "AAHED ZYMIC" // constant
 
-final String allValidAnswers = "ABACK ZONAL" // constant
+static final String allValidAnswers = "ABACK ZONAL" // constant
 
 static void main() {
   while (true) {
-    final Int choice = inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4); // constant
+    static final Int choice = inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4); // constant
     clearAllDisplays(); // call procedure
     executeOption(choice); // call procedure
     pressAnyKeyToContinue(); // call procedure
@@ -25,7 +25,7 @@ static void executeOption(int choice) { // procedure
     print("Please wait for analysis to complete ...");
     analyse(); // call procedure
   } else {
-    final String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase(); // constant
+    static final String word = inputStringWithLimits("Enter word: ", 5, 5).upperCase(); // constant
     if (allValidAnswers.contains(word)) {
       print(String.format("% is a valid answer", word));
     } else if (allWords.contains(word)) {
@@ -44,7 +44,7 @@ static void playGame() { // procedure
     used[letter] = " "; // reassign variable
   }
   displayHtml(drawGrid(grid) + drawKeyboard(used)); // call procedure
-  final String target = allValidAnswers.split(" ")[randint(0, 2308)]; // constant
+  static final String target = allValidAnswers.split(" ")[randint(0, 2308)]; // constant
   var attemptNo = 0;
   var solved = false;
   while ((attemptNo < 6) && (!solved)) {
@@ -190,14 +190,14 @@ static void analyse() { // procedure
     weightedSum = weightedSum + (i*outcomes[i]); // reassign variable
   }
   clearPrintedText(); // call procedure
-  final Int solved = (success/2309.0*100).floor(); // constant
-  final Float avg = divAsFloat(weightedSum, success).round(2); // constant
-  final String pc = "%"; // constant
+  static final Int solved = (success/2309.0*100).floor(); // constant
+  static final Float avg = divAsFloat(weightedSum, success).round(2); // constant
+  static final String pc = "%"; // constant
   print(String.format("For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved %% within 6 attempts,\nwith an average of % attempts.", solved, pc, avg));
 }
 
 static boolean isUCLetter(String k) { // function
-  final Int unicode = k.asUnicode(); // constant
+  static final Int unicode = k.asUnicode(); // constant
   return (k.length() == 1) && (unicode > 64) && (unicode < 91);
 }
 
@@ -260,7 +260,7 @@ static String markAttempt(String attempt, String target) { // function
 static List<String> possibleAnswersAfterAttempt(List<String> possible, String attempt, String mark) { // function
   var newPossible = new List<String>();
   foreach (var word in possible) {
-    final String markForWord = markAttempt(attempt, word); // constant
+    static final String markForWord = markAttempt(attempt, word); // constant
     if (markForWord.equals(mark)) {
       newPossible = newPossible.withAppend(word); // reassign variable
     }
@@ -282,9 +282,9 @@ static String drawGrid(List<List<String>> grid) { // function
   foreach (var row in range(0, 6)) {
     html = html + "<word>"; // reassign variable
     foreach (var col in range(0, 5)) {
-      final String entry = grid[col][row]; // constant
-      final String ch = if(entry.length() > 0, entry[0], ""); // constant
-      final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
+      static final String entry = grid[col][row]; // constant
+      static final String ch = if(entry.length() > 0, entry[0], ""); // constant
+      static final String mark = if(entry.length() > 1, entry.subString(1, entry.length()), ""); // constant
       html = html + String.format("<ch class='_%'>%</ch>", mark, ch); // reassign variable
     }
     html = html + "</word>"; // reassign variable
@@ -304,4 +304,4 @@ static String drawKeyboard(Dictionary<String, String> used) { // function
   return html + "<key></key></div></keyboard>";
 }
 
-final String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" // constant
+static final String style = "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px;}word { display: flex; flex-direction: row; margin: auto;}ch, key { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; background-color: white;}ch { text-align: center; font-size: 18pt; border: solid, 1.5px, black; margin: 2px; width: 37.5px; height: 37.5px; line-height: 33px;}ch:empty, key:empty { border-color: lightgrey;}key._ { background-color: lightgrey;}ch._2, key._2 { background-color: #6aaa64; border-color: #6aaa64; color: white;}ch._1, key._1 { background-color: #c9b458; border-color: #c9b458; color: white;}ch._0, key._0 { background-color: #787c7e; border-color: #787c7e; color: white;}keyboard { width: 500px; display: flex; flex-direction: column; margin-top:5px;}keyboard div { display: flex; flex-direction: row; margin:auto;}key { display: block; float: left; font-size: 10pt; width: 23px; margin: 2px; padding-bottom: 6px; padding-top:5px; text-align: center; border-radius: 5px;}" // constant

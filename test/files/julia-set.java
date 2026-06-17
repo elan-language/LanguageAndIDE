@@ -139,10 +139,10 @@ class Coords {
   assertEquals(3, onepoint(0.5, 0.5, 100, p));
 } // test
 
-final Int width = 200; // constant
+static final Int width = 200; // constant
 
-final Int height = 150; // constant
+static final Int height = 150; // constant
 
-final Int nmax = 360; // constant
+static final Int nmax = 360; // constant
 
 }

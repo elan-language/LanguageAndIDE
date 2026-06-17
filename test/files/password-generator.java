@@ -6,23 +6,23 @@ public class Global {
 
 // - rule for no more than 'n' same characters in succession
 
-final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // constant
+static final String upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // constant
 
-final String lowerChars = "abcdefghijklmnopqrstuvwxyz"; // constant
+static final String lowerChars = "abcdefghijklmnopqrstuvwxyz"; // constant
 
-final String digitChars = "01234567890"; // constant
+static final String digitChars = "01234567890"; // constant
 
-final String symbolChars = "!$%^&*"; // constant
+static final String symbolChars = "!$%^&*"; // constant
 
-final Int length = 32; // constant
+static final Int length = 32; // constant
 
-final Boolean upper = true; // constant
+static final Boolean upper = true; // constant
 
-final Boolean lower = true; // constant
+static final Boolean lower = true; // constant
 
-final Boolean digit = true; // constant
+static final Boolean digit = true; // constant
 
-final Boolean symbol = true; // constant
+static final Boolean symbol = true; // constant
 
 static void main() {
   var all = upperChars + lowerChars + digitChars + symbolChars;

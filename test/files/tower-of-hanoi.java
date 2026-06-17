@@ -2,9 +2,9 @@
 
 public class Global {
 
-final Int nDiscs = 7; // constant
+static final Int nDiscs = 7; // constant
 
-final Int delay_ms = 300; // constant
+static final Int delay_ms = 300; // constant
 
 static void main() {
   var stacks = create3Stacks(nDiscs);

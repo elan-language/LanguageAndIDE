@@ -23,7 +23,7 @@ static void main() {
   } // if
 } // main
 
-final Int displayWidth = 150; // constant
+static final Int displayWidth = 150; // constant
 
 static void saveAsFile(String name, List<List<int>> b) { // procedure
   var file = createFileForWriting(name);
