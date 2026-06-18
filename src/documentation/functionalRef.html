@@ -21,12 +21,12 @@
 </div>
 
 <h1>Getting started</h1>
-<h2>Select functional programming profile</h2> <!-- to balance the ToC -->
+<h2>Select functional programming paradigm</h2> <!-- to balance the ToC -->
 
 <p>To undertake functional programming (FP) in Elan,
     you should first be reasonably familiar with procedural programming (PP) with Elan,
      and ideally, with object-oriented programming (OOP) with Elan.
-Then, switch to the <b>functional</b> profile from the menu at the top of the IDE.
+Then, switch to the <b>functional</b> paradigm from the menu at the top of the IDE.
 This changes two things: </p>
 <ol>
 <li>The list of demo programs will now show only programs that use FP.
@@ -71,7 +71,7 @@ This changes two things: </p>
     &mdash; including Python, VB, C#, and Java &mdash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
-(in Python, VB, C#, or Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> profiles
+(in Python, VB, C#, or Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> paradigms
 and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a procedure</b>, nor can you make use of system methods such as <el-method>input</el-method>,
 <el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
 
@@ -225,12 +225,12 @@ end function
   <li>Within a test, because the 'actual' field does not support 'chained' expressions (expressions containing more than one 'dot')</li>
 </ul>
 
-<p>When running in the <b>functional</b> profile, <b>let statement</b> is the only type of instruction that you may add within a function,
+<p>When running in the <b>functional</b> paradigm, <b>let statement</b> is the only type of instruction that you may add within a function,
   and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
 
 <h2>Selection is implemented using 'conditional expressions'</h2>
 
-<p>When running in the Functional profile, you cannot add an <b>if</b> <i>instruction</i> into a function.
+<p>When running in the Functional paradigm, you cannot add an <b>if</b> <i>instruction</i> into a function.
    Selection is handled by means of a 'conditional expression'.</p>
 
 <p>All of the languages supported by Elan have their own custom syntax for conditional expressions. For simplicity,
@@ -524,7 +524,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 <h2>User-defined Classes should be immutable</h2>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
-  never be mutated. So, when running under the <b>functional</b> profile, you may define Classes and add properties and function methods,
+  never be mutated. So, when running under the <b>functional</b> paradigm, you may define Classes and add properties and function methods,
   but you may <i>not</i> define any <i>procedure</i> method. (In Object-oriented Programming  you <i>would</i> use procedure methods to mutate an instance or do anything
   that cannot be done by a function.)</p>
 
@@ -552,7 +552,7 @@ Note that it:
 
 <p>Although a <el-method>with..</el-method> method is a pure function, the standard form of a <el-method>with..</el-method> method, like the one above,
 must be created using the <b>with method</b> instruction template, which is
-offered only within a Class, and only when using the <b>functional</b> profile.</p>
+offered only within a Class, and only when using the <b>functional</b> paradigm.</p>
 <p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
 a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
@@ -668,18 +668,18 @@ end function
 <h1>Global Instructions</h1>
 
 <h2>Same as for object-oriented programming</h2>
-<p>Coding with Elan using the <b>functional</b> profile offers the same
-  <a href="oopRef.html#GlobalInstructions">global instructions as offered in the <b>object-oriented</b> profile</a>.</p>
+<p>Coding with Elan using the <b>functional</b> paradigm offers the same
+  <a href="oopRef.html#GlobalInstructions">global instructions as offered in the <b>object-oriented</b> paradigm</a>.</p>
 </div>
 
 <div id="StatementInstructions"
 <h1>Statement instructions</h1>
 
 
-<p><i>Within the main routine or any procedure</i> coding with Elan using the <b>functional</b> profile offers the same
-  <a href="oopRef.html#StatementInstructions">statement instructions as offered in the <b>object-oriented</b> profile</a>.</p>
+<p><i>Within the main routine or any procedure</i> coding with Elan using the <b>functional</b> paradigm offers the same
+  <a href="oopRef.html#StatementInstructions">statement instructions as offered in the <b>object-oriented</b> paradigm</a>.</p>
 
-<p>However, <i>within a function</i> coding with Elan using the <b>functional</b> profile allows only the <code>return</code> statement</p> -
+<p>However, <i>within a function</i> coding with Elan using the <b>functional</b> paradigm allows only the <code>return</code> statement</p> -
 which forms part of the function template, plus the option to precede this with one or more ...</p>
 
 <div id="let">
@@ -756,8 +756,8 @@ end function
 <div id="MemberInstructions" >
 <h1 id="Member">Member instructions</h1>
 
-<p>When using the <b>functional</b> profile, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
-profile, with two exceptions:</p>
+<p>When using the <b>functional</b> paradigm, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
+paradigm, with two exceptions:</p>
  <ul>
   <li>There is an additional member: the <b>with method</b></li>
   <li>The procedure method is not available for use - because procedure methods cause side effects. 
@@ -816,7 +816,7 @@ profile, with two exceptions:</p>
             whole method and start again.</li>
           <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>reassign copyOfThis.aPropertyName to theNewValue</code></li>
           <li><code>copyOfThis</code> is a <i>reserved name</i> within Elan - this variable can only be created by the templated instruction shown above,
-          and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> profile.</li>
+          and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> paradigm.</li>
           <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 
             procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
             <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
