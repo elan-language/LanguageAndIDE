@@ -23,8 +23,8 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   isPrivate: boolean;
   isAbstract = false;
   file: File;
-  help: string =  "functionMethod";
-  document: string =  "oopRef.html";
+  help: string = "functionMethod";
+  document: string = "oopRef.html";
 
   constructor(parent: Parent, priv = false) {
     super(parent);

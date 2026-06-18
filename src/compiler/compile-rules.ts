@@ -95,6 +95,7 @@ import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
+import { LambdaAsn } from "./syntax-nodes/lambda-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
@@ -1371,5 +1372,29 @@ const compilerAssertions = true;
 export function compilerAssert(condition: boolean, message: string) {
   if (compilerAssertions && !condition) {
     throw new ElanCompilerError(message);
+  }
+}
+
+export function mustMatchLambdaParameters(
+  expectedParams: SymbolType[],
+  lambda: LambdaAsn,
+  compileErrors: CompileError[],
+  fieldId: string,
+) {
+  const actualParams = lambda.signature.parameters;
+  if (expectedParams.length > actualParams.length) {
+    compileErrors.push(
+      new MissingParameterCompileError(
+        `${expectedParams.length} Actual: ${actualParams.length}`,
+        fieldId,
+      ),
+    );
+  } else if (expectedParams.length < actualParams.length) {
+    compileErrors.push(
+      new ExtraParameterCompileError(
+        `${expectedParams.length} Actual: ${actualParams.length}`,
+        fieldId,
+      ),
+    );
   }
 }

@@ -28,7 +28,12 @@ import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
-import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
+import {
+  mustBeAssignableType,
+  mustBeIndexableType,
+  mustMatchLambdaParameters,
+  mustMatchParameters,
+} from "../compile-rules";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
@@ -40,6 +45,7 @@ import { ClassAsn } from "./globals/class-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
+import { LambdaAsn } from "./lambda-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
 
@@ -522,4 +528,25 @@ export function getChildSymbol(
 
 export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
+}
+
+export function processLambdaParameters(
+  callParameters: AstNode[],
+  procSymbolType: ProcedureType,
+  compileErrors: CompileError[],
+  fieldId: string,
+) {
+  for (let i = 0; i < callParameters.length; i++) {
+    const callParameter = callParameters[i];
+    if (callParameter instanceof LambdaAsn) {
+      const matchingParameter = procSymbolType.parameterTypes[i];
+
+      if (matchingParameter instanceof FunctionType) {
+        const lambdaParams = matchingParameter.parameterTypes;
+        callParameter.signature.setParameterTypes(lambdaParams);
+
+        mustMatchLambdaParameters(lambdaParams, callParameter, compileErrors, fieldId);
+      }
+    }
+  }
 }
