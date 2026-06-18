@@ -85,8 +85,8 @@ together with this seventh best practice that is supported and encouraged by Ela
   instruction only within the <b>main</b> routine, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
   is a <a href="#constant"><b>constant</b></a> and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
 
-  <p class="Java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <code>Global</code> to adhere to this rule, 
-  and all code must be within this. Everything added <i>immediately</i> within the <code>Global</code> is deemed, in Elan terms, to be
+  <p class="java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <b>Global</b> to adhere to this rule, 
+  and all code must be within this. Everything added <i>immediately</i> within this class is deemed, in Elan terms, to be
   global, so you will not be able to add a variable, even in the form of a class property there.</p>
 
 <h3 class="no-TOC" id="staticTyping">Static typing</h3>
@@ -261,7 +261,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
     to make clear which result you are looking for (<el-method>divAsInt</el-method> will round <i>down</i> the result if necessary).</li>
   <li>2-dimension arrays are implemented as a list of lists. However, </li>
   <li>Negative index values, and index <i>ranges</i> are not supported, but you can use <el-method>subString</el-method> or <el-method>subString</el-method> to achieve the same effect.</li>
-  <li>Passing by reference, if wanted, is done by, for example, wrapping a parameter of type <code>Int</code> as a <code>Ref&lt;of Int&gt;</code>.</li>
+  <li>Passing by reference, if wanted, is done by, for example, wrapping a parameter of type <code>Int</code> as a <code>AsRef&lt;of Int&gt;</code>.</li>
 </ul>
 </div>
 </div>
@@ -1733,7 +1733,6 @@ end test
 <tr><td><a href="LibRef.html#String">String <i class="fa">&#xf08e;</i></a></td><td><code>"Hello"</code></td></tr>
 <tr><td><a href="LibRef.html#Tuple">Tuple <i class="fa">&#xf08e;</i></a></td><td><code>(3, "banana")</code></td></tr>
 <tr><td><a href="LibRef.html#List">List <i class="fa">&#xf08e;</i></a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
-<tr><td><a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a></td><td><code>["a":3, "b":5]</code></td></tr>
 </table>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard data structures <i class="fa">&#xf08e;</i></a> table.</p>
 

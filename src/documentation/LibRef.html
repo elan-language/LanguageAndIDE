@@ -182,7 +182,7 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <code>.0</code> on the end of the whole number, as in:<br>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br>
  <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
@@ -304,7 +304,7 @@ end test
 </tr>
 </table>
 
-<p>A newline may be inserted within a string with <code>\n</code>:
+<p>A newline may be inserted within a string with <b>\n</b>:
 <table class="tablePlain">
 <tr>
  <td><code>print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
@@ -486,14 +486,16 @@ with specified changes: that is why all such methods have names starting '<el-me
   <th>HashSet</th>
   <th>Stack</th>
   <th>Queue</th>
- </tr><tr>
+ </tr>
+ <tr>
   <td>mutability</td>
   <td>Mutable</td>
   <td>Mutable</td>
   <td>Immutable</td>
   <td>Immutable</td>
   <td>Immutable</td>
- </tr><tr>
+ </tr>
+ <tr>
   <td>Type form</td>
   <td><code>List&lt;of Type&gt;</code><br>The type of item can be any, including <code>List</code> for 'jagged' data</td>
   <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code><br>
@@ -502,12 +504,14 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
   <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
   <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
- </tr><tr>
+ </tr>
+ <tr>
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
- </tr><tr>
+ </tr>
+ <tr>
   <td>literal definition</td>
   <td><code>[2, 3, 5, 7, 11]</code></td>
-  <td><code>["a":3, "b":5]</code></td>
+  <td>Not available</td>
   <td>Only as converted from a literal <code>List</code><br>e.g. <code>["a","b","c"].asSet()</code></td>
   <td>Not available</td>
   <td>Not available</td>
@@ -1682,7 +1686,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setWidth</el-method></td>
   <td><el-method>withWidth</el-method></td>
  </tr><tr>
-  <td id="xy_VG"><code>x, y</code></td>
+  <td id="xy_VG"><code>x</code>, <code>y</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
@@ -1693,7 +1697,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX</el-method>, <el-method>setY</el-method></td>
   <td><el-method>withX</el-method>, <el-method>withY</el-method></td>
  </tr><tr>
-  <td id="x1y1_VG"><code>x1, y1</code></td>
+  <td id="x1y1_VG"><code>x1</code>, <code>y1</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -1704,7 +1708,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX1</el-method>, <el-method>setY1</el-method></td>
   <td><el-method>withX1</el-method>, <el-method>withY1</el-method></td>
  </tr><tr>
-  <td id="x2y2_VG"><code>x2, y2</code></td>
+  <td id="x2y2_VG"><code>x2</code>, <code>y2</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -2066,7 +2070,7 @@ end main
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<code>\n</code>) automatically appended.</li>
+<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<b>\n</b>) automatically appended.</li>
 <li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
@@ -2176,7 +2180,7 @@ end main
 such as in <b>file://host/path</b> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
- <li>put the Html <code>&lt;img&gt;</code> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+ <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <codeblock>
 main
   variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
@@ -2491,7 +2495,7 @@ end main
   <td>(none)</td>
   <td>prints the string to the display without appending a newline so<br>
   a following call will output on the same line.<br>
-  You can put your own <code>\n</code> newlines in the argument string</td>
+  You can put your own <b>\n</b> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><code>Int</code>, <code>String</code></td>
@@ -2659,7 +2663,7 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 <tr id="divAsFloat"><td><el-method>divAsFloat</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value</td><td></td></tr>
 <tr id="divAsInt"><td><el-method>divAsInt</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value<br>and result rounded down to integer</td><td></td></tr>
 <tr>
-  <td id="exp"><code><el-method>exp</el-method></code></td>
+  <td id="exp"><el-method>exp</el-method></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td>
