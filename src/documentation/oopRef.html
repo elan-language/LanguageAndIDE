@@ -132,7 +132,11 @@ where the only thing you <i>must</i> provide is a unique name for the class, whi
 
 <p>A new instance may also be created as part of an expression without having to be assigned to a variable, for example:
 
-<codeblock>return new Square(newX, newY)</codeblock>
+<codeblock>
+function emptyPoint() returns Point
+  return new Point(-1, -1)
+end function
+</codeblock>
 
 <h3 class="no-TOC">Reading properties</h3>
 
@@ -183,7 +187,7 @@ end class
 <ul>
   <li>Even properties that are automatically initialised <i>may</i> be explicitly initialised in the constructor.</li>
   <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type, 
-        for example <code>new List&lt;of Int&gt;</code> - though you may choose any value.</li>
+        for example <code>new List&lt;of Int&gt;()</code> - though you may choose any value.</li>
   <li>If you don't you want every instance of a class to be initialised with the same value, the specific value for
     an instance is specified via paramaters added into the constructor definition.</li>
   <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
@@ -229,7 +233,7 @@ end class
 <ul>
   <li>The<code>Snake</code> is always initialised to the same values, so the constructor does not need to define any parameters.</li>
   <li>The <code>currentDir</code> property is of type <code>Direction</code> (which is an enum) and is initialised to <code>Direction.right</code>.</li>
-  <li>The <code>body</code> property is a multiple association - defined as a list of type <code>Square</li>
+  <li>The <code>body</code> property is a multiple association - defined as a list of type <code>Square</code></li>
   <li>The constructor defines a variable <code>tail</code> used only for the purpose of initialising properties. 
     It is first used to initialise the <code>body</code> as a list containing only the <code>tail</code> and
     is finally used to define the <code>priorTail</code> which is a single association of type <code>Square</code>.
@@ -423,9 +427,9 @@ For that reason, irrespective of the programming language being used, Elan delib
 
 <p>In Elan, an object-oriented program still needs a procedural main method to execute.</p>
 
-<p>The Java language is unusual in that even the main routine must defined within a class - Elan handles this by including a class named <code>Global</code> as part of the file boilerplate,
+<p class="java">The Java language is unusual in that even the main routine must defined within a class - Elan handles this by including a class named <b>Global</b> as part of the file boilerplate,
    but treats the instructions directly within this class as being 'global' in nature. Any user-defined classes are added <i>within</i> this, and Elan does not allow properties to be added
-   <i>directly</i> within that <code>Global</code> class since these would be, effectively, just <i>global variables in disguise</i>.</p>
+   <i>directly</i> within that <b>Global</b> class since these would be, effectively, just <i>global variables in disguise</i>.</p>
 
 <p>In general good OOP design means aiming to keep the functionality well-distributed among the user-defined classes.
    Inevitably, some classes are going to define more methods, and/or more-complex methods, than others. But you should be wary of a situation where one class is doing most
