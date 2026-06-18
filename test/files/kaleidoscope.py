@@ -11,5 +11,7 @@ def main() -> None:
     blocks[20 - x][15 - y] = colour # reassign variable
     blocks[20 - x][15 + y] = colour # reassign variable
     displayBlocks(blocks) # call procedure
+  # end while
+# end main
 
 main()

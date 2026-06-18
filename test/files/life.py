@@ -9,11 +9,16 @@ def main() -> None:
     nextGeneration(gridRef) # call procedure
     grid = gridRef.value() # reassign variable
     sleep_ms(50) # call procedure
+  # end while
+# end main
 
 def fillRandom(grid: list[list[int]]) -> None: # procedure
   for col in range(0, 40):
     for row in range(0, 30):
       grid[col][row] = blackOrWhite(random()) # reassign variable
+    # end for
+  # end for
+# end procedure
 
 def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   nextGen = createBlockGraphics(white) # variable definition
@@ -22,13 +27,18 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
     for y in range(0, 30):
       colour = nextCellValue(grid, x, y) # variable definition
       nextGen[x][y] = colour # reassign variable
+    # end for
+  # end for
   gridRef.set(nextGen) # call procedure
+# end procedure
 
 def blackOrWhite(random: float) -> int: # function
   result = black # variable definition
   if random > 0.5:
     result = white # reassign variable
+  # end if
   return result
+# end function
 
 def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
@@ -36,7 +46,9 @@ def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   y2 = y - 1 # variable definition
   if y2 == -1:
     y2 = 29 # reassign variable
+  # end if
   return (x, y2)
+# end function
 
 def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
@@ -44,7 +56,9 @@ def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   y2 = y + 1 # variable definition
   if y2 == 30:
     y2 = 0 # reassign variable
+  # end if
   return (x, y2)
+# end function
 
 def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
@@ -52,7 +66,9 @@ def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   x2 = x + 1 # variable definition
   if x2 == 40:
     x2 = 0 # reassign variable
+  # end if
   return (x2, y)
+# end function
 
 def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   x = cell.item_0 # variable definition
@@ -60,23 +76,30 @@ def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   x2 = x - 1 # variable definition
   if x2 == -1:
     x2 = 39 # reassign variable
+  # end if
   return (x2, y)
+# end function
 
 def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function
   return north(east(cell))
+# end function
 
 def northWest(cell: tuple[int, int]) -> tuple[int, int]: # function
   return north(west(cell))
+# end function
 
 def southEast(cell: tuple[int, int]) -> tuple[int, int]: # function
   return south(east(cell))
+# end function
 
 def southWest(cell: tuple[int, int]) -> tuple[int, int]: # function
   return south(west(cell))
+# end function
 
 def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
   c = (x, y) # variable definition
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
+# end function
 
 def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
   count = 0 # variable definition
@@ -85,7 +108,10 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
     cy = cell.item_1 # variable definition
     if grid[cx][cy] == black:
       count = count + 1 # reassign variable
+    # end if
+  # end for
   return count
+# end function
 
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   result = False # variable definition
@@ -93,38 +119,46 @@ def willLive(cell: int, liveNeighbours: int) -> bool: # function
     result = (liveNeighbours > 1) and (liveNeighbours < 4) # reassign variable
   else:
     result = liveNeighbours == 3 # reassign variable
+  # end if
   return result
+# end function
 
 def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   colour = white # variable definition
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
   if live:
     colour = black # reassign variable
+  # end if
   return colour
+# end function
 
 def test_north(self) -> None:
   self.assertEqual(north((3, 4)), (3, 3))
   self.assertEqual(north((39, 0)), (39, 29))
   self.assertEqual(north((0, 29)), (0, 28))
   self.assertEqual(north((39, 29)), (39, 28))
+# end test
 
 def test_south(self) -> None:
   self.assertEqual(south((3, 4)), (3, 5))
   self.assertEqual(south((39, 0)), (39, 1))
   self.assertEqual(south((0, 29)), (0, 0))
   self.assertEqual(south((39, 29)), (39, 0))
+# end test
 
 def test_east(self) -> None:
   self.assertEqual(east((10, 2)), (11, 2))
   self.assertEqual(east((39, 0)), (0, 0))
   self.assertEqual(east((0, 1)), (1, 1))
   self.assertEqual(east((39, 29)), (0, 29))
+# end test
 
 def test_west(self) -> None:
   self.assertEqual(west((3, 4)), (2, 4))
   self.assertEqual(west((39, 0)), (38, 0))
   self.assertEqual(west((0, 0)), (39, 0))
   self.assertEqual(west((0, 29)), (39, 29))
+# end test
 
 def test_northEast(self) -> None:
   self.assertEqual(northEast((3, 4)), (4, 3))
@@ -132,6 +166,7 @@ def test_northEast(self) -> None:
   self.assertEqual(northEast((39, 0)), (0, 29))
   self.assertEqual(northEast((0, 29)), (1, 28))
   self.assertEqual(northEast((39, 29)), (0, 28))
+# end test
 
 def test_southEast(self) -> None:
   self.assertEqual(southEast((3, 4)), (4, 5))
@@ -139,6 +174,7 @@ def test_southEast(self) -> None:
   self.assertEqual(southEast((39, 0)), (0, 1))
   self.assertEqual(southEast((0, 29)), (1, 0))
   self.assertEqual(southEast((39, 29)), (0, 0))
+# end test
 
 def test_northWest(self) -> None:
   self.assertEqual(northWest((3, 4)), (2, 3))
@@ -146,6 +182,7 @@ def test_northWest(self) -> None:
   self.assertEqual(northWest((39, 0)), (38, 29))
   self.assertEqual(northWest((0, 29)), (39, 28))
   self.assertEqual(northWest((39, 29)), (38, 28))
+# end test
 
 def test_southWest(self) -> None:
   self.assertEqual(southWest((3, 4)), (2, 5))
@@ -153,6 +190,7 @@ def test_southWest(self) -> None:
   self.assertEqual(southWest((39, 0)), (38, 1))
   self.assertEqual(southWest((0, 29)), (39, 0))
   self.assertEqual(southWest((39, 29)), (38, 0))
+# end test
 
 def test_blackOrWhite(self) -> None:
   self.assertEqual(blackOrWhite(0), black)
@@ -160,9 +198,11 @@ def test_blackOrWhite(self) -> None:
   self.assertEqual(blackOrWhite(0.5), black)
   self.assertEqual(blackOrWhite(0.501), white)
   self.assertEqual(blackOrWhite(1), white)
+# end test
 
 def test_neighbourCells(self) -> None:
   self.assertEqual(neighbourCells(3, 4), [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)])
+# end test
 
 def test_willLive(self) -> None:
   self.assertEqual(willLive(white, 0), False)
@@ -183,5 +223,6 @@ def test_willLive(self) -> None:
   self.assertEqual(willLive(black, 6), False)
   self.assertEqual(willLive(black, 7), False)
   self.assertEqual(willLive(black, 8), False)
+# end test
 
 main()

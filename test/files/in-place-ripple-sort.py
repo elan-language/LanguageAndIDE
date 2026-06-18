@@ -5,6 +5,7 @@ def main() -> None:
   print(li)
   inPlaceRippleSort(li) # call procedure
   print(li)
+# end main
 
 def inPlaceRippleSort(li: list[int]) -> None: # procedure
   hasChanged = True # variable definition
@@ -17,6 +18,10 @@ def inPlaceRippleSort(li: list[int]) -> None: # procedure
         li[i] = li[i + 1] # reassign variable
         li[i + 1] = temp # reassign variable
         hasChanged = True # reassign variable
+      # end if
+    # end for
     lastComp = lastComp - 1 # reassign variable
+  # end while
+# end procedure
 
 main()

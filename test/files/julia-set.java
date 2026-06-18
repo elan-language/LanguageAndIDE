@@ -25,8 +25,8 @@ static void main() {
     displayVectorGraphics(vg); // call procedure
     p.checkkeys(); // call procedure
     System.out.println(String.format("x = % y = %", p.jx, p.jy)); // print
-  } // while
-} // main
+  } // end while
+} // end main
 
 static List<VectorGraphic> allpoints(Coords p) { // function
   var vg2 = createVectorGraphics();
@@ -38,10 +38,10 @@ static List<VectorGraphic> allpoints(Coords p) { // function
       var col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
       vg2 = vg2.withAppend(rect); // reassign variable
-    } // foreach
-  } // foreach
+    } // end foreach
+  } // end foreach
   return vg2;
-} // function
+} // end function
 
 static int onepoint(double x, double y, int maxnum, Coords p) { // function
   var done = false;
@@ -55,10 +55,10 @@ static int onepoint(double x, double y, int maxnum, Coords p) { // function
     i = i + 1; // reassign variable
     if ((i >= maxnum) || ((a*a + b*b) > 4)) {
       done = true; // reassign variable
-    } // if
-  } // while
+    } // end if
+  } // end while
   return i;
-} // function
+} // end function
 
 class Coords {
 
@@ -71,11 +71,11 @@ class Coords {
     // Julia set parameters
     this.jx = -0.512; // reassign variable
     this.jy = 0.521; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return "a Coords";
-  } // function method
+  } // end function method
 
   public double scale; // property
 
@@ -121,23 +121,23 @@ class Coords {
           // for autocomplete in the RHS expression, don't type "property"
         } else {
           // ignore erroneous key presses
-        } // if
+        } // end if
         // there is no harm in recalculating even if an invalid key was pressed
         changed = true; // reassign variable
         // another key may have been pressed
         k = getKey(); // reassign variable
-      } // while
+      } // end while
       sleep_ms(10); // call procedure
-    } // while
-  } // procedure method
+    } // end while
+  } // end procedure method
 
-} // class
+} // end class
 
 @Test static void test_one() {
   var p = new Coords();
   assertEquals(100, onepoint(0, 0, 100, p));
   assertEquals(3, onepoint(0.5, 0.5, 100, p));
-} // test
+} // end test
 
 static final Int width = 200; // constant
 

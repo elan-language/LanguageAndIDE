@@ -15,7 +15,12 @@ def main() -> None:
         td = int(reply) # variable definition
         if td >= 0:
           print(getDate(td))
+        # end if
       except ElanRuntimeError as e: # catch
+      # end try
+    # end if
+  # end while
+# end main
 
 def getDate(unixSecs: int) -> str: # function
   dt = dateTime(unixSecs) # variable definition
@@ -38,9 +43,11 @@ def getDate(unixSecs: int) -> str: # function
   d = padLwithZero(day) # variable definition
   monthName = getMonthName(month) # variable definition
   return f"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
+# end function
 
 def test_getDate(self) -> None:
   self.assertEqual(getDate(1774946991), "Tue, 31 Mar 2026 08:49:51 UTC")
+# end test
 
 def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # get separate values from Unix time
@@ -56,9 +63,11 @@ def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   # day number (1-365 or 1-366) in this year
   day = dayInYear(year, unixDay) # variable definition
   return (hour, minute, second, day, year, weekday)
+# end function
 
 def test_dateTime(self) -> None:
   self.assertEqual(dateTime(1774946991), (8, 49, 51, 90, 2026, 2))
+# end test
 
 def dayInYear(year: int, unixDays: int) -> int: # function
   # unixDays start at 0, months, day numbers start at 1
@@ -70,13 +79,19 @@ def dayInYear(year: int, unixDays: int) -> int: # function
     for y in range(unixYear, year):
       if leap(y):
         dayNumber = dayNumber - 1 # reassign variable
+      # end if
+    # end for
+  # end if
   return dayNumber
+# end function
 
 def test_dayInYear(self) -> None:
   self.assertEqual(dayInYear(2025, 1), -20087)
+# end test
 
 def leap(year: int) -> bool: # function
   return (((year % 4) == 0) and ((year % 100) != 0)) or ((year % 400) == 0)
+# end function
 
 def test_leap(self) -> None:
   # normal cases
@@ -85,6 +100,7 @@ def test_leap(self) -> None:
   # boundary cases
   self.assertEqual(leap(1900), False)
   self.assertEqual(leap(2000), True)
+# end test
 
 def monthDay(startDays: list[int], dayNumber: int) -> tuple[int, int]: # function
   # get month (1-12) & day (1-31) from dayNumber (1-365 or 1-366)
@@ -97,7 +113,10 @@ def monthDay(startDays: list[int], dayNumber: int) -> tuple[int, int]: # functio
       day = dayNumber - startDays[month - 1] + 1 # reassign variable
     else:
       month = month + 1 # reassign variable
+    # end if
+  # end while
   return (month, day)
+# end function
 
 def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
   # alter month start days if leap year
@@ -105,7 +124,10 @@ def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
   if leap(year):
     for m in range(2, 13):
       startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # reassign variable
+    # end for
+  # end if
   return startDaysL
+# end function
 
 # Unix epoch is 1970.01.01 00:00:00 Thursday
 
@@ -120,29 +142,36 @@ daySecs = 86400 # constant
 def getWeekdayName(weekDay: int) -> str: # function
   names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] # variable definition
   return names[weekDay]
+# end function
 
 def test_getWeekdayName(self) -> None:
   self.assertEqual(getWeekdayName(0), "Sun")
   self.assertEqual(getWeekdayName(6), "Sat")
+# end test
 
 def getMonthName(month: int) -> str: # function
   names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] # variable definition
   return names[month - 1]
+# end function
 
 def test_getMonthName(self) -> None:
   self.assertEqual(getMonthName(1), "Jan")
   self.assertEqual(getMonthName(12), "Dec")
+# end test
 
 def getStartDays() -> list[int]: # function
   return [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
+# end function
 
 def padLwithZero(i: int) -> str: # function
   return pad("L", "00", i.toString())
+# end function
 
 def test_padLwithZero(self) -> None:
   self.assertEqual(padLwithZero(1), "01")
   self.assertEqual(padLwithZero(10), "10")
   self.assertEqual(padLwithZero(0), "00")
+# end test
 
 def pad(d: str, p: str, s: str) -> str: # function
   # d: L or R for pad left or right
@@ -155,6 +184,9 @@ def pad(d: str, p: str, s: str) -> str: # function
       sR = ps.subString(ps.length() - p.length(), ps.length()) # reassign variable
     elif d.upperCase().equals("R"): # else if
       sR = (s + p).subString(0, p.length()) # reassign variable
+    # end if
+  # end if
   return sR
+# end function
 
 main()

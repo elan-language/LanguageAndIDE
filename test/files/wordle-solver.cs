@@ -27,95 +27,95 @@ static void main() {
     mark = inp; // reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
     attempt = bestAttempt(possible); // reassign variable
-  } // while
-} // main
+  } // end while
+} // end main
 
 static bool isGreen(string attempt, string target, int n) { // function
   return target[n].equals(attempt[n]);
-} // function
+} // end function
 
 static string setChar(string word, int n, string newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
-} // function
+} // end function
 
 static string setAttemptIfGreen(string attempt, string target, int n) { // function
   return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
-} // function
+} // end function
 
 static string setTargetIfGreen(string attempt, string target, int n) { // function
   return if_(isGreen(attempt, target, n), setChar(target, n, "."), target);
-} // function
+} // end function
 
 static List<string> evaluateGreens(string attempt, string target) { // function
   return range(0, 5).reduce(new [] {attempt, target}, List<string> a, int x => new [] {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)});
-} // function
+} // end function
 
 static bool isYellow(string attempt, string target, int n) { // function
   return target.contains(attempt[n]);
-} // function
+} // end function
 
 static string setAttemptIfYellow(string attempt, string target, int n) { // function
   return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
-} // function
+} // end function
 
 static bool isAlreadyMarkedGreen(string attempt, int n) { // function
   return attempt[n].equals("*");
-} // function
+} // end function
 
 static string setTargetIfYellow(string attempt, string target, int n) { // function
   return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
-} // function
+} // end function
 
 static List<string> evaluateYellows(string attempt, string target) { // function
   return range(0, 5).reduce(new [] {attempt, target}, List<string> a, int x => new [] {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)});
-} // function
+} // end function
 
 static string markAttempt(string attempt, string target) { // function
   var greens = evaluateGreens(attempt, target); // let
   var markedAttempt = evaluateYellows(greens[0], greens[1]); // let
   return markedAttempt[0];
-} // function
+} // end function
 
 static List<string> possibleAnswersAfterAttempt(List<string> prior, string attempt, string mark) { // function
   return prior.filter(string w => markAttempt(attempt, w).equals(mark));
-} // function
+} // end function
 
 static int maxWordCountRemainingAfterAttempt(List<string> possAnswers, string attempt) { // function
   var d = new Dictionary<string, int>(); // let
   var d2 = possAnswers.reduce(d, Dictionary<string, int> dd, string answer => incrementCount(dd, answer, attempt)); // let
   var keys = d2.keys(); // let
   return keys.reduce(0, int maxSoFar, string mark => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
-} // function
+} // end function
 
 static Dictionary<string, int> incrementCount(Dictionary<string, int> d, string possAnswer, string attempt) { // function
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
   var count = if_(keys.contains(mark), d[mark], 0); // let
   return d.withSet(mark, count + 1);
-} // function
+} // end function
 
 static List<WordCount> allRemainingWordCounts(List<string> possAnswers) { // function
   return possAnswers.map(string w => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)));
-} // function
+} // end function
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<string> possAnswers) { // function
   var isBetter = wc2.count < wc1.count; // let
   var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
   return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
-} // function
+} // end function
 
 static string bestAttempt(List<string> possAnswers) { // function
   var wordCounts = allRemainingWordCounts(possAnswers); // let
   var best = wordCounts.reduce(wordCounts.head(), WordCount bestSoFar, WordCount newWord => betterOf(bestSoFar, newWord, possAnswers)); // let
   return best.word;
-} // function
+} // end function
 
 class WordCount {
 
   public WordCount(string word, int count) {
     this.word = word; // reassign variable
     this.count = count; // reassign variable
-  } // constructor
+  } // end constructor
 
   public string word {get; private set;} // property
 
@@ -123,9 +123,9 @@ class WordCount {
 
   public string toString() { // function method
     return $"{this.word} {this.count}";
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 // 2309 words
 
@@ -145,47 +145,47 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   var possAnswers3 = new [] {"B", "A"}; // let
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers3));
   Assert.AreEqual(a2, betterOf(b2, a2, possAnswers3));
-} // test
+} // end test
 
 [TestMethod] static void test_bestAttempt() {
   var possAnswers = new [] {"ABCDE", "ABBBB", "EDCBA"}; // let
   Assert.AreEqual("EDCBA", bestAttempt(possAnswers));
   var possAnswers2 = new [] {"ABCDE", "ABBBB", "BCDEA"}; // let
   Assert.AreEqual("BCDEA", bestAttempt(possAnswers2));
-} // test
+} // end test
 
 [TestMethod] static void test_Wordcount() {
   var wc = new WordCount("ABCDE", 3); // let
   Assert.AreEqual("ABCDE", wc.word);
   Assert.AreEqual(3, wc.count);
   Assert.AreEqual("ABCDE 3", wc.toString());
-} // test
+} // end test
 
 [TestMethod] static void test_isGreen() {
   Assert.AreEqual(true, isGreen("ABCDE", "A____", 0));
   Assert.AreEqual(true, isGreen("ABCDE", "____E", 4));
   Assert.AreEqual(false, isGreen("ABCDE", "_A___", 1));
   Assert.AreEqual(false, isGreen("BABBB", "B____", 1));
-} // test
+} // end test
 
 [TestMethod] static void test_setChar() {
   Assert.AreEqual("_BCDE", setChar("ABCDE", 0, "_"));
   Assert.AreEqual("ABCD_", setChar("ABCDE", 4, "_"));
-} // test
+} // end test
 
 [TestMethod] static void test_setAttemptIfGreen() {
   Assert.AreEqual("*BCDE", setAttemptIfGreen("ABCDE", "ABCDE", 0));
   Assert.AreEqual("ABCD*", setAttemptIfGreen("ABCDE", "ABCDE", 4));
   Assert.AreEqual("BBCDE", setAttemptIfGreen("BBCDE", "ABCDE", 0));
   Assert.AreEqual("*BCDE", setAttemptIfGreen("ABCDE", "AACDE", 0));
-} // test
+} // end test
 
 [TestMethod] static void test_setTargetIfGreen() {
   Assert.AreEqual(".BCDE", setTargetIfGreen("ABCDE", "ABCDE", 0));
   Assert.AreEqual("ABCD.", setTargetIfGreen("ABCDE", "ABCDE", 4));
   Assert.AreEqual("ABCDE", setTargetIfGreen("BBCDE", "ABCDE", 0));
   Assert.AreEqual(".ACDE", setTargetIfGreen("ABCDE", "AACDE", 0));
-} // test
+} // end test
 
 [TestMethod] static void test_evaluateGreens() {
   Assert.AreEqual(new [] {"*BCDE", ".XXXX"}, evaluateGreens("ABCDE", "AXXXX"));
@@ -193,7 +193,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(new [] {"*****", "....."}, evaluateGreens("ABCDE", "ABCDE"));
   Assert.AreEqual(new [] {"*ACDE", ".XXXX"}, evaluateGreens("AACDE", "AXXXX"));
   Assert.AreEqual(new [] {"*BCDE", ".AXXX"}, evaluateGreens("ABCDE", "AAXXX"));
-} // test
+} // end test
 
 [TestMethod] static void test_isYellow() {
   Assert.AreEqual(true, isYellow("ABCDE", "____A", 0));
@@ -201,14 +201,14 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(true, isYellow("ABCDE", "___AA", 0));
   Assert.AreEqual(true, isYellow("AACDE", "_A___", 1));
   Assert.AreEqual(true, isYellow("AACDE", "__A__", 1));
-} // test
+} // end test
 
 [TestMethod] static void test_setAttemptIfYellow() {
   Assert.AreEqual("+BCDE", setAttemptIfYellow("ABCDE", "EABCD", 0));
   Assert.AreEqual("ABCD+", setAttemptIfYellow("ABCDE", "EABCD", 4));
   Assert.AreEqual("+BCDE", setAttemptIfYellow("ABCDE", "BAAAA", 0));
   Assert.AreEqual("AAAA+", setAttemptIfYellow("AAAAB", "EABBB", 4));
-} // test
+} // end test
 
 [TestMethod] static void test_isAlreadyMarkedGreen() {
   Assert.AreEqual(true, isAlreadyMarkedGreen("AB*DE", 2));
@@ -217,7 +217,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(false, isAlreadyMarkedGreen("*BCD*", 2));
   Assert.AreEqual(true, isAlreadyMarkedGreen("*BCD*", 0));
   Assert.AreEqual(true, isAlreadyMarkedGreen("*BCD*", 4));
-} // test
+} // end test
 
 [TestMethod] static void test_setTargetIfYellow() {
   Assert.AreEqual("E.BCD", setTargetIfYellow("ABCDE", "EABCD", 0));
@@ -226,7 +226,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual("EA.EA", setTargetIfYellow("AAAAB", "EABEA", 4));
   Assert.AreEqual("EA.BB", setTargetIfYellow("AAAAB", "EABBB", 4));
   Assert.AreEqual("*BCDA", setTargetIfYellow("*BCDE", "*BCDA", 4));
-} // test
+} // end test
 
 [TestMethod] static void test_evaluateYellows() {
   Assert.AreEqual(new [] {"+____", "X.XXX"}, evaluateYellows("ABCDE", "XAXXX"));
@@ -235,7 +235,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(new [] {"+____", "X.AXX"}, evaluateYellows("ABCDE", "XAAXX"));
   Assert.AreEqual(new [] {"+____", "X.XXX"}, evaluateYellows("AACDE", "XAXXX"));
   Assert.AreEqual(new [] {"+++++", "....."}, evaluateYellows("ABCDE", "BCDEA"));
-} // test
+} // end test
 
 [TestMethod] static void test_markAttempt() {
   Assert.AreEqual("_____", markAttempt("ABCDE", "XXXXX"));
@@ -246,14 +246,14 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual("+__*_", markAttempt("CABAL", "RECAP"));
   Assert.AreEqual("+__*_", markAttempt("CABAL", "RECAP"));
   Assert.AreEqual("_++__", markAttempt("COLON", "GLORY"));
-} // test
+} // end test
 
 [TestMethod] static void test_possibleAnswersAfterAttempt() {
   var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
   Assert.AreEqual(new [] {"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
   Assert.AreEqual(new [] {"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
   Assert.AreEqual(new [] {"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
-} // test
+} // end test
 
 [TestMethod] static void test_maxWordCountRemainingAfterAttempt() {
   var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
@@ -261,10 +261,10 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
   Assert.AreEqual(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"));
   Assert.AreEqual(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"));
   Assert.AreEqual(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"));
-} // test
+} // end test
 
 [TestMethod] static void test_allRemainingWordCounts() {
   var possAnswers = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
   var wordcounts = allRemainingWordCounts(possAnswers); // let
   Assert.AreEqual("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
-} // test
+} // end test

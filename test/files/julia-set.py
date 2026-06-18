@@ -23,6 +23,8 @@ def main() -> None:
     displayVectorGraphics(vg) # call procedure
     p.checkkeys() # call procedure
     print(f"x = {p.jx} y = {p.jy}")
+  # end while
+# end main
 
 def allpoints(p: Coords) -> list[VectorGraphic]: # function
   vg2 = createVectorGraphics() # variable definition
@@ -34,7 +36,10 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
       col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
       rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
       vg2 = vg2.withAppend(rect) # reassign variable
+    # end for
+  # end for
   return vg2
+# end function
 
 def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
   done = False # variable definition
@@ -48,7 +53,10 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
     i = i + 1 # reassign variable
     if (i >= maxnum) or ((a*a + b*b) > 4):
       done = True # reassign variable
+    # end if
+  # end while
   return i
+# end function
 
 class Coords: # concrete class
 
@@ -61,9 +69,11 @@ class Coords: # concrete class
     # Julia set parameters
     self.jx = -0.512 # reassign variable
     self.jy = 0.521 # reassign variable
+  # end constructor
 
   def toString(self: Coords) -> str: # function method
     return "a Coords"
+  # end function method
 
   scale: float # property
 
@@ -109,18 +119,23 @@ class Coords: # concrete class
           # for autocomplete in the RHS expression, don't type "property"
         else:
           # ignore erroneous key presses
+        # end if
         # there is no harm in recalculating even if an invalid key was pressed
         changed = True # reassign variable
         # another key may have been pressed
         k = getKey() # reassign variable
+      # end while
       sleep_ms(10) # call procedure
+    # end while
+  # end procedure method
 
-
+# end class
 
 def test_one(self) -> None:
   p = Coords() # variable definition
   self.assertEqual(onepoint(0, 0, 100, p), 100)
   self.assertEqual(onepoint(0.5, 0.5, 100, p), 3)
+# end test
 
 width = 200 # constant
 
