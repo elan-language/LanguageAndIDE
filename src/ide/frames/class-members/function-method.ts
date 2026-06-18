@@ -24,6 +24,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   isAbstract = false;
   file: File;
   help: string =  "functionMethod";
+  document: string =  "oopRef.html";
 
   constructor(parent: Parent, priv = false) {
     super(parent);
@@ -35,8 +36,12 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return this.getParent() instanceof AbstractClass;
   }
 
+  setDocument(id: string) {
+    this.document = id;
+  }
+
   override helpDocument(): string {
-    return "oopRef.html";
+    return this.document;
   }
 
   setHelpId(id: string) {
