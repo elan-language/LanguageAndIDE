@@ -924,7 +924,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr>
  <td>
   <codeblock>
-  variable st set to new HashSet<of Int>()
+  variable st set to new HashSet&lt;of Int&gt;()
   reassign st to st.addFromList([3, 5, 7])
   print(st.length())
   </codeblock>
@@ -1164,7 +1164,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr><td>
 <codeblock>
 main
-  variable sk set to new Stack<of String>()
+  variable sk set to new Stack&lt;of String&gt;()
   print(sk.length())
   reassign sk to sk.push("apple")
   reassign sk to sk.push("banana")
@@ -1191,7 +1191,7 @@ end main
 <tr><td>
 <codeblock>
 main
-  variable qu set to new Queue<of String>()
+  variable qu set to new Queue&lt;of String&gt;()
   print(qu.length())
   reassign qu to qu.enqueue("apple")
   reassign qu to qu.enqueue("banana")
@@ -1742,7 +1742,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle that changes between red and green every second:</p>
 <codeblock>
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to new List&lt;of VectorGraphic&gt;()
   variable circ set to new CircleVG()
   call circ.setCentreX(50)
   call circ.setCentreY(37.5)
@@ -3099,9 +3099,9 @@ end main
 <codeblock>
 main
   variable n set to [2, 3, 5, 7, 11, 13]
-  variable nR set to new List<of Int>()
-  variable eL set to new List<of Int>()
-  print(n.reduce(eL, lambda nR as List<of Int>, m as Int => nR.withPrepend(m)))
+  variable nR set to new List&lt;of Int&gt;()
+  variable eL set to new List&lt;of Int&gt;()
+  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
@@ -3118,8 +3118,8 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
 main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
-  variable eL set to new List<of String>()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List<of String>, word as String => sR.withPrepend(word)).join(" ")
+  variable eL set to new List&lt;of String&gt;()
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>
@@ -3229,7 +3229,7 @@ class Pupil
   property mathsPercent as Int
 end class
 main
-  variable allPupils set to new List<of Pupil>()
+  variable allPupils set to new List&lt;of Pupil&gt;()
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 function passedMathsTest(p as Pupil) returns Boolean

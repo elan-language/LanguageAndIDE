@@ -647,10 +647,10 @@ main
   call print ($"{rainbow()[0]} is violet")
   call print ($"{suitColours()["hearts"]} is red")
 end main
-function rainbow() returns List<of Int>
+function rainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
-function suitColours() returns Dictionary<of String, Int>
+function suitColours() returns Dictionary&lt;of String, Int&gt;
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>

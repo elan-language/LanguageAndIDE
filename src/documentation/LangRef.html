@@ -324,7 +324,7 @@ main
   call fillRandom(grid)
   while true
     call displayBlocks(grid)
-    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
+    variable gridRef set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(grid)
     call nextGeneration(gridRef)
     reassign grid to gridRef.value()
     call sleep_ms(50)
@@ -357,7 +357,7 @@ end main
 <p>From the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
 <codeblock>
-procedure moveGrowBurst(bubbles as List<of CircleVG>)
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -394,7 +394,7 @@ end procedure
 <p>From the <b>Life - procedural</b> demo. The code sets each of the cells in the 40x30 <code>grid</code></p>
 
 <codeblock>
-procedure fillRandom(grid as List<of List<of Int>>)
+procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   for col in range(0, 40)
     for row in range(0, 30)
       reassign grid[col][row] to blackOrWhite(random())
@@ -446,11 +446,11 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <codeblock>
 main
   variable arg set to "abc"
-  variable argRef set to new AsRef<of String>(arg)
+  variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
   print(argRef.value())
 end main
-procedure changeArg(pointer as AsRef<of String>)
+procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
@@ -535,7 +535,7 @@ end function
 <p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
 
 <codeblock>
-function binarySearch(li as List<of String>, item as String) returns Boolean
+function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -834,10 +834,10 @@ main
   call print ($"{rainbow()[0]} is violet")
   call print ($"{suitColours()["hearts"]} is red")
 end main
-function rainbow() returns List<of Int>
+function rainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
-function suitColours() returns Dictionary<of String, Int>
+function suitColours() returns Dictionary&lt;of String, Int&gacute;t;
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
@@ -859,7 +859,7 @@ enum Direction up, down, left, right
 <p>and is used in several places in the code, for example:</p>
 
 <codeblock>
-  function getAdjacentSquare(sq as List<of Int>, dir as Direction) returns List<of Int>
+  function getAdjacentSquare(sq as List&lt;of Int&gt;, dir as Direction) returns List&lt;of Int&gt;
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is Direction.left then
@@ -924,7 +924,7 @@ enum Outcome undecided, win, lose, draw, winDouble
  <p>From the <b>Bubbles</b> demo, where comments explain specific blocks of instructions<p>
 
   <codeblock>
-procedure moveGrowBurst(bubbles as List<of CircleVG>)
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -1136,7 +1136,7 @@ case a function call:</p>
   and then to <code>true</code> if two values are swapped:</p>
 
   <codeblock>
- procedure inPlaceRippleSort(li as List<of Int>)
+ procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
@@ -1159,7 +1159,7 @@ end procedure
   system method:</p>
 
 <codeblock>
-procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&lg;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1502,7 +1502,7 @@ which is defined immediately below the main routine at the same (global) level.
 <p>From the <b>Snake - procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
 
 <codeblock>
-procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1770,7 +1770,7 @@ end main
  <td>
 <codeblock>
 main
-  variable li set to new List<of Int>()
+  variable li set to new List&lt;of Int&gt;()
   reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
@@ -1945,17 +1945,6 @@ e.g. in a particular call to a Higher-order Function.</p>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
-<!-- <p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
- to assign a <b>lambda</b> to a named value, so as to reuse it within the scope of that named value.</p>
-
-Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
-<codeblock>
-function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
-  variable neighbours set to neighbourCells(c)
-  variable live set to neighbours.filter(lambda i as Int => cells[i])
-  return live.length()
-end function
-</codeblock> -->
 
 <h2 id="ifExpression"><b>if</b> expression</h2>
 
@@ -2001,7 +1990,7 @@ end procedure
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
    or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
-<code>variable headRef set to new AsRef&lt;of List<of Int&gt;&gt;(head)</code>
+<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 
 <div>
   <h1>Miscellaneous</h1>

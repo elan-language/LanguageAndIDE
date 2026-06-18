@@ -469,7 +469,7 @@ class Apple
     end while
   end procedure
 
-  procedure updateBlocks(blocks as List<of List<of Int>>)
+  procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
     reassign blocks[this.location.x][this.location.y] to red
   end procedure
   
@@ -539,7 +539,7 @@ end class
   end function
 
   # Returns the 8 theoretically-neighbouring points, whether or not within bounds
-  function neighbouringPoints() returns List<of Point>
+  function neighbouringPoints() returns List&lt;of Point&gt;
     return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
   end function
 
@@ -597,7 +597,7 @@ abstract class Player
 
   property points as Int
 
-  property cards as List<of Card>
+  property cards as List&lt;of Card&gt;
 
   property handTotal as Int
 
