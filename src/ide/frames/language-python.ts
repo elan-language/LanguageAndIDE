@@ -205,8 +205,34 @@ export class LanguagePython extends LanguageAbstract {
     return result;
   }
 
-  renderBottomAsHtml(_frame: Frame): string {
-    return ""; // Python blocks have no textual ending;
+ renderBottomAsHtml(frame: Frame): string {
+    let html = "<el-comment># end ";
+    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
+      html += this.CLASS;
+    } else if (frame instanceof Constructor) {
+      html += "constructor";
+    } else if (frame instanceof FunctionMethod) {
+      html += "function method";
+    } else if (frame instanceof ProcedureMethod) {
+      html += "procedure method";
+    } else if (frame instanceof For) {
+      html += this.FOR;
+    } else if (frame instanceof GlobalFunction) {
+      html += "function";
+    } else if (frame instanceof GlobalProcedure) {
+      html += "procedure";
+    } else if (frame instanceof IfStatement) {
+      html += "if";
+    } else if (frame instanceof MainFrame) {
+      html += "main";
+    } else if (frame instanceof TryStatement) {
+      html += this.TRY;
+    } else if (frame instanceof While) {
+      html += this.WHILE;
+    } else if (frame instanceof TestFrame) {
+      html += "test";
+    }
+    return html + "</el-comment>";
   }
 
   renderFileImportsAsHtml(): string {

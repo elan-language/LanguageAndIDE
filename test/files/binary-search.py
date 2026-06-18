@@ -13,6 +13,10 @@ def main() -> None:
         print(f"\nWe can supply a {wanted}")
       else:
         print(f"\nSorry, we cannot supply a {wanted}")
+      # end if
+    # end if
+  # end while
+# end main
 
 def binarySearch(li: list[str], item: str) -> bool: # function
   result = False # variable definition
@@ -25,7 +29,10 @@ def binarySearch(li: list[str], item: str) -> bool: # function
       result = binarySearch(li.subList(0, mid), item) # reassign variable
     else:
       result = binarySearch(li.subList(mid + 1, li.length()), item) # reassign variable
+    # end if
+  # end if
   return result
+# end function
 
 def test_binarySearch(self) -> None:
   li1 = ["lemon", "lime", "orange"] # variable definition
@@ -42,5 +49,6 @@ def test_binarySearch(self) -> None:
   self.assertEqual(binarySearch(li3, "lime"), False)
   li4 = list[str]() # variable definition
   self.assertEqual(binarySearch(li4, "pear"), False)
+# end test
 
 main()

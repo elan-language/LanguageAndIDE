@@ -8,5 +8,7 @@ def main() -> None:
     t.move(i) # call procedure
     t.turn(90) # call procedure
     sleep_ms(300) # call procedure
+  # end for
+# end main
 
 main()

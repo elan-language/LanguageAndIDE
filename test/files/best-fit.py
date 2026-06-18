@@ -9,6 +9,7 @@ def bestFitLine(points: list[Point]) -> tuple[float, float]: # function
   a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX) # let
   b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) # let
   return (a, b)
+# end function
 
 class Point: # concrete class
 
@@ -19,14 +20,17 @@ class Point: # concrete class
   def __init__(self: Point, x: float, y: float) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+  # end constructor
 
   def toString(self: Point) -> str: # function method
     return f"Point {self.x}, {self.y}"
+  # end function method
 
-
+# end class
 
 def newPoint(x: float, y: float) -> Point: # function
   return Point(x, y)
+# end function
 
 def test_bestFit(self) -> None:
   l1 = [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)] # let
@@ -35,9 +39,11 @@ def test_bestFit(self) -> None:
   b = a_b.item_1 # let
   self.assertEqual(a.round(3), 0.766)
   self.assertEqual(b.round(3), 1.093)
+# end test
 
 def test_bestFit_empty(self) -> None:
   l1 = list[Point]() # let
   a_b = bestFitLine(l1) # let
   # NaN means 'Not A Number"
   self.assertEqual(a_b.toString(), "(NaN, NaN)")
+# end test

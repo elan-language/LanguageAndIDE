@@ -12,13 +12,16 @@ def main() -> None:
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
     game = clockTick(game, getKey()) # reassign variable
+  # end while
   print(f"Game Over! Score: {score(game)}")
+# end main
 
 def clockTick(g: Game, k: str) -> Game: # function
   g2 = if_(k.equals(""), g, g.withKey(k)) # let
   g3 = moveSnake(g2) # let
   g4 = eatAppleIfPoss(g3) # let
   return if_(gameOver(g4), g4.withIsOn(False), g4)
+# end function
 
 def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # let
@@ -26,12 +29,15 @@ def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
   tail = g.body[0] # let
   tailColour = if_(tail.equals(g.priorTail), green, white) # let
   return graphicsPut(b3, tail.x, tail.y, tailColour)
+# end function
 
 def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
   return graphics.withSet(x, graphics[x].withSet(y, colour))
+# end function
 
 def score(g: Game) -> int: # function
   return g.body.length() - 2
+# end function
 
 def moveSnake(g: Game) -> Game: # function
   k = g.key # let
@@ -40,22 +46,27 @@ def moveSnake(g: Game) -> Game: # function
   newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) # let
   newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) # let
   return g.withBody(g.body.withAppend(g.head)).withHead(Square(newX, newY))
+# end function
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # let
   moveTail = g.body.subList(1, g.body.length()) # let
   return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+# end function
 
 def headOverApple(g: Game) -> bool: # function
   return g.head.equals(g.apple)
+# end function
 
 def gameOver(g: Game) -> bool: # function
   return g.body.contains(g.head) or hasHitEdge(g)
+# end function
 
 def hasHitEdge(g: Game) -> bool: # function
   x = g.head.x # let
   y = g.head.y # let
   return (x == -1) or (y == -1) or (x == 40) or (y == 30)
+# end function
 
 class Game: # concrete class
 
@@ -81,9 +92,11 @@ class Game: # concrete class
     self.isOn = True # reassign variable
     self.apple = Square(12, 15) # reassign variable
     self.rnd = rnd # reassign variable
+  # end constructor
 
   def toString(self: Game) -> str: # function method
     return "a Game"
+  # end function method
 
   def withNewApple(self: Game) -> Game: # function method
     x = self.rnd.asInt(0, 39) # let
@@ -93,43 +106,51 @@ class Game: # concrete class
     apple2 = Square(x, y) # let
     g2 = self.withApple(apple2).withRnd(rnd3) # let
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
+  # end function method
 
   def withHead(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.head = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withBody(self: Game, value: list[Square]) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.body = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withPriorTail(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.priorTail = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withApple(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.apple = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withIsOn(self: Game, value: bool) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.isOn = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withRnd(self: Game, value: Random) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.rnd = value # reassign variable
     return copyOfThis
+  # end function method
 
   def withKey(self: Game, value: str) -> Game: # function method
     copyOfThis = copy(self) # let
     copyOfThis.key = value # reassign variable
     return copyOfThis
+  # end function method
 
-
+# end class
 
 class Square: # concrete class
 
@@ -140,11 +161,13 @@ class Square: # concrete class
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+  # end constructor
 
   def toString(self: Square) -> str: # function method
     return f"{self.x}, {self.y}"
+  # end function method
 
-
+# end class
 
 def test_clockTick(self) -> None:
   g1 = Game(Random()) # let
@@ -162,6 +185,7 @@ def test_clockTick(self) -> None:
   g6 = g5.withHead(Square(22, 29)) # let
   g7 = clockTick(g6, "s") # let
   self.assertEqual(g7.isOn, False)
+# end test
 
 def test_updateGraphics(self) -> None:
   blocks = createBlockGraphics(white) # let
@@ -175,6 +199,7 @@ def test_updateGraphics(self) -> None:
   self.assertEqual(blocks3[12][15], red)
   self.assertEqual(blocks3[22][15], green)
   self.assertEqual(blocks3[23][15], green)
+# end test
 
 def test_testnewApple(self) -> None:
   g1 = Game(Random()) # let
@@ -188,6 +213,7 @@ def test_testnewApple(self) -> None:
   g5 = g4.withBody([Square(10, 12)]) # let
   g6 = g5.withNewApple() # let
   self.assertEqual(g4.apple, Square(12, 15))
+# end test
 
 def test_score(self) -> None:
   g1 = Game(Random()) # let
@@ -198,6 +224,7 @@ def test_score(self) -> None:
   self.assertEqual(score(g3), 1)
   g4 = g1.withBody([Square(3, 4), Square(4, 4), Square(5, 4), Square(5, 5)]) # let
   self.assertEqual(score(g4), 2)
+# end test
 
 def test_moveSnake(self) -> None:
   g1 = Game(Random()) # let
@@ -213,6 +240,7 @@ def test_moveSnake(self) -> None:
   g8 = g1.withKey("s") # let
   g9 = moveSnake(g8) # let
   self.assertEqual(g9.head, Square(22, 16))
+# end test
 
 def test_eatAppleIfPoss(self) -> None:
   g1 = Game(Random()) # let
@@ -229,6 +257,7 @@ def test_eatAppleIfPoss(self) -> None:
   self.assertEqual(g5.body.length(), 2)
   self.assertEqual(g5.apple, Square(12, 15))
   self.assertEqual(g5.priorTail, g1.priorTail)
+# end test
 
 def test_overApple(self) -> None:
   g1 = Game(Random()) # let
@@ -236,6 +265,7 @@ def test_overApple(self) -> None:
   self.assertEqual(headOverApple(g2), False)
   g3 = g2.withHead(Square(23, 15)) # let
   self.assertEqual(headOverApple(g3), True)
+# end test
 
 def test_gameOver(self) -> None:
   g1 = Game((Random())) # let
@@ -246,6 +276,7 @@ def test_gameOver(self) -> None:
   self.assertEqual(gameOver(g3), True)
   g4 = g1.withHead(Square(21, 15)) # let
   self.assertEqual(gameOver(g4), True)
+# end test
 
 def test_headIsAtEdge(self) -> None:
   g1 = Game(Random()) # let
@@ -258,11 +289,13 @@ def test_headIsAtEdge(self) -> None:
   self.assertEqual(hasHitEdge(g4), True)
   g5 = g1.withHead(Square(20, -1)) # let
   self.assertEqual(hasHitEdge(g5), True)
+# end test
 
 def test_newSquare(self) -> None:
   sq = Square(3, 4) # let
   self.assertEqual(sq.x, 3)
   self.assertEqual(sq.y, 4)
+# end test
 
 def test_newGame(self) -> None:
   rnd = Random() # let
@@ -277,5 +310,6 @@ def test_newGame(self) -> None:
   self.assertEqual(game.priorTail, Square(0, 0))
   self.assertEqual(game.key, "d")
   self.assertEqual(game.isOn, True)
+# end test
 
 main()
