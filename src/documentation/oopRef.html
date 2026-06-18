@@ -160,10 +160,23 @@ end if
     within the constructor for <code>Square</code> in the <b>Snake</b> demo:</p>
 
 <codeblock>
-constructor(x as Int, y as Int)
-  reassign this.x to x
-  reassign this.y to y
-end constructor
+class Square
+  constructor(x as Int, y as Int)
+    reassign this.x to x
+    reassign this.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  # Methods not shown here
+
+  function toString() returns String
+    return "{this.x}, {this.y}"
+  end function
+
+end class
 </codeblock>
 
 <h3 class="no-TOC">Note:</h3>
