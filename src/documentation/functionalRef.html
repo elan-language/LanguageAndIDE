@@ -242,14 +242,14 @@ end function
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List&lt;of String&gt;) returns WordCount
   let isBetter be wc2.count < wc1.count
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
-  return if(isBetter or isEqualAndPossAnswer, wc2, wc1)
+  return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
 end function
 </codeblock>
 
 <codeblock>
 function nextCellValue(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int, y as Int) returns Int
   let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
-  return if(live, black, white)
+  return if_(live, black, white)
 end function
 </codeblock>
 
@@ -283,7 +283,7 @@ When required, it is often better to delegate to a new function to perform part 
 
 <codeblock>
 function factorial(n as Int) returns Int
-  return if(n < 2, 1, n*factorial(n - 1))
+  return if_(n < 2, 1, n*factorial(n - 1))
 end function
 </codeblock>
 
@@ -341,7 +341,7 @@ or
    <b>Recursive Functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
 function sum(li as List&lt;of Float&gt;) returns Float
-  return if(li.length() is 0, 0.0, li.head() + sum(li.tail()))
+  return if_(li.length() is 0, 0.0, li.head() + sum(li.tail()))
 end function
 </codeblock>
 
@@ -369,7 +369,7 @@ in a function to reverse the order or items in a List:
 
 <codeblock>
 function reverse(li as List&lt;of Float&gt;) returns List&lt;of Float&gt;
-  return if(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
+  return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 end function
 </codeblock>
 
@@ -695,7 +695,7 @@ which forms part of the function template, plus the option to precede this with 
 function north(cell as (Int, Int)) returns (Int, Int)
   let x be cell.item_0
   let y be cell.item_1
-  let y2 be if(y is 0, 29, y - 1)
+  let y2 be if_(y is 0, 29, y - 1)
   return (x, y2)
 end function
  </codeblock> 
@@ -789,8 +789,8 @@ paradigm, with two exceptions:</p>
           let k be g.key
           let x be g.head.x
           let y be g.head.y
-          let newX be if(k.equals("a"), x - 1, if(k.equals("d"), x + 1, x))
-          let newY be if(k.equals("w"), y - 1, if(k.equals("s"), y + 1, y))
+          let newX be if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
+          let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
           return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
         end function
       </codeblock>
