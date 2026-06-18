@@ -298,7 +298,7 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
-      this.enable(profileButton, "Profile");
+      this.enable(profileButton, "Programming paradigm");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
       this.enable(newButton, "Clear the current code and start afresh");
