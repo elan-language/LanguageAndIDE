@@ -385,7 +385,7 @@ inheritance may be characterised as an 'is a' relationship, as in 'a Student is 
 <ul>
   <li>To reduce repetition of common properties and methods - which may be defined on the abstract superclass and then not repeated in the subclasses.
     For example it might be that Individual define a (string) property named 'emailAddress' and define a common procedure method named 'sendMessage'.</li>
-  <li>To allow instances of any of the subclasses to be handled by external code <i>without having to know the individual subclass of each instance.
+  <li>To allow instances of any of the subclasses to be handled by external code <i>without having to know the individual subclass of each instance</i>.
     This principle is known as 'type substitutability' and is a form of a more general principle know as 'polymorphism' - meaning 'of multiple forms'.
     For example, the user might define a special interest group that included some pupils, parents, and teachers, and so would be defined as a list of type
     Individual. This then makes it easy to send a message to all the members of the group, by invoking the method 'sendMessage' on each member in turn,
