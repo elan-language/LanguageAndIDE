@@ -29,7 +29,7 @@ static void main() {
 } // main
 
 static List<VectorGraphic> allpoints(Coords p) { // function
-  var vg2 = new List<VectorGraphic>();
+  var vg2 = createVectorGraphics();
   foreach (var xp in range(0, width + 1)) {
     foreach (var yp in range(0, height + 1)) {
       // scale and centre

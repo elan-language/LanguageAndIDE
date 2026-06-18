@@ -230,6 +230,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
   createWithMethod(): Frame {
     const wm = new FunctionMethod(this, false);
+    wm.setHelpId("with-method");
     wm.name.setPlaceholder("<i>withPropertyName</i>");
     const className: string = this.name.text;
     wm.returnType.setFieldToKnownValidText(className);

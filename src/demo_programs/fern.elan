@@ -1,9 +1,9 @@
-# bfbd6402860bacaea38272885cc3c951c9b6396e5fe013bf1abc722e9af9c38c Elan 2.0.0-beta valid
+# 03e2bedf7b9eecf262dbd898d0447b3bbc3874a4dd3dd86b331e02afeb525221 Elan 2.0.0-beta valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  variable vg set to new List<of VectorGraphic>()
+  variable vg set to createVectorGraphics()
   variable s set to new State(new RectangleVG(), 0.0, 0.16, new Random())
   # can't call s.r.initialiseFromClock() directly
   variable t set to s.r

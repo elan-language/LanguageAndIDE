@@ -22,9 +22,9 @@
 
 <h1>Getting started</h1>
 
-<h2>Select the procedural programming profile</h2>
+<h2>Select the procedural programming paradigm</h2>
 
- <p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>procedural</b> profile
+ <p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>procedural</b> paradigm
   from the menu at the top of the IDE. This will ensure that:</p>
 <ul>
  <li>The list of demo programs will now show only programs that use PP.</li> 
@@ -58,7 +58,7 @@
 <p>Elan supports, and in many cases <i>enforces</i> good programming practices, which 
   are automatically applied across all the supported languages, even where 
   a language ( when used outside Elan) would allow you to do otherwise. In the context of procedural programming 
-  (the <b>procedural</b> profile having been selected in the IDE), there are seven such best practices,
+  (the <b>procedural</b> paradigm having been selected in the IDE), there are seven such best practices,
   some widely recognised, others less so.</p> 
   <p>Some programmers will argue that there are specific circumstances where
   breaking the rules <i>should</i> be acceptable. The problem with this is that most of the places where
@@ -127,8 +127,8 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <h3 class="no-TOC" id="functionReturn">Return from a function or procedure only after the final instruction</h3>
 
 <p>This principle is somewhat analogous to the previous one, in that programmers find it convenient to include multiple
- <code>return</code> statements within a procedure or a function. All the supported languages permit this.
- Elan, however, deliberately prevents this practice. In Elan a function always has one <b>return</b> as its <i>last</i>
+ <code>return</code> instructions within a procedure or a function. All the supported languages permit this.
+ Elan, however, deliberately prevents this practice. In Elan a function always has one <b>return</b> instruction as its <i>last</i>
  instruction (which specifies the value to be returned), and there is no option to add another one earlier. 
  An Elan <b>procedure</b> cannot have a <b>return</b> instruction: the procedure exits after its last instruction.</p> 
 <p>Some programmers may argue that the constraint of no early returns in a function means you have to write an extra line of code at the start
@@ -279,7 +279,7 @@ generates a non-editable class named <code>Global</code>, and all global instruc
 <h3 class="no-TOC acc-title">Examples of main routines</h3>
 <div class="acc-body">
 
-p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
+<p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
 <codeblock>
 main
@@ -324,7 +324,7 @@ main
   call fillRandom(grid)
   while true
     call displayBlocks(grid)
-    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
+    variable gridRef set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(grid)
     call nextGeneration(gridRef)
     reassign grid to gridRef.value()
     call sleep_ms(50)
@@ -357,7 +357,7 @@ end main
 <p>From the <b>Bubbles</b> demo. It changes the vertical position, and the size, of each bubble in the provided list:</p>
 
 <codeblock>
-procedure moveGrowBurst(bubbles as List<of CircleVG>)
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -394,7 +394,7 @@ end procedure
 <p>From the <b>Life - procedural</b> demo. The code sets each of the cells in the 40x30 <code>grid</code></p>
 
 <codeblock>
-procedure fillRandom(grid as List<of List<of Int>>)
+procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   for col in range(0, 40)
     for row in range(0, 30)
       reassign grid[col][row] to blackOrWhite(random())
@@ -446,11 +446,11 @@ This then allows use of the dot methods <el-method>value</el-method> and <el-met
 <codeblock>
 main
   variable arg set to "abc"
-  variable argRef set to new AsRef<of String>(arg)
+  variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
   print(argRef.value())
 end main
-procedure changeArg(pointer as AsRef<of String>)
+procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
   call pointer.set(r.upperCase())
 end procedure
@@ -535,7 +535,7 @@ end function
 <p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
 
 <codeblock>
-function binarySearch(li as List<of String>, item as String) returns Boolean
+function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -568,13 +568,13 @@ end function
     <code>headX as Int</code></li>
   <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
   <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
-  <li>A function always has a <code>return</code> statement as its last instruction, which specifies a value, or an expression to be evaluated.
+  <li>A function always has a <code>return</code> instruction as its last instruction, which specifies a value, or an expression to be evaluated.
   The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
   <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
     Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
-  <li>The body of a function <i>may</i> consist only of the return statement - with the expression following <code>return</code> doing
+  <li>The body of a function <i>may</i> consist only of the <code>return</code> instruction - with the expression following <code>return</code> doing
   all the work needed.</li>
-  <li>More generally, the return statement will be preceded by other statement instructions to determine the result in several steps.</li>
+  <li>More generally, the <code>return</code> instruction will be preceded by other  instructions to determine the result in several steps.</li>
   <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
     languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
   <ul>
@@ -663,7 +663,7 @@ end test
   <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
     adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
   <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
-  <li>A test method must include one or more <b>assert</b> statements - with each one typically covering a different use-case.</li>
+  <li>A test method must include one or more <code>assert</code> instructionss - with each one typically covering a different use-case.</li>
   <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
     consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
   <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
@@ -834,10 +834,10 @@ main
   call print ($"{rainbow()[0]} is violet")
   call print ($"{suitColours()["hearts"]} is red")
 end main
-function rainbow() returns List<of Int>
+function rainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
 end function
-function suitColours() returns Dictionary<of String, Int>
+function suitColours() returns Dictionary&lt;of String, Int&gacute;t;
   return ["spades":black, "hearts":red, "diamonds":red, "clubs":black]
 end function
 </codeblock>
@@ -859,7 +859,7 @@ enum Direction up, down, left, right
 <p>and is used in several places in the code, for example:</p>
 
 <codeblock>
-  function getAdjacentSquare(sq as List<of Int>, dir as Direction) returns List<of Int>
+  function getAdjacentSquare(sq as List&lt;of Int&gt;, dir as Direction) returns List&lt;of Int&gt;
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is Direction.left then
@@ -924,7 +924,7 @@ enum Outcome undecided, win, lose, draw, winDouble
  <p>From the <b>Bubbles</b> demo, where comments explain specific blocks of instructions<p>
 
   <codeblock>
-procedure moveGrowBurst(bubbles as List<of CircleVG>)
+procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -965,15 +965,16 @@ end procedure
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
 of a program: the main routine, functions, and procedures.</p>
 
+<div id="print"></div>
 <div id="print_statement">
 <h2>Print</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of print statements</h3>
+<h3 class="no-TOC acc-title">Examples of print instructions</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
-    inline within the print statement:</code></p>
+    inline within the print instruction:</code></p>
 
 <codeblock>
 main
@@ -1043,14 +1044,14 @@ end main
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about print statements</h3>
+<h3 class="no-TOC acc-title">What you need to know about print instructions</h3>
 <div class="acc-body">
 
 <ul>
 <li>The <b>print</b> instruction writes a value to <b>display</b>.</li>
 <li>It automatically prints a new line after the value.</li>
 <li>The value can be any expression.</li>
-<li>You must provide a value; if you just want to print a blank line, just set the value to <code>""</code>.</li>
+<li>You must provide a value; if you just want to print a blank line, just set the value to "".</li>
 <li>The recommended way to print multiple values is to use an interpolated string (see third example above)</li>
 </ul>
 </div></div>
@@ -1135,7 +1136,7 @@ case a function call:</p>
   and then to <code>true</code> if two values are swapped:</p>
 
   <codeblock>
- procedure inPlaceRippleSort(li as List<of Int>)
+ procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
@@ -1158,7 +1159,7 @@ end procedure
   system method:</p>
 
 <codeblock>
-procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&lg;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1237,10 +1238,10 @@ which offer several advantages, including:</p>
 
 <div id="if">
 <div id="then"></div><div id="else"></div><div id="elif"></div>
-<h2 id="if_statement">If statement</h2>
+<h2 id="ifStatement">If</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of if statements</h3>
+<h3 class="no-TOC acc-title">Examples of <b>if</b> instructions</h3>
 <div class="acc-body">
 
 <p>From the <b>Life - procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
@@ -1256,8 +1257,8 @@ function blackOrWhite(random as Float) returns Int
 end function
 </codeblock>
 
-<p>From the <b>Bubbles</b> demo where the <b>if</b> statement includes an <b>else</b> clause,
-  so that one of two separate blocks of statements is always executed depending on the value of a randomly-generated number.</p>
+<p>From the <b>Bubbles</b> demo where the <b>if</b> instruction includes an <b>else</b> clause,
+  so that one of two separate blocks of instructions is always executed depending on the value of a randomly-generated number.</p>
 
 <codeblock>
 if random() < 0.05 then
@@ -1272,7 +1273,7 @@ end if
 </codeblock>
 
 <p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
-on the value of the <code>direction</code> variable, one of four different statements is executed:</p>
+on the value of the <code>direction</code> variable, one of four different instructions is executed:</p>
 
 <codeblock>
 if direction is 0 then
@@ -1291,7 +1292,7 @@ end if
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about an if statement</h3>
+<h3 class="no-TOC acc-title">What you need to know about an <b>if</b> instruction</h3>
 <div class="acc-body">
   <ul>
     <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
@@ -1302,16 +1303,16 @@ end if
       <li>a single existing variable that is of Boolean type</li>
       <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
     </ul>
-    <li>Within the body of an <b>if</b> expression you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
-    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> statement body</li>
+    <li>Within the body of an <b>if</b> instruction you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
+    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> instruction body</li>
   </ul>
 </div></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body"> 
-  <p><a href="#if_expression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although 
-    that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> profile.
+  <p><a href="#ifExpression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although 
+    that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> paradigm.</p>
 </div></div>
 </div>
 
@@ -1371,9 +1372,9 @@ end while
 <div class="acc-body">
 
 <ul>
-  <li>The <b>while loop</b> specifies that a block of statements is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
+  <li>The <b>while loop</b> specifies that a block of instructions is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
   <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
-  <li>As on an <b>if</b> statement, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
+  <li>As on an <b>if</b> instruction, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
   <li>The condition is evaluated at the beginning of each pass through the loop.</li>
   <li>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</li>
   <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
@@ -1449,7 +1450,7 @@ end procedure
   <ul>
     <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
-    <li>The <b>for loop</b> specifies that a block of statements that is repeated, once for each value in a sequence.</li>
+    <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
     <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
     <li>The sequence of values may be specified:</li>
@@ -1501,7 +1502,7 @@ which is defined immediately below the main routine at the same (global) level.
 <p>From the <b>Snake - procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
 
 <codeblock>
-procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
+procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1546,10 +1547,12 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 
 <div id="try">
 <div id="catch"></div>
+<div id="CustomError"></div>
+<div id="ElanRuntimeError"></div>
 <h2>Try</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples <b>try</b> statements</h3>
+<h4 class="no-TOC acc-title">Examples <b>try</b></h4>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
@@ -1588,7 +1591,7 @@ end main
   <li>The <b>try</b> instruction is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
     and to <i>catch</i> that exception without the program being automatically halted.</li>
   <li>The <b>try</b> instruction is often referred to as a `try-catch` - because it makes no sense to have
-  a <b>try</b> statement <i>without</i> a 'catch' clause.</li>
+  a <b>try</b> instruction <i>without</i> a 'catch' clause.</li>
   <li>When you add a <b>try</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
   <li class="python">'except' is Python's word for 'catch'</li>
   <li>When you add a new <b>try</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
@@ -1767,7 +1770,7 @@ end main
  <td>
 <codeblock>
 main
-  variable li set to new List<of Int>()
+  variable li set to new List&lt;of Int&gt;()
   reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
   call print(li.subList(4, li.length()))
@@ -1942,21 +1945,10 @@ e.g. in a particular call to a Higher-order Function.</p>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
-<!-- <p>Although a <b>lambda</b> is commonly defined 'inline' it is also possible
- to assign a <b>lambda</b> to a named value, so as to reuse it within the scope of that named value.</p>
 
-Example using a <b>lambda</b> to look for <el-id>true</el-id> in a list of Boolean values:
-<codeblock>
-function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
-  variable neighbours set to neighbourCells(c)
-  variable live set to neighbours.filter(lambda i as Int => cells[i])
-  return live.length()
-end function
-</codeblock> -->
+<h2 id="ifExpression"><b>if</b> expression</h2>
 
-<h2 id="if_expression"><b>if</b> (expression)</h2>
-
-<p>The <b>if</b> expression returns one of two values or expressions dependent upon the evaulation of a Boolean value:</p>
+<p>The <b>if</b> expression returns one of two values dependent upon the evaulation of a Boolean value:</p>
 <p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
@@ -1998,7 +1990,7 @@ end procedure
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
    or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program snake_PP.elan:</p>
-<code>variable headRef set to new AsRef&lt;of List<of Int&gt;&gt;(head)</code>
+<code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 
 <div>
   <h1>Miscellaneous</h1>
@@ -2064,7 +2056,7 @@ end procedure
  <p>The type must follow the rules for a <a href="#TypeName">type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
-<h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
+<h3 id="ProcRefField" class="no-TOC">'procedureName' in a <b>call procedure</b> instruction</h3>
  <p>Valid forms for a procedure call are
  <ul>
   <li><code>call procedureName()</code> to call a library procedure, or user-defined procedure.</li>

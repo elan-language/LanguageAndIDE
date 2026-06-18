@@ -2,9 +2,8 @@
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-code, codeblock { /* For convenience when authoring - before code is transformed to Html*/
+code *, codeblock * { /* For convenience when authoring - before code is transformed to Html*/
     font-family: consolas, monospace;
-    color: rgba(5, 87, 165, 0.76);
 }
 
 code {

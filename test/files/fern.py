@@ -5,7 +5,7 @@
 # Draws a fractal image
 
 def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
+  vg = createVectorGraphics() # variable definition
   s = State(RectangleVG(), 0.0, 0.16, Random()) # variable definition
   # can't call s.r.initialiseFromClock() directly
   t = s.r # variable definition

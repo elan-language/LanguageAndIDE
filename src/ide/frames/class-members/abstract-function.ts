@@ -33,6 +33,15 @@ export class AbstractFunction extends SingleLineFrame {
   initialKeywords(): string {
     return abstractFunctionKeywords;
   }
+
+  override helpDocument(): string {
+    return "oopRef.html";
+  }
+
+  override helpId(): string {
+    return "abstract_function";
+  }
+  
   getFields(): Field[] {
     return [this.name, this.params, this.returnType];
   }

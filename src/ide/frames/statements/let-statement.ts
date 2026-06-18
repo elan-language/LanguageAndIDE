@@ -15,6 +15,14 @@ export class LetStatement extends AbstractDefinitionStatement {
     return constantKeyword;
   }
 
+  override helpDocument(): string {
+    return "functionalRef.html";
+  }
+
+  override helpId(): string {
+    return "let";
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${letKeyword} `);

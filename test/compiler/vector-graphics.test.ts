@@ -40,6 +40,49 @@ end main`;
     ]);
   });
 
+  test("Pass_useCreateVectorGraphics", async () => {
+    const code = `${testHeader}
+
+main
+  variable vg set to createVectorGraphics()
+  variable circ set to (new CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1)
+  variable vg2 set to vg.withAppend(circ)
+  call printNoLine(vg2.vectorGraphicsAsHtml())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let vg = (await _stdlib.createVectorGraphics());
+  let circ = (system.initialise(await new _stdlib.CircleVG()._initialise())).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(_stdlib.red).withStrokeWidth(1);
+  let vg2 = vg.withAppend(circ);
+  await _stdlib.printNoLine(_stdlib.vectorGraphicsAsHtml(vg2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50%" cy="66.66666666666667%" r="11.25%" stroke="#000000" stroke-width="0.3%" fill="#ff0000"/>
+</svg>
+`,
+    );
+  });
+
   test("Pass_AppendUsingFunction", async () => {
     const code = `${testHeader}
 

@@ -31,7 +31,7 @@ static void moveOne(List<List<int>> stacks, int fromStack, int toStack) { // pro
 
 static void display(List<List<int>> stacks) { // procedure
   clearAllDisplays(); // call procedure
-  var vg = new List<VectorGraphic>();
+  var vg = createVectorGraphics();
   drawStack(stacks[0], 1, vg); // call procedure
   drawStack(stacks[1], 2, vg); // call procedure
   drawStack(stacks[2], 3, vg); // call procedure
