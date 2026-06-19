@@ -41,7 +41,7 @@ export class AbstractFunction extends SingleLineFrame {
   override helpId(): string {
     return "abstract_function";
   }
-  
+
   getFields(): Field[] {
     return [this.name, this.params, this.returnType];
   }
