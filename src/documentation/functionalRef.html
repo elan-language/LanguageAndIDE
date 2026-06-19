@@ -67,8 +67,8 @@ This changes two things: </p>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
 
-<p>Dedicated Functional Programming languages &mdash; such as Haskell &mdash; enforce these rules automatically. Common 'multi-paradigm' languages
-    &mdash; including Python, VB, C#, and Java &mdash; do not enforce them. However, if any of those languages are used within Elan, then the
+<p>Dedicated Functional Programming languages &ndash; such as Haskell &ndash; enforce these rules automatically. Common 'multi-paradigm' languages
+    &ndash; including Python, VB, C#, and Java &ndash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
 (in Python, VB, C#, or Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> paradigms
@@ -89,7 +89,7 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
     but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</p>
 
   <p>This may seem logical when a program is obviously heavily dependent upon calculation, logic, or data transformation
-    &mdash; as, for example, the <b>Best Fit</b> and <b>Wordle solver</b> demo programs. But what about an interactive game, where
+    &ndash; as, for example, the <b>Best Fit</b> demo program. But what about an interactive game, where
     most of the logic is concerned with managing the user input and the display? Consider the two demo programs: <b>Snake - procedural</b>
     and <b>Snake - procedural</b>. The two programs behave identically when run.
      We recommend that you take the time to explore the these two programs in detail,but here's a summary of the key differences:
@@ -140,7 +140,7 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
 
   <p>On some platforms it is possible to write automated tests that also cover procedures (including the main routine).
      These are sometimes referred to as 'end to end tests', or 'UI tests' because they can simulate a user interacting with the program.
-     But such tests are much harder to write than unit tests, and notoriously 'brittle' &mdash; meaning that a tiny change to code can break
+     But such tests are much harder to write than unit tests, and notoriously 'brittle' &ndash; meaning that a tiny change to code can break
      many existing tests and take hours to fix. Changes external to your program, such as a routine upgrade to the browser or operating system,
      can easily render such tests invalid. Elan does not currently support those kind of tests.</p>
      <p>Note, however, that <i>outside Elan</i>,  Python, VB, C#, and Java, have <i>unit testing</i> frameworks
@@ -221,7 +221,7 @@ end function
 
 <ul>
   <li>To make a long expression easier to read</li>
-  <li>To eliminate duplication &mdash; where the same sub-expression otherwise appears in full in more than one place.</li>
+  <li>To eliminate duplication &ndash; where the same sub-expression otherwise appears in full in more than one place.</li>
   <li>Within a test, because the 'actual' field does not support 'chained' expressions (expressions containing more than one 'dot')</li>
 </ul>
 
@@ -294,8 +294,13 @@ end function
   <li>The recursion must 'bottom out' eventually, and this must be explicitly checked for. In this case it bottoms out when
     <code>n</code> is less than <code>2</code>, because 0! and 1! are both 1. The most common error when writing a recursive function
     is forgetting to define and check for the bottoming-out condition. If you fail to do this, for example by writing
-    <code>return n*factorial(n - 1)</code>
-    &mdash; or you get the condition wrong &mdash; the
+<codeblock>
+function factorial(n as Int) returns Int
+  return n*factorial(n - 1)
+end function
+</codeblock>
+
+    &ndash; or you get the condition wrong &ndash; the
     iteration will continue indefinitely until you eventually get a 'Stack overflow error', which crashes the program.
     Try it so that you learn to recognise and diagnose the potential problem.
   </li>
@@ -318,22 +323,22 @@ or by calling one of the available procedure methods on on it such as:
 but in FP this is not permitted. Data structures are never to be mutated. Instead, you may call a function that returns
 a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:
 
-<codeblock>
+<b>
   let myNewSubjects be mySubjects.withSet(3, "Geography")
-</codeblock>
+</b>
 or
-<codeblock>
+<b>
   let myNewSubjects be mySubjects.withAppend("Music")
-</codeblock>
+</b>
 </p>
 
 <p>At first sight this may seem awkward, strange and certainly inefficient.
   But though you might never have thought about it in these terms, this is what you have always done when manipulating a <code>String</code>.
   You can never actually mutate a string, such as converting it to upper case or trimming off the leading spaces. You have to write, for example:</p>
 
-<codeblock>
+<b>
   let myNewString be myString.upperCase()
-</codeblock>
+</b>
 
 <p>When you want to apply operations to all items in a List you need to use iteration, which means using
   either <a href="#FP_recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#FP_HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
@@ -383,7 +388,7 @@ end function
   <li>At first glance, none of the functions <i>appears</i> to be recursive because none of them calls <i>itself</i> directly. However,
   as you study the code you will see that <el-method>sort</el-method> calls <el-method>sortedFrontHalf</el-method>
   and <el-method>sortedBackHalf</el-method> both of which call
-back into <el-method>sort</el-method> again &mdash; crucially with approximately half of the original List.
+back into <el-method>sort</el-method> again &ndash; crucially with approximately half of the original List.
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
@@ -394,7 +399,7 @@ The same pattern exists between <el-method>merge</el-method> and <el-method>merg
   but Elan does not currently support that pattern.)
   Under the covers, HoFs are written using recursion, but you don't see this. </p>
 
-<p>There are many possible HoFs, but three of them &mdash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &mdash;
+<p>There are many possible HoFs, but three of them &ndash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &ndash;
 are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
 They can be used individually or in combination. The purpose and operation of each is explained below.</p>
 
@@ -474,7 +479,7 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
     <li>The function can be tested in isolation.</li>
   </ul>
   <p>However, there are many circumstances where the function you need to pass into a HoF, is unlikely to be used in any different context,
-    and where the function is so simple that it hardly warrants its own test &mdash; especially if the whole expression that uses the HoF is being tested.</p>
+    and where the function is so simple that it hardly warrants its own test &ndash; especially if the whole expression that uses the HoF is being tested.</p>
 <p>A <b>lambda</b> is a function that is defined 'inline' as an argument in a function call. For example, the expression from the example above:</p>
   <codeblock>nums.filter(lessThan5)</codeblock>
   could be written as:
@@ -483,19 +488,19 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
 
 <p>There is a whole branch of <i>mathematics</i> devoted to 'lambda calculus', which in turn provided the theoretical underpinning for the concept
   of function programming (FP). And lambdas have capabilities that are both more subtle and more sophisticated than can be described here, including the
-  idea of 'closure' (which you can look up if you are ready to go much deeper &mdash; and which is supported in Elan). However, you should note that,
+  idea of 'closure' (which you can look up if you are ready to go much deeper &ndash; and which is supported in Elan). However, you should note that,
   because of the need for compatibility across all the supported languages, Elan has a restricted implementation of HoFs and of 'function passing' in general,
   but it is sufficient to grasp the key principles of Functional Programming. To go further you would need to switch to a pure FP language such as Haskell.
   <i>Currently</i> Elan does <i>not</i> permit (in any of the supported languages):</p>
 <ul>
 <li>The definition of a lambda <i>except</i> inline as the argument to a HoF. You cannot, for example, assign a lambda (or a function) to a variable.</li>
-<li>The definition of your own HoFs &mdash; you are restricted to using the HoFs defined in the Elan library.</li>
+<li>The definition of your own HoFs &ndash; you are restricted to using the HoFs defined in the Elan library.</li>
 </ul>
 
 <h3 class="no-TOC">Using HoFs to iterate over a 2D List</h3>
 
 <p>If you are using Elan's Block Graphics, or have another need to process a 2D List (such as working with matrices or tabular data), and you
-  want to do this in pure functions, you have the challenge of how to iterate over two dimensions &mdash; something that is straightforward in
+  want to do this in pure functions, you have the challenge of how to iterate over two dimensions &ndash; something that is straightforward in
   <i>procedural</i> programming by means of 'nested loops'. It is certainly possible to iterate over two dimensions of a List using HoFs within a
   single expression, but until you are <i>fluent</i> in such programming, the recommended approach is to break up the task into an 'inner' function
   that processes just a single <i>column</i> (or row, if preferred) of the 2D structure and an 'outer' function that processes each of the columns
@@ -557,7 +562,7 @@ offered only within a Class, and only when using the <b>functional</b> paradigm.
 a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
 <p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
-  within the program to update any instance of Square &mdash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
+  within the program to update any instance of Square &ndash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
   need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 

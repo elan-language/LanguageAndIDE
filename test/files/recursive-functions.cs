@@ -2,7 +2,7 @@
 
 static int factorial(int n) { // function
   return if_(n < 2, 1, n*factorial(n - 1));
-} // function
+} // end function
 
 [TestMethod] static void test_factorial() {
   Assert.AreEqual(2, factorial(2));
@@ -12,11 +12,11 @@ static int factorial(int n) { // function
   // edge cases:
   Assert.AreEqual(1, factorial(1));
   Assert.AreEqual(1, factorial(0));
-} // test
+} // end test
 
 static double sum(List<double> li) { // function
   return if_(li.length() == 0, 0.0, li.head() + sum(li.tail()));
-} // function
+} // end function
 
 [TestMethod] static void test_sum() {
   var li = new [] {3.1, 5.02, 4, 7.73, 9.9}; // let
@@ -26,11 +26,11 @@ static double sum(List<double> li) { // function
   Assert.AreEqual(0, sum(le));
   var l1 = new [] {0.6}; // let
   Assert.AreEqual(0.6, sum(l1));
-} // test
+} // end test
 
 static List<double> reverse(List<double> li) { // function
   return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()));
-} // function
+} // end function
 
 [TestMethod] static void test_reverse() {
   var l = new [] {3.1, 5.02, 4, 7.73, 9.9}; // let
@@ -40,4 +40,4 @@ static List<double> reverse(List<double> li) { // function
   Assert.AreEqual(le, reverse(le));
   var l1 = new [] {0.6}; // let
   Assert.AreEqual(l1, reverse(l1));
-} // test
+} // end test

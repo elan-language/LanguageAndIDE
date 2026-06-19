@@ -27,95 +27,95 @@ static void main() {
     mark = inp; // reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
     attempt = bestAttempt(possible); // reassign variable
-  } // while
-} // main
+  } // end while
+} // end main
 
 static boolean isGreen(String attempt, String target, int n) { // function
   return target[n].equals(attempt[n]);
-} // function
+} // end function
 
 static String setChar(String word, int n, String newChar) { // function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length());
-} // function
+} // end function
 
 static String setAttemptIfGreen(String attempt, String target, int n) { // function
   return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt);
-} // function
+} // end function
 
 static String setTargetIfGreen(String attempt, String target, int n) { // function
   return if_(isGreen(attempt, target, n), setChar(target, n, "."), target);
-} // function
+} // end function
 
 static List<String> evaluateGreens(String attempt, String target) { // function
   return range(0, 5).reduce(list(attempt, target), (List<String> a, int x) -> list(setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)));
-} // function
+} // end function
 
 static boolean isYellow(String attempt, String target, int n) { // function
   return target.contains(attempt[n]);
-} // function
+} // end function
 
 static String setAttemptIfYellow(String attempt, String target, int n) { // function
   return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")));
-} // function
+} // end function
 
 static boolean isAlreadyMarkedGreen(String attempt, int n) { // function
   return attempt[n].equals("*");
-} // function
+} // end function
 
 static String setTargetIfYellow(String attempt, String target, int n) { // function
   return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target));
-} // function
+} // end function
 
 static List<String> evaluateYellows(String attempt, String target) { // function
   return range(0, 5).reduce(list(attempt, target), (List<String> a, int x) -> list(setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)));
-} // function
+} // end function
 
 static String markAttempt(String attempt, String target) { // function
   var greens = evaluateGreens(attempt, target); // let
   var markedAttempt = evaluateYellows(greens[0], greens[1]); // let
   return markedAttempt[0];
-} // function
+} // end function
 
 static List<String> possibleAnswersAfterAttempt(List<String> prior, String attempt, String mark) { // function
   return prior.filter((String w) -> markAttempt(attempt, w).equals(mark));
-} // function
+} // end function
 
 static int maxWordCountRemainingAfterAttempt(List<String> possAnswers, String attempt) { // function
   var d = new Dictionary<String, int>(); // let
   var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt)); // let
   var keys = d2.keys(); // let
   return keys.reduce(0, (int maxSoFar, String mark) -> if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
-} // function
+} // end function
 
 static Dictionary<String, int> incrementCount(Dictionary<String, int> d, String possAnswer, String attempt) { // function
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
   var count = if_(keys.contains(mark), d[mark], 0); // let
   return d.withSet(mark, count + 1);
-} // function
+} // end function
 
 static List<WordCount> allRemainingWordCounts(List<String> possAnswers) { // function
   return possAnswers.map((String w) -> new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)));
-} // function
+} // end function
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<String> possAnswers) { // function
   var isBetter = wc2.count < wc1.count; // let
   var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
   return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
-} // function
+} // end function
 
 static String bestAttempt(List<String> possAnswers) { // function
   var wordCounts = allRemainingWordCounts(possAnswers); // let
   var best = wordCounts.reduce(wordCounts.head(), (WordCount bestSoFar, WordCount newWord) -> betterOf(bestSoFar, newWord, possAnswers)); // let
   return best.word;
-} // function
+} // end function
 
 class WordCount {
 
   public WordCount(String word, int count) {
     this.word = word; // reassign variable
     this.count = count; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String word; // property
 
@@ -123,9 +123,9 @@ class WordCount {
 
   public String toString() { // function method
     return String.format("% %", this.word, this.count);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 // 2309 words
 
@@ -145,47 +145,47 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   var possAnswers3 = list("B", "A"); // let
   assertEquals(b2, betterOf(a2, b2, possAnswers3));
   assertEquals(a2, betterOf(b2, a2, possAnswers3));
-} // test
+} // end test
 
 @Test static void test_bestAttempt() {
   var possAnswers = list("ABCDE", "ABBBB", "EDCBA"); // let
   assertEquals("EDCBA", bestAttempt(possAnswers));
   var possAnswers2 = list("ABCDE", "ABBBB", "BCDEA"); // let
   assertEquals("BCDEA", bestAttempt(possAnswers2));
-} // test
+} // end test
 
 @Test static void test_Wordcount() {
   var wc = new WordCount("ABCDE", 3); // let
   assertEquals("ABCDE", wc.word);
   assertEquals(3, wc.count);
   assertEquals("ABCDE 3", wc.toString());
-} // test
+} // end test
 
 @Test static void test_isGreen() {
   assertEquals(true, isGreen("ABCDE", "A____", 0));
   assertEquals(true, isGreen("ABCDE", "____E", 4));
   assertEquals(false, isGreen("ABCDE", "_A___", 1));
   assertEquals(false, isGreen("BABBB", "B____", 1));
-} // test
+} // end test
 
 @Test static void test_setChar() {
   assertEquals("_BCDE", setChar("ABCDE", 0, "_"));
   assertEquals("ABCD_", setChar("ABCDE", 4, "_"));
-} // test
+} // end test
 
 @Test static void test_setAttemptIfGreen() {
   assertEquals("*BCDE", setAttemptIfGreen("ABCDE", "ABCDE", 0));
   assertEquals("ABCD*", setAttemptIfGreen("ABCDE", "ABCDE", 4));
   assertEquals("BBCDE", setAttemptIfGreen("BBCDE", "ABCDE", 0));
   assertEquals("*BCDE", setAttemptIfGreen("ABCDE", "AACDE", 0));
-} // test
+} // end test
 
 @Test static void test_setTargetIfGreen() {
   assertEquals(".BCDE", setTargetIfGreen("ABCDE", "ABCDE", 0));
   assertEquals("ABCD.", setTargetIfGreen("ABCDE", "ABCDE", 4));
   assertEquals("ABCDE", setTargetIfGreen("BBCDE", "ABCDE", 0));
   assertEquals(".ACDE", setTargetIfGreen("ABCDE", "AACDE", 0));
-} // test
+} // end test
 
 @Test static void test_evaluateGreens() {
   assertEquals(list("*BCDE", ".XXXX"), evaluateGreens("ABCDE", "AXXXX"));
@@ -193,7 +193,7 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals(list("*****", "....."), evaluateGreens("ABCDE", "ABCDE"));
   assertEquals(list("*ACDE", ".XXXX"), evaluateGreens("AACDE", "AXXXX"));
   assertEquals(list("*BCDE", ".AXXX"), evaluateGreens("ABCDE", "AAXXX"));
-} // test
+} // end test
 
 @Test static void test_isYellow() {
   assertEquals(true, isYellow("ABCDE", "____A", 0));
@@ -201,14 +201,14 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals(true, isYellow("ABCDE", "___AA", 0));
   assertEquals(true, isYellow("AACDE", "_A___", 1));
   assertEquals(true, isYellow("AACDE", "__A__", 1));
-} // test
+} // end test
 
 @Test static void test_setAttemptIfYellow() {
   assertEquals("+BCDE", setAttemptIfYellow("ABCDE", "EABCD", 0));
   assertEquals("ABCD+", setAttemptIfYellow("ABCDE", "EABCD", 4));
   assertEquals("+BCDE", setAttemptIfYellow("ABCDE", "BAAAA", 0));
   assertEquals("AAAA+", setAttemptIfYellow("AAAAB", "EABBB", 4));
-} // test
+} // end test
 
 @Test static void test_isAlreadyMarkedGreen() {
   assertEquals(true, isAlreadyMarkedGreen("AB*DE", 2));
@@ -217,7 +217,7 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals(false, isAlreadyMarkedGreen("*BCD*", 2));
   assertEquals(true, isAlreadyMarkedGreen("*BCD*", 0));
   assertEquals(true, isAlreadyMarkedGreen("*BCD*", 4));
-} // test
+} // end test
 
 @Test static void test_setTargetIfYellow() {
   assertEquals("E.BCD", setTargetIfYellow("ABCDE", "EABCD", 0));
@@ -226,7 +226,7 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals("EA.EA", setTargetIfYellow("AAAAB", "EABEA", 4));
   assertEquals("EA.BB", setTargetIfYellow("AAAAB", "EABBB", 4));
   assertEquals("*BCDA", setTargetIfYellow("*BCDE", "*BCDA", 4));
-} // test
+} // end test
 
 @Test static void test_evaluateYellows() {
   assertEquals(list("+____", "X.XXX"), evaluateYellows("ABCDE", "XAXXX"));
@@ -235,7 +235,7 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals(list("+____", "X.AXX"), evaluateYellows("ABCDE", "XAAXX"));
   assertEquals(list("+____", "X.XXX"), evaluateYellows("AACDE", "XAXXX"));
   assertEquals(list("+++++", "....."), evaluateYellows("ABCDE", "BCDEA"));
-} // test
+} // end test
 
 @Test static void test_markAttempt() {
   assertEquals("_____", markAttempt("ABCDE", "XXXXX"));
@@ -246,14 +246,14 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals("+__*_", markAttempt("CABAL", "RECAP"));
   assertEquals("+__*_", markAttempt("CABAL", "RECAP"));
   assertEquals("_++__", markAttempt("COLON", "GLORY"));
-} // test
+} // end test
 
 @Test static void test_possibleAnswersAfterAttempt() {
   var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
   assertEquals(list("ABCDE"), possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
   assertEquals(list("BCDEA", "CDEAB", "DEABC", "EABCD"), possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
   assertEquals(list("BCDEA", "CDEAB", "EABCD"), possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
-} // test
+} // end test
 
 @Test static void test_maxWordCountRemainingAfterAttempt() {
   var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
@@ -261,12 +261,12 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   assertEquals(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"));
   assertEquals(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"));
   assertEquals(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"));
-} // test
+} // end test
 
 @Test static void test_allRemainingWordCounts() {
   var possAnswers = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
   var wordcounts = allRemainingWordCounts(possAnswers); // let
   assertEquals("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
-} // test
+} // end test
 
 }

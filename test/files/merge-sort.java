@@ -18,24 +18,24 @@ public class Global {
 
 static List<String> sort(List<String> li) { // function
   return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)));
-} // function
+} // end function
 
 static List<String> sortedFrontHalf(List<String> li) { // function
   var mid = divAsInt(li.length(), 2); // let
   var frontHalf = li.subList(0, mid); // let
   return sort(frontHalf);
-} // function
+} // end function
 
 static List<String> sortedBackHalf(List<String> li) { // function
   var mid = divAsInt(li.length(), 2); // let
   var backHalf = li.subList(mid, li.length()); // let
   return sort(backHalf);
-} // function
+} // end function
 
 static List<String> merge(List<String> a, List<String> b) { // function
   var oneIsEmpty = (a.length() == 0) || (b.length() == 0); // let
   return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
-} // function
+} // end function
 
 static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var aHead = a.head(); // let
@@ -43,7 +43,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var aTail = a.tail(); // let
   var bTail = b.tail(); // let
   return if_(aHead.isBefore(bHead), list(aHead).withAppendList(merge(aTail, b)), list(bHead).withAppendList(merge(a, bTail)));
-} // function
+} // end function
 
 @Test static void test_sort() {
   // Edge case: empty
@@ -63,7 +63,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li5 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"); // let
   assertEquals(li5, sort(li5));
-} // test
+} // end test
 
 @Test static void test_sortedFrontHalf() {
   // Edge case: one item - so front half is empty
@@ -78,7 +78,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
   assertEquals(list("apple", "apricot", "lemon"), sortedFrontHalf(li4));
-} // test
+} // end test
 
 @Test static void test_sortedBackHalf() {
   // Edge case: one item - so back half is whole list
@@ -93,7 +93,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
   assertEquals(list("lime", "melon", "orange", "pear"), sortedBackHalf(li4));
-} // test
+} // end test
 
 @Test static void test_merge() {
   // Happy cases:
@@ -113,7 +113,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var lu = list("lime", "pear", "apple"); // let
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
   assertEquals(list("lime", "pear", "apple"), merge(lu, le));
-} // test
+} // end test
 
 @Test static void test_mergeNonEmpty() {
   var l1 = list("apple", "lime", "pear"); // let
@@ -132,6 +132,6 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   //  Error case unsorted list
   var lu = list("lime", "pear", "apple"); // let
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
-} // test
+} // end test
 
 }

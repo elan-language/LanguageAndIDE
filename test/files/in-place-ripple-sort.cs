@@ -5,7 +5,7 @@ static void main() {
   Console.WriteLine(li); // print
   inPlaceRippleSort(li); // call procedure
   Console.WriteLine(li); // print
-} // main
+} // end main
 
 static void inPlaceRippleSort(List<int> li) { // procedure
   var hasChanged = true;
@@ -18,8 +18,8 @@ static void inPlaceRippleSort(List<int> li) { // procedure
         li[i] = li[i + 1]; // reassign variable
         li[i + 1] = temp; // reassign variable
         hasChanged = true; // reassign variable
-      } // if
-    } // foreach
+      } // end if
+    } // end foreach
     lastComp = lastComp - 1; // reassign variable
-  } // while
-} // procedure
+  } // end while
+} // end procedure

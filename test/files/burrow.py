@@ -17,5 +17,8 @@ def main() -> None:
       y = min([y + 1, 29]) # reassign variable
     elif direction == 3: # else if
       y = max([y - 1, 0]) # reassign variable
+    # end if
+  # end while
+# end main
 
 main()

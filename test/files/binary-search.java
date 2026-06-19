@@ -15,10 +15,10 @@ static void main() {
         System.out.println(String.format("\nWe can supply a %", wanted)); // print
       } else {
         System.out.println(String.format("\nSorry, we cannot supply a %", wanted)); // print
-      } // if
-    } // if
-  } // while
-} // main
+      } // end if
+    } // end if
+  } // end while
+} // end main
 
 static boolean binarySearch(List<String> li, String item) { // function
   var result = false;
@@ -31,10 +31,10 @@ static boolean binarySearch(List<String> li, String item) { // function
       result = binarySearch(li.subList(0, mid), item); // reassign variable
     } else {
       result = binarySearch(li.subList(mid + 1, li.length()), item); // reassign variable
-    } // if
-  } // if
+    } // end if
+  } // end if
   return result;
-} // function
+} // end function
 
 @Test static void test_binarySearch() {
   var li1 = list("lemon", "lime", "orange");
@@ -51,6 +51,6 @@ static boolean binarySearch(List<String> li, String item) { // function
   assertEquals(false, binarySearch(li3, "lime"));
   var li4 = new List<String>();
   assertEquals(false, binarySearch(li4, "pear"));
-} // test
+} // end test
 
 }

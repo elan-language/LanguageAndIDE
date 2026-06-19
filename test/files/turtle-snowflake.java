@@ -9,8 +9,8 @@ static void main() {
   foreach (var i in range(1, 4)) {
     drawSide(side, t); // call procedure
     t.turn(120); // call procedure
-  } // foreach
-} // main
+  } // end foreach
+} // end main
 
 static void drawSide(double length, Turtle t) { // procedure
   if ((length > 1)) {
@@ -24,8 +24,8 @@ static void drawSide(double length, Turtle t) { // procedure
     drawSide(third, t); // call procedure
   } else {
     t.move(length); // call procedure
-  } // if
-} // procedure
+  } // end if
+} // end procedure
 
 static final Int side = 100; // constant
 

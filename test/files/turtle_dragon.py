@@ -9,9 +9,11 @@ def main() -> None:
   turns = left # variable definition
   for i in range(1, order + 1):
     turns = setTurns(turns) # reassign variable
+  # end for
   t = Turtle() # variable definition
   setupTurtle(t, order) # call procedure
   drawDragon(t, order, turns, side, corner) # call procedure
+# end main
 
 left = "1" # constant
 
@@ -27,8 +29,10 @@ def drawDragon(t: Turtle, order: int, turns: str, side: float, corner: float) ->
     t.turn(-45*turnI) # call procedure
     t.move(side) # call procedure
     sleep_ms(p) # call procedure
+  # end for
   t.penUp() # call procedure
   t.hide() # call procedure
+# end procedure
 
 def setupTurtle(t: Turtle, order: int) -> None: # procedure
   t.turnToHeading(180 + order*45) # call procedure
@@ -37,26 +41,32 @@ def setupTurtle(t: Turtle, order: int) -> None: # procedure
   t.penWidth(10.0/order) # call procedure
   t.penDown() # call procedure
   t.show() # call procedure
+# end procedure
 
 def setTurns(turns: str) -> str: # function
   turnsR = turns + left + reflect(turns) # variable definition
   # turnsR[0..turnsR.length() - 1]
   return turnsR.subString(0, turnsR.length() - 1)
+# end function
 
 def reflect(s: str) -> str: # function
   sR = "" # variable definition
   for i in range(1, s.length() + 1):
     sR = if_((s[i - 1]).equals(left), right, left) + sR # reassign variable
+  # end for
   return sR
+# end function
 
 def test_setTurns(self) -> None:
   self.assertEqual(setTurns("1"), "11")
   self.assertEqual(setTurns("11"), "1110")
   self.assertEqual(setTurns("110"), "110110")
   self.assertEqual(setTurns("1101100"), "11011001110010")
+# end test
 
 def test_reflect(self) -> None:
   self.assertEqual(reflect("110"), "100")
   self.assertEqual(reflect("00001"), "01111")
+# end test
 
 main()

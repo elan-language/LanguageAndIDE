@@ -11,7 +11,7 @@ static (double, double) bestFitLine(List<Point> points) { // function
   var a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX); // let
   var b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX); // let
   return (a, b);
-} // function
+} // end function
 
 class Point {
 
@@ -22,17 +22,17 @@ class Point {
   public Point(double x, double y) {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return String.format("Point %, %", this.x, this.y);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 static Point newPoint(double x, double y) { // function
   return new Point(x, y);
-} // function
+} // end function
 
 @Test static void test_bestFit() {
   var l1 = list(newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)); // let
@@ -41,13 +41,13 @@ static Point newPoint(double x, double y) { // function
   var b = a_b.item_1; // let
   assertEquals(0.766, a.round(3));
   assertEquals(1.093, b.round(3));
-} // test
+} // end test
 
 @Test static void test_bestFit_empty() {
   var l1 = new List<Point>(); // let
   var a_b = bestFitLine(l1); // let
   // NaN means 'Not A Number"
   assertEquals("(NaN, NaN)", a_b.toString());
-} // test
+} // end test
 
 }

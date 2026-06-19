@@ -18,22 +18,29 @@ def main() -> None:
         x = divAsInt(x, 2) # reassign variable
       else:
         x = x*3 + 1 # reassign variable
+      # end if
       if x > max:
         max = x # reassign variable
+      # end if
       p.append(x) # call procedure
       # draw what we have got so far, scaled to the canvas
       vg = createVectorGraphics() # variable definition
       for i in range(0, p.length() - 1):
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # reassign variable
+      # end for
       displayVectorGraphics(vg) # call procedure
       print(x)
       sleep_ms(100) # call procedure
+    # end while
+  # end while
   print("Finished")
+# end main
 
 # scale x.  We pass in p just to get its length
 
 def scx(i: int, p: list[int]) -> float: # function
   return divAsFloat(i*100, p.length())
+# end function
 
 # scale y
 
@@ -43,6 +50,7 @@ def scx(i: int, p: list[int]) -> float: # function
 
 def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
+# end function
 
 grey = 0x808080 # constant
 

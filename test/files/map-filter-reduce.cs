@@ -7,28 +7,28 @@
   Assert.AreEqual(81480107, nums.reduce(1.0, product).floor());
   Assert.AreEqual(new [] {0.45, 0.4}, nums.filter(lessThan5).map(inverse));
   Assert.AreEqual("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat));
-} // test
+} // end test
 
 static bool lessThan5(double n) { // function
   return n < 5;
-} // function
+} // end function
 
 static double cube(double n) { // function
   return pow(n, 3).round(2);
-} // function
+} // end function
 
 static double inverse(double n) { // function
   return (1/n).round(2);
-} // function
+} // end function
 
 static string asString(double n) { // function
   return $"{n}|";
-} // function
+} // end function
 
 static double product(double x, double y) { // function
   return (x*y);
-} // function
+} // end function
 
 static string concat(string a, string b) { // function
   return a + b;
-} // function
+} // end function
