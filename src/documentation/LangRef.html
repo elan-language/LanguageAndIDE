@@ -1209,8 +1209,8 @@ end procedure
   <li>The entered value is put into a <i>new</i> variable - equivalent to if it was a <b>variable definition</b>.</li>
   <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding a <b>reassign variable</b>
   instruction on the next line.</li>
-  <li>Also in a separate instruction, you can parse the string into a numeric type by applying the <code>int()</code>
-    or <code>float()</code> function to the input variable.</li>
+  <li>Also <i>in a separate instruction</i>, you can parse the string into a numeric type by applying the <code>asInt()</code>
+    or <code>asFloat()</code> functions to the input variable, but note that <i>these functions will throw an exception if the input string does not parse to the required numeric type</i>.</li>
   <li>See below for more advanced options for handling specific forms of user input.</li>
 </ul>
 </div></div>
@@ -1552,7 +1552,7 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 <h2>Try</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples <b>try</b></h4>
+<h3 class="no-TOC acc-title">Examples of <b>try</b> instructions</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
@@ -1947,6 +1947,21 @@ e.g. in a particular call to a Higher-order Function.</p>
 
 <h2 id="ifExpression"><b>if</b> expression</h2>
 
+<p>An 'if expression' has some similarity with an <b>if</b> <i>statement</i>, but with important differences:</p>
+
+<ul>
+  <li>An 'if expression' is written within a single line.</li>
+  <li>An 'if expression' always returns a value</li>
+  <li>An 'if expression' may be used where an expression is expected in code, for example to define the value to be assigned to a variable.</li>
+  <li>An 'if expression' may form part of a more complex expression.</li>
+</ul>
+
+<p>All modern languages, including Python, VB, C#, and Java, support this concept, though sometimes by another name such as 'conditional expression', or even 'ternary operator' (because it has three terms).
+  The syntax varies significantly between those languages. When coding with Elan in any of the supported languages, this functionality is provided by a 'pseudo function' named <el-method>if_</el-method>,
+  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if</b> statement. (This is consistent the standard advice
+  that if you define your own identifier that classes with a <i>reserved word</i>, the simplest fix is to add an underscore on the end.)
+</p>
+
 <p>The <b>if</b> expression returns one of two values dependent upon the evaulation of a Boolean value:</p>
 <p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
@@ -1954,6 +1969,12 @@ e.g. in a particular call to a Higher-order Function.</p>
   <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
 <p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
+
+<p>Why do we refer to <el-method>if_</el-method> as a 'pseudo function'. At first glance it looks to operate like any function: it requires three arguments and returns a result that depends on them.
+But it does one thing very differently: if either or both of the second and third arguments are themselves defined by expressions, they are evaluated <i>lazily</i> - only the one that is
+is needed (depending on the evaluation of the condition argument) will be evaluated. It turns out that this is very important - without it can be very easy to end up with lots of 'Stack overflow errors'.
+So though <el-method>if_</el-method> <i>looks</i> like any other library function, it is actually special syntax. And that is why you don't see <el-method>if_</el-method> offered in the 
+drop-down list of library function names.</p>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples using <b>if</b> expression:</h3>

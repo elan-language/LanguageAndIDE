@@ -414,7 +414,7 @@ Indeed, inheritance is the most over-used, and the most frequently abused, conce
 For that reason, irrespective of the programming language being used, Elan deliberately enforces principles of <i>good</i> OOP from the outset. For example:</p>
 
 <ul>
-  <li>Each class may inherit from one superclass only<li>
+  <li>Each class may inherit from one superclass only</li>
   <li>The superclass must be an abstract class - no class may inherit from another concrete class.</li>
   <li>A abstract class may inherit from another abstract class - to form a 'hierarchy' of abstraction, if desired.</li>
   <li>A concrete class may inherit concrete (ordinary) members from its superclass, but it may not <i>override</i> them.</li>
@@ -437,17 +437,17 @@ For that reason, irrespective of the programming language being used, Elan delib
    once (this pattern is known as a 'singleton'), by the main routine. While singletons are not always a bad idea, a singleton that does most of the work of the program -
    sometimes irreverently referred to as a 'god class' - is really just a procedural program in disguise.</p>
 
-<p>A useful check on your design is to look at the distribution of instructions in the program (not counting instructions within tests, which are not part of the executable program) as in the
-  the following summary of the <b>Snake - object-oriented</b> demo:</p>
+<p>A useful check on your design is to look at the distribution of instructions in the program (not counting instructions within tests, which are not part of the executable program).
+  For example, the <b>Snake - object-oriented</b> demo has a total of 96 instructions (excluding tests), of which just 12 are not in a user-defined class
+(they are all in the main routine). The allocation of the other instructions is as follows:</p>
 
 <table>
   <tr><th>Class</th><th>Properties</th><th>Methods (excl. constructor & toString)</th><th>No. of instructions</th><th>Notes</th></tr>
-  <tr><td><code>Snake</code></td><td>4</td>6<td></td><td>57</td><td>singleton - but an extended version of the game might have multiple instances.</td></tr>
-  <tr><td><code>Snake</code></td><td>1</td>2<td></td><td>16</td><td>ditto</td></tr>
-  <tr><td><code>Square</code></td><td>2</td>2<td></td><td>22</td><td>Many instances created in the game. Both Snake and Apple have associations to one or more Squares</td></tr>
-  <tr><td>Instructions not in a user-defined class</td><td>12</td><td>13</td><td>e.g. in main method, enums, or global procedures/functions, excluding tests</td></tr>
-  <tr><td>Total instructions</td><td>96</td><td>excluding tests</td></tr>
+  <tr><td><code>Snake</code></td><td>4</td><td>6</td><td>57</td><td>singleton - but an extended version of the game might have multiple instances.</td></tr>
+  <tr><td><code>Apple</code></td><td>1</td><td>2</td><td>16</td><td>ditto</td></tr>
+  <tr><td><code>Square</code></td><td>2</td><td>2</td><td>22</td><td>Many instances created in the game. Both Snake and Apple have associations to one or more Squares</td></tr>
 </table>
+
 </div>
 
 <div id="GlobalInstructions">
@@ -802,6 +802,12 @@ class Square
     reassign this.x to x
     reassign this.y to y
   end constructor
+
+  # other code not shown
+  function toString() returns String
+    return "{this.x}, {this.y}"
+  end function
+
 end class
 </codeblock>
 
@@ -811,11 +817,19 @@ and assigns these parameters to the corresponding properties of the object.</p>
 <p>From the <b>Blackjack</b> demo, where the <code>Game</code> class defines this constructor:</p>
 
 <codeblock>
+class Game
   constructor(dealerStartPoints as Int)
     reassign this.dealer to new Dealer(dealerStartPoints)
-    reassign this.players to new List&lt;of Player&gt;()
+    reassign this.players to new List<of Player>()
     reassign this.message to ""
-  end constructor  
+  end constructor
+
+  #  other code not shown
+  function toString() returns String
+    return "a Game"
+  end function
+
+end class
 </codeblock>
 
 <p>Note that the single parameter defined in the instructor does not correspond directly to the any property defined on <code>Game</code>,
@@ -824,14 +838,14 @@ and assigns these parameters to the corresponding properties of the object.</p>
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about a constructors</h4>
+<h4 class="no-TOC acc-title">What you need to know about constructors</h4>
 <div class="acc-body">
 
   <ul>
     <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
-      the default values for those types).</li><
-    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example: <code>reassign this.x to x</code> - 
+      the default values for those types).</li>
+    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>reassign this.x to x</code> &ndash; 
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</ul>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
