@@ -15,5 +15,4 @@ static void main() {
     displayBlocks(blocks); // call procedure
   } // end while
 } // end main
-
-}
+} // end Global

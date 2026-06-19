@@ -55,5 +55,4 @@ static double scy(int pi, int max) { // function
 } // end function
 
 static final Int grey = 0x808080; // constant
-
-}
+} // end Global

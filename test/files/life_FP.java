@@ -301,5 +301,4 @@ static List<int> nextCol(List<List<int>> grid, int x) { // function
   assertEquals(white, col[2]);
   assertEquals(black, col[29]);
 } // end test
-
-}
+} // end Global

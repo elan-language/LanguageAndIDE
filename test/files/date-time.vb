@@ -14,7 +14,7 @@ Sub main()
       Console.WriteLine(getDate(now)) ' print
     Else
       Try 
-        Dim td = int(reply) ' variable definition
+        Dim td = asInt(reply) ' variable definition
         If td >= 0 Then
           Console.WriteLine(getDate(td)) ' print
         End If

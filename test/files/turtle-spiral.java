@@ -12,5 +12,4 @@ static void main() {
     sleep_ms(300); // call procedure
   } // end foreach
 } // end main
-
-}
+} // end Global

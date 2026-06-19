@@ -125,5 +125,4 @@ static int updateColour(int nowColour, int sumStates, int nInfected, int nIll) {
   } // end if
   return if_(state > (colours.length() - 1), ill, colours[state]);
 } // end function
-
-}
+} // end Global

@@ -49,5 +49,4 @@ static Point newPoint(double x, double y) { // function
   // NaN means 'Not A Number"
   assertEquals("(NaN, NaN)", a_b.toString());
 } // end test
-
-}
+} // end Global

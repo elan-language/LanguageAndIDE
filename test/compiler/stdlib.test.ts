@@ -12,7 +12,6 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
-  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
@@ -187,14 +186,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to  float("10.1")
+  variable a set to  asFloat("10.1")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.float("10.1");
+  let a = _stdlib.asFloat("10.1");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -220,14 +219,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to float("x12")
+  variable a set to asFloat("x12")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.float("x12");
+  let a = _stdlib.asFloat("x12");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -253,14 +252,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to float("25g")
+  variable a set to asFloat("25g")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.float("25g");
+  let a = _stdlib.asFloat("25g");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -286,14 +285,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to  float("10")
+  variable a set to  asFloat("10")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.float("10");
+  let a = _stdlib.asFloat("10");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -319,20 +318,20 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to  float("10.1e2")
-  variable b set to  float("10.1e+2")
-  variable c set to  float("10.1e-2")
-  variable d set to  float("0.12E2")
+  variable a set to  asFloat("10.1e2")
+  variable b set to  asFloat("10.1e+2")
+  variable c set to  asFloat("10.1e-2")
+  variable d set to  asFloat("0.12E2")
   call printNoLine([a, b, c, d])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.float("10.1e2");
-  let b = _stdlib.float("10.1e+2");
-  let c = _stdlib.float("10.1e-2");
-  let d = _stdlib.float("0.12E2");
+  let a = _stdlib.asFloat("10.1e2");
+  let b = _stdlib.asFloat("10.1e+2");
+  let c = _stdlib.asFloat("10.1e-2");
+  let d = _stdlib.asFloat("0.12E2");
   await _stdlib.printNoLine(system.list([a, b, c, d]));
 }
 return [main, _tests];}`;
@@ -358,13 +357,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to int("25g")
+  variable a set to asInt("25g")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.int("25g");
+  let a = _stdlib.asInt("25g");
 }
 return [main, _tests];}`;
 
@@ -389,14 +388,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to int("10")
+  variable a set to asInt("10")
   call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.int("10");
+  let a = _stdlib.asInt("10");
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -422,13 +421,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to int("")
+  variable a set to asInt("")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.int("");
+  let a = _stdlib.asInt("");
 }
 return [main, _tests];}`;
 
@@ -453,13 +452,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to int("10.1")
+  variable a set to asInt("10.1")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = _stdlib.int("10.1");
+  let a = _stdlib.asInt("10.1");
 }
 return [main, _tests];}`;
 
@@ -1715,7 +1714,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  call printNoLine(int("12 34 56".split(" ")[1]))
+  call printNoLine(asInt("12 34 56".split(" ")[1]))
   call printNoLine("z" + "a b c".split(" ")[1])
   call printNoLine("a b c".split(" ")[1] + "z")
 end main`;
@@ -1723,7 +1722,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine(_stdlib.int(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
+  await _stdlib.printNoLine(_stdlib.asInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
   await _stdlib.printNoLine("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
   await _stdlib.printNoLine(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
 }

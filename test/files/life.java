@@ -226,5 +226,4 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(false, willLive(black, 7));
   assertEquals(false, willLive(black, 8));
 } // end test
-
-}
+} // end Global

@@ -25,5 +25,4 @@ static void inPlaceRippleSort(List<int> li) { // procedure
     lastComp = lastComp - 1; // reassign variable
   } // end while
 } // end procedure
-
-}
+} // end Global

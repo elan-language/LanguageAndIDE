@@ -144,5 +144,4 @@ static final Int width = 200; // constant
 static final Int height = 150; // constant
 
 static final Int nmax = 360; // constant
-
-}
+} // end Global

@@ -52,5 +52,4 @@ static boolean binarySearch(List<String> li, String item) { // function
   var li4 = new List<String>();
   assertEquals(false, binarySearch(li4, "pear"));
 } // end test
-
-}
+} // end Global

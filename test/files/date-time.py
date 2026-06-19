@@ -12,7 +12,7 @@ def main() -> None:
       print(getDate(now))
     else:
       try:
-        td = int(reply) # variable definition
+        td = asInt(reply) # variable definition
         if td >= 0:
           print(getDate(td))
         # end if

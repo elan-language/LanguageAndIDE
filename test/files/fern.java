@@ -123,5 +123,4 @@ static List<double> roundtuple2((double, double) n) { // function
 } // end function
 
 static final Int scale = 7; // constant
-
-}
+} // end Global

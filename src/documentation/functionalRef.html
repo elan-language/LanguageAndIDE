@@ -773,10 +773,10 @@ paradigm, with two exceptions:</p>
   <h2>With method</h2>
 
     <div class="accordion">
-      <h4 class="no-TOC acc-title">Examples of with methods</h4>
+      <h3 class="no-TOC acc-title">Examples of <b>with method</b></h3>
       <div class="acc-body">
 
-        <p>From the <b>Snake - functional</b> demo, where the </p><code>Game</code> class defines 8 <b>with method</b>s including:</p>
+        <p>From the <b>Snake - functional</b> demo, where the <code>Game</code> class defines 8 <b>with method</b>s including:</p>
 
         <codeblock>
           function withHead(value as Square) returns Game
@@ -785,7 +785,6 @@ paradigm, with two exceptions:</p>
             return copyOfThis
           end function
         </codeblock>
-      </div>
 
       <p>This method is called from 11 places elsewhere in the code, including within this global method:</p> 
 
@@ -800,13 +799,15 @@ paradigm, with two exceptions:</p>
         end function
       </codeblock>
 
-      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with method</b>s</p> -
+      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with method</b>s -
       because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
       to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
+      </div>
     </div>
+  
 
       <div class="accordion">
-      <h4 class="no-TOC acc-title">What you need to know about methods</h4>
+      <h4 class="no-TOC acc-title">What you need to know about <b>with method</b>s</h4>
       <div class="acc-body">
 
         <ul>

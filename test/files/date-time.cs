@@ -14,7 +14,7 @@ static void main() {
       Console.WriteLine(getDate(now)); // print
     } else {
       try {
-        var td = int(reply);
+        var td = asInt(reply);
         if (td >= 0) {
           Console.WriteLine(getDate(td)); // print
         } // end if

@@ -1,4 +1,4 @@
-# 59302c2bbdae1e1a7ed76e6f6733b2b029dd72e42f8ee0b23ed196f487e4b569 Elan 2.0.0-beta valid
+# 3596017fa9498bd4360f71c2a9f14f3f0c707a83833759b28c7147914203af7b Elan 2.0.0-beta valid
 
 main
   variable quit set to false
@@ -12,7 +12,7 @@ main
       print(getDate(now))
     else
       try
-        variable td set to int(reply)
+        variable td set to asInt(reply)
         if td >= 0 then
           print(getDate(td))
         end if

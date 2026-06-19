@@ -125,7 +125,7 @@ export class LanguageJava extends LanguageCfamily {
     return "<div><el-kw>public class</el-kw> <el-type>Global</el-type> <el-punc>{</el-punc><br><br></div><div class='global-indent'>";
   }
   renderFileTrailerAsHtml(_f: FileImpl): string {
-    return "</div>\n\n<el-punc>}</el-punc>";
+    return "</div>\n} <el-comment>// end Global</el-comment>";
   }
 
   translateExpression(expr: string): string {
