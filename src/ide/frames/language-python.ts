@@ -205,7 +205,7 @@ export class LanguagePython extends LanguageAbstract {
     return result;
   }
 
- renderBottomAsHtml(frame: Frame): string {
+  renderBottomAsHtml(frame: Frame): string {
     let html = "<el-comment># end ";
     if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
       html += this.CLASS;

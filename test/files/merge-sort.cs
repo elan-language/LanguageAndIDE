@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 // Implementation of the Merge sort algorithm demonstrating
 

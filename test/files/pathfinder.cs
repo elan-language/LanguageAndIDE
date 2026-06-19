@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var start = new Point(5, 5);

@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition

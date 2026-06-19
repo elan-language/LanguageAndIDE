@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def bestFitLine(points: list[Point]) -> tuple[float, float]: # function
   sumX = points.reduce(0.0, lambda s: float, p: Point: s + p.x) # let

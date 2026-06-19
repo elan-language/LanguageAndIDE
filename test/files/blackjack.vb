@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta
+' VB.NET with Elan 2.0.0-beta-pre1
 
 Sub main()
   Dim game = New Game(1000) ' variable definition

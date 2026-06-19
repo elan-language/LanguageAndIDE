@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12);
