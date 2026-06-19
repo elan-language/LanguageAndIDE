@@ -116,5 +116,4 @@ static int top(List<int> s) { // function
   // Error cases
   assertEquals("Out of range index: -1 size: 0", top(new List<int>()));
 } // end test
-
-}
+} // end Global

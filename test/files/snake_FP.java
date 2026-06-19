@@ -313,5 +313,4 @@ class Square {
   assertEquals("d", game.key);
   assertEquals(true, game.isOn);
 } // end test
-
-}
+} // end Global

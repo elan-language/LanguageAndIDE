@@ -14,7 +14,7 @@ static void main() {
       System.out.println(getDate(now)); // print
     } else {
       try {
-        var td = int(reply);
+        var td = asInt(reply);
         if (td >= 0) {
           System.out.println(getDate(td)); // print
         } // end if
@@ -190,5 +190,4 @@ static String pad(String d, String p, String s) { // function
   } // end if
   return sR;
 } // end function
-
-}
+} // end Global

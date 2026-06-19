@@ -84,5 +84,4 @@ static boolean hasAtLeastOneFrom(String fromChars, String password) { // functio
   assertEquals(true, hasAtLeastOneFrom("C12", "ABC"));
   assertEquals(false, hasAtLeastOneFrom("12", "ABCD"));
 } // end test
-
-}
+} // end Global

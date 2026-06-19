@@ -43,5 +43,4 @@ static List<double> reverse(List<double> li) { // function
   var l1 = list(0.6); // let
   assertEquals(l1, reverse(l1));
 } // end test
-
-}
+} // end Global

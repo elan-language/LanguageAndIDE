@@ -34,5 +34,4 @@ static double product(double x, double y) { // function
 static String concat(String a, String b) { // function
   return a + b;
 } // end function
-
-}
+} // end Global

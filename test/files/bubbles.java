@@ -29,5 +29,4 @@ static void moveGrowBurst(List<CircleVG> bubbles) { // procedure
   displayVectorGraphics(bubbles); // call procedure
   sleep_ms(5); // call procedure
 } // end procedure
-
-}
+} // end Global

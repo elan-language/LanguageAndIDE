@@ -268,5 +268,4 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
   var wordcounts = allRemainingWordCounts(possAnswers); // let
   assertEquals("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
 } // end test
-
-}
+} // end Global

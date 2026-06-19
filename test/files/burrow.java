@@ -22,5 +22,4 @@ static void main() {
     } // end if
   } // end while
 } // end main
-
-}
+} // end Global

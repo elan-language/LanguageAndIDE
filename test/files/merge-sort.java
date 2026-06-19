@@ -133,5 +133,4 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var lu = list("lime", "pear", "apple"); // let
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
 } // end test
-
-}
+} // end Global

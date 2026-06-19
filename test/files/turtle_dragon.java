@@ -70,5 +70,4 @@ static String reflect(String s) { // function
   assertEquals("100", reflect("110"));
   assertEquals("01111", reflect("00001"));
 } // end test
-
-}
+} // end Global

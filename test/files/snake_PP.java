@@ -142,5 +142,4 @@ enum Direction {up, down, left, right}
   assertEquals(Direction.right, directionByKey(current, "d"));
   assertEquals(Direction.up, directionByKey(current, "D"));
 } // end test
-
-}
+} // end Global

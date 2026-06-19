@@ -490,5 +490,4 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
 } // end procedure
-
-}
+} // end Global
