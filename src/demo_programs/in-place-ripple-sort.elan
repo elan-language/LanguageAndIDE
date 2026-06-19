@@ -1,4 +1,4 @@
-# 27002cde2c0c46ac68a24a38b8a6a85fa373afd12e97be3ea8699a2de2224454 Elan 2.0.0-beta valid
+# 71cbdc849adf29640ef62a7dd2d2ba6777b1216b65d7fad77de8a5ba8097bb9e Elan 2.0.0-beta-pre1 valid
 
 main
   variable li set to [7, 1, 0, 4, 8, 3, 6]

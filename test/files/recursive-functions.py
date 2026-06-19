@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def factorial(n: int) -> int: # function
   return if_(n < 2, 1, n*factorial(n - 1))
