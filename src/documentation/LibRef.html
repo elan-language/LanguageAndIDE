@@ -9,7 +9,7 @@
 <!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="favicon.ico">
-<title>Elan Library Reference</title>
+<title>LibRef: Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 <script type="text/javascript" src="doc-scripts.js"></script>
 <script type="text/javascript" src="accordion.js"></script>
@@ -829,22 +829,60 @@ with specified changes: that is why all such methods have names starting '<el-me
 i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
 <p>The key's type must be one of <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code>.
  The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
-<p>You refer to a dictionary item using one of its (unique) keys:</p>
-<table class="tablePlain">
- <tr><td>
+<p>You refer to a dictionary item using one of its (unique) keys, e.g. in a <code>Dictionary&lt;of String, Int&gt;</code> named <code>birthdays</code>
+whose keys are names and whose values are birth year, you might refer to <code>birthdays["Shakespeare"]</code> and retrieve the value 1564.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Dictionary</code></h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program:</p>
+<p>Procedure greekLetters sets up the key:value pairs, procedure printD shows how a procedure can use the Dictionary,
+and function getDItem retrieves a value given a key.</p>
 <codeblock>
 main
-  variable di1 set to ["alpha":1, "beta":2, "gamma":3]
-  print(di1["beta"])
-  variable di2 set to [1:"alpha", 2:"beta", 3:"gamma"]
-  print(di2[3])
+  variable dL set to new Dictionary&lt;of String, Int&gt;()
+  variable dLRef set to new AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;(dL)
+  call greekLetters(dLRef)
+  reassign dL to dLRef.value()
+  print(dL)
+  call printD(dL)
+  print(getDItem(dL, "alpha"))
 end main
+procedure printD(dL as Dictionary&lt;of String, Int&gt;)
+  print(dL)
+end procedure
+function getDItem(dL as Dictionary&lt;of String, Int&gt;, k as String) returns Int
+  return dL[k]
+end function
+procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
+  print(dL, k)
+end procedure
+procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
+  variable di set to new Dictionary&lt;of String, Int&gt;()
+  reassign di["alpha"] to 1
+  reassign di["beta"] to 2
+  reassign di["gamma"] to 3
+  call d.set(di)
+end procedure
 </codeblock>
-  </td>
-  <td><br><br><br>&#x27f6;<br><br>&#x27f6;</td>
-  <td><br><br><br>2<br><br>gamma</td>
- </tr>
-</table>
+<hr>
+
+<div class="functional">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
+in a way suitable for Functional programming, by using the HoF <code>reduce</code> in a function
+that creates the Dictionary from a List of key:value pairs as Tuples:</p> 
+<codeblock>
+main
+  variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
+  print(di["beta"])
+end main
+function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
+  let d be new Dictionary&lt;of String, Int&gt;()
+  return kvps.reduce(d, lambda d, kvp  =&gt; d.withSet(kvp.item_0, kvp.item_1))
+end function
+</codeblock>
+</div>
+</div></div>
 
 <h3 class="no-TOC" id="Dictionary_procedures">Procedure method on a <code>Dictionary</code></h3>
 <table class="tableMethod">
