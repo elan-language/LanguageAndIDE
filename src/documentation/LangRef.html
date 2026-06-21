@@ -27,7 +27,7 @@
  <p>To undertake procedural programming (PP) in Elan, ensure that Elan is set to the <b>procedural</b> paradigm
   from the menu at the top of the IDE. This will ensure that:</p>
 <ul>
- <li>The list of demo programs will now show only programs that use PP.</li> 
+ <li>The list of demo programs will now show only programs that use PP.</li>
  <li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP. These are listed below under:
   <ul>
     <li><a href="#globalInstructions">Global Instructions <i class="fa">&#xf14c;</i></a> and</li>
@@ -56,16 +56,16 @@
 <div id="bestPractices">
 <h2>Best practices in coding that Elan encourages</h2>
 
-<p>Elan supports, and in many cases <i>enforces</i> good programming practices, which 
-  are automatically applied across all the supported languages, even where 
-  a language ( when used outside Elan) would allow you to do otherwise. In the context of procedural programming 
+<p>Elan supports, and in many cases <i>enforces</i> good programming practices, which
+  are automatically applied across all the supported languages, even where
+  a language ( when used outside Elan) would allow you to do otherwise. In the context of procedural programming
   (the <b>procedural</b> paradigm having been selected in the IDE), there are seven such best practices,
-  some widely recognised, others less so.</p> 
+  some widely recognised, others less so.</p>
   <p>Some programmers will argue that there are specific circumstances where
   breaking the rules <i>should</i> be acceptable. The problem with this is that most of the places where
   even professional programmers break the rules don't fit those circumstances: they are broken because the programmer just finds
-  it more convenient. It is far better to learn to program without breaking these rules than that to adopt 
-  bad habits from the beginning. This will result in you writing better code and encountering fewer unexpected problems.</p>  
+  it more convenient. It is far better to learn to program without breaking these rules than that to adopt
+  bad habits from the beginning. This will result in you writing better code and encountering fewer unexpected problems.</p>
   <p>The six best practices enforced by Elan for procedural programming are:</p>
 <ol>
   <li><a href="#noGlobalVars">No global variables <i class="fa">&#xf14c;</i></a></li>
@@ -86,7 +86,7 @@ together with this seventh best practice that is supported and encouraged by Ela
   instruction only within the <b>main</b> routine, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
   is a <a href="#constant"><b>constant</b></a> and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
 
-  <p class="java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <b>Global</b> to adhere to this rule, 
+  <p class="java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <b>Global</b> to adhere to this rule,
   and all code must be within this. Everything added <i>immediately</i> within this class is deemed, in Elan terms, to be
   global, so you will not be able to add a variable, even in the form of a class property there.</p>
 
@@ -94,9 +94,9 @@ together with this seventh best practice that is supported and encouraged by Ela
 <p>Static typing means that the <i>type</i> of every variable, parameter, or value returned by a function, is known at <i>compile</i> time,
  and that type never changes, even though the value may change. VB, C#, and Java, are  statically typed. but Python is inherently dynamically typed.
  Python 3.5 offers the option to add 'type hints' that assist working in a statically typed manner.</p>
-<o> While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that 
+<o> While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that
  dynamic typing does not work well when building large, complex systems. Moreover, in a purely educational context, using static typing gives a stronger
- understanding that, in all modern languages (with static or dynamic types) all data elements always have an associated type, and static typing helps
+ understanding that, in all modern languages (with static or dynamic types) all data items always have an associated type, and static typing helps
  you to understand the nature of those types.
  <span class="Python">When entering and editing Python, Elan therefore <i>enforces</i> the use of type hints.</span></p>
 <p>Elan does not require the type to be specified explicitly for any variable (or constant) because its type is <i>inferred</i> from the
@@ -107,7 +107,7 @@ initial value given to it.</p>
   very hard to track down. Tony Hoare, Turing Medal recipient and one of Britain's greatest computer scientists, magnanimously described his invention
   of 'null' as a <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/">Billion Dollar Mistake</a>.</p>
 
-<p>All the supported programming languages inherently permit null reference errors, though when you are coding in Elan it is impossible for one 
+<p>All the supported programming languages inherently permit null reference errors, though when you are coding in Elan it is impossible for one
   to arise because:
   <ul>
     <li>Every variable definition must specify an initial value</li>
@@ -118,7 +118,7 @@ initial value given to it.</p>
 
 <h3 class="no-TOC" id="noEarlyBreaks">No breaking out of loops before they have completed</h3>
 
-<p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allows you to break out of 
+<p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allows you to break out of
 a loop before its completion. Elan does not permit any of those instructions to be used for the following reasons.</p>
 <p>The <b>break</b> instruction was invented when the only possible kind of loop that a programming language
 offered executed a specified number of times; there were no 'conditional loops'. With the advent of structured programming
@@ -130,8 +130,8 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <p>This principle is somewhat analogous to the previous one, in that programmers find it convenient to include multiple
  <code>return</code> instructions within a procedure or a function. All the supported languages permit this.
  Elan, however, deliberately prevents this practice. An Elan <b>function</b> always has one <b>return</b> instruction as its <i>last</i>
- instruction (which specifies the value to be returned), and there is no option to add another one earlier. 
- An Elan <b>procedure</b> cannot have a <b>return</b> instruction: the procedure exits after its last instruction.</p> 
+ instruction (which specifies the value to be returned), and there is no option to add another one earlier.
+ An Elan <b>procedure</b> cannot have a <b>return</b> instruction: the procedure exits after its last instruction.</p>
 <p>Some programmers may argue that the constraint of no early returns in a function means you have to write an extra line of code at the start
  to define a variable to hold the result. This is true but it's a small price to pay and makes your code more readable</p>
 <p>In summary, here are four reasons to avoid early returns:</p>
@@ -140,14 +140,14 @@ With properly structured programming, it is never <i>necessary</i> to break out 
  <li>They lead to poorly structured code,</li>
  <li>They make it harder to debug code because you may need to find, and put separate breakpoints on, every return instruction,</li>
  <li>When you change the requirements of the function &ndash; for example so that a returned string is always
-  upper case &ndash; you would need to enforce this in several places, running the risk of overlooking some. 
+  upper case &ndash; you would need to enforce this in several places, running the risk of overlooking some.
   (Some languages offer a 'finally' clause to make that easier, but this is just a kludge to paper over
   the cracks of poor structure).</li>
 </ul>
 
 <h3 class="no-TOC" id="pureFunctions">All functions must be pure</h3>
 
-<p>Many textbooks draw no distinction between procedures and functions, except that the latter return a value to the calling code. 
+<p>Many textbooks draw no distinction between procedures and functions, except that the latter return a value to the code that references it.
   Used properly, the two are distinct in other, very important, respects.</p>
 
 <p>A procedure:</p>
@@ -163,7 +163,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
 <p>By contrast, a <i>proper</i> function:</p>
 <ul>
   <li>can be thought of as a way of adding a custom <i>operator</i> to the language &ndash; a way to derive a new value from one or more arguments,</li>
-  <li>does <i>not</i> make any change to the state of the system. The only observable effect of calling a function is the returned
+  <li>does <i>not</i> make any change to the state of the system. The only observable effect of referencing a function is the returned
   value, which is held, temporarily, on the system stack, to be consumed by something else. Another way to say this is that a function creates <i>no side effects</i>,</li>
   <li>may <i>not</i>  depend on the system: the value returned must depend solely, and deterministically, on the values provided as parameters,</li>
   <li>should always be called where an expression is required, never in isolation (though the function call <i>may</i> constitute the complete expression).
@@ -179,7 +179,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
 
       <ul>
         <li>Fewer bugs &ndash;  specifically those arising from the unforeseen clashes between the side effects of procedures.</li>
-        <li>Easier to reason about the correctness of the program, because functions behave more like mathematical functions. 
+        <li>Easier to reason about the correctness of the program, because functions behave more like mathematical functions.
           Specifically, if function <el-method>foo</el-method> is correct, and function <el-method>bar</el-method> is correct, then
           combining them in any way is also correct code. That cannot be inferred from combining two procedures.</li>
         <li>Functions can be more easily tested, which leads us on to our final best practice, as follows.</li>
@@ -197,7 +197,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
     <p>There are many forms of automated testing, but 'unit testing' is the most popular. All modern languages offer a 'unit testing framework',
       but they vary considerably in how easy they are to write and use.</p>
 
-    <p>Unit tests are intended for testing only <i>proper functions</i> though many languages do not enforce that. Running unit tests on procedures 
+    <p>Unit tests are intended for testing only <i>proper functions</i> though many languages do not enforce that. Running unit tests on procedures
       or on <i>improper</i> functions (that create side effects) can be dangerous &ndash; running the tests might result in data being written to a database,
       or a network message being sent repeatedly. There are software frameworks for automated testing of procedures and even whole applications
       (known as 'end to end testing'), but these frameworks are much harder to use.</p>
@@ -212,7 +212,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
     </ul>
 
     <p>Elan provides unit testing for all the supported languages, and it is even simpler to use (both for writing the tests and running them) than most
-      other tools. Although it does not <i>enforce</i> the rule that every function written should have automated unit tests, it does make it 
+      other tools. Although it does not <i>enforce</i> the rule that every function written should have automated unit tests, it does make it
     so easy that it hopefully encourages learners to use the practice.</p>
 </div>
 
@@ -249,7 +249,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
   <li>All languages disallow the use of certain reserved words as identifiers. Elan deliberately disallows the reserved words from all the supported languages,
    so translations are guaranteed to run.</li>
   <li>Literal strings must be bounded by double quotes, not by single quotes</li>
-  <li>Some languages distinguish between a 'for loop' and a 'for each loop'. Elan, like Python, uses the same syntax for both. 
+  <li>Some languages distinguish between a 'for loop' and a 'for each loop'. Elan, like Python, uses the same syntax for both.
     When you use a <b>for loop</b> in Elan, the syntax in VB, C#, and Java will be that of a 'for each' loop.</li>
   <li>Raising a number to a power must be done with the <el-method>pow</el-method> function: the 'power operator' symbol in the supported languages
   will not be recognised.</li>
@@ -257,8 +257,8 @@ where you might encounter one, <i>you will get a clear error message that gives 
      Special 'tuple deconstruction' syntax is not recognised for any of the languages.</li>
   <li>Equality testing of <i>value types</i> uses the equality operator for each language e.g. <code>a is b</code>, but if the types
   are <i>reference types</i> (e.g. lists or strings) you must use the syntax <code>a.equals(b)</code></li>
-  <li>Division of two floating point numbers (or one floating point and one integer) may use the division operator <code>a/b</code> and 
-    the result will always be floating point. 
+  <li>Division of two floating point numbers (or one floating point and one integer) may use the division operator <code>a/b</code> and
+    the result will always be floating point.
     But if <i>both</i> values are of integer type then you must use either <code>divAsInt(a, b)</code> or <code>divAsFloat(a, b)</code>
     to make clear which result you are looking for (<el-method>divAsInt</el-method> will round <i>down</i> the result if necessary).</li>
   <li>A 2-dimensional arrays is implemented as a list of lists.</li>
@@ -267,11 +267,11 @@ where you might encounter one, <i>you will get a clear error message that gives 
 </ul>
 </div>
 
-<div id="globalInstructions"> 
+<div id="globalInstructions">
 <h1>Global instructions</h1>
 <p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
   and are therefore not indented.</p>
-<div class="java"><img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor 
+<div class="java"><img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor
 generates a non-editable class named Global, and all global instructions are created directly within that (and automatically indented).</p></div>
 </div>
 
@@ -284,8 +284,7 @@ generates a non-editable class named Global, and all global instructions are cre
 
 <p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
-<codeblock>
-main
+<codeblock>main
   variable blocks set to createBlockGraphics(white)
   variable x set to 20
   variable y set to 15
@@ -307,22 +306,20 @@ main
 end main
 </codeblock>
 
-<p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted, 
+<p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted,
   delegates most of the work to the <el-method>inPlaceRippleSort</el-method> procedure (not shown here),
   then prints the sorted list:</p>
-<codeblock>
-main
+<codeblock>main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
   print(li)
 end main
 </codeblock>
 
-<p>From the <b>Life procedural</b> demo. The whole program is 157 instructions (including tests), but the main routine contains just 9.
+<p>From the <b>Life &ndash; procedural</b> demo. The whole program is 157 instructions (including tests), but the main routine contains just 9.
 It is good practice to <i>keep the main routine small</i>.</p>
 
-<codeblock>
-main
+<codeblock>main
   variable grid set to createBlockGraphics(white)
   call fillRandom(grid)
   while true
@@ -332,7 +329,7 @@ main
     reassign grid to gridRef.value()
     call sleep_ms(50)
   end while
-end main 
+end main
 </codeblock>
 </div></div>
 
@@ -347,7 +344,7 @@ end main
   <li>The main routine <i>may</i> form the entire program (as in the <b>Burrow</b> example above). More commonly it will delegate
     to procedures and functions that you define.</li>
 </ul>
-</div></div>>
+</div></div>
 </div>
 
 <div id="procedure">
@@ -358,8 +355,7 @@ end main
 <div class="acc-body">
 <p>From the <b>Bubbles</b> demo, this procedure changes the vertical position, and the size, of each bubble in the provided list:</p>
 
-<codeblock>
-procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+<codeblock>procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -383,8 +379,7 @@ end procedure
 of a straight sequence of <b>call procedure</b> instructions, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
 using 'dot syntax':</p>
 
-<codeblock>
-procedure setupTurtle(t as Turtle, order as Int)
+<codeblock>procedure setupTurtle(t as Turtle, order as Int)
   call t.turnToHeading(180 + order*45)
   call t.placeAt(-40, 20)
   call t.penColour(red)
@@ -394,10 +389,9 @@ procedure setupTurtle(t as Turtle, order as Int)
 end procedure
 </codeblock>
 
-<p>From the <b>Life - procedural</b> demo, this code sets each of the cells in the 40times;30 <code>grid</code></p>
+<p>From the <b>Life &ndash; procedural</b> demo, this code sets each of the cells in the 40&times;30 <code>grid</code></p>
 
-<codeblock>
-procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
+<codeblock>procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   for col in range(0, 40)
     for row in range(0, 30)
       reassign grid[col][row] to blackOrWhite(random())
@@ -435,19 +429,19 @@ end procedure
 <div id="set_Ref"></div>
 <div id="value_Ref"></div>
 <div id="Parameter_reference"></div>
+
 <div class="accordion">
-<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<h3 class="no-TOC">More advanced techniques</h3>
 <div class="acc-body">
 
 <h4 class="no-TOC" id="CallByRef">Call by reference</h4>
 <p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
-must use a reference (or pointer) to it defined as type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>value</el-method> and <el-method>set</el-method> on it to read and change its value,
+must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
+This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
  as in this example where <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
  so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
 
-<codeblock>
-main
+<codeblock>main
   variable arg set to "abc"
   variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
@@ -461,20 +455,19 @@ end procedure
 
 <h3 class="no-TOC">Recursive procedure calls</h3>
 
-<p>A procedure may call itself, directly or indirectly (calling another procedure that then calls back to the first one). 
-  The following example is from the <b>Turtle Snowflake</b> demo, you can see that the <el-method>drawSide</el-method> 
-  procedure calls itself from four separate places within its body - in order to achieve the 'fractal' effect, where
-  a basic shape repeats itself at different levels of scale. You can also observe two very important principles of 
+<p>A procedure may call itself, directly or indirectly (calling another procedure that then calls back to the first one).
+  In the following example is from the <b>Turtle Snowflake</b> demo, you can see that the <el-method>drawSide</el-method>
+  procedure calls itself from four separate places within its body &ndash; in order to achieve the 'fractal' effect, where
+  a basic shape repeats itself at different levels of scale. You can also observe two very important principles of
   recursion here:
   <ul>
-    <li>That calls back into itself are with a smaller version of the problem - in this case a <code>third</code> of the <code>length</code>
+    <li>Calls back into itself are with a smaller version of the problem &ndash; in this case one third of the <el-id>length</el-id>
     that the procedure was given.</li>
-    <li>That there is a terminating condition where the recursion 'bottoms out' - in this when the side length gets down to 1.</li>
+    <li>There is a terminating condition where the recursion 'bottoms out' &ndash; in this when the side length gets down to 1.</li>
   </ul>
 </p>
 
-<codeblock>
-procedure drawSide(length as Float, t as Turtle)
+<codeblock>procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
     variable third set to length/3
     call drawSide(third, t)
@@ -498,33 +491,28 @@ end procedure
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of functions</h3>
 <div class="acc-body">
-<p>From the <b>Snake - procedural</b> demo. Given the coordinates of the snake's head, determines
+<p>From the <b>Snake &ndash; procedural</b> demo. Given the coordinates of the snake's head, determines
 whether or not the head has gone outside the bounds of the 40x30 grid:</p>
 
-<codeblock>
-function hasHitEdge(headX as Int, headY as Int) returns Boolean
+<codeblock>function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 </codeblock>
 
 <p>It is called within the main routine as part of this instruction:</p>
-
-<codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)</codeblock>
-
+<codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+</codeblock>
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
-
-<codeblock>
-function leap(year as Int) returns Boolean
+<codeblock>function leap(year as Int) returns Boolean
   return (((year mod 4) is 0) and ((year mod 100) isnt 0)) or ((year mod 400) is 0)
 end function
 </codeblock>
 
-<p>From the <b>Life - procedural</b> demo a function that finds the cell immediately to the north of the cell provided. Both
-the single parameter and return value are 2-tuples, where both elements are of type <code>Int</code>:</p>
+<p>From the <b>Life &ndash; procedural</b> demo a function that finds the cell immediately to the north of the cell provided. Both
+the single parameter and return value are 2-tuples, where both items are of type <code>Int</code>:</p>
 
-<codeblock>
-function north(cell as (Int, Int)) returns (Int, Int)
+<codeblock>function north(cell as (Int, Int)) returns (Int, Int)
   variable x set to cell.item_0
   variable y set to cell.item_1
   variable y2 set to y - 1
@@ -537,8 +525,7 @@ end function
 
 <p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
 
-<codeblock>
-function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
+<codeblock>function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
     variable mid set to divAsInt(li.length(), 2)
@@ -560,33 +547,48 @@ end function
 <h3 class="no-TOC acc-title">What you need to know about functions</h3>
 <div class="acc-body">
 <ul>
-  <li>A function defines a mechanism to transform input data (passed as parameters) into a 'returned' value.</li>
-  <li>Because it generates a value, a function <i>call</i> is a kind of expression - it may define a complete expression,
-     a part of a more complex expression (as above).</li>
+  <li>A function defines a mechanism to transform input data (passed as parameters) into a single returned value that may be  of any type including a data structure.</li>
+  <li>Because it generates a value, a function <i>reference</i> is a kind of expression &ndash; it may define a complete expression,
+     or be a part of a more complex expression (as above).</li>
   <li>The Elan library provides some ready-made functions such as <el-method>sqrt</el-method>.</li>
   <li>The <b>function</b> instruction allows you to define your own functions.</li>
-  <li>A function is defined with a unique name, starting lower case (<el-method>hasHitEdge</el-method>).</li>
+  <li>A function is defined with a unique name (starting with a lower case letter, e.g. <el-method>hasHitEdge</el-method>).</li>
   <li>It will usually define one or more parameters (two in the example above), comma-separated if more than one.</li>
-  <li>Each parameter specifies a name starting lower case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
+  <li>Each parameter specifies a name starting in lower case (<code>headX</code> above) and a type (<code>Int</code> above) using the syntax
     <code>headX as Int</code></li>
-  <li>The function signature (top line) must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
-  <li>The returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
+  <li>A function's first (definition) line &ndash; its signature &ndash; must also specify the <i>type</i> of value it will return (<code>returns</code> <code>Boolean</code> above).</li>
+  <li>As with the parameters, the returned value may be a simple value such as an <code>Int</code>, or it may be a data structure such as a <code>List&lt;of Float&gt;</code>.</li>
   <li>A function always has a <code>return</code> instruction as its last instruction, which specifies a value, or an expression to be evaluated.
   The value, or the result of evaluating the expression, must yield the same type as specified in the signature.</li>
   <li>Even though some languages would allow you to put the <code>return</code> anywhere within the function, or even have more than one of them,
-    Elan deliberately does not permit this - in any of the supported languages - because that would result in poorly-structured code.</li>
-  <li>The body of a function <i>may</i> consist only of the <code>return</code> instruction - with the expression following <code>return</code> doing
+    Elan deliberately does not permit this &ndash; in any of the supported languages &ndash; because that would result in poorly structured code.</li>
+  <li>The body of a function <i>may</i> consist only of the <code>return</code> instruction &ndash; with the expression following <code>return</code> doing
   all the work needed.</li>
-  <li>More generally, the <code>return</code> instruction will be preceded by other  instructions to determine the result in several steps.</li>
-  <li>While many languages treat functions as a procedure that returns a value - this is unhelpful. Elan enforces - for each of the supported
-    languages - that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
+  <li>More generally, the <code>return</code> instruction will be preceded by other instructions that determine the result in several steps.</li>
+  <li>While many languages treat functions as a procedure that returns a value, this is unhelpful. Elan enforces &ndash; for each of the supported
+    languages &ndash; that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
   <ul>
-    <li>a function cannot undertake any input/output, or create any other side effect (change to the system that can be observed outside the function).</li>
+    <li>a function cannot undertake any input/output, or create any other side effect (i.e. change to the system that can be observed outside the function).</li>
     <li>prohibited side effects including changing any of the values passed in as parameters.</li>
-    <li>the returned result must depend solely, and deterministically, on the values provided as parameters - just as <code>sqrt(2)</code>
+    <li>the returned result must depend solely, and deterministically, on the values provided as parameters &ndash; just as <code>sqrt(2)</code>
     always produces the same result, irrespective of whatever else might be occurring in the program.</li>
   </ul>
 </ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
+<div class="acc-body">
+
+<h3 class="no-TOC">Recursive function references</h3>
+<p>A function may reference itself, directly or indirectly (referencing another function that then calls back to the first one).
+<p>The same two principles discussed above under Recursive procedure calls apply equally to recursive functions.</p>
+<p>In this example of factorial calculation, each call is on a smaller value of input, and the process stops when <el-id>n</el-id> reaches <el-lit>1</el-lit>:</p>
+
+<codeblock>function factorial(n as Int) returns Int
+  return (if(n > 1, n*factorial(n - 1), 1))
+end function
+</codeblock>
 </div></div>
 </div>
 
@@ -596,13 +598,12 @@ end function
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of tests</h3>
 <div class="acc-body">
-  
-<p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year. 
+
+<p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year.
   Note that the comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
   where errors are more common:</p>
 
-  <codeblock>
-test test_leap
+<codeblock>test test_leap
   # normal cases
   assert leap(2025) is false
   assert leap(2024) is true
@@ -610,13 +611,12 @@ test test_leap
   assert leap(1900) is false
   assert leap(2000) is true
 end test
-  </codeblock>
+</codeblock>
 
-<p>Example from the <b>Life - procedural</b> demo. It tests <i>all</i> valid combinations of parameter values -
-  because the logic of this function is quite unusual:</p>
+<p>Example from the <b>Life &ndash; procedural</b> demo. It tests <i>all</i> valid combinations of parameter values,
+ because the logic of this function is quite unusual:</p>
 
-<codeblock>
-test test_willLive
+<codeblock>test test_willLive
   assert willLive(white, 0) is false
   assert willLive(white, 1) is false
   assert willLive(white, 2) is false
@@ -638,10 +638,9 @@ test test_willLive
 end test
 </codeblock>
 
-  <p>Example from the <b>Snake - procedural</b> demo, showing the use of a variable to create data to be used within multiple test cases (asserts):</p>
+  <p>Example from the <b>Snake &ndash; procedural</b> demo, showing the use of a variable to create data to be used within multiple assertions:</p>
 
-  <codeblock>
-test test_getAdjacentSquare
+  <codeblock>test test_getAdjacentSquare
   variable sq set to [20, 15]
   assert getAdjacentSquare(sq, Direction.up) is [20, 14]
   assert getAdjacentSquare(sq, Direction.down) is [20, 16]
@@ -659,24 +658,27 @@ end test
 
 <ul>
   <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
-  <li>Some languages allow unit tests to be applied to procedures, but this dangerous since running the tests could result
-    in unwanted damage to the system (such as writing to a database); Elan guarantees that tests are safe by restrict them to functions.</li>
-  <li>A test method must be given a name that starts with the prefix `test_` (added automatically) and followed, typically,
+  <li>Some languages allow unit tests to be applied to procedures, but this is dangerous since running the tests could result
+    in unwanted damage to the system (such as writing to a database). Elan guarantees that tests are safe by restricting them to functions.</li>
+  <li>A test method must be given a name that starts with the prefix `test_` (automatically supplied) and followed, typically,
     by the name of the function.</li>
-  <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you may write a test
-    adjacent to the function being tested, or group all the tests at the end of the file perhaps.</li>
-  <li>A test method may define variables for use in the test - for example to define a data value that will be used in several asserts.</li>
-  <li>A test method must include one or more <code>assert</code> instructions - with each one typically covering a different use-case.</li>
-  <li>Each assert instruction has two fields that the programmer must complete: the <i>actual (computed)</i> result - which typically
-    consists of a call to the function being tested, with specific arguments - and the <i>expected</i> result.</li>
+  <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you could write a test
+    adjacent to the function being tested, or group all the tests at the end of the file.</li>
+  <li>A test method may define variables for use in the test &ndash; for example to define a data value that will be used in several <code>assert</code> instructions.</li>
+  <li>A test method must include at least one <code>assert</code> instruction &ndash; with each one typically covering a different use case.</li>
+  <li>Each <code>assert</code> instruction must have two fields:
+    <ol>
+     <li>the <i>actual</i> (i.e. computed) value &ndash; which usually consists of a call to the function being tested, with specific arguments,</li>
+     <li>the <i>expected</i> result.</li>
+    </ol>
   <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
   <li>Instead, all tests in a program are run automatically, each time the code compiles.</li>
-  <li>The result of each assert in each test is shown alongside the assert instruction, and the overall summary is shown in the
+  <li>The result is shown alongside each <code>assert</code> instruction, and the overall summary is shown in the
     status panel at the top centre of the Elan IDE.</li>
-  <li>Writing tests for every function is good practice - confirming that your function implementations are correct: when you write them,
-    every time you re-load the program from file.</li>
-    <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you 
-      have inadvertently made then incorrect for certain cases.</li>
+  <li>Writing tests for every function is good practice: they confirm that your function implementations are correct, not only when you write them,
+    but every time you reload the program from file or make changes.</li>
+   <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you
+    inadvertently make then incorrect for certain cases.</li>
 </ul>
 </div></div>
 
@@ -685,14 +687,13 @@ end test
 <div class="acc-body">
 
 <h4 class="no-TOC" id="ignore">Ghosting tests</h4>
-<p>To deliberately ensure that a test is not run, use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when <b>test</b>s or <b>assert</b> equals are <code>ghosted</code>, all the tests will be run and their status shown, but
-the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
+<p>To prevent a particular test from running, you can use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
+<p>Even when a <b>test</b> or <b>assert</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
+the overall test status will show the status only only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <p>You can ghost an entire test:</p>
 
-<codeblock>
-[ghosted] test test_overApple
+<codeblock>[ghosted] test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
   assert headOverApple(g2) is false
@@ -701,10 +702,9 @@ the overall test status will show the status of only the unghosted tests (green 
 end test
 </codeblock>
 
-<p>or you can ghost any individual assert(s):</p>
+<p>or you can ghost individual asserts:</p>
 
-<codeblock>
-test test_overApple
+<codeblock>test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
   [ghosted] assert headOverApple(g2) is true
@@ -714,41 +714,32 @@ end test
 </codeblock>
 
 <h4 class="no-TOC">Testing <code>Float</code> values</h4>
-<p>When testing <code>Float</code> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
+<p>When testing <code>Float</code> values it is recommend that you use method <el-method>round</el-method> to round the computed result to a fixed number of decimal places.
+This avoids rounding errors and is easier to read. For example:</p>
 
-<codeblock>
-test test_round
+<codeblock>test test_round
   assert sqrt(2).round(3) is 1.414
 end test
 </codeblock>
 
 <h4 class="no-TOC">Testing for runtime errors</h3>
-<p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
+<p>If the expression you are testing causes a runtime error, then the error will be displayed in the red <b>fail</b> message.</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
-<codeblock>
-test test_list
-  variable a set to [5, 1, 7]
-  assert a[0] is 5
-  assert a[2] is 7
-end test
-</codeblock>
 
 <p>This <b>assert</b> shows how to test for an <i>expected</i> error message:</p>
-<codeblock>
-test test_message
+<codeblock>test test_message
   variable a set to [5, 1, 7]
   assert a[4] is 0
   assert a[4] is "Out of range index: 4 size: 3"
 end test
 </codeblock>
 
-<h4 class="no-TOC" >Testing long strings</h4>
+<h4 class="no-TOC">Testing long strings</h4>
 <p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
- <i>first</i> character at which the actual (computed) and expected strings differ. In the following example, the 
- programmer has accidentally missed out the `/` in the closing html tag:</p>
+ <i>first</i> character at which the actual (computed) and expected strings differ. In the following example, the
+ programmer has accidentally missed out the `/` in the closing Html tag:</p>
 
-<codeblock>
-constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
+<codeblock>constant sGW set to "grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }"
 function setInStyle(s as String) returns String
   return "&lt;style&gt;" + s + "&lt;style&gt;"
 end function
@@ -759,11 +750,11 @@ end test
 </codeblock>
 
 <h4 class="no-TOC">Non-terminating loops and recursion</h4>
-<p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. 
+<p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate.
   This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds
-   (most tests will pass in milliseconds), and an error message will appear. 
-  Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <code>test</code>.</p>
+   (most tests will pass in milliseconds), and an error message will appear.
+  Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the test.</p>
 </p>
 </div></div>
 </div>
@@ -775,20 +766,17 @@ end test
 <h3 class="no-TOC acc-title">Examples of constants</h3>
 <div class="acc-body">
 
-<p>From the <b>Turtle Snowflake</b> demo. The constant value <code>side</code> is defined here:</p>
+<p>From the <b>Turtle Snowflake</b> demo. The constant value <code>side</code> is defined like this:</p>
 
-<codeblock>
-constant side set to 100
+<codeblock>constant side set to 100
 </codeblock>
 
 <p>and used within the main routine as an argument to pass into the <el-method>drawSide</el-method> procedure:</p>
 
-<codeblock>
-call drawSide(side, t)
+<codeblock>call drawSide(side, t)
 </codeblock>
-
-<codeblock>
-constant maxHits set to 10
+<p>Here are some other examples of globally fixed values that can be referred to from anywhere in your program:</p>
+<codeblock>constant maxHits set to 10
 constant turquoise set to 0x00ced1
 constant liveCell set to black
 constant speedOfLight set to 299792.458
@@ -805,18 +793,18 @@ constant warningMsg set to "Limit reached"
 <ul>
   <li>A constant is a named value that never changes while a program is running.</li>
   <li>The Elan library defines a few constants including <code>pi</code> and a handful of simple colours e.g. <code>red</code>.</li>
-  <li>The <b>constant</b> instruction allows you to define your own constant(s).</li>
+  <li>The <b>constant</b> instruction allows you to define your own constants.</li>
   <li class="python">Even though Python does not natively support the idea of a constant, when writing
     Python with Elan, having created a constant with <b>constant</b> instruction you will find that you
     cannot change it with a <b>reassign</b> instruction.</li>
   <li>When coding with Elan, a constant:
       <ul>
-        <li>may be defined only at global (file) level.</li>
-        <li>must be given a unique name, starting lower case (<code>side</code> above).</li>
-        <li>must be defined by a literal value, which must be a number, string, or Boolean (true/false).</li>
+        <li>may be defined only at global (file) level,</li>
+        <li>must be given a unique name, starting lower case (<code>side</code> above),</li>
+        <li>must be defined by a literal value, which must be a number, string, or Boolean (i.e. true or false).</li>
       </ul></li>
   <li>If you define your own constant with the same name as a library constant, you will not be able to access
-    the library one within your program. If you need to do this: rename your own version.</li>
+    the library one within your program.</li>
 </ul>
 </div></div>
 
@@ -825,16 +813,15 @@ constant warningMsg set to "Limit reached"
 <div class="acc-body">
 
 <h4 class="no-TOC" id="constantStructure">Constant data structures</h4>
-<p>To use a data structure that is to be a constant in your program, you define it as the value returned <b>function</b>
-  that defines no parameters. This function can then be referenced from anywhere in the program, often from within an expression
-  but you need to remember to and empty brackets after the name, when using it.</p>
+<p>To set up a data structure that is to be a constant in your program, you define it as the value returned by a <b>function</b>
+  that requires no parameters. Such a function can then be referenced from anywhere in the program, often from within an expression,
+  remembering to add empty brackets after its name.</p>
 <p>The following examples define a constant list of colours (using numerical hex values), and a constant dictionary that specifies
   the colour for each suit in a deck of cards:</p>
 
-<codeblock>
-main
-  call print ($"{rainbow()[0]} is violet")
-  call print ($"{suitColours()["hearts"]} is red")
+<codeblock>main
+  print($"{rainbow()[0]} is violet")
+  print($"{suitColours()["hearts"]} is red")
 end main
 function rainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
@@ -853,16 +840,14 @@ end function
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of enums</h3>
 <div class="acc-body">
-<p>From the <b>Snake - procedural</b> demo, the enum is defined here:</p>
+<p>From the <b>Snake &ndash; procedural</b> demo, this <code>enum</code> is defined:</p>
 
-<codeblock>
-enum Direction up, down, left, right
+<codeblock>enum Direction up, down, left, right
 </codeblock>
 
-<p>and is used in several places in the code, for example:</p>
+<p>It is used in several places in the code, for example:</p>
 
-<codeblock>
-  function getAdjacentSquare(sq as List&lt;of Int&gt;, dir as Direction) returns List&lt;of Int&gt;
+<codeblock>function getAdjacentSquare(sq as List&lt;of Int&gt;, dir as Direction) returns List&lt;of Int&gt;
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is Direction.left then
@@ -878,10 +863,9 @@ enum Direction up, down, left, right
 end function
 </codeblock>
 
-From the <b>Blackjack</b> demo:
+<p>From the <b>Blackjack</b> demo:</p>
 
-<codeblock>
-enum Suit spades, hearts, diamonds, clubs
+<codeblock>enum Suit spades, hearts, diamonds, clubs
 enum Outcome undecided, win, lose, draw, winDouble
 </codeblock>
 </div></div>
@@ -892,25 +876,26 @@ enum Outcome undecided, win, lose, draw, winDouble
 
 <ul>
   <li><p>An <b>enum</b> &ndash; short for 'enumeration' &ndash; is the simplest form of <i>user-defined</i> type.</li>
-  <li>Because it is a type, the name given to the enum (<code>Direction</code> above must start with an upper case letter.</li>
-  <li>An enum forces any named value of that type to be one of a fixed number of named values, listed in the enum definition.</li>
-  <li>The instruction <code>variable currentDir set to Direction.right</code> initialises <code>currentDir</code> with the
-  value <code>right</code> defined on the enum named <code>Direction</code>.</li>
-  <li>Because the variable <code>currentDirect</code> has the type </li>Direction</code>, it may only be reassigned to 
-  another of the named values defined on <code>currentDir</code></li>
+  <li>Because it is a type, the name given to the enum (e.g. <code>Direction</code> above) must start with an upper case letter.</li>
+  <li>An enum forces any named value of that type to be one of the fixed number of named values listed in the enum definition.</li>
+  <li>The instruction
+  <codeblock>variable currentDir set to Direction.right
+  </codeblock>
+  initialises <code>currentDir</code> with the value <code>right</code> which is valid only because it is listed
+  in the definition of the enum named <code>Direction</code>.</li>
+  <li>Because the variable <code>currentDirect</code> has the type <code>Direction</code>, it may only be reassigned to
+  another of the values defined in enum <code>Direction</code></li>
   <li>An enum value cannot be converted to anything else.</li>
   <li>The advantages of using enums are:
     <ul>
-      <li>Readability</li>
-      <li>Safety. If the four directions were defined as strings, e.g. <code>"right"</code> a mis-spelling
-      might not picked up until runtime; however, writing e.g. <code>Direction.right</code> would be a compile
-      error.
-    </li>
+      <li>readability,</li>
+      <li>safety, because if the four directions were defined as strings, e.g. <code>"right"</code> a mis-spelling
+      might not be picked up until runtime. Whereas with the enum, writing <code>Direction.rihgt</code> would raise an error at compilation.</li>
     </ul>
   </li>
 </ul>
 </div></div>
-></div>
+</div>
 
 <div id="Comment">
 <h2>Comment</h2>
@@ -918,16 +903,14 @@ enum Outcome undecided, win, lose, draw, winDouble
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of comments</h3>
 <div class="acc-body">
-  <p>From the <b>Snake - procedural</b> demo, where a comment at global level describes how to use the program:</p>
+  <p>From the <b>Snake &ndash; procedural</b> demo, where a comment at global level describes how to use the program:</p>
 
-<codeblock>
-# Use the w,a,s,d keys to change snake's direction
+<codeblock># Use the w,a,s,d keys to change snake's direction
 </codeblock>
 
 <p>From the <b>Bubbles</b> demo, where comments explain specific blocks of instructions<p>
 
-<codeblock>
-procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
+<codeblock>procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
     if random() < 0.05 then
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -954,21 +937,21 @@ end procedure
   <li>Rather, a comment contains information <i>about</i> the program, intended to be read by a person seeking to understand or modify the code.</li>
   <li>A comment may be entered at any <b>new code</b> prompt by typing the symbol <code># </code> which then provides a field in which you may enter text, or leave blank.</li>
   <li>Your text may contain any characters, except that it must not start with an open square bracket [.</li>
-  <li>When coding with Elan, a comment added by the programmer always starts on a new line.</li>
-  <li>Comments that you see written after an instruction are generated by the system and may not be edited or deleted.</li>
-  <li>Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user;
-  this comment is known as the 'file header'.</li>
+  <li>When coding with Elan, a comment is always on a line of its own.</li>
+  <li>Comments that you see written on the same line as and after an instruction are generated by the system and may not be edited or deleted.</li>
+  <li>Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by you.
+  This comment is known as the 'file header'.</li>
 </ul>
 </div></div>
 </div>
 
 <div id="statementInstructions">
 <h1>Statement instructions</h1>
-<p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods 
+<p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods
 of a program: the main routine, functions, and procedures.</p>
 
 <div id="print">
-<div id="print_statement"></div>
+<div id="print_instruction"></div>
 <h2>Print</h2>
 
 <div class="accordion">
@@ -978,8 +961,7 @@ of a program: the main routine, functions, and procedures.</p>
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
     inline within the print instruction:</code></p>
 
-<codeblock>
-main
+<codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
     reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
@@ -1002,8 +984,7 @@ end main
 
 <p>From the <b>Ripple sort</b> demo, printing a list:</code></p>
 
-  <codeblock>
-main
+  <codeblock>main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
   print(li)
   call inPlaceRippleSort(li)
@@ -1011,10 +992,9 @@ main
 end main
   </codeblock>
 
-<p>From the <b>Snake - procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
+<p>From the <b>Snake &ndash; procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
 
-  <codeblock>
-main
+  <codeblock>main
   variable blocks set to createBlockGraphics(white)
   variable head set to [20, 15]
   variable tail set to head
@@ -1098,14 +1078,14 @@ the <b>call procedure</b> instruction:</p>
 
 <codeblock>reassign blocks[x][y] to red</codeblock>
 
-<p>From the <b>Life - procedural</b> demo where a variable is initialised using an expression, in this 
+<p>From the <b>Life &ndash; procedural</b> demo where a variable is initialised using an expression, in this
 case a function call:</p>
 
 <codeblock>variable grid set to createBlockGraphics(white)</codeblock>
 
 <p>Example from the <b>Ripple Sort</b> demo where a variable being initialised using a literal list of integers:</p>
 
-<codeblock>  variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
+<codeblock>variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
 </div></div>
 
 <div class="accordion">
@@ -1121,8 +1101,8 @@ case a function call:</p>
   <li>The type of the initial value determines the type of the variable, so if/when the variable is later
     changed to a new value, that new value must be of that same type./li>
   <li>Variables may only be defined within a method (the main routine, a procedure, or function).
-  <li>Elan does not permit 'global variables' to be defined - even though, outside Elan, that would be
-    allowed by all the languages - because it is considered a bad practice.</li>
+  <li>Elan does not permit 'global variables' to be defined &ndash; even though, outside Elan, that would be
+    allowed by all the languages &ndash; because it is considered a bad practice.</li>
 </ul>
 </div></div>
 </div>
@@ -1134,12 +1114,11 @@ case a function call:</p>
 <h3 class="no-TOC acc-title">Examples of variable reassignment</h3>
 <div class="acc-body">
 
-  <p>From the <b>Ripple sort</b> demo, where the <code>hasChanged</code> variable, having been <i>defined</i> higher up, 
+  <p>From the <b>Ripple sort</b> demo, where the <code>hasChanged</code> variable, having been <i>defined</i> higher up,
     is reassigned to <code>false</code> at the start of the while loop,
   and then to <code>true</code> if two values are swapped:</p>
 
-  <codeblock>
- procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
+  <codeblock>procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
@@ -1157,12 +1136,11 @@ case a function call:</p>
 end procedure
   </codeblock>
 
-  <p>From the <b>Snake -procedural</b> demo, where the variable <code>currentDef</code> is reassigned to a new value by calling the function 
+  <p>From the <b>Snake -procedural</b> demo, where the variable <code>currentDef</code> is reassigned to a new value by calling the function
     <el-method>directionByKey</el-method>, which is passed a keypress that has been read from the keyboard using the <el-method>getKey</el-method>
   system method:</p>
 
-<codeblock>
-procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&lg;, body as List&lt;of List&lt;of Int&gt;&gt;)
+<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&lg;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1188,7 +1166,7 @@ end procedure
 </div></div>
 </div>
 
-<div id="input_statement">
+<div id="input_instruction">
 <h2>Input</h2>
 
 <div class="accordion">
@@ -1206,9 +1184,9 @@ end procedure
 
 <ul>
   <li>The <b>input</b> instruction is the simplest way to read a string value typed in by the user (followed by <b>Enter</b>.</li>
-  <li>You must specify a user-prompt string, though this may be an empty string - <code>""</code>.</li>
+  <li>You must specify a user-prompt string, though this may be an empty string &ndash; <code>""</code>.</li>
   <li>When working in Elan, the user entry will <i>always</i> be on the line below the displayed prompt.</li>
-  <li>The entered value is put into a <i>new</i> variable - equivalent to if it was a <b>variable definition</b>.</li>
+  <li>The entered value is put into a <i>new</i> variable &ndash; equivalent to if it was a <b>variable definition</b>.</li>
   <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding a <b>reassign variable</b>
   instruction on the next line.</li>
   <li>Also <i>in a separate instruction</i>, you can parse the string into a numeric type by applying the <code>asInt()</code>
@@ -1249,11 +1227,10 @@ which offer several advantages, including:</p>
 <h3 class="no-TOC acc-title">Examples of <b>if</b> instructions</h3>
 <div class="acc-body">
 
-<p>From the <b>Life - procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
+<p>From the <b>Life &ndash; procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
 random value (expected to be in the range 0 to 1) is greater than 0.5:</p>
 
-<codeblock>
-function blackOrWhite(random as Float) returns Int
+<codeblock>function blackOrWhite(random as Float) returns Int
   variable result set to black
   if random > 0.5 then
     reassign result to white
@@ -1265,8 +1242,7 @@ end function
 <p>From the <b>Bubbles</b> demo where the <b>if</b> instruction includes an <b>else</b> clause,
   so that one of two separate blocks of instructions is always executed depending on the value of a randomly-generated number.</p>
 
-<codeblock>
-if random() < 0.05 then
+<codeblock>if random() < 0.05 then
   # 5% chance bubble 'bursts' and starts again tiny at bottom
   call b.setRadius(0)
   call b.setCentreY(75)
@@ -1280,8 +1256,7 @@ end if
 <p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
 on the value of the <code>direction</code> variable, one of four different instructions is executed:</p>
 
-<codeblock>
-if direction is 0 then
+<codeblock>if direction is 0 then
   reassign x to min([x + 1, 39])
 elif direction is 1 then
   reassign x to max([x - 1, 0])
@@ -1292,7 +1267,7 @@ elif direction is 3 then
 end if
 </codeblock>
 
-<p>(Note: the <i>last</i> <b>else if</b> clause <i>could</i> have been written as an <b>else</b> clause, 
+<p>(Note: the <i>last</i> <b>else if</b> clause <i>could</i> have been written as an <b>else</b> clause,
   but writing it as an <b>else if</b> makes the intention clearer to a human reader).</p>
 </div></div>
 
@@ -1301,7 +1276,7 @@ end if
 <div class="acc-body">
   <ul>
     <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
-    <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value - <code>true</code> or <code>false</code>.</li>
+    <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value &ndash; <code>true</code> or <code>false</code>.</li>
     <li>That expression might take any of the following forms:</li>
     <ul>
       <li>comparing two values using one of the Boolean operators e.g. <code>random() < 0.05</code> or <code>direction is 0</code></li>
@@ -1315,8 +1290,8 @@ end if
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
-<div class="acc-body"> 
-  <p><a href="#ifExpression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although 
+<div class="acc-body">
+  <p><a href="#ifExpression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although
     that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> paradigm.</p>
 </div></div>
 </div>
@@ -1330,8 +1305,7 @@ end if
   <p>From the <b>Ripple Sort</b> demo, where the loop is executed until a pass right through the loop has left the <code>hasChanged</code>
   variable as <code>false (meaning that no more swaps have occurred):</code></p>
 
-  <codeblock>
-while hasChanged is true
+  <codeblock>while hasChanged is true
   reassign hasChanged to false
   for i in range(0, lastComp + 1)
     if li[i] > li[i + 1] then
@@ -1348,17 +1322,15 @@ end while
   <p>From the <b>Bubbles</b> demo, where the condition is 'hard-wired' to <code>true</code>, which means that the loop will
   executive <i>indefinitely</i> (until you stop the program manually with the <b>stop</b> button):</p>
 
-  <codeblock>
-while true
+  <codeblock>while true
   call moveGrowBurst(bubbles)
 end while
   </codeblock>
 
-  <p>From the <b>Tower of Hanoi</b> demo, which uses a more complicated expression - to exit the loop only when the third stack 
+  <p>From the <b>Tower of Hanoi</b> demo, which uses a more complicated expression &ndash; to exit the loop only when the third stack
   has <i>all</i> the discs on it:</p>
 
-  <codeblock>
-while stacks[2].length() isnt nDiscs
+  <codeblock>while stacks[2].length() isnt nDiscs
   if (stacks[0].length() mod 2) is 0 then
     call moveBetween(stacks, 0, 1)
     call moveBetween(stacks, 0, 2)
@@ -1381,7 +1353,7 @@ end while
   <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
   <li>As on an <b>if</b> instruction, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
   <li>The condition is evaluated at the beginning of each pass through the loop.</li>
-  <li>If the condition makes use of one or more variables (most do) then the variable(s) must be defined before the start of the loop.</li>
+  <li>If the condition makes use of one or more variables (most do) then the variables must be defined before the start of the loop.</li>
   <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
     not executed at all.</li>
   <li>Conversely, if the condition always evaluates to true, then the loop will executive indefintely; this can be deliberate, but
@@ -1405,22 +1377,20 @@ end while
 <h3 class="no-TOC acc-title">Examples of for loops</h3>
 <div class="acc-body">
 
-  <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method> 
+  <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method>
     function being <i>exclusive</i>) to create 20 bubbles of the same size, but of different (randomised) colours, and spread evenly across
   the bottom of the display:</p>
 
-  <codeblock>
-  for i in range(1, 21)
+  <codeblock>for i in range(1, 21)
     variable b set to (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white))
     call bubbles.append(b)
   end for
   </codeblock>
 
-  <p>From the <b>Turtle Dragon</b> demo, where the number of times to execute the loop is calculated - based on the number of characters in
+  <p>From the <b>Turtle Dragon</b> demo, where the number of times to execute the loop is calculated &ndash; based on the number of characters in
     the string variable named <code>turns</code>:</p>
 
-  <codeblock>
-procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
+  <codeblock>procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, corner as Float)
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
@@ -1436,11 +1406,10 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
 end procedure
   </codeblock>
 
-  <p>From the <b>Life - procedural</b> demo, a 'nested' <b>for loop</b> (one inside another) to apply the two inner instructions to each
+  <p>From the <b>Life &ndash; procedural</b> demo, a 'nested' <b>for loop</b> (one inside another) to apply the two inner instructions to each
   cell in the 40 x 30 grid:</p>
 
-  <codeblock>
-  for x in range(0, 40)
+  <codeblock>for x in range(0, 40)
     for y in range(0, 30)
       variable colour set to nextCellValue(grid, x, y)
       reassign nextGen[x][y] to colour
@@ -1456,7 +1425,7 @@ end procedure
     <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
     <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
-    <li>The value is held in a variable - which is defined in the first editable field when you create a new for instruction.</li>
+    <li>The value is held in a variable &ndash; which is defined in the first editable field when you create a new for instruction.</li>
     <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
     <li>The sequence of values may be specified:</li>
     <ul>
@@ -1491,11 +1460,10 @@ end procedure
 <h3 class="no-TOC acc-title">Examples of procedure calls</h3>
 <div class="acc-body">
 
-<p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>, 
+<p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>,
   passing in the data structure held in variable <code>blocks:</code></p>
 
-  <codeblock>
-    call displayBlocks(blocks)
+  <codeblock>call displayBlocks(blocks)
   </codeblock>
 
 <p>From the <b>Bubbles</b> demo, a call from within the main routine to the procedure named <el-method>moveGrowBurst</el-method> procedure:</p>
@@ -1504,10 +1472,9 @@ end procedure
 
 which is defined immediately below the main routine at the same (global) level.
 
-<p>From the <b>Snake - procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
+<p>From the <b>Snake &ndash; procedural</b> demo, a procedure that contains a sequence of four calls to other procedures:</p>
 
-<codeblock>
-procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
+<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1533,7 +1500,7 @@ is a procedure method on the type <code>List</code>, which is the type of the <c
 <li>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
 <p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; if there are no parameters, leave the brackets empty.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object.
- 
+
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
   To enforce this, <b>call procedure</b> instructions are not allowed in functions.</p>
 <p>There is a limit to the complexity of a <b>call procedure</b> instruction.
@@ -1560,13 +1527,12 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 <h3 class="no-TOC acc-title">Examples of <b>try</b> instructions</h3>
 <div class="acc-body">
 
-  <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string 
-    (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code> 
+  <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string
+    (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code>
   attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try</b> instruction
 is used to intercept (or 'catch') this exception and just ignore that input:</p>
 
-<codeblock>
-  main
+<codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
     reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
@@ -1595,7 +1561,7 @@ end main
 <ul>
   <li>The <b>try</b> instruction is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
     and to <i>catch</i> that exception without the program being automatically halted.</li>
-  <li>The <b>try</b> instruction is often referred to as a `try-catch` - because it makes no sense to have
+  <li>The <b>try</b> instruction is often referred to as a `try-catch` &ndash; because it makes no sense to have
   a <b>try</b> instruction <i>without</i> a 'catch' clause.</li>
   <li>When you add a <b>try</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
   <li class="python">'except' is Python's word for 'catch'</li>
@@ -1626,8 +1592,7 @@ end main
 <p>The following function to calculate factorials <i>deliberately</i> 'throws' an exception (error) if it is given
   a <i>negative</i> value for the argument:</p>
 
-<codeblock>
-function factorial(n as Int) returns Int
+<codeblock>function factorial(n as Int) returns Int
   variable result set to 1
   if n > 1 then
     reassign result to n*factorial(n - 1)
@@ -1661,8 +1626,7 @@ end function
 
   <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
 
-<codeblock></codeblock>
-  test test_leap
+<codeblock>test test_leap
   # normal cases
   assert leap(2025) is false
   assert leap(2024) is true
@@ -1674,8 +1638,7 @@ end test
 
 <p>From the <b></b>Tower of Hanoi</p> demo, showing an assert for an error case:
 
-<codeblock>
-test test_colour
+<codeblock>test test_colour
   # Normal cases
   assert colour(5) is green
   # Edge cases
@@ -1698,14 +1661,14 @@ end test
   <ul>
     <li>The <i>actual</i> value as returned by a call to the function being tested.</li>
     <li>The expected value, which will typically be a literal value of the same type as the actual.</li>
-    <li>When the tests are run (automatically whenever the code <i>compiles</i>) the result - pass or fail - will be
+    <li>When the tests are run (automatically whenever the code <i>compiles</i>) the result &ndash; pass or fail &ndash; will be
       shown alongside each assert. </li>
     <li>A fail indicates that the expected and actual values do not match.</li>
     <li>The expected value should be of the same type as the actual; if they are not that will be reported as a test failure,
       without showing the actual values.</li>
-    <li>You can, however, test for an exception having been thrown, by setting the expected value to a the expected error <i>message</i> 
+    <li>You can, however, test for an exception having been thrown, by setting the expected value to a the expected error <i>message</i>
       (as a <i>string</i>).</li>
-          <li>Unlike on many systems, Elan does not stop at the first failure within each <b>test</b> - it will attempt
+          <li>Unlike on many systems, Elan does not stop at the first failure within each <b>test</b> &ndash; it will attempt
     to evaluate all the asserts.</li>
     <li>The required <i>order</i> of the actual and expected fields varies between the supported languages;
     Elan handles this automatically when translating between languages.</li>
@@ -1720,7 +1683,7 @@ end test
 </div>
 </div>
 
-<div id="Expression"> 
+<div id="Expression">
 <h1>Expressions</h1>
 <p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
 <ul>
@@ -1736,7 +1699,7 @@ end test
 <p>A literal value is where a value is written 'literally' in the code, such as <code>3.142</code>, in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each type.</p>
 <table>
-<tr><th>Type</th><th>Example of literal</th></tr>
+<tr><th>type</th><th>Example of literal</th></tr>
 <tr><td><a href="LibRef.html#Int">Int <i class="fa">&#xf08e;</i></a></td><td><code>3</code></td></tr>
 <tr><td><a href="LibRef.html#Float">Float <i class="fa">&#xf08e;</i></a></td><td><code>2.0</code></td></tr>
 <tr><td><a href="LibRef.html#Boolean">Boolean <i class="fa">&#xf08e;</i></a></td><td><el-id>true</el-id></td></tr>
@@ -1762,8 +1725,7 @@ then an empty string or list is returned.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable a set to "Hello world!"
   call print(a[4])
   call print(a.subString(4, a.length()))
@@ -1779,8 +1741,7 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable li set to new List&lt;of Int&gt;()
   reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   call print(li[4])
@@ -1864,8 +1825,7 @@ This is just to visually reinforce the precedence.</p>
 <p>The operator precedence is <code>not</code> &rarr; <code>and</code> &rarr; <code>or</code>, so this
 example, which implements an 'exclusive or', need not use brackets and can rely on the operator precedence:</p>
 
-<codeblock>
-function exOr(a as Boolean, b as Boolean) returns Boolean
+<codeblock>function exOr(a as Boolean, b as Boolean) returns Boolean
   return a and not b or b and not a
 end function
 </codeblock>
@@ -1889,8 +1849,7 @@ end function
 <p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
 <li>
-<codeblock>
-if listA.equals(listB) then
+<codeblock>if listA.equals(listB) then
 
 end if
 </codeblock>
@@ -1929,8 +1888,7 @@ Two instances which are subclasses of the same abstract class compare equal only
 <div id="functionCall">
 <h2>Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
-<codeblock>
-main
+<codeblock>main
   call print(sin(radians(30)))
   variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
   variable name set to input("Your name")
@@ -1967,7 +1925,7 @@ e.g. in a particular call to a Higher-order Function.</p>
 <div id="ifExpression">
 <h2><b>if</b> expression</h2>
 
-<p>An 'if expression' has some similarity with an <b>if</b> <i>statement</i>, but with important differences:</p>
+<p>An 'if expression' has some similarity with an <b>if</b> <i>instruction</i>, but with important differences:</p>
 
 <ul>
   <li>An 'if expression' is written within a single line.</li>
@@ -1978,7 +1936,7 @@ e.g. in a particular call to a Higher-order Function.</p>
 
 <p>All modern languages, including Python, VB, C#, and Java, support this concept, though sometimes by another name such as 'conditional expression', or even 'ternary operator' (because it has three terms).
   The syntax varies significantly between those languages. When coding with Elan in any of the supported languages, this functionality is provided by a 'pseudo function' named <el-method>if_</el-method>,
-  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if</b> statement. (This is consistent the standard advice
+  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if</b> instruction. (This is consistent the standard advice
   that if you define your own identifier that classes with a <i>reserved word</i>, the simplest fix is to add an underscore on the end.)
 </p>
 
@@ -1991,17 +1949,16 @@ e.g. in a particular call to a Higher-order Function.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <p>Why do we refer to <el-method>if_</el-method> as a 'pseudo function'. At first glance it looks to operate like any function: it requires three arguments and returns a result that depends on them.
-But it does one thing very differently: if either or both of the second and third arguments are themselves defined by expressions, they are evaluated <i>lazily</i> - only the one that is
-is needed (depending on the evaluation of the condition argument) will be evaluated. It turns out that this is very important - without it can be very easy to end up with lots of 'Stack overflow errors'.
-So though <el-method>if_</el-method> <i>looks</i> like any other library function, it is actually special syntax. And that is why you don't see <el-method>if_</el-method> offered in the 
+But it does one thing very differently: if either or both of the second and third arguments are themselves defined by expressions, they are evaluated <i>lazily</i> &ndash; only the one that is
+is needed (depending on the evaluation of the condition argument) will be evaluated. It turns out that this is very important &ndash; without it can be very easy to end up with lots of 'Stack overflow errors'.
+So though <el-method>if_</el-method> <i>looks</i> like any other library function, it is actually special syntax. And that is why you don't see <el-method>if_</el-method> offered in the
 drop-down list of library function names.</p>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples using <b>if</b> expression:</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
-<codeblock>
-function foo() returns Int
+<codeblock>function foo() returns Int
   return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
 end function
 </codeblock>
@@ -2010,8 +1967,7 @@ end function
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable p set to unicode(0x03c0)
   call testPi(p, 3)
   call testPi(p, 4)
@@ -2042,32 +1998,21 @@ end procedure
 <h2>Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of a <code>String s</code> using a library method:<br>
- <code>variable  n set to s.length()</code></li>
+ <li>To apply a function method to a named value, e.g. to obtain the length of <code>String</code> <el-id>s</el-id> using a library method:<br>
+ <code>variable n set to s.length()</code></li>
  <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
  <code>call  li.initialise(10,0)</code></li>
  <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>game</el-id>) of a class and, in this example to get the length of the property's current string value, using
  library methods:<br>
  <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
- <code>variable  point set to (3, 7)</code><br>
- <code>variable  x set to point.item_0</code>
+<codeblock>variable  point set to (3, 7)
+variable x set to point.item_0
 </codeblock></li>
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
-  <code>enum Suit spades, hearts, diamonds, clubs</code><br>
-  <code>variable suit set to Suit.spades</code></li>
-<li>A variety of dot syntax is also present where a variable name is used both for a global constant and for a local value within a <b>function</b> or <b>procedure</b>.
-The global value may then be referred to by prefixing the variable name with the keyword <b>global</b> and a dot. In this example, a call to the function
-returns the value of the global constant and not the value of the local variable of the same name:
-<codeblock>
-constant maxHits set to 20
-function hits() returns Int
-  variable maxHits set to 99
-  return global.maxHits                                      „
-end function
-</codeblock>
-<p>A similar name override is available to force reference to a library name by prefixing the keyword <b>library</b></p>.
- </li>
+<codeblock>enum Suit spades, hearts, diamonds, clubs
+variable suit set to Suit.spades
+</codeblock></li>
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
  nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
@@ -2113,10 +2058,10 @@ end function
 <h3 id="ExceptionMessageField" class="no-TOC">'message' field in a throw instruction</h3>
  <p>An exception message must be either a literal string or a named value holding a string.</p>
 
-<h3 id="ExpressionField" class="no-TOC">expression field - used within multiple instructions</h3>
+<h3 id="ExpressionField" class="no-TOC">expression field &ndash; used within multiple instructions</h3>
  <p>This field expects an expression. For the various forms of expression see <a href="#Expression">Expressions <i class="fa">&#xf14c;</i></a>.</p>
 
-<h3 id="IdentifierField" class="no-TOC">identifier field - used within multiple instructions</h3>
+<h3 id="IdentifierField" class="no-TOC">identifier field &ndash; used within multiple instructions</h3>
 
 <h3 id="IfSelectorField" class="no-TOC">'if' field in an else clause</h3>
 
@@ -2142,8 +2087,8 @@ end function
  </ul>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
- <p>For certain data structure types the name may be followed by a 'generic' clause, which specifies the type(s)
-  of the elements that make up the data structure, for example:</p>
+ <p>For certain data structure types the name may be followed by a 'generic' clause, which specifies the types
+  of the items that make up the data structure, for example:</p>
 <code>List&lt;of Int&gt;</code><br>
 <code>Dictionary&lt;of String, Int&gt;</code> specifies that the keys are of type <code>Sting</code> and the values of type <code>Int</code>.
 
