@@ -293,7 +293,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1, 2]
-  variable b set to a.map(lambda x as Int => x)
+  variable b set to a.map(lambda x => x)
   reassign b to [1, 2]
   call printNoLine(b)
 end main`;

@@ -19,7 +19,7 @@ suite("Lambda", () => {
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x * 3)
+  call printModified(4, lambda x => x * 3)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -59,7 +59,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => first(t))
+  call printModified((4, 5), lambda t => first(t))
 end main
 
 function first(t as (Int, Int)) returns Int
@@ -110,7 +110,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
+  call printModified((4, 5), lambda t => t.item_0)
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
@@ -382,7 +382,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x.toString())
+  call printModified(4, lambda x => x.toString())
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -410,7 +410,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified("4", lambda x as Int => x + 3)
+  call printModified("4", lambda x => x + 3)
 end main
 
 procedure printModified(i as String, f as Func<of Int => Int>)
@@ -438,7 +438,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x)
+  call printModified(4, lambda x => x)
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)

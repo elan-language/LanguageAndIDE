@@ -20,9 +20,9 @@ suite("StdLib HOFs", () => {
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.filter(lambda x as Int => x > 20))
-  call printNoLine(source.filter(lambda x as Int => x > 20))
-  call printNoLine(source.filter(lambda x as Int => (x < 3) or (x > 35)))
+  call printNoLine(source.filter(lambda x => x > 20))
+  call printNoLine(source.filter(lambda x => x > 20))
+  call printNoLine(source.filter(lambda x => (x < 3) or (x > 35)))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -58,7 +58,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  call printNoLine(li.filter(lambda x as String => x.equals("o")))
+  call printNoLine(li.filter(lambda x => x.equals("o")))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -97,7 +97,7 @@ main
 end main
 
 function filterIt(tofilter as List<of Int>) returns List<of Int>
-    return tofilter.filter(lambda x as Int => x > 20)
+    return tofilter.filter(lambda x => x > 20)
 end function
 
 function source() returns List<of Int>
@@ -145,8 +145,8 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.map(lambda x as Int => x + 1))
-  call printNoLine(source.map(lambda x as Int => x.toString() + "*"))
+  call printNoLine(source.map(lambda x => x + 1))
+  call printNoLine(source.map(lambda x => x.toString() + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -184,7 +184,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  call printNoLine(li.map(lambda x as String => x + "*"))
+  call printNoLine(li.map(lambda x => x + "*"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -220,7 +220,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  reassign source to source.map(lambda x as Int => x + 1)
+  reassign source to source.map(lambda x => x + 1)
   call printNoLine(source)
 end main`;
 
@@ -357,7 +357,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.maxBy(lambda x as Int => x mod 5))
+  call printNoLine(source.maxBy(lambda x => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -390,7 +390,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [[1], [2, 2]]
-  call printNoLine(source.maxBy(lambda x as List<of Int> => x.length()))
+  call printNoLine(source.maxBy(lambda x => x.length()))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -422,7 +422,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(source().maxBy(lambda t as String => t.length()))
+  call printNoLine(source().maxBy(lambda t => t.length()))
 end main
 
 function source() returns List<of String>
@@ -627,7 +627,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.minBy(lambda x as Int => x mod 5))
+  call printNoLine(source.minBy(lambda x => x mod 5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -659,7 +659,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  call printNoLine(source.orderBy(lambda x as Int, y as Int => x < y))
+  call printNoLine(source.orderBy(lambda x, y => x < y))
   call printNoLine(source)
 end main`;
 
@@ -735,7 +735,7 @@ main
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()])
+  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n => not isnumberchar(s[n]))) + 1..s.length()])
 end function
 
 function isnumberchar(s as String) returns Boolean
@@ -826,7 +826,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  call printNoLine(source().maxBy(lambda t as String => t))
+  call printNoLine(source().maxBy(lambda t => t))
 end main
 
 function source() returns List<of String>

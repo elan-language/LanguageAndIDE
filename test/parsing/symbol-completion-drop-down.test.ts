@@ -2553,7 +2553,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
+  call printModified(new Foo(), lambda t => t.bar())
 end main
   
 class Foo

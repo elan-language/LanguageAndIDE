@@ -784,7 +784,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, rr))
+  call printNoLine(a.filter(lambda x => x > 2).map(lambda x => x * x).reduce(0, rr))
 end main
 
 function rr(s as Int, x as Int) returns Int
@@ -826,7 +826,7 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  variable c set to a.subList(0, 5).map(lambda x as Int => x * x)
+  variable c set to a.subList(0, 5).map(lambda x => x * x)
   call printNoLine(c.subList(2, c.length()).reduce(0, rr))
 end main
 

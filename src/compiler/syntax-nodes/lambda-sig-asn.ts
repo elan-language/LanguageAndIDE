@@ -6,11 +6,11 @@ import { getGlobalScope, isDefinitionScope, match } from "../../compiler/symbols
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ParamDefAsn } from "./param-def-asn";
+import { IdDefAsn } from "./id-def-asn";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(
-    public readonly parameters: ParamDefAsn[],
+    public readonly parameters: IdDefAsn[],
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -42,7 +42,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return this.parameters.map((p) => p.compile()).join(", ");
+    return this.parameters.map((p) => p.id).join(", ");
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
@@ -75,8 +75,18 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     const matches = searchScope.symbolMatches(id, all, this.scope);
     let localMatches: ElanSymbol[] = [];
 
-    for (const p of this.parameters) {
-      localMatches = localMatches.concat(p.symbolMatches(id, all, this));
+    for (let i = 0; i < this.parameters.length; i++) {
+      const p = this.parameters[i];
+      if (all || match(p.id.trim(), id, false)) {
+        localMatches.push({
+          symbolId: id,
+          symbolType: () => this._pTypes[i] ?? UnknownType.Instance,
+          symbolScope: SymbolScope.parameter,
+          symbolIsType: false,
+        });
+      }
+
+
     }
 
     return localMatches.concat(matches);
