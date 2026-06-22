@@ -252,6 +252,7 @@ export function generateType(
       type.isExtension,
       type.isPure,
       type.isAsync,
+      type.isLambda,
       type.deprecated,
     );
   }
@@ -536,10 +537,17 @@ export function processLambdaParameters(
   compileErrors: CompileError[],
   fieldId: string,
 ) {
+  let parameterTypes = procSymbolType.parameterTypes;
+
+  if (parameterTypes.some((pt) => containsGenericType(pt))) {
+    const matches = matchGenericTypes(procSymbolType, callParameters);
+    parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
+  }
+
   for (let i = 0; i < callParameters.length; i++) {
     const callParameter = callParameters[i];
     if (callParameter instanceof LambdaAsn) {
-      const matchingParameter = procSymbolType.parameterTypes[i];
+      const matchingParameter = parameterTypes[i];
 
       if (matchingParameter instanceof FunctionType) {
         const lambdaParams = matchingParameter.parameterTypes;

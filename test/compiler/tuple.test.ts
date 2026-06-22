@@ -195,6 +195,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+   test("Pass_IndexGenericFunctionReturnsTupleLambda", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [(1,2)]
+  variable t set to a.reduce((1, 1), lambda i, j => j)
+  variable fst set to t.item_0
+  call printNoLine(fst)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.tuple([1, 2])]);
+  let t = (await a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  let fst = t[0];
+  await _stdlib.printNoLine(fst);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Pass_FunctionTupleParameter", async () => {
     const code = `${testHeader}
 

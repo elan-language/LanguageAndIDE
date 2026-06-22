@@ -12,6 +12,7 @@ export class FunctionType implements SymbolType {
     public readonly isExtension: boolean,
     public readonly isPure: boolean,
     public readonly isAsync: boolean,
+    public readonly isLambda: boolean,
     public readonly deprecated?: Deprecated | undefined,
   ) {}
 

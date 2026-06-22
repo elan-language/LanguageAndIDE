@@ -250,6 +250,46 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
+  test("Pass_reduceListLambda", async () => {
+    const code = `${testHeader}
+
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  call printNoLine(source.reduce(0, lambda s, x => s + x))
+  call printNoLine(source.reduce(100, lambda s, x => s + x))
+  call printNoLine(source.reduce("Concat:", lambda s, x => s + x.toString()))
+  variable a set to ""
+  reassign a to source.reduce("Concat:", lambda s, x => s + x.toString())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await _stdlib.printNoLine((await source.reduce(0, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await source.reduce(100, async (s, x) => s + x)));
+  await _stdlib.printNoLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.toString(x)))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
+  });
+
   test("Pass_reduceList", async () => {
     const code = `${testHeader}
 
@@ -706,6 +746,46 @@ async function main() {
   let source = system.list(["apple", "orange", "pair", "apple"]);
   await _stdlib.printNoLine(source.asSet());
 }
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[apple, orange, pair]");
+  });
+
+   test("Pass_reduceClass", async () => {
+    const code = `${testHeader}
+
+main
+  variable source set to [new Point(), new Point()]
+  variable r set to source.reduce(0, lambda a, p => a + p.x)
+  call printNoLine(r)
+end main
+
+class Point
+  property x as Int
+  property y as Int
+
+  constructor()
+    reassign this.x to 0
+    reassign this.y to 0
+  end constructor
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

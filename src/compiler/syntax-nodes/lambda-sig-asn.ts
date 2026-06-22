@@ -73,7 +73,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         : this.scope;
 
     const matches = searchScope.symbolMatches(id, all, this.scope);
-    let localMatches: ElanSymbol[] = [];
+    const localMatches: ElanSymbol[] = [];
 
     for (let i = 0; i < this.parameters.length; i++) {
       const p = this.parameters[i];
@@ -85,8 +85,6 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
           symbolIsType: false,
         });
       }
-
-
     }
 
     return localMatches.concat(matches);

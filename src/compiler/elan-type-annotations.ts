@@ -154,6 +154,7 @@ export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
       this.isExtension,
       this.isPure,
       this.isAsync,
+      false,
       this.deprecated,
     );
   }
@@ -230,6 +231,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
       this.returnType.mapType(scope),
       false,
       true,
+      false,
       false,
       undefined,
     );

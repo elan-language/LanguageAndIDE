@@ -121,6 +121,7 @@ const funcSymbol: ClassSymbol = {
       false,
       true,
       false,
+      false,
     );
   },
   symbolScope: SymbolScope.program,

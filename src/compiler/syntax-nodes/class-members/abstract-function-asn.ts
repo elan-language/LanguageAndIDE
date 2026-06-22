@@ -61,7 +61,7 @@ ${this.indent()}}\r
     const [pn, pt] =
       this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
     const rt = this.returnType.symbolType();
-    return new FunctionType(pn, pt, rt, false, true, true);
+    return new FunctionType(pn, pt, rt, false, true, true, false);
   }
 
   get symbolScope() {
