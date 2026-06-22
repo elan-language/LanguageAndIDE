@@ -1,4 +1,4 @@
-# c18b938015dec90fb157ae7f818ea08cf52ec6aca2f6d38d865879a8025de9f8 Elan 2.0.0-beta-pre1 valid
+# 63224d12b72ec37fc2e6ebda6baf1ce72820cf05dd772c46725b742c315cb9c4 Elan 2.0.0-beta valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -36,8 +36,9 @@ function setTargetIfGreen(attempt as String, target as String, n as Int) returns
   return if_(isGreen(attempt, target, n), setChar(target, n, "."), target)
 end function
 
-function evaluateGreens(attempt as String, target as String) returns List<of String>
-  return range(0, 5).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
+function evaluateGreens(attempt as String, target as String) returns (String, String)
+  let starter be (attempt, target)
+  return range(0, 5).reduce(starter, lambda a, x => (setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)))
 end function
 
 function isYellow(attempt as String, target as String, n as Int) returns Boolean
@@ -56,25 +57,26 @@ function setTargetIfYellow(attempt as String, target as String, n as Int) return
   return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
 end function
 
-function evaluateYellows(attempt as String, target as String) returns List<of String>
-  return range(0, 5).reduce([attempt, target], lambda a as List<of String>, x as Int => [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
+function (attempt as String, target as String) returns (String, String)
+  let starter be (attempt, target)
+  return range(0, 5).reduce(starter, lambda a, x => (setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)))
 end function
 
 function markAttempt(attempt as String, target as String) returns String
   let greens be evaluateGreens(attempt, target)
-  let markedAttempt be evaluateYellows(greens[0], greens[1])
+  let markedAttempt be (greens.item_0, greens.item_1)
   return markedAttempt[0]
 end function
 
 function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w).equals(mark))
+  return prior.filter(lambda w => markAttempt(attempt, w).equals(mark))
 end function
 
 function maxWordCountRemainingAfterAttempt(possAnswers as List<of String>, attempt as String) returns Int
-  let d be new Dictionary<of String, Int>()
-  let d2 be possAnswers.reduce(d, lambda dd as Dictionary<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
+  let d_empty be new Dictionary<of String, Int>()
+  let d2 be possAnswers.reduce(d_empty, lambda d, answer => incrementCount(d, answer, attempt))
   let keys be d2.keys()
-  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+  return keys.reduce(0, lambda maxSoFar, mark => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 end function
 
 function incrementCount(d as Dictionary<of String, Int>, possAnswer as String, attempt as String) returns Dictionary<of String, Int>
@@ -85,7 +87,7 @@ function incrementCount(d as Dictionary<of String, Int>, possAnswer as String, a
 end function
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
-  return possAnswers.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAnswers.map(lambda w => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List<of String>) returns WordCount
@@ -96,7 +98,8 @@ end function
 
 function bestAttempt(possAnswers as List<of String>) returns String
   let wordCounts be allRemainingWordCounts(possAnswers)
-  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
+  let starter be wordCounts.head()
+  let best be wordCounts.reduce(starter, lambda bestSoFar, newWord => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 
@@ -176,11 +179,11 @@ test test_setTargetIfGreen
 end test
 
 test test_evaluateGreens
-  assert evaluateGreens("ABCDE", "AXXXX") is ["*BCDE", ".XXXX"]
-  assert evaluateGreens("ABCDE", "XXXXE") is ["ABCD*", "XXXX."]
-  assert evaluateGreens("ABCDE", "ABCDE") is ["*****", "....."]
-  assert evaluateGreens("AACDE", "AXXXX") is ["*ACDE", ".XXXX"]
-  assert evaluateGreens("ABCDE", "AAXXX") is ["*BCDE", ".AXXX"]
+  assert evaluateGreens("ABCDE", "AXXXX") is tuple("*BCDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "XXXXE") is tuple("ABCD*", "XXXX.")
+  assert evaluateGreens("ABCDE", "ABCDE") is tuple("*****", ".....")
+  assert evaluateGreens("AACDE", "AXXXX") is tuple("*ACDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "AAXXX") is tuple("*BCDE", ".AXXX")
 end test
 
 test test_isYellow
@@ -217,12 +220,12 @@ test test_setTargetIfYellow
 end test
 
 test test_evaluateYellows
-  assert evaluateYellows("ABCDE", "XAXXX") is ["+____", "X.XXX"]
-  assert evaluateYellows("ABCDE", "XXXXA") is ["+____", "XXXX."]
-  assert evaluateYellows("ABCDE", "XXXXE") is ["____+", "XXXX."]
-  assert evaluateYellows("ABCDE", "XAAXX") is ["+____", "X.AXX"]
-  assert evaluateYellows("AACDE", "XAXXX") is ["+____", "X.XXX"]
-  assert evaluateYellows("ABCDE", "BCDEA") is ["+++++", "....."]
+  assert evaluateYellows("ABCDE", "XAXXX") is tuple("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "XXXXA") is tuple("+____", "XXXX.")
+  assert evaluateYellows("ABCDE", "XXXXE") is tuple("____+", "XXXX.")
+  assert evaluateYellows("ABCDE", "XAAXX") is tuple("+____", "X.AXX")
+  assert evaluateYellows("AACDE", "XAXXX") is tuple("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "BCDEA") is tuple("+++++", ".....")
 end test
 
 test test_markAttempt

@@ -1,4 +1,4 @@
-# 828d8edcca1b54c2ab5893b05373de4f67aa7f846773aa03632875a40a715e7c Elan 2.0.0-beta-pre1 valid
+# 03e2bedf7b9eecf262dbd898d0447b3bbc3874a4dd3dd86b331e02afeb525221 Elan 2.0.0-beta valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -101,7 +101,7 @@ function roundtuple1(n as (Float, Float)) returns (Float, Float)
 end function
 
 function roundtuple2(n as (Float, Float)) returns List<of Float>
-  return [n.item_0, n.item_1].map(lambda x as Float => x.round(8))
+  return [n.item_0, n.item_1].map(lambda x => x.round(8))
 end function
 
 constant scale set to 7

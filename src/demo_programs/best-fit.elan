@@ -1,10 +1,10 @@
-# 08e3521e286239cb26a19048ae0843eccbdcc80afcd0983811bbc3f7f2f6f60e Elan 2.0.0-beta-pre1 valid
+# 701a41306345ed8b2952bce6fe6c47af80b1b2cce41ec9d93bed366e538637ad Python with Elan 2.0.0-beta valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
-  let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  let sumXsq be points.reduce(0.0, lambda s as Float, p as Point => s + pow(p.x, 2))
-  let sumY be points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
-  let sumXY be points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
+  let sumX be points.sumBy(lambda p => p.x)
+  let sumXsq be points.sumBy(lambda p => pow(p.x, 2))
+  let sumY be points.sumBy(lambda p => p.y)
+  let sumXY be points.sumBy(lambda p => p.x*p.y)
   let n be points.length()
   let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
   let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)

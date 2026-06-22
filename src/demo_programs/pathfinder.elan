@@ -1,4 +1,4 @@
-# 00076c091ce62b2fc03853a0d8878be712f2323291116f9ef4665720aaad8b99 Elan 2.0.0-beta-pre1 valid
+# 98ca7c415220315a2cc0abe6c952a235f07598d79a08fe73f8a14f50c2ec8e1d Elan 2.0.0-beta valid
 
 main
   variable start set to new Point(5, 5)
@@ -161,7 +161,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
+    variable matches set to this.nodes.filter(lambda n => n.point.equals(p))
     return if_(matches.length() is 1, matches.head(), emptyNode())
   end function
 
@@ -172,7 +172,7 @@ class Solver
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to emptyNode()
-    variable possibilities set to this.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    variable possibilities set to this.nodes.filter(lambda nd => (not nd.visited) and (nd.distFromStart < infinity))
     for nd in possibilities
       variable cost set to this.calculateCost(nd)
       if cost < lowestCostSoFar then

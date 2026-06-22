@@ -1,4 +1,4 @@
-# 3f6de21f81e89ed86e79a7630b85d936666ce0a5f6bd02e1f4e2bc1fcb29af7c Elan 2.0.0-beta-pre1 valid
+# aeddfa5e10ee01a8bdd3c5dcdfaa6eb86cc1a22a17e5cf2ab4a5e02958fa7ddd Elan 2.0.0-beta valid
 
 main
   variable rng set to new Random()
@@ -282,13 +282,13 @@ end test
 
 function nextGeneration(grid as List<of List<of Int>>) returns List<of List<of Int>>
   let cols be range(0, 40)
-  return cols.map(lambda x as Int => nextCol(grid, x))
+  return cols.map(lambda x => nextCol(grid, x))
 end function
 
 function nextCol(grid as List<of List<of Int>>, x as Int) returns List<of Int>
   let col be grid[x]
   let rows be range(0, 30)
-  return rows.map(lambda y as Int => nextCellValue(grid, x, y))
+  return rows.map(lambda y => nextCellValue(grid, x, y))
 end function
 
 test test_nextCol
