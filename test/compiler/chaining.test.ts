@@ -784,24 +784,15 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  call printNoLine(a.filter(lambda x as Int => x > 2).map(lambda x as Int => x * x).reduce(0, rr))
-end main
-
-function rr(s as Int, x as Int) returns Int
-  return s + x
-end function`;
+  call printNoLine(a.filter(lambda x => x > 2).map(lambda x => x * x).reduce(0, lambda s, x => s + x))
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
-  await _stdlib.printNoLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, global.rr)));
+  await _stdlib.printNoLine((await (await (await a.filter(async (x) => x > 2)).map(async (x) => x * x)).reduce(0, async (s, x) => s + x)));
 }
-
-async function rr(s, x) {
-  return s + x;
-}
-global["rr"] = rr;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -826,26 +817,17 @@ return [main, _tests];}`;
 
 main 
   variable a set to [1,2,3,4,5,6]
-  variable c set to a.subList(0, 5).map(lambda x as Int => x * x)
-  call printNoLine(c.subList(2, c.length()).reduce(0, rr))
-end main
-
-function rr(s as Int, x as Int) returns Int
-  return s + x
-end function`;
+  variable c set to a.subList(0, 5).map(lambda x => x * x)
+  call printNoLine(c.subList(2, c.length()).reduce(0, lambda s, x => s + x))
+end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5, 6]);
   let c = (await a.subList(0, 5).map(async (x) => x * x));
-  await _stdlib.printNoLine((await c.subList(2, c.length()).reduce(0, global.rr)));
+  await _stdlib.printNoLine((await c.subList(2, c.length()).reduce(0, async (s, x) => s + x)));
 }
-
-async function rr(s, x) {
-  return s + x;
-}
-global["rr"] = rr;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

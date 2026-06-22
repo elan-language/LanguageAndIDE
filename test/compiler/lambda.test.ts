@@ -19,7 +19,7 @@ suite("Lambda", () => {
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x * 3)
+  call printModified(4, lambda x => x * 3)
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -382,7 +382,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x.toString())
+  call printModified(4, lambda x => x.toString())
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
@@ -410,7 +410,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified("4", lambda x as Int => x + 3)
+  call printModified("4", lambda x => x + 3)
 end main
 
 procedure printModified(i as String, f as Func<of Int => Int>)
@@ -438,7 +438,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  call printModified(4, lambda x as Int => x)
+  call printModified(4, lambda x => x)
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)
@@ -458,7 +458,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: 0 Actual: 1.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes no parameters - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -486,7 +486,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: 1 Actual: 0.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#compile_error",
     ]);
   });
 
