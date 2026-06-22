@@ -158,16 +158,19 @@ suite("Parsing Nodes", () => {
       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
     );
     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
+  });
+
+  test("Lambda as argument", () => {
     testNodeParse(
       new ExprNode(f),
-      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a, x => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.invalid,
       "",
-      "",
-      "",
+      "lambda a, x => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       "",
     );
   });
+
   test("Set To Clause", () => {
     testNodeParse(
       new SetToClause(f, () => ""),
@@ -930,9 +933,9 @@ suite("Parsing Nodes", () => {
   test("Lambda", () => {
     testNodeParse(
       new Lambda(f),
-      `lambda x as Int => x * x`,
+      `lambda x => x * x`,
       ParseStatus.valid,
-      "lambda x as Int => x * x",
+      "lambda x => x * x",
       "",
       "",
     );
@@ -940,14 +943,14 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new Lambda(f),
       `lambda x => x * x`,
-      ParseStatus.invalid,
-      "",
+      ParseStatus.valid,
       "lambda x => x * x",
       "",
+      "",
     );
     testNodeParse(
       new Lambda(f),
-      `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
+      `lambda bestSoFar, newWord => betterOf(bestSoFar, newWord, possAnswers)`,
       ParseStatus.valid,
       "",
       "",
@@ -955,11 +958,11 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new Lambda(f),
-      `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+      `lambda a, x => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
       ParseStatus.valid,
       "",
       "",
-      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "lambda a, x => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
     );
   });
   test("IfExpr", () => {
