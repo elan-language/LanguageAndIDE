@@ -154,19 +154,28 @@ return [main, _tests];}`;
 
 main
   variable a set to [(1,2)]
-  variable t set to a.reduce((1, 1), lambda i, j => j)
+  variable t set to a.reduce((1, 1), rr)
   variable fst set to t.item_0
   call printNoLine(fst)
-end main`;
+end main
+
+function rr(i as (Int, Int), j as (Int, Int)) returns (Int, Int)
+  return j
+end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.list([system.tuple([1, 2])]);
-  let t = (await a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  let t = (await a.reduce(system.tuple([1, 1]), global.rr));
   let fst = t[0];
   await _stdlib.printNoLine(fst);
 }
+
+async function rr(i, j) {
+  return j;
+}
+global["rr"] = rr;
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
