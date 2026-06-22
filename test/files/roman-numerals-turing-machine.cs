@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 // Turing Machine that converts a Year from decimal to roman numerals
 
@@ -27,9 +27,9 @@ static void main() {
     Console.WriteLine($"State: {tm.currentState}"); // print
     Console.WriteLine($"Rule applied: {rule.toString()}"); // print
     sleep_ms(40); // call procedure
-  } // while
+  } // end while
   Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}"); // print
-} // main
+} // end main
 
 const String initState = "init";
 
@@ -44,11 +44,11 @@ class TuringMachine {
     this.rules = new List<Rule>(); // reassign variable
     this.currentState = initialState; // reassign variable
     this.headPosition = 0; // reassign variable
-  } // constructor
+  } // end constructor
 
   public string toString() { // function method
     return "a TuringMachine";
-  } // function method
+  } // end function method
 
   public string initialState {get; private set;} // property
 
@@ -64,33 +64,33 @@ class TuringMachine {
 
   public void setTape(string tape) { // procedure method
     this.tape = tape; // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void append(Rule rule) { // procedure method
     this.rules = this.rules.withAppend(rule); // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
-  } // procedure method
+  } // end procedure method
 
   public bool isHalted() { // function method
     return this.currentState.equals(this.haltState);
-  } // function method
+  } // end function method
 
   public Rule findMatchingRule() { // function method
     var matches = this.rules.filter(Rule r => (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError($"No rule matching state {this.currentState} and symbol {this.tape[this.headPosition]}");
-    } // if
+    } // end if
     return matches.head();
-  } // function method
+  } // end function method
 
   public void write(string newSymbol) { // procedure method
     var hp = this.headPosition;
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void execute(Rule rule) { // procedure method
     this.currentState = rule.nextState; // reassign variable
@@ -99,17 +99,17 @@ class TuringMachine {
       this.headPosition = this.headPosition + 1; // reassign variable
       if (this.headPosition >= this.tape.length()) {
         this.tape = this.tape + " "; // reassign variable
-      } // if
+      } // end if
     } else {
       this.headPosition = this.headPosition - 1; // reassign variable
       if (this.headPosition < 0) {
         this.tape = " " + this.tape; // reassign variable
         this.headPosition = 0; // reassign variable
-      } // if
-    } // if
-  } // procedure method
+      } // end if
+    } // end if
+  } // end procedure method
 
-} // class
+} // end class
 
 class Rule {
 
@@ -129,13 +129,13 @@ class Rule {
     this.nextState = nextState; // reassign variable
     this.writeSymbol = writeSymbol; // reassign variable
     this.move = move; // reassign variable
-  } // constructor
+  } // end constructor
 
   public string toString() { // function method
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}";
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 enum Dir {left, right}
 
@@ -487,4 +487,4 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "M", "barFound", "M", Dir.left)); // call procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
-} // procedure
+} // end procedure

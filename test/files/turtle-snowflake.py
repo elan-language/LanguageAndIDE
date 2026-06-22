@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   t = Turtle() # variable definition
@@ -7,6 +7,8 @@ def main() -> None:
   for i in range(1, 4):
     drawSide(side, t) # call procedure
     t.turn(120) # call procedure
+  # end for
+# end main
 
 def drawSide(length: float, t: Turtle) -> None: # procedure
   if (length > 1):
@@ -20,6 +22,8 @@ def drawSide(length: float, t: Turtle) -> None: # procedure
     drawSide(third, t) # call procedure
   else:
     t.move(length) # call procedure
+  # end if
+# end procedure
 
 side = 100 # constant
 

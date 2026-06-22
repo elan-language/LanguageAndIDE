@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -11,16 +11,16 @@ static void main() {
     nextGeneration(gridRef); // call procedure
     grid = gridRef.value(); // reassign variable
     sleep_ms(50); // call procedure
-  } // while
-} // main
+  } // end while
+} // end main
 
 static void fillRandom(List<List<int>> grid) { // procedure
   foreach (var col in range(0, 40)) {
     foreach (var row in range(0, 30)) {
       grid[col][row] = blackOrWhite(random()); // reassign variable
-    } // foreach
-  } // foreach
-} // procedure
+    } // end foreach
+  } // end foreach
+} // end procedure
 
 static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   var nextGen = createBlockGraphics(white);
@@ -29,18 +29,18 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
     foreach (var y in range(0, 30)) {
       var colour = nextCellValue(grid, x, y);
       nextGen[x][y] = colour; // reassign variable
-    } // foreach
-  } // foreach
+    } // end foreach
+  } // end foreach
   gridRef.set(nextGen); // call procedure
-} // procedure
+} // end procedure
 
 static int blackOrWhite(double random) { // function
   var result = black;
   if (random > 0.5) {
     result = white; // reassign variable
-  } // if
+  } // end if
   return result;
-} // function
+} // end function
 
 static (int, int) north((int, int) cell) { // function
   var x = cell.item_0;
@@ -48,9 +48,9 @@ static (int, int) north((int, int) cell) { // function
   var y2 = y - 1;
   if (y2 == -1) {
     y2 = 29; // reassign variable
-  } // if
+  } // end if
   return (x, y2);
-} // function
+} // end function
 
 static (int, int) south((int, int) cell) { // function
   var x = cell.item_0;
@@ -58,9 +58,9 @@ static (int, int) south((int, int) cell) { // function
   var y2 = y + 1;
   if (y2 == 30) {
     y2 = 0; // reassign variable
-  } // if
+  } // end if
   return (x, y2);
-} // function
+} // end function
 
 static (int, int) east((int, int) cell) { // function
   var x = cell.item_0;
@@ -68,9 +68,9 @@ static (int, int) east((int, int) cell) { // function
   var x2 = x + 1;
   if (x2 == 40) {
     x2 = 0; // reassign variable
-  } // if
+  } // end if
   return (x2, y);
-} // function
+} // end function
 
 static (int, int) west((int, int) cell) { // function
   var x = cell.item_0;
@@ -78,30 +78,30 @@ static (int, int) west((int, int) cell) { // function
   var x2 = x - 1;
   if (x2 == -1) {
     x2 = 39; // reassign variable
-  } // if
+  } // end if
   return (x2, y);
-} // function
+} // end function
 
 static (int, int) northEast((int, int) cell) { // function
   return north(east(cell));
-} // function
+} // end function
 
 static (int, int) northWest((int, int) cell) { // function
   return north(west(cell));
-} // function
+} // end function
 
 static (int, int) southEast((int, int) cell) { // function
   return south(east(cell));
-} // function
+} // end function
 
 static (int, int) southWest((int, int) cell) { // function
   return south(west(cell));
-} // function
+} // end function
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
   var c = (x, y);
   return list(northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c));
-} // function
+} // end function
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
   var count = 0;
@@ -110,10 +110,10 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
     var cy = cell.item_1;
     if (grid[cx][cy] == black) {
       count = count + 1; // reassign variable
-    } // if
-  } // foreach
+    } // end if
+  } // end foreach
   return count;
-} // function
+} // end function
 
 static boolean willLive(int cell, int liveNeighbours) { // function
   var result = false;
@@ -121,46 +121,46 @@ static boolean willLive(int cell, int liveNeighbours) { // function
     result = (liveNeighbours > 1) && (liveNeighbours < 4); // reassign variable
   } else {
     result = liveNeighbours == 3; // reassign variable
-  } // if
+  } // end if
   return result;
-} // function
+} // end function
 
 static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var colour = white;
   var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
   if (live) {
     colour = black; // reassign variable
-  } // if
+  } // end if
   return colour;
-} // function
+} // end function
 
 @Test static void test_north() {
   assertEquals((3, 3), north((3, 4)));
   assertEquals((39, 29), north((39, 0)));
   assertEquals((0, 28), north((0, 29)));
   assertEquals((39, 28), north((39, 29)));
-} // test
+} // end test
 
 @Test static void test_south() {
   assertEquals((3, 5), south((3, 4)));
   assertEquals((39, 1), south((39, 0)));
   assertEquals((0, 0), south((0, 29)));
   assertEquals((39, 0), south((39, 29)));
-} // test
+} // end test
 
 @Test static void test_east() {
   assertEquals((11, 2), east((10, 2)));
   assertEquals((0, 0), east((39, 0)));
   assertEquals((1, 1), east((0, 1)));
   assertEquals((0, 29), east((39, 29)));
-} // test
+} // end test
 
 @Test static void test_west() {
   assertEquals((2, 4), west((3, 4)));
   assertEquals((38, 0), west((39, 0)));
   assertEquals((39, 0), west((0, 0)));
   assertEquals((39, 29), west((0, 29)));
-} // test
+} // end test
 
 @Test static void test_northEast() {
   assertEquals((4, 3), northEast((3, 4)));
@@ -168,7 +168,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((0, 29), northEast((39, 0)));
   assertEquals((1, 28), northEast((0, 29)));
   assertEquals((0, 28), northEast((39, 29)));
-} // test
+} // end test
 
 @Test static void test_southEast() {
   assertEquals((4, 5), southEast((3, 4)));
@@ -176,7 +176,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((0, 1), southEast((39, 0)));
   assertEquals((1, 0), southEast((0, 29)));
   assertEquals((0, 0), southEast((39, 29)));
-} // test
+} // end test
 
 @Test static void test_northWest() {
   assertEquals((2, 3), northWest((3, 4)));
@@ -184,7 +184,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((38, 29), northWest((39, 0)));
   assertEquals((39, 28), northWest((0, 29)));
   assertEquals((38, 28), northWest((39, 29)));
-} // test
+} // end test
 
 @Test static void test_southWest() {
   assertEquals((2, 5), southWest((3, 4)));
@@ -192,7 +192,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals((38, 1), southWest((39, 0)));
   assertEquals((39, 0), southWest((0, 29)));
   assertEquals((38, 0), southWest((39, 29)));
-} // test
+} // end test
 
 @Test static void test_blackOrWhite() {
   assertEquals(black, blackOrWhite(0));
@@ -200,11 +200,11 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(black, blackOrWhite(0.5));
   assertEquals(white, blackOrWhite(0.501));
   assertEquals(white, blackOrWhite(1));
-} // test
+} // end test
 
 @Test static void test_neighbourCells() {
   assertEquals(list((2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)), neighbourCells(3, 4));
-} // test
+} // end test
 
 @Test static void test_willLive() {
   assertEquals(false, willLive(white, 0));
@@ -225,6 +225,5 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   assertEquals(false, willLive(black, 6));
   assertEquals(false, willLive(black, 7));
   assertEquals(false, willLive(black, 8));
-} // test
-
-}
+} // end test
+} // end Global

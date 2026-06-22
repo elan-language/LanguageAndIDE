@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 // A program to investigate the Collatz Conjecture
 
@@ -18,29 +18,29 @@ static void main() {
         x = divAsInt(x, 2); // reassign variable
       } else {
         x = x*3 + 1; // reassign variable
-      } // if
+      } // end if
       if (x > max) {
         max = x; // reassign variable
-      } // if
+      } // end if
       p.append(x); // call procedure
       // draw what we have got so far, scaled to the canvas
       var vg = createVectorGraphics();
       foreach (var i in range(0, p.length() - 1)) {
         vg = vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)); // reassign variable
-      } // foreach
+      } // end foreach
       displayVectorGraphics(vg); // call procedure
       Console.WriteLine(x); // print
       sleep_ms(100); // call procedure
-    } // while
-  } // while
+    } // end while
+  } // end while
   Console.WriteLine("Finished"); // print
-} // main
+} // end main
 
 // scale x.  We pass in p just to get its length
 
 static double scx(int i, List<int> p) { // function
   return divAsFloat(i*100, p.length());
-} // function
+} // end function
 
 // scale y
 
@@ -50,6 +50,6 @@ static double scx(int i, List<int> p) { // function
 
 static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
-} // function
+} // end function
 
 const Int grey = 0x808080;

@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # Use the w,a,s,d keys to change snake's direction
 
@@ -25,8 +25,11 @@ def main() -> None:
       setAppleToRandomPosition(apple, body) # call procedure
     else:
       body.removeAt(0) # call procedure
+    # end if
     sleep_ms(150) # call procedure
+  # end while
   print(f"Game Over! Score: {body.length() - 1}")
+# end main
 
 def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], headRef: AsRef[list[int]], body: list[list[int]]) -> None: # procedure
   head = headRef.value() # variable definition
@@ -37,6 +40,7 @@ def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], head
   body.append(head) # call procedure
   headRef.set(getAdjacentSquare(head, currentDir)) # call procedure
   currentDirRef.set(currentDir) # call procedure
+# end procedure
 
 def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure
   blocks[head[0]][head[1]] = green # reassign variable
@@ -44,6 +48,7 @@ def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], bod
   blocks[tail[0]][tail[1]] = tailColour # reassign variable
   blocks[apple[0]][apple[1]] = red # reassign variable
   displayBlocks(blocks) # call procedure
+# end procedure
 
 def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: # procedure
   changePosition = True # variable definition
@@ -52,15 +57,21 @@ def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: #
     apple[1] = randint(0, 29) # reassign variable
     if not body.contains(apple):
       changePosition = False # reassign variable
+    # end if
+  # end while
+# end procedure
 
 def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
   colour = white # variable definition
   if body[0].equals(tail):
     colour = green # reassign variable
+  # end if
   return colour
+# end function
 
 def hasHitEdge(headX: int, headY: int) -> bool: # function
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
+# end function
 
 def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
   newX = sq[0] # variable definition
@@ -73,7 +84,9 @@ def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
     newY = newY - 1 # reassign variable
   elif dir == Direction.down: # else if
     newY = newY + 1 # reassign variable
+  # end if
   return [newX, newY]
+# end function
 
 def directionByKey(current: Direction, key: str) -> Direction: # function
   dirn = current # variable definition
@@ -85,7 +98,9 @@ def directionByKey(current: Direction, key: str) -> Direction: # function
     dirn = Direction.left # reassign variable
   elif key.equals("d"): # else if
     dirn = Direction.right # reassign variable
+  # end if
   return dirn
+# end function
 
 class Direction(Enum):
   up = 1
@@ -96,6 +111,7 @@ class Direction(Enum):
 def test_getTailColour(self) -> None:
   self.assertEqual(getTailColour([3, 4], [[3, 4], [3, 5]]), green)
   self.assertEqual(getTailColour([3, 4], [[3, 5], [3, 6]]), white)
+# end test
 
 def test_hasHitEdge(self) -> None:
   self.assertEqual(hasHitEdge(0, 0), False)
@@ -106,6 +122,7 @@ def test_hasHitEdge(self) -> None:
   self.assertEqual(hasHitEdge(5, 30), True)
   self.assertEqual(hasHitEdge(40, 5), True)
   self.assertEqual(hasHitEdge(5, -1), True)
+# end test
 
 def test_getAdjacentSquare(self) -> None:
   sq = [20, 15] # variable definition
@@ -115,6 +132,7 @@ def test_getAdjacentSquare(self) -> None:
   self.assertEqual(getAdjacentSquare(sq, Direction.right), [21, 15])
   # boundary
   self.assertEqual(getAdjacentSquare([0, 15], Direction.left), [-1, 15])
+# end test
 
 def test_directionByKey(self) -> None:
   current = Direction.up # variable definition
@@ -125,5 +143,6 @@ def test_directionByKey(self) -> None:
   self.assertEqual(directionByKey(current, "a"), Direction.left)
   self.assertEqual(directionByKey(current, "d"), Direction.right)
   self.assertEqual(directionByKey(current, "D"), Direction.up)
+# end test
 
 main()

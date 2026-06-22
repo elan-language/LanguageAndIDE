@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   bubbles = list[CircleVG]() # variable definition
@@ -6,8 +6,11 @@ def main() -> None:
   for i in range(1, 21):
     b = (CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white)) # variable definition
     bubbles.append(b) # call procedure
+  # end for
   while True:
     moveGrowBurst(bubbles) # call procedure
+  # end while
+# end main
 
 def moveGrowBurst(bubbles: list[CircleVG]) -> None: # procedure
   for b in bubbles:
@@ -19,7 +22,10 @@ def moveGrowBurst(bubbles: list[CircleVG]) -> None: # procedure
       # bubble rises and grows slightly
       b.setCentreY(b.centreY - 1) # call procedure
       b.setRadius(b.radius + 0.2) # call procedure
+    # end if
+  # end for
   displayVectorGraphics(bubbles) # call procedure
   sleep_ms(5) # call procedure
+# end procedure
 
 main()

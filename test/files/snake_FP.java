@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -14,16 +14,16 @@ static void main() {
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
     game = clockTick(game, getKey()); // reassign variable
-  } // while
+  } // end while
   System.out.println(String.format("Game Over! Score: %", score(game))); // print
-} // main
+} // end main
 
 static Game clockTick(Game g, String k) { // function
   var g2 = if_(k.equals(""), g, g.withKey(k)); // let
   var g3 = moveSnake(g2); // let
   var g4 = eatAppleIfPoss(g3); // let
   return if_(gameOver(g4), g4.withIsOn(false), g4);
-} // function
+} // end function
 
 static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
   var b2 = graphicsPut(b, g.apple.x, g.apple.y, red); // let
@@ -31,15 +31,15 @@ static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
   var tail = g.body[0]; // let
   var tailColour = if_(tail.equals(g.priorTail), green, white); // let
   return graphicsPut(b3, tail.x, tail.y, tailColour);
-} // function
+} // end function
 
 static List<List<int>> graphicsPut(List<List<int>> graphics, int x, int y, int colour) { // function
   return graphics.withSet(x, graphics[x].withSet(y, colour));
-} // function
+} // end function
 
 static int score(Game g) { // function
   return g.body.length() - 2;
-} // function
+} // end function
 
 static Game moveSnake(Game g) { // function
   var k = g.key; // let
@@ -48,27 +48,27 @@ static Game moveSnake(Game g) { // function
   var newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)); // let
   var newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)); // let
   return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY));
-} // function
+} // end function
 
 static Game eatAppleIfPoss(Game g) { // function
   var tail = g.body[0]; // let
   var moveTail = g.body.subList(1, g.body.length()); // let
   return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail));
-} // function
+} // end function
 
 static boolean headOverApple(Game g) { // function
   return g.head.equals(g.apple);
-} // function
+} // end function
 
 static boolean gameOver(Game g) { // function
   return g.body.contains(g.head) || hasHitEdge(g);
-} // function
+} // end function
 
 static boolean hasHitEdge(Game g) { // function
   var x = g.head.x; // let
   var y = g.head.y; // let
   return (x == -1) || (y == -1) || (x == 40) || (y == 30);
-} // function
+} // end function
 
 class Game {
 
@@ -94,11 +94,11 @@ class Game {
     this.isOn = true; // reassign variable
     this.apple = new Square(12, 15); // reassign variable
     this.rnd = rnd; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return "a Game";
-  } // function method
+  } // end function method
 
   public Game withNewApple() { // function method
     var x = this.rnd.asInt(0, 39); // let
@@ -108,51 +108,51 @@ class Game {
     var apple2 = new Square(x, y); // let
     var g2 = this.withApple(apple2).withRnd(rnd3); // let
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2);
-  } // function method
+  } // end function method
 
   public Game withHead(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.head = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withBody(List<Square> value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.body = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withPriorTail(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.priorTail = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withApple(Square value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.apple = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withIsOn(boolean value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.isOn = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withRnd(Random value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.rnd = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
   public Game withKey(String value) { // function method
     var copyOfThis = copy(this); // let
     copyOfThis.key = value; // reassign variable
     return copyOfThis;
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 class Square {
 
@@ -163,13 +163,13 @@ class Square {
   public Square(int x, int y) {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return String.format("%, %", this.x, this.y);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 @Test static void test_clockTick() {
   var g1 = new Game(new Random()); // let
@@ -187,7 +187,7 @@ class Square {
   var g6 = g5.withHead(new Square(22, 29)); // let
   var g7 = clockTick(g6, "s"); // let
   assertEquals(false, g7.isOn);
-} // test
+} // end test
 
 @Test static void test_updateGraphics() {
   var blocks = createBlockGraphics(white); // let
@@ -201,7 +201,7 @@ class Square {
   assertEquals(red, blocks3[12][15]);
   assertEquals(green, blocks3[22][15]);
   assertEquals(green, blocks3[23][15]);
-} // test
+} // end test
 
 @Test static void test_testnewApple() {
   var g1 = new Game(new Random()); // let
@@ -215,7 +215,7 @@ class Square {
   var g5 = g4.withBody(list(new Square(10, 12))); // let
   var g6 = g5.withNewApple(); // let
   assertEquals(new Square(12, 15), g4.apple);
-} // test
+} // end test
 
 @Test static void test_score() {
   var g1 = new Game(new Random()); // let
@@ -226,7 +226,7 @@ class Square {
   assertEquals(1, score(g3));
   var g4 = g1.withBody(list(new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5))); // let
   assertEquals(2, score(g4));
-} // test
+} // end test
 
 @Test static void test_moveSnake() {
   var g1 = new Game(new Random()); // let
@@ -242,7 +242,7 @@ class Square {
   var g8 = g1.withKey("s"); // let
   var g9 = moveSnake(g8); // let
   assertEquals(new Square(22, 16), g9.head);
-} // test
+} // end test
 
 @Test static void test_eatAppleIfPoss() {
   var g1 = new Game(new Random()); // let
@@ -259,7 +259,7 @@ class Square {
   assertEquals(2, g5.body.length());
   assertEquals(new Square(12, 15), g5.apple);
   assertEquals(g1.priorTail, g5.priorTail);
-} // test
+} // end test
 
 @Test static void test_overApple() {
   var g1 = new Game(new Random()); // let
@@ -267,7 +267,7 @@ class Square {
   assertEquals(false, headOverApple(g2));
   var g3 = g2.withHead(new Square(23, 15)); // let
   assertEquals(true, headOverApple(g3));
-} // test
+} // end test
 
 @Test static void test_gameOver() {
   var g1 = new Game((new Random())); // let
@@ -278,7 +278,7 @@ class Square {
   assertEquals(true, gameOver(g3));
   var g4 = g1.withHead(new Square(21, 15)); // let
   assertEquals(true, gameOver(g4));
-} // test
+} // end test
 
 @Test static void test_headIsAtEdge() {
   var g1 = new Game(new Random()); // let
@@ -291,13 +291,13 @@ class Square {
   assertEquals(true, hasHitEdge(g4));
   var g5 = g1.withHead(new Square(20, -1)); // let
   assertEquals(true, hasHitEdge(g5));
-} // test
+} // end test
 
 @Test static void test_newSquare() {
   var sq = new Square(3, 4); // let
   assertEquals(3, sq.x);
   assertEquals(4, sq.y);
-} // test
+} // end test
 
 @Test static void test_newGame() {
   var rnd = new Random(); // let
@@ -312,6 +312,5 @@ class Square {
   assertEquals(new Square(0, 0), game.priorTail);
   assertEquals("d", game.key);
   assertEquals(true, game.isOn);
-} // test
-
-}
+} // end test
+} // end Global

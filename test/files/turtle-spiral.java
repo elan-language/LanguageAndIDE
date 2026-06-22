@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -10,7 +10,6 @@ static void main() {
     t.move(i); // call procedure
     t.turn(90); // call procedure
     sleep_ms(300); // call procedure
-  } // foreach
-} // main
-
-}
+  } // end foreach
+} // end main
+} // end Global

@@ -1,10 +1,11 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   li = [7, 1, 0, 4, 8, 3, 6] # variable definition
   print(li)
   inPlaceRippleSort(li) # call procedure
   print(li)
+# end main
 
 def inPlaceRippleSort(li: list[int]) -> None: # procedure
   hasChanged = True # variable definition
@@ -17,6 +18,10 @@ def inPlaceRippleSort(li: list[int]) -> None: # procedure
         li[i] = li[i + 1] # reassign variable
         li[i + 1] = temp # reassign variable
         hasChanged = True # reassign variable
+      # end if
+    # end for
     lastComp = lastComp - 1 # reassign variable
+  # end while
+# end procedure
 
 main()

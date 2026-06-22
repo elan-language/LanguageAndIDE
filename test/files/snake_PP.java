@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -27,11 +27,11 @@ static void main() {
       setAppleToRandomPosition(apple, body); // call procedure
     } else {
       body.removeAt(0); // call procedure
-    } // if
+    } // end if
     sleep_ms(150); // call procedure
-  } // while
+  } // end while
   System.out.println(String.format("Game Over! Score: %", body.length() - 1)); // print
-} // main
+} // end main
 
 static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
   var head = headRef.value();
@@ -42,7 +42,7 @@ static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef
   body.append(head); // call procedure
   headRef.set(getAdjacentSquare(head, currentDir)); // call procedure
   currentDirRef.set(currentDir); // call procedure
-} // procedure
+} // end procedure
 
 static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
   blocks[head[0]][head[1]] = green; // reassign variable
@@ -50,7 +50,7 @@ static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail
   blocks[tail[0]][tail[1]] = tailColour; // reassign variable
   blocks[apple[0]][apple[1]] = red; // reassign variable
   displayBlocks(blocks); // call procedure
-} // procedure
+} // end procedure
 
 static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure
   var changePosition = true;
@@ -59,21 +59,21 @@ static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { //
     apple[1] = randint(0, 29); // reassign variable
     if (!body.contains(apple)) {
       changePosition = false; // reassign variable
-    } // if
-  } // while
-} // procedure
+    } // end if
+  } // end while
+} // end procedure
 
 static int getTailColour(List<int> tail, List<List<int>> body) { // function
   var colour = white;
   if (body[0].equals(tail)) {
     colour = green; // reassign variable
-  } // if
+  } // end if
   return colour;
-} // function
+} // end function
 
 static boolean hasHitEdge(int headX, int headY) { // function
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
-} // function
+} // end function
 
 static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
   var newX = sq[0];
@@ -86,9 +86,9 @@ static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
     newY = newY - 1; // reassign variable
   } else if (dir == Direction.down) {
     newY = newY + 1; // reassign variable
-  } // if
+  } // end if
   return list(newX, newY);
-} // function
+} // end function
 
 static Direction directionByKey(Direction current, String key) { // function
   var dirn = current;
@@ -100,16 +100,16 @@ static Direction directionByKey(Direction current, String key) { // function
     dirn = Direction.left; // reassign variable
   } else if (key.equals("d")) {
     dirn = Direction.right; // reassign variable
-  } // if
+  } // end if
   return dirn;
-} // function
+} // end function
 
 enum Direction {up, down, left, right}
 
 @Test static void test_getTailColour() {
   assertEquals(green, getTailColour(list(3, 4), list(list(3, 4), list(3, 5))));
   assertEquals(white, getTailColour(list(3, 4), list(list(3, 5), list(3, 6))));
-} // test
+} // end test
 
 @Test static void test_hasHitEdge() {
   assertEquals(false, hasHitEdge(0, 0));
@@ -120,7 +120,7 @@ enum Direction {up, down, left, right}
   assertEquals(true, hasHitEdge(5, 30));
   assertEquals(true, hasHitEdge(40, 5));
   assertEquals(true, hasHitEdge(5, -1));
-} // test
+} // end test
 
 @Test static void test_getAdjacentSquare() {
   var sq = list(20, 15);
@@ -130,7 +130,7 @@ enum Direction {up, down, left, right}
   assertEquals(list(21, 15), getAdjacentSquare(sq, Direction.right));
   // boundary
   assertEquals(list(-1, 15), getAdjacentSquare(list(0, 15), Direction.left));
-} // test
+} // end test
 
 @Test static void test_directionByKey() {
   var current = Direction.up;
@@ -141,6 +141,5 @@ enum Direction {up, down, left, right}
   assertEquals(Direction.left, directionByKey(current, "a"));
   assertEquals(Direction.right, directionByKey(current, "d"));
   assertEquals(Direction.up, directionByKey(current, "D"));
-} // test
-
-}
+} // end test
+} // end Global

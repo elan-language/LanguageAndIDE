@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 
@@ -16,7 +16,9 @@ def main() -> None:
     s = onepoint(s) # reassign variable
     vg.append(s.rect) # call procedure
     displayVectorGraphics(vg) # call procedure
+  # end for
   print("Finished")
+# end main
 
 # The State class is used as a convenient way to pass multiple
 
@@ -34,6 +36,7 @@ def onepoint(s: State) -> State: # function
   rect = (RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25) # let
   # s.r.nextGen() moves the random number generator on to the next number
   return (State(rect, nx, ny, s.r.nextGen()))
+# end function
 
 # r is random Float 0.0 <= r < 1.0
 
@@ -54,6 +57,7 @@ def onestep(x: float, y: float, r: float) -> tuple[float, float]: # function
   # weighted by the probabilities and put it in pp
   pp = getparams(r, allPs, 0.0) # let
   return (x*pp[0] + y*pp[1] + pp[4], x*pp[2] + y*pp[3] + pp[5])
+# end function
 
 # select a parameter set depending on random number
 
@@ -67,6 +71,7 @@ def getparams(r: float, prms: list[list[float]], cumuprob: float) -> list[float]
   head = prms.head() # let
   cp2 = cumuprob + head[6] # let
   return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
+# end function
 
 # class to hold the working data passed in and out of onepoint()
 
@@ -77,6 +82,7 @@ class State: # concrete class
     self.x = x # reassign variable
     self.y = y # reassign variable
     self.r = r # reassign variable
+  # end constructor
 
   rect: RectangleVG # property
 
@@ -88,8 +94,9 @@ class State: # concrete class
 
   def toString(self: State) -> str: # function method
     return f"rect at {self.rect.x}, {self.rect.y}"
+  # end function method
 
-
+# end class
 
 def test_one(self) -> None:
   self.assertEqual(roundtuple2(onestep(0.0, 0.16, 0.5)), [0.0064, 1.736])
@@ -101,14 +108,17 @@ def test_one(self) -> None:
   self.assertEqual(getparams(0.005, [p1, p2], 0.0), p1)
   self.assertEqual(getparams(0.03, [p1, p2], 0.0), p2)
   self.assertEqual(getparams(0.03, [p2], 0.01), p2)
+# end test
 
 # two approaches to rounding a tuple to N decimal places
 
 def roundtuple1(n: tuple[float, float]) -> tuple[float, float]: # function
   return (n.item_0.round(8), n.item_1.round(8))
+# end function
 
 def roundtuple2(n: tuple[float, float]) -> list[float]: # function
   return [n.item_0, n.item_1].map(lambda x: float: x.round(8))
+# end function
 
 scale = 7 # constant
 

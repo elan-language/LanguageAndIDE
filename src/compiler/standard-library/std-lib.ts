@@ -415,7 +415,7 @@ export class StdLib {
   }
 
   @elanFunction(["string"], FunctionOptions.pure, ElanFloat)
-  float(s: string): number {
+  asFloat(s: string): number {
     if (StdLib.negatableLitFloatOnly.test(s)) {
       const f = parseFloat(s);
       if (Number.isFinite(f)) {
@@ -426,7 +426,7 @@ export class StdLib {
   }
 
   @elanFunction(["string"], FunctionOptions.pure, ElanInt)
-  int(s: string): number {
+  asInt(s: string): number {
     if (StdLib.negatableLitIntOnly.test(s)) {
       const i = parseInt(s);
       if (isFinite(i)) {

@@ -1,11 +1,11 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var li = new [] {7, 1, 0, 4, 8, 3, 6};
   Console.WriteLine(li); // print
   inPlaceRippleSort(li); // call procedure
   Console.WriteLine(li); // print
-} // main
+} // end main
 
 static void inPlaceRippleSort(List<int> li) { // procedure
   var hasChanged = true;
@@ -18,8 +18,8 @@ static void inPlaceRippleSort(List<int> li) { // procedure
         li[i] = li[i + 1]; // reassign variable
         li[i + 1] = temp; // reassign variable
         hasChanged = true; // reassign variable
-      } // if
-    } // foreach
+      } // end if
+    } // end foreach
     lastComp = lastComp - 1; // reassign variable
-  } // while
-} // procedure
+  } // end while
+} // end procedure

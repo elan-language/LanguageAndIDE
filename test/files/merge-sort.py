@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # Implementation of the Merge sort algorithm demonstrating
 
@@ -16,20 +16,24 @@
 
 def sort(li: list[str]) -> list[str]: # function
   return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+# end function
 
 def sortedFrontHalf(li: list[str]) -> list[str]: # function
   mid = divAsInt(li.length(), 2) # let
   frontHalf = li.subList(0, mid) # let
   return sort(frontHalf)
+# end function
 
 def sortedBackHalf(li: list[str]) -> list[str]: # function
   mid = divAsInt(li.length(), 2) # let
   backHalf = li.subList(mid, li.length()) # let
   return sort(backHalf)
+# end function
 
 def merge(a: list[str], b: list[str]) -> list[str]: # function
   oneIsEmpty = (a.length() == 0) or (b.length() == 0) # let
   return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+# end function
 
 def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
   aHead = a.head() # let
@@ -37,6 +41,7 @@ def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
   aTail = a.tail() # let
   bTail = b.tail() # let
   return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+# end function
 
 def test_sort(self) -> None:
   # Edge case: empty
@@ -56,6 +61,7 @@ def test_sort(self) -> None:
   # Edge case: already sorted
   li5 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"] # let
   self.assertEqual(sort(li5), li5)
+# end test
 
 def test_sortedFrontHalf(self) -> None:
   # Edge case: one item - so front half is empty
@@ -70,6 +76,7 @@ def test_sortedFrontHalf(self) -> None:
   # Edge case: already sorted
   li4 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"] # let
   self.assertEqual(sortedFrontHalf(li4), ["apple", "apricot", "lemon"])
+# end test
 
 def test_sortedBackHalf(self) -> None:
   # Edge case: one item - so back half is whole list
@@ -84,6 +91,7 @@ def test_sortedBackHalf(self) -> None:
   # Edge case: already sorted
   li4 = ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"] # let
   self.assertEqual(sortedBackHalf(li4), ["lime", "melon", "orange", "pear"])
+# end test
 
 def test_merge(self) -> None:
   # Happy cases:
@@ -103,6 +111,7 @@ def test_merge(self) -> None:
   lu = ["lime", "pear", "apple"] # let
   self.assertEqual(merge(lu, l2), ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"])
   self.assertEqual(merge(lu, le), ["lime", "pear", "apple"])
+# end test
 
 def test_mergeNonEmpty(self) -> None:
   l1 = ["apple", "lime", "pear"] # let
@@ -121,3 +130,4 @@ def test_mergeNonEmpty(self) -> None:
   #  Error case unsorted list
   lu = ["lime", "pear", "apple"] # let
   self.assertEqual(merge(lu, l2), ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"])
+# end test

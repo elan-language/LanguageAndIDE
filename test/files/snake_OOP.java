@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -15,9 +15,9 @@ static void main() {
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
     snake.clockTick(getKey(), apple); // call procedure
-  } // while
+  } // end while
   System.out.println(String.format("Game Over! Score: %", snake.score())); // print
-} // main
+} // end main
 
 class Snake {
 
@@ -27,7 +27,7 @@ class Snake {
     this.body = list(tail); // reassign variable
     this.head = tail.getAdjacentSquare(this.currentDir); // reassign variable
     this.priorTail = tail; // reassign variable
-  } // constructor
+  } // end constructor
 
   private Direction currentDir; // private property
 
@@ -47,33 +47,33 @@ class Snake {
       apple.newRandomPosition(this); // call procedure
     } else {
       this.body = this.body.subList(1, this.body.length()); // reassign variable
-    } // if
-  } // procedure method
+    } // end if
+  } // end procedure method
 
   public void updateBlocks(List<List<int>> blocks) { // procedure method
     blocks[this.head.x][this.head.y] = green; // reassign variable
     if (!this.body[0].equals(this.priorTail)) {
       blocks[this.priorTail.x][this.priorTail.y] = white; // reassign variable
-    } // if
-  } // procedure method
+    } // end if
+  } // end procedure method
 
   public int score() { // function method
     return this.body.length() - 1;
-  } // function method
+  } // end function method
 
   public boolean bodyCovers(Square sq) { // function method
     var result = false;
     foreach (var seg in this.body) {
       if ((seg.equals(sq))) {
         result = true; // reassign variable
-      } // if
-    } // foreach
+      } // end if
+    } // end foreach
     return result;
-  } // function method
+  } // end function method
 
   public boolean gameOver() { // function method
     return this.bodyCovers(this.head) || this.head.hasHitEdge();
-  } // function method
+  } // end function method
 
   private void setDirection(String key) { // private procedure method
     if (key.equals("w")) {
@@ -84,20 +84,20 @@ class Snake {
       this.currentDir = Direction.left; // reassign variable
     } else if (key.equals("d")) {
       this.currentDir = Direction.right; // reassign variable
-    } // if
-  } // procedure method
+    } // end if
+  } // end procedure method
 
   public String toString() { // function method
     return String.format("a Snake with head at %", this.head);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 class Apple {
 
   public Apple() {
     this.location = new Square(0, 0); // reassign variable
-  } // constructor
+  } // end constructor
 
   public Square location; // property
 
@@ -109,26 +109,26 @@ class Apple {
       this.location = new Square(ranX, ranY); // reassign variable
       if (!snake.bodyCovers(this.location)) {
         changePosition = false; // reassign variable
-      } // if
-    } // while
-  } // procedure method
+      } // end if
+    } // end while
+  } // end procedure method
 
   public void updateBlocks(List<List<int>> blocks) { // procedure method
     blocks[this.location.x][this.location.y] = red; // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public String toString() { // function method
     return String.format("an Apple at %", this.location);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 class Square {
 
   public Square(int x, int y) {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
-  } // constructor
+  } // end constructor
 
   public int x; // property
 
@@ -145,19 +145,19 @@ class Square {
       newY = this.y - 1; // reassign variable
     } else if (d == Direction.down) {
       newY = this.y + 1; // reassign variable
-    } // if
+    } // end if
     return new Square(newX, newY);
-  } // function method
+  } // end function method
 
   public boolean hasHitEdge() { // function method
     return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
-  } // function method
+  } // end function method
 
   public String toString() { // function method
     return "{this.x}, {this.y}";
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 enum Direction {up, down, left, right}
 
@@ -169,11 +169,11 @@ enum Direction {up, down, left, right}
   // gameOver, score - can only test test_for default - which is not thorough test
   assertEquals(false, snake.gameOver());
   assertEquals(0, snake.score());
-} // test
+} // end test
 
 @Test static void test_apple() {
   // no tests
-} // test
+} // end test
 
 @Test static void test_square() {
   // constructor - not testable as properties are private
@@ -193,6 +193,5 @@ enum Direction {up, down, left, right}
   assertEquals(true, (new Square(3, -1)).hasHitEdge());
   assertEquals(true, (new Square(40, 3)).hasHitEdge());
   assertEquals(true, (new Square(3, 30)).hasHitEdge());
-} // test
-
-}
+} // end test
+} // end Global

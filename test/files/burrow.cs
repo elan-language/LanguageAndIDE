@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var blocks = createBlockGraphics(white);
@@ -17,6 +17,6 @@ static void main() {
       y = min(new [] {y + 1, 29}); // reassign variable
     } else if (direction == 3) {
       y = max(new [] {y - 1, 0}); // reassign variable
-    } // if
-  } // while
-} // main
+    } // end if
+  } // end while
+} // end main

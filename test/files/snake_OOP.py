@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # Use the W,A,S,D keys to change Snake direction
 
@@ -13,7 +13,9 @@ def main() -> None:
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
     snake.clockTick(getKey(), apple) # call procedure
+  # end while
   print(f"Game Over! Score: {snake.score()}")
+# end main
 
 class Snake: # concrete class
 
@@ -23,6 +25,7 @@ class Snake: # concrete class
     self.body = [tail] # reassign variable
     self.head = tail.getAdjacentSquare(self.currentDir) # reassign variable
     self.priorTail = tail # reassign variable
+  # end constructor
 
   currentDir: Direction # private property
 
@@ -42,24 +45,33 @@ class Snake: # concrete class
       apple.newRandomPosition(self) # call procedure
     else:
       self.body = self.body.subList(1, self.body.length()) # reassign variable
+    # end if
+  # end procedure method
 
   def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure method
     blocks[self.head.x][self.head.y] = green # reassign variable
     if not self.body[0].equals(self.priorTail):
       blocks[self.priorTail.x][self.priorTail.y] = white # reassign variable
+    # end if
+  # end procedure method
 
   def score(self: Snake) -> int: # function method
     return self.body.length() - 1
+  # end function method
 
   def bodyCovers(self: Snake, sq: Square) -> bool: # function method
     result = False # variable definition
     for seg in self.body:
       if (seg.equals(sq)):
         result = True # reassign variable
+      # end if
+    # end for
     return result
+  # end function method
 
   def gameOver(self: Snake) -> bool: # function method
     return self.bodyCovers(self.head) or self.head.hasHitEdge()
+  # end function method
 
   def setDirection(self: Snake, key: str) -> None: # private procedure method
     if key.equals("w"):
@@ -70,16 +82,20 @@ class Snake: # concrete class
       self.currentDir = Direction.left # reassign variable
     elif key.equals("d"): # else if
       self.currentDir = Direction.right # reassign variable
+    # end if
+  # end procedure method
 
   def toString(self: Snake) -> str: # function method
     return f"a Snake with head at {self.head}"
+  # end function method
 
-
+# end class
 
 class Apple: # concrete class
 
   def __init__(self: Apple) -> None:
     self.location = Square(0, 0) # reassign variable
+  # end constructor
 
   location: Square # property
 
@@ -91,20 +107,26 @@ class Apple: # concrete class
       self.location = Square(ranX, ranY) # reassign variable
       if not snake.bodyCovers(self.location):
         changePosition = False # reassign variable
+      # end if
+    # end while
+  # end procedure method
 
   def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure method
     blocks[self.location.x][self.location.y] = red # reassign variable
+  # end procedure method
 
   def toString(self: Apple) -> str: # function method
     return f"an Apple at {self.location}"
+  # end function method
 
-
+# end class
 
 class Square: # concrete class
 
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # reassign variable
     self.y = y # reassign variable
+  # end constructor
 
   x: int # property
 
@@ -121,15 +143,19 @@ class Square: # concrete class
       newY = self.y - 1 # reassign variable
     elif d == Direction.down: # else if
       newY = self.y + 1 # reassign variable
+    # end if
     return Square(newX, newY)
+  # end function method
 
   def hasHitEdge(self: Square) -> bool: # function method
     return (self.x == -1) or (self.y == -1) or (self.x == 40) or (self.y == 30)
+  # end function method
 
   def toString(self: Square) -> str: # function method
     return "{this.x}, {this.y}"
+  # end function method
 
-
+# end class
 
 class Direction(Enum):
   up = 1
@@ -145,9 +171,11 @@ def test_snake(self) -> None:
   # gameOver, score - can only test test_for default - which is not thorough test
   self.assertEqual(snake.gameOver(), False)
   self.assertEqual(snake.score(), 0)
+# end test
 
 def test_apple(self) -> None:
   # no tests
+# end test
 
 def test_square(self) -> None:
   # constructor - not testable as properties are private
@@ -167,5 +195,6 @@ def test_square(self) -> None:
   self.assertEqual((Square(3, -1)).hasHitEdge(), True)
   self.assertEqual((Square(40, 3)).hasHitEdge(), True)
   self.assertEqual((Square(3, 30)).hasHitEdge(), True)
+# end test
 
 main()

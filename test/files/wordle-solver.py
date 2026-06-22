@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
@@ -25,75 +25,95 @@ def main() -> None:
     mark = inp # reassign variable
     possible = possibleAnswersAfterAttempt(possible, attempt, mark) # reassign variable
     attempt = bestAttempt(possible) # reassign variable
+  # end while
+# end main
 
 def isGreen(attempt: str, target: str, n: int) -> bool: # function
   return target[n].equals(attempt[n])
+# end function
 
 def setChar(word: str, n: int, newChar: str) -> str: # function
   return word.subString(0, n) + newChar + word.subString(n + 1, word.length())
+# end function
 
 def setAttemptIfGreen(attempt: str, target: str, n: int) -> str: # function
   return if_(isGreen(attempt, target, n), setChar(attempt, n, "*"), attempt)
+# end function
 
 def setTargetIfGreen(attempt: str, target: str, n: int) -> str: # function
   return if_(isGreen(attempt, target, n), setChar(target, n, "."), target)
+# end function
 
 def evaluateGreens(attempt: str, target: str) -> list[str]: # function
   return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)])
+# end function
 
 def isYellow(attempt: str, target: str, n: int) -> bool: # function
   return target.contains(attempt[n])
+# end function
 
 def setAttemptIfYellow(attempt: str, target: str, n: int) -> str: # function
   return if_(attempt[n].equals("*"), attempt, if_(isYellow(attempt, target, n), setChar(attempt, n, "+"), setChar(attempt, n, "_")))
+# end function
 
 def isAlreadyMarkedGreen(attempt: str, n: int) -> bool: # function
   return attempt[n].equals("*")
+# end function
 
 def setTargetIfYellow(attempt: str, target: str, n: int) -> str: # function
   return if_(isAlreadyMarkedGreen(attempt, n), target, if_(isYellow(attempt, target, n), setChar(target, target.indexOf(attempt[n]), "."), target))
+# end function
 
 def evaluateYellows(attempt: str, target: str) -> list[str]: # function
   return range(0, 5).reduce([attempt, target], lambda a: list[str], x: int: [setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)])
+# end function
 
 def markAttempt(attempt: str, target: str) -> str: # function
   greens = evaluateGreens(attempt, target) # let
   markedAttempt = evaluateYellows(greens[0], greens[1]) # let
   return markedAttempt[0]
+# end function
 
 def possibleAnswersAfterAttempt(prior: list[str], attempt: str, mark: str) -> list[str]: # function
   return prior.filter(lambda w: str: markAttempt(attempt, w).equals(mark))
+# end function
 
 def maxWordCountRemainingAfterAttempt(possAnswers: list[str], attempt: str) -> int: # function
   d = Dictionary[str, int]() # let
   d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str: incrementCount(dd, answer, attempt)) # let
   keys = d2.keys() # let
   return keys.reduce(0, lambda maxSoFar: int, mark: str: if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
+# end function
 
 def incrementCount(d: Dictionary[str, int], possAnswer: str, attempt: str) -> Dictionary[str, int]: # function
   mark = markAttempt(attempt, possAnswer) # let
   keys = d.keys() # let
   count = if_(keys.contains(mark), d[mark], 0) # let
   return d.withSet(mark, count + 1)
+# end function
 
 def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # function
   return possAnswers.map(lambda w: str: WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+# end function
 
 def betterOf(wc1: WordCount, wc2: WordCount, possAnswers: list[str]) -> WordCount: # function
   isBetter = wc2.count < wc1.count # let
   isEqualAndPossAnswer = (wc2.count == wc1.count) and possAnswers.contains(wc2.word) # let
   return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
+# end function
 
 def bestAttempt(possAnswers: list[str]) -> str: # function
   wordCounts = allRemainingWordCounts(possAnswers) # let
   best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount: betterOf(bestSoFar, newWord, possAnswers)) # let
   return best.word
+# end function
 
 class WordCount: # concrete class
 
   def __init__(self: WordCount, word: str, count: int) -> None:
     self.word = word # reassign variable
     self.count = count # reassign variable
+  # end constructor
 
   word: str # property
 
@@ -101,8 +121,9 @@ class WordCount: # concrete class
 
   def toString(self: WordCount) -> str: # function method
     return f"{self.word} {self.count}"
+  # end function method
 
-
+# end class
 
 # 2309 words
 
@@ -122,40 +143,47 @@ def test_betterOf(self) -> None:
   possAnswers3 = ["B", "A"] # let
   self.assertEqual(betterOf(a2, b2, possAnswers3), b2)
   self.assertEqual(betterOf(b2, a2, possAnswers3), a2)
+# end test
 
 def test_bestAttempt(self) -> None:
   possAnswers = ["ABCDE", "ABBBB", "EDCBA"] # let
   self.assertEqual(bestAttempt(possAnswers), "EDCBA")
   possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"] # let
   self.assertEqual(bestAttempt(possAnswers2), "BCDEA")
+# end test
 
 def test_Wordcount(self) -> None:
   wc = WordCount("ABCDE", 3) # let
   self.assertEqual(wc.word, "ABCDE")
   self.assertEqual(wc.count, 3)
   self.assertEqual(wc.toString(), "ABCDE 3")
+# end test
 
 def test_isGreen(self) -> None:
   self.assertEqual(isGreen("ABCDE", "A____", 0), True)
   self.assertEqual(isGreen("ABCDE", "____E", 4), True)
   self.assertEqual(isGreen("ABCDE", "_A___", 1), False)
   self.assertEqual(isGreen("BABBB", "B____", 1), False)
+# end test
 
 def test_setChar(self) -> None:
   self.assertEqual(setChar("ABCDE", 0, "_"), "_BCDE")
   self.assertEqual(setChar("ABCDE", 4, "_"), "ABCD_")
+# end test
 
 def test_setAttemptIfGreen(self) -> None:
   self.assertEqual(setAttemptIfGreen("ABCDE", "ABCDE", 0), "*BCDE")
   self.assertEqual(setAttemptIfGreen("ABCDE", "ABCDE", 4), "ABCD*")
   self.assertEqual(setAttemptIfGreen("BBCDE", "ABCDE", 0), "BBCDE")
   self.assertEqual(setAttemptIfGreen("ABCDE", "AACDE", 0), "*BCDE")
+# end test
 
 def test_setTargetIfGreen(self) -> None:
   self.assertEqual(setTargetIfGreen("ABCDE", "ABCDE", 0), ".BCDE")
   self.assertEqual(setTargetIfGreen("ABCDE", "ABCDE", 4), "ABCD.")
   self.assertEqual(setTargetIfGreen("BBCDE", "ABCDE", 0), "ABCDE")
   self.assertEqual(setTargetIfGreen("ABCDE", "AACDE", 0), ".ACDE")
+# end test
 
 def test_evaluateGreens(self) -> None:
   self.assertEqual(evaluateGreens("ABCDE", "AXXXX"), ["*BCDE", ".XXXX"])
@@ -163,6 +191,7 @@ def test_evaluateGreens(self) -> None:
   self.assertEqual(evaluateGreens("ABCDE", "ABCDE"), ["*****", "....."])
   self.assertEqual(evaluateGreens("AACDE", "AXXXX"), ["*ACDE", ".XXXX"])
   self.assertEqual(evaluateGreens("ABCDE", "AAXXX"), ["*BCDE", ".AXXX"])
+# end test
 
 def test_isYellow(self) -> None:
   self.assertEqual(isYellow("ABCDE", "____A", 0), True)
@@ -170,12 +199,14 @@ def test_isYellow(self) -> None:
   self.assertEqual(isYellow("ABCDE", "___AA", 0), True)
   self.assertEqual(isYellow("AACDE", "_A___", 1), True)
   self.assertEqual(isYellow("AACDE", "__A__", 1), True)
+# end test
 
 def test_setAttemptIfYellow(self) -> None:
   self.assertEqual(setAttemptIfYellow("ABCDE", "EABCD", 0), "+BCDE")
   self.assertEqual(setAttemptIfYellow("ABCDE", "EABCD", 4), "ABCD+")
   self.assertEqual(setAttemptIfYellow("ABCDE", "BAAAA", 0), "+BCDE")
   self.assertEqual(setAttemptIfYellow("AAAAB", "EABBB", 4), "AAAA+")
+# end test
 
 def test_isAlreadyMarkedGreen(self) -> None:
   self.assertEqual(isAlreadyMarkedGreen("AB*DE", 2), True)
@@ -184,6 +215,7 @@ def test_isAlreadyMarkedGreen(self) -> None:
   self.assertEqual(isAlreadyMarkedGreen("*BCD*", 2), False)
   self.assertEqual(isAlreadyMarkedGreen("*BCD*", 0), True)
   self.assertEqual(isAlreadyMarkedGreen("*BCD*", 4), True)
+# end test
 
 def test_setTargetIfYellow(self) -> None:
   self.assertEqual(setTargetIfYellow("ABCDE", "EABCD", 0), "E.BCD")
@@ -192,6 +224,7 @@ def test_setTargetIfYellow(self) -> None:
   self.assertEqual(setTargetIfYellow("AAAAB", "EABEA", 4), "EA.EA")
   self.assertEqual(setTargetIfYellow("AAAAB", "EABBB", 4), "EA.BB")
   self.assertEqual(setTargetIfYellow("*BCDE", "*BCDA", 4), "*BCDA")
+# end test
 
 def test_evaluateYellows(self) -> None:
   self.assertEqual(evaluateYellows("ABCDE", "XAXXX"), ["+____", "X.XXX"])
@@ -200,6 +233,7 @@ def test_evaluateYellows(self) -> None:
   self.assertEqual(evaluateYellows("ABCDE", "XAAXX"), ["+____", "X.AXX"])
   self.assertEqual(evaluateYellows("AACDE", "XAXXX"), ["+____", "X.XXX"])
   self.assertEqual(evaluateYellows("ABCDE", "BCDEA"), ["+++++", "....."])
+# end test
 
 def test_markAttempt(self) -> None:
   self.assertEqual(markAttempt("ABCDE", "XXXXX"), "_____")
@@ -210,12 +244,14 @@ def test_markAttempt(self) -> None:
   self.assertEqual(markAttempt("CABAL", "RECAP"), "+__*_")
   self.assertEqual(markAttempt("CABAL", "RECAP"), "+__*_")
   self.assertEqual(markAttempt("COLON", "GLORY"), "_++__")
+# end test
 
 def test_possibleAnswersAfterAttempt(self) -> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "*____"), ["ABCDE"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "+____"), ["BCDEA", "CDEAB", "DEABC", "EABCD"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"), ["BCDEA", "CDEAB", "EABCD"])
+# end test
 
 def test_maxWordCountRemainingAfterAttempt(self) -> None:
   prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
@@ -223,10 +259,12 @@ def test_maxWordCountRemainingAfterAttempt(self) -> None:
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "AAAAA"), 1)
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "AXXXX"), 4)
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "XXXXX"), 5)
+# end test
 
 def test_allRemainingWordCounts(self) -> None:
   possAnswers = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
   wordcounts = allRemainingWordCounts(possAnswers) # let
   self.assertEqual(wordcounts.toString(), "[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]")
+# end test
 
 main()

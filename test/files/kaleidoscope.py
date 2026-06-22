@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   blocks = createBlockGraphics(white) # variable definition
@@ -11,5 +11,7 @@ def main() -> None:
     blocks[20 - x][15 - y] = colour # reassign variable
     blocks[20 - x][15 + y] = colour # reassign variable
     displayBlocks(blocks) # call procedure
+  # end while
+# end main
 
 main()

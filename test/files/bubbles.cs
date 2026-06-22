@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var bubbles = new List<CircleVG>();
@@ -6,11 +6,11 @@ static void main() {
   foreach (var i in range(1, 21)) {
     var b = (new CircleVG()).withCentreX(i*5 + 2).withCentreY(75).withRadius(0).withFillColour(transparent).withStrokeColour(randint(0, white));
     bubbles.append(b); // call procedure
-  } // foreach
+  } // end foreach
   while (true) {
     moveGrowBurst(bubbles); // call procedure
-  } // while
-} // main
+  } // end while
+} // end main
 
 static void moveGrowBurst(List<CircleVG> bubbles) { // procedure
   foreach (var b in bubbles) {
@@ -22,8 +22,8 @@ static void moveGrowBurst(List<CircleVG> bubbles) { // procedure
       // bubble rises and grows slightly
       b.setCentreY(b.centreY - 1); // call procedure
       b.setRadius(b.radius + 0.2); // call procedure
-    } // if
-  } // foreach
+    } // end if
+  } // end foreach
   displayVectorGraphics(bubbles); // call procedure
   sleep_ms(5); // call procedure
-} // procedure
+} // end procedure

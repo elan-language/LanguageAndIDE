@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -29,9 +29,9 @@ static void main() {
     System.out.println(String.format("State: %", tm.currentState)); // print
     System.out.println(String.format("Rule applied: %", rule.toString())); // print
     sleep_ms(40); // call procedure
-  } // while
+  } // end while
   System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print
-} // main
+} // end main
 
 static final String initState = "init"; // constant
 
@@ -46,11 +46,11 @@ class TuringMachine {
     this.rules = new List<Rule>(); // reassign variable
     this.currentState = initialState; // reassign variable
     this.headPosition = 0; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return "a TuringMachine";
-  } // function method
+  } // end function method
 
   public String initialState; // property
 
@@ -66,33 +66,33 @@ class TuringMachine {
 
   public void setTape(String tape) { // procedure method
     this.tape = tape; // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void append(Rule rule) { // procedure method
     this.rules = this.rules.withAppend(rule); // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void singleStep() { // procedure method
     var rule = this.findMatchingRule();
     this.execute(rule); // call procedure
-  } // procedure method
+  } // end procedure method
 
   public boolean isHalted() { // function method
     return this.currentState.equals(this.haltState);
-  } // function method
+  } // end function method
 
   public Rule findMatchingRule() { // function method
     var matches = this.rules.filter((Rule r) -> (r.currentState.equals(this.currentState)) && (r.currentSymbol.equals(this.tape[this.headPosition])));
     if (matches.length() == 0) {
       throw new ElanRuntimeError(String.format("No rule matching state % and symbol %", this.currentState, this.tape[this.headPosition]));
-    } // if
+    } // end if
     return matches.head();
-  } // function method
+  } // end function method
 
   public void write(String newSymbol) { // procedure method
     var hp = this.headPosition;
     this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // reassign variable
-  } // procedure method
+  } // end procedure method
 
   public void execute(Rule rule) { // procedure method
     this.currentState = rule.nextState; // reassign variable
@@ -101,17 +101,17 @@ class TuringMachine {
       this.headPosition = this.headPosition + 1; // reassign variable
       if (this.headPosition >= this.tape.length()) {
         this.tape = this.tape + " "; // reassign variable
-      } // if
+      } // end if
     } else {
       this.headPosition = this.headPosition - 1; // reassign variable
       if (this.headPosition < 0) {
         this.tape = " " + this.tape; // reassign variable
         this.headPosition = 0; // reassign variable
-      } // if
-    } // if
-  } // procedure method
+      } // end if
+    } // end if
+  } // end procedure method
 
-} // class
+} // end class
 
 class Rule {
 
@@ -131,13 +131,13 @@ class Rule {
     this.nextState = nextState; // reassign variable
     this.writeSymbol = writeSymbol; // reassign variable
     this.move = move; // reassign variable
-  } // constructor
+  } // end constructor
 
   public String toString() { // function method
     return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumValue(this.move));
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 enum Dir {left, right}
 
@@ -489,6 +489,5 @@ static void addRulesForRomanNumeralsInto(TuringMachine tm) { // procedure
   tm.append(new Rule("barFound", "M", "barFound", "M", Dir.left)); // call procedure
   tm.append(new Rule("barFound", "|", "barFound", "|", Dir.left)); // call procedure
   tm.append(new Rule("barFound", " ", "removeBars", " ", Dir.right)); // call procedure
-} // procedure
-
-}
+} // end procedure
+} // end Global

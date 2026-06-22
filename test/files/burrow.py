@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 def main() -> None:
   blocks = createBlockGraphics(white) # variable definition
@@ -17,5 +17,8 @@ def main() -> None:
       y = min([y + 1, 29]) # reassign variable
     elif direction == 3: # else if
       y = max([y - 1, 0]) # reassign variable
+    # end if
+  # end while
+# end main
 
 main()

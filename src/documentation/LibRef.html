@@ -9,7 +9,7 @@
 <!-- See https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-external-link -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="favicon.ico">
-<title>Elan Library Reference</title>
+<title>LibRef: Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 <script type="text/javascript" src="doc-scripts.js"></script>
 <script type="text/javascript" src="accordion.js"></script>
@@ -20,7 +20,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<h1 id="ValueTypes">Value data Types</h1>
+<h1 id="ValueTypes">Value data types</h1>
 
 <h2 id="Int">Integer</h2>
 <p>An <b>integer</b> is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
@@ -44,8 +44,8 @@
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="asBinary">
   <td><el-method>asBinary</el-method></td>
@@ -111,7 +111,7 @@ end main
 Its type is <code>Float</code>.
 <table class="tableType">
  <tr>
-  <th>name<br>of Type</th>
+  <th>name<br>of type</th>
   <th>examples of defining<br>a literal value</th>
 </tr><tr>
   <td><code>Float</code></td>
@@ -126,8 +126,8 @@ Its type is <code>Float</code>.
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="ceiling_Float">
   <td><el-method>ceiling</el-method></td>
@@ -182,7 +182,7 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <code>.0</code> on the end of the whole number, as in:<br>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br>
  <code>variable hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
@@ -214,7 +214,7 @@ end test
 <p>The words <code>true</code> and <code>false</code> must be written in lower case.</p>
 <table class="tableType">
  <tr>
-  <th>name<br>of Type</th>
+  <th>name<br>of type</th>
   <th>examples of defining<br>a literal value</th>
 </tr><tr>
   <td><code>Boolean</code></td>
@@ -226,8 +226,8 @@ end test
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="equals_Boolean">
   <td><el-method>equals</el-method></td>
@@ -247,13 +247,13 @@ end test
  </tr>
  </table>
 
-<h1 id="ReferenceTypes">Reference data Types</h1>
+<h1 id="ReferenceTypes">Reference data types</h1>
 
 <h2 id="String">String</h2>
 <p>A <code>String</code> represents text,  i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
  <tr>
-  <th>name<br>of Type</th>
+  <th>name<br>of type</th>
   <th>examples of defining<br>a literal value</th>
   <th>details</th>
 </tr><tr>
@@ -304,7 +304,7 @@ end test
 </tr>
 </table>
 
-<p>A newline may be inserted within a string with <code>\n</code>:
+<p>A newline may be inserted within a string with <b>\n</b>:
 <table class="tablePlain">
 <tr>
  <td><code>print("Hello\nworld")</code></td><td>&#x27f6;</td><td>Hello<br>world</td>
@@ -319,8 +319,8 @@ end test
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="asRegExp">
   <td><el-method>asRegExp</el-method></td>
@@ -463,10 +463,10 @@ end main
 
 <h2 id="StandardDataStructures">Standard data structures</h2>
 
-<p>Elan has two mutable data structure Types <code>List</code> and <code>Dictionary</code>, and
-three immutable data structure Types <code>HashSet</code>, <code>Stack</code> and <code>Queue</code>.</p>
+<p>Elan has two mutable data structure types <code>List</code> and <code>Dictionary</code>, and
+three immutable data structure types <code>HashSet</code>, <code>Stack</code> and <code>Queue</code>.</p>
 <p>The contents of these structures are referred to as items (or sometimes elements).</p>
-<p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various procedure dot methods defined for each structure Type.</p>
+<p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various procedure dot methods defined for each structure type.</p>
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no procedure dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
 <p>Since procedure methods may be called only from within the <b>main</b> routine or a <b>procedure</b>,
@@ -474,7 +474,7 @@ it is also possible to make changes via <b>function</b> dot methods,  which retu
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
-<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single Type, that type being specified either explicitly
+<p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single type, that type being specified either explicitly
  (as in &lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 
@@ -486,28 +486,32 @@ with specified changes: that is why all such methods have names starting '<el-me
   <th>HashSet</th>
   <th>Stack</th>
   <th>Queue</th>
- </tr><tr>
+ </tr>
+ <tr>
   <td>mutability</td>
   <td>Mutable</td>
   <td>Mutable</td>
   <td>Immutable</td>
   <td>Immutable</td>
   <td>Immutable</td>
- </tr><tr>
-  <td>Type form</td>
+ </tr>
+ <tr>
+  <td>type form</td>
   <td><code>List&lt;of Type&gt;</code><br>The type of item can be any, including <code>List</code> for 'jagged' data</td>
   <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code><br>
   <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
-  <code>valueType</code> may be any Type</td>
+  <code>valueType</code> may be any type</td>
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
   <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
   <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
- </tr><tr>
+ </tr>
+ <tr>
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
- </tr><tr>
+ </tr>
+ <tr>
   <td>literal definition</td>
   <td><code>[2, 3, 5, 7, 11]</code></td>
-  <td><code>["a":3, "b":5]</code></td>
+  <td>Not available</td>
   <td>Only as converted from a literal <code>List</code><br>e.g. <code>["a","b","c"].asSet()</code></td>
   <td>Not available</td>
   <td>Not available</td>
@@ -558,13 +562,13 @@ with specified changes: that is why all such methods have names starting '<el-me
 </table>
 
 <h2 id="List">List</h2>
-<p>The <code>List</code> type defines a data structure containing <i>n</i> items of any single Type,
- including basic value Types, structure Types such as <code>List</code>,
- and user-defined Types such as a Class.</p>
+<p>The <code>List</code> type defines a data structure containing <i>n</i> items of any single type,
+ including basic value types, structure types such as <code>List</code>,
+ and user-defined types such as a Class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>To create a List, use either of:</p>
 <ul>
- <li>Method <a href="#createPopulatedList"><el-method>createPopulatedList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the Type) of its items:<br>
+ <li>Method <a href="#createPopulatedList"><el-method>createPopulatedList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the type) of its items:<br>
   <code>variable aList set to createPopulatedList(10, "no one")</code></li>
  <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
  <code>variable aList set to new List&lt;of String&gt;()</code><br>
@@ -630,7 +634,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <th>action</th>
  </tr><tr id="append">
   <td><el-method>append</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td>the item is added to the end of the List</td>
  </tr><tr id="appendList">
   <td><el-method>appendList</el-method></td>
@@ -638,18 +642,18 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the argument List is added to the end of the List</td>
  </tr><tr id="initialise">
   <td><el-method>initialise</el-method></td>
-  <td><code>Int</code>,<br>value of <code>List</code> item's Type</td>
+  <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td>specify the number (&gt; 0) of items in the List,<br>and an initial value for every item.<br>
       May be called at any time to redefine the List's size and initial values.</td>
  </tr><tr id="insert">
   <td><el-method>insert</el-method></td>
-  <td><code>Int</code>,<br>value of <code>List</code> item's Type</td>
+  <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td>the item is inserted at the index given.<br>
   If the index is negative it is counted from the end<br>
   If the index is greater than the list's length, the item is inserted at the end</td>
  </tr><tr id="prepend">
   <td><el-method>prepend</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td>the item is is added to the start of the List</td>
  </tr><tr id="prependList">
   <td><el-method>prependList</el-method></td>
@@ -657,7 +661,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>the argument List is added to the start of the List</td>
  </tr><tr id="removeAll">
   <td><el-method>removeAll</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td>delete all items equal to the given item</td>
  </tr><tr id="removeAt_List">
   <td><el-method>removeAt</el-method></td>
@@ -665,7 +669,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>delete the item at the argument index</td>
  </tr><tr id="removeFirst">
   <td><el-method>removeFirst</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td>delete the first item equal to the given value</td>
  </tr>
 </table>
@@ -675,7 +679,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <tr>
   <th>function<br>dot method</th>
   <th>arguments</th>
-  <th>return<br>Type</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="asSet_List">
   <td><el-method>asSet</el-method></td>
@@ -702,11 +706,11 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr><tr id="head_List">
   <td><el-method>head</el-method></td>
   <td>(none)</td>
-  <td><code>List</code> item's Type</td>
+  <td><code>List</code> item's type</td>
   <td>the first item of the List (i.e. index = 0, which must exist)</td>
  </tr><tr id="indexOf_List">
   <td><el-method>indexOf</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td><code>Int</code></td>
   <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
@@ -728,13 +732,13 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
   <td><code>lambda</code></td>
-  <td><code>List</code> item's Type</td>
+  <td><code>List</code> item's type</td>
   <td>the list item corresponding to the maximum of the values returned by a lambda<br>
   see <a href="#maxBy"><el-method>maxBy</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
   <td><code>lambda</code></td>
-  <td><code>List</code> item's Type</td>
+  <td><code>List</code> item's type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="notEqualTo_List">
@@ -749,7 +753,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>a new list with the items ordered according to the value returned by a lambda</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
-  <td>item of <code>List</code> item's Type,<br><code>lambda</code></td>
+  <td>item of <code>List</code> item's type,<br><code>lambda</code></td>
   <td>return type of lambda</td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
@@ -765,7 +769,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   </td><tr id="tail">
   <td><el-method>tail</el-method></td>
   <td>(none)</td>
-  <td><code>List</code> item's Type</td>
+  <td><code>List</code> item's type</td>
   <td>all items except the first item in the List (i.e. index = 1..n, which must exist)</td>
  </tr><tr id="toString_List">
   <td><el-method>toString</el-method></td>
@@ -774,32 +778,32 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>a String that is a comma+space-separated list of the List's items, enclosed in square brackets</td>
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
-  <td>item of <code>List</code> item's Type</td>
+  <td>item of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List lengthened with the item added after the end</td>
  </tr><tr id="withAppend_List">
   <td><el-method>withAppendList</el-method></td>
-  <td><code>List</code> of same Type</td>
+  <td><code>List</code> of same type</td>
   <td><code>List</code></td>
   <td>a new List lengthened by appending the given List</td>
  </tr><tr id="withInsert">
   <td><el-method>withInsert</el-method></td>
-  <td><code>Int</code>,<br>value of <code>List</code> item's Type</td>
+  <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the item inserted after the item at the given index position</td>
 </tr><tr id="withPrepend">
   <td><el-method>withPrepend</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List lengthened with the item added before the beginning</td>
  </tr><tr id="withPrepend_List">
   <td><el-method>withPrependList</el-method></td>
-  <td><code>List</code> of same Type</td>
+  <td><code>List</code> of same type</td>
   <td><code>List</code></td>
   <td>a new List lengthened by prepending the given List</td>
  </tr><tr id="withRemoveAll">
   <td><el-method>withRemoveAll</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with items equal to the given item removed</td>
  </tr><tr id="withRemoveAt_List">
@@ -809,12 +813,12 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>a new List with the item at the given index removed</td>
  </tr><tr id="withRemoveFirst">
   <td><el-method>withRemoveFirst</el-method></td>
-  <td>value of <code>List</code> item's Type</td>
+  <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the first item equal to the given item removed</td>
  </tr><tr id="withSet_List">
   <td><el-method>withSet</el-method></td>
-  <td><code>Int</code>,<br>value of <code>List</code> item's Type</td>
+  <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the item replacing that at the given index</td>
  </tr>
@@ -824,33 +828,71 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>A <code>Dictionary</code> is like a List whose items are pairs but, instead of having a numeric index, each item has a <i>key</i> plus  an  associated <i>value</i>,
 i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
 <p>The key's type must be one of <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code>.
- The values may be of any Type. The Types of both keys and values are fixed when the Dictionary is created.</p>
-<p>You refer to a dictionary item using one of its (unique) keys:</p>
-<table class="tablePlain">
- <tr><td>
+ The values may be of any type. The types of both keys and values are fixed when the Dictionary is created.</p>
+<p>You refer to a dictionary item using one of its (unique) keys, e.g. in a <code>Dictionary&lt;of String, Int&gt;</code> named <code>birthdays</code>
+whose keys are names and whose values are birth year, you might refer to <code>birthdays["Shakespeare"]</code> and retrieve the value 1564.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Dictionary</code></h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program:</p>
+<p>Procedure greekLetters sets up the key:value pairs, procedure printD shows how a procedure can use the Dictionary,
+and function getDItem retrieves a value given a key.</p>
 <codeblock>
 main
-  variable di1 set to ["alpha":1, "beta":2, "gamma":3]
-  print(di1["beta"])
-  variable di2 set to [1:"alpha", 2:"beta", 3:"gamma"]
-  print(di2[3])
+  variable dL set to new Dictionary&lt;of String, Int&gt;()
+  variable dLRef set to new AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;(dL)
+  call greekLetters(dLRef)
+  reassign dL to dLRef.value()
+  print(dL)
+  call printD(dL)
+  print(getDItem(dL, "alpha"))
 end main
+procedure printD(dL as Dictionary&lt;of String, Int&gt;)
+  print(dL)
+end procedure
+function getDItem(dL as Dictionary&lt;of String, Int&gt;, k as String) returns Int
+  return dL[k]
+end function
+procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
+  print(dL, k)
+end procedure
+procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
+  variable di set to new Dictionary&lt;of String, Int&gt;()
+  reassign di["alpha"] to 1
+  reassign di["beta"] to 2
+  reassign di["gamma"] to 3
+  call d.set(di)
+end procedure
 </codeblock>
-  </td>
-  <td><br><br><br>&#x27f6;<br><br>&#x27f6;</td>
-  <td><br><br><br>2<br><br>gamma</td>
- </tr>
-</table>
+<hr>
+
+<div class="functional">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
+in a way suitable for Functional programming, by using the HoF <code>reduce</code> in a function
+that creates the Dictionary from a List of key:value pairs as Tuples:</p> 
+<codeblock>
+main
+  variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
+  print(di["beta"])
+end main
+function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
+  let d be new Dictionary&lt;of String, Int&gt;()
+  return kvps.reduce(d, lambda d, kvp  =&gt; d.withSet(kvp.item_0, kvp.item_1))
+end function
+</codeblock>
+</div>
+</div></div>
 
 <h3 class="no-TOC" id="Dictionary_procedures">Procedure method on a <code>Dictionary</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
-  <th>argument<br>Types</th>
+  <th>argument<br>types</th>
   <th>action</th>
  </tr><tr id="removeAt_Dictionary">
   <td><el-method>removeAt</el-method></td>
-  <td>key's Type</td>
+  <td>key's type</td>
   <td>delete the key:pair at the given key (if it exists)</td>
  </tr>
 </table>
@@ -859,8 +901,8 @@ end main
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="equals_Dictionary">
   <td><el-method>equals</el-method></td>
@@ -869,7 +911,7 @@ end main
   <td><code>true</code> if dictionary and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="hasKey_Dictionary">
   <td><el-method>hasKey</el-method></td>
-  <td>item of Dictionary key's Type</td>
+  <td>item of Dictionary key's type</td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if the Dictionary contains the given key<br>&ndash; <code>false</code> otherwise</td>
 </tr><tr id="keys_Dictionary">
@@ -894,12 +936,12 @@ end main
   <td>a List containing the values</td>
 </tr><tr id="withSet_Dictionary">
   <td><el-method>withSet</el-method></td>
-  <td>item of Dictionary key's Type,<br>item of Dictionary value's Type</td>
+  <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
  </tr><tr id="withRemoveAt_Dictionary">
   <td><el-method>withRemoveAt</el-method></td>
-  <td>item of Dictionary key's Type</td>
+  <td>item of Dictionary key's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the <i>key:value</i> pair removed from the specified key</td>
  </tr>
@@ -967,12 +1009,12 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="add">
   <td><el-method>add</el-method></td>
-  <td>value<br>(of <code>HashSet</code> members' Type)</td>
+  <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>HashSet</code></td>
   <td>a new Set extended with the item, provided it differs from all of the Set's current members</td>
  </tr><tr id="addFromList">
@@ -987,7 +1029,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td>a List containing the Set's members as List items</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
-  <td>value<br>(of <code>HashSet</code> members' Type)</td>
+  <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if the Set contains the item<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="difference">
@@ -1032,7 +1074,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td>the number of members of the Set</td>
  </tr><tr id="remove">
   <td><el-method>remove</el-method></td>
-  <td>value<br>(of <code>HashSet</code> members' Type)</td>
+  <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>HashSet</code></td>
   <td>a new Set with the argument item removed (if present)</td>
  </tr><tr id="toString_Set">
@@ -1053,11 +1095,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <ul>
  <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
- <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they can contain, similarly to how <code>List</code> has a specified item Type, though with different syntax.
+ <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they can contain, similarly to how <code>List</code> has a specified item type, though with different syntax.
  The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
  <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
- <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> Type.</li>
+ <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> type.</li>
  <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
  <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
  <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
@@ -1067,8 +1109,8 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>returns</th>
  </tr><tr id="equals_Stack">
   <td><el-method>equals</el-method></td>
@@ -1082,7 +1124,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>true</code> if stack and argument differ<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="push">
   <td><el-method>push</el-method></td>
-  <td>value<br>(of <code>Stack</code> item's Type)</td>
+  <td>value<br>(of <code>Stack</code> item's type)</td>
   <td><code>Stack</code></td>
   <td>the Stack with the value added to its top</td>
  </tr><tr id="pop">
@@ -1113,8 +1155,8 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>returns</th>
  </tr><tr id="equals_Queue">
   <td><el-method>equals</el-method></td>
@@ -1128,7 +1170,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>true</code> if queue and argument differ<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="enqueue">
   <td><el-method>enqueue</el-method></td>
-  <td>value<br>(of <code>Queue</code> item's Type)</td>
+  <td>value<br>(of <code>Queue</code> item's type)</td>
   <td><code>Queue</code></td>
   <td>the Queue with the item added to the end of the Queue</td>
  </tr><tr id="dequeue">
@@ -1215,8 +1257,8 @@ end main
 <hr>
 </div></div>
 <h2 id="Tuple">Tuple</h2>
-<p>A Tuple is not a value or data structure Type. Rather, it is a small <i>collection</i> of values
-of differing Types held together and referenced by a single identifier.</p>
+<p>A Tuple is not a value or data structure type. Rather, it is a small <i>collection</i> of values
+of differing types held together and referenced by a single identifier.</p>
 <p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
 <p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
@@ -1224,7 +1266,7 @@ of differing Types held together and referenced by a single identifier.</p>
 <p>A <b>function</b> may return a <b>Tuple</b>.</p>
 <p>A Tuple differs from a List in that:</p>
 <ul>
- <li>A Tuple may hold items of <i>different</i> Types.</li>
+ <li>A Tuple may hold items of <i>different</i> types.</li>
  <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
   Once defined, Tuples are effectively read-only.<br>Nor, unlike a <code>List</code>, can you copy a Tuple
   from an existing one with specified differences except by referencing each of its items (see below).</li>
@@ -1274,19 +1316,19 @@ end function
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="equals_Tuple">
   <td><el-method>equals</el-method></td>
   <td>Tuple</td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if the Types, item values and order all equal those of the argument,<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if the types, item values and order all equal those of the argument,<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="notEqualTo_Tuple">
   <td><el-method>notEqualTo</el-method></td>
   <td>Tuple</td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if any of the Types, item values and order differ from those of the argument,<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if any of the types, item values and order differ from those of the argument,<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="toString_Tuple">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
@@ -1295,7 +1337,7 @@ end function
  </tr>
 </table>
 
-<h1 id="Graphics">Graphic Types</h1>
+<h1 id="Graphics">Graphic types</h1>
 
 <h2 id="BlockGraphics">Block graphics</h2>
 <p>Block graphics provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.</p>
@@ -1343,7 +1385,7 @@ So the top left corner of the display is at (-100,75).</p>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
-  <th>argument<br>Types</th>
+  <th>argument<br>types</th>
   <th>action</th>
  </tr><tr id="clearAndReset">
   <td><el-method>clearAndReset</el-method></td>
@@ -1406,7 +1448,7 @@ So the top left corner of the display is at (-100,75).</p>
   <th colspan="2"></th>
  </tr><tr>
   <th>name</th>
-  <th>Type</th>
+  <th>type</th>
   <th>description</th>
   <th>default</th>
  </tr><tr id="heading">
@@ -1497,7 +1539,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <code>s
 <p><el-method>createVectorGraphics</el-method> is a convenience method that returns an empty <code>List&lt;of VectorGraphic&gt;</code></p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
-<p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
+<p>The constructors for the VG types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
 in a <b>function</b>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
@@ -1514,9 +1556,9 @@ Later shapes are positioned in front of earlier ones.</p>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>on<br>Type</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>on<br>type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="asHtml">
   <td><el-method>asHtml</el-method></td>
@@ -1562,7 +1604,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <th colspan="2">Method</th>
  </tr><tr>
   <th>name</th>
-  <th>Type</th>
+  <th>type</th>
   <th>CircleVG</th>
   <th>ImageVG</th>
   <th>LineVG</th>
@@ -1682,7 +1724,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setWidth</el-method></td>
   <td><el-method>withWidth</el-method></td>
  </tr><tr>
-  <td id="xy_VG"><code>x, y</code></td>
+  <td id="xy_VG"><code>x</code>, <code>y</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
@@ -1693,7 +1735,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX</el-method>, <el-method>setY</el-method></td>
   <td><el-method>withX</el-method>, <el-method>withY</el-method></td>
  </tr><tr>
-  <td id="x1y1_VG"><code>x1, y1</code></td>
+  <td id="x1y1_VG"><code>x1</code>, <code>y1</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -1704,7 +1746,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
   <td><el-method>setX1</el-method>, <el-method>setY1</el-method></td>
   <td><el-method>withX1</el-method>, <el-method>withY1</el-method></td>
  </tr><tr>
-  <td id="x2y2_VG"><code>x2, y2</code></td>
+  <td id="x2y2_VG"><code>x2</code>, <code>y2</code></td>
   <td><code>Float</code>, <code>Float</code></td>
   <td></td>
   <td></td>
@@ -1770,7 +1812,7 @@ By this means features such as simple SVG animation can be defined.</p>
  <li>The raw SVG content should be enclosed in double quotes within which the SVG attribute values must be enclosed in single quotes.</li>
  <li>To include <a href="#InterpolatedString">interpolated <i class="fa">&#xf14c;</i></a> values, you precede the string with a $.</li>
  <li>The raw SVG may define multiple shapes.</li>
- <li>Multiple instances of <code>RawVG</code> may be added to the collection to be displayed, along with instances of other SVG Types;
+ <li>Multiple instances of <code>RawVG</code> may be added to the collection to be displayed, along with instances of other SVG types;
  hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
  <li>Method <el-method>withContent</el-method> is used to specify the property of Class <code>RawVG</code> that must contain the SVG string.</li>
  <li>The example is of a simple animation in which the repetition defined in the SVG continues after the program has stopped,
@@ -1804,7 +1846,7 @@ end main
 <p>So some care is needed to manage the layout in the display.</p>
 <p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the display does not scroll until the graphic completes.</p>
 
-<h1>Other Types</h1>
+<h1>Other types</h1>
 
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
@@ -1822,7 +1864,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
+  <th>argument<br>type</th>
   <th>action</th>
  </tr><tr id="initialiseFromClock">
   <td><el-method>initialiseFromClock</el-method></td>
@@ -1835,8 +1877,8 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="asFloat">
   <td><el-method>asFloat</el-method></td>
@@ -1893,8 +1935,8 @@ end function
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>action</th>
  </tr><tr id="getKey">
   <td><el-method>getKey</el-method></td>
@@ -2012,7 +2054,7 @@ end main
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
-  <th>argument<br>Types</th>
+  <th>argument<br>types</th>
   <th>return<br>Class</th>
   <th>action</th>
  </tr><tr id="createFileForWriting">
@@ -2039,7 +2081,7 @@ end main
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
+  <th>argument<br>type</th>
   <th>action</th>
  </tr><tr id="writeLine">
   <td><el-method>writeLine</el-method></td>
@@ -2066,7 +2108,7 @@ end main
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<code>\n</code>) automatically appended.</li>
+<li><code>writeLine</code> adds the string it is passed onto the end of any data previously written, with a newline character (<b>\n</b>) automatically appended.</li>
 <li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
@@ -2095,7 +2137,7 @@ or you could make the code offer the user options: to save again, or to continue
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
+  <th>argument<br>type</th>
   <th>action</th>
  </tr><tr id="readLine">
   <td><el-method>readLine</el-method></td>
@@ -2176,7 +2218,7 @@ end main
 such as in <b>file://host/path</b> to access an image from your local file system, are not supported. Here are two techniques:
 
 <ul>
- <li>put the Html <code>&lt;img&gt;</code> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+ <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <codeblock>
 main
   variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
@@ -2234,13 +2276,13 @@ end main
 <h1 id="CommonMethods">Common methods</h1>
 <h2 id="CommonDotMethods">Common dot methods</h2>
 
-<p>Click on a type to go to the Type's function dot methods, or on &#xf14c; to go to the specific method on that Type.</p>
+<p>Click on a type to go to the type's function dot methods, or on &#xf14c; to go to the specific method on that type.</p>
 
 <table>
  <tr>
   <th>Dot method</th>
-  <th colspan="3"> Value Type</th>
-  <th colspan="6">Reference Type</th>
+  <th colspan="3"> Value type</th>
+  <th colspan="6">Reference type</th>
   <th>Tuple</th>
  </tr><tr><!---->
   <td></td>
@@ -2447,7 +2489,7 @@ end main
 
 <h2 id="StandaloneProcedures">Standalone procedures</h2>
 
-<table class="tableMethod"> <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th>
+<table class="tableMethod"> <tr><th>procedure</th><th>input<br>argument<br>types</th><th>output<br>argument<br>types</th><th>action</th>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
@@ -2491,7 +2533,7 @@ end main
   <td>(none)</td>
   <td>prints the string to the display without appending a newline so<br>
   a following call will output on the same line.<br>
-  You can put your own <code>\n</code> newlines in the argument string</td>
+  You can put your own <b>\n</b> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><code>Int</code>, <code>String</code></td>
@@ -2567,7 +2609,7 @@ end main
 
 <h2 id="InstanceProcedures">Type instance procedures</h2>
 
-<p>Procedures applicable to standard Reference Types are linked from:</p>
+<p>Procedures applicable to standard Reference types are linked from:</p>
 <ul>
  <li><a href="#List_procedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></li>
  <li><a href="#Dictionary_procedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
@@ -2585,23 +2627,19 @@ end main
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>returns</th>
  </tr><tr id="parseAsFloat">
-  <td><el-method>parseAsFloat</el-method></td>
+  <td><el-method><a href=""></a>sFloat</el-method></td>
   <td><code>String</code></td>
-  <td><code>Boolean</code>, <code>Float</code></td>
-  <td>a 2-Tuple in which the first item is <code>true</code> if the parse was successful,<br>
-  &ndash; <code>false</code> otherwise<br>
-  and, if <code>true</code>, the second item is the <code>Float</code> value, otherwise zero</td>
+  <td><code>Float</code></td>
+  <td>Will throw an exception if the string does not parse as an integer</td>
  </tr><tr id="parseAsInt">
-  <td><el-method>parseAsInt</el-method></td>
+  <td><el-method>asInt</el-method></td>
   <td><code>String</code></td>
-  <td><code>Boolean</code>, <code>Int</code></td>
-  <td>a 2-Tuple in which the first item is <code>true</code> if the parse was successful,<br>
-  &ndash; <code>false</code> otherwise<br>
-  and, if <code>true</code>, the second item is the <code>Int</code> value, otherwise zero</td>
+  <td><code>Int</code></td>
+  <td>Will throw an exception if the string does not parse as an integer</td>
  </tr><tr id="unicode">
   <td><el-method>unicode</el-method></td>
   <td><code>Int</code></td>
@@ -2650,7 +2688,7 @@ end test
 <p>All the maths functions expect <code>Float</code> arguments, but <code>Int</code> arguments are accepted.
 They all return a value of type <code>Float</code>, except for <el-method>divAsInt</el-method> which returns an <code>Int</code>.
 <table class="tableMethod">
-<tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
+<tr><th>function</th><th>argument<br>type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="abs"><td><el-method>abs</el-method></td><td><code>Float</code></td><td></td><td>absolute value of the input</td><td></td></tr>
 <tr id="acos"><td><el-method>acos</el-method></td><td><code>Float</code></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
 <tr id="asin"><td><el-method>asin</el-method></td><td><code>Float</code></td><td></td><td>arcsine of the input</td><td>radians</td></tr>
@@ -2659,7 +2697,7 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 <tr id="divAsFloat"><td><el-method>divAsFloat</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value</td><td></td></tr>
 <tr id="divAsInt"><td><el-method>divAsInt</el-method></td><td><code>Float</code>, <code>Float</code></td><td></td><td>first input value divided by second input value<br>and result rounded down to integer</td><td></td></tr>
 <tr>
-  <td id="exp"><code><el-method>exp</el-method></code></td>
+  <td id="exp"><el-method>exp</el-method></td>
   <td><code>Float</code></td>
   <td></td>
   <td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td>
@@ -2702,8 +2740,8 @@ end test
 <table class="tableMethod">
  <tr>
   <th>function</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Type</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
   <th>returns</th>
  </tr><tr id="bitAnd">
   <td><el-method>bitAnd</el-method></td>
@@ -2843,8 +2881,8 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>returns</th>
  </tr><tr id="clock">
   <td><el-method>clock</el-method></td>
@@ -2869,22 +2907,22 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
-  <th>argument<br>Types</th>
-  <th>return<br>Types</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
   <th>returns</th>
  </tr><tr id="copy">
   <td><el-method>copy</el-method></td>
-  <td>named value of any Type</td>
+  <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
-  <td><code>Int</code>,<br> value of <code>List</code> item's Type</td>
+  <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
   <td><code>List&lt;of ItemType&gt;</code></td>
   <td>a List containing the specified number of items each initialised to the value in the second argument</td>
  </tr><tr id="createPopulatedListofLists">
   <td><el-method>createPopulatedListofLists</el-method></td>
-  <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's Type</td>
+  <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's type</td>
   <td><code>List&lt;of List&lt;of ItemType&gt;&gt;</code></td>
   <td>a List of length the first argument containing that number of Lists<br>
   each initialised to a List of length the second argument<br>
@@ -3053,12 +3091,12 @@ end main
  <li>The initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument..
  For example, if you were finding the sum of a list of type <code>Float</code>, the initial seed value
  would typically be <code>0.0</code>. If you were creating a dictionary of words, the initial seed
- value would be an empty Dictionary of the correct Types.</li>
+ value would be an empty Dictionary of the correct types.</li>
  <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
 <ol>
  <li>The accumulating value, which is therefore of the same type as the initial seed value.
  (This will be the return value of the <b>function</b> or <code>lambda</code>).</li>
- <li>The item to which the <b>function</b> is applied, which is therefore of the same Type
+ <li>The item to which the <b>function</b> is applied, which is therefore of the same type
    as the items in the input list.</li>
  </ol>
  </li>
@@ -3246,7 +3284,7 @@ end function
 <p>These constants are of use when the characters { } and " are required within a string.</p>
 <table class="tableType">
  <tr>
-  <th>name</th><th>Type</th><th >value</th>
+  <th>name</th><th>type</th><th >value</th>
  </tr><tr id="openBrace">
   <td><code>openBrace</code></td>
   <td><code>String</code></td>
@@ -3264,7 +3302,7 @@ end function
 
 <h2 id="MathsConstant">Maths constant</h2>
 <table class="tableType">
- <tr><th>name</th><th>Type</th><th>value</th></tr>
+ <tr><th>name</th><th>type</th><th>value</th></tr>
 <tr id="pi">
   <td><code>pi</code></td>
   <td><code>Float</code></td>
@@ -3275,7 +3313,7 @@ end function
 <h2 id="BooleanConstants">Boolean constants</h2>
 <table class="tableType">
  <tr>
-  <th>name</th><th>Type</th><th >value</th>
+  <th>name</th><th>type</th><th >value</th>
  </tr><tr id="true">
   <td><code>true</code></td>
   <td><code>Boolean</code></td>

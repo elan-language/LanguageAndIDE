@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -19,8 +19,7 @@ static void main() {
       y = min(list(y + 1, 29)); // reassign variable
     } else if (direction == 3) {
       y = max(list(y - 1, 0)); // reassign variable
-    } // if
-  } // while
-} // main
-
-}
+    } // end if
+  } // end while
+} // end main
+} // end Global

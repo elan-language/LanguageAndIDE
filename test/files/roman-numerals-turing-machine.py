@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta-pre1
 
 # Turing Machine that converts a Year from decimal to roman numerals
 
@@ -27,7 +27,9 @@ def main() -> None:
     print(f"State: {tm.currentState}")
     print(f"Rule applied: {rule.toString()}")
     sleep_ms(40) # call procedure
+  # end while
   print(f"The roman numeral equivalent for {dec} is {tm.tape.trim()}")
+# end main
 
 initState = "init" # constant
 
@@ -42,9 +44,11 @@ class TuringMachine: # concrete class
     self.rules = list[Rule]() # reassign variable
     self.currentState = initialState # reassign variable
     self.headPosition = 0 # reassign variable
+  # end constructor
 
   def toString(self: TuringMachine) -> str: # function method
     return "a TuringMachine"
+  # end function method
 
   initialState: str # property
 
@@ -60,26 +64,33 @@ class TuringMachine: # concrete class
 
   def setTape(self: TuringMachine, tape: str) -> None: # procedure method
     self.tape = tape # reassign variable
+  # end procedure method
 
   def append(self: TuringMachine, rule: Rule) -> None: # procedure method
     self.rules = self.rules.withAppend(rule) # reassign variable
+  # end procedure method
 
   def singleStep(self: TuringMachine) -> None: # procedure method
     rule = self.findMatchingRule() # variable definition
     self.execute(rule) # call procedure
+  # end procedure method
 
   def isHalted(self: TuringMachine) -> bool: # function method
     return self.currentState.equals(self.haltState)
+  # end function method
 
   def findMatchingRule(self: TuringMachine) -> Rule: # function method
     matches = self.rules.filter(lambda r: Rule: (r.currentState.equals(self.currentState)) and (r.currentSymbol.equals(self.tape[self.headPosition]))) # variable definition
     if matches.length() == 0:
       raise ElanRuntimeError(f"No rule matching state {self.currentState} and symbol {self.tape[self.headPosition]}")
+    # end if
     return matches.head()
+  # end function method
 
   def write(self: TuringMachine, newSymbol: str) -> None: # procedure method
     hp = self.headPosition # variable definition
     self.tape = self.tape.subString(0, hp) + newSymbol + self.tape.subString(hp + 1, self.tape.length()) # reassign variable
+  # end procedure method
 
   def execute(self: TuringMachine, rule: Rule) -> None: # procedure method
     self.currentState = rule.nextState # reassign variable
@@ -88,13 +99,17 @@ class TuringMachine: # concrete class
       self.headPosition = self.headPosition + 1 # reassign variable
       if self.headPosition >= self.tape.length():
         self.tape = self.tape + " " # reassign variable
+      # end if
     else:
       self.headPosition = self.headPosition - 1 # reassign variable
       if self.headPosition < 0:
         self.tape = " " + self.tape # reassign variable
         self.headPosition = 0 # reassign variable
+      # end if
+    # end if
+  # end procedure method
 
-
+# end class
 
 class Rule: # concrete class
 
@@ -114,11 +129,13 @@ class Rule: # concrete class
     self.nextState = nextState # reassign variable
     self.writeSymbol = writeSymbol # reassign variable
     self.move = move # reassign variable
+  # end constructor
 
   def toString(self: Rule) -> str: # function method
     return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
+  # end function method
 
-
+# end class
 
 class Dir(Enum):
   left = 1
@@ -472,5 +489,6 @@ def addRulesForRomanNumeralsInto(tm: TuringMachine) -> None: # procedure
   tm.append(Rule("barFound", "M", "barFound", "M", Dir.left)) # call procedure
   tm.append(Rule("barFound", "|", "barFound", "|", Dir.left)) # call procedure
   tm.append(Rule("barFound", " ", "removeBars", " ", Dir.right)) # call procedure
+# end procedure
 
 main()

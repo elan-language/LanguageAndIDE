@@ -164,7 +164,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   }
 
   common_renderBottomAsHtml(frame: Frame): string {
-    let html = "<el-punc>}</el-punc><el-comment> // ";
+    let html = "<el-punc>}</el-punc><el-comment> // end ";
     if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
       html += this.CLASS;
     } else if (frame instanceof Constructor) {

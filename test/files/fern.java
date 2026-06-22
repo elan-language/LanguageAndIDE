@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -18,9 +18,9 @@ static void main() {
     s = onepoint(s); // reassign variable
     vg.append(s.rect); // call procedure
     displayVectorGraphics(vg); // call procedure
-  } // foreach
+  } // end foreach
   System.out.println("Finished"); // print
-} // main
+} // end main
 
 // The State class is used as a convenient way to pass multiple
 
@@ -38,7 +38,7 @@ static State onepoint(State s) { // function
   var rect = (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25); // let
   // s.r.nextGen() moves the random number generator on to the next number
   return (new State(rect, nx, ny, s.r.nextGen()));
-} // function
+} // end function
 
 // r is random Float 0.0 <= r < 1.0
 
@@ -59,7 +59,7 @@ static (double, double) onestep(double x, double y, double r) { // function
   // weighted by the probabilities and put it in pp
   var pp = getparams(r, allPs, 0.0); // let
   return (x*pp[0] + y*pp[1] + pp[4], x*pp[2] + y*pp[3] + pp[5]);
-} // function
+} // end function
 
 // select a parameter set depending on random number
 
@@ -73,7 +73,7 @@ static List<double> getparams(double r, List<List<double>> prms, double cumuprob
   var head = prms.head(); // let
   var cp2 = cumuprob + head[6]; // let
   return if_(r < cp2, head, getparams(r, prms.tail(), cp2));
-} // function
+} // end function
 
 // class to hold the working data passed in and out of onepoint()
 
@@ -84,7 +84,7 @@ class State {
     this.x = x; // reassign variable
     this.y = y; // reassign variable
     this.r = r; // reassign variable
-  } // constructor
+  } // end constructor
 
   public RectangleVG rect; // property
 
@@ -96,9 +96,9 @@ class State {
 
   public String toString() { // function method
     return String.format("rect at %, %", this.rect.x, this.rect.y);
-  } // function method
+  } // end function method
 
-} // class
+} // end class
 
 @Test static void test_one() {
   assertEquals(list(0.0064, 1.736), roundtuple2(onestep(0.0, 0.16, 0.5)));
@@ -110,18 +110,17 @@ class State {
   assertEquals(p1, getparams(0.005, list(p1, p2), 0.0));
   assertEquals(p2, getparams(0.03, list(p1, p2), 0.0));
   assertEquals(p2, getparams(0.03, list(p2), 0.01));
-} // test
+} // end test
 
 // two approaches to rounding a tuple to N decimal places
 
 static (double, double) roundtuple1((double, double) n) { // function
   return (n.item_0.round(8), n.item_1.round(8));
-} // function
+} // end function
 
 static List<double> roundtuple2((double, double) n) { // function
   return list(n.item_0, n.item_1).map((double x) -> x.round(8));
-} // function
+} // end function
 
 static final Int scale = 7; // constant
-
-}
+} // end Global

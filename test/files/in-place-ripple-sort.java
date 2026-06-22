@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta
+// Java with Elan 2.0.0-beta-pre1
 
 public class Global {
 
@@ -7,7 +7,7 @@ static void main() {
   System.out.println(li); // print
   inPlaceRippleSort(li); // call procedure
   System.out.println(li); // print
-} // main
+} // end main
 
 static void inPlaceRippleSort(List<int> li) { // procedure
   var hasChanged = true;
@@ -20,10 +20,9 @@ static void inPlaceRippleSort(List<int> li) { // procedure
         li[i] = li[i + 1]; // reassign variable
         li[i + 1] = temp; // reassign variable
         hasChanged = true; // reassign variable
-      } // if
-    } // foreach
+      } // end if
+    } // end foreach
     lastComp = lastComp - 1; // reassign variable
-  } // while
-} // procedure
-
-}
+  } // end while
+} // end procedure
+} // end Global

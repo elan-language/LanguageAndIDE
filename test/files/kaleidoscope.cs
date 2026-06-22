@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta-pre1
 
 static void main() {
   var blocks = createBlockGraphics(white);
@@ -11,5 +11,5 @@ static void main() {
     blocks[20 - x][15 - y] = colour; // reassign variable
     blocks[20 - x][15 + y] = colour; // reassign variable
     displayBlocks(blocks); // call procedure
-  } // while
-} // main
+  } // end while
+} // end main
