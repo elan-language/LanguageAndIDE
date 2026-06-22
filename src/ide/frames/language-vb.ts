@@ -351,7 +351,7 @@ export class LanguageVB extends LanguageAbstract {
     node.addElement(new KeywordNode(node.file, this.FUNCTION));
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
+    node.params = new CSV(node.file, () => new IdentifierDef(node.file), 0);
     node.addElement(node.params);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
     node.addElement(new SpaceNode(node.file, Space.added));

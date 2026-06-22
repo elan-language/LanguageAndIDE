@@ -15,6 +15,7 @@ import { Alternatives } from "./parse-nodes/alternatives";
 import { CommaNode } from "./parse-nodes/comma-node";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
@@ -158,7 +159,7 @@ export class LanguageJava extends LanguageCfamily {
 
   addNodesForLambda(node: Lambda): void {
     node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
+    node.params = new CSV(node.file, () => new IdentifierDef(node.file), 0);
     node.addElement(node.params);
     node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
     node.addElement(new SpaceNode(node.file, Space.added));

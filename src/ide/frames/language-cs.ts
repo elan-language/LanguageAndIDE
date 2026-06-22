@@ -13,6 +13,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
+import { IdentifierDef } from "./parse-nodes/identifier-def";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
 import { ListNode } from "./parse-nodes/list-node";
@@ -137,7 +138,7 @@ export class LanguageCS extends LanguageCfamily {
   }
 
   addNodesForLambda(node: Lambda): void {
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
+    node.params = new CSV(node.file, () => new IdentifierDef(node.file), 0);
     node.addElement(node.params);
     node.addElement(new SpaceNode(node.file, Space.added));
     node.addElement(new PunctuationNode(node.file, ARROW));
