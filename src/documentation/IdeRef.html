@@ -17,41 +17,116 @@
 <body id="top">
 <div class="docTitle">IDE controls & keyboard shortcuts</div>
 
-<div class="accordion">
-<h2 class="acc-title" id="LaunchIDE">Launch the IDE</h2>
-<div class="acc-body">
-<p>Use a compatible browser (currently Chrome, Chromium and Edge) and one of these links, depending on which language
-you want the IDE to open in:</p>
+<div id="docTOC">
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
+
+
+ <div id="platform">
+<hl>Platform compatibility</hl>
+
+<h2>Browser</h2>
+
+<p>Elan must be accessed through a Chrome-compatible browser: Chrome, Chromium and Edge. </p>
+
+ <p><i>Always use the browser in 'full screen mode' &ndash; it makes more space available and reduces the risk of accidentally refreshing the browser and losing work.</i></p>
+
+
+<h2 id="MacOS">Apple macOS specific</h2>
+
+<p>It is recommended that you use Chrome even on Apple machines. (Safari works for most things but some compatibility issues have been reported.)</p>
+
+<p>Where a keyboard shortcut is shown with the <b>Ctrl</b> control key, users of Apple's macOS should use the &#x2318; <b>Command</b> key instead.</p>
+</div>
+
+<div id="CustomiseIDE">
+<h1>Customising the IDE</h1>
+
+<h2>Select the prorgamming language</h2>
+<p>When the public Elan IDE is accessed - via <b>https://codewithelan.org</p>b> - it will be set up for programming in Python.</p>
+<p>This may be changed via the <b>languages</b> button - and the dialog that it opens - to any of:</p>
+
 <ul>
- <li><a href="https://elan-lang.org"><b>Reference Language</b> (Elan) <i class="fa">&#xf08e;</i></a> &ndash; https://elan-lang.org</li>
- <li><a href="https://elan-lang.org?lang=python"><b>Python</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=python</li>
- <li><a href="https://elan-lang.org?lang=vb"><b>VB.NET</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=vb</li>
- <li><a href="https://elan-lang.org?lang=cs"><b>C#</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=cs</li>
- <li><a href="https://elan-lang.org?lang=java"><b>Java</b> <i class="fa">&#xf08e;</i></a>&ndash; https://elan-lang.org?lang=java</li>
+  <li>Python</li>
+  <li>C#</li>
+  <li>Java</li>
+  <li>Reference Language</li>
 </ul>
 
-<div class="accordion">
-<h3 class="acc-title" id="CustomiseIDE">Customising the IDE</h3>
-<div class="acc-body">
+<p><b>VB.NET</b> is currently offered as an option only within the <a href="#quad-view">Quad View </a> - for <i>viewing only</i>. 
+  We hope to make VB.NET an option for entering and editing code in a future release.</p>
 
-<p>To customise start-up, you add further options after <b>?</b> in the URL, separated by <b>&</b> and including no spaces, for example:</p>
+<p>It is possible to create a link that will open Elan with the preferred language option already selected:</p>
+
 <ul>
- <li>To specify a programming paradigm that reflects limits to the use of the IDE<br>
- <code>https://elan-lang.org?#profile=object-oriented</code></li>
- <li>To specify both a language and a CVD option:<br>
- <code>https://elan-lang.org?#lang=python&cvd=1</code></li>
+ <li><a href="https://codewithelan.org?#lang=python"><b>Python</b> <i class="fa">&#xf08e;</i></a>&ndash; https://codewithelan.org?#lang=python</li>
+ <li><a href="https://codewithelan.org?#lang=cs"><b>C#</b> <i class="fa">&#xf08e;</i></a>&ndash; https://codewithelan.org?#lang=cs</li>
+ <li><a href="https://codewithelan.org?#lang=java"><b>Java</b> <i class="fa">&#xf08e;</i></a>&ndash; https://codewithelan.org?#lang=java</li>
 </ul>
-</div></div>
 
+<p>See also <a href="#copy-url">copy Url for this code</a></p>
 
-<div class="accordion">
-<h2 class="acc-title" id="Navigation">Navigate around the IDE</h2>
-<div class="acc-body">
- <p>Watch the video: <a href="videos/navigate-ide.html">Navigate around the IDE</a></p>
- <p><i>Always use the browser in 'full screen mode' &ndash; it makes more space available and is safer.</i></p>
- <p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel, or change the magnification via the browser's zoom menu.</p>
- <p>If an area has a blue tinted background, it does not have browser 'focus' and will not respond to keyboard input.
-Use keyboard shortcuts or mouse or touch gestures to change the focus (which is indicated by a white background):</p>
+<h2 id="quad-view">Quad view</h2>
+
+<p>The dialog returned by the <b>languages</b> button also offers a check-box for <b>Quad View</b>. If selected, this replaces the main code editor
+with four 'quadrants', which will typically be used to show the same code in four different languages at the same time. Please note that:</p>
+
+<ul>
+  <li>In Quad View, the top-left quadrant is the <i>active</i> editor. The other three quadrants offer a <i>passive</i> view of the translated code</li>
+  <li>The language that was selected in the regular (single-pane) view will, by default be the language selected for the active editor. The other
+    three panes will each have a different default language. The language for each of the quadrants may be selected individually from the drop down list -
+    and you may even show the same language in more than one pane, though there would be little point. </li>
+  <li>For any given program, the total number of instructions is identical in each language, and when an instruction is highlighted in the active editor, 
+    the corresponding instruction (with same instruction number) will be highlighted in the other three panes.</li>
+  <li>When a <i>field</i> (within an instruction) is being entered or edited in the active editor, the fields in the three passive editors will
+  be automatically updated - having been translated if necessary - but only when that field contains <i>valid</i> code in the active editor.</li>
+  <li>In the current release <b>VB.NET</b> may be shown only as a passive view, not in the active quadrant.</li>
+</ul>
+
+<h2 id="paradigm">The programming paradigm</h2>
+
+<p>The button to the left of <b>Languages</b> shows the selected programming paradigm, one of three options:</p>
+
+<ul>
+  <li>procedural (the default option)</li>
+  <li>object-oriented</li>
+  <li>functional</li>
+</ul>
+
+<p>The selected paradigm determines:</p>
+
+<ul>
+  <li>the list of <b>demo</b> programs will change to show only programs written to the specified paradigm - except
+  where more than one version of the same program is listed in order to allow comparison.</li>
+  <li>the documents (e.g. <b>Object-oriented programming with Elan</b>) available in the <b>help</b> tab</li>
+  <li>The instructions offered in the <b>new code</b> prompts when entering/editing code</li>
+</ul>
+
+<p>Changing the paradigm resets editor to a new file, so you will be warned that existing code might need to be saved.</p>
+
+<h2 id="copy-url">Copy Url for this code</h2>
+
+<p>The action <b>File > Copy Url for this code</b> will generate a Url - copied into the system clipboard - that can be used as a shortcut into 
+the configuration that has been selected via menu actions:</p>
+
+<ul>
+  <li>The programming language (as used in the single editor, or active editor in Quad View)</li>
+  <li>The programming <a href="paradigm">paradigm</a></li>
+  <li>The CVD <a href="#ColourScheme">colour scheme</a> if selected</li>
+</ul>
+
+<p>Also, if the editor contains code (other than the default code for new file) and that code is less than 20 instructions, then the code
+  will be compressed and included as a parameter in the Url. This makes is possible to share simple programs with other users without
+  the need for saving and loading a code file.
+</p>
+</div>
+
+<div id="Navigation">
+<h1 class="acc-title" >Navigating around the IDE</h1>
+<h2></h2>
+
+ <p>If any area has a blue tinted background, it does not have browser 'focus' and will not respond to keyboard input.
+Use keyboard shortcuts or mouse or touch gestures to change the focus (which is always indicated by a white background):</p>
 <table>
  <tr><th>To focus on...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
  <tr><td>code editor</td><td><b>Ctrl+e</b></td><td>Click on background within editor</td><td>See also <a href="#BrowseCode">Browse code</a></td></tr>
@@ -62,24 +137,12 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
  <tr><td>a button</td><td><b>Ctrl+b</b></td><td>Click on the button</td><td><b>Ctrl+b</b> puts focus on the first <i>active</i> button<br>Use <b>Tab</b> or <b>Shift+Tab</b>
   to navigate to another active button</tr>
 </table>
-</div></div>
+</div>
 
-<div class="accordion">
-<h2 class="acc-title" id="Programs">Load, run, and save programs</h2>
-<div class="acc-body">
-<p>Watch the video: <a href="videos/load-run-save.html">Load, run, and save programs</a></p>
+<div id="Programs">
+<h1>Loading,saving, and running programs</h1>
 
-<div class="accordion">
-<h3 class="acc-title">Loading and saving</h3>
-<div class="acc-body">
-<p>To access the <b>demo</b> or <b>file</b> menus via the keyboard:</p>
-<ul>
- <li>If the menus are disabled, you need to stop the program currently running</li>
- <li>press <b>Ctrl+b</b> then <b>Tab</b> to the menu (if needed)</li>
- <li>press <b>Enter</b> to open the menu</li>
- <li>press <b>&darr;</b> or <b>&uarr;</b> to select the required menu item</li>
- <li>press <b>Enter</b> to action the selected item</li>
-</ul>
+<h2>Load, Save, and Append</h2>
 <table>
  <tr><th>Intention</th><th>Menu action</th><th>Notes</th></tr>
  <tr><td>load a <b>demo</b> program</td><td><b>demo</b> then select desired program</td><td></td></tr>
@@ -90,11 +153,10 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
  <tr><td><b>save</b> a program manually</td><td><b>file &gt; manual save</b></td><td>saves the code to file but does <i>not</i> automatically save subsequent changes</td></tr>
  <tr><td>create a <b>standalone</b> Html page incorporating your program</td><td><b>file &gt; save as standalone</b></td><td>the saved .html file contains the compiled program, and will run automatically when opened</td></tr>
 </table>
-</div></div>
+</div>
 
-<div class="accordion">
-<h3 class="acc-title">Running and stopping programs</h3>
-<div class="acc-body">
+<div id="run-stop">
+<h1>Run, Stop</h1>
 <table>
  <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
  <tr><td><b><u>r</u></b>un a program</td><td><b>Ctrl+r</b></td><td>Click on '<b><u>r</u></b>un' button</td><td>disabled if there are any <b>parse</b> or <b>compile</b> issues.</tr>
@@ -104,37 +166,22 @@ Use keyboard shortcuts or mouse or touch gestures to change the focus (which is 
 This is an unavoidable side effect within the browser, but you will be returned to editing after a short period. Avoid repeatedly clicking '<b><u>s</u></b>top' as that might
 cause the browser tab to be closed.</p>
 <p>See also <a href="#Debugging">Debugging programs</a></p>
-</div></div>
-</div></div>
+</div>
 
 
-<div class="accordion">
- <h2 class="acc-title" id="Debugging">Debugging programs</h2>
- <div class="acc-body">
+<div id="Debugging">
+<h1 >Debugging programs</h1>
 
- <p>Watch the video: <a href="videos/debug.html">Debugging programs</a></p>
- <p>You can debug a running program with or without having set breakpoints.</p>
-
-<h3>Run in debug mode, pause, and step</h3>
+<h2>Run in debug mode, pause, and step</h3>
 
 <table>
  <tr><th>To...</th><th>Keyboard<br> shortcut</th><th>Mouse<br> gesture</th><th>Notes</th></tr>
  <tr><td>debu<b><u>g</u></b> a program, or resume debugging a paused program</td><td><b>Ctrl+g</b></td><td>Click on 'debu<b><u>g</u></b>' button</td><td>disabled if there are any <b>parse</b> or <b>compile</b> issues.</td></tr>
  <tr><td>pa<b><u>u</u></b>se a program that is running</td><td><b>Ctrl+u</b></td><td>Click on 'pa<b><u>u</u>se</b>' button</td><td>enabled only when program is being debugged</td></tr>
  <tr><td>ste<b><u>p</u></b> to the next instruction in a paused program</td><td><b>Ctrl+p</b></td><td>Click on 'ste<b><u>p</u></b>' button</td><td>enabled only then program is paused</td></tr>
- </table>
+</table>
 
- <h3>Browsing named values</h3>
- <p>Whenever the program is paused, all named values (variables, parameters and constant values)
- that are currently in scope have their values automatically listed in the <b>Info</b> pane.
- This list may be browsed as follows:</p>
- <table>
-  <tr><th>To...</th><th>Keyboard<br> shortcut</th><th>Mouse<br> gesture</th></tr>
-  <tr><td>navigate to a specific line in the list when paused</td><td><b>Tab</b>, <b>Shift+Tab</b></td><td>Click on the line</td></tr>
-  <tr><td>expand/collapse a specific name within the list</td><td><b>Enter</b></td><td>Click on the <b>+</b> or <b>-</b> at the start of the line</td></tr>
- </table>
-
-<h3 id="Breakpoints">Using breakpoints</h3>
+<h2 id="Breakpoints">Using breakpoints</h2>
 <p>Before clicking on <b>debug</b> you can set breakpoints at one or more instructions where you want execution to pause.
  A red flash symbol appears at every instruction that has a breakpoint defined..</p>
  <p>When run using <b>debug</b> the program will automatically pause at every breakpoint, and the in-scope named values will be listed in the <b>Info</b> pane.</p>
@@ -143,16 +190,26 @@ cause the browser tab to be closed.</p>
  <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td><b>Ctrl+m</b> on a selected instruction keyword then select <b>set breakpoint</b></td><td><b>right-click</b> for <b>context menu</b>, then select <b>set breakpoint</b></td></tr>
  <tr><td>clear existing breakpoints</td><td><b>Ctrl+m</b> on a selected instruction keyword, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td><td><b>right-click</b> for <b>context menu</b>, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td></tr>
  </table>
-</div></div>
 
-<div class="accordion">
-<h2 class="acc-title" id="MacOS">Apple macOS specific</h2>
-<p class="acc-body">Where a keyboard shortcut is shown with the <b>Ctrl</b> control key, users of Apple's macOS should use the &#x2318; <b>Command</b> key instead.</p>
+  <h2>Browsing values when paused at a breakpoint</h2>
+ <p>Whenever the program is paused, all named values (variables, parameters and constant values)
+ that are currently in scope have their values automatically listed in the <b>Info</b> pane.
+ This list may be browsed as follows:</p>
+ <table>
+  <tr><th>To...</th><th>Keyboard<br> shortcut</th><th>Mouse<br> gesture</th></tr>
+  <tr><td>navigate to a specific line in the list when paused</td><td><b>Tab</b>, <b>Shift+Tab</b></td><td>Click on the line</td></tr>
+  <tr><td>expand/collapse a specific name within the list</td><td><b>Enter</b></td><td>Click on the <b>+</b> or <b>-</b> at the start of the line</td></tr>
+ </table>
 </div>
 
-<div class="accordion">
-<h2 class="acc-title" id="ColourScheme">Colour scheme for CVD</h2>
-<div class="acc-body"><p>There are two ways in which to change the colour scheme for users
+<div id="accessibility"></div>
+<h1>Accessibility</h1>
+
+<h2>Change text size</h2>
+<p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel, or change the magnification via the browser's zoom menu.</p>
+
+<h2 id="ColourScheme">Colour scheme for CVD</h2>
+<p>There are two ways in which to change the colour scheme for users
 with CVD:</p>
 <ul>
  <li>Button <b>file</b> has menu option <b>preferences</b> which offers an alternative
@@ -161,7 +218,7 @@ with CVD:</p>
  You can also just press <b>Escape</b> to remove the dialogue.</li>
  <li>The URL provided to a pupil may include a CVD scheme, as described above in <a href="#LaunchIDE">Launch the IDE</a>.</li>
 </ul>
-</div></div>
+</div>
 
 <h2></h2><!-- for final rule -->
 </body>
