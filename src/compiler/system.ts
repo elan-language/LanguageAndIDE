@@ -355,7 +355,7 @@ export class System {
   }
 
   ignoredProperty(s: string) {
-    return s === "system" || s === "stdlib" || s.startsWith("elan_");
+    return s === "system" || s === "stdlib" || s === "_system" ||  s.startsWith("elan_");
   }
 
   getProtoTypes(v: any): any[] {
