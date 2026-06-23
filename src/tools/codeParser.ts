@@ -9,6 +9,7 @@ import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { Language } from "../ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
+import { FunctionFrame } from "../ide/frames/globals/function-frame";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { MainFrame } from "../ide/frames/globals/main-frame";
 import { LanguageCS } from "../ide/frames/language-cs";
@@ -96,6 +97,28 @@ async function parseAsStatement(code: string, l: Language) {
   }
 }
 
+async function parseAsFunctionStatement(code: string, l: Language) {
+  const codeSource = new CodeSourceFromString(code + " ");
+  const file = await newFileImpl();
+
+  try {
+    const gf = new GlobalFunction(file);
+    const ss = new StatementSelector(gf);
+    ss.parseFrom(codeSource);
+
+    if (file.parseError) {
+      return "";
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+    file.setLanguage(l);
+    return gf.getChildren()[0].renderAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
+
+
 async function parseAsMember(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
   const file = await newFileImpl();
@@ -178,6 +201,7 @@ export async function processInnerCode(code: string, l: Language) {
     (await parseAsKeyword(code)) ||
     (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
     (await parseAsStatement(code, l)) ||
+    (await parseAsFunctionStatement(code, l)) ||
     (await parseAsMember(code, l)) ||
     (await parseAsExpression(code, l)) ||
     (await parseAsType(code, l)) ||
