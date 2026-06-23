@@ -9,7 +9,6 @@ import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { Language } from "../ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
-import { FunctionFrame } from "../ide/frames/globals/function-frame";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { MainFrame } from "../ide/frames/globals/main-frame";
 import { LanguageCS } from "../ide/frames/language-cs";
