@@ -5,19 +5,19 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertCompiles,
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  testHash,
-  testHeader,
-  transforms,
+    assertCompiles,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertGraphicsContains,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    assertTestObjectCodeExecutes,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
@@ -2273,7 +2273,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[5, 5], [5, 5], [5, 5]]");
   });
 
-  test("Pass_createDictionaryFrom", async () => {
+  test("Pass_createDictionary", async () => {
     const code = `${testHeader}
 
 main
@@ -2281,8 +2281,8 @@ main
   variable b set to [(1, "a"), (2, "b")]
   variable d1 set to new Dictionary<of String, Int>()
   variable d2 set to new Dictionary<of Int, String>()
-  reassign d1 to createDictionaryFrom(a)
-  reassign d2 to createDictionaryFrom(b)
+  reassign d1 to createDictionary(a)
+  reassign d2 to createDictionary(b)
   call printNoLine(d1)
   call printNoLine(d2)
 end main
@@ -2295,8 +2295,8 @@ async function main() {
   let b = system.list([system.tuple([1, "a"]), system.tuple([2, "b"])]);
   let d1 = system.initialise(await new _stdlib.Dictionary()._initialise());
   let d2 = system.initialise(await new _stdlib.Dictionary()._initialise());
-  d1 = (await _stdlib.createDictionaryFrom(a));
-  d2 = (await _stdlib.createDictionaryFrom(b));
+  d1 = (await _stdlib.createDictionary(a));
+  d2 = (await _stdlib.createDictionary(b));
   await _stdlib.printNoLine(d1);
   await _stdlib.printNoLine(d2);
 }
