@@ -35,6 +35,7 @@
 
     Updated to do generate_from_page properly, January 2025 (thanks Bernard!)
     Updated by Bernard to make "open" status the default
+    Updated by Bernard to suppress "Show/Hide table of contents" option
 
 */
 
@@ -117,10 +118,12 @@ generated_toc = {
 //    if (status && status == "open") { this line replaced by the following for "open" status to be default
       if ((status && status == "open") || true){
       display_initially = "block";
-      toggle_initially = "Hide table of contents";
+//    toggle_initially = "Hide table of contents";
+      toggle_initially = "";
     } else {
       display_initially = "none";
-      toggle_initially = "Show table of contents";
+//    toggle_initially = "Show table of contents";
+      toggle_initially = "";
     }
 
     cur_head_lvl = "h" + generate_from;
