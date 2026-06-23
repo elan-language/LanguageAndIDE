@@ -30,13 +30,13 @@ static void main() {
 
 static List<VectorGraphic> allpoints(Coords p) { // function
   var vg2 = createVectorGraphics();
-  foreach (var xp in range(0, width + 1)) {
-    foreach (var yp in range(0, height + 1)) {
+  foreach (var xp in range(0, width)) {
+    foreach (var yp in range(0, height)) {
       // scale and centre
-      var n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p);
+      var n = onepoint((xp - width/2.0)/p.scale - p.xoff, (yp - height/2.0)/p.scale - p.yoff, nmax, p);
       // colour depends on how many iterations were done for that point
       var col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
-      var rect = (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25);
+      var rect = (new RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25);
       vg2 = vg2.withAppend(rect); // reassign variable
     } // end foreach
   } // end foreach
@@ -118,7 +118,6 @@ class Coords {
           this.jy = this.jy + jstep; // reassign variable
         } else if (k.equals("h")) {
           this.jy = this.jy - jstep; // reassign variable
-          // for autocomplete in the RHS expression, don't type "property"
         } else {
           // ignore erroneous key presses
         } // end if

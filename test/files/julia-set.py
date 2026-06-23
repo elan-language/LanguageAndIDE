@@ -28,13 +28,13 @@ def main() -> None:
 
 def allpoints(p: Coords) -> list[VectorGraphic]: # function
   vg2 = createVectorGraphics() # variable definition
-  for xp in range(0, width + 1):
-    for yp in range(0, height + 1):
+  for xp in range(0, width):
+    for yp in range(0, height):
       # scale and centre
-      n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) # variable definition
+      n = onepoint((xp - width/2.0)/p.scale - p.xoff, (yp - height/2.0)/p.scale - p.yoff, nmax, p) # variable definition
       # colour depends on how many iterations were done for that point
       col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
-      rect = (RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) # variable definition
+      rect = (RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25) # variable definition
       vg2 = vg2.withAppend(rect) # reassign variable
     # end for
   # end for
@@ -116,7 +116,6 @@ class Coords: # concrete class
           self.jy = self.jy + jstep # reassign variable
         elif k.equals("h"): # else if
           self.jy = self.jy - jstep # reassign variable
-          # for autocomplete in the RHS expression, don't type "property"
         else:
           # ignore erroneous key presses
         # end if

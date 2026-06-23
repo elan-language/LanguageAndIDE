@@ -1,4 +1,4 @@
-# e8feaa873872dd4fe14b06174830abcfa549d136e851df5a066e694441fc4b2b Elan 2.0.0-beta valid
+# 62fc9cc21036617f833cada9cc654fbf180a6e9dfa7e30550b99743d6a2a5ae3 Elan 2.0.0-beta valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -20,13 +20,13 @@ end main
 
 function allpoints(p as Coords) returns List<of VectorGraphic>
   variable vg2 set to createVectorGraphics()
-  for xp in range(0, width + 1)
-    for yp in range(0, height + 1)
+  for xp in range(0, width)
+    for yp in range(0, height)
       # scale and centre
-      variable n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
+      variable n set to onepoint((xp - width/2.0)/p.scale - p.xoff, (yp - height/2.0)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
       variable col set to if_(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
-      variable rect set to (new RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25)
+      variable rect set to (new RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25)
       reassign vg2 to vg2.withAppend(rect)
     end for
   end for
@@ -107,7 +107,6 @@ class Coords
           reassign this.jy to this.jy + jstep
         elif k.equals("h") then
           reassign this.jy to this.jy - jstep
-          # for autocomplete in the RHS expression, don't type "property"
         else
           # ignore erroneous key presses
         end if
