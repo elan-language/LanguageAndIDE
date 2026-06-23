@@ -506,7 +506,7 @@ export class StdLib {
   }
 
   @elanFunction(["kvps"], FunctionOptions.pureAsync, ElanClass(Dictionary, [ElanT1, ElanT2]))
-  async createDictionaryFrom<T1, T2>(
+  async createDictionary<T1, T2>(
     @elanClassType(List, [ElanTuple([ElanT1, ElanT2])]) kvps: List<[T1, T2]>,
   ): Promise<Dictionary<T1, T2>> {
     const dict = this.system.initialise(await new Dictionary<T1, T2>()._initialise());
