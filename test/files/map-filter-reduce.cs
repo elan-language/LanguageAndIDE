@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta-pre1
+// C# with Elan 2.0.0-beta
 
 [TestMethod] static void test_Map_Filter_Reduce() {
   var nums = new [] {2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5}; // let

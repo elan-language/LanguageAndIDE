@@ -4,5 +4,5 @@ export const elanVersion = {
   major: 2,
   minor: 0,
   patch: 0,
-  preRelease: "beta-pre1",
+  preRelease: "beta",
 };

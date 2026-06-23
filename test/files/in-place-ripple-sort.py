@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta-pre1
+# Python with Elan 2.0.0-beta
 
 def main() -> None:
   li = [7, 1, 0, 4, 8, 3, 6] # variable definition

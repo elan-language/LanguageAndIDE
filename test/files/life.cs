@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta-pre1
+// C# with Elan 2.0.0-beta
 
 static void main() {
   var grid = createBlockGraphics(white);
