@@ -96,6 +96,8 @@ export class CallAsn extends BreakpointAsn {
       let isAsync: boolean = false;
 
       if (procSymbolType instanceof ProcedureType) {
+        processLambdaParameters(callParameters, procSymbolType, this.compileErrors, this.fieldId);
+
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.fieldId);
 
         mustNotCallNonExtensionViaQualifier(
@@ -121,7 +123,7 @@ export class CallAsn extends BreakpointAsn {
           qualifier = EmptyAsn.Instance;
         }
 
-        processLambdaParameters(callParameters, procSymbolType, this.compileErrors, this.fieldId);
+       
 
         matchParametersAndTypes(
           id,

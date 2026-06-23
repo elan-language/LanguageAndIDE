@@ -75,7 +75,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   compile(): string {
     this.compileErrors = [];
 
-    let parameters = [...this.parameters];
+   
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
     mustBeKnownSymbol(
@@ -94,7 +94,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
 
+    let parameters : AstNode[] = [];
     if (funcSymbolType instanceof FunctionType) {
+      processLambdaParameters(this.parameters, funcSymbolType, this.compileErrors, this.fieldId);
+      parameters = [...this.parameters];
+
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
       mustCallExtensionViaQualifier(
@@ -127,8 +131,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
         parameters = [this.precedingNode].concat(parameters);
       }
 
-      processLambdaParameters(parameters, funcSymbolType, this.compileErrors, this.fieldId);
-
+  
       matchParametersAndTypes(
         funcSymbol.symbolId,
         funcSymbolType,
@@ -174,6 +177,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const [, funcSymbolType] = this.getSymbolAndType();
 
     if (funcSymbolType instanceof FunctionType) {
+      processLambdaParameters(this.parameters, funcSymbolType, this.compileErrors, this.fieldId);
+
       const returnType = funcSymbolType.returnType;
 
       if (containsGenericType(returnType)) {

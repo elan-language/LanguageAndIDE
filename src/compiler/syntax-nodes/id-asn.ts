@@ -23,6 +23,7 @@ import {
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleAsn } from "./globals/tuple-asn";
+import { LambdaSigAsn } from "./lambda-sig-asn";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -49,6 +50,11 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
+
+    if (this.scope instanceof LambdaSigAsn) {
+      searchScope = this.scope;
+    }
+
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, true);
     }

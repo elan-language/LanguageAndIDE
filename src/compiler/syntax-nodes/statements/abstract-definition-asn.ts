@@ -52,8 +52,6 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const lhs = this.name;
     const rhs = this.expr;
 
-    mustBeCompatibleDefinitionNode(rhs, this.isLocalConstant(), this.compileErrors, this.fieldId);
-
     mustConformToCopyOfThisBoilerPlate(
       lhs,
       rhs,
@@ -66,6 +64,8 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     const lhsCode = lhs.compile();
 
     const rhsCode = rhs.compile();
+
+    mustBeCompatibleDefinitionNode(rhs, this.isLocalConstant(), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
