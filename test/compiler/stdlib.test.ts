@@ -2238,6 +2238,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[a, a, a, a, a]");
   });
+
   test("Pass_createListOfLists", async () => {
     const code = `${testHeader}
 
@@ -2271,6 +2272,53 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[[5, 5], [5, 5], [5, 5]]");
   });
+
+  test("Pass_createDictionaryFrom", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [("a", 1), ("b", 2)]
+  variable b set to [(1, "a"), (2, "b")]
+  variable d1 set to new Dictionary<of String, Int>()
+  variable d2 set to new Dictionary<of Int, String>()
+  reassign d1 to createDictionaryFrom(a)
+  reassign d2 to createDictionaryFrom(b)
+  call printNoLine(d1)
+  call printNoLine(d2)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.tuple(["a", 1]), system.tuple(["b", 2])]);
+  let b = system.list([system.tuple([1, "a"]), system.tuple([2, "b"])]);
+  let d1 = system.initialise(await new _stdlib.Dictionary()._initialise());
+  let d2 = system.initialise(await new _stdlib.Dictionary()._initialise());
+  d1 = (await _stdlib.createDictionaryFrom(a));
+  d2 = (await _stdlib.createDictionaryFrom(b));
+  await _stdlib.printNoLine(d1);
+  await _stdlib.printNoLine(d2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:2][1:a, 2:b]");
+  });
+
   test("Pass_allLibraryTypeNamesValid", async () => {
     const code = `${testHeader}
 
