@@ -28,13 +28,13 @@ End Sub
 
 Function allpoints(p As Coords) As List(Of VectorGraphic)
   Dim vg2 = createVectorGraphics() ' variable definition
-  For Each xp In range(0, width + 1)
-    For Each yp In range(0, height + 1)
+  For Each xp In range(0, width)
+    For Each yp In range(0, height)
       ' scale and centre
-      Dim n = onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p) ' variable definition
+      Dim n = onepoint((xp - width/2.0)/p.scale - p.xoff, (yp - height/2.0)/p.scale - p.yoff, nmax, p) ' variable definition
       ' colour depends on how many iterations were done for that point
       Dim col = if_(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
-      Dim rect = (New RectangleVG()).withX(divAsFloat(xp, 2)).withY(divAsFloat(yp, 2)).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeWidth(0.25) ' variable definition
+      Dim rect = (New RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25) ' variable definition
       vg2 = vg2.withAppend(rect) ' reassign variable
     Next yp
   Next xp
@@ -116,7 +116,6 @@ Class Coords
           Me.jy = Me.jy + jstep ' reassign variable
         ElseIf k.equals("h") Then
           Me.jy = Me.jy - jstep ' reassign variable
-          ' for autocomplete in the RHS expression, don't type "property"
         Else
           ' ignore erroneous key presses
         End If
