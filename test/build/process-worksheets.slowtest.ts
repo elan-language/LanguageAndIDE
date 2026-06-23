@@ -71,6 +71,22 @@ end constructor`;
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
 
+   test("process let", async () => {
+    const code = `let a be 1`;
+
+    const actual = await processInnerCode(code, LanguageElan.Instance);
+
+    assert.strictEqual(actual.startsWith("<el-statement"), true);
+  });
+
+  test("process return", async () => {
+    const code = `return 1`;
+
+    const actual = await processInnerCode(code, LanguageElan.Instance);
+
+    assert.strictEqual(actual.startsWith("<el-statement"), true);
+  });
+
   test("process keyword1", async () => {
     const code = `set`;
 
