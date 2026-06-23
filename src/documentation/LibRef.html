@@ -16,6 +16,8 @@
 </head>
 <body id="top">
 <div class="docTitle">Elan Library Reference</div>
+<h2 class="no-TOC">Table of contents</h2>
+<h3 class="no-TOC">Main topics | Detailed topics</h3>
 <div class="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
@@ -24,7 +26,7 @@
 
 <h2 id="Int">Integer</h2>
 <p>An <b>integer</b> is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
-<p><code>100</code> (decimal), <code>0x64</code> (hexadecimal) and <code>0b1100100</code> all have the same value.</p>
+<p><code>100</code> (decimal), <code>0x64</code> (hexadecimal) and <code>0b1100100</code> (binary) all have the same value.</p>
 <p>Its type is <code>Int</code>.</p>
 
 <table class="tableType">
@@ -84,13 +86,35 @@ in the range:</li>
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
     in exponential (scientific) format, as shown in the example.</li>
 </ul>
+<div id="hex"></div>
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of base conversion</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Functions to return an integer value as a hexadecimal string:</p>
+<codeblock>function hex(n as Int) returns String
+  variable h set to ""
+  if (n &lt; 1) then
+    reassign h to "0"
+  else
+    variable m set to n
+    while m &gt; 0
+      reassign h to hexDigit(m mod 16) + h
+      reassign m to divAsInt(m, 16)
+    end while
+  end if
+  return h
+end function
+function hexDigit(i as Int) returns String
+  return "0123456789abcdef".subString(i, i + 1)
+end function
+</codeblock><hr>
+</div></div>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
-<codeblock>
-main
+<codeblock>main
   for n in range(50, 73)
     variable np set to pow(2, n).floor()
     call printTab(n.toString().length(), $"{n}")
@@ -182,8 +206,7 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br>
- <code>variable hour set to 3.0</code></li>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br><codeblock>able hour set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
@@ -191,8 +214,7 @@ Its type is <code>Float</code>.
 <h4 class="no-TOC acc-title" tabindex="0">Examples of standalone dot methods on a <code>Float</code></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions using dot methods on a <code>Float</code>:</p>
-<codeblock>
-test test_floor
+<codeblock>test test_floor
   variable p set to pi
   variable mp set to -pi
   assert p.floor() is 3
@@ -379,7 +401,7 @@ end test
   <td><code>Int</code></td>
   <td>the number of characters in the string</td>
  </tr><tr id="lowerCase">
-  <td ><el-method>lowerCase</el-method></td>
+  <td><el-method>lowerCase</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
   <td>a new string with the original rendered in lower case</td>
@@ -451,8 +473,7 @@ end test
 <p>And for the area of a circle:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>
-main
+<codeblock>main
   variable r set to 2.0
   print($"area = {(pi*r*r).round(2)}")
 end main
@@ -526,7 +547,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>create initialised</td>
   <td><code>createPopulatedList(number, value)</code><br>
   <code>createPopulatedListofLists(cols, rows, value)</code>
-  <td>Not available</td>
+  <td><code>createDictionary</code></td>
   <td>Not available</td>
   <td>Not available</td>
   <td>Not available</td>
@@ -838,8 +859,7 @@ whose keys are names and whose values are birth year, you might refer to <code>b
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program:</p>
 <p>Procedure greekLetters sets up the key:value pairs, procedure printD shows how a procedure can use the Dictionary,
 and function getDItem retrieves a value given a key.</p>
-<codeblock>
-main
+<codeblock>main
   variable dL set to new Dictionary&lt;of String, Int&gt;()
   variable dLRef set to new AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;(dL)
   call greekLetters(dLRef)
@@ -870,9 +890,8 @@ end procedure
 <div class="functional">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
 in a way suitable for Functional programming, by using the HoF <code>reduce</code> in a function
-that creates the Dictionary from a List of key:value pairs as Tuples:</p> 
-<codeblock>
-main
+that creates the Dictionary from a List of key:value pairs as Tuples:</p>
+<codeblock>main
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
   print(di["beta"])
 end main
@@ -965,8 +984,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tablePlain">
 <tr>
  <td>
-  <codeblock>
-  variable st set to new HashSet&lt;of Int&gt;()
+  <codeblock>  variable st set to new HashSet&lt;of Int&gt;()
   reassign st to st.addFromList([3, 5, 7])
   print(st.length())
   </codeblock>
@@ -976,8 +994,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  </td>
 </tr><tr>
  <td>
-  <codeblock>
-  reassign st to st.add(7)
+  <codeblock>  reassign st to st.add(7)
   print(st.length())
   </codeblock>
  </td><td>
@@ -987,15 +1004,13 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  </td>
 </tr><tr>
  <td>
-  <codeblock>
-  reassign st to st.remove(3)
+  <codeblock>  reassign st to st.remove(3)
   print(st.length())
   </codeblock>
 <td><br>&#x27f6;</td><td><br>2</td>
 </tr><tr>
  <td>
-  <codeblock>
-  reassign st to st.remove(3)
+  <codeblock>  reassign st to st.remove(3)
   print(st.length())
   </codeblock>
  <td><br>&#x27f6;</td><td><br>2</td>
@@ -1204,8 +1219,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <code>Stack</code>:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>
-main
+<codeblock>main
   variable sk set to new Stack&lt;of String&gt;()
   print(sk.length())
   reassign sk to sk.push("apple")
@@ -1231,8 +1245,7 @@ end main
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <code>Queue</code>:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>
-main
+<codeblock>main
   variable qu set to new Queue&lt;of String&gt;()
   print(qu.length())
   reassign qu to qu.enqueue("apple")
@@ -1289,8 +1302,7 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
@@ -1305,8 +1317,7 @@ end main
 </table>
 
 <p>And where p1 and p2 represent points each with 2-Tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
-<codeblock>
-function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
+<codeblock>function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
 end function
 </codeblock>
@@ -1345,8 +1356,7 @@ end function
 <p>Each block is be rendered as a solid colour.</p>
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
-<codeblock>
-main
+<codeblock>main
   variable grid set to createBlockGraphics(white)
   while true
     variable x set to randint(0, 39)
@@ -1426,7 +1436,7 @@ So the top left corner of the display is at (-100,75).</p>
       <code>Int</code> or <code>Float</code></td>
   <td>places or repositions the turtle at the <i>x,y</i> position specified without drawing a path</td>
  </tr><tr id="show">
-  <td ><el-method>show</el-method></td>
+  <td><el-method>show</el-method></td>
   <td>(none)</td>
   <td>makes the turtle visible in the display as a green blob<br>marked with a black radius that indicates its heading</td>
  </tr><tr id="turn">
@@ -1469,8 +1479,7 @@ So the top left corner of the display is at (-100,75).</p>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a square:</p>
-<codeblock>
-main
+<codeblock>main
   variable t set to new Turtle()
   call t.placeAt(-75, 50)
   call t.show()
@@ -1484,8 +1493,7 @@ end main
 <p><img src="images/turtleSquare.png" width="270" height="290" alt="Turtle square"></p>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a fractal snowflake, using a procedure and recursion:</p>
-<codeblock>
-main
+<codeblock>main
   variable t set to new Turtle()
   call t.placeAt(-50, 30)
   call t.turn(90)
@@ -1497,7 +1505,7 @@ main
 end main
 constant side set to 100
 procedure drawSide(length as Float, t as Turtle)
-  if (length > 1) then
+  if (length &gt; 1) then
     variable third set to length/3
     call drawSide(third, t)
     call t.turn(-60)
@@ -1764,8 +1772,7 @@ together with the <b>procedure</b> and <b>function</b> methods provided to alter
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle with a coloured circumference:</p>
-<codeblock>
-main
+<codeblock>main
   variable vg set to createVectorGraphics()
   variable circ set to new CircleVG()
   call circ.setCentreX(20)
@@ -1782,8 +1789,7 @@ end main
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To draw a circle that changes between red and green every second:</p>
-<codeblock>
-main
+<codeblock>main
   variable vg set to new List&lt;of VectorGraphic&gt;()
   variable circ set to new CircleVG()
   call circ.setCentreX(50)
@@ -1823,8 +1829,7 @@ By this means features such as simple SVG animation can be defined.</p>
 <h4 class="no-TOC acc-title" tabindex="0">Example using <code>RawVG</code></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To display a repeating movement of a circle:</p>
-<codeblock>
-main
+<codeblock>main
   variable movingCircle set to "<circle cx='50' cy='50' r='50' style='fill:red;'>\n<animate attributeName='cx' begin='0s' dur='2s' from='50' to='90%' repeatCount='indefinite' /></circle>"
   variable raw set to (new RawVG()).withContent(movingCircle)
   call displayVectorGraphics([raw])
@@ -1903,8 +1908,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code>:
-<codeblock>
-main
+<codeblock>main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
@@ -2009,8 +2013,7 @@ end function
 <h3 class="no-TOC"> Reading keys 'on the fly'</h3>
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
 <p>Whether your application makes use of graphics, or uses the display  just for text, reading keystrokes 'on the fly' is done via one of the three methods shown here:</p>
-<codeblock>
-main
+<codeblock>main
   variable key1 set to getKey()
   variable key2 set to getNumericKey()
   variable km set to getKeyWithModifier()
@@ -2039,8 +2042,7 @@ end main
  if <code>false</code>, no prompt appears.
  </li>
 </ul>
-<codeblock>
-main
+<codeblock>main
   call pressAnyKeyToContinue()
   print("OK, press A or B")
   variable key set to waitForKey()
@@ -2099,8 +2101,7 @@ end main
 </table>
 
 <p>These methods may be used to write a whole file in one go:</p>
-<codeblock>
-main
+<codeblock>main
   variable file set to createFileForWriting("myFile.txt")
   call file.writeWholeFile("Text line 1\nText line 2")
 end main
@@ -2114,8 +2115,7 @@ end main
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
 <li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
 To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <b>try</b> instruction like this (where <code>CustomError</code> is a Class provided by Elan for this purpose):
-<codeblock>
-main
+<codeblock>main
   variable file set to createFileForWriting("squares.txt")
   for i in range(1, (101))
     call file.writeLine($"{i*i}")
@@ -2159,8 +2159,7 @@ or you could make the code offer the user options: to save again, or to continue
  </tr>
 </table>
 <p>These methods may be used to read a whole file in one go:</p>
-<codeblock>
-main
+<codeblock>main
   variable file set to openFileForReading()
   variable text set to file.readWholeFile()
   print(text)
@@ -2182,8 +2181,7 @@ end main
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>display</b>.
     The following code:</p>
 
-<codeblock>
-  call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
+<codeblock>  call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
 </codeblock>
 
 <p>will produce:</p>
@@ -2202,8 +2200,7 @@ end main
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
 the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
-<codeblock>
-main
+<codeblock>main
   variable style set to "&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;"
   call displayHtml($"{style}&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;")
 end main
@@ -2219,8 +2216,7 @@ such as in <b>file://host/path</b> to access an image from your local file syste
 
 <ul>
  <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
-<codeblock>
-main
+<codeblock>main
   variable pic set to "&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg' width='400' height='200' title='shark' alt='shark'&gt;"
   call displayHtml(pic)
 end main
@@ -2228,8 +2224,7 @@ end main
    <p>The usual &lt;img&gt; tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
  <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures <i class="fa">&#xf14c;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
-<codeblock>
-main
+<codeblock>main
   variable sharkUrl set to "https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"
   variable sharkVG set to new ImageVG(sharkUrl)
   call sharkVG.setWidth(400)
@@ -2255,8 +2250,7 @@ end main
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>tone</el-method></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; An example that plays a C major scale first ascending then descending:</p>
-<codeblock>
-main
+<codeblock>main
   variable scale set to [262, 294, 330, 349, 392, 440, 494, 523]
   variable scaleL set to scale.length()
   variable quaver set to 250
@@ -2479,8 +2473,8 @@ end main
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><code>call print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
- <tr><td><code>call print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
 </ol>
 
@@ -2559,8 +2553,7 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   print("Hello")
   variable a set to 3
   variable b set to 4
@@ -2579,8 +2572,7 @@ end main
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Procedure <el-method>printTab</el-method> helps in the layout of information printed to the display, e.g. when printing columns of data:</p>
-<codeblock>
-main
+<codeblock>main
   call printTab(0, "Number")
   call printTab(10, "Square")
   call printTab(20, "Cube\n")
@@ -2594,12 +2586,11 @@ end main
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; For numeric output, it is preferable to right-align the columns, e.g. when listing powers of 9:</p>
-<codeblock>
-main
+<codeblock>main
   variable tab set to 10
   for i in range(1, tab)
     variable j set to pow(9, i).floor()
-    variable f set to (lambda j as Int => j.toString().length())
+    variable f set to (lambda j as Int =&gt; j.toString().length())
     call printTab(tab - f(j), $"{j}\n")
   end for
 end main
@@ -2658,8 +2649,7 @@ end main
 
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
-<codeblock>
-test test_parse
+<codeblock>test test_parse
   assert parseAsInt("31") is (true, 31)
   assert parseAsInt("0") is (true, 0)
   assert parseAsInt("thirty one") is (false, 0)
@@ -2714,8 +2704,7 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 </table>
 
 <p>Examples of some maths functions and constants being tested:</p>
-<codeblock>
-test test_maths
+<codeblock>test test_maths
   assert pi is 3.141592653589793
   assert abs(-3.7) is 3.7
   assert pow(2, 10) is 1024
@@ -2781,8 +2770,7 @@ end test
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Examples of the bitwise functions being tested</p>
 
-<codeblock>
-test test_bitwise
+<codeblock>test test_bitwise
   variable a set to 13
   assert a is 0xd
   assert a is 0b1101
@@ -2828,8 +2816,7 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
     <p>More functions for using regular expressions will be added in a future release of Elan. For now:</p>
     <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
 
-<codeblock>
-test test_matchesRegExp
+<codeblock>test test_matchesRegExp
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to /^[a-z]*$/
@@ -2839,8 +2826,7 @@ end test
 </codeblock>
 
 <p>You can convert a valid string without <code>/../</code> delimiters to a <code>RegExp</code> using function <el-method>asRegExp</el-method>:</p>
-<codeblock>
-test test_matchesRegExp
+<codeblock>test test_matchesRegExp
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to "^[a-z]*$".asRegExp()
@@ -2915,6 +2901,11 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
+ </tr><tr id="createDictionary">
+  <td><el-method>createDictionary</el-method></td>
+  <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
+  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
+  <td>a Dictionary containing the specified key:value pairs</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
   <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
@@ -2958,8 +2949,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>range</el-method> or <el-method>rangeInSteps</el-method></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Print every second item in a List:</p>
-<codeblock>
-main
+<codeblock>main
   variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
   for n in rangeInSteps(0, numbers.length() + 1, 2)
     print(numbers[n])
@@ -2969,13 +2959,12 @@ end main
 <hr>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the <a href="#filter">Higher-order Function <el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> to print the prime numbers less than a given limit:</p>
-<codeblock>
-main
+<codeblock>main
   print(primesFromList(range(2, 100)))
 end main
 function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
   # returns primes from the list assuming it starts with a prime (e.g. 2)
-  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) > 0))))
+  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int =&gt; (n mod li.head()) &gt; 0))))
 end function
 </codeblock>
 <hr>
@@ -2986,10 +2975,10 @@ end function
   but Elan does not currently support that pattern.) </p>
 
 <h2>Standard HoFs</h2>
-<p>The standard library contains several HoFs that are widely recognised and used within Functional Programming, namely
+<p>The standard library contains several HoFs that are widely recognised and used within Functional Programming, namely:<br>
 <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#map"><el-method>map</el-method> <i class="fa">&#xf14c;</i></a> and
-<a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a>, and also provides
+<a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a>,<br> and also provides:<br>
 <a href="#maxBy"><el-method>maxBy</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#minBy"><el-method>minBy</el-method> <i class="fa">&#xf14c;</i></a> and
 <a href="#orderBy"><el-method>orderBy</el-method> <i class="fa">&#xf14c;</i></a>.</p>
@@ -2997,22 +2986,21 @@ end function
 <p>You cannot define your own Higher-order Functions.</p>
 
 <h2 id="libraryHoFs">Library functions that process Lists</h2>
-<p>These dot methods may be called on any <code>List</code> or <code>String</code>. As Higher-order Functions they take either a <b>lambda</b> or a <b>function</b> reference as one of their arguments.</p>
+<p>These dot methods may be called on any <code>List</code> or <code>String</code>. As Higher-order Functions they take either a <code>lambda</code> or a <b>function</b> reference as one of their arguments.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
 
 <p>You give a <code>List</code> to the Higher-order Function <el-method>filter</el-method> in order to return a new <code>List</code> containing a subset of items.
-The subset is chosen by a lambda function that tests list item values and returns a Boolean to specify filtering in or out.</p>
+The subset is chosen by a <code>lambda</code> that tests list item values and returns a Boolean to specify filtering in or out.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder.elan</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
-<codeblock>
-function getNodeFor(p as Point) returns Node
-  variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
+<codeblock>function getNodeFor(p as Point) returns Node
+  variable matches set to this.nodes.filter(lambda n as Node =&gt; n.point.equals(p))
   return if_(matches.length() is 1,  matches.head(), emptyNode())
 end function
 </codeblock>
@@ -3032,10 +3020,9 @@ The <b>function</b> to be applied is usually specified as a <code>lambda</code> 
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable li set to [1, 2, 3, 4, 5]
-  print(li.map(lambda n as Int => pow(n, 3)))
+  print(li.map(lambda n as Int =&gt; pow(n, 3)))
 end main
 </codeblock>
 </td>
@@ -3047,10 +3034,9 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable names set to ["Tom", "Dick", "Harriet"]
-  print(names.map(lambda s as String => s.upperCase()))
+  print(names.map(lambda s as String =&gt; s.upperCase()))
 end main
 </codeblock>
 </td>
@@ -3058,45 +3044,54 @@ end main
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To reverse each string in the list of names using the function <el-method>reverse</el-method>
- (from the example of the <a href="LangRef.html#for">for <i class="fa">&#xf08e;</i></a> loop):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To reverse each string in the list of names using the function <el-method>reverse</el-method>:</p>
 <table class="tablePlain">
 <tr>
  <td>
-<code>print(names.map(lambda s as String => reverse(s)))</code>
+<codeblock>main
+  print(names.map(lambda s as String =&gt; reverse(s)))
+end main
+function reverse(s as String) returns String
+  variable sReturn set to ""
+  for ch in s
+    reassign sReturn to ch + sReturn
+  end for
+  return sReturn
+end function
+</codeblock>
 </td>
-<td>&#x27f6;</td><td><code>[moT, kciD, teirraH]</td>
+<td><br>&#x27f6;</td><td><br><code>[moT, kciD, teirraH]</td>
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <code>maze-generator.elan</code>:</p>
-<code>variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))</code>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <code>maze-generator</code>:</p>
+<codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point =&gt; getValue(p, g))
+</codeblock>
 <hr>
 </div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to combine the items in a list in some way to produce
-  a single result. This result may be of the same type as the items in the list, for example to:
+<p>The function <el-method>reduce</el-method> is used to combine the items in a list in some way to produce a single result. This result may be of the same type as the items in the list, for example to:</p>
 <ul>
- <li>Find the sum or sum-of-squares of a list of numeric values.</li>
- <li>Concatenate, or combine in some other way, the items from a List of Strings.</li>
+ <li>find the sum or sum-of-squares of a list of numeric values.</li>
+ <li>concatenate, or combine in some other way, the items from a list of strings.</li>
 </ul>
-<p>The result may, however, be of a different type than the items in the list, and may even  be a data structure, for example to:</p>
+<p>The result may, however, be of a different type than the items in the list, and may even be a data structure, for example to:</p>
 <ul>
- <li>Generate a <a href="#Tuple">3-Tuple <i class="fa">&#xf14c;</i></a> of the sum, sum-of-squares, and count of numerical items.</li>
- <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input List</li>
+ <li>generate a 3-tuple containing the sum, sum-of-squares, and count of numerical items,</li>
+ <li>generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
 <ol>
- <li>The initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument..
+ <li>the initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument.
  For example, if you were finding the sum of a list of type <code>Float</code>, the initial seed value
  would typically be <code>0.0</code>. If you were creating a dictionary of words, the initial seed
- value would be an empty Dictionary of the correct types.</li>
- <li>The <b>function</b> or lambda to be applied, which itself requires two arguments:
+ value would be an empty dictionary of the correct key and value types.</li>
+ <li>the <b>function</b> or <code>lambda</code> to be applied, which itself requires two arguments:
 <ol>
- <li>The accumulating value, which is therefore of the same type as the initial seed value.
+ <li>the accumulating named value, which is therefore of the same type as the initial seed value,
  (This will be the return value of the <b>function</b> or <code>lambda</code>).</li>
- <li>The item to which the <b>function</b> is applied, which is therefore of the same type
+ <li>the item to which the <b>function</b> is applied, which is therefore of the same type
    as the items in the input list.</li>
  </ol>
  </li>
@@ -3113,10 +3108,9 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
-  print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
+  print(n.reduce(0.0, lambda sum as Float, m as Float =&gt; (sum + m).round(2)))
 end main
 </codeblock>
 </td>
@@ -3134,12 +3128,11 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable n set to [2, 3, 5, 7, 11, 13]
   variable nR set to new List&lt;of Int&gt;()
   variable eL set to new List&lt;of Int&gt;()
-  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
+  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int =&gt; nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
@@ -3152,12 +3145,11 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String =&gt; sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>
@@ -3189,10 +3181,9 @@ They take a <b>function</b> as an argument, and return the list item correspondi
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable a set to [33, 4, 0, 92, 89, 55, 102]
-  print(a.maxBy(lambda x as Int => x mod 10))
+  print(a.maxBy(lambda x as Int =&gt; x mod 10))
 end main
 </codeblock>
 </td>
@@ -3204,10 +3195,9 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable fruit set to ["apple", "orange", "pear"]
-  print(fruit.minBy(lambda x as String => x.length()))
+  print(fruit.minBy(lambda x as String =&gt; x.length()))
 end main
 </codeblock>
 </td>
@@ -3224,17 +3214,16 @@ end main
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>orderBy</el-method></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To  reorder integers in a <code>List</code>, using > for ascending (you would use < for descending):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To  reorder integers in a <code>List</code>, using &gt; for ascending (you would use &lt; for descending):</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
-  variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
+<codeblock>  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
+  variable ordered set to numbers.orderBy(lambda x as Int, y as Int =&gt; x &gt; y)
   print(ordered)
 </codeblock>
 </td>
-<td><br><br><br>&#x27f6;</td><td><br><br><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
+<td><br><br>&#x27f6;</td><td><br><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
 </tr>
 </table>
 
@@ -3242,10 +3231,9 @@ end main
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>
-main
+<codeblock>main
   variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
-  print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
+  print(names.orderBy(lambda x as String, y as String =&gt; x.isBefore(y)))
 end main
 </codeblock>
 </td>
@@ -3257,13 +3245,12 @@ end main
 
 <h2 id="AsRef">Passing a function as a reference</h2>
 <p>To use a Higher-order Function (HoF), you have to pass in a reference to a <b>function</b>.
- This can be either a <a href="LangRef.html#lambda"><code>lambda</code> <i class="fa">&#xf08e;</i></a> or the name of a <b>function</b>.
+ This can be either a <code>lambda</code> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a <b>function</b>, its name is not followed by round brackets (or arguments), as in this example:
 
-<codeblock>
-class Pupil
+<codeblock>class Pupil
   property mathsPercent as Int
 end class
 main
@@ -3271,7 +3258,7 @@ main
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 function passedMathsTest(p as Pupil) returns Boolean
-  return p.mathsPercent > 35
+  return p.mathsPercent &gt; 35
 end function
 </codeblock>
 
@@ -3284,7 +3271,7 @@ end function
 <p>These constants are of use when the characters { } and " are required within a string.</p>
 <table class="tableType">
  <tr>
-  <th>name</th><th>type</th><th >value</th>
+  <th>name</th><th>type</th><th>value</th>
  </tr><tr id="openBrace">
   <td><code>openBrace</code></td>
   <td><code>String</code></td>
@@ -3313,7 +3300,7 @@ end function
 <h2 id="BooleanConstants">Boolean constants</h2>
 <table class="tableType">
  <tr>
-  <th>name</th><th>type</th><th >value</th>
+  <th>name</th><th>type</th><th>value</th>
  </tr><tr id="true">
   <td><code>true</code></td>
   <td><code>Boolean</code></td>
