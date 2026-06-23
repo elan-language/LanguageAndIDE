@@ -250,7 +250,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
-    test("Pass_sumByList", async () => {
+  test("Pass_sumByList", async () => {
     const code = `${testHeader}
 
 
@@ -835,7 +835,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[apple, orange, pair]");
   });
 
-   test("Pass_reduceClass", async () => {
+  test("Pass_reduceClass", async () => {
     const code = `${testHeader}
 
 main

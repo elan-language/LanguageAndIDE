@@ -82,6 +82,18 @@ export async function mapHelper<T1, T2>(
   return await Promise.all(list.map(predicate));
 }
 
+export async function sumByHelper<T>(
+  contents: T[],
+  predicate: (value: T) => Promise<number>,
+): Promise<number> {
+    const list = [...contents];
+  let acc = 0;
+  for (const i of list) {
+    acc += await predicate(i);
+  }
+  return acc;
+}
+
 export async function reduceHelper<T1, T2>(
   contents: T1[],
   initValue: T2,

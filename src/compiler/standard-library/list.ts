@@ -27,6 +27,7 @@ import {
   minByHelper,
   orderByHelper,
   reduceHelper,
+  sumByHelper,
   withAppendHelper,
   withAppendListHelper,
   withInsertHelper,

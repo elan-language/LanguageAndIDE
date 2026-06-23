@@ -195,7 +195,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-   test("Pass_IndexGenericFunctionReturnsTupleLambda", async () => {
+  test("Pass_IndexGenericFunctionReturnsTupleLambda", async () => {
     const code = `${testHeader}
 
 main
