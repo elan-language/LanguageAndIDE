@@ -175,6 +175,14 @@ export class List<T1> {
     return this.newList(await mapHelper(this.contents, predicate));
   }
 
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanFloat)
+  async sumBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<number> {
+    return await sumByHelper(this.contents, predicate);
+  }
+
   @elanFunction(["initialValue", "lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanT2)
   async reduce<T2>(
     @elanGenericParamT2Type() initValue: T2,

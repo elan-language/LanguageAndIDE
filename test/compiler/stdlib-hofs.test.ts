@@ -250,6 +250,76 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
+    test("Pass_sumByList", async () => {
+    const code = `${testHeader}
+
+
+main
+  variable source set to [2, 3, 5, 7]
+  call printNoLine(source.sumBy(lambda x => x))
+  call printNoLine(source.sumBy(lambda x => x*x))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list([2, 3, 5, 7]);
+  await _stdlib.printNoLine((await source.sumBy(async (x) => x)));
+  await _stdlib.printNoLine((await source.sumBy(async (x) => x * x)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1787");
+  });
+
+  test("Pass_sumByListOfStringLengths", async () => {
+    const code = `${testHeader}
+
+
+main
+  variable source set to ["a","bb","ccc"]
+  call printNoLine(source.sumBy(lambda x => x.length()))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list(["a", "bb", "ccc"]);
+  await _stdlib.printNoLine((await source.sumBy(async (x) => _stdlib.length(x))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
+
   test("Pass_reduceListLambda", async () => {
     const code = `${testHeader}
 
