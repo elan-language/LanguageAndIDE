@@ -80,7 +80,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
       if (offset !== undefined) {
         let actual = outcome.actual;
         actual = offset > 0 ? `...${actual.substring(offset, offset + 50)}` : actual;
-        actual = actual.length > 50 ? `${actual.substring(0,50)}...` : actual;
+        actual = actual.length > 50 ? `${actual.substring(0, 50)}...` : actual;
         return `strings differ at [${offset}]. Actual: ${actual} `;
       }
       return `actual (computed): ${outcome.actual}`;

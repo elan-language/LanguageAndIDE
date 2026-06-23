@@ -9,6 +9,7 @@ import {
   ElanString,
   ElanT1,
   ElanT1Constrained,
+  ElanT2,
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
@@ -502,6 +503,19 @@ export class StdLib {
       listOfList.append(subArr);
     }
     return listOfList;
+  }
+
+  @elanFunction(["kvps"], FunctionOptions.pureAsync, ElanClass(Dictionary, [ElanT1, ElanT2]))
+  async createDictionaryFrom<T1, T2>(
+    @elanClassType(List, [ElanTuple([ElanT1, ElanT2])]) kvps: List<[T1, T2]>,
+  ): Promise<Dictionary<T1, T2>> {
+    const dict = this.system.initialise(await new Dictionary<T1, T2>()._initialise());
+
+    for (const kvp of kvps) {
+      const [key, val] = kvp;
+      dict.safeSet(val, key);
+    }
+    return dict;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
